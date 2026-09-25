@@ -23,6 +23,11 @@ clean through the vertical back plate:
 
 ![Orbiting the accepted bracket](docs/demo/hero_multiview_3d.gif)
 
+The same part, rendered from a fixed 3/4 angle — the L profile, plate
+thickness, and all four rectangular through-holes in one frame:
+
+![Orbit view — four cutouts through the vertical plate](docs/demo/28_mv_orbit_isometric.png)
+
 This result isn't just eyeballed: an independent STL topology check
 (`scripts/verify_stl.py`) confirms **genus 4 — exactly four through-holes**,
 one watertight component, and dimensions within 9% of the reference

@@ -35,7 +35,9 @@ verification (`verify_stl.py`, Euler-characteristic topology):
 | Extents vs 80:50:100 reference ratio | 73.1 : 47.8 : 100 (rel err ≤ 9%) |
 
 Assets: `hero_multiview_flow.gif` (draw → generate), `hero_multiview_3d.gif`
-(orbit), `multiview_session.mp4` (full 2.5 min session),
+(orbit), `28_mv_orbit_isometric.png` (fixed 3/4 render via OpenSCAD
+`--camera`, the clearest single still of the four through-holes),
+`multiview_session.mp4` (full 2.5 min session),
 `20–27_mv_*.png` (sheet stages, result, orbit, authoritative OpenSCAD
 front/right renders), `multiview_model.scad` (the generated parametric source).
 
