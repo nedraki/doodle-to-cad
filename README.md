@@ -33,9 +33,9 @@ This result isn't just eyeballed: an independent STL topology check
 one watertight component, and dimensions within 9% of the reference
 proportions. The supervisor's own front-view render agrees:
 
-| Your sketch (as drawn) | Generated part, front view | Generated part, right view | Generated OpenSCAD |
-|---|---|---|---|
-| ![hand-drawn sheet](docs/demo/21_mv_sheet_done.png) | ![front render](docs/demo/26_mv_front_render.png) | ![right render](docs/demo/27_mv_right_render.png) | 📄 [`multiview_model.scad`](docs/demo/multiview_model.scad) — parametric source, shown in full below |
+| Your sketch (as drawn) | Generated part, front view | Generated part, right view | Generated part, 3D view | Generated OpenSCAD |
+|---|---|---|---|---|
+| ![hand-drawn sheet](docs/demo/21_mv_sheet_done.png) | ![front render](docs/demo/26_mv_front_render.png) | ![right render](docs/demo/27_mv_right_render.png) | ![3/4 orbit render](docs/demo/28_mv_orbit_isometric.png) | 📄 [`multiview_model.scad`](docs/demo/multiview_model.scad) — parametric source, shown in full below |
 
 <details>
 <summary>The parametric OpenSCAD the model wrote for this part (101 lines)</summary>
