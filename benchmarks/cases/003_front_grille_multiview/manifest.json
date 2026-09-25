@@ -1,0 +1,118 @@
+{
+  "schema_version": 1,
+  "id": "003_front_grille_multiview",
+  "title": "Front grille with headlights and repeated slots",
+  "split": "development",
+  "status": "reference_pair_verified_with_declared_dimension_discrepancy",
+  "provenance": {
+    "source": "user_supplied_in_conversation",
+    "original_files": {
+      "drawing": "codex-clipboard-23999349-b332-43b3-b039-ab962d66837a.png",
+      "scad": "front_grille.scad",
+      "stl": "front_grille.stl"
+    },
+    "sha256": {
+      "drawing.png": "c2d3a0fee0a0045f88359eb19b0b679f458ae9bc3cb54f7e46d272ff9c15af03",
+      "model.scad": "b7a44e2a2f6e72e0e38ae039864db0bce426a065f14fd8525f5c3653b2f271e0",
+      "model.stl": "023b6c284de6587891a1cb2b66bcea87c70c126f568f9dd501cdb2ac22bc4942"
+    }
+  },
+  "reference": {
+    "authority": "user_supplied_candidate_ground_truth",
+    "scad_stl_equivalence": {
+      "equivalent": true,
+      "same_extents": true,
+      "volume_relative_delta": 0.0
+    },
+    "coordinate_system": {
+      "xy": "front_profile_plane",
+      "z": "extrusion_thickness",
+      "front_view_direction": "along_z",
+      "top_view_direction": "along_y",
+      "right_view_direction": "along_x",
+      "status": "exact_from_reference_scad"
+    },
+    "declared_dimensions_mm": {
+      "width": 130.0,
+      "height": 80.0,
+      "thickness": 3.0,
+      "status": "exact_from_named_reference_scad_variables"
+    },
+    "realized_dimensions_mm": {
+      "width": 126.0,
+      "height": 76.0,
+      "thickness": 3.0,
+      "status": "exact_from_supplied_stl_and_fresh_scad_compilation"
+    },
+    "dimension_discrepancy": "The named total_width/total_height variables are not used to construct the outer polygon; realized geometry is 4 mm smaller on both axes.",
+    "topology": {
+      "components": 1,
+      "watertight": true,
+      "through_cutout_count": 9,
+      "genus": 9,
+      "construction": "single linear extrusion of a filleted outer profile with subtractive openings",
+      "status": "exact_from_reference_scad and verified mesh"
+    }
+  },
+  "drawing": {
+    "image_size_px": [706, 619],
+    "views": [
+      {
+        "direction": "front",
+        "sheet_region": "bottom",
+        "constraints": ["outer grille silhouette", "two rounded openings", "seven vertical slots", "bilateral layout"]
+      },
+      {
+        "direction": "top",
+        "sheet_region": "top",
+        "constraints": ["thin depth profile", "overall width correspondence"]
+      }
+    ],
+    "projection_standard": "third-angle_if_primary_is_front",
+    "projection_standard_status": "inferred from top view placement; not explicitly supplied"
+  },
+  "semantic_labels": {
+    "object": "front grille",
+    "construction_family": "extruded_contoured_plate",
+    "repetition": {"slot_count": 7, "paired_round_opening_count": 2},
+    "status": "object exact from supplied filenames and SCAD; counts exact from drawing and reference"
+  },
+  "observability": {
+    "observable_from_supplied_drawing": [
+      "outer front silhouette",
+      "two rounded openings",
+      "seven narrow openings",
+      "approximate bilateral symmetry",
+      "thin second projection"
+    ],
+    "reference_regularizations": [
+      "rounded openings become exact circles",
+      "narrow openings become equally spaced rounded rectangles",
+      "outer contour becomes symmetric and filleted",
+      "upper-view division strokes are not modeled as physical seams"
+    ],
+    "not_observable_from_supplied_drawing": ["exact 3 mm thickness", "exact millimetre dimensions", "fillet radii"]
+  },
+  "acceptance": {
+    "mandatory": {
+      "watertight": true,
+      "component_count": 1,
+      "through_cutout_count": 9,
+      "paired_round_opening_count": 2,
+      "repeated_slot_count": 7,
+      "front_projection_required": true,
+      "top_projection_required": true
+    },
+    "dimension_target": {
+      "authoritative_choice": null,
+      "options": ["declared_130x80x3", "realized_126x76x3"],
+      "status": "requires user/reference-policy decision"
+    },
+    "shape_comparison_thresholds": "to_be_calibrated_on_multiple extruded-profile families"
+  },
+  "known_ambiguities": [
+    "The drawing does not provide absolute scale.",
+    "The declared SCAD dimensions differ from its realized geometry.",
+    "Upper-view internal strokes may be construction/projection marks rather than part features."
+  ]
+}

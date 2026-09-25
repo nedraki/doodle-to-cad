@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+# OpenSCAD shim: runs the openscad binary inside the openscad/openscad:latest
+# Docker image, mounting every directory that appears in the arguments so the
+# same absolute paths are valid inside the container.
+# Usage (as OPENSCAD_BIN): openscad-docker -o out.stl in.scad [extra flags...]
+set -euo pipefail
+
+MOUNTS=()
+add_mount() {
+  local d="$1"
+  d="$(dirname "$d")"
+  d="$(realpath -m "$d")"
+  [[ -d "$d" ]] || return 0
+  for m in "${MOUNTS[@]:-}"; do [[ "$m" == "$d" ]] && return 0; done
+  MOUNTS+=("$d")
+}
+
+for arg in "$@"; do
+  [[ "$arg" == -* ]] && continue
+  add_mount "$arg"
+done
+# Also mount the project dir (cwd) for relative paths.
+add_mount "$PWD/placeholder"
+
+MOUNT_ARGS=()
+for d in "${MOUNTS[@]:-}"; do
+  MOUNT_ARGS+=(-v "$d:$d")
+done
+
+# xvfb-run provides a virtual display: STL export works headless, but PNG
+# view rendering needs an OpenGL context ("Can't create OpenGL OffscreenView").
+# NOTE: sh is the entrypoint and xvfb-run runs as its child — xvfb-run as
+# container PID 1 hangs after openscad exits (never reaps its Xvfb grandchild).
+# -w "$PWD" mirrors the host cwd so relative scad/stl arguments resolve.
+exec docker run --rm --entrypoint sh "${MOUNT_ARGS[@]}" -w "$PWD" \
+  "${DOODLE_OPENSCAD_DOCKER:-openscad/openscad:latest}" \
+  -c 'xvfb-run -a openscad "$@"' sh "$@"

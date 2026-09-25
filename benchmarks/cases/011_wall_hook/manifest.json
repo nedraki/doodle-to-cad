@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "id": "011_wall_hook",
+  "title": "L wall hook extruded from front profile",
+  "split": "development",
+  "status": "synthetic_reference_pair_verified",
+  "provenance": {
+    "source": "synthetic_parametric_generated_by_benchmarks/tools/gen_cases.py",
+    "original_files": {
+      "drawing": "generated: jittered doodle of declared GT view geometry (seed 118)",
+      "scad": "authored by benchmark tooling",
+      "stl": "compiled from sibling model.scad with pipeline OpenSCAD"
+    },
+    "sha256": {
+      "drawing.png": "e308fdc822354745222b07f6134bef7284d5c9871dfdcb5f8cb1e5e72e90bb6e",
+      "model.scad": "12fd492e38b8465d589813970e625cf4b69e9f61f46c16aa544ffccdc2bb35f8",
+      "model.stl": "6c4685fe8497c342e5ef6e166fd1a4eb88c37181b3746de23864893b51d0a47e"
+    }
+  },
+  "reference": {
+    "authority": "generated_parametric_ground_truth",
+    "coordinate_system": {
+      "x": "width",
+      "y": "front_to_back_depth",
+      "z": "height",
+      "front_view_direction": "along_y",
+      "top_view_direction": "along_z",
+      "right_view_direction": "along_x",
+      "status": "exact_from_scad_construction"
+    },
+    "dimensions_mm": {
+      "extents_xyz": [
+        60.0,
+        10.0,
+        55.0
+      ],
+      "status": "exact_measured_from_gt_stl"
+    },
+    "topology": {
+      "components": 1,
+      "watertight": true,
+      "through_cutout_count": 0,
+      "status": "exact_measured_from_gt_stl"
+    },
+    "print_envelope_mm": {
+      "max": 256.0,
+      "fits": true
+    }
+  },
+  "drawing": {
+    "views": [
+      {
+        "direction": "front",
+        "sheet_region": "lower-left",
+        "constraints": [
+          "L toe",
+          "back height",
+          "tip"
+        ]
+      },
+      {
+        "direction": "top",
+        "sheet_region": "upper-left",
+        "constraints": [
+          "toe length",
+          "thickness"
+        ]
+      }
+    ],
+    "projection_standard": "third-angle",
+    "view_labels_status": "exact_from_generator",
+    "style_note": "jittered single-weight ink outlines, white sheet, no fills"
+  },
+  "semantic_labels": {
+    "object": "wall hook",
+    "family": "extrude_freeform_profile",
+    "manufacturing_intent": "FDM print on BambuLab-class printer",
+    "object_status": "exact_from_generator"
+  },
+  "acceptance": {
+    "mandatory": {
+      "watertight": true,
+      "component_count": 1,
+      "dimension_relative_tolerance": 0.05,
+      "through_cutout_count": 0,
+      "build_envelope_mm": 256.0,
+      "front_projection_required": true,
+      "top_projection_required": true
+    },
+    "shape_comparison": {
+      "method": "registered_contour_and_internal_profile_correspondence"
+    }
+  },
+  "controls": {
+    "primary_view": "front",
+    "projection_standard": "third-angle"
+  },
+  "target_dimension_mm": "60",
+  "known_ambiguities": []
+}

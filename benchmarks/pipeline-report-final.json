@@ -1,0 +1,1694 @@
+{
+  "tag": "final",
+  "mode": "assisted",
+  "base": "http://127.0.0.1:8082",
+  "started": "2026-09-17 23:02:58",
+  "cases": [
+    {
+      "id": "001_l_bookend_multiview",
+      "family": "multi_face_union_with_through_cutouts",
+      "success": true,
+      "score": 98.5,
+      "accepted_gates": {
+        "compiled": true,
+        "topology": true,
+        "dimensions": true,
+        "shape_sanity": true,
+        "features": true,
+        "projections": true,
+        "build_envelope": true
+      },
+      "failures": [],
+      "projection_similarity": {
+        "front": 0.903,
+        "right": 0.9
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 4,
+          "rendered_internal_profiles": 4,
+          "crop_internal_profiles": 4,
+          "source_aspect": 0.822,
+          "rendered_aspect": 0.802,
+          "source_opening_centroids": [
+            [
+              0.755,
+              0.614
+            ],
+            [
+              0.316,
+              0.612
+            ],
+            [
+              0.535,
+              0.421
+            ],
+            [
+              0.257,
+              0.191
+            ]
+          ],
+          "rendered_opening_centroids": [
+            [
+              0.275,
+              0.198
+            ],
+            [
+              0.537,
+              0.429
+            ],
+            [
+              0.323,
+              0.599
+            ],
+            [
+              0.747,
+              0.608
+            ]
+          ],
+          "feature_position_fidelity": 1.0
+        },
+        "right": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 0,
+          "source_aspect": 0.702,
+          "rendered_aspect": 0.599,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": []
+        }
+      },
+      "selected_attempt": 1,
+      "attempt_count": 1,
+      "repaired": false,
+      "duration_s": 272.77,
+      "model": "local-vlm/private-flash",
+      "run_id": "073e6bfc0a1c",
+      "extents_mm": [
+        80.0,
+        60.0,
+        100.0
+      ],
+      "extent_ratios_vs_gt": [
+        1.0,
+        1.2,
+        1.0
+      ],
+      "fits_build_envelope": true,
+      "watertight": true,
+      "components": 1,
+      "volume_ratio_vs_gt": 1.7211
+    },
+    {
+      "id": "002_greek_vase_silhouette",
+      "family": "surface_of_revolution",
+      "success": true,
+      "score": 95.6,
+      "accepted_gates": {
+        "compiled": true,
+        "topology": true,
+        "dimensions": true,
+        "shape_sanity": true,
+        "features": true,
+        "projections": true,
+        "build_envelope": true
+      },
+      "failures": [],
+      "projection_similarity": {
+        "front": 0.707
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 5,
+          "crop_internal_profiles": 0,
+          "source_aspect": 0.896,
+          "rendered_aspect": 0.795,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": [
+            [
+              0.536,
+              0.133
+            ],
+            [
+              0.412,
+              0.133
+            ],
+            [
+              0.609,
+              0.097
+            ],
+            [
+              0.341,
+              0.036
+            ]
+          ]
+        }
+      },
+      "selected_attempt": 1,
+      "attempt_count": 1,
+      "repaired": false,
+      "duration_s": 233.69,
+      "model": "local-vlm/private-flash",
+      "run_id": "24cdc6fd0a0d",
+      "extents_mm": [
+        160.0,
+        159.124,
+        200.0
+      ],
+      "extent_ratios_vs_gt": [
+        1.5613,
+        1.5528,
+        1.6667
+      ],
+      "fits_build_envelope": true,
+      "watertight": true,
+      "components": 1,
+      "volume_ratio_vs_gt": 13.6788
+    },
+    {
+      "id": "003_front_grille_multiview",
+      "family": "extruded_contoured_plate",
+      "success": false,
+      "score": 75.0,
+      "accepted_gates": {
+        "compiled": true,
+        "topology": true,
+        "dimensions": true,
+        "shape_sanity": true,
+        "features": false,
+        "projections": false,
+        "build_envelope": true
+      },
+      "failures": [
+        "required internal profiles are missing: front view demands 9, best rendered view has 0",
+        "one or more registered CAD projections poorly match their corresponding drawing view",
+        "features exist but sit at the wrong positions in front view(s): match each opening's location (u,v within the outer profile) to the drawing; check the cad_mapping signs (front: u->+X v->-Z; top: u->+X v->-Y i.e. sheet-down is the FRONT of the part)"
+      ],
+      "projection_similarity": {
+        "front": 0.35,
+        "top": 0.986
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 9,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 9,
+          "source_aspect": 1.663,
+          "rendered_aspect": 1.657,
+          "source_opening_centroids": [
+            [
+              0.568,
+              0.583
+            ],
+            [
+              0.31,
+              0.599
+            ],
+            [
+              0.205,
+              0.359
+            ],
+            [
+              0.446,
+              0.588
+            ],
+            [
+              0.627,
+              0.56
+            ],
+            [
+              0.38,
+              0.552
+            ],
+            [
+              0.796,
+              0.349
+            ],
+            [
+              0.505,
+              0.561
+            ],
+            [
+              0.688,
+              0.525
+            ]
+          ],
+          "rendered_opening_centroids": [],
+          "feature_position_fidelity": 0.0
+        },
+        "top": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 0,
+          "source_aspect": 6.612,
+          "rendered_aspect": 25.222,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": []
+        }
+      },
+      "selected_attempt": 2,
+      "attempt_count": 3,
+      "repaired": true,
+      "duration_s": 881.59,
+      "model": "local-vlm/private-flash",
+      "run_id": "f1b6edb41fb8",
+      "extents_mm": [
+        240.0,
+        10.0,
+        145.0
+      ],
+      "extent_ratios_vs_gt": [
+        1.9048,
+        0.1316,
+        48.3333
+      ],
+      "fits_build_envelope": true,
+      "watertight": true,
+      "components": 1,
+      "volume_ratio_vs_gt": 19.0518
+    },
+    {
+      "id": "004_flat_mounting_plate",
+      "family": "extrude_plate_with_cutouts",
+      "success": true,
+      "score": 99.3,
+      "accepted_gates": {
+        "compiled": true,
+        "topology": true,
+        "dimensions": true,
+        "shape_sanity": true,
+        "features": true,
+        "projections": true,
+        "build_envelope": true
+      },
+      "failures": [],
+      "projection_similarity": {
+        "front": 0.911,
+        "top": 0.992
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 3,
+          "rendered_internal_profiles": 3,
+          "crop_internal_profiles": 3,
+          "source_aspect": 1.617,
+          "rendered_aspect": 1.612,
+          "source_opening_centroids": [
+            [
+              0.839,
+              0.74
+            ]
+          ],
+          "rendered_opening_centroids": [
+            [
+              0.829,
+              0.727
+            ],
+            [
+              0.47,
+              0.534
+            ],
+            [
+              0.163,
+              0.275
+            ]
+          ],
+          "feature_position_fidelity": 1.0
+        },
+        "top": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 0,
+          "source_aspect": 10.333,
+          "rendered_aspect": 10.182,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": []
+        }
+      },
+      "selected_attempt": 1,
+      "attempt_count": 1,
+      "repaired": false,
+      "duration_s": 67.33,
+      "model": "local-vlm/private-flash",
+      "run_id": "bcc375f4dff1",
+      "extents_mm": [
+        100.0,
+        10.0,
+        62.0
+      ],
+      "extent_ratios_vs_gt": [
+        1.0,
+        2.0,
+        1.0333
+      ],
+      "fits_build_envelope": true,
+      "watertight": true,
+      "components": 1,
+      "volume_ratio_vs_gt": 2.1035
+    },
+    {
+      "id": "005_bolt_flange",
+      "family": "circular_array_with_cutouts",
+      "success": true,
+      "score": 100.0,
+      "accepted_gates": {
+        "compiled": true,
+        "topology": true,
+        "dimensions": true,
+        "shape_sanity": true,
+        "features": true,
+        "projections": true,
+        "build_envelope": true
+      },
+      "failures": [],
+      "projection_similarity": {
+        "front": 1.0,
+        "top": 1.0
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 5,
+          "rendered_internal_profiles": 5,
+          "crop_internal_profiles": 5,
+          "source_aspect": 1.009,
+          "rendered_aspect": 1.0,
+          "source_opening_centroids": [
+            [
+              0.758,
+              0.766
+            ],
+            [
+              0.233,
+              0.766
+            ],
+            [
+              0.496,
+              0.503
+            ],
+            [
+              0.759,
+              0.243
+            ],
+            [
+              0.232,
+              0.24
+            ]
+          ],
+          "rendered_opening_centroids": [
+            [
+              0.245,
+              0.245
+            ],
+            [
+              0.753,
+              0.245
+            ],
+            [
+              0.499,
+              0.499
+            ],
+            [
+              0.245,
+              0.753
+            ],
+            [
+              0.753,
+              0.753
+            ]
+          ],
+          "feature_position_fidelity": 1.0
+        },
+        "top": {
+          "source_internal_profiles": 1,
+          "rendered_internal_profiles": 12,
+          "crop_internal_profiles": 1,
+          "source_aspect": 6.486,
+          "rendered_aspect": 8.13,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": [
+            [
+              0.848,
+              0.479
+            ],
+            [
+              0.794,
+              0.479
+            ],
+            [
+              0.754,
+              0.479
+            ],
+            [
+              0.71,
+              0.479
+            ],
+            [
+              0.664,
+              0.479
+            ],
+            [
+              0.618,
+              0.479
+            ],
+            [
+              0.57,
+              0.479
+            ],
+            [
+              0.521,
+              0.479
+            ],
+            [
+              0.473,
+              0.479
+            ],
+            [
+              0.425,
+              0.479
+            ],
+            [
+              0.377,
+              0.479
+            ],
+            [
+              0.187,
+              0.48
+            ]
+          ]
+        }
+      },
+      "selected_attempt": 2,
+      "attempt_count": 2,
+      "repaired": true,
+      "duration_s": 100.71,
+      "model": "local-vlm/private-flash",
+      "run_id": "f957d9cd14a8",
+      "extents_mm": [
+        120.0,
+        15.0,
+        120.0
+      ],
+      "extent_ratios_vs_gt": [
+        1.0,
+        1.25,
+        1.0
+      ],
+      "fits_build_envelope": true,
+      "watertight": true,
+      "components": 1,
+      "volume_ratio_vs_gt": 1.2311
+    },
+    {
+      "id": "006_stepped_knob",
+      "family": "revolve_axisymmetric",
+      "success": true,
+      "score": 100.0,
+      "accepted_gates": {
+        "compiled": true,
+        "topology": true,
+        "dimensions": true,
+        "shape_sanity": true,
+        "features": true,
+        "projections": true,
+        "build_envelope": true
+      },
+      "failures": [],
+      "projection_similarity": {
+        "front": 0.998,
+        "right": 0.998
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 20,
+          "crop_internal_profiles": 0,
+          "source_aspect": 1.432,
+          "rendered_aspect": 1.415,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": [
+            [
+              0.849,
+              0.893
+            ],
+            [
+              0.777,
+              0.891
+            ],
+            [
+              0.724,
+              0.892
+            ],
+            [
+              0.666,
+              0.892
+            ],
+            [
+              0.605,
+              0.891
+            ],
+            [
+              0.562,
+              0.891
+            ],
+            [
+              0.432,
+              0.891
+            ],
+            [
+              0.95,
+              0.135
+            ],
+            [
+              0.863,
+              0.134
+            ],
+            [
+              0.791,
+              0.134
+            ],
+            [
+              0.751,
+              0.134
+            ],
+            [
+              0.708,
+              0.134
+            ],
+            [
+              0.663,
+              0.132
+            ],
+            [
+              0.617,
+              0.134
+            ],
+            [
+              0.521,
+              0.132
+            ],
+            [
+              0.473,
+              0.132
+            ],
+            [
+              0.425,
+              0.133
+            ],
+            [
+              0.377,
+              0.134
+            ]
+          ]
+        },
+        "right": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 20,
+          "crop_internal_profiles": 0,
+          "source_aspect": 1.463,
+          "rendered_aspect": 1.415,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": [
+            [
+              0.849,
+              0.893
+            ],
+            [
+              0.777,
+              0.891
+            ],
+            [
+              0.724,
+              0.892
+            ],
+            [
+              0.666,
+              0.892
+            ],
+            [
+              0.605,
+              0.891
+            ],
+            [
+              0.562,
+              0.891
+            ],
+            [
+              0.432,
+              0.891
+            ],
+            [
+              0.95,
+              0.135
+            ],
+            [
+              0.863,
+              0.134
+            ],
+            [
+              0.791,
+              0.134
+            ],
+            [
+              0.751,
+              0.134
+            ],
+            [
+              0.708,
+              0.134
+            ],
+            [
+              0.663,
+              0.132
+            ],
+            [
+              0.617,
+              0.134
+            ],
+            [
+              0.521,
+              0.132
+            ],
+            [
+              0.473,
+              0.132
+            ],
+            [
+              0.425,
+              0.133
+            ],
+            [
+              0.377,
+              0.134
+            ]
+          ]
+        }
+      },
+      "selected_attempt": 2,
+      "attempt_count": 2,
+      "repaired": true,
+      "duration_s": 249.05,
+      "model": "local-vlm/private-flash",
+      "run_id": "550c4e03acba",
+      "extents_mm": [
+        56.0,
+        56.0,
+        39.5
+      ],
+      "extent_ratios_vs_gt": [
+        1.0,
+        1.0,
+        1.0395
+      ],
+      "fits_build_envelope": true,
+      "watertight": true,
+      "components": 1,
+      "volume_ratio_vs_gt": 1.052
+    },
+    {
+      "id": "007_angle_bracket_holes",
+      "family": "multi_face_union_with_cutouts",
+      "success": true,
+      "score": 98.8,
+      "accepted_gates": {
+        "compiled": true,
+        "topology": true,
+        "dimensions": true,
+        "shape_sanity": true,
+        "features": true,
+        "projections": true,
+        "build_envelope": true
+      },
+      "failures": [],
+      "projection_similarity": {
+        "front": 0.839,
+        "top": 1.0
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 3,
+          "rendered_internal_profiles": 3,
+          "crop_internal_profiles": 3,
+          "source_aspect": 1.568,
+          "rendered_aspect": 2.0,
+          "source_opening_centroids": [
+            [
+              0.254,
+              0.404
+            ],
+            [
+              0.496,
+              0.405
+            ],
+            [
+              0.739,
+              0.406
+            ]
+          ],
+          "rendered_opening_centroids": [
+            [
+              0.249,
+              0.498
+            ],
+            [
+              0.499,
+              0.498
+            ],
+            [
+              0.749,
+              0.498
+            ]
+          ],
+          "feature_position_fidelity": 1.0
+        },
+        "top": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 0,
+          "source_aspect": 1.863,
+          "rendered_aspect": 2.0,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": []
+        }
+      },
+      "selected_attempt": 1,
+      "attempt_count": 1,
+      "repaired": false,
+      "duration_s": 52.22,
+      "model": "local-vlm/private-flash",
+      "run_id": "e16c03896aa4",
+      "extents_mm": [
+        80.0,
+        40.0,
+        40.0
+      ],
+      "extent_ratios_vs_gt": [
+        1.0,
+        1.0,
+        0.8
+      ],
+      "fits_build_envelope": true,
+      "watertight": true,
+      "components": 1,
+      "volume_ratio_vs_gt": 1.077
+    },
+    {
+      "id": "008_open_enclosure_window",
+      "family": "shell_with_cutout",
+      "success": true,
+      "score": 98.4,
+      "accepted_gates": {
+        "compiled": true,
+        "topology": true,
+        "dimensions": true,
+        "shape_sanity": true,
+        "features": true,
+        "projections": true,
+        "build_envelope": true
+      },
+      "failures": [],
+      "projection_similarity": {
+        "front": 0.787,
+        "top": 1.0
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 1,
+          "rendered_internal_profiles": 1,
+          "crop_internal_profiles": 1,
+          "source_aspect": 2.727,
+          "rendered_aspect": 2.727,
+          "source_opening_centroids": [
+            [
+              0.497,
+              0.497
+            ]
+          ],
+          "rendered_opening_centroids": [
+            [
+              0.498,
+              0.494
+            ]
+          ],
+          "feature_position_fidelity": 1.0
+        },
+        "top": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 0,
+          "source_aspect": 1.468,
+          "rendered_aspect": 1.474,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": []
+        }
+      },
+      "selected_attempt": 1,
+      "attempt_count": 1,
+      "repaired": false,
+      "duration_s": 40.14,
+      "model": "local-vlm/private-flash",
+      "run_id": "b54bde0d59a9",
+      "extents_mm": [
+        120.0,
+        81.6,
+        44.0
+      ],
+      "extent_ratios_vs_gt": [
+        1.0,
+        1.02,
+        1.1
+      ],
+      "fits_build_envelope": true,
+      "watertight": true,
+      "components": 1,
+      "volume_ratio_vs_gt": 1.562
+    },
+    {
+      "id": "009_hex_prism_knob",
+      "family": "extrude_polygon_profile",
+      "success": true,
+      "score": 95.1,
+      "accepted_gates": {
+        "compiled": true,
+        "topology": true,
+        "dimensions": true,
+        "shape_sanity": true,
+        "features": true,
+        "projections": true,
+        "build_envelope": true
+      },
+      "failures": [],
+      "projection_similarity": {
+        "front": 0.638,
+        "right": 0.712
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 3,
+          "crop_internal_profiles": 0,
+          "source_aspect": 1.139,
+          "rendered_aspect": 1.0,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": [
+            [
+              0.872,
+              0.497
+            ],
+            [
+              0.497,
+              0.497
+            ],
+            [
+              0.122,
+              0.497
+            ]
+          ]
+        },
+        "right": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 2,
+          "crop_internal_profiles": 0,
+          "source_aspect": 1.122,
+          "rendered_aspect": 0.863,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": [
+            [
+              0.746,
+              0.497
+            ],
+            [
+              0.246,
+              0.497
+            ]
+          ]
+        }
+      },
+      "selected_attempt": 1,
+      "attempt_count": 1,
+      "repaired": false,
+      "duration_s": 37.63,
+      "model": "local-vlm/private-flash",
+      "run_id": "0c97624d479d",
+      "extents_mm": [
+        70.0,
+        60.622,
+        70.0
+      ],
+      "extent_ratios_vs_gt": [
+        1.0,
+        1.7501,
+        2.3334
+      ],
+      "fits_build_envelope": true,
+      "watertight": true,
+      "components": 1,
+      "volume_ratio_vs_gt": 4.0836
+    },
+    {
+      "id": "010_nameplate_slots_vents",
+      "family": "extrude_repeated_cutouts",
+      "success": true,
+      "score": 95.9,
+      "accepted_gates": {
+        "compiled": true,
+        "topology": true,
+        "dimensions": true,
+        "shape_sanity": true,
+        "features": true,
+        "projections": true,
+        "build_envelope": true
+      },
+      "failures": [],
+      "projection_similarity": {
+        "front": 0.729
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 7,
+          "rendered_internal_profiles": 7,
+          "crop_internal_profiles": 7,
+          "source_aspect": 4.716,
+          "rendered_aspect": 4.709,
+          "source_opening_centroids": [
+            [
+              0.355,
+              0.516
+            ],
+            [
+              0.427,
+              0.515
+            ],
+            [
+              0.639,
+              0.503
+            ],
+            [
+              0.568,
+              0.507
+            ],
+            [
+              0.497,
+              0.511
+            ],
+            [
+              0.885,
+              0.505
+            ],
+            [
+              0.108,
+              0.511
+            ]
+          ],
+          "rendered_opening_centroids": [
+            [
+              0.354,
+              0.509
+            ],
+            [
+              0.636,
+              0.514
+            ],
+            [
+              0.427,
+              0.509
+            ],
+            [
+              0.565,
+              0.496
+            ],
+            [
+              0.495,
+              0.491
+            ],
+            [
+              0.874,
+              0.505
+            ],
+            [
+              0.117,
+              0.505
+            ]
+          ],
+          "feature_position_fidelity": 1.0
+        }
+      },
+      "selected_attempt": 1,
+      "attempt_count": 1,
+      "repaired": false,
+      "duration_s": 71.5,
+      "model": "local-vlm/private-flash",
+      "run_id": "e51dc917edcd",
+      "extents_mm": [
+        140.0,
+        3.0,
+        29.5
+      ],
+      "extent_ratios_vs_gt": [
+        1.0,
+        1.0,
+        1.2292
+      ],
+      "fits_build_envelope": true,
+      "watertight": true,
+      "components": 1,
+      "volume_ratio_vs_gt": 1.2533
+    },
+    {
+      "id": "011_wall_hook",
+      "family": "extrude_freeform_profile",
+      "success": true,
+      "score": 100.0,
+      "accepted_gates": {
+        "compiled": true,
+        "topology": true,
+        "dimensions": true,
+        "shape_sanity": true,
+        "features": true,
+        "projections": true,
+        "build_envelope": true
+      },
+      "failures": [],
+      "projection_similarity": {
+        "front": 1.0,
+        "top": 0.995
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 0,
+          "source_aspect": 1.104,
+          "rendered_aspect": 1.109,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": []
+        },
+        "top": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 0,
+          "source_aspect": 4.396,
+          "rendered_aspect": 4.311,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": []
+        }
+      },
+      "selected_attempt": 1,
+      "attempt_count": 1,
+      "repaired": false,
+      "duration_s": 64.1,
+      "model": "local-vlm/private-flash",
+      "run_id": "247412b6f0d3",
+      "extents_mm": [
+        60.0,
+        14.0,
+        54.0
+      ],
+      "extent_ratios_vs_gt": [
+        1.0,
+        1.4,
+        0.9818
+      ],
+      "fits_build_envelope": true,
+      "watertight": true,
+      "components": 1,
+      "volume_ratio_vs_gt": 1.4297
+    },
+    {
+      "id": "012_vent_grille_grid",
+      "family": "extrude_grid_array_cutouts",
+      "success": true,
+      "score": 94.6,
+      "accepted_gates": {
+        "compiled": true,
+        "topology": true,
+        "dimensions": true,
+        "shape_sanity": true,
+        "features": true,
+        "projections": true,
+        "build_envelope": true
+      },
+      "failures": [],
+      "projection_similarity": {
+        "front": 0.637
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 9,
+          "crop_internal_profiles": 0,
+          "source_aspect": 1.629,
+          "rendered_aspect": 1.638,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": [
+            [
+              0.898,
+              0.836
+            ],
+            [
+              0.499,
+              0.836
+            ],
+            [
+              0.099,
+              0.836
+            ],
+            [
+              0.898,
+              0.498
+            ],
+            [
+              0.499,
+              0.498
+            ],
+            [
+              0.099,
+              0.498
+            ],
+            [
+              0.898,
+              0.159
+            ],
+            [
+              0.499,
+              0.159
+            ],
+            [
+              0.099,
+              0.159
+            ]
+          ]
+        }
+      },
+      "selected_attempt": 1,
+      "attempt_count": 1,
+      "repaired": false,
+      "duration_s": 48.08,
+      "model": "local-vlm/private-flash",
+      "run_id": "364ae1abac95",
+      "extents_mm": [
+        100.0,
+        4.0,
+        61.4
+      ],
+      "extent_ratios_vs_gt": [
+        1.0,
+        1.0,
+        1.0233
+      ],
+      "fits_build_envelope": true,
+      "watertight": true,
+      "components": 1,
+      "volume_ratio_vs_gt": 0.8596
+    },
+    {
+      "id": "013_wedge_ramp",
+      "family": "loft_wedge",
+      "success": true,
+      "score": 95.0,
+      "accepted_gates": {
+        "compiled": true,
+        "topology": true,
+        "dimensions": true,
+        "shape_sanity": true,
+        "features": true,
+        "projections": true,
+        "build_envelope": true
+      },
+      "failures": [],
+      "projection_similarity": {
+        "front": 1.0,
+        "top": 0.998
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 0,
+          "source_aspect": 3.067,
+          "rendered_aspect": 3.064,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": []
+        },
+        "top": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 0,
+          "source_aspect": 1.603,
+          "rendered_aspect": 1.6,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": []
+        }
+      },
+      "selected_attempt": 1,
+      "attempt_count": 1,
+      "repaired": false,
+      "duration_s": 135.58,
+      "model": "local-vlm/private-flash",
+      "run_id": "3ef418311c96",
+      "extents_mm": [
+        100.0,
+        62.5,
+        32.6
+      ],
+      "extent_ratios_vs_gt": [
+        1.0,
+        1.0417,
+        1.0867
+      ],
+      "fits_build_envelope": true,
+      "watertight": true,
+      "components": 1,
+      "volume_ratio_vs_gt": 1.1319
+    },
+    {
+      "id": "101_bltouch_bracket",
+      "family": "real_mesh_derived",
+      "success": false,
+      "score": 78.9,
+      "accepted_gates": {
+        "compiled": true,
+        "topology": true,
+        "dimensions": true,
+        "shape_sanity": true,
+        "features": false,
+        "projections": false,
+        "build_envelope": true
+      },
+      "failures": [
+        "required internal profiles are missing: right view demands 3, best rendered view has 1",
+        "one or more registered CAD projections poorly match their corresponding drawing view",
+        "features exist but sit at the wrong positions in top, right view(s): match each opening's location (u,v within the outer profile) to the drawing; check the cad_mapping signs (front: u->+X v->-Z; top: u->+X v->-Y i.e. sheet-down is the FRONT of the part)"
+      ],
+      "projection_similarity": {
+        "front": 0.61,
+        "top": 0.35,
+        "right": 0.495
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 0,
+          "source_aspect": 0.945,
+          "rendered_aspect": 1.496,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": []
+        },
+        "top": {
+          "source_internal_profiles": 3,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 3,
+          "source_aspect": 0.713,
+          "rendered_aspect": 1.507,
+          "source_opening_centroids": [
+            [
+              0.651,
+              0.846
+            ],
+            [
+              0.251,
+              0.493
+            ],
+            [
+              0.637,
+              0.155
+            ]
+          ],
+          "rendered_opening_centroids": [],
+          "feature_position_fidelity": 0.0
+        },
+        "right": {
+          "source_internal_profiles": 3,
+          "rendered_internal_profiles": 1,
+          "crop_internal_profiles": 3,
+          "source_aspect": 1.309,
+          "rendered_aspect": 0.993,
+          "source_opening_centroids": [
+            [
+              0.507,
+              0.616
+            ],
+            [
+              0.159,
+              0.183
+            ],
+            [
+              0.852,
+              0.182
+            ]
+          ],
+          "rendered_opening_centroids": [
+            [
+              0.496,
+              0.496
+            ]
+          ],
+          "feature_position_fidelity": 0.333
+        }
+      },
+      "selected_attempt": 2,
+      "attempt_count": 3,
+      "repaired": true,
+      "duration_s": 368.79,
+      "model": "local-vlm/private-flash",
+      "run_id": "db87f7e2cd5e",
+      "extents_mm": [
+        60.0,
+        40.0,
+        40.0
+      ],
+      "extent_ratios_vs_gt": [
+        1.5176,
+        0.6667,
+        0.9173
+      ],
+      "fits_build_envelope": true,
+      "watertight": true,
+      "components": 1,
+      "volume_ratio_vs_gt": 1.2745
+    },
+    {
+      "id": "102_lcd_knob",
+      "family": "real_mesh_derived",
+      "success": false,
+      "score": 94.7,
+      "accepted_gates": {
+        "compiled": true,
+        "topology": true,
+        "dimensions": true,
+        "shape_sanity": true,
+        "features": true,
+        "projections": false,
+        "build_envelope": true
+      },
+      "failures": [
+        "one or more registered CAD projections poorly match their corresponding drawing view"
+      ],
+      "projection_similarity": {
+        "front": 0.953,
+        "top": 0.421,
+        "right": 0.732
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 8,
+          "crop_internal_profiles": 0,
+          "source_aspect": 3.114,
+          "rendered_aspect": 3.0,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": [
+            [
+              0.764,
+              0.511
+            ],
+            [
+              0.682,
+              0.511
+            ],
+            [
+              0.592,
+              0.512
+            ],
+            [
+              0.497,
+              0.511
+            ],
+            [
+              0.403,
+              0.511
+            ],
+            [
+              0.197,
+              0.515
+            ],
+            [
+              0.98,
+              0.19
+            ],
+            [
+              0.873,
+              0.5
+            ]
+          ]
+        },
+        "top": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 0,
+          "source_aspect": 0.906,
+          "rendered_aspect": 1.005,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": []
+        },
+        "right": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 8,
+          "crop_internal_profiles": 0,
+          "source_aspect": 3.321,
+          "rendered_aspect": 2.984,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": [
+            [
+              0.497,
+              0.242
+            ],
+            [
+              0.598,
+              0.548
+            ],
+            [
+              0.397,
+              0.548
+            ],
+            [
+              0.206,
+              0.511
+            ],
+            [
+              0.791,
+              0.499
+            ]
+          ]
+        }
+      },
+      "selected_attempt": 1,
+      "attempt_count": 3,
+      "repaired": true,
+      "duration_s": 141.74,
+      "model": "local-vlm/private-flash",
+      "run_id": "61041db828c9",
+      "extents_mm": [
+        48.005,
+        47.737,
+        16.0
+      ],
+      "extent_ratios_vs_gt": [
+        1.1086,
+        0.9547,
+        1.4455
+      ],
+      "fits_build_envelope": true,
+      "watertight": true,
+      "components": 1,
+      "volume_ratio_vs_gt": 3.9434
+    },
+    {
+      "id": "103_y_motor_holder",
+      "family": "real_mesh_derived",
+      "success": false,
+      "score": 80.6,
+      "accepted_gates": {
+        "compiled": true,
+        "topology": true,
+        "dimensions": true,
+        "shape_sanity": true,
+        "features": false,
+        "projections": false,
+        "build_envelope": true
+      },
+      "failures": [
+        "required internal profiles are missing: top view demands 2, best rendered view has 1",
+        "one or more registered CAD projections poorly match their corresponding drawing view",
+        "features exist but sit at the wrong positions in top view(s): match each opening's location (u,v within the outer profile) to the drawing; check the cad_mapping signs (front: u->+X v->-Z; top: u->+X v->-Y i.e. sheet-down is the FRONT of the part)"
+      ],
+      "projection_similarity": {
+        "front": 0.57,
+        "top": 0.343,
+        "right": 0.198
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 0,
+          "source_aspect": 2.008,
+          "rendered_aspect": 1.496,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": []
+        },
+        "top": {
+          "source_internal_profiles": 2,
+          "rendered_internal_profiles": 1,
+          "crop_internal_profiles": 2,
+          "source_aspect": 0.896,
+          "rendered_aspect": 1.429,
+          "source_opening_centroids": [
+            [
+              0.137,
+              0.75
+            ],
+            [
+              0.849,
+              0.122
+            ]
+          ],
+          "rendered_opening_centroids": [
+            [
+              0.457,
+              0.522
+            ]
+          ],
+          "feature_position_fidelity": 0.0
+        },
+        "right": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 1,
+          "crop_internal_profiles": 0,
+          "source_aspect": 2.096,
+          "rendered_aspect": 1.047,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": [
+            [
+              0.474,
+              0.498
+            ]
+          ]
+        }
+      },
+      "selected_attempt": 3,
+      "attempt_count": 3,
+      "repaired": true,
+      "duration_s": 902.01,
+      "model": "local-vlm/private-flash",
+      "run_id": "2d8a5ab06be7",
+      "extents_mm": [
+        60.0,
+        42.0,
+        40.0
+      ],
+      "extent_ratios_vs_gt": [
+        1.1429,
+        0.7,
+        1.6842
+      ],
+      "fits_build_envelope": true,
+      "watertight": true,
+      "components": 1,
+      "volume_ratio_vs_gt": 0.8208
+    },
+    {
+      "id": "104_cable_holder",
+      "family": "real_mesh_derived",
+      "success": false,
+      "score": 73.5,
+      "accepted_gates": {
+        "compiled": true,
+        "topology": true,
+        "dimensions": true,
+        "shape_sanity": true,
+        "features": false,
+        "projections": false,
+        "build_envelope": true
+      },
+      "failures": [
+        "required internal profiles are missing: right view demands 5, best rendered view has 0",
+        "one or more registered CAD projections poorly match their corresponding drawing view",
+        "features exist but sit at the wrong positions in top, right view(s): match each opening's location (u,v within the outer profile) to the drawing; check the cad_mapping signs (front: u->+X v->-Z; top: u->+X v->-Y i.e. sheet-down is the FRONT of the part)"
+      ],
+      "projection_similarity": {
+        "front": 1.0,
+        "top": 0.35,
+        "right": 0.35
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 0,
+          "source_aspect": 0.302,
+          "rendered_aspect": 0.3,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": []
+        },
+        "top": {
+          "source_internal_profiles": 1,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 1,
+          "source_aspect": 0.627,
+          "rendered_aspect": 1.194,
+          "source_opening_centroids": [
+            [
+              0.492,
+              0.557
+            ]
+          ],
+          "rendered_opening_centroids": [],
+          "feature_position_fidelity": 0.0
+        },
+        "right": {
+          "source_internal_profiles": 5,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 5,
+          "source_aspect": 0.489,
+          "rendered_aspect": 0.251,
+          "source_opening_centroids": [
+            [
+              0.307,
+              0.831
+            ],
+            [
+              0.576,
+              0.68
+            ],
+            [
+              0.31,
+              0.507
+            ],
+            [
+              0.579,
+              0.335
+            ],
+            [
+              0.307,
+              0.159
+            ]
+          ],
+          "rendered_opening_centroids": [],
+          "feature_position_fidelity": 0.0
+        }
+      },
+      "selected_attempt": 3,
+      "attempt_count": 3,
+      "repaired": true,
+      "duration_s": 665.29,
+      "model": "local-vlm/private-flash",
+      "run_id": "1387d05fc4fc",
+      "extents_mm": [
+        12.0,
+        10.0,
+        40.0
+      ],
+      "extent_ratios_vs_gt": [
+        1.185,
+        0.5514,
+        1.0
+      ],
+      "fits_build_envelope": true,
+      "watertight": true,
+      "components": 1,
+      "volume_ratio_vs_gt": 0.8141
+    }
+  ]
+}

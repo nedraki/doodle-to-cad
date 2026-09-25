@@ -1,0 +1,98 @@
+{
+  "schema_version": 1,
+  "id": "009_hex_prism_knob",
+  "title": "Hex prism handle (extruded hexagon)",
+  "split": "development",
+  "status": "synthetic_reference_pair_verified",
+  "provenance": {
+    "source": "synthetic_parametric_generated_by_benchmarks/tools/gen_cases.py",
+    "original_files": {
+      "drawing": "generated: jittered doodle of declared GT view geometry (seed 906)",
+      "scad": "authored by benchmark tooling",
+      "stl": "compiled from sibling model.scad with pipeline OpenSCAD"
+    },
+    "sha256": {
+      "drawing.png": "93f80fc1299f39921b6bb305cad89fa3d5c6f72c6697202cc1e6ced1207dff34",
+      "model.scad": "079f5f5048a7897ce9ed3d232f40d48283be73ed117d45177720808c29341f69",
+      "model.stl": "eae8a9e4a0b2e5c147f2f66a0f946b6b341fe66acc7641bc81af0b2085cfe28c"
+    }
+  },
+  "reference": {
+    "authority": "generated_parametric_ground_truth",
+    "coordinate_system": {
+      "x": "width",
+      "y": "front_to_back_depth",
+      "z": "height",
+      "front_view_direction": "along_y",
+      "top_view_direction": "along_z",
+      "right_view_direction": "along_x",
+      "status": "exact_from_scad_construction"
+    },
+    "dimensions_mm": {
+      "extents_xyz": [
+        70.0,
+        34.64,
+        29.9992
+      ],
+      "status": "exact_measured_from_gt_stl"
+    },
+    "topology": {
+      "components": 1,
+      "watertight": true,
+      "through_cutout_count": 0,
+      "status": "exact_measured_from_gt_stl"
+    },
+    "print_envelope_mm": {
+      "max": 256.0,
+      "fits": true
+    }
+  },
+  "drawing": {
+    "views": [
+      {
+        "direction": "right",
+        "sheet_region": "right",
+        "constraints": [
+          "hexagon across-flats"
+        ]
+      },
+      {
+        "direction": "front",
+        "sheet_region": "lower-left",
+        "constraints": [
+          "length",
+          "across-flats height"
+        ]
+      }
+    ],
+    "projection_standard": "third-angle",
+    "view_labels_status": "exact_from_generator",
+    "style_note": "jittered single-weight ink outlines, white sheet, no fills"
+  },
+  "semantic_labels": {
+    "object": "hexagonal handle knob",
+    "family": "extrude_polygon_profile",
+    "manufacturing_intent": "FDM print on BambuLab-class printer",
+    "object_status": "exact_from_generator"
+  },
+  "acceptance": {
+    "mandatory": {
+      "watertight": true,
+      "component_count": 1,
+      "dimension_relative_tolerance": 0.05,
+      "through_cutout_count": 0,
+      "build_envelope_mm": 256.0,
+      "right_projection_required": true,
+      "front_projection_required": true
+    },
+    "shape_comparison": {
+      "method": "registered_contour_and_internal_profile_correspondence"
+    }
+  },
+  "controls": {
+    "primary_view": "front",
+    "projection_standard": "third-angle"
+  },
+  "target_dimension_mm": "70",
+  "known_ambiguities": []
+}

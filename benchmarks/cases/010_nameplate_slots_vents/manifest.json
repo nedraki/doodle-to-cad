@@ -1,0 +1,92 @@
+{
+  "schema_version": 1,
+  "id": "010_nameplate_slots_vents",
+  "title": "Nameplate with end slots and vent holes",
+  "split": "development",
+  "status": "synthetic_reference_pair_verified",
+  "provenance": {
+    "source": "synthetic_parametric_generated_by_benchmarks/tools/gen_cases.py",
+    "original_files": {
+      "drawing": "generated: jittered doodle of declared GT view geometry (seed 107)",
+      "scad": "authored by benchmark tooling",
+      "stl": "compiled from sibling model.scad with pipeline OpenSCAD"
+    },
+    "sha256": {
+      "drawing.png": "85d6506d58676f63315ca84db58bcf26077102ade9ce509503eda49d06173dea",
+      "model.scad": "d864e36ce7fd1434e095c77c51a03076b61f31091080605676b49755d62d56a1",
+      "model.stl": "23c65c87d586d4610ef8fced52f08d2b04210e4a2dc1dcdd17fd6e9634d0759f"
+    }
+  },
+  "reference": {
+    "authority": "generated_parametric_ground_truth",
+    "coordinate_system": {
+      "x": "width",
+      "y": "front_to_back_depth",
+      "z": "height",
+      "front_view_direction": "along_y",
+      "top_view_direction": "along_z",
+      "right_view_direction": "along_x",
+      "status": "exact_from_scad_construction"
+    },
+    "dimensions_mm": {
+      "extents_xyz": [
+        140.0,
+        3.0,
+        24.0
+      ],
+      "status": "exact_measured_from_gt_stl"
+    },
+    "topology": {
+      "components": 1,
+      "watertight": true,
+      "through_cutout_count": 7,
+      "status": "exact_measured_from_gt_stl"
+    },
+    "print_envelope_mm": {
+      "max": 256.0,
+      "fits": true
+    }
+  },
+  "drawing": {
+    "views": [
+      {
+        "direction": "front",
+        "sheet_region": "center",
+        "constraints": [
+          "width",
+          "height",
+          "two slots",
+          "five vents"
+        ]
+      }
+    ],
+    "projection_standard": "third-angle",
+    "view_labels_status": "exact_from_generator",
+    "style_note": "jittered single-weight ink outlines, white sheet, no fills"
+  },
+  "semantic_labels": {
+    "object": "mounting nameplate",
+    "family": "extrude_repeated_cutouts",
+    "manufacturing_intent": "FDM print on BambuLab-class printer",
+    "object_status": "exact_from_generator"
+  },
+  "acceptance": {
+    "mandatory": {
+      "watertight": true,
+      "component_count": 1,
+      "dimension_relative_tolerance": 0.05,
+      "through_cutout_count": 7,
+      "build_envelope_mm": 256.0,
+      "front_projection_required": true
+    },
+    "shape_comparison": {
+      "method": "registered_contour_and_internal_profile_correspondence"
+    }
+  },
+  "controls": {
+    "primary_view": "front",
+    "projection_standard": "third-angle"
+  },
+  "target_dimension_mm": "140",
+  "known_ambiguities": []
+}

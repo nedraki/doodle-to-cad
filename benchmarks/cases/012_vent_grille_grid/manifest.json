@@ -1,0 +1,91 @@
+{
+  "schema_version": 1,
+  "id": "012_vent_grille_grid",
+  "title": "Vent grille plate with 3x3 round hole grid",
+  "split": "development",
+  "status": "synthetic_reference_pair_verified",
+  "provenance": {
+    "source": "synthetic_parametric_generated_by_benchmarks/tools/gen_cases.py",
+    "original_files": {
+      "drawing": "generated: jittered doodle of declared GT view geometry (seed 129)",
+      "scad": "authored by benchmark tooling",
+      "stl": "compiled from sibling model.scad with pipeline OpenSCAD"
+    },
+    "sha256": {
+      "drawing.png": "f6c58efb1a120883c2e4741d2353b3f661ec9c8b72bc9b73098a4e2848b0daa7",
+      "model.scad": "fbad4346e2fadf921ed50d44c56e94ecd77ef8c5f4690fe7b0ca7e924427c000",
+      "model.stl": "9b5a9c0d3ddc1d12d32753b3402a05bcfe2d52bf1758e27c64d17bdb16cf8f22"
+    }
+  },
+  "reference": {
+    "authority": "generated_parametric_ground_truth",
+    "coordinate_system": {
+      "x": "width",
+      "y": "front_to_back_depth",
+      "z": "height",
+      "front_view_direction": "along_y",
+      "top_view_direction": "along_z",
+      "right_view_direction": "along_x",
+      "status": "exact_from_scad_construction"
+    },
+    "dimensions_mm": {
+      "extents_xyz": [
+        100.0,
+        4.0,
+        60.0
+      ],
+      "status": "exact_measured_from_gt_stl"
+    },
+    "topology": {
+      "components": 1,
+      "watertight": true,
+      "through_cutout_count": 9,
+      "status": "exact_measured_from_gt_stl"
+    },
+    "print_envelope_mm": {
+      "max": 256.0,
+      "fits": true
+    }
+  },
+  "drawing": {
+    "views": [
+      {
+        "direction": "front",
+        "sheet_region": "center",
+        "constraints": [
+          "width",
+          "height",
+          "3x3 hole grid"
+        ]
+      }
+    ],
+    "projection_standard": "third-angle",
+    "view_labels_status": "exact_from_generator",
+    "style_note": "jittered single-weight ink outlines, white sheet, no fills"
+  },
+  "semantic_labels": {
+    "object": "ventilation grille plate",
+    "family": "extrude_grid_array_cutouts",
+    "manufacturing_intent": "FDM print on BambuLab-class printer",
+    "object_status": "exact_from_generator"
+  },
+  "acceptance": {
+    "mandatory": {
+      "watertight": true,
+      "component_count": 1,
+      "dimension_relative_tolerance": 0.05,
+      "through_cutout_count": 9,
+      "build_envelope_mm": 256.0,
+      "front_projection_required": true
+    },
+    "shape_comparison": {
+      "method": "registered_contour_and_internal_profile_correspondence"
+    }
+  },
+  "controls": {
+    "primary_view": "front",
+    "projection_standard": "third-angle"
+  },
+  "target_dimension_mm": "100",
+  "known_ambiguities": []
+}

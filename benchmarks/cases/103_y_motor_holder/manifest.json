@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "id": "103_y_motor_holder",
+  "split": "development",
+  "status": "active",
+  "object": "stepper motor mount bracket",
+  "semantic_labels": {
+    "object": "stepper motor mount bracket",
+    "family": "real_mesh_derived"
+  },
+  "provenance": {
+    "source_url": "https://raw.githubusercontent.com/prusa3d/Original-Prusa-i3/MK3S/Printed-Parts/STL/y-motor-holder.stl",
+    "stl_sha256": "546636853162250bd9e1dc715e51cfbcbb3dac75a3b92c62f794a47036c11395",
+    "note": "real mesh; doodle derived from pipeline-camera renders of the normalized GT",
+    "sha256": {
+      "drawing.png": "9c60067d3756cd279f7d7560f6f308b63a167e93dce016dd0b9fe641acd1d4e6",
+      "model.scad": "c747b64d02310f92f3cac4e1306fc9aa2363afedad154370d90a2ee5a982544b",
+      "model.stl": "8f98fb91162d3aa15c12fff110c35b238a535e37df2585548a316c975119697f"
+    }
+  },
+  "reference": {
+    "dimensions_mm": {
+      "extents_xyz": [
+        52.5,
+        60.0,
+        23.75
+      ]
+    },
+    "topology": {
+      "watertight": true,
+      "components": 16
+    }
+  },
+  "target_dimension_mm": 60.0,
+  "print_envelope_mm": 256.0,
+  "controls": {
+    "primary_view": "front",
+    "projection_standard": "third-angle",
+    "object_type_hint": "stepper motor mount bracket"
+  },
+  "views": [
+    {
+      "direction": "front",
+      "region": "auto"
+    },
+    {
+      "direction": "top",
+      "region": "auto"
+    },
+    {
+      "direction": "right",
+      "region": "auto"
+    }
+  ],
+  "style_note": "hybrid: silhouette+openings lifted from GT renders, re-inked with jittered hand style",
+  "files": {
+    "drawing": "source/drawing.png",
+    "gt_scad": "ground_truth/model.scad",
+    "gt_stl": "ground_truth/model.stl",
+    "gt_source_stl": "ground_truth/source.stl"
+  }
+}

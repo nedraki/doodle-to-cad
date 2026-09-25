@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "id": "101_bltouch_bracket",
+  "split": "development",
+  "status": "active",
+  "object": "bltouch mounting bracket",
+  "semantic_labels": {
+    "object": "bltouch mounting bracket",
+    "family": "real_mesh_derived"
+  },
+  "provenance": {
+    "source_url": "https://raw.githubusercontent.com/BondtechAB/Bondtech-CR10s/master/CAD-Files/CR10%20Direct%20BLTouch%20bracket%20V1.1.STL",
+    "stl_sha256": "18df37fe8ff8425def315498103eb01b0c3634eb1e5dced7cb8f1156feae8e2d",
+    "note": "real mesh; doodle derived from pipeline-camera renders of the normalized GT",
+    "sha256": {
+      "drawing.png": "742838394287d3857f72360df1e3e21bf9f637e882edea8464b07ffacc4d9366",
+      "model.scad": "ae40ffc1e7e0e9cc2b120f4dce25b062a6236526544e16c5bdbd2aa466471b4c",
+      "model.stl": "06ce2ea3fa1517b5dc9aa50b352a3c14cdaddc7cd2c6263443ae8ebac6db75c8"
+    }
+  },
+  "reference": {
+    "dimensions_mm": {
+      "extents_xyz": [
+        39.53,
+        60.0,
+        43.6
+      ]
+    },
+    "topology": {
+      "watertight": true,
+      "components": 1
+    }
+  },
+  "target_dimension_mm": 60.0,
+  "print_envelope_mm": 256.0,
+  "controls": {
+    "primary_view": "front",
+    "projection_standard": "third-angle",
+    "object_type_hint": "bltouch mounting bracket"
+  },
+  "views": [
+    {
+      "direction": "front",
+      "region": "auto"
+    },
+    {
+      "direction": "top",
+      "region": "auto"
+    },
+    {
+      "direction": "right",
+      "region": "auto"
+    }
+  ],
+  "style_note": "hybrid: silhouette+openings lifted from GT renders, re-inked with jittered hand style",
+  "files": {
+    "drawing": "source/drawing.png",
+    "gt_scad": "ground_truth/model.scad",
+    "gt_stl": "ground_truth/model.stl",
+    "gt_source_stl": "ground_truth/source.stl"
+  }
+}

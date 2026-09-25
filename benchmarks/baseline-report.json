@@ -1,0 +1,1515 @@
+{
+  "schema_version": 1,
+  "case_count": 17,
+  "warning": "Descriptive baseline only; three development cases are insufficient for threshold calibration.",
+  "cases": [
+    {
+      "id": "001_l_bookend_multiview",
+      "family": "multi_face_union_with_through_cutouts",
+      "reference_quality_status": "reference_pair_verified_pending_intent_confirmation",
+      "drawing_evidence": {
+        "view_group_count": 2,
+        "logical_internal_profile_count": 4
+      },
+      "reference_mesh": {
+        "watertight": true,
+        "components": 1,
+        "extents_mm": [
+          80.0,
+          50.0,
+          100.0
+        ]
+      },
+      "registered_projection_similarity": {
+        "front": 0.91,
+        "right": 0.931
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 4,
+          "rendered_internal_profiles": 4,
+          "crop_internal_profiles": 4,
+          "source_aspect": 0.822,
+          "rendered_aspect": 0.798,
+          "source_opening_centroids": [
+            [
+              0.755,
+              0.614
+            ],
+            [
+              0.316,
+              0.612
+            ],
+            [
+              0.535,
+              0.421
+            ],
+            [
+              0.257,
+              0.191
+            ]
+          ],
+          "rendered_opening_centroids": [
+            [
+              0.248,
+              0.189
+            ],
+            [
+              0.528,
+              0.424
+            ],
+            [
+              0.308,
+              0.613
+            ],
+            [
+              0.748,
+              0.614
+            ]
+          ],
+          "feature_position_fidelity": 1.0
+        },
+        "right": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 0,
+          "source_aspect": 0.702,
+          "rendered_aspect": 0.497,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": []
+        }
+      },
+      "reference_cutout_check": {
+        "expected": 4,
+        "rendered": 4,
+        "matches": true
+      },
+      "eligible_for_threshold_calibration": true
+    },
+    {
+      "id": "002_greek_vase_silhouette",
+      "family": "surface_of_revolution",
+      "reference_quality_status": "reference_mismatch_and_unobservable_features_pending_review",
+      "drawing_evidence": {
+        "view_group_count": 1,
+        "logical_internal_profile_count": 0
+      },
+      "reference_mesh": {
+        "watertight": true,
+        "components": 1,
+        "extents_mm": [
+          102.478,
+          102.478,
+          120.0
+        ]
+      },
+      "registered_projection_similarity": {
+        "front": 0.917
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 7,
+          "crop_internal_profiles": 0,
+          "source_aspect": 0.896,
+          "rendered_aspect": 0.848,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": [
+            [
+              0.368,
+              0.904
+            ],
+            [
+              0.846,
+              0.903
+            ],
+            [
+              0.767,
+              0.815
+            ],
+            [
+              0.257,
+              0.806
+            ],
+            [
+              0.545,
+              0.253
+            ],
+            [
+              0.647,
+              0.162
+            ]
+          ]
+        }
+      },
+      "reference_cutout_check": {
+        "expected": null,
+        "rendered": 7,
+        "matches": null
+      },
+      "eligible_for_threshold_calibration": false
+    },
+    {
+      "id": "003_front_grille_multiview",
+      "family": "extruded_contoured_plate",
+      "reference_quality_status": "reference_pair_verified_with_declared_dimension_discrepancy",
+      "drawing_evidence": {
+        "view_group_count": 2,
+        "logical_internal_profile_count": 9
+      },
+      "reference_mesh": {
+        "watertight": true,
+        "components": 1,
+        "extents_mm": [
+          126.0,
+          76.0,
+          3.0
+        ]
+      },
+      "registered_projection_similarity": {
+        "front": 0.991,
+        "top": 0.692
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 9,
+          "rendered_internal_profiles": 2,
+          "crop_internal_profiles": 9,
+          "source_aspect": 1.663,
+          "rendered_aspect": 1.657,
+          "source_opening_centroids": [
+            [
+              0.568,
+              0.583
+            ],
+            [
+              0.31,
+              0.599
+            ],
+            [
+              0.205,
+              0.359
+            ],
+            [
+              0.446,
+              0.588
+            ],
+            [
+              0.627,
+              0.56
+            ],
+            [
+              0.38,
+              0.552
+            ],
+            [
+              0.796,
+              0.349
+            ],
+            [
+              0.505,
+              0.561
+            ],
+            [
+              0.688,
+              0.525
+            ]
+          ],
+          "rendered_opening_centroids": [
+            [
+              0.166,
+              0.367
+            ],
+            [
+              0.832,
+              0.367
+            ],
+            [
+              0.304,
+              0.564
+            ],
+            [
+              0.369,
+              0.564
+            ],
+            [
+              0.434,
+              0.564
+            ],
+            [
+              0.499,
+              0.564
+            ],
+            [
+              0.564,
+              0.564
+            ],
+            [
+              0.629,
+              0.564
+            ],
+            [
+              0.694,
+              0.564
+            ]
+          ],
+          "feature_position_fidelity": 1.0
+        },
+        "top": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 5,
+          "crop_internal_profiles": 0,
+          "source_aspect": 6.612,
+          "rendered_aspect": 45.4,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": [
+            [
+              0.913,
+              0.401
+            ],
+            [
+              0.736,
+              0.403
+            ],
+            [
+              0.499,
+              0.402
+            ],
+            [
+              0.262,
+              0.403
+            ],
+            [
+              0.078,
+              0.405
+            ]
+          ]
+        }
+      },
+      "reference_cutout_check": {
+        "expected": 9,
+        "rendered": 2,
+        "matches": false
+      },
+      "eligible_for_threshold_calibration": true
+    },
+    {
+      "id": "004_flat_mounting_plate",
+      "family": "extrude_plate_with_cutouts",
+      "reference_quality_status": "synthetic_reference_pair_verified",
+      "drawing_evidence": {
+        "view_group_count": 2,
+        "logical_internal_profile_count": 3
+      },
+      "reference_mesh": {
+        "watertight": true,
+        "components": 1,
+        "extents_mm": [
+          100.0,
+          5.0,
+          60.0
+        ]
+      },
+      "registered_projection_similarity": {
+        "front": 0.993,
+        "top": 1.0
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 3,
+          "rendered_internal_profiles": 3,
+          "crop_internal_profiles": 3,
+          "source_aspect": 1.617,
+          "rendered_aspect": 1.669,
+          "source_opening_centroids": [
+            [
+              0.839,
+              0.74
+            ]
+          ],
+          "rendered_opening_centroids": [
+            [
+              0.149,
+              0.248
+            ],
+            [
+              0.499,
+              0.498
+            ],
+            [
+              0.848,
+              0.749
+            ]
+          ],
+          "feature_position_fidelity": 1.0
+        },
+        "top": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 0,
+          "source_aspect": 10.333,
+          "rendered_aspect": 20.636,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": []
+        }
+      },
+      "reference_cutout_check": {
+        "expected": 3,
+        "rendered": 3,
+        "matches": true
+      },
+      "eligible_for_threshold_calibration": false
+    },
+    {
+      "id": "005_bolt_flange",
+      "family": "circular_array_with_cutouts",
+      "reference_quality_status": "synthetic_reference_pair_verified",
+      "drawing_evidence": {
+        "view_group_count": 2,
+        "logical_internal_profile_count": 5
+      },
+      "reference_mesh": {
+        "watertight": true,
+        "components": 1,
+        "extents_mm": [
+          120.0,
+          12.0,
+          120.0
+        ]
+      },
+      "registered_projection_similarity": {
+        "front": 1.0,
+        "top": 1.0
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 5,
+          "rendered_internal_profiles": 5,
+          "crop_internal_profiles": 5,
+          "source_aspect": 1.009,
+          "rendered_aspect": 1.0,
+          "source_opening_centroids": [
+            [
+              0.758,
+              0.766
+            ],
+            [
+              0.233,
+              0.766
+            ],
+            [
+              0.496,
+              0.503
+            ],
+            [
+              0.759,
+              0.243
+            ],
+            [
+              0.232,
+              0.24
+            ]
+          ],
+          "rendered_opening_centroids": [
+            [
+              0.234,
+              0.234
+            ],
+            [
+              0.764,
+              0.234
+            ],
+            [
+              0.499,
+              0.499
+            ],
+            [
+              0.234,
+              0.764
+            ],
+            [
+              0.764,
+              0.764
+            ]
+          ],
+          "feature_position_fidelity": 1.0
+        },
+        "top": {
+          "source_internal_profiles": 1,
+          "rendered_internal_profiles": 2,
+          "crop_internal_profiles": 1,
+          "source_aspect": 6.486,
+          "rendered_aspect": 9.842,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": [
+            [
+              0.849,
+              0.475
+            ],
+            [
+              0.248,
+              0.477
+            ]
+          ]
+        }
+      },
+      "reference_cutout_check": {
+        "expected": 5,
+        "rendered": 5,
+        "matches": true
+      },
+      "eligible_for_threshold_calibration": false
+    },
+    {
+      "id": "006_stepped_knob",
+      "family": "revolve_axisymmetric",
+      "reference_quality_status": "synthetic_reference_pair_verified",
+      "drawing_evidence": {
+        "view_group_count": 2,
+        "logical_internal_profile_count": 0
+      },
+      "reference_mesh": {
+        "watertight": true,
+        "components": 1,
+        "extents_mm": [
+          56.0,
+          56.0,
+          38.0
+        ]
+      },
+      "registered_projection_similarity": {
+        "front": 0.998,
+        "right": 0.998
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 17,
+          "crop_internal_profiles": 0,
+          "source_aspect": 1.432,
+          "rendered_aspect": 1.47,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": [
+            [
+              0.812,
+              0.889
+            ],
+            [
+              0.648,
+              0.889
+            ],
+            [
+              0.605,
+              0.889
+            ],
+            [
+              0.562,
+              0.889
+            ],
+            [
+              0.432,
+              0.889
+            ],
+            [
+              0.389,
+              0.889
+            ],
+            [
+              0.848,
+              0.128
+            ],
+            [
+              0.754,
+              0.128
+            ],
+            [
+              0.666,
+              0.129
+            ],
+            [
+              0.618,
+              0.129
+            ],
+            [
+              0.571,
+              0.129
+            ],
+            [
+              0.517,
+              0.469
+            ],
+            [
+              0.423,
+              0.129
+            ],
+            [
+              0.376,
+              0.129
+            ],
+            [
+              0.254,
+              0.471
+            ]
+          ]
+        },
+        "right": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 17,
+          "crop_internal_profiles": 0,
+          "source_aspect": 1.463,
+          "rendered_aspect": 1.47,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": [
+            [
+              0.812,
+              0.889
+            ],
+            [
+              0.648,
+              0.889
+            ],
+            [
+              0.605,
+              0.889
+            ],
+            [
+              0.562,
+              0.889
+            ],
+            [
+              0.432,
+              0.889
+            ],
+            [
+              0.389,
+              0.889
+            ],
+            [
+              0.848,
+              0.128
+            ],
+            [
+              0.754,
+              0.128
+            ],
+            [
+              0.666,
+              0.129
+            ],
+            [
+              0.618,
+              0.129
+            ],
+            [
+              0.571,
+              0.129
+            ],
+            [
+              0.517,
+              0.469
+            ],
+            [
+              0.423,
+              0.129
+            ],
+            [
+              0.376,
+              0.129
+            ],
+            [
+              0.254,
+              0.471
+            ]
+          ]
+        }
+      },
+      "reference_cutout_check": {
+        "expected": 0,
+        "rendered": 17,
+        "matches": false
+      },
+      "eligible_for_threshold_calibration": false
+    },
+    {
+      "id": "007_angle_bracket_holes",
+      "family": "multi_face_union_with_cutouts",
+      "reference_quality_status": "synthetic_reference_pair_verified",
+      "drawing_evidence": {
+        "view_group_count": 2,
+        "logical_internal_profile_count": 3
+      },
+      "reference_mesh": {
+        "watertight": true,
+        "components": 1,
+        "extents_mm": [
+          80.0,
+          40.0,
+          50.0
+        ]
+      },
+      "registered_projection_similarity": {
+        "front": 1.0,
+        "top": 1.0
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 3,
+          "rendered_internal_profiles": 3,
+          "crop_internal_profiles": 3,
+          "source_aspect": 1.568,
+          "rendered_aspect": 1.605,
+          "source_opening_centroids": [
+            [
+              0.254,
+              0.404
+            ],
+            [
+              0.496,
+              0.405
+            ],
+            [
+              0.739,
+              0.406
+            ]
+          ],
+          "rendered_opening_centroids": [
+            [
+              0.249,
+              0.398
+            ],
+            [
+              0.499,
+              0.398
+            ],
+            [
+              0.748,
+              0.398
+            ]
+          ],
+          "feature_position_fidelity": 1.0
+        },
+        "top": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 0,
+          "source_aspect": 1.863,
+          "rendered_aspect": 2.01,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": []
+        }
+      },
+      "reference_cutout_check": {
+        "expected": 3,
+        "rendered": 3,
+        "matches": true
+      },
+      "eligible_for_threshold_calibration": false
+    },
+    {
+      "id": "008_open_enclosure_window",
+      "family": "shell_with_cutout",
+      "reference_quality_status": "synthetic_reference_pair_verified",
+      "drawing_evidence": {
+        "view_group_count": 2,
+        "logical_internal_profile_count": 1
+      },
+      "reference_mesh": {
+        "watertight": true,
+        "components": 1,
+        "extents_mm": [
+          120.0,
+          80.0,
+          40.0
+        ]
+      },
+      "registered_projection_similarity": {
+        "front": 0.875,
+        "top": 1.0
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 1,
+          "rendered_internal_profiles": 1,
+          "crop_internal_profiles": 1,
+          "source_aspect": 2.727,
+          "rendered_aspect": 2.986,
+          "source_opening_centroids": [
+            [
+              0.497,
+              0.497
+            ]
+          ],
+          "rendered_opening_centroids": [
+            [
+              0.498,
+              0.493
+            ]
+          ],
+          "feature_position_fidelity": 1.0
+        },
+        "top": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 1,
+          "crop_internal_profiles": 0,
+          "source_aspect": 1.468,
+          "rendered_aspect": 1.493,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": [
+            [
+              0.498,
+              0.496
+            ]
+          ]
+        }
+      },
+      "reference_cutout_check": {
+        "expected": 1,
+        "rendered": 1,
+        "matches": true
+      },
+      "eligible_for_threshold_calibration": false
+    },
+    {
+      "id": "009_hex_prism_knob",
+      "family": "extrude_polygon_profile",
+      "reference_quality_status": "synthetic_reference_pair_verified",
+      "drawing_evidence": {
+        "view_group_count": 2,
+        "logical_internal_profile_count": 0
+      },
+      "reference_mesh": {
+        "watertight": true,
+        "components": 1,
+        "extents_mm": [
+          70.0,
+          34.64,
+          29.9992
+        ]
+      },
+      "registered_projection_similarity": {
+        "front": 0.533,
+        "right": 0.977
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 2,
+          "crop_internal_profiles": 0,
+          "source_aspect": 1.139,
+          "rendered_aspect": 2.329,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": [
+            [
+              0.497,
+              0.744
+            ],
+            [
+              0.497,
+              0.244
+            ]
+          ]
+        },
+        "right": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 0,
+          "source_aspect": 1.122,
+          "rendered_aspect": 1.141,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": []
+        }
+      },
+      "reference_cutout_check": {
+        "expected": 0,
+        "rendered": 2,
+        "matches": false
+      },
+      "eligible_for_threshold_calibration": false
+    },
+    {
+      "id": "010_nameplate_slots_vents",
+      "family": "extrude_repeated_cutouts",
+      "reference_quality_status": "synthetic_reference_pair_verified",
+      "drawing_evidence": {
+        "view_group_count": 1,
+        "logical_internal_profile_count": 7
+      },
+      "reference_mesh": {
+        "watertight": true,
+        "components": 1,
+        "extents_mm": [
+          140.0,
+          3.0,
+          24.0
+        ]
+      },
+      "registered_projection_similarity": {
+        "front": 0.969
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 7,
+          "rendered_internal_profiles": 2,
+          "crop_internal_profiles": 7,
+          "source_aspect": 4.716,
+          "rendered_aspect": 5.8,
+          "source_opening_centroids": [
+            [
+              0.355,
+              0.516
+            ],
+            [
+              0.427,
+              0.515
+            ],
+            [
+              0.639,
+              0.503
+            ],
+            [
+              0.568,
+              0.507
+            ],
+            [
+              0.497,
+              0.511
+            ],
+            [
+              0.885,
+              0.505
+            ],
+            [
+              0.108,
+              0.511
+            ]
+          ],
+          "rendered_opening_centroids": [
+            [
+              0.106,
+              0.494
+            ],
+            [
+              0.892,
+              0.494
+            ],
+            [
+              0.356,
+              0.494
+            ],
+            [
+              0.428,
+              0.494
+            ],
+            [
+              0.499,
+              0.494
+            ],
+            [
+              0.57,
+              0.494
+            ],
+            [
+              0.642,
+              0.494
+            ]
+          ],
+          "feature_position_fidelity": 1.0
+        }
+      },
+      "reference_cutout_check": {
+        "expected": 7,
+        "rendered": 2,
+        "matches": false
+      },
+      "eligible_for_threshold_calibration": false
+    },
+    {
+      "id": "011_wall_hook",
+      "family": "extrude_freeform_profile",
+      "reference_quality_status": "synthetic_reference_pair_verified",
+      "drawing_evidence": {
+        "view_group_count": 2,
+        "logical_internal_profile_count": 0
+      },
+      "reference_mesh": {
+        "watertight": true,
+        "components": 1,
+        "extents_mm": [
+          60.0,
+          10.0,
+          55.0
+        ]
+      },
+      "registered_projection_similarity": {
+        "front": 1.0,
+        "top": 0.998
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 0,
+          "source_aspect": 1.104,
+          "rendered_aspect": 1.09,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": []
+        },
+        "top": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 0,
+          "source_aspect": 4.396,
+          "rendered_aspect": 6.062,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": []
+        }
+      },
+      "reference_cutout_check": {
+        "expected": 0,
+        "rendered": 0,
+        "matches": true
+      },
+      "eligible_for_threshold_calibration": false
+    },
+    {
+      "id": "012_vent_grille_grid",
+      "family": "extrude_grid_array_cutouts",
+      "reference_quality_status": "synthetic_reference_pair_verified",
+      "drawing_evidence": {
+        "view_group_count": 1,
+        "logical_internal_profile_count": 0
+      },
+      "reference_mesh": {
+        "watertight": true,
+        "components": 1,
+        "extents_mm": [
+          100.0,
+          4.0,
+          60.0
+        ]
+      },
+      "registered_projection_similarity": {
+        "front": 0.999
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 9,
+          "crop_internal_profiles": 0,
+          "source_aspect": 1.629,
+          "rendered_aspect": 1.669,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": [
+            [
+              0.249,
+              0.248
+            ],
+            [
+              0.499,
+              0.247
+            ],
+            [
+              0.749,
+              0.248
+            ],
+            [
+              0.249,
+              0.498
+            ],
+            [
+              0.499,
+              0.498
+            ],
+            [
+              0.749,
+              0.498
+            ],
+            [
+              0.249,
+              0.749
+            ],
+            [
+              0.749,
+              0.749
+            ],
+            [
+              0.499,
+              0.749
+            ]
+          ]
+        }
+      },
+      "reference_cutout_check": {
+        "expected": 9,
+        "rendered": 9,
+        "matches": true
+      },
+      "eligible_for_threshold_calibration": false
+    },
+    {
+      "id": "013_wedge_ramp",
+      "family": "loft_wedge",
+      "reference_quality_status": "synthetic_reference_pair_verified",
+      "drawing_evidence": {
+        "view_group_count": 2,
+        "logical_internal_profile_count": 0
+      },
+      "reference_mesh": {
+        "watertight": true,
+        "components": 1,
+        "extents_mm": [
+          100.0,
+          60.0,
+          30.0
+        ]
+      },
+      "registered_projection_similarity": {
+        "front": 1.0,
+        "top": 0.998
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 0,
+          "source_aspect": 3.067,
+          "rendered_aspect": 3.318,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": []
+        },
+        "top": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 0,
+          "source_aspect": 1.603,
+          "rendered_aspect": 1.667,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": []
+        }
+      },
+      "reference_cutout_check": {
+        "expected": 0,
+        "rendered": 0,
+        "matches": true
+      },
+      "eligible_for_threshold_calibration": false
+    },
+    {
+      "id": "101_bltouch_bracket",
+      "family": "real_mesh_derived",
+      "reference_quality_status": "active",
+      "drawing_evidence": {
+        "view_group_count": 3,
+        "logical_internal_profile_count": 3
+      },
+      "reference_mesh": {
+        "watertight": true,
+        "components": 1,
+        "extents_mm": [
+          39.5349,
+          60.0,
+          43.6046
+        ]
+      },
+      "registered_projection_similarity": {
+        "front": 1.0,
+        "top": 1.0,
+        "right": 1.0
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 0,
+          "source_aspect": 0.945,
+          "rendered_aspect": 0.912,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": []
+        },
+        "top": {
+          "source_internal_profiles": 3,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 3,
+          "source_aspect": 0.713,
+          "rendered_aspect": 0.661,
+          "source_opening_centroids": [
+            [
+              0.651,
+              0.846
+            ],
+            [
+              0.251,
+              0.493
+            ],
+            [
+              0.637,
+              0.155
+            ]
+          ],
+          "rendered_opening_centroids": [
+            [
+              0.652,
+              0.15
+            ],
+            [
+              0.234,
+              0.499
+            ],
+            [
+              0.652,
+              0.847
+            ]
+          ],
+          "feature_position_fidelity": 1.0
+        },
+        "right": {
+          "source_internal_profiles": 3,
+          "rendered_internal_profiles": 9,
+          "crop_internal_profiles": 3,
+          "source_aspect": 1.309,
+          "rendered_aspect": 1.38,
+          "source_opening_centroids": [
+            [
+              0.507,
+              0.616
+            ],
+            [
+              0.159,
+              0.183
+            ],
+            [
+              0.852,
+              0.182
+            ]
+          ],
+          "rendered_opening_centroids": [
+            [
+              0.15,
+              0.171
+            ],
+            [
+              0.847,
+              0.171
+            ],
+            [
+              0.499,
+              0.619
+            ],
+            [
+              0.815,
+              0.943
+            ],
+            [
+              0.135,
+              0.944
+            ],
+            [
+              0.497,
+              0.882
+            ],
+            [
+              0.663,
+              0.679
+            ],
+            [
+              0.332,
+              0.679
+            ],
+            [
+              0.663,
+              0.637
+            ],
+            [
+              0.332,
+              0.637
+            ],
+            [
+              0.498,
+              0.216
+            ]
+          ],
+          "feature_position_fidelity": 1.0
+        }
+      },
+      "reference_cutout_check": {
+        "expected": null,
+        "rendered": 0,
+        "matches": null
+      },
+      "eligible_for_threshold_calibration": false
+    },
+    {
+      "id": "102_lcd_knob",
+      "family": "real_mesh_derived",
+      "reference_quality_status": "active",
+      "drawing_evidence": {
+        "view_group_count": 3,
+        "logical_internal_profile_count": 0
+      },
+      "reference_mesh": {
+        "watertight": true,
+        "components": 1,
+        "extents_mm": [
+          43.3037,
+          50.0,
+          11.0687
+        ]
+      },
+      "registered_projection_similarity": {
+        "front": 1.0,
+        "top": 1.0,
+        "right": 0.999
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 0,
+          "source_aspect": 3.114,
+          "rendered_aspect": 3.886,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": []
+        },
+        "top": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 0,
+          "source_aspect": 0.906,
+          "rendered_aspect": 0.868,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": []
+        },
+        "right": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 0,
+          "source_aspect": 3.321,
+          "rendered_aspect": 4.477,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": []
+        }
+      },
+      "reference_cutout_check": {
+        "expected": null,
+        "rendered": 0,
+        "matches": null
+      },
+      "eligible_for_threshold_calibration": false
+    },
+    {
+      "id": "103_y_motor_holder",
+      "family": "real_mesh_derived",
+      "reference_quality_status": "active",
+      "drawing_evidence": {
+        "view_group_count": 3,
+        "logical_internal_profile_count": 2
+      },
+      "reference_mesh": {
+        "watertight": true,
+        "components": 16,
+        "extents_mm": [
+          52.5,
+          60.0,
+          23.75
+        ]
+      },
+      "registered_projection_similarity": {
+        "front": 1.0,
+        "top": 1.0,
+        "right": 0.995
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 0,
+          "source_aspect": 2.008,
+          "rendered_aspect": 2.197,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": []
+        },
+        "top": {
+          "source_internal_profiles": 2,
+          "rendered_internal_profiles": 2,
+          "crop_internal_profiles": 2,
+          "source_aspect": 0.896,
+          "rendered_aspect": 0.874,
+          "source_opening_centroids": [
+            [
+              0.137,
+              0.75
+            ],
+            [
+              0.849,
+              0.122
+            ]
+          ],
+          "rendered_opening_centroids": [
+            [
+              0.868,
+              0.113
+            ],
+            [
+              0.129,
+              0.759
+            ],
+            [
+              0.901,
+              0.674
+            ]
+          ],
+          "feature_position_fidelity": 1.0
+        },
+        "right": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 2,
+          "crop_internal_profiles": 0,
+          "source_aspect": 2.096,
+          "rendered_aspect": 2.513,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": [
+            [
+              0.166,
+              0.313
+            ],
+            [
+              0.624,
+              0.313
+            ]
+          ]
+        }
+      },
+      "reference_cutout_check": {
+        "expected": null,
+        "rendered": 0,
+        "matches": null
+      },
+      "eligible_for_threshold_calibration": false
+    },
+    {
+      "id": "104_cable_holder",
+      "family": "real_mesh_derived",
+      "reference_quality_status": "active",
+      "drawing_evidence": {
+        "view_group_count": 3,
+        "logical_internal_profile_count": 6
+      },
+      "reference_mesh": {
+        "watertight": true,
+        "components": 1,
+        "extents_mm": [
+          10.1266,
+          18.1348,
+          40.0
+        ]
+      },
+      "registered_projection_similarity": {
+        "front": 1.0,
+        "top": 1.0,
+        "right": 1.0
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 3,
+          "crop_internal_profiles": 0,
+          "source_aspect": 0.302,
+          "rendered_aspect": 0.251,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": [
+            [
+              0.912,
+              0.862
+            ],
+            [
+              0.912,
+              0.505
+            ],
+            [
+              0.912,
+              0.143
+            ]
+          ]
+        },
+        "top": {
+          "source_internal_profiles": 1,
+          "rendered_internal_profiles": 1,
+          "crop_internal_profiles": 1,
+          "source_aspect": 0.627,
+          "rendered_aspect": 0.551,
+          "source_opening_centroids": [
+            [
+              0.492,
+              0.557
+            ]
+          ],
+          "rendered_opening_centroids": [
+            [
+              0.496,
+              0.556
+            ]
+          ],
+          "feature_position_fidelity": 1.0
+        },
+        "right": {
+          "source_internal_profiles": 5,
+          "rendered_internal_profiles": 1,
+          "crop_internal_profiles": 5,
+          "source_aspect": 0.489,
+          "rendered_aspect": 0.455,
+          "source_opening_centroids": [
+            [
+              0.307,
+              0.831
+            ],
+            [
+              0.576,
+              0.68
+            ],
+            [
+              0.31,
+              0.507
+            ],
+            [
+              0.579,
+              0.335
+            ],
+            [
+              0.307,
+              0.159
+            ]
+          ],
+          "rendered_opening_centroids": [
+            [
+              0.301,
+              0.151
+            ],
+            [
+              0.577,
+              0.329
+            ],
+            [
+              0.301,
+              0.505
+            ],
+            [
+              0.577,
+              0.682
+            ],
+            [
+              0.301,
+              0.835
+            ]
+          ],
+          "feature_position_fidelity": 1.0
+        }
+      },
+      "reference_cutout_check": {
+        "expected": null,
+        "rendered": 3,
+        "matches": null
+      },
+      "eligible_for_threshold_calibration": false
+    }
+  ]
+}

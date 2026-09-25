@@ -1,0 +1,99 @@
+{
+  "schema_version": 1,
+  "id": "006_stepped_knob",
+  "title": "Stepped round knob (revolved profile)",
+  "split": "development",
+  "status": "synthetic_reference_pair_verified",
+  "provenance": {
+    "source": "synthetic_parametric_generated_by_benchmarks/tools/gen_cases.py",
+    "original_files": {
+      "drawing": "generated: jittered doodle of declared GT view geometry (seed 603)",
+      "scad": "authored by benchmark tooling",
+      "stl": "compiled from sibling model.scad with pipeline OpenSCAD"
+    },
+    "sha256": {
+      "drawing.png": "4765bb63f92b926258323865d199bedadd0f0a398a9af8da8922fde95008d5b5",
+      "model.scad": "42170dda6c19a5daf247f97a6f0bef8c33d649c249cf09b4790b0c5bd205d35f",
+      "model.stl": "c46d1e195d26c1554bd89ad9d9772c73175538b9855302a1c2a966a3cceb1968"
+    }
+  },
+  "reference": {
+    "authority": "generated_parametric_ground_truth",
+    "coordinate_system": {
+      "x": "width",
+      "y": "front_to_back_depth",
+      "z": "height",
+      "front_view_direction": "along_y",
+      "top_view_direction": "along_z",
+      "right_view_direction": "along_x",
+      "status": "exact_from_scad_construction"
+    },
+    "dimensions_mm": {
+      "extents_xyz": [
+        56.0,
+        56.0,
+        38.0
+      ],
+      "status": "exact_measured_from_gt_stl"
+    },
+    "topology": {
+      "components": 1,
+      "watertight": true,
+      "through_cutout_count": 0,
+      "status": "exact_measured_from_gt_stl"
+    },
+    "print_envelope_mm": {
+      "max": 256.0,
+      "fits": true
+    }
+  },
+  "drawing": {
+    "views": [
+      {
+        "direction": "front",
+        "sheet_region": "center",
+        "constraints": [
+          "stepped silhouette",
+          "three diameters",
+          "height"
+        ]
+      },
+      {
+        "direction": "right",
+        "sheet_region": "right",
+        "constraints": [
+          "same revolved silhouette"
+        ]
+      }
+    ],
+    "projection_standard": "third-angle",
+    "view_labels_status": "exact_from_generator",
+    "style_note": "jittered single-weight ink outlines, white sheet, no fills"
+  },
+  "semantic_labels": {
+    "object": "lathe-turned knob",
+    "family": "revolve_axisymmetric",
+    "manufacturing_intent": "FDM print on BambuLab-class printer",
+    "object_status": "exact_from_generator"
+  },
+  "acceptance": {
+    "mandatory": {
+      "watertight": true,
+      "component_count": 1,
+      "dimension_relative_tolerance": 0.05,
+      "through_cutout_count": 0,
+      "build_envelope_mm": 256.0,
+      "front_projection_required": true,
+      "right_projection_required": true
+    },
+    "shape_comparison": {
+      "method": "registered_contour_and_internal_profile_correspondence"
+    }
+  },
+  "controls": {
+    "primary_view": "front",
+    "projection_standard": "third-angle"
+  },
+  "target_dimension_mm": "56",
+  "known_ambiguities": []
+}

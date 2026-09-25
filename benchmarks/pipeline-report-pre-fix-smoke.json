@@ -1,0 +1,54 @@
+{
+  "tag": "pre-fix-smoke",
+  "mode": "assisted",
+  "base": "http://127.0.0.1:8081",
+  "started": "2026-09-17 02:21:02",
+  "cases": [
+    {
+      "id": "007_angle_bracket_holes",
+      "family": "multi_face_union_with_cutouts",
+      "success": false,
+      "score": 91.4,
+      "accepted_gates": {
+        "compiled": true,
+        "topology": true,
+        "dimensions": true,
+        "shape_sanity": true,
+        "features": true,
+        "projections": false
+      },
+      "failures": [
+        "one or more registered CAD projections poorly match their corresponding drawing view"
+      ],
+      "projection_similarity": {
+        "front": 0.428
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 3,
+          "rendered_internal_profiles": 0
+        }
+      },
+      "selected_attempt": 1,
+      "attempt_count": 2,
+      "repaired": true,
+      "duration_s": 489.32,
+      "model": "local-vlm/private-flash",
+      "run_id": "6a14d0a72b34",
+      "extents_mm": [
+        80.0,
+        40.0,
+        80.0
+      ],
+      "extent_ratios_vs_gt": [
+        1.0,
+        1.0,
+        1.6
+      ],
+      "fits_build_envelope": true,
+      "watertight": true,
+      "components": 1,
+      "volume_ratio_vs_gt": 2.2066
+    }
+  ]
+}

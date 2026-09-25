@@ -1,0 +1,104 @@
+{
+  "schema_version": 1,
+  "id": "002_greek_vase_silhouette",
+  "title": "Greek vase from a single silhouette",
+  "split": "development",
+  "status": "reference_mismatch_and_unobservable_features_pending_review",
+  "provenance": {
+    "source": "user_supplied_in_conversation",
+    "original_files": {
+      "drawing": "codex-clipboard-6e0c2aa9-b508-4e29-973d-81c5dd0c81d9.png",
+      "scad": "greek-vase.scad",
+      "stl": "greek vase.stl"
+    },
+    "sha256": {
+      "drawing.png": "fcd10bfadce5c6d8d331790963fb63691101a71f4c5ad707c974af39ed3145b1",
+      "model.scad": "95dbb77e7cf64503fafe00b9e379b3405983c133ae4c76fa710706a4aa7143af",
+      "model.stl": "43e9c1a57c83f08dd2e4b5814fa0ce3a6b789c859df2a9692701b2c0ea7e52c1"
+    }
+  },
+  "reference": {
+    "authority": "user_supplied_candidate_ground_truth",
+    "scad_stl_equivalence": {
+      "equivalent": false,
+      "max_extent_delta_mm": 1.1352,
+      "volume_relative_delta": 0.058115,
+      "status": "measured_with_local_openscad_and_trimesh; requires reference selection"
+    },
+    "coordinate_system": {
+      "z": "axis_of_revolution_and_height",
+      "xy": "radial_plane",
+      "status": "exact_from_reference_scad"
+    },
+    "scad_dimensions_mm": {
+      "height": 120.0,
+      "wall_thickness": 4.0,
+      "floor_thickness": 4.0,
+      "status": "exact_parameters_from_reference_scad"
+    },
+    "supplied_stl_dimensions_mm": {
+      "x": 102.478,
+      "y": 102.478,
+      "z": 120.0,
+      "status": "measured"
+    },
+    "topology": {
+      "components": 1,
+      "watertight": true,
+      "construction": "hollow_surface_of_revolution_with_closed_bottom_and_three_raised_ribs",
+      "status": "exact_from_reference_scad; supplied STL topology verified"
+    }
+  },
+  "drawing": {
+    "image_size_px": [607, 504],
+    "views": [
+      {
+        "direction": "front_or_side_for_axisymmetric_body",
+        "sheet_region": "center",
+        "constraints": ["outer silhouette", "bilateral symmetry", "relative height-to-width profile"]
+      }
+    ],
+    "projection_standard": null,
+    "status": "single-view silhouette; depth and interior are underconstrained"
+  },
+  "semantic_labels": {
+    "object": "Greek vase",
+    "construction_family": "surface_of_revolution",
+    "object_status": "exact_from_reference_scad title",
+    "construction_family_status": "strong inference from bilateral silhouette; exact in reference SCAD"
+  },
+  "observability": {
+    "observable_from_supplied_drawing": [
+      "outer axial profile",
+      "bilateral symmetry",
+      "wide foot and belly",
+      "narrow neck",
+      "flared mouth"
+    ],
+    "not_observable_from_supplied_drawing": [
+      "hollow cavity",
+      "4 mm wall",
+      "4 mm closed floor",
+      "three raised ribs",
+      "rib angular placement",
+      "rim chamfer dimensions",
+      "absolute 120 mm height"
+    ]
+  },
+  "acceptance": {
+    "image_conditioned": {
+      "mandatory": ["single connected body", "registered silhouette agreement", "axial symmetry unless explicitly contradicted"],
+      "must_not_require": ["hollow cavity", "three ribs", "specific wall thickness", "absolute dimensions without a user dimension"]
+    },
+    "full_reference_reconstruction": {
+      "enabled": false,
+      "reason": "reference SCAD and STL differ and several reference features are absent from the drawing"
+    },
+    "shape_comparison_thresholds": "to_be_calibrated_on_multiple_revolved-form cases"
+  },
+  "known_ambiguities": [
+    "The silhouette alone cannot distinguish a solid ornament from an open vessel.",
+    "The supplied SCAD mentions source details not present in the supplied drawing.",
+    "The supplied STL differs measurably from a fresh compilation of the supplied SCAD."
+  ]
+}

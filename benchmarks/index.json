@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "cases": [
+    {
+      "id": "004_flat_mounting_plate",
+      "split": "development",
+      "status": "synthetic_reference_pair_verified",
+      "family": "extrude_plate_with_cutouts"
+    },
+    {
+      "id": "005_bolt_flange",
+      "split": "development",
+      "status": "synthetic_reference_pair_verified",
+      "family": "circular_array_with_cutouts"
+    },
+    {
+      "id": "006_stepped_knob",
+      "split": "development",
+      "status": "synthetic_reference_pair_verified",
+      "family": "revolve_axisymmetric"
+    },
+    {
+      "id": "007_angle_bracket_holes",
+      "split": "development",
+      "status": "synthetic_reference_pair_verified",
+      "family": "multi_face_union_with_cutouts"
+    },
+    {
+      "id": "008_open_enclosure_window",
+      "split": "development",
+      "status": "synthetic_reference_pair_verified",
+      "family": "shell_with_cutout"
+    },
+    {
+      "id": "009_hex_prism_knob",
+      "split": "development",
+      "status": "synthetic_reference_pair_verified",
+      "family": "extrude_polygon_profile"
+    },
+    {
+      "id": "010_nameplate_slots_vents",
+      "split": "development",
+      "status": "synthetic_reference_pair_verified",
+      "family": "extrude_repeated_cutouts"
+    },
+    {
+      "id": "011_wall_hook",
+      "split": "development",
+      "status": "synthetic_reference_pair_verified",
+      "family": "extrude_freeform_profile"
+    },
+    {
+      "id": "012_vent_grille_grid",
+      "split": "development",
+      "status": "synthetic_reference_pair_verified",
+      "family": "extrude_grid_array_cutouts"
+    },
+    {
+      "id": "013_wedge_ramp",
+      "split": "development",
+      "status": "synthetic_reference_pair_verified",
+      "family": "loft_wedge"
+    },
+    {
+      "id": "101_bltouch_bracket",
+      "split": "development",
+      "status": "active",
+      "family": "real_mesh_derived"
+    },
+    {
+      "id": "102_lcd_knob",
+      "split": "development",
+      "status": "active",
+      "family": "real_mesh_derived"
+    },
+    {
+      "id": "103_y_motor_holder",
+      "split": "development",
+      "status": "active",
+      "family": "real_mesh_derived"
+    },
+    {
+      "id": "104_cable_holder",
+      "split": "development",
+      "status": "active",
+      "family": "real_mesh_derived"
+    }
+  ]
+}

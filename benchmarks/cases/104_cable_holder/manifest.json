@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "id": "104_cable_holder",
+  "split": "development",
+  "status": "active",
+  "object": "cable clip holder",
+  "semantic_labels": {
+    "object": "cable clip holder",
+    "family": "real_mesh_derived"
+  },
+  "provenance": {
+    "source_url": "https://raw.githubusercontent.com/prusa3d/Original-Prusa-i3/MK3S/Printed-Parts/STL/cable-holder.stl",
+    "stl_sha256": "4cbbe40c0eb2865cb18429d2a65de38fcb54eb232a44c572990ef1161a19d166",
+    "note": "real mesh; doodle derived from pipeline-camera renders of the normalized GT",
+    "sha256": {
+      "drawing.png": "814cde61816147f97be056e736c26c081592f95c3de74cdfbe696c4c7bc312c9",
+      "model.scad": "5ea1609cca90d0faa16073ac004320ae90aeb4e78450f579d3dd659f7cfb5ba9",
+      "model.stl": "60d9fcd954fe59a1cb9ea57c06687ca71a46e3f73259a97a7bcdae8607ae2758"
+    }
+  },
+  "reference": {
+    "dimensions_mm": {
+      "extents_xyz": [
+        10.13,
+        18.14,
+        40.0
+      ]
+    },
+    "topology": {
+      "watertight": true,
+      "components": 1
+    }
+  },
+  "target_dimension_mm": 40.0,
+  "print_envelope_mm": 256.0,
+  "controls": {
+    "primary_view": "front",
+    "projection_standard": "third-angle",
+    "object_type_hint": "cable clip holder"
+  },
+  "views": [
+    {
+      "direction": "front",
+      "region": "auto"
+    },
+    {
+      "direction": "top",
+      "region": "auto"
+    },
+    {
+      "direction": "right",
+      "region": "auto"
+    }
+  ],
+  "style_note": "hybrid: silhouette+openings lifted from GT renders, re-inked with jittered hand style",
+  "files": {
+    "drawing": "source/drawing.png",
+    "gt_scad": "ground_truth/model.scad",
+    "gt_stl": "ground_truth/model.stl",
+    "gt_source_stl": "ground_truth/source.stl"
+  }
+}

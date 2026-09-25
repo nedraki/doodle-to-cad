@@ -1,0 +1,60 @@
+{
+  "supplied_stl": {
+    "watertight": true,
+    "components": 1,
+    "vertices": 8832,
+    "triangles": 17660,
+    "bounds_mm": [
+      [
+        -51.239,
+        -51.239,
+        0.0
+      ],
+      [
+        51.239,
+        51.239,
+        120.0
+      ]
+    ],
+    "extents_mm": [
+      102.478,
+      102.478,
+      120.0
+    ],
+    "volume_mm3": 116828.78898682499,
+    "surface_area_mm2": 66689.25103931234,
+    "euler_number": 2
+  },
+  "compiled_scad": {
+    "watertight": true,
+    "components": 1,
+    "vertices": 9429,
+    "triangles": 18854,
+    "bounds_mm": [
+      [
+        -51.239,
+        -52.3742,
+        0.0
+      ],
+      [
+        51.239,
+        51.239,
+        120.0
+      ]
+    ],
+    "extents_mm": [
+      102.478,
+      103.6132,
+      120.0
+    ],
+    "volume_mm3": 123618.30203321355,
+    "surface_area_mm2": 67633.65000622504,
+    "euler_number": 2
+  },
+  "equivalence": {
+    "same_extents": false,
+    "max_extent_delta_mm": 1.1352000000000118,
+    "volume_delta_mm3": 6789.513046388558,
+    "volume_relative_delta": 0.05811506825731305
+  }
+}

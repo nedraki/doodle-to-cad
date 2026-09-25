@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "id": "102_lcd_knob",
+  "split": "development",
+  "status": "active",
+  "object": "lcd rotary knob",
+  "semantic_labels": {
+    "object": "lcd rotary knob",
+    "family": "real_mesh_derived"
+  },
+  "provenance": {
+    "source_url": "https://raw.githubusercontent.com/prusa3d/Original-Prusa-i3/MK3S/Printed-Parts/STL/LCD-knob.stl",
+    "stl_sha256": "d6acf9be18e76a5e59729d43946732edaf066ff3057461d7e3ebb115ed7e0861",
+    "note": "real mesh; doodle derived from pipeline-camera renders of the normalized GT",
+    "sha256": {
+      "drawing.png": "a8e42eb9f44830265b21ab408bb1632b12b6c501bc484bb8aee2e842e270c53d",
+      "model.scad": "05ca1ac09c081da6517eefaf1e9571915515c4289cccc4c08a5cb897bac8b85e",
+      "model.stl": "f9c7d5073cf9c3ef8dfe66a30b38c16be80ad52e57f12ce4160d2b14c539cb06"
+    }
+  },
+  "reference": {
+    "dimensions_mm": {
+      "extents_xyz": [
+        43.3,
+        50.0,
+        11.07
+      ]
+    },
+    "topology": {
+      "watertight": true,
+      "components": 1
+    }
+  },
+  "target_dimension_mm": 50.0,
+  "print_envelope_mm": 256.0,
+  "controls": {
+    "primary_view": "front",
+    "projection_standard": "third-angle",
+    "object_type_hint": "lcd rotary knob"
+  },
+  "views": [
+    {
+      "direction": "front",
+      "region": "auto"
+    },
+    {
+      "direction": "top",
+      "region": "auto"
+    },
+    {
+      "direction": "right",
+      "region": "auto"
+    }
+  ],
+  "style_note": "hybrid: silhouette+openings lifted from GT renders, re-inked with jittered hand style",
+  "files": {
+    "drawing": "source/drawing.png",
+    "gt_scad": "ground_truth/model.scad",
+    "gt_stl": "ground_truth/model.stl",
+    "gt_source_stl": "ground_truth/source.stl"
+  }
+}

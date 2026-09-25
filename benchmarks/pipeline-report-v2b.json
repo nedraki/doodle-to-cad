@@ -1,0 +1,175 @@
+{
+  "tag": "v2b",
+  "mode": "assisted",
+  "base": "http://127.0.0.1:8082",
+  "started": "2026-09-17 09:26:12",
+  "cases": [
+    {
+      "id": "001_l_bookend_multiview",
+      "family": "multi_face_union_with_through_cutouts",
+      "success": true,
+      "score": 97.8,
+      "accepted_gates": {
+        "compiled": true,
+        "topology": true,
+        "dimensions": true,
+        "shape_sanity": true,
+        "features": true,
+        "projections": true,
+        "build_envelope": true
+      },
+      "failures": [],
+      "projection_similarity": {
+        "front": 0.865,
+        "right": 0.841
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 4,
+          "rendered_internal_profiles": 4,
+          "crop_internal_profiles": 4,
+          "source_aspect": 0.822,
+          "rendered_aspect": 0.803,
+          "source_opening_centroids": [
+            [
+              0.755,
+              0.614
+            ],
+            [
+              0.316,
+              0.612
+            ],
+            [
+              0.535,
+              0.421
+            ],
+            [
+              0.257,
+              0.191
+            ]
+          ],
+          "rendered_opening_centroids": [
+            [
+              0.272,
+              0.194
+            ],
+            [
+              0.534,
+              0.425
+            ],
+            [
+              0.325,
+              0.602
+            ],
+            [
+              0.745,
+              0.612
+            ]
+          ],
+          "feature_position_fidelity": 1.0
+        },
+        "right": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 0,
+          "source_aspect": 0.702,
+          "rendered_aspect": 0.667,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": []
+        }
+      },
+      "selected_attempt": 1,
+      "attempt_count": 1,
+      "repaired": false,
+      "duration_s": 316.65,
+      "model": "local-vlm/private-flash",
+      "run_id": "d4d9fc18aacc",
+      "extents_mm": [
+        120.0,
+        100.0,
+        150.0
+      ],
+      "extent_ratios_vs_gt": [
+        1.5,
+        2.0,
+        1.5
+      ],
+      "fits_build_envelope": true,
+      "watertight": true,
+      "components": 1,
+      "volume_ratio_vs_gt": 6.9532
+    },
+    {
+      "id": "003_front_grille_multiview",
+      "error": "RuntimeError: HTTP 500 from /api/generate: {\"detail\":{\"message\":\"CAD code generation failed at 'generation' (ReadTimeout): \",\"error_type\":\"RuntimeError\",\"stage\":\"generation\"}}"
+    },
+    {
+      "id": "009_hex_prism_knob",
+      "error": "RuntimeError: HTTP 500 from /api/generate: {\"detail\":{\"message\":\"CAD code generation failed at 'generation' (ReadTimeout): \",\"error_type\":\"RuntimeError\",\"stage\":\"generation\"}}"
+    },
+    {
+      "id": "010_nameplate_slots_vents",
+      "error": "RuntimeError: HTTP 500 from /api/generate: {\"detail\":{\"message\":\"interpretation failed with thinking (ReadTimeout: ) and direct-output retry also failed (ReadTimeout: )\",\"error_type\":\"RuntimeError\",\"stage\":\"generation\"}}"
+    },
+    {
+      "id": "013_wedge_ramp",
+      "family": "loft_wedge",
+      "success": true,
+      "score": 95.0,
+      "accepted_gates": {
+        "compiled": true,
+        "topology": true,
+        "dimensions": true,
+        "shape_sanity": true,
+        "features": true,
+        "projections": true,
+        "build_envelope": true
+      },
+      "failures": [],
+      "projection_similarity": {
+        "front": 1.0,
+        "top": 0.998
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 0,
+          "source_aspect": 3.067,
+          "rendered_aspect": 3.064,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": []
+        },
+        "top": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 0,
+          "source_aspect": 1.603,
+          "rendered_aspect": 1.6,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": []
+        }
+      },
+      "selected_attempt": 1,
+      "attempt_count": 1,
+      "repaired": false,
+      "duration_s": 298.95,
+      "model": "local-vlm/private-flash",
+      "run_id": "369bf6884c9a",
+      "extents_mm": [
+        100.0,
+        62.5,
+        32.6
+      ],
+      "extent_ratios_vs_gt": [
+        1.0,
+        1.0417,
+        1.0867
+      ],
+      "fits_build_envelope": true,
+      "watertight": true,
+      "components": 1,
+      "volume_ratio_vs_gt": 1.1319
+    }
+  ]
+}

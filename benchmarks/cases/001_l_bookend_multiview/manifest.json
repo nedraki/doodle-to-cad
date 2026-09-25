@@ -1,0 +1,94 @@
+{
+  "schema_version": 1,
+  "id": "001_l_bookend_multiview",
+  "title": "L-shaped bookend from front and right views",
+  "split": "development",
+  "status": "reference_pair_verified_pending_intent_confirmation",
+  "provenance": {
+    "source": "user_supplied_in_conversation",
+    "original_files": {
+      "drawing": "codex-clipboard-2789af30-84e8-4b49-af5f-d0329764400e.png",
+      "scad": "scad-nemotron-multiview.scad",
+      "stl": "book-end-nemotron-multiview.stl"
+    },
+    "sha256": {
+      "drawing.png": "5a3f4f2f11c2f37bf7e47001bdc6302cc2901afab888118cb787bf1455168dd2",
+      "model.scad": "41231574a20a3c8bf256325a92881610116d34c4c52fd9b71f90ee22a38dbd03",
+      "model.stl": "189bff828f372a71ef0d3c1ee857e4235faea0e60a6f93be4d662c90c961d2a2"
+    }
+  },
+  "reference": {
+    "authority": "user_supplied_candidate_ground_truth",
+    "scad_stl_equivalence": {
+      "same_extents": true,
+      "volume_relative_delta": 0.0
+    },
+    "coordinate_system": {
+      "x": "width",
+      "y": "front_to_back_depth",
+      "z": "height",
+      "front_view_direction": "along_y",
+      "top_view_direction": "along_z",
+      "right_view_direction": "along_x",
+      "status": "exact_from_reference_scad_geometry_and_comments"
+    },
+    "dimensions_mm": {
+      "width": 80.0,
+      "depth": 50.0,
+      "height": 100.0,
+      "wall_thickness": 3.0,
+      "status": "exact_from_reference_scad_and_verified_stl"
+    },
+    "topology": {
+      "components": 1,
+      "watertight": true,
+      "construction": "union_of_horizontal_base_and_vertical_back_panel_with_overlap",
+      "through_cutout_count": 4,
+      "status": "exact_from_reference_scad_and_verified_stl"
+    }
+  },
+  "drawing": {
+    "image_size_px": [845, 542],
+    "views": [
+      {
+        "direction": "front",
+        "sheet_region": "left",
+        "constraints": ["width", "height", "four through-cutout profiles"]
+      },
+      {
+        "direction": "right",
+        "sheet_region": "right",
+        "constraints": ["height", "depth", "L-shaped side profile", "wall thickness intent"]
+      }
+    ],
+    "projection_standard": null,
+    "view_labels_status": "exact_from_reference_scad_header_and drawing layout",
+    "projection_standard_status": "not supplied; do not infer from two-view placement alone"
+  },
+  "semantic_labels": {
+    "object": "L-shaped bookend",
+    "manufacturing_intent": null,
+    "family": "multi_face_union_with_through_cutouts",
+    "object_status": "exact_from_reference_scad title and STL filename",
+    "manufacturing_intent_status": "unknown"
+  },
+  "acceptance": {
+    "mandatory": {
+      "watertight": true,
+      "component_count": 1,
+      "dimension_relative_tolerance": 0.02,
+      "through_cutout_count": 4,
+      "front_projection_required": true,
+      "right_projection_required": true
+    },
+    "shape_comparison": {
+      "method": "registered_contour_and_internal_profile_correspondence",
+      "thresholds": "to_be_calibrated_on_multiple_families"
+    }
+  },
+  "known_ambiguities": [
+    "The sketch does not explicitly specify whether the part is printed, bent, or assembled.",
+    "Projection standard is not recoverable reliably from this two-view arrangement alone.",
+    "The supplied CAD regularizes hand-drawn cutouts as rectangles."
+  ]
+}

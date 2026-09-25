@@ -1,0 +1,44 @@
+[hidden] { display: none !important; }
+
+/* Generated output must sit above the continuous blueprint canvas and guide overlay. */
+#result,
+#working,
+#error {
+  z-index: 20;
+}
+
+#result {
+  overflow: hidden;
+}
+
+#result #views {
+  z-index: 21;
+  left: 132px;
+  right: 18px;
+  bottom: 150px;
+}
+
+#result .badges,
+#result #inputThumb,
+#result .result-note,
+#result .result-actions {
+  z-index: 22;
+}
+
+#result .result-actions {
+  display: flex;
+  bottom: 14px;
+}
+
+#result .result-note {
+  left: 132px;
+  right: 18px;
+  bottom: 66px;
+}
+
+#attemptPanel { position:absolute; right:18px; top:18px; z-index:24; width:min(430px,42%); max-height:44%; overflow:auto; color:#17202a; background:#f8f4e9; border:2px solid #37b987; border-radius:12px; padding:8px 12px; font-size:11px; }
+#attemptPanel summary { cursor:pointer; font-weight:bold; letter-spacing:1px; }
+#attemptPanel .attempt { border-top:1px dashed #aaa; padding:7px 0; }
+#attemptPanel .attempt span { display:block; color:#566; }
+#attemptPanel .attempt p { margin:3px 0; }
+#attemptPanel .selected { color:#087953; }
