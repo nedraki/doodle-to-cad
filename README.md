@@ -1,37 +1,71 @@
-# Doodle to CAD — recovered multi-view pipeline
+# 🚀 Doodle to CAD
 
-A local-first web application that converts an imperfect doodle plus optional text and dimensions into parametric OpenSCAD, a compiled STL, and an interactive 3D preview.
+**Sketch → Get a Design → 3D Print.** A local-first web app that turns an
+imperfect hand doodle — plus optional text notes and a target size — into
+parametric OpenSCAD, a compiled STL, and an interactive 3D preview. Nothing
+leaves your machine: the multimodal model runs locally (vLLM), the CAD kernel
+is OpenSCAD, the viewer is your browser.
 
 ## See it work
 
-Hand-drawn **multiview engineering sheet** (front plate with four rectangular
-through-cutouts + L side profile, drawn stroke-by-stroke with the app's pen) →
-parametric OpenSCAD → compiled STL → supervisor validation → orbitable 3D.
-Accepted **100/100 on the first attempt in 91 s** by a local Qwen model;
-independent STL verification confirms genus 4 (exactly four through-holes),
-one watertight component, dimensions within 9% of the reference proportions.
+### From pen ink to a verified part, in one take
 
-![Multiview bookend: pen sheet to accepted 3D model](docs/demo/hero_multiview_flow.gif)
-![Orbiting the accepted bracket — four cutouts in the back plate](docs/demo/hero_multiview_3d.gif)
+The pen draws a genuine two-view engineering sheet — a front plate with four
+rectangular through-cutout loops, plus a thin-L side profile. No dimension
+text, no hole descriptions: the interpretation comes from ink alone.
 
-The full pen-drawn flow on a simpler single-view doodle — doodle → agentic
-generation → live parametric editing:
+![Pen-drawn multiview sheet, then launch](docs/demo/hero_multiview_flow.gif)
 
-![Doodle to CAD full flow](docs/demo/hero_flow.gif)
+The pipeline authors parametric OpenSCAD, compiles it, and a CAD supervisor
+scores the result. This run was **accepted 100/100 on the first attempt in
+91 s** by a local Qwen model. Orbit the accepted bracket — the four cutouts go
+clean through the vertical back plate:
 
-More stills, videos, capture scripts, and verification output: [`docs/demo/`](docs/demo/README.md).
+![Orbiting the accepted bracket](docs/demo/hero_multiview_3d.gif)
 
-## Pipeline
+This result isn't just eyeballed: an independent STL topology check
+(`scripts/verify_stl.py`) confirms **genus 4 — exactly four through-holes**,
+one watertight component, and dimensions within 9% of the reference
+proportions. The supervisor's own front-view render agrees:
 
-1. The browser uploads a PNG, JPEG, or WebP and optional intent/dimension text.
-2. OpenCV extracts ink density, contours, normalized regions, circularity, lines, and a diagnostic overlay.
-3. The configured multimodal model converts the original image and measurements into a structured part/constraint specification.
+| Your sketch (as drawn) | Generated part, front view | Generated part, right view |
+|---|---|---|
+| ![hand-drawn sheet](docs/demo/21_mv_sheet_done.png) | ![front render](docs/demo/26_mv_front_render.png) | ![right render](docs/demo/27_mv_right_render.png) |
+
+### Reshape the model without redrawing it
+
+A simpler single-view doodle: an L-bookend with a thumb hole. After
+generation, **Modify** opens parametric sliders extracted from the SCAD
+source — drag one and the mesh recompiles live, camera untouched.
+
+![Single-view doodle to accepted model to live sliders](docs/demo/hero_flow.gif)
+
+![Live parametric edit: slider moved, mesh recompiled](docs/demo/07_param_live.png)
+
+### Every stage, up close
+
+| Stage | What happens |
+|---|---|
+| ![sheet](docs/demo/21_mv_sheet_done.png) | **One continuous drawing sheet.** Front view plus projected top/bottom/left/right/isometric regions, orthographic guide lines snapped to your own ink. |
+| ![flight](docs/demo/03_rocket_flight.png) | **Agentic generation.** OpenCV ink analysis → model interpretation → SCAD authoring → compile, with live stage feedback and an abort button. |
+| ![result](docs/demo/23_mv_result.png) | **Supervised acceptance.** Every candidate is scored on topology, dimensions, required features, and projection similarity; the full attempt history is saved and shown. |
+| ![params](docs/demo/06_param_panel.png) | **Parametric editing.** Editable dimensions become sliders; every change recompiles the model in seconds. |
+
+## How the pipeline works
+
+1. The browser captures the drawing sheet (PNG) plus optional intent text and a maximum dimension.
+2. OpenCV extracts ink density, contours, normalized regions, circularity, and lines into a diagnostic overlay.
+3. The configured multimodal model converts the images and measurements into a structured part/constraint specification.
 4. The same model generates parametric OpenSCAD from that specification.
-5. OpenSCAD compiles STL; the result page loads it into an interactive, auto-rotating 3D viewer.
-6. A bounded CAD supervisor scores topology, dimensions, required subtractive features, and projection similarity.
-7. It may accept, repair the OpenSCAD, or reinterpret the drawings. It keeps the best candidate across attempts and saves the full decision history under `results/<run-id>/attempts.json`.
+5. OpenSCAD compiles the STL; the result page loads it into an interactive, auto-rotating 3D viewer.
+6. A bounded CAD supervisor scores topology, dimensions, required subtractive features, and projection similarity against every drawn view.
+7. It may accept, repair the OpenSCAD, or reinterpret the drawings — keeping the best candidate across attempts, with the full decision history under `results/<run-id>/attempts.json`.
 
-This recreates the recovered `codex/multi-view-drawing` product direction. It is a clean-room implementation, not byte-for-byte recovery of the lost repository.
+The supervisor is deliberately a small inspectable state machine rather than
+a general-purpose agent framework. Known limitation today: its repair
+instructions can be too vague to fix a 90° intent flip (e.g. cutting holes in
+the foot instead of the wall) — see [`docs/demo/`](docs/demo/README.md) for a
+recorded accepted run and a recorded rejected one, side by side.
 
 ## What you need before running
 
@@ -112,6 +146,21 @@ If `.venv/` ever misbehaves (e.g. built on another machine — uv venvs are not 
 uv run pytest -q
 ```
 
+## Regenerate the demo assets
+
+All screenshots and GIFs in this README were captured from the running app
+with scripted pen input — no mockups. Refresh them after any meaningful
+change:
+
+```bash
+uv run playwright install chromium
+DISPLAY=:1 uv run python scripts/capture_demo_multiview.py   # multiview showcase, ~4 min
+DISPLAY=:1 uv run python scripts/capture_demo.py             # single-view + parametric flow, ~5 min
+```
+
+Details, stage-by-stage stills, and verification output:
+[`docs/demo/`](docs/demo/README.md).
+
 ## Troubleshooting
 
 - `/api/health` says `"openscad": {"available": false}` — `OPENSCAD_BIN` isn't on `PATH` or isn't executable. For the Docker shim, verify `docker run --rm --entrypoint openscad openscad/openscad:latest --version` works by hand.
@@ -123,4 +172,4 @@ uv run pytest -q
 
 Implemented: local UI/API, image/text/dimension input, OpenCV evidence, model discovery, structured interpretation, SCAD generation, compile repair, STL, three views, artifacts, downloads, and execution provenance.
 
-Still appropriate for a production phase: a labeled CAD benchmark corpus, stronger camera/view registration, feature-level geometric measurements, candidate fan-out, authentication, cancellation, and queued concurrent jobs. The supervisor is deliberately a small inspectable state machine rather than a general-purpose agent framework.
+Still appropriate for a production phase: a labeled CAD benchmark corpus, stronger camera/view registration, feature-level geometric measurements, candidate fan-out, authentication, cancellation, and queued concurrent jobs.
