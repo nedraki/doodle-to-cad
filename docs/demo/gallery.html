@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  body { font-family: var(--app-font, system-ui, sans-serif); color: var(--foreground); margin: 0; padding: 14px; }
+  h2 { font-size: 15px; margin: 0 0 4px; }
+  p.sub { color: var(--muted-foreground); font-size: 12px; margin: 0 0 12px; }
+  .row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
+  figure { margin: 0; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; background: var(--card); }
+  figure img { display: block; width: 210px; height: auto; cursor: pointer; }
+  figcaption { font-size: 11px; padding: 5px 8px; color: var(--muted-foreground); border-top: 1px solid var(--border); }
+  .big img { width: 300px; }
+  .badge { display:inline-block; font-size:10px; padding:1px 6px; border-radius:8px; background: var(--accent); color: var(--card); margin-left:6px; }
+</style>
+</head>
+<body>
+<h2>Doodle to CAD — live-captured demo gallery <span class="badge">real runs</span></h2>
+<p class="sub">Captured against the running app with the local vLLM model. Click any frame to see it enlarged in chat.</p>
+
+<div class="row">
+  <figure class="big"><img src="hero_flow.gif" data-hermes-send="Tell me about the hero_flow.gif pipeline demo">
+    <figcaption>hero_flow.gif — full flow: doodle → rocket → accepted 3D → live sliders</figcaption></figure>
+  <figure class="big"><img src="hero_3d.gif" data-hermes-send="Tell me about the hero_3d.gif orbit demo">
+    <figcaption>hero_3d.gif — orbit (thumb hole sweeps in) + parametric reshape</figcaption></figure>
+</div>
+
+<div class="row">
+  <figure><img src="02_doodle_drawn.png">
+    <figcaption>02 — pen-drawn L-bookend doodle + notes</figcaption></figure>
+  <figure><img src="03_rocket_flight.png">
+    <figcaption>03 — agentic pipeline in flight</figcaption></figure>
+  <figure><img src="04_result_3d.png">
+    <figcaption>04 — accepted: 95.1/100 supervisor score</figcaption></figure>
+</div>
+<div class="row">
+  <figure><img src="06_param_panel.png">
+    <figcaption>06 — parametric sliders from Modify</figcaption></figure>
+  <figure><img src="07_param_live.png">
+    <figcaption>07 — live recompile: 1 param live</figcaption></figure>
+  <figure><img src="12_showcase_sweep_b.png">
+    <figcaption>12 — orbit shows the real thumb hole</figcaption></figure>
+</div>
+</body>
+</html>

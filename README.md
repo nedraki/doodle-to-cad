@@ -2,6 +2,18 @@
 
 A local-first web application that converts an imperfect doodle plus optional text and dimensions into parametric OpenSCAD, a compiled STL, and an interactive 3D preview.
 
+## See it work
+
+The full pen-drawn flow — doodle → agentic generation → accepted model → live parametric editing:
+
+![Doodle to CAD full flow](docs/demo/hero_flow.gif)
+
+Orbit the accepted result (thumb hole sweeps into view) and reshape it with the sliders — the mesh recompiles live, camera untouched:
+
+![3D orbit and live parametric edit](docs/demo/hero_3d.gif)
+
+More stills, videos, and instructions to regenerate everything: [`docs/demo/`](docs/demo/README.md).
+
 ## Pipeline
 
 1. The browser uploads a PNG, JPEG, or WebP and optional intent/dimension text.
