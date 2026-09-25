@@ -13,6 +13,39 @@ Both open a visible Chromium window on `DISPLAY=:1` and record the session.
 The scripts require the dev extra (`playwright`) and a Chromium download
 (`uv run playwright install chromium`).
 
+```bash
+uv run python scripts/capture_demo_multiview.py  # benchmark-style bookend sheet, ~4 min
+uv run python scripts/verify_stl.py results/<run-id>/model.stl --target-max 100
+```
+
+## The multiview bookend demo (best showcase)
+
+`capture_demo_multiview.py` hand-draws a real engineering sheet with the app's
+pen — front view: plate outline with four rectangular through-cutout loops;
+right view: thin-L side profile, heights aligned. Notes carry only the family
+hint "L-shaped bookend"; all hole geometry must come from ink alone.
+
+Run `ba02a7a12ca1` was accepted **100/100 on attempt 1 (91 s)**. Independent
+verification (`verify_stl.py`, Euler-characteristic topology):
+
+| Check | Result |
+|---|---|
+| Through-holes (genus) | **4** — exactly the 4 cutouts, in the vertical back plate |
+| Components / watertight | 1 / closed manifold (edge defect 0) |
+| Extents vs 80:50:100 reference ratio | 73.1 : 47.8 : 100 (rel err ≤ 9%) |
+
+Assets: `hero_multiview_flow.gif` (draw → generate), `hero_multiview_3d.gif`
+(orbit), `multiview_session.mp4` (full 2.5 min session),
+`20–27_mv_*.png` (sheet stages, result, orbit, authoritative OpenSCAD
+front/right renders), `multiview_model.scad` (the generated parametric source).
+
+**Rejected-run evidence kept honest:** run `0d64ed50e5f5` (thinner 8% walls,
+zero notes) was *rejected* by the supervisor — 95/100 with right-view
+similarity 0.37 < 0.45 — after 3 attempts that fixed a missing 4th hole but
+never resolved a wall/foot orientation flip. The gate works; the repair
+instruction ("mirror depth, wall position") is too vague to fix a 90° intent
+flip. That is the current known supervisor-prompt limitation.
+
 ## Highlights
 
 | File | What it shows |

@@ -4,15 +4,22 @@ A local-first web application that converts an imperfect doodle plus optional te
 
 ## See it work
 
-The full pen-drawn flow — doodle → agentic generation → accepted model → live parametric editing:
+Hand-drawn **multiview engineering sheet** (front plate with four rectangular
+through-cutouts + L side profile, drawn stroke-by-stroke with the app's pen) →
+parametric OpenSCAD → compiled STL → supervisor validation → orbitable 3D.
+Accepted **100/100 on the first attempt in 91 s** by a local Qwen model;
+independent STL verification confirms genus 4 (exactly four through-holes),
+one watertight component, dimensions within 9% of the reference proportions.
+
+![Multiview bookend: pen sheet to accepted 3D model](docs/demo/hero_multiview_flow.gif)
+![Orbiting the accepted bracket — four cutouts in the back plate](docs/demo/hero_multiview_3d.gif)
+
+The full pen-drawn flow on a simpler single-view doodle — doodle → agentic
+generation → live parametric editing:
 
 ![Doodle to CAD full flow](docs/demo/hero_flow.gif)
 
-Orbit the accepted result (thumb hole sweeps into view) and reshape it with the sliders — the mesh recompiles live, camera untouched:
-
-![3D orbit and live parametric edit](docs/demo/hero_3d.gif)
-
-More stills, videos, and instructions to regenerate everything: [`docs/demo/`](docs/demo/README.md).
+More stills, videos, capture scripts, and verification output: [`docs/demo/`](docs/demo/README.md).
 
 ## Pipeline
 
