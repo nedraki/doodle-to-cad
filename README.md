@@ -10,9 +10,7 @@ is OpenSCAD, the viewer is your browser.
 |---|---|---|---|
 | ![hand-drawn sheet](docs/demo/21_mv_sheet_done.png) | ![front render](docs/demo/26_mv_front_render.png) | ![right render](docs/demo/27_mv_right_render.png) | ![3/4 orbit render](docs/demo/28_mv_orbit_isometric.png) |
 
-*One hand-drawn two-view sheet → 100/100 supervisor score → verified four
-through-holes. The part was written as [parametric OpenSCAD](docs/demo/multiview_model.scad);
-details and full pipeline below.*
+*The part is written as .STL and [parametric OpenSCAD](docs/demo/multiview_model.scad).*
 
 ## See it work
 
