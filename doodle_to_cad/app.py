@@ -96,11 +96,12 @@ def parametrize(run_id: str, updates: dict):
         raise HTTPException(422, {"message": "No known parameter matched the requested updates", "requested": sorted(updates)})
     from .openscad import compile_stl_only
     from .config import settings as _s
-    stl_url, error = compile_stl_only(out, edited, f"edited-{uuid.uuid4().hex}", binary=_s.openscad_bin)
+    tag = f"edited-{uuid.uuid4().hex}"
+    stl_url, error = compile_stl_only(out, edited, tag, binary=_s.openscad_bin)
     if not stl_url:
         return {"ok": False, "applied": applied,
                 "message": error or "Recompile produced no mesh — last successful geometry retained."}
-    return {"ok": True, "applied": applied, "stl": stl_url, "params": [p.to_dict() for p in extract_params(edited)]}
+    return {"ok": True, "applied": applied, "stl": stl_url, "scad": f"/results/{run_id}/{tag}.scad", "params": [p.to_dict() for p in extract_params(edited)]}
 
 
 @app.post("/api/generate")

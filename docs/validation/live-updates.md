@@ -11,8 +11,10 @@ Every API compilation uses a UUID in its SCAD/STL filenames. Concurrent requests
 cannot share output files, including requests changing the same parameters.
 Aborting a browser request does not cancel an already-running server compilation.
 These artifacts currently remain in the run directory; cleanup and server-side
-job scheduling are separate work. Edited-result validation labels and SCAD
-download selection remain tracked by issue #5.
+job scheduling are separate work. Edited models are labeled as compiled without geometric revalidation. Both STL
+and SCAD downloads switch only after successful mesh display, and reset restores
+the original pair and original acceptance status. Original downloads remain
+available separately; generation history is not modified.
 
 ## Measured compilation latency
 
@@ -37,7 +39,8 @@ is not needed to address request ordering.
   output contents, and preservation of the original model.
 - `node scripts/check_live_updates.cjs`: delayed older responses, input during
   mesh loading, reset during compilation, current/stale failures, run changes,
-  and the viewer's stale-geometry disposal guard.
+  mesh-loading failures, matched download pairs, result states, and the viewer's
+  stale-geometry disposal guard.
 - `python scripts/check_live_updates_browser.py`: rapid inputs coalesce; the
   previous mesh stays visible; camera changes survive replacement; compilation
   failures retain the mesh; reset restores controls. Requires a running app and
