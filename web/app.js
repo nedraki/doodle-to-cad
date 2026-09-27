@@ -75,9 +75,9 @@ let currentRun=null;function render(d,input){show('result');const ev=d.evaluatio
 $('#modify').onclick=async()=>{if(!currentRun){return $('#modifyDialog').showModal()}await openParamPanel()};$('#modifyDimension').oninput=e=>$('#modifyOut').value=e.target.value;document.querySelectorAll('.close-mod').forEach(b=>b.onclick=()=>$('#modifyDialog').close());$('#confirmModify').onclick=()=>{form.dimension.value=$('#modifyDimension').value;$('#modifyDialog').close();form.requestSubmit()};
 
 /* ---- interactive viewer + parametric editing ---- */
-let viewer=null,paramState=null,paramTimer=null;
+let viewer=null,paramState=null,paramTimer=null,paramRevision=0,paramAbort=null;
 function closeParamPanel(){viewer?.highlightParameter(null);$('#paramPanel').close();$('#modify').setAttribute('aria-expanded','false')}
-function hideParamPanel(){closeParamPanel();clearTimeout(paramTimer);$('#paramSliders').innerHTML='';paramState=null}
+function hideParamPanel(){closeParamPanel();invalidateParamCompile();$('#paramSliders').innerHTML='';paramState=null}
 $('#paramClose').onclick=()=>{closeParamPanel();$('#modify').focus()};
 $('#paramPanel').addEventListener('cancel',e=>{e.preventDefault();$('#paramClose').click()});
 $('#paramPanel').addEventListener('click',e=>{
@@ -101,6 +101,7 @@ async function openParamPanel(){
   $('#paramStatus').textContent='reading parameters…';$('#paramStatus').className='';
   try{
     const data=await fetch(`/api/results/${runId}/params`).then(r=>{if(!r.ok)throw 0;return r.json()});
+    if(currentRun?.id!==runId)return;
     if(!data.params?.length)
       {$('#paramSliders').innerHTML='<p class="param-hint">This model exposes no editable parameters. Use full regeneration.</p>';$('#paramStatus').textContent='';return}
     paramState={runId,base:{},current:{},controls:new Map(),originalParams:data.params};
@@ -173,7 +174,7 @@ async function openParamPanel(){
         const raw=number.valueAsNumber;
         const value=format(raw);
         if(!Number.isFinite(raw)||raw<p.low||raw>p.high||value<p.low||value>p.high||(unit==='count'&&!Number.isInteger(raw))){
-          clearTimeout(paramTimer);number.setAttribute('aria-invalid','true');
+          invalidateParamCompile();$('#paramStatus').textContent='Correct the highlighted value to update geometry.';$('#paramStatus').className='';number.setAttribute('aria-invalid','true');
           error.textContent=`Enter ${unit==='count'?'a whole number':'a number'} from ${format(p.low)} to ${format(p.high)} ${unit}.`;error.hidden=false;
           return false;
         }
@@ -203,27 +204,44 @@ async function openParamPanel(){
     $('#paramStatus').textContent='';
   }
 }
-function scheduleParamCompile(){
+// Invalidate on input, before the debounce expires, including pending STL loads.
+function invalidateParamCompile(){
   clearTimeout(paramTimer);
-  paramTimer=setTimeout(runParamCompile,350); // coalesce rapid drags into one compile
+  paramRevision++;
+  paramAbort?.abort();paramAbort=null;
+}
+function scheduleParamCompile(){
+  invalidateParamCompile();
+  $('#paramStatus').textContent='waiting to update…';$('#paramStatus').className='busy';
+  paramTimer=setTimeout(runParamCompile,350);
 }
 async function runParamCompile(){
   if(!paramState||$('#paramSliders [aria-invalid="true"]'))return;
-  const changed=Object.entries(paramState.current).filter(([k,v])=>v!==paramState.base[k]);
+  invalidateParamCompile();
+  const revision=paramRevision,state=paramState,run=currentRun;
+  const isCurrent=()=>revision===paramRevision&&paramState===state&&currentRun===run;
+  const changed=Object.entries(state.current).filter(([k,v])=>v!==state.base[k]);
   const status=$('#paramStatus');
-  if(!changed.length){status.textContent='';viewer?.replaceStl(currentRun.files.stl,paramState.originalParams);$('#stl').href=currentRun.files.stl;return}
-  status.textContent='recompiling…';status.className='busy';
-  const payload=Object.fromEntries(changed);
+  status.textContent=changed.length?'recompiling…':'restoring original…';status.className='busy';
   try{
-    const res=await fetch(`/api/results/${paramState.runId}/parametrize`,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(payload)}).then(async r=>{const d=await r.json().catch(()=>({}));if(!r.ok)throw Error(d?.detail?.message||d?.message||`HTTP ${r.status}`);return d});
-    if(res.ok&&res.stl){
-      await viewer?.replaceStl(res.stl,res.params||[]);          // camera untouched — geometry only
-      $('#stl').href=res.stl;
-      status.textContent=`${res.applied.length} param(s) live`;status.className='';
-    }else{
-      status.textContent=res.message||'compile failed';status.className='fail';
+    let url=run.files.stl,params=state.originalParams;
+    if(changed.length){
+      const controller=new AbortController();paramAbort=controller;
+      const response=await fetch(`/api/results/${state.runId}/parametrize`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.fromEntries(changed)),signal:controller.signal});
+      const res=await response.json().catch(()=>({}));
+      if(!isCurrent())return;
+      if(!response.ok||!res.ok||!res.stl)throw Error(res?.detail?.message||res.message||`Compile failed (HTTP ${response.status})`);
+      url=res.stl;params=res.params||[];
     }
-  }catch(err){status.textContent=err.message;status.className='fail'}
+    if(!isCurrent())return;
+    const displayed=await viewer?.replaceStl(url,params,isCurrent);
+    if(!isCurrent()||displayed===false)return;
+    $('#stl').href=url;
+    status.textContent=changed.length?`${changed.length} param(s) updated` : '';status.className='';
+  }catch(err){
+    if(!isCurrent())return;
+    status.textContent=`Update failed — last successful geometry retained. ${err.message}`;status.className='fail';
+  }finally{if(isCurrent())paramAbort=null}
 }
 $('#paramReset')?.addEventListener('click',()=>{
   if(!paramState)return;

@@ -82,7 +82,7 @@ def get_params(run_id: str):
 def parametrize(run_id: str, updates: dict):
     """Rewrite top-level parameters, recompile, return a cache-busted STL URL.
 
-    The accepted model.scad stays untouched; edits land in model-edited.scad
+    The accepted model.scad stays untouched; edits receive unique SCAD/STL filenames
     so a reset is always one click away.
     """
     out, scad = _run_dir(run_id)
@@ -96,10 +96,10 @@ def parametrize(run_id: str, updates: dict):
         raise HTTPException(422, {"message": "No known parameter matched the requested updates", "requested": sorted(updates)})
     from .openscad import compile_stl_only
     from .config import settings as _s
-    stl_url, error = compile_stl_only(out, edited, f"edited-{len(applied)}-{'-'.join(sorted(applied))[:60]}", binary=_s.openscad_bin)
+    stl_url, error = compile_stl_only(out, edited, f"edited-{uuid.uuid4().hex}", binary=_s.openscad_bin)
     if not stl_url:
         return {"ok": False, "applied": applied,
-                "message": error or "Recompile produced no mesh — parameters reverted."}
+                "message": error or "Recompile produced no mesh — last successful geometry retained."}
     return {"ok": True, "applied": applied, "stl": stl_url, "params": [p.to_dict() for p in extract_params(edited)]}
 
 

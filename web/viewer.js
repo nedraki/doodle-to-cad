@@ -175,15 +175,15 @@ class CadViewer {
   }
 
   /* Live parameter edit: swap geometry only, camera stays exactly where it is. */
-  replaceStl(url, params = []) {
-    return this._load(url, false, params);
+  replaceStl(url, params = [], isCurrent = () => true) {
+    return this._load(url, false, params, isCurrent);
   }
 
-  _load(url, reframe, params = []) {
+  _load(url, reframe, params = [], isCurrent = () => true) {
     const mine = ++this.token;
     return new Promise((resolve, reject) => {
       this.loader.load(url, (geo) => {
-        if (mine !== this.token) { geo.dispose(); return resolve(false); }
+        if (mine !== this.token || !isCurrent()) { geo.dispose(); return resolve(false); }
         geo.computeVertexNormals();
         if (this.mesh) {
           this.scene.remove(this.mesh);

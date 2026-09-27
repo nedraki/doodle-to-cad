@@ -35,11 +35,12 @@ with sync_playwright() as pw:
     assert page.evaluate('viewer.activeParameter') == 'opening'
     # Metadata and mesh are swapped together, preserving the camera.
     page.evaluate('''async () => {
+      viewer.setAutoRotate(false);
       const position = viewer.camera.position.clone();
       const params = viewer.featureParams.map(p => ({...p}));
       params[1].feature = {...params[1].feature, max:[15,5,10]};
       await viewer.replaceStl(currentRun.files.stl, params);
-      if (!viewer.camera.position.equals(position)) throw Error('Camera moved');
+      if (viewer.camera.position.distanceTo(position) > 1e-7) throw Error('Camera moved');
     }''')
     assert page.evaluate('viewer.featureOverlay.children[0].box.max.x') == 15
     page.click('#paramClose')
