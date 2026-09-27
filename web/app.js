@@ -76,7 +76,7 @@ $('#modify').onclick=async()=>{if(!currentRun){return $('#modifyDialog').showMod
 
 /* ---- interactive viewer + parametric editing ---- */
 let viewer=null,paramState=null,paramTimer=null;
-function closeParamPanel(){$('#paramPanel').close();$('#modify').setAttribute('aria-expanded','false')}
+function closeParamPanel(){viewer?.highlightParameter(null);$('#paramPanel').close();$('#modify').setAttribute('aria-expanded','false')}
 function hideParamPanel(){closeParamPanel();clearTimeout(paramTimer);$('#paramSliders').innerHTML='';paramState=null}
 $('#paramClose').onclick=()=>{closeParamPanel();$('#modify').focus()};
 $('#paramPanel').addEventListener('cancel',e=>{e.preventDefault();$('#paramClose').click()});
@@ -103,7 +103,8 @@ async function openParamPanel(){
     const data=await fetch(`/api/results/${runId}/params`).then(r=>{if(!r.ok)throw 0;return r.json()});
     if(!data.params?.length)
       {$('#paramSliders').innerHTML='<p class="param-hint">This model exposes no editable parameters. Use full regeneration.</p>';$('#paramStatus').textContent='';return}
-    paramState={runId,base:{},current:{},controls:new Map()};
+    paramState={runId,base:{},current:{},controls:new Map(),originalParams:data.params};
+    viewer?.setFeatureParams(data.params);
     const list=$('#paramSliders');list.replaceChildren();
     let lastGroup=null,container=list;
     data.params.forEach((p,index)=>{
@@ -136,6 +137,19 @@ async function openParamPanel(){
         row.querySelector('[type=range]').setAttribute('aria-describedby',effect.id);
         row.querySelector('[type=number]').setAttribute('aria-describedby',`${id}-help ${id}-error ${effect.id}`);
       }
+      const indicate=()=>{
+        list.querySelectorAll('.feature-active').forEach(el=>el.classList.remove('feature-active'));
+        row.classList.add('feature-active');viewer?.highlightParameter(p.name);
+      };
+      const clear=()=>{
+        const focused=list.querySelector('.param-row:focus-within');
+        if(focused){focused.dispatchEvent(new Event('focusin'));return}
+        row.classList.remove('feature-active');viewer?.highlightParameter(null);
+      };
+      row.addEventListener('mouseenter',indicate);
+      row.addEventListener('mouseleave',clear);
+      row.addEventListener('focusin',indicate);
+      row.addEventListener('focusout',()=>queueMicrotask(clear));
       container.append(row);
       const slider=row.querySelector('[type=range]'),number=row.querySelector('[type=number]'),output=row.querySelector('output'),error=row.querySelector('.param-error');
       for(const input of [slider,number]){input.min=p.low;input.max=p.high}
@@ -197,13 +211,13 @@ async function runParamCompile(){
   if(!paramState||$('#paramSliders [aria-invalid="true"]'))return;
   const changed=Object.entries(paramState.current).filter(([k,v])=>v!==paramState.base[k]);
   const status=$('#paramStatus');
-  if(!changed.length){status.textContent='';viewer?.replaceStl(currentRun.files.stl);$('#stl').href=currentRun.files.stl;return}
+  if(!changed.length){status.textContent='';viewer?.replaceStl(currentRun.files.stl,paramState.originalParams);$('#stl').href=currentRun.files.stl;return}
   status.textContent='recompiling…';status.className='busy';
   const payload=Object.fromEntries(changed);
   try{
     const res=await fetch(`/api/results/${paramState.runId}/parametrize`,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(payload)}).then(async r=>{const d=await r.json().catch(()=>({}));if(!r.ok)throw Error(d?.detail?.message||d?.message||`HTTP ${r.status}`);return d});
     if(res.ok&&res.stl){
-      await viewer?.replaceStl(res.stl);          // camera untouched — geometry only
+      await viewer?.replaceStl(res.stl,res.params||[]);          // camera untouched — geometry only
       $('#stl').href=res.stl;
       status.textContent=`${res.applied.length} param(s) live`;status.className='';
     }else{

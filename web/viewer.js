@@ -57,6 +57,13 @@ class CadViewer {
     });
     this.edgeMaterial = new THREE.LineBasicMaterial({ color: 0x1c2836, transparent: true, opacity: 0.35 });
 
+    this.featureParams = [];
+    this.featureOverlay = new THREE.Group();
+    this.scene.add(this.featureOverlay);
+    this.featureCaption = document.createElement('div');
+    this.featureCaption.className = 'feature-caption';
+    this.featureCaption.hidden = true;
+    this.viewport.appendChild(this.featureCaption);
     this.mesh = null;
     this.edges = null;
     this.loader = new THREE.STLLoader();
@@ -168,11 +175,11 @@ class CadViewer {
   }
 
   /* Live parameter edit: swap geometry only, camera stays exactly where it is. */
-  replaceStl(url) {
-    return this._load(url, false);
+  replaceStl(url, params = []) {
+    return this._load(url, false, params);
   }
 
-  _load(url, reframe) {
+  _load(url, reframe, params = []) {
     const mine = ++this.token;
     return new Promise((resolve, reject) => {
       this.loader.load(url, (geo) => {
@@ -189,6 +196,7 @@ class CadViewer {
         const lines = new THREE.EdgesGeometry(geo, 30);
         this.edges = new THREE.LineSegments(lines, this.edgeMaterial);
         this.scene.add(this.edges);
+        this.setFeatureParams(params);
         if (reframe) {
           this.setView('drawing');
         }
@@ -197,7 +205,52 @@ class CadViewer {
     });
   }
 
+  setFeatureParams(params) {
+    this.featureParams = params;
+    this.highlightParameter(this.activeParameter);
+  }
+
+  highlightParameter(name) {
+    this.activeParameter = name;
+    for (const child of [...this.featureOverlay.children]) {
+      this.featureOverlay.remove(child);
+      child.traverse(object => { object.geometry?.dispose(); object.material?.dispose(); });
+    }
+    this.featureCaption.hidden = !name;
+    if (!name) return;
+    const feature = this.featureParams.find(p => p.name === name)?.feature;
+    this.featureCaption.textContent = 'Geometry indication unavailable for this parameter';
+    if (!feature || !this.mesh) return;
+    const color = 0xfbbf24;
+    const box = new THREE.Box3().setFromObject(this.mesh);
+    if (feature.kind === 'dimension') {
+      const axis = feature.axis;
+      if (!['x', 'y', 'z'].includes(axis)) return;
+      const size = box.getSize(new THREE.Vector3());
+      const margin = Math.max(size.length() * 0.06, 1);
+      const start = box.min.clone().addScalar(-margin);
+      const end = start.clone();
+      start[axis] = box.min[axis]; end[axis] = box.max[axis];
+      const length = end.distanceTo(start);
+      if (!length) return;
+      const direction = end.clone().sub(start).normalize();
+      for (const [origin, dir] of [[start, direction], [end, direction.clone().negate()]]) {
+        const arrow = new THREE.ArrowHelper(dir, origin, length, color, Math.min(margin, length / 4), Math.min(margin / 2, length / 8));
+        arrow.traverse(object => { if(object.material) {object.material.depthTest=false;object.renderOrder=10;} });
+        this.featureOverlay.add(arrow);
+      }
+      this.featureCaption.textContent = `${feature.label}: ${length.toFixed(2)} mm · dimension arrows`;
+    } else if (feature.kind === 'region') {
+      const region = new THREE.Box3(new THREE.Vector3(...feature.min), new THREE.Vector3(...feature.max));
+      const outline = new THREE.Box3Helper(region, color);
+      outline.material.depthTest = false; outline.renderOrder = 10;
+      this.featureOverlay.add(outline);
+      this.featureCaption.textContent = `${feature.label} · outlined feature region`;
+    }
+  }
+
   dispose() {
+    this.highlightParameter(null);
     cancelAnimationFrame(this._raf);
     this._observer.disconnect();
     this.controls.dispose();
