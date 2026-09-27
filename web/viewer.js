@@ -1,5 +1,5 @@
 /* CadViewer — one persistent three.js scene for the result stage.
- * Auto-rotates until the user grabs it; free orbit afterwards.
+ * Uses the CAD Z-up frame and starts in the recorded drawing direction.
  * replaceStl() swaps geometry in-place: camera, zoom and lighting NEVER reset,
  * which is what makes live slider edits feel real-time. */
 class CadViewer {
@@ -10,34 +10,45 @@ class CadViewer {
   }
 
   _build() {
-    const w = this.container.clientWidth || 640;
-    const h = this.container.clientHeight || 400;
+    this.viewport = document.createElement('div');
+    this.viewport.className = 'viewer-viewport';
+    this.container.querySelector('.viewer-tools').insertAdjacentElement('afterend', this.viewport);
+    const w = this.viewport.clientWidth || 640;
+    const h = this.viewport.clientHeight || 400;
     this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     this.renderer.setSize(w, h);
-    this.container.appendChild(this.renderer.domElement);
+    this.viewport.appendChild(this.renderer.domElement);
 
     this.scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera(38, w / h, 0.1, 5000);
-    this.camera.position.set(160, 130, 190);
+    this.camera.up.set(0, 0, 1);
+    this.camera.position.set(160, -190, 130);
+    this.primaryView = 'front';
+    this.fitted = true;
 
     this.controls = new THREE.OrbitControls(this.camera, this.renderer.domElement);
     this.controls.enableDamping = true;
     this.controls.dampingFactor = 0.08;
-    this.controls.autoRotate = true;
+    this.controls.autoRotate = false;
     this.controls.autoRotateSpeed = 1.6;
     // Stop the idle spin the moment the user takes over; never fight them.
-    this.controls.addEventListener('start', () => { this.controls.autoRotate = false; this._syncRotateChip(false); });
+    this.controls.addEventListener('start', () => {
+      this.setAutoRotate(false);
+      this.fitted = false;
+      this._syncViewChip(null);
+    });
 
     const key = new THREE.DirectionalLight(0xffffff, 0.95);
-    key.position.set(1, 1.4, 1.2);
+    key.position.set(1, -1.4, 1.2);
     this.scene.add(key, new THREE.HemisphereLight(0xbfd4ff, 0x2a2f3a, 0.55));
     const rim = new THREE.DirectionalLight(0x88aaff, 0.35);
     rim.position.set(-1.2, -0.4, -1);
     this.scene.add(rim);
 
     this.grid = new THREE.GridHelper(400, 20, 0x3a4a63, 0x222c3d);
-    this.grid.position.y = 0;
+    this.grid.rotation.x = Math.PI / 2;
+    this.grid.position.z = -0.02;
     this.scene.add(this.grid);
 
     this.material = new THREE.MeshStandardMaterial({
@@ -51,14 +62,15 @@ class CadViewer {
     this.loader = new THREE.STLLoader();
 
     this._resize = () => {
-      const cw = this.container.clientWidth, ch = this.container.clientHeight;
+      const cw = this.viewport.clientWidth, ch = this.viewport.clientHeight;
       if (!cw || !ch) return;
       this.camera.aspect = cw / ch;
       this.camera.updateProjectionMatrix();
       this.renderer.setSize(cw, ch);
+      if (this.fitted) this.fitView();
     };
     this._observer = new ResizeObserver(this._resize);
-    this._observer.observe(this.container);
+    this._observer.observe(this.viewport);
 
     const loop = () => {
       this._raf = requestAnimationFrame(loop);
@@ -70,12 +82,49 @@ class CadViewer {
 
   _syncRotateChip(on) {
     const chip = this.container.querySelector('[data-rotate]');
-    if (chip) chip.classList.toggle('active', on);
+    if (chip) {
+      chip.classList.toggle('active', on);
+      chip.setAttribute('aria-pressed', String(on));
+    }
   }
 
   setAutoRotate(on) {
     this.controls.autoRotate = on;
     this._syncRotateChip(on);
+    if (on) {
+      this._syncViewChip(null);
+      this.fitView();
+    }
+  }
+
+  _syncViewChip(name) {
+    this.container.querySelectorAll('[data-camera-view]').forEach(button => {
+      const active = button.dataset.cameraView === name;
+      button.classList.toggle('active', active);
+      button.setAttribute('aria-pressed', String(active));
+    });
+  }
+
+  setView(name) {
+    const direction = name === 'drawing' ? this.primaryView : name;
+    // Position relative to the target. Top/bottom retain +X screen-right;
+    // a tiny Y offset avoids the Z-up orbit pole singularity.
+    const directions = {
+      front: [0, -1, 0], rear: [0, 1, 0],
+      right: [1, 0, 0], left: [-1, 0, 0],
+      top: [0, -0.00001, 1], bottom: [0, 0.00001, -1],
+      isometric: [1, -1, 0.8],
+    };
+    if (!directions[direction] || !this.mesh) return;
+    this.setAutoRotate(false);
+    // Flush pending drag damping before applying an explicit camera preset.
+    this.controls.enableDamping = false;
+    this.controls.update();
+    this.controls.enableDamping = true;
+    this.camera.position.copy(this.controls.target).add(new THREE.Vector3(...directions[direction]));
+    this.camera.lookAt(this.controls.target);
+    this.fitView();
+    this._syncViewChip(name);
   }
 
   fitView() {
@@ -83,19 +132,38 @@ class CadViewer {
     const box = new THREE.Box3().setFromObject(this.mesh);
     const center = box.getCenter(new THREE.Vector3());
     const size = box.getSize(new THREE.Vector3());
-    const radius = Math.max(size.length() / 2, 1);
-    this.controls.target.copy(center);
-    const dist = radius / Math.sin((this.camera.fov * Math.PI) / 360);
     const dir = this.camera.position.clone().sub(this.controls.target).normalize();
-    this.camera.position.copy(center.clone().add(dir.multiplyScalar(dist * 1.15)));
+    this.controls.target.copy(center);
+    this.camera.position.copy(center).add(dir);
+    this.camera.lookAt(center);
+    const right = new THREE.Vector3(1, 0, 0).applyQuaternion(this.camera.quaternion);
+    const up = new THREE.Vector3(0, 1, 0).applyQuaternion(this.camera.quaternion);
+    const tanY = Math.tan(this.camera.fov * Math.PI / 360);
+    const tanX = tanY * this.camera.aspect;
+    let dist = 1;
+    // Fit all eight corners in both dimensions, including perspective depth.
+    for (const x of [box.min.x, box.max.x])
+      for (const y of [box.min.y, box.max.y])
+        for (const z of [box.min.z, box.max.z]) {
+          const corner = new THREE.Vector3(x, y, z).sub(center);
+          dist = Math.max(dist, corner.dot(dir) + 1.15 * Math.max(
+            Math.abs(corner.dot(right)) / tanX, Math.abs(corner.dot(up)) / tanY));
+        }
+    // Reserve space for every angle during automatic orbit, including long parts.
+    if (this.controls.autoRotate) {
+      dist = Math.max(dist, 1.1 * size.length() / 2 / Math.sin(Math.atan(Math.min(tanX, tanY))));
+    }
+    this.camera.position.copy(center).addScaledVector(dir, dist);
     this.camera.near = Math.max(dist / 1000, 0.05);
-    this.camera.far = dist * 20;
+    this.camera.far = Math.max(dist * 20, size.length() * 20, 1000);
     this.camera.updateProjectionMatrix();
     this.controls.update();
+    this.fitted = true;
   }
 
-  /* First load of a fresh generation: frame the part, restart the idle spin. */
-  showStl(url) {
+  /* Start in the saved drawing view; orbit is an explicit user action. */
+  showStl(url, primaryView = 'front') {
+    this.primaryView = ['front', 'rear', 'top', 'bottom', 'right', 'left'].includes(primaryView) ? primaryView : 'front';
     return this._load(url, true);
   }
 
@@ -108,7 +176,7 @@ class CadViewer {
     const mine = ++this.token;
     return new Promise((resolve, reject) => {
       this.loader.load(url, (geo) => {
-        if (mine !== this.token) return resolve(false); // superseded by a newer load
+        if (mine !== this.token) { geo.dispose(); return resolve(false); }
         geo.computeVertexNormals();
         if (this.mesh) {
           this.scene.remove(this.mesh);
@@ -122,8 +190,7 @@ class CadViewer {
         this.edges = new THREE.LineSegments(lines, this.edgeMaterial);
         this.scene.add(this.edges);
         if (reframe) {
-          this.fitView();
-          this.setAutoRotate(true);
+          this.setView('drawing');
         }
         resolve(true);
       }, undefined, (err) => reject(err));

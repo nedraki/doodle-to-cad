@@ -54,3 +54,34 @@
 #paramPanel .param-foot #paramStatus.busy{color:#b58a2f}
 #paramPanel .param-foot #paramStatus.fail{color:#b23b3b}
 .param-row .param-reset{font:inherit;font-size:10px;border:none;background:none;color:#7c86a0;cursor:pointer;text-decoration:underline;padding:0}
+
+/* Keep the viewport in the result flow: no badges or reports over the model. */
+#result {
+  display:grid;
+  grid-template-columns:90px minmax(0,1fr);
+  grid-template-rows:auto minmax(260px,1fr) auto auto auto auto;
+  gap:10px;
+  padding:14px;
+  overflow:auto;
+}
+#result .badges {position:static;grid-column:1 / -1;flex-wrap:wrap}
+#result #paramLayout {grid-column:1 / -1;min-height:0}
+#result #viewerWrap {height:100%;min-height:260px;display:flex;flex-direction:column}
+.viewer3d .viewer-tools {position:static;flex-wrap:wrap;padding:8px;flex:none}
+.viewer3d .viewer-viewport {position:relative;flex:1;min-height:0;overflow:hidden}
+.viewer3d .viewer-viewport canvas {position:absolute;inset:0}
+.viewer3d .viewer-hint {position:static;padding:6px 10px;flex:none}
+.viewer3d .chip-btn:focus-visible {outline:2px solid #ffd34e;outline-offset:2px}
+#result #inputThumb {position:static;width:90px;height:80px;grid-column:1;grid-row:3;padding:4px}
+#result #inputThumb img {height:56px}
+#result .result-note {position:static;grid-column:2;grid-row:3;min-width:0}
+#result #views.static-strip {position:static;grid-column:1 / -1;margin:0}
+#result #views.static-strip figure {height:100px}
+#result #views.static-strip img {position:static;height:80px;object-fit:contain}
+#result #views.static-strip figcaption {position:static}
+#result .result-actions {position:static;grid-column:1 / -1;flex-wrap:wrap}
+#result #attemptPanel {position:static;grid-column:1 / -1;width:auto;max-height:160px}
+@media(max-width:850px) {
+  #result {grid-template-columns:minmax(0,1fr)}
+  #result .result-note {grid-column:1}
+}
