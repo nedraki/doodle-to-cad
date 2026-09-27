@@ -13,7 +13,7 @@ from fastapi.staticfiles import StaticFiles
 from .config import ROOT, settings
 from .model_client import CompatibleModelClient
 from .openscad import available
-from .params import extract_params, rewrite_params
+from .params import extract_params, rewrite_params, validate_updates
 from .pipeline import Pipeline
 
 RUN_ID_RE = re.compile(r"^[0-9a-f]{6,32}$")
@@ -72,8 +72,6 @@ def get_params(run_id: str):
     """Numeric top-level parameters the accepted model exposes for live editing."""
     out, scad = _run_dir(run_id)
     cached = out / "parameters.json"
-    if cached.exists():
-        return json.loads(cached.read_text())
     params = [p.to_dict() for p in extract_params(scad.read_text())]
     payload = {"run_id": run_id, "params": params}
     cached.write_text(json.dumps(payload, indent=2))
@@ -89,7 +87,11 @@ def parametrize(run_id: str, updates: dict):
     """
     out, scad = _run_dir(run_id)
     base = scad.read_text()
-    edited, applied = rewrite_params(base, {k: float(v) for k, v in updates.items() if isinstance(v, (int, float))})
+    try:
+        validate_updates(base, updates)
+    except ValueError as exc:
+        raise HTTPException(422, {"message": str(exc)}) from exc
+    edited, applied = rewrite_params(base, updates)
     if not applied:
         raise HTTPException(422, {"message": "No known parameter matched the requested updates", "requested": sorted(updates)})
     from .openscad import compile_stl_only

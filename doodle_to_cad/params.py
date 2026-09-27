@@ -8,6 +8,7 @@ benchmark loop and attempt history are untouched.
 """
 from __future__ import annotations
 
+import math
 import re
 from dataclasses import dataclass
 from typing import Any
@@ -27,11 +28,12 @@ class Param:
     low: float
     high: float
     step: float
+    group: str | None = None
 
     def to_dict(self) -> dict[str, Any]:
         return {
             "name": self.name, "value": self.value, "unit": self.unit,
-            "description": self.description, "low": self.low, "high": self.high, "step": self.step,
+            "group": self.group, "description": self.description, "low": self.low, "high": self.high, "step": self.step,
         }
 
 
@@ -40,8 +42,10 @@ def _unit_for(name: str, value: float, comment: str) -> str:
     # Count first: "hole_count"/"num_bolts" read as sizes otherwise.
     if any(k in text for k in ("count", "number", "qty", "sides", "teeth", "num_")):
         return "count"
-    if any(k in text for k in ("hole", "bore", "radius", "dia", "fillet", "chamfer")):
-        return "radius/diameter"
+    if re.search(r"\b(deg|degrees?|angle)\b", text.replace("_", " ")):
+        return "°"
+    if re.search(r"\b(ratio|scale|factor)\b", text.replace("_", " ")):
+        return "unitless"
     return "mm"
 
 
@@ -49,12 +53,10 @@ def _bounds(name: str, value: float, unit: str) -> tuple[float, float, float]:
     if unit == "count":
         low, high = 0, max(2, round(value * 2))
         return float(low), float(high), 1
-    if value <= 0:
-        return 0.0, 1.0, 0.05
-    low = max(0.0, value - max(2 * abs(value) * 0.5, 1.0))
-    high = value + max(2 * abs(value) * 0.5, 1.0)
-    step = max(round(abs(value) / 100, 3), 0.05) if abs(value) >= 2 else 0.1
-    return round(low, 3), round(high, 3), step
+    span = max(abs(value), 1.0)
+    low = value - span if value < 0 else max(0.0, value - span)
+    high = value + span
+    return low, high, 0.01
 
 
 def extract_params(scad_text: str, max_params: int = 14) -> list[Param]:
@@ -76,11 +78,16 @@ def extract_params(scad_text: str, max_params: int = 14) -> list[Param]:
             value = float(raw)
         except ValueError:
             continue
+        if not math.isfinite(value):
+            continue
         unit = _unit_for(name, value, comment)
         low, high, step = _bounds(name, value, unit)
+        # OpenSCAD Customizer section headers are explicit author metadata.
+        groups = re.findall(r"^\s*/\*\s*\[([^]\n]+)\]\s*\*/\s*$", head[:match.start()], re.M)
+        group = groups[-1].strip() if groups else None
         seen[name] = Param(name=name, value=value, unit=unit,
                            description=comment or name.replace("_", " "),
-                           low=low, high=high, step=step)
+                           low=low, high=high, step=step, group=group)
         if len(seen) >= max_params:
             break
     return list(seen.values())
@@ -90,7 +97,7 @@ def rewrite_params(scad_text: str, updates: dict[str, float]) -> tuple[str, list
     """Return (new_text, applied_names). Unknown names are skipped, never fatal."""
     applied: list[str] = []
     for name, value in updates.items():
-        if not re.fullmatch(r"[A-Za-z_]\w*", name) or not isinstance(value, (int, float)):
+        if not re.fullmatch(r"[A-Za-z_]\w*", name) or isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value):
             continue
         numeric = repr(float(value)) if float(value) != int(value) else str(int(value))
         pattern = re.compile(rf"^({re.escape(name)}\s*=\s*)[-\d.eE+]+(\s*;)", re.M)
@@ -99,3 +106,17 @@ def rewrite_params(scad_text: str, updates: dict[str, float]) -> tuple[str, list
             scad_text = new_text
             applied.append(name)
     return scad_text, applied
+
+
+def validate_updates(scad_text: str, updates: dict) -> None:
+    """Reject invalid edits before invoking OpenSCAD; use the same bounds as the UI."""
+    params = {p.name: p for p in extract_params(scad_text)}
+    for name, value in updates.items():
+        p = params.get(name)
+        if p is None:
+            raise ValueError(f"Unknown editable parameter: {name}")
+        if (isinstance(value, bool) or not isinstance(value, (int, float))
+                or not math.isfinite(value) or not p.low <= value <= p.high
+                or (p.unit == "count" and not float(value).is_integer())):
+            kind = "a whole number" if p.unit == "count" else "a finite number"
+            raise ValueError(f"{name}: enter {kind} from {p.low} to {p.high} {p.unit}")

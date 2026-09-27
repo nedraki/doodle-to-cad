@@ -392,7 +392,7 @@ def test_extract_params_classifies_units_and_bounds():
     params = {p.name: p for p in extract_params(SAMPLE_SCAD)}
     assert params["hole_count"].unit == "count" and params["hole_count"].step == 1
     assert params["plate_width"].low < 80 < params["plate_width"].high
-    assert params["hole_diameter"].unit == "radius/diameter"
+    assert params["hole_diameter"].unit == "mm"
     assert params["plate_width"].description == "mm overall width"
 
 def test_rewrite_params_edits_only_top_level_assignment():
@@ -506,3 +506,65 @@ def test_normalize_dimensions_coerces_list_form():
     assert out == {"max_width": 120.0, "max_thickness": 4.5}
     assert normalize_dimensions({"max_width": 5}) == {"max_width": 5}
     assert normalize_dimensions(None) == {}
+
+
+# Issue #3: precision controls share bounds/units with request validation.
+def test_parameter_metadata_and_signed_originals():
+    params = {p.name: p for p in extract_params("""
+/* [Body] */
+width = 12.345;
+offset = -5;
+/* [Pattern] */
+hole_count = 4;
+rotation_angle = 45;
+scale_factor = 1;
+bad = 1e999;
+""")}
+    assert params["width"].group == "Body"
+    assert params["width"].step == .01
+    assert params["offset"].low <= -5 <= params["offset"].high
+    assert params["hole_count"].group == "Pattern"
+    assert params["rotation_angle"].unit == "°"
+    assert params["scale_factor"].unit == "unitless"
+    assert "bad" not in params
+
+
+def test_parameter_validation_rejects_invalid_requests():
+    import pytest
+    from doodle_to_cad.params import validate_updates
+    validate_updates(SAMPLE_SCAD, {"plate_width": 80.123, "hole_count": 5})
+    for updates in ({"plate_width": float("nan")}, {"plate_width": float("inf")},
+                    {"plate_width": -1}, {"plate_width": 161}, {"hole_count": 2.5},
+                    {"plate_width": "20"}, {"plate_width": True}, {"ghost": 2}):
+        with pytest.raises(ValueError):
+            validate_updates(SAMPLE_SCAD, updates)
+    text, applied = rewrite_params(SAMPLE_SCAD, {"plate_width": float("inf")})
+    assert text == SAMPLE_SCAD and not applied
+
+
+def test_parameter_api_rejects_invalid_edits_before_compile(tmp_path, monkeypatch):
+    from fastapi.testclient import TestClient
+    import doodle_to_cad.app as app_module
+    import doodle_to_cad.openscad as openscad_module
+    scad = tmp_path / "model.scad"
+    scad.write_text(SAMPLE_SCAD)
+    (tmp_path / "parameters.json").write_text('{"params": [{"unit": "obsolete"}]}')
+    monkeypatch.setattr(app_module, "_run_dir", lambda run_id: (tmp_path, scad))
+    calls = []
+    def compile_stub(*args, **kwargs):
+        calls.append(args)
+        return "/results/test/edited.stl", None
+    monkeypatch.setattr(openscad_module, "compile_stl_only", compile_stub)
+    client = TestClient(app_module.app)
+    params = client.get('/api/results/abcdef/params').json()['params']
+    assert params[2]['unit'] == 'mm'  # stale metadata is refreshed
+    for update in ({'plate_width': -1}, {'hole_count': 1.5}, {'plate_width': True},
+                   {'plate_width': 'bad'}, {'plate_width': 161}, {'ghost': 3}):
+        response = client.post('/api/results/abcdef/parametrize', json=update)
+        assert response.status_code == 422
+        assert response.json()['detail']['message']
+    assert not calls
+    response = client.post('/api/results/abcdef/parametrize', json={'plate_width': 81.123})
+    assert response.status_code == 200 and response.json()['ok']
+    assert 'plate_width = 81.123;' in calls[0][1]
+    assert scad.read_text() == SAMPLE_SCAD
