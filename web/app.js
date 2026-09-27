@@ -117,7 +117,7 @@ async function openParamPanel(){
         lastGroup=group;
       }
       const row=document.createElement('div');row.className='param-row';
-      const id=`param-${index}`,label=p.description||p.name;
+      const id=`param-${index}`,label=p.label||p.description||p.name;
       const unit=p.unit==='radius/diameter'?'mm':(p.unit||'mm');
       const step=unit==='count'?1:0.01;
       const format=value=>Number(value.toFixed(2));
@@ -130,6 +130,12 @@ async function openParamPanel(){
         <div id="${id}-help" class="param-help"></div>
         <p id="${id}-error" class="param-error" aria-live="polite" hidden></p>
         <button type="button" class="param-reset" data-reset="${escapeHtml(p.name)}"></button>`;
+      if(p.label&&p.description){
+        const effect=document.createElement('p');effect.className='param-help';effect.textContent=p.description;
+        effect.id=`${id}-effect`;row.append(effect);
+        row.querySelector('[type=range]').setAttribute('aria-describedby',effect.id);
+        row.querySelector('[type=number]').setAttribute('aria-describedby',`${id}-help ${id}-error ${effect.id}`);
+      }
       container.append(row);
       const slider=row.querySelector('[type=range]'),number=row.querySelector('[type=number]'),output=row.querySelector('output'),error=row.querySelector('.param-error');
       for(const input of [slider,number]){input.min=p.low;input.max=p.high}

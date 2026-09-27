@@ -100,7 +100,7 @@ def parametrize(run_id: str, updates: dict):
     if not stl_url:
         return {"ok": False, "applied": applied,
                 "message": error or "Recompile produced no mesh — parameters reverted."}
-    return {"ok": True, "applied": applied, "stl": stl_url}
+    return {"ok": True, "applied": applied, "stl": stl_url, "params": [p.to_dict() for p in extract_params(edited)]}
 
 
 @app.post("/api/generate")
