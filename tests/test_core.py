@@ -568,3 +568,31 @@ def test_parameter_api_rejects_invalid_edits_before_compile(tmp_path, monkeypatc
     assert response.status_code == 200 and response.json()['ok']
     assert 'plate_width = 81.123;' in calls[0][1]
     assert scad.read_text() == SAMPLE_SCAD
+
+
+def test_concurrent_parameter_edits_use_isolated_artifacts(tmp_path, monkeypatch):
+    from concurrent.futures import ThreadPoolExecutor
+    from threading import Barrier
+    import doodle_to_cad.app as app_module
+    import doodle_to_cad.openscad as openscad_module
+
+    original = tmp_path / 'model.scad'
+    original.write_text(SAMPLE_SCAD)
+    monkeypatch.setattr(app_module, '_run_dir', lambda _: (tmp_path, original))
+    barrier = Barrier(2)
+
+    def compile_stub(args, cwd):
+        # Both sources must coexist while their compilations overlap.
+        barrier.wait(timeout=5)
+        source = (cwd / args[-1]).read_text()
+        (cwd / args[2]).write_text(source)
+        return True, ''
+
+    monkeypatch.setattr(openscad_module, 'run', compile_stub)
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        results = list(pool.map(lambda width: app_module.parametrize('abcdef', {'plate_width': width}), [81, 82]))
+    assert results[0]['stl'] != results[1]['stl']
+    for width, result in zip([81, 82], results):
+        filename = result['stl'].split('/')[-1].split('?')[0]
+        assert f'plate_width = {width};' in (tmp_path / filename).read_text()
+    assert original.read_text() == SAMPLE_SCAD
