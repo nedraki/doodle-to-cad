@@ -24,7 +24,7 @@ async function health(){try{const h=await fetch('/api/health?refresh=true').then
 const STAGE_LABELS={queued:'Queued…',analyzing:'Reading ink and geometry…',interpreting:'Building the object and part graph…',generating:'Authoring parametric OpenSCAD…',finalizing:'Preparing the 3D model…'};
 function stageLabel(stage){if(!stage)return'Working…';const m=/^(\w+) \(attempt (\d)\)$/.exec(stage);if(m){if(m[1]==='compiling')return`Compiling STL — attempt ${m[2]} of 3…`;if(m[1]==='supervising')return`CAD supervisor reviewing attempt ${m[2]}…`}return STAGE_LABELS[stage]||'Working…'}
 function showError(message,aborted){show('error');$('#error').innerHTML=`<h2>GENERATION STOPPED</h2><p>${escapeHtml(message)}</p><button type="button" id="returnToDrawing">← Return to drawing</button>`;$('#returnToDrawing').onclick=()=>{$('#inputTools').hidden=false;$('#deckTitle').textContent='BLUEPRINT DECK — FRONT & PROJECTED VIEWS';show('blueprint')};void aborted}
-function escapeHtml(value){const el=document.createElement('div');el.textContent=String(value);return el.innerHTML}
+function escapeHtml(value){const el=document.createElement('div');el.textContent=String(value);return el.innerHTML.replaceAll('"','&quot;')}
 function show(id){['result','working','error'].forEach(x=>$('#'+x).hidden=x!==id)}
 async function pollJob(id,onStage){
   // Poll the job until the server reports it finished. Transient network
@@ -103,25 +103,79 @@ async function openParamPanel(){
     const data=await fetch(`/api/results/${runId}/params`).then(r=>{if(!r.ok)throw 0;return r.json()});
     if(!data.params?.length)
       {$('#paramSliders').innerHTML='<p class="param-hint">This model exposes no editable parameters. Use full regeneration.</p>';$('#paramStatus').textContent='';return}
-    paramState={runId,base:{},current:{}};
-    $('#paramSliders').innerHTML=data.params.map(p=>{
+    paramState={runId,base:{},current:{},controls:new Map()};
+    const list=$('#paramSliders');list.replaceChildren();
+    let lastGroup=null,container=list;
+    data.params.forEach((p,index)=>{
       paramState.base[p.name]=p.value;paramState.current[p.name]=p.value;
-      return `<div class="param-row"><label><span>${escapeHtml(p.description||p.name)}</span><output data-out="${p.name}">${p.value}</output></label>
-      <input type="range" data-param="${p.name}" min="${p.low}" max="${p.high}" step="${p.step}" value="${p.value}">
-      <button type="button" class="param-reset" data-reset="${p.name}">reset ${p.value}</button></div>`}).join('');
-    $('#paramSliders').querySelectorAll('input[type=range]').forEach(input=>{
-      const name=input.dataset.param;
-      input.oninput=()=>{
-        paramState.current[name]=parseFloat(input.value);
-        $(`output[data-out="${name}"]`).textContent=input.value;
-        scheduleParamCompile();
+      // Only use explicit metadata; names do not imply a geometric feature.
+      const group=p.group||null;
+      if(group!==lastGroup){
+        container=list;
+        if(group){container=document.createElement('fieldset');container.className='param-group';
+          const legend=document.createElement('legend');legend.textContent=group;container.append(legend);list.append(container)}
+        lastGroup=group;
+      }
+      const row=document.createElement('div');row.className='param-row';
+      const id=`param-${index}`,label=p.description||p.name;
+      const unit=p.unit==='radius/diameter'?'mm':(p.unit||'mm');
+      const step=unit==='count'?1:0.01;
+      const format=value=>Number(value.toFixed(2));
+      row.innerHTML=`<label id="${id}-label" for="${id}-number">${escapeHtml(label)}</label>
+        <div class="param-value"><output data-out="${escapeHtml(p.name)}"></output><span class="param-unit">${escapeHtml(unit)}</span></div>
+        <input id="${id}-slider" type="range" data-param="${escapeHtml(p.name)}" aria-labelledby="${id}-label" step="any">
+        <div class="param-entry"><button type="button" data-adjust="-1" aria-label="Decrease ${escapeHtml(label)}">−</button>
+        <input id="${id}-number" type="number" aria-labelledby="${id}-label" aria-describedby="${id}-help ${id}-error">
+        <button type="button" data-adjust="1" aria-label="Increase ${escapeHtml(label)}">+</button></div>
+        <div id="${id}-help" class="param-help"></div>
+        <p id="${id}-error" class="param-error" aria-live="polite" hidden></p>
+        <button type="button" class="param-reset" data-reset="${escapeHtml(p.name)}"></button>`;
+      container.append(row);
+      const slider=row.querySelector('[type=range]'),number=row.querySelector('[type=number]'),output=row.querySelector('output'),error=row.querySelector('.param-error');
+      for(const input of [slider,number]){input.min=p.low;input.max=p.high}
+      number.step=String(step);
+      slider.step=unit==='count'?'1':'0.1';
+      // Anchor the slider to a decimal grid, even when generated bounds are fractional.
+      slider.min=Math.ceil(p.low/Number(slider.step))*Number(slider.step);
+      slider.max=Math.floor(p.high/Number(slider.step))*Number(slider.step);
+      row.querySelector('.param-help').textContent=`${format(p.low)}–${format(p.high)} ${unit} · slider ${slider.step} · buttons ±${step}`;
+      const reset=row.querySelector('[data-reset]');reset.textContent=`↺ Reset to ${format(p.value)} ${unit}`;
+      reset.setAttribute('aria-label',`Reset ${label} to ${format(p.value)} ${unit}`);
+      const sync=value=>{
+        slider.value=value;number.value=format(value);output.textContent=format(value);
+        slider.setAttribute('aria-valuetext',`${format(Number(slider.value))} ${unit}`);
+        number.setAttribute('aria-invalid','false');error.hidden=true;
+        row.querySelector('[data-adjust="-1"]').disabled=value<=p.low;
+        row.querySelector('[data-adjust="1"]').disabled=value>=p.high;
       };
-    });
-    $('#paramSliders').querySelectorAll('[data-reset]').forEach(b=>b.onclick=()=>{
-      const name=b.dataset.reset,def=paramState.base[name];
-      paramState.current[name]=def;
-      const input=$(`input[data-param="${name}"]`);input.value=def;$(`output[data-out="${name}"]`).textContent=def;
-      scheduleParamCompile();
+      const commit=value=>{paramState.current[p.name]=value;sync(value);scheduleParamCompile()};
+      const validate=()=>{
+        const raw=number.valueAsNumber;
+        const value=format(raw);
+        if(!Number.isFinite(raw)||raw<p.low||raw>p.high||value<p.low||value>p.high||(unit==='count'&&!Number.isInteger(raw))){
+          clearTimeout(paramTimer);number.setAttribute('aria-invalid','true');
+          error.textContent=`Enter ${unit==='count'?'a whole number':'a number'} from ${format(p.low)} to ${format(p.high)} ${unit}.`;error.hidden=false;
+          return false;
+        }
+        commit(value);return true;
+      };
+      const adjust=direction=>{
+        if(number.getAttribute('aria-invalid')==='true')return;
+        commit(Math.min(p.high,Math.max(p.low,format(format(paramState.current[p.name])+direction*step))));
+      };
+      slider.oninput=()=>commit(format(Number(slider.value)));
+      number.oninput=validate;
+      for(const input of [slider,number])input.addEventListener('keydown',event=>{
+        const direction={ArrowUp:1,ArrowRight:1,ArrowDown:-1,ArrowLeft:-1}[event.key];
+        if(direction&&input===number&&['ArrowUp','ArrowDown'].includes(event.key)){event.preventDefault();adjust(direction)}
+        if(event.key==='Enter'&&input===number){event.preventDefault();validate()}
+        if(event.key==='Escape'&&number.getAttribute('aria-invalid')==='true'){
+          event.preventDefault();event.stopPropagation();sync(paramState.current[p.name]);scheduleParamCompile();
+        }
+      });
+      row.querySelectorAll('[data-adjust]').forEach(button=>button.onclick=()=>adjust(Number(button.dataset.adjust)));
+      reset.onclick=()=>commit(paramState.base[p.name]);
+      paramState.controls.set(p.name,sync);sync(p.value);
     });
     $('#paramStatus').textContent='';
   }catch{
@@ -134,7 +188,7 @@ function scheduleParamCompile(){
   paramTimer=setTimeout(runParamCompile,350); // coalesce rapid drags into one compile
 }
 async function runParamCompile(){
-  if(!paramState)return;
+  if(!paramState||$('#paramSliders [aria-invalid="true"]'))return;
   const changed=Object.entries(paramState.current).filter(([k,v])=>v!==paramState.base[k]);
   const status=$('#paramStatus');
   if(!changed.length){status.textContent='';viewer?.replaceStl(currentRun.files.stl);$('#stl').href=currentRun.files.stl;return}
@@ -153,8 +207,8 @@ async function runParamCompile(){
 }
 $('#paramReset')?.addEventListener('click',()=>{
   if(!paramState)return;
+  clearTimeout(paramTimer);
   paramState.current={...paramState.base};
-  $('#paramSliders').querySelectorAll('input[type=range]').forEach(i=>{i.value=paramState.base[i.dataset.param]});
-  $('#paramSliders').querySelectorAll('output').forEach(o=>{o.textContent=paramState.base[o.dataset.out]});
+  paramState.controls.forEach((sync,name)=>sync(paramState.base[name]));
   runParamCompile();
 });

@@ -98,3 +98,27 @@ body:has(#paramPanel[open]){overflow:hidden}
   #result {grid-template-columns:minmax(0,1fr)}
   #result .result-note {grid-column:1}
 }
+
+/* Comfortable precision controls, including keyboard and touch targets. */
+#paramSliders .param-row{position:relative;gap:8px;padding-bottom:18px;border-bottom:1px solid #ccc4b8}
+#paramSliders .param-row label{display:block;margin:0;font-weight:700;color:var(--ink);overflow-wrap:anywhere}
+.param-value{display:flex;align-items:baseline;gap:6px}
+#paramSliders .param-row output{font-size:22px;font-variant-numeric:tabular-nums;overflow-wrap:anywhere;min-width:0;flex:0 1 auto}
+.param-unit{font-size:13px;color:#596575}
+#paramSliders input[type=range]{appearance:none;-webkit-appearance:none;height:44px;margin:0;padding:0;background:transparent;cursor:pointer;flex:none}
+#paramSliders input[type=range]::-webkit-slider-runnable-track{height:8px;background:#dbd4c7;border-radius:8px}
+#paramSliders input[type=range]::-moz-range-track{height:8px;background:#dbd4c7;border-radius:8px}
+#paramSliders input[type=range]::-webkit-slider-thumb{appearance:none;width:28px;height:28px;margin-top:-10px;border:2px solid var(--ink);border-radius:50%;background:var(--orange)}
+#paramSliders input[type=range]::-moz-range-thumb{width:24px;height:24px;border:2px solid var(--ink);border-radius:50%;background:var(--orange)}
+.param-entry{display:grid;grid-template-columns:44px minmax(0,1fr) 44px;gap:8px}
+.param-entry button,.param-entry input{min-width:0;min-height:44px;border:2px solid var(--ink);border-radius:8px;background:#fffdfa;color:var(--ink);font:inherit;text-align:center;margin:0;padding:6px}
+.param-entry button{font-size:22px;cursor:pointer}
+.param-entry button:disabled{opacity:.4;cursor:default}
+#paramSliders input:focus-visible{outline:3px solid var(--orange);outline-offset:2px}
+#paramSliders input[aria-invalid=true]{border-color:#b23b3b;background:#fff2ef}
+.param-help{font-size:11px;color:#596575}
+.param-error{margin:0;color:#a12a2a;font-size:12px}
+#paramSliders .param-reset{align-self:flex-start;min-height:44px;padding:6px 8px;font-size:12px;color:#4b5263;text-align:left}
+.param-group{display:flex;flex-direction:column;gap:20px;min-width:0;margin:0;padding:0;border:0}
+.param-group legend{font-size:12px;font-weight:bold;padding:0 0 14px;text-transform:uppercase;overflow-wrap:anywhere}
+#paramSliders input[type=range]{border:0;border-radius:0;box-shadow:none}
