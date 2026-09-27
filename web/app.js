@@ -76,7 +76,15 @@ $('#modify').onclick=async()=>{if(!currentRun){return $('#modifyDialog').showMod
 
 /* ---- interactive viewer + parametric editing ---- */
 let viewer=null,paramState=null,paramTimer=null;
-function hideParamPanel(){$('#paramPanel').hidden=true;$('#paramSliders').innerHTML='';paramState=null}
+function closeParamPanel(){$('#paramPanel').close();$('#modify').setAttribute('aria-expanded','false')}
+function hideParamPanel(){closeParamPanel();clearTimeout(paramTimer);$('#paramSliders').innerHTML='';paramState=null}
+$('#paramClose').onclick=()=>{closeParamPanel();$('#modify').focus()};
+$('#paramPanel').addEventListener('cancel',e=>{e.preventDefault();$('#paramClose').click()});
+$('#paramPanel').addEventListener('click',e=>{
+  if(e.target!==e.currentTarget)return;
+  const bounds=e.currentTarget.getBoundingClientRect();
+  if(e.clientX<bounds.left||e.clientX>bounds.right||e.clientY<bounds.top||e.clientY>bounds.bottom)$('#paramClose').click();
+});
 $('#viewerWrap')?.addEventListener('click',e=>{
   const t=e.target.closest('button');if(!t)return;
   if(t.dataset.rotate!==undefined)viewer?.setAutoRotate(!viewer.controls.autoRotate);
@@ -86,8 +94,11 @@ $('#viewerWrap')?.addEventListener('click',e=>{
 });
 async function openParamPanel(){
   const runId=currentRun?.id;if(!runId)return hideParamPanel();
+  if(!$('#paramPanel').open)$('#paramPanel').showModal();
+  $('#modify').setAttribute('aria-expanded','true');
+  $('#paramClose').focus({preventScroll:true});
+  if(paramState?.runId===runId)return;
   $('#paramStatus').textContent='reading parameters…';$('#paramStatus').className='';
-  $('#paramPanel').hidden=false;
   try{
     const data=await fetch(`/api/results/${runId}/params`).then(r=>{if(!r.ok)throw 0;return r.json()});
     if(!data.params?.length)

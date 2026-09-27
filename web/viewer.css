@@ -34,23 +34,35 @@
 #views.static-strip img{width:100%;background:#fff;border-radius:8px}
 #views.static-strip figcaption{font-size:10px;letter-spacing:.08em;color:#7c86a0;text-transform:uppercase;text-align:center}
 
-/* Parametric edit panel (slides in on Modify) + viewer layout */
-#paramLayout{display:flex;gap:12px;align-items:stretch}
+/* Modal parameter drawer, anchored to the screen's right edge. */
+#paramLayout{display:flex;gap:12px;align-items:stretch;height:min(62vh,720px)}
 #paramLayout #viewerWrap{flex:1;min-width:0}
 #paramPanel{
-  width:230px;flex:0 0 230px;
-  background:#f4f1ea;border:1px solid #d8d2c4;border-radius:14px;
-  padding:12px 14px;display:flex;flex-direction:column;gap:10px;
+  position:fixed;inset:0 0 0 auto;margin:0;
+  width:min(380px,calc(100vw - 32px));height:100dvh;max-height:100dvh;max-width:none;
+  overflow:hidden;background:var(--paper);color:var(--ink);
+  border:0;border-left:3px solid var(--ink);border-radius:0;
+  padding:20px;box-shadow:-8px 0 0 #0002;
 }
-#paramPanel b{font-size:12px;letter-spacing:.12em}
+#paramPanel[open]{display:flex;flex-direction:column;gap:20px}
+#paramPanel:not([open]){display:none}
+#paramPanel::backdrop{background:rgba(13,23,34,.28)}
+body:has(#paramPanel[open]){overflow:hidden}
+#paramPanel b{font-size:13px;letter-spacing:0}
+.param-head{display:flex;align-items:center;justify-content:space-between;flex:none;gap:12px;border-bottom:3px solid var(--ink);padding-bottom:16px}
+#paramClose{width:36px;height:36px;flex:none;font-size:24px;border:2px solid var(--ink);border-radius:50%;background:#fffdfa;color:var(--ink);cursor:pointer}
+#paramPanel button:focus-visible{outline:3px solid var(--orange);outline-offset:3px}
 #paramPanel .param-hint{margin:0;font-size:11px;color:#7c86a0;line-height:1.35}
-#paramSliders{display:flex;flex-direction:column;gap:12px;overflow-y:auto;max-height:min(46vh,420px)}
+#paramSliders{display:flex;flex:1;min-height:0;flex-direction:column;gap:20px;overflow-y:auto;scrollbar-gutter:stable;padding-right:8px}
 #paramSliders .param-row{display:flex;flex-direction:column;gap:2px}
-#paramSliders .param-row label{display:flex;justify-content:space-between;font-size:11px;letter-spacing:.04em;color:#4b5263;text-transform:uppercase}
-#paramSliders .param-row output{font-weight:700;color:#1d3557}
-#paramSliders input[type=range]{width:100%;accent-color:#2f6fb5}
-#paramPanel .param-foot{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:auto}
-#paramPanel .param-foot #paramStatus{font-size:11px;color:#7c86a0;min-height:14px}
+#paramSliders .param-row label{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin:0 0 6px;font-size:13px;letter-spacing:0;color:#4b5263}
+#paramSliders .param-row label span{min-width:0;overflow-wrap:anywhere}
+#paramSliders .param-row output{flex:none}
+#paramSliders .param-row output{font-weight:700;color:var(--ink)}
+#paramSliders input[type=range]{width:100%;accent-color:var(--orange)}
+#paramPanel .param-foot{display:flex;flex:none;align-items:center;justify-content:space-between;gap:8px;margin-top:auto;border-top:3px solid var(--ink);padding-top:16px}
+#paramReset{flex:none;min-height:40px;padding:8px 14px;font:inherit;font-weight:bold;border:3px solid var(--ink);border-radius:24px;background:var(--yellow);color:var(--ink);box-shadow:2px 3px #bbb;cursor:pointer}
+#paramPanel .param-foot #paramStatus{font-size:12px;color:#596575;min-height:14px;overflow-wrap:anywhere;min-width:0}
 #paramPanel .param-foot #paramStatus.busy{color:#b58a2f}
 #paramPanel .param-foot #paramStatus.fail{color:#b23b3b}
 .param-row .param-reset{font:inherit;font-size:10px;border:none;background:none;color:#7c86a0;cursor:pointer;text-decoration:underline;padding:0}
@@ -59,13 +71,14 @@
 #result {
   display:grid;
   grid-template-columns:90px minmax(0,1fr);
-  grid-template-rows:auto minmax(260px,1fr) auto auto auto auto;
+  grid-template-rows:auto auto auto auto auto auto;
+  align-content:start;
   gap:10px;
   padding:14px;
   overflow:auto;
 }
 #result .badges {position:static;grid-column:1 / -1;flex-wrap:wrap}
-#result #paramLayout {grid-column:1 / -1;min-height:0}
+#result #paramLayout {grid-column:1 / -1;min-height:360px}
 #result #viewerWrap {height:100%;min-height:260px;display:flex;flex-direction:column}
 .viewer3d .viewer-tools {position:static;flex-wrap:wrap;padding:8px;flex:none}
 .viewer3d .viewer-viewport {position:relative;flex:1;min-height:0;overflow:hidden}
