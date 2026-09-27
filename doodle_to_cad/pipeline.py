@@ -52,6 +52,10 @@ Hard requirements:
 - Never create one solid per drawing view and never lay projections out as geometry.
 - Fuse views into one coherent object at a shared origin.
 - Use millimetres, named parameters and modules; preserve functional parts, bends, attachments, symmetry and repetition.
+- Before the parameter declarations, include a /* doodle-meta JSON */ comment with version 1, parameters and features objects. Example:
+  /* doodle-meta {"version":1,"parameters":{"width":{"label":"Overall width","description":"Changes the body width","unit":"mm","feature":"body_width"}},"features":{"body_width":{"kind":"dimension","axis":"x","label":"Overall width"}}} */
+- Metadata parameters are an explicit allowlist of user-editable numeric top-level assignments at column 0 before any module/function. Give every control a descriptive label, effect description, unit (mm, °, count, unitless), and optional feature ID. Exclude epsilon, tessellation, and other implementation constants. Keep derived assignments out of the editing allowlist.
+- Feature associations must be explicit. Overall dimension features use kind dimension and axis x/y/z. Local features use kind region, label, min and max arrays of three CAD-world coordinates in mm outlining the feature's bounding region. Each coordinate is a number or {"parameter":"name","scale":0.5,"offset":0}; references must name literal numeric top-level assignments. Include every editable dependency in these coordinates so outlines track edits; omit a region if its placement cannot be represented accurately. Never guess feature associations from variable names.
 - Implement every feature marked hole, slot or through_cutout subtractively with difference(); cutters must fully traverse the owning wall/plate with a small epsilon margin.
 - A cutter's axis must be PERPENDICULAR to the wall it pierces: front-view openings cut along Y -> rotate([90,0,0]) before cylinder(), or use a cube whose Y side spans -eps..thickness+eps. A plain cylinder() has its axis along Z and will drill a vertical tunnel (breaking top/bottom edges) instead of a front hole. Right-view openings cut along X -> rotate([0,90,0]). Rounded slot ends need the same rotation as their slot's through-axis.
 - For a through-cutter, the primitive's own axis must cross the material: use `cylinder(..., center=true)` at the hole centre, or a cube spanning from one epsilon outside the far face to the other (e.g. y from -eps to thickness+eps). A cylinder started at the near face with center=false cuts nothing.
@@ -73,6 +77,7 @@ Hard requirements:
 COMPILER_REPAIR_PROMPT = """You repair OpenSCAD compiler and empty-object failures without redesigning the part.
 Return complete OpenSCAD code only. Make the smallest source change that compiles to a non-empty STL.
 Preserve all dimensions, profiles, holes, slots, symmetry, modules and the intended construction family.
+Preserve and update the doodle-meta JSON comment to match any changed geometry and parameter declarations.
 Use only real OpenSCAD syntax and built-ins. Use cube(), not box(); use rotate_extrude(), not revolve().
 Never assign geometry or module invocations to variables. The final program must instantiate one connected design."""
 
