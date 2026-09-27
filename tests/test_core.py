@@ -578,6 +578,8 @@ def test_concurrent_parameter_edits_use_isolated_artifacts(tmp_path, monkeypatch
 
     original = tmp_path / 'model.scad'
     original.write_text(SAMPLE_SCAD)
+    history = tmp_path / 'attempts.json'
+    history.write_text('[{"attempt": 1, "score": 100}]')
     monkeypatch.setattr(app_module, '_run_dir', lambda _: (tmp_path, original))
     barrier = Barrier(2)
 
@@ -595,4 +597,8 @@ def test_concurrent_parameter_edits_use_isolated_artifacts(tmp_path, monkeypatch
     for width, result in zip([81, 82], results):
         filename = result['stl'].split('/')[-1].split('?')[0]
         assert f'plate_width = {width};' in (tmp_path / filename).read_text()
+        scad_filename = result['scad'].split('/')[-1]
+        assert scad_filename == filename.replace('.stl', '.scad')
+        assert (tmp_path / scad_filename).read_text() == (tmp_path / filename).read_text()
     assert original.read_text() == SAMPLE_SCAD
+    assert history.read_text() == '[{"attempt": 1, "score": 100}]'

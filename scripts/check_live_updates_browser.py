@@ -29,10 +29,19 @@ with sync_playwright() as pw:
     assert page.evaluate('viewer.mesh===window.previousMesh')
     # Orbit remains usable while compilation is pending; replacement preserves it.
     page.evaluate('viewer.camera.position.x+=10; viewer.controls.update(); window.cameraBefore=viewer.camera.position.toArray()')
+    assert page.locator('#statusBadge').get_attribute('data-state') == 'updating'
+    original_scad = page.locator('#scad').get_attribute('href')
+    original_badge = page.evaluate('resultVersion.original.badge')
+    original_history = page.locator('#attemptReport').inner_html()
     url = page.evaluate('currentRun.files.stl')
-    requests[0].fulfill(json={'ok': True, 'stl': url, 'params': params})
+    requests[0].fulfill(json={'ok': True, 'stl': url, 'scad': '/results/test/edited.scad', 'params': params})
     page.wait_for_function('document.querySelector("#paramStatus").textContent.includes("updated")')
     assert page.evaluate('viewer.camera.position.toArray().every((v,i)=>Math.abs(v-window.cameraBefore[i])<1e-7)')
+    assert page.locator('#scad').get_attribute('href') == '/results/test/edited.scad'
+    assert page.locator('#originalScad').get_attribute('href') == original_scad
+    assert page.locator('#statusBadge').get_attribute('data-state') == 'edited'
+    assert 'not geometrically validated' in page.locator('#statusBadge').inner_text()
+    assert 'COMPILED ONLY' in page.locator('#resultTitle').inner_text()
     page.evaluate('window.previousMesh=viewer.mesh')
     page.fill('#param-0-number', '24')
     page.wait_for_timeout(500)
@@ -40,9 +49,15 @@ with sync_playwright() as pw:
     page.wait_for_function('document.querySelector("#paramStatus").className==="fail"')
     assert page.evaluate('viewer.mesh===window.previousMesh')
     assert 'last successful geometry retained' in page.locator('#paramStatus').inner_text()
+    assert page.locator('#statusBadge').get_attribute('data-state') == 'failed'
+    assert page.locator('#scad').get_attribute('href') == '/results/test/edited.scad'
     page.click('#paramReset')
     page.wait_for_function('document.querySelector("#paramStatus").textContent===""')
     assert page.input_value('#param-0-number') == '20'
+    assert page.locator('#scad').get_attribute('href') == original_scad
+    assert page.locator('#stl').get_attribute('href') == url
+    assert page.locator('#statusBadge').inner_text() == 'Original · ' + original_badge
+    assert page.locator('#attemptReport').inner_html() == original_history
     assert not errors, errors
     browser.close()
 print('Live update browser checks passed')
