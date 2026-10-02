@@ -8,175 +8,356 @@ is OpenSCAD, the viewer is your browser.
 
 | Your sketch (as drawn) | Generated part, front view | Generated part, right view | Generated part, 3D view |
 |---|---|---|---|
-| ![hand-drawn sheet](docs/demo/21_mv_sheet_done.png) | ![front render](docs/demo/26_mv_front_render.png) | ![right render](docs/demo/27_mv_right_render.png) | ![3/4 orbit render](docs/demo/28_mv_orbit_isometric.png) |
+| ![hand-drawn sheet](docs/demo/kit_sketch.png) | ![front render](docs/demo/kit_view_front.png) | ![right render](docs/demo/kit_view_right.png) | ![3/4 orbit render](docs/demo/kit_view_isometric.png) |
 
-*The part is written as .STL and [parametric OpenSCAD](docs/demo/multiview_model.scad).*
+*The part is written as .STL and [parametric OpenSCAD](docs/demo/kit_model.scad).*
 
 ## See it work
+
+Everything below — GIFs, stills, the hero video in the media kit — is cut
+from **one continuous recording of one live session**: one doodle, one
+generation, one result. No spliced states, no cherry-picked second run.
 
 ### From pen ink to a verified part, in one take
 
 The pen draws a genuine two-view engineering sheet — a front plate with four
-rectangular through-cutout loops, plus a thin-L side profile. No dimension
-text, no hole descriptions: the interpretation comes from ink alone.
+rectangular through-cutout loops, plus a thin-L side profile. The only text
+is the hint *"L-shaped bookend"* and a 100 mm target: all hole geometry must
+come from ink alone.
 
-![Pen-drawn multiview sheet, then launch](docs/demo/hero_multiview_flow.gif)
+![Pen-drawing the multiview sheet](docs/demo/kit_drawing.gif)
 
-The pipeline authors parametric OpenSCAD, compiles it, and a CAD supervisor
-scores the result. This run was **accepted 100/100 on the first attempt in
-91 s** by a local Qwen model. Orbit the accepted bracket — the four cutouts go
-clean through the vertical back plate:
+Launch sends it down the pipeline — OpenCV ink analysis → model
+interpretation → SCAD authoring → compile — with live stage feedback:
 
-![Orbiting the accepted bracket](docs/demo/hero_multiview_3d.gif)
+![CAD rocket in flight](docs/demo/kit_flight.png)
 
-The same part, rendered from a fixed 3/4 angle — the L profile, plate
+A CAD supervisor scores every candidate on topology, dimensions, required
+features, and projection similarity. Here two drafts scored 95.1 and were
+**rejected**; the third was **accepted 100/100** — a genuine repair loop,
+191 s end to end on a local Qwen model:
+
+![Acceptance moment — CAD supervisor accepted, 100/100](docs/demo/kit_accepted.png)
+
+Orbit the accepted bracket — the four cutouts go clean through the vertical
+back plate:
+
+![Orbiting the accepted bracket](docs/demo/kit_orbit.gif)
+
+The same part, rendered from a fixed 3/4 camera — the L profile, plate
 thickness, and all four rectangular through-holes in one frame:
 
-![Orbit view — four cutouts through the vertical plate](docs/demo/28_mv_orbit_isometric.png)
+![3/4 render — four cutouts through the vertical plate](docs/demo/kit_view_isometric.png)
 
 This result isn't just eyeballed: an independent STL topology check
 (`scripts/verify_stl.py`) confirms **genus 4 — exactly four through-holes**,
-one watertight component, and dimensions within 9% of the reference
-proportions. The supervisor's own front-view render agrees:
+one watertight component (closed manifold, edge defect 0), and extents
+**73.11 × 47.78 × 100.00 mm** — max dimension exactly on the 100 mm target.
+The supervisor's own fixed-camera renders agree:
 
 | Your sketch (as drawn) | Generated part, front view | Generated part, right view | Generated part, 3D view |
 |---|---|---|---|
-| ![hand-drawn sheet](docs/demo/21_mv_sheet_done.png) | ![front render](docs/demo/26_mv_front_render.png) | ![right render](docs/demo/27_mv_right_render.png) | ![3/4 orbit render](docs/demo/28_mv_orbit_isometric.png) |
+| ![hand-drawn sheet](docs/demo/kit_sketch.png) | ![front render](docs/demo/kit_view_front.png) | ![right render](docs/demo/kit_view_right.png) | ![3/4 orbit render](docs/demo/kit_view_isometric.png) |
 
-The model wrote this part as parametric OpenSCAD —
-[`multiview_model.scad`](docs/demo/multiview_model.scad), shown in full below:
-
-<details>
-<summary>The parametric OpenSCAD the model wrote for this part (101 lines)</summary>
+The model wrote this part as parametric OpenSCAD with a `doodle-meta` block
+declaring which variables are editable — head of
+[`kit_model.scad`](docs/demo/kit_model.scad):
 
 ```openscad
-// L-shaped bookend
-// Derived sizes: width=73.11 (X), depth=47.78 (Y), height=100.0 (Z)
-// Right view (view_1) defines the L-profile in YZ plane, extruded along X.
-// Front view (view_2) defines four rectangular through-cutouts on the vertical face, cut along Y.
+/* doodle-meta {"version":1,"parameters":{
+     "width":  {"label":"Overall width",  "unit":"mm","feature":"body_width"},
+     "depth":  {"label":"Overall depth",  "unit":"mm","feature":"body_depth"},
+     "height": {"label":"Overall height", "unit":"mm","feature":"body_height"},
+     "thickness":{"label":"Wall thickness","unit":"mm","feature":"wall_thickness"}},
+   "features":{"body_width":{"kind":"dimension","axis":"x"}, ...}} */
 
-// --- Parameters ---
-width = 73.11;      // X
-depth = 47.78;      // Y
-height = 100.0;     // Z
-
-// L-profile parameters derived from right view polygon
-// Right view: u maps to +Y, v maps to -Z
-// Polygon points (u,v) -> (Y, Z):
-// (0.0462, 0.0157) -> Y=2.21, Z=98.43
-// (0.0462, 0.9822) -> Y=2.21, Z=1.78
-// (0.9394, 0.9866) -> Y=44.88, Z=1.34
-// (0.9441, 0.8594) -> Y=45.11, Z=14.06
-// (0.3024, 0.855)  -> Y=14.45, Z=14.50
-// (0.3116, 0.0157) -> Y=14.89, Z=98.43
-
-// Simplified L-profile:
-// Vertical backplate: Y from 0 to backplate_depth, Z from 0 to height
-// Horizontal base: Y from 0 to depth, Z from 0 to base_height
-// The inner corner is at (Y=inner_y, Z=inner_z)
-
-backplate_depth = 14.5;  // Y extent of vertical part
-base_height = 14.5;      // Z extent of horizontal part
-
-// Cutout parameters from front view (view_2)
-// Front view: u maps to +X, v maps to -Z
-// Outer profile spans u: 0.0302-0.9665, v: 0.0133-0.9823
-// Map to physical: X = u * width, Z = (1-v) * height
-
-// Cutout 1 (contour_8): upper-left window
-// center_view_normalized: (0.2689, 0.1968), size: (0.3069, 0.146)
-c1_cx = 0.2689 * width;
-c1_cz = (1.0 - 0.1968) * height;
-c1_w = 0.3069 * width;
-c1_h = 0.146 * height;
-
-// Cutout 2 (contour_10): upper-right vertical slot
-// center_view_normalized: (0.5577, 0.1968), size: (0.1245, 0.3661)
-c2_cx = 0.5577 * width;
-c2_cz = (1.0 - 0.1968) * height;
-c2_w = 0.1245 * width;
-c2_h = 0.3661 * height;
-
-// Cutout 3 (contour_6): lower-right vertical slot
-// center_view_normalized: (0.7734, 0.7024), size: (0.1245, 0.4447)
-c3_cx = 0.7734 * width;
-c3_cz = (1.0 - 0.7024) * height;
-c3_w = 0.1245 * width;
-c3_h = 0.4447 * height;
-
-// Cutout 4 (contour_4): lower-left vertical slot
-// center_view_normalized: (0.1822, 0.7024), size: (0.1245, 0.3661)
-c4_cx = 0.1822 * width;
-c4_cz = (1.0 - 0.7024) * height;
-c4_w = 0.1245 * width;
-c4_h = 0.3661 * height;
-
-eps = 0.01;
-
-// --- Modules ---
-
-module l_profile() {
-    // L-shape in YZ plane, extruded along X
-    // Vertical backplate: Y [0, backplate_depth], Z [0, height]
-    // Horizontal base: Y [0, depth], Z [0, base_height]
-    // Union of two boxes
-    translate([0, 0, 0])
-        cube([width, backplate_depth, height]);
-    translate([0, 0, 0])
-        cube([width, depth, base_height]);
-}
-
-module cutout_cutter(cx, cz, w, h) {
-    // Rectangular through-cutout on vertical face (front face at Y=0)
-    // Cut along Y axis. The cutter spans Y from -eps to backplate_depth+eps
-    // Centered at (cx, cz) in XZ plane
-    translate([cx - w/2, -eps, cz - h/2])
-        cube([w, backplate_depth + 2*eps, h]);
-}
-
-// --- Main Design ---
-
-difference() {
-    l_profile();
-    
-    // Cutout 1: upper-left window
-    cutout_cutter(c1_cx, c1_cz, c1_w, c1_h);
-    
-    // Cutout 2: upper-right vertical slot
-    cutout_cutter(c2_cx, c2_cz, c2_w, c2_h);
-    
-    // Cutout 3: lower-right vertical slot
-    cutout_cutter(c3_cx, c3_cz, c3_w, c3_h);
-    
-    // Cutout 4: lower-left vertical slot
-    cutout_cutter(c4_cx, c4_cz, c4_w, c4_h);
-}
+width  = 73.11;
+depth  = 47.78;
+height = 100.0;
+thickness = 10.0;
 ```
 
-The exact, complete source — including all four cutout contours and the
-L-profile polygon with per-vertex view-mapping comments — is in
-[`docs/demo/multiview_model.scad`](docs/demo/multiview_model.scad).
+The exact, complete source — 214 lines, including the model's per-vertex
+view-mapping reasoning comments and all four cutout contours — is in
+[`docs/demo/kit_model.scad`](docs/demo/kit_model.scad):
+
+<details>
+<summary>The parametric OpenSCAD the model wrote for this part (214 lines)</summary>
+
+```openscad
+/* doodle-meta {"version":1,"parameters":{"width":{"label":"Overall width","description":"Changes the body width","unit":"mm","feature":"body_width"},"depth":{"label":"Overall depth","description":"Changes the body depth","unit":"mm","feature":"body_depth"},"height":{"label":"Overall height","description":"Changes the body height","unit":"mm","feature":"body_height"},"thickness":{"label":"Wall thickness","description":"Thickness of the L-shape walls","unit":"mm","feature":"wall_thickness"}},"features":{"body_width":{"kind":"dimension","axis":"x","label":"Overall width"},"body_depth":{"kind":"dimension","axis":"y","label":"Overall depth"},"body_height":{"kind":"dimension","axis":"z","label":"Overall height"},"wall_thickness":{"kind":"dimension","axis":"z","label":"Wall thickness"}}} */
+
+// Parameters
+width = 73.11;
+depth = 47.78;
+height = 100.0;
+thickness = 10.0; // Estimated from aspect ratio
+
+// Derived dimensions
+base_height = thickness;
+backplate_width = thickness;
+front_face_width = width;
+front_face_height = height;
+
+// Cutout parameters (derived from front view proportions)
+// View 2 (Front) mapping: X = u * width, Z = (1-v) * height
+// Outer profile bbox in view: [0.0242, 0.0111, 0.9483, 0.9778] -> Width ~0.924, Height ~0.967
+// Let's normalize cutout positions relative to the outer profile bounds for robustness.
+// Outer profile in view coords:
+// u_min = 0.0242, u_max = 0.9665 (approx from polygon) -> span_u = 0.9423
+// v_min = 0.0111, v_max = 0.9823 (approx from polygon) -> span_v = 0.9712
+// Actual CAD width/height correspond to these spans.
+// However, the spec says "measured ink spans x authoritative max dimension".
+// The outer profile polygon vertices are roughly:
+// (0.0302, 0.0133), (0.0302, 0.9823), (0.9634, 0.98), (0.9665, 0.0177)
+// This is a rectangle covering almost the whole view.
+// Let's assume the outer profile defines the full width and height of the front face.
+// So u=0 maps to X=0, u=1 maps to X=width. v=0 maps to Z=height, v=1 maps to Z=0.
+
+// Cutout 1 (contour_8): Top Left Square-ish
+// Center: (0.2689, 0.1968)
+// Size: (0.3069, 0.146)
+// X_center = 0.2689 * width
+// Z_center = (1 - 0.1968) * height
+// w = 0.3069 * width
+// h = 0.146 * height
+
+// Cutout 2 (contour_10): Top Right Slot
+// Center: (0.5577, 0.1968)
+// Size: (0.1245, 0.3661)
+// X_center = 0.5577 * width
+// Z_center = (1 - 0.1968) * height
+// w = 0.1245 * width
+// h = 0.3661 * height
+
+// Cutout 3 (contour_6): Bottom Right Slot
+// Center: (0.7734, 0.7024)
+// Size: (0.1245, 0.4447)
+// X_center = 0.7734 * width
+// Z_center = (1 - 0.7024) * height
+// w = 0.1245 * width
+// h = 0.4447 * height
+
+// Cutout 4 (contour_4): Bottom Left Slot
+// Center: (0.1822, 0.7024)
+// Size: (0.1245, 0.3661)
+// X_center = 0.1822 * width
+// Z_center = (1 - 0.7024) * height
+// w = 0.1245 * width
+// h = 0.3661 * height
+
+// Helper module for rectangular cutout through Y axis
+module rect_cutout(x, z, w, h, depth_cut) {
+    // Centered at x, z in XZ plane.
+    // Cut along Y.
+    // The backplate is at Y=0 to Y=thickness.
+    // We need to cut through the backplate.
+    // The cutout should be centered on the backplate thickness? 
+    // Usually decorative cutouts go through the visible face.
+    // The front face is at Y=0 (if we orient the L such that the vertical part is at Y=0..thickness).
+    // Wait, let's define the L-shape orientation carefully.
+    
+    // Right View (View 1) shows the L-profile.
+    // View 1 is Right View. u -> +Y, v -> -Z.
+    // Polygon: (0.0462, 0.0157) -> (0.0462, 0.9822) -> (0.9394, 0.9866) -> (0.9441, 0.8594) -> (0.3024, 0.855) -> (0.3116, 0.0157)
+    // This looks like an L-shape.
+    // Let's map it to Y-Z.
+    // u=0 is Y=0 (Front of part? No, Right view looks down X. u is Y. u=0 is left of view. 
+    // Standard Right View: Looking from +X towards -X. 
+    // The "left" of the right view corresponds to the FRONT of the object (Y=0) if we assume standard third angle?
+    // Actually, in third angle projection, the Right View is placed to the right of the Front View.
+    // The Right View shows the object from the right side.
+    // The horizontal axis of the Right View is Depth (Y).
+    // Usually, the left side of the Right View corresponds to the Front of the object (Y=0) and the right side to the Back (Y=depth).
+    // Let's verify with the polygon.
+    // The L-shape has a vertical backplate and a horizontal base.
+    // The vertical part is usually at the back (Y=depth) or front?
+    // A bookend usually has the vertical part at the back to support books, and the base extends forward.
+    // So the vertical wall is at Y=depth-thickness to Y=depth? Or Y=0 to Y=thickness?
+    // If the vertical wall is at the back, it's at high Y.
+    // Let's look at the polygon in View 1 (Right View).
+    // Points:
+    // (0.0462, 0.0157) -> Top Left
+    // (0.0462, 0.9822) -> Bottom Left
+    // (0.9394, 0.9866) -> Bottom Right
+    // (0.9441, 0.8594) -> Step Up on Right
+    // (0.3024, 0.855) -> Step Left
+    // (0.3116, 0.0157) -> Top Right (inner corner)
+    
+    // This shape is an inverted L? Or standard L?
+    // Left side (u~0.05) goes from v~0.01 to v~0.98. This is a tall vertical bar on the LEFT of the view.
+    // Bottom side (v~0.98) goes from u~0.05 to u~0.94. This is a wide horizontal bar at the BOTTOM.
+    // The "cutout" of the L is at the top right.
+    // So the material is on the Left and Bottom of the Right View.
+    // If Left of Right View = Front (Y=0), then the vertical wall is at the FRONT (Y=0..thickness).
+    // And the base extends to the BACK (Y=0..depth).
+    // This is a "front-facing" bookend? Or maybe the view is mirrored?
+    // Let's re-read standard mapping.
+    // Right View: u maps to +Y.
+    // If u=0 is Y=0, then the vertical wall is at Y=0.
+    // This means the vertical wall is at the FRONT.
+    // The base extends from Y=0 to Y=depth.
+    // This is a valid L-shape.
+    
+    // Now, where are the cutouts?
+    // The cutouts are on the "Front Face".
+    // If the vertical wall is at Y=0..thickness, the "Front Face" visible from the front (looking down Y) is the face at Y=0?
+    // Or is the "Front Face" the large vertical surface?
+    // The Front View (View 2) shows the cutouts.
+    // The Front View looks down Y.
+    // If the vertical wall is at Y=0..thickness, looking from -Y (Front) we see the face at Y=0.
+    // So the cutouts go through the wall at Y=0..thickness.
+    
+    // Let's construct the L-shape:
+    // Vertical part: X=0..width, Y=0..thickness, Z=0..height.
+    // Horizontal part: X=0..width, Y=0..depth, Z=0..thickness.
+    // This forms an L with the corner at (0,0,0).
+    // The vertical wall is at the front (Y=0).
+    // The base extends backward (Y>0).
+    
+    // Cutouts are in the vertical wall (Y=0..thickness).
+    // They are through-holes along Y.
+    
+    translate([x, -1, z]) 
+        cube([w, depth_cut, h], center=true);
+}
+
+// Main Body
+difference() {
+    // Union of L-shape
+    union() {
+        // Vertical Backplate (actually Front Plate based on Right View analysis)
+        // X: 0 to width
+        // Y: 0 to thickness
+        // Z: 0 to height
+        cube([width, thickness, height]);
+        
+        // Horizontal Base
+        // X: 0 to width
+        // Y: 0 to depth
+        // Z: 0 to thickness
+        // Note: The vertical part already covers Y:0..thickness, Z:0..thickness.
+        // So we just add the rest of the base.
+        // To avoid overlap issues in CSG (though union handles it), we can just union the two boxes.
+        cube([width, depth, thickness]);
+    }
+    
+    // Cutouts
+    // All cutouts go through the vertical wall (Y=0..thickness).
+    // We need to cut along Y.
+    // The cutters should span Y from -eps to thickness+eps.
+    
+    // Cutout 1: Top Left
+    // Center X = 0.2689 * width
+    // Center Z = (1 - 0.1968) * height
+    // Width = 0.3069 * width
+    // Height = 0.146 * height
+    c1_x = 0.2689 * width;
+    c1_z = (1 - 0.1968) * height;
+    c1_w = 0.3069 * width;
+    c1_h = 0.146 * height;
+    
+    translate([c1_x, thickness/2, c1_z])
+        cube([c1_w, thickness + 2, c1_h], center=true);
+        
+    // Cutout 2: Top Right Slot
+    // Center X = 0.5577 * width
+    // Center Z = (1 - 0.1968) * height
+    // Width = 0.1245 * width
+    // Height = 0.3661 * height
+    c2_x = 0.5577 * width;
+    c2_z = (1 - 0.1968) * height;
+    c2_w = 0.1245 * width;
+    c2_h = 0.3661 * height;
+    
+    translate([c2_x, thickness/2, c2_z])
+        cube([c2_w, thickness + 2, c2_h], center=true);
+        
+    // Cutout 3: Bottom Right Slot
+    // Center X = 0.7734 * width
+    // Center Z = (1 - 0.7024) * height
+    // Width = 0.1245 * width
+    // Height = 0.4447 * height
+    c3_x = 0.7734 * width;
+    c3_z = (1 - 0.7024) * height;
+    c3_w = 0.1245 * width;
+    c3_h = 0.4447 * height;
+    
+    translate([c3_x, thickness/2, c3_z])
+        cube([c3_w, thickness + 2, c3_h], center=true);
+        
+    // Cutout 4: Bottom Left Slot
+    // Center X = 0.1822 * width
+    // Center Z = (1 - 0.7024) * height
+    // Width = 0.1245 * width
+    // Height = 0.3661 * height
+    c4_x = 0.1822 * width;
+    c4_z = (1 - 0.7024) * height;
+    c4_w = 0.1245 * width;
+    c4_h = 0.3661 * height;
+    
+    translate([c4_x, thickness/2, c4_z])
+        cube([c4_w, thickness + 2, c4_h], center=true);
+}
+```
 
 </details>
 
 ### Reshape the model without redrawing it
 
-A simpler single-view doodle: an L-bookend with a thumb hole. After
-generation, **Modify** opens parametric sliders extracted from the SCAD
-source — drag one and the mesh recompiles live, camera untouched.
+Same session, same part: on the accepted result, **⚙ Modify design** opens a
+right-side drawer of editable parameters — exactly the variables the model
+declared in its `doodle-meta` block. Each row pairs a slider (0.1 steps)
+with a precise numeric field (±0.01 stepper buttons, typed entry), shows its
+unit and allowed range, and carries a per-parameter reset. Drag or type — the
+mesh recompiles live, camera untouched, and downloads (`.scad`/`.stl`) always
+follow the geometry you are looking at.
 
-![Single-view doodle to accepted model to live sliders](docs/demo/hero_flow.gif)
+Hover a slider and the model itself points at the feature it owns, with an
+on-model dimension overlay:
 
-![Live parametric edit: slider moved, mesh recompiled](docs/demo/07_param_live.png)
+![Hover the width slider — the model highlights the measured feature](docs/demo/kit_width_hint.png)
+
+Drag it and the mesh recompiles live, in this same take from 73.11 mm to
+109.66 mm — an independent STL check on the edited mesh confirms it is still
+genus 4 and manifold at the new extents (109.66 × 47.78 × 100.00 mm):
+
+![Live edit: hover hint, slider drag, live recompile](docs/demo/kit_live_edit.gif)
+
+![The parameter drawer after the edit: Edited badge, feature highlight, dimension overlay](docs/demo/kit_param_edit.png)
+
+Invalid entries (out of range, non-integer counts) are rejected inline and
+block compilation until fixed or reset — the viewer keeps showing the last
+successfully compiled geometry, never a broken half-state.
+
+![Row close-up: value, slider, stepper, range hint, reset](docs/demo/32_param_row_closeup.png)
+
+### How to modify a generated part
+
+1. On any result page, press **⚙ Modify design** — the parameter drawer slides
+   in from the right.
+2. Adjust any parameter three ways: drag its slider, click the −/+ buttons
+   (±0.01), or type an exact value in the numeric field. The helper line under
+   every row states the allowed range and step sizes.
+3. The part recompiles in seconds; the status line confirms
+   "*N param(s) updated*". The result badge switches to *Edited — compiled*
+   (parameter edits are compiled, not re-scored by the supervisor; original
+   generation downloads stay available under "Original generation downloads").
+4. **↺ Reset to …** on a row restores that parameter's original value;
+   **↺ Reset all** in the drawer footer restores everything.
+5. Which parameters appear is authored, not guessed: only top-level numeric
+   SCAD variables declared in the model's `doodle-meta` block are exposed
+   (with label, description, unit, optional feature link) — internal
+   constants stay hidden. See [`docs/parameter-metadata.md`](docs/parameter-metadata.md).
 
 ### Every stage, up close
 
 | Stage | What happens |
 |---|---|
-| ![sheet](docs/demo/21_mv_sheet_done.png) | **One continuous drawing sheet.** Front view plus projected top/bottom/left/right/isometric regions, orthographic guide lines snapped to your own ink. |
-| ![flight](docs/demo/03_rocket_flight.png) | **Agentic generation.** OpenCV ink analysis → model interpretation → SCAD authoring → compile, with live stage feedback and an abort button. |
-| ![result](docs/demo/23_mv_result.png) | **Supervised acceptance.** Every candidate is scored on topology, dimensions, required features, and projection similarity; the full attempt history is saved and shown. |
-| ![params](docs/demo/06_param_panel.png) | **Parametric editing.** Editable dimensions become sliders; every change recompiles the model in seconds. |
+| ![sheet](docs/demo/kit_sheet.png) | **One continuous drawing sheet.** Front view plus projected top/bottom/left/right/isometric regions, orthographic guide lines snapped to your own ink. |
+| ![flight](docs/demo/kit_flight.png) | **Agentic generation.** OpenCV ink analysis → model interpretation → SCAD authoring → compile, with live stage feedback and an abort button. |
+| ![result](docs/demo/kit_accepted.png) | **Supervised acceptance.** Every candidate is scored on topology, dimensions, required features, and projection similarity; the full attempt history is saved and shown. |
+| ![params](docs/demo/kit_param_edit.png) | **Parametric editing.** Right-side drawer: slider + precise numeric entry per parameter, live recompile, feature highlights in the viewer. |
 
 ## How the pipeline works
 
@@ -276,16 +457,26 @@ uv run pytest -q
 ## Regenerate the demo assets
 
 All screenshots and GIFs in this README were captured from the running app
-with scripted pen input — no mockups. Refresh them after any meaningful
-change:
+with scripted pen input — no mockups. The current set (prefix `kit_*`) comes
+from the v3 one-take session: a single continuous 251 s recording of one
+doodle → generation → acceptance → live edit, cut with
+`scripts/cut_demo_kit.py` (beat timeline, speed-ramp, and verification
+numbers in the media kit's `PRODUCTION.md`). Refresh them after any
+meaningful change:
 
 ```bash
-uv run playwright install chromium
-DISPLAY=:1 uv run python scripts/capture_demo_multiview.py   # multiview showcase, ~4 min
-DISPLAY=:1 uv run python scripts/capture_demo.py             # single-view + parametric flow, ~5 min
+DOODLE_PORT=8066 uv run python run.py &                        # app on the capture port
+DISPLAY=:1 TAKE_DIR=…/stills VIDEO_DIR=…/raw uv run --no-project --python 3.11 \
+  --with "playwright==1.62.0" python scripts/capture_demo_v2.py  # one take, ~5 min
+uv run python scripts/cut_demo_kit.py <take>.webm <outdir> --ramp 27:219 \
+  --beats blank=4 --beats hero_sheet=24 --beats rocket=60 --beats accepted=228 \
+  --beats orbit=240 --beats param_edit=246 --beats width_hint=245.5 \
+  --gif drawing=6:16 --gif orbit=231:12 --gif live_edit=243:7
 ```
 
-Details, stage-by-stage stills, and verification output:
+Legacy per-flow capture scripts (`capture_demo.py`,
+`capture_demo_multiview.py`) still regenerate the older `hero_*`/`20–27_*`
+set. Details, stage-by-stage stills, and verification output:
 [`docs/demo/`](docs/demo/README.md).
 
 ## Troubleshooting
