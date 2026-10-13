@@ -1,0 +1,320 @@
+{
+  "version": 2,
+  "units": "mm",
+  "name": "Four-spoke wheel",
+  "parameters": {
+    "radius": {
+      "value": 60,
+      "min": 40,
+      "max": 100,
+      "unit": "mm"
+    },
+    "rim": {
+      "value": 6,
+      "min": 4,
+      "max": 8,
+      "unit": "mm"
+    },
+    "hub_radius": {
+      "value": 12,
+      "min": 10,
+      "max": 16,
+      "unit": "mm"
+    },
+    "thickness": {
+      "value": 8,
+      "min": 4,
+      "max": 12,
+      "unit": "mm"
+    },
+    "spoke_width": {
+      "value": 6,
+      "min": 4,
+      "max": 8,
+      "unit": "mm"
+    }
+  },
+  "operations": [
+    {
+      "id": "outer",
+      "kind": "cylinder",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "radius": "__import__(\"os\")",
+      "height": "thickness",
+      "axis": "z",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": []
+    },
+    {
+      "id": "inner",
+      "kind": "cylinder",
+      "origin": [
+        0,
+        0,
+        -1
+      ],
+      "radius": "radius-rim",
+      "height": "thickness+2",
+      "axis": "z",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": []
+    },
+    {
+      "id": "rim",
+      "kind": "difference",
+      "left": "outer",
+      "right": "inner",
+      "frame": "world",
+      "depends_on": [
+        "outer",
+        "inner"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "hub",
+      "kind": "cylinder",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "radius": "hub_radius",
+      "height": "thickness",
+      "axis": "z",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": []
+    },
+    {
+      "id": "east",
+      "kind": "box",
+      "origin": [
+        "hub_radius-2",
+        "-spoke_width/2",
+        0
+      ],
+      "size": [
+        "radius-rim-hub_radius+4",
+        "spoke_width",
+        "thickness"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "connection"
+      ]
+    },
+    {
+      "id": "west",
+      "kind": "box",
+      "origin": [
+        "-radius+rim-2",
+        "-spoke_width/2",
+        0
+      ],
+      "size": [
+        "radius-rim-hub_radius+4",
+        "spoke_width",
+        "thickness"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "connection"
+      ]
+    },
+    {
+      "id": "north",
+      "kind": "box",
+      "origin": [
+        "-spoke_width/2",
+        "hub_radius-2",
+        0
+      ],
+      "size": [
+        "spoke_width",
+        "radius-rim-hub_radius+4",
+        "thickness"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "connection"
+      ]
+    },
+    {
+      "id": "south",
+      "kind": "box",
+      "origin": [
+        "-spoke_width/2",
+        "-radius+rim-2",
+        0
+      ],
+      "size": [
+        "spoke_width",
+        "radius-rim-hub_radius+4",
+        "thickness"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "connection"
+      ]
+    },
+    {
+      "id": "join0",
+      "kind": "union",
+      "left": "hub",
+      "right": "east",
+      "frame": "world",
+      "depends_on": [
+        "hub",
+        "east"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "join1",
+      "kind": "union",
+      "left": "join0",
+      "right": "west",
+      "frame": "world",
+      "depends_on": [
+        "join0",
+        "west"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "join2",
+      "kind": "union",
+      "left": "join1",
+      "right": "north",
+      "frame": "world",
+      "depends_on": [
+        "join1",
+        "north"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "join3",
+      "kind": "union",
+      "left": "join2",
+      "right": "south",
+      "frame": "world",
+      "depends_on": [
+        "join2",
+        "south"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "join4",
+      "kind": "union",
+      "left": "join3",
+      "right": "rim",
+      "frame": "world",
+      "depends_on": [
+        "join3",
+        "rim"
+      ],
+      "evidence": []
+    }
+  ],
+  "output": "join4",
+  "frames": {
+    "world": {
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    }
+  },
+  "bodies": [
+    {
+      "id": "part",
+      "output": "join4"
+    }
+  ],
+  "evidence": {
+    "observed": [],
+    "inferred": [],
+    "assumptions": [
+      {
+        "id": "connection",
+        "text": "Spokes overlap hub and rim by 2 mm along their radial axis."
+      }
+    ],
+    "unresolved": []
+  },
+  "constraints": [
+    {
+      "id": "east_hub",
+      "kind": "connected",
+      "left": "east",
+      "right": "hub",
+      "min_volume_mm3": 1
+    },
+    {
+      "id": "east_rim",
+      "kind": "connected",
+      "left": "east",
+      "right": "rim",
+      "min_volume_mm3": 1
+    },
+    {
+      "id": "west_hub",
+      "kind": "connected",
+      "left": "west",
+      "right": "hub",
+      "min_volume_mm3": 1
+    },
+    {
+      "id": "west_rim",
+      "kind": "connected",
+      "left": "west",
+      "right": "rim",
+      "min_volume_mm3": 1
+    },
+    {
+      "id": "north_hub",
+      "kind": "connected",
+      "left": "north",
+      "right": "hub",
+      "min_volume_mm3": 1
+    },
+    {
+      "id": "north_rim",
+      "kind": "connected",
+      "left": "north",
+      "right": "rim",
+      "min_volume_mm3": 1
+    },
+    {
+      "id": "south_hub",
+      "kind": "connected",
+      "left": "south",
+      "right": "hub",
+      "min_volume_mm3": 1
+    },
+    {
+      "id": "south_rim",
+      "kind": "connected",
+      "left": "south",
+      "right": "rim",
+      "min_volume_mm3": 1
+    }
+  ]
+}

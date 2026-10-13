@@ -57,6 +57,9 @@ def scalar(value, parameters):
 
 def validate_recipe(recipe, updates=None):
     """Validate everything before launching a kernel process; resolve dimensions."""
+    if isinstance(recipe, dict) and type(recipe.get("version")) is int and recipe["version"] == 2:
+        from .construction_recipe import validate_v2
+        return validate_v2(recipe, updates)
     if not isinstance(recipe, dict) or set(recipe) - {"version", "units", "parameters", "operations", "output", "name"}:
         raise ValueError("Invalid recipe fields")
     if type(recipe.get("version")) is not int or recipe.get("version") != 1 or recipe.get("units") != "mm":

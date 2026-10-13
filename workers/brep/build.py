@@ -59,6 +59,21 @@ def build(source, output):
         bodies[op["id"]] = body
         history.append({"id": op["id"], "kind": kind, "faces": len(body.faces())})
     body = bodies[recipe["output"]]
+    connections = []
+    for check in recipe.get("constraints", []):
+        try:
+            overlap = sm.boolean_intersection(bodies[check["left"]].copy(), bodies[check["right"]].copy())
+            overlap_volume = abs(overlap.volume()) if overlap is not None else 0
+            if not math.isfinite(overlap_volume) or overlap_volume < check["min_volume_mm3"]:
+                raise ValueError(f"overlap {overlap_volume:.6g} mm3 is too small")
+            # Later cuts must not remove the declared connection.
+            retained = sm.boolean_intersection(overlap.copy(), body.copy())
+            retained_volume = abs(retained.volume()) if retained is not None else 0
+            if not math.isfinite(retained_volume) or retained_volume < check["min_volume_mm3"]:
+                raise ValueError("final body removed the required connection")
+        except Exception as exc:
+            raise ValueError(f"{check['id']}: required connection failed: {exc}") from exc
+        connections.append({"id": check["id"], "overlap_mm3": retained_volume, "passed": True})
     volume = body.volume()
     if not math.isfinite(volume) or volume <= 0:
         raise ValueError("Invalid solid volume")
@@ -97,11 +112,11 @@ def build(source, output):
     reloaded = trimesh.load(output / "model.stl", force="mesh")
     if not reloaded.is_watertight or not reloaded.is_winding_consistent:
         raise ValueError("Exported STL validation failed")
-    diagnostics = {"backend": "usd-brep", "version": "1.0.0", "solid_volume_mm3": volume,
+    diagnostics = {"backend": "usd-brep", "version": "1.0.0", "recipe_version": recipe["version"], "solid_volume_mm3": volume,
                    "mesh_volume_mm3": mesh.volume, "extents_mm": mesh.extents.tolist(),
                    "bounds_mm": mesh.bounds.tolist(), "watertight": True, "winding_consistent": True,
                    "euler_number": int(mesh.euler_number), "triangles": len(mesh.faces),
-                   "usd_roundtrip": True, "operations": history,
+                   "usd_roundtrip": True, "operations": history, "connections": connections,
                    "build_seconds": round(time.monotonic()-started, 3)}
     (output / "diagnostics.json").write_text(json.dumps(diagnostics, indent=2))
 
