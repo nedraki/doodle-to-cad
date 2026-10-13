@@ -8,6 +8,8 @@ import subprocess
 from pathlib import Path
 from typing import Any
 
+from .build_contract import BuildInput, BuildResult, Diagnostic, CAMERAS
+
 
 def available(binary: str) -> bool:
     if shutil.which(binary) is not None:
@@ -40,6 +42,13 @@ def _docker_prefix(binary: str) -> list[str] | None:
     return _DOCKER_READY
 
 
+class _FailureLog(str):
+    def __new__(cls, message: str, code: str):
+        value = super().__new__(cls, message)
+        value.code = code
+        return value
+
+
 def _run(raw_args: list[str], timeout: int, cwd: Path | None, docker_prefix: list[str] | None) -> tuple[bool, str]:
     if docker_prefix is not None:
         # Mount the working directory at /work and rewrite file paths under it.
@@ -68,38 +77,82 @@ def _run(raw_args: list[str], timeout: int, cwd: Path | None, docker_prefix: lis
     try:
         proc = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout, cwd=cwd)
         return proc.returncode == 0, (proc.stderr or proc.stdout).strip()[-4000:]
-    except (OSError, subprocess.TimeoutExpired) as exc:
-        return False, str(exc)
+    except subprocess.TimeoutExpired as exc:
+        return False, _FailureLog(str(exc), "timeout")
+    except OSError as exc:
+        return False, _FailureLog(str(exc), "backend_unavailable")
 
 
 def run(args: list[str], timeout: int = 180, cwd: Path | None = None) -> tuple[bool, str]:
     docker_prefix = None
     if shutil.which(args[0]) is None:
-        docker_prefix = _docker_prefix(args[0])
+        try:
+            docker_prefix = _docker_prefix(args[0])
+        except subprocess.TimeoutExpired as exc:
+            return False, _FailureLog(str(exc), "timeout")
+        except OSError as exc:
+            return False, _FailureLog(str(exc), "backend_unavailable")
         if docker_prefix is None:
-            return False, f"{args[0]} not found (no host binary and no Docker fallback; set DOODLE_OPENSCAD_DOCKER or install openscad)"
+            return False, _FailureLog(f"{args[0]} not found (no host binary and no Docker fallback; set DOODLE_OPENSCAD_DOCKER or install openscad)", "backend_unavailable")
     return _run(args, timeout, cwd, docker_prefix)
 
 
-def compile_and_render(scad: Path, output_dir: Path, binary: str) -> tuple[Path | None, dict[str, Path], str]:
-    stl = output_dir / "model.stl"
-    # Run with output_dir as cwd and relative paths so the Docker fallback can
-    # bind-mount one directory and see both the source .scad and its outputs.
-    scad_name = Path(scad).resolve().relative_to(output_dir.resolve()).as_posix() if scad.resolve().is_relative_to(output_dir.resolve()) else Path(scad).name
-    ok, log = run([binary, "-o", "model.stl", scad_name], cwd=output_dir)
-    if not ok or not stl.exists():
-        return None, {}, log
+def render_views(source: Path, output_dir: Path, binary: str) -> tuple[dict[str, Path], str]:
     views: dict[str, Path] = {}
-    # Canonical generated-part axes: X=width, Y=front-to-back depth,
-    # Z=height. Front looks down Y; top looks down Z; right looks down X.
-    cameras = {"isometric": "0,0,0,55,0,35,0", "front": "0,0,0,90,0,0,0",
-               "top": "0,0,0,0,0,0,0", "right": "0,0,0,90,0,90,0"}
-    for name, camera in cameras.items():
+    logs = []
+    for name, camera in CAMERAS.items():
         target = output_dir / f"view-{name}.png"
-        rendered, render_log = run([binary, "--imgsize=720,540", "--projection=ortho", "--viewall", "--autocenter", f"--camera={camera}", "-o", f"view-{name}.png", scad_name], cwd=output_dir)
-        if rendered and target.exists(): views[name] = target
-        elif render_log: log += f"\n{name}: {render_log}"
-    return stl, views, log
+        target.unlink(missing_ok=True)
+        rendered, log = run([binary, "--imgsize=720,540", "--projection=ortho", "--viewall", "--autocenter", f"--camera={camera}", "-o", target.name, source.name], cwd=output_dir)
+        if rendered and target.exists():
+            views[name] = target
+        else:
+            logs.append(f"{name}: {log or 'No image produced'}")
+    return views, "\n".join(logs)
+
+
+def build_scad(request: BuildInput, binary: str) -> BuildResult:
+    output_dir = request.output_dir
+    output_dir.mkdir(parents=True, exist_ok=True)
+    source = output_dir / request.source.name
+    result = BuildResult("openscad", source)
+    try:
+        if source.resolve() != request.source.resolve():
+            shutil.copy2(request.source, source)
+        elif not source.is_file():
+            raise ValueError("OpenSCAD source does not exist")
+    except (OSError, ValueError) as exc:
+        result.log = str(exc)
+        result.diagnostics.append(Diagnostic("invalid_input", result.log))
+        return result
+    stl = output_dir / "model.stl"
+    stl.unlink(missing_ok=True)
+    ok, result.log = run([binary, "-o", stl.name, source.name], cwd=output_dir)
+    if not ok or not stl.exists():
+        stl.unlink(missing_ok=True)
+        result.diagnostics.append(Diagnostic(getattr(result.log, "code", "build_failed"), result.log or "No STL produced"))
+        return result
+    try:
+        result.measurements = mesh_health(stl)
+        if not result.measurements["triangles"]:
+            raise ValueError("STL contains no triangles")
+    except Exception as exc:
+        stl.unlink(missing_ok=True)
+        result.log += "\n" + str(exc)
+        result.diagnostics.append(Diagnostic("invalid_output", str(exc)))
+        return result
+    result.stl = stl
+    if request.render:
+        result.views, render_log = render_views(source, output_dir, binary)
+        if render_log:
+            result.log += "\n" + render_log
+            result.diagnostics.append(Diagnostic("render_failed", render_log, "warning"))
+    return result
+
+
+def compile_and_render(scad: Path, output_dir: Path, binary: str) -> tuple[Path | None, dict[str, Path], str]:
+    result = build_scad(BuildInput("openscad", scad, output_dir), binary)
+    return result.stl, result.views, result.log
 
 
 def compile_stl_only(output_dir: Path, scad_text: str, tag: str, binary: str = "openscad") -> tuple[str | None, str]:

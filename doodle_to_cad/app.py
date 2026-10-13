@@ -18,6 +18,7 @@ from .params import extract_params, rewrite_params, validate_updates
 from .pipeline import Pipeline
 from .brep import build_recipe, worker_python, RECIPE_PROMPT
 from .brep_recipe import recipe_params, validate_recipe
+from .build_contract import CAPABILITIES
 
 RUN_ID_RE = re.compile(r"^[0-9a-f]{6,32}$")
 app = FastAPI(title="Doodle to CAD", version="0.1.0")
@@ -101,12 +102,12 @@ def parametrize(run_id: str, updates: dict):
         try:
             return build_recipe(out, json.loads(scad.read_text()), updates)
         except ValueError as exc:
-            raise HTTPException(422, {"message": str(exc)}) from exc
+            raise HTTPException(422, {"message": str(exc), "code": getattr(exc, "code", "invalid_input")}) from exc
     base = scad.read_text()
     try:
         validate_updates(base, updates)
     except ValueError as exc:
-        raise HTTPException(422, {"message": str(exc)}) from exc
+        raise HTTPException(422, {"message": str(exc), "code": getattr(exc, "code", "invalid_input")}) from exc
     edited, applied = rewrite_params(base, updates)
     if not applied:
         raise HTTPException(422, {"message": "No known parameter matched the requested updates", "requested": sorted(updates)})
@@ -118,6 +119,11 @@ def parametrize(run_id: str, updates: dict):
         return {"ok": False, "applied": applied,
                 "message": error or "Recompile produced no mesh — last successful geometry retained."}
     return {"ok": True, "applied": applied, "stl": stl_url, "scad": f"/results/{run_id}/{tag}.scad", "params": [p.to_dict() for p in extract_params(edited)]}
+
+
+@app.get("/api/backends")
+def backend_capabilities():
+    return {"version": 1, "backends": CAPABILITIES}
 
 
 @app.get("/api/brep")
@@ -140,7 +146,7 @@ def brep_build(recipe: dict):
         built = build_recipe(out, recipe)
         return _save_brep_result(out, recipe, built)
     except ValueError as exc:
-        raise HTTPException(422, {"message": str(exc)}) from exc
+        raise HTTPException(422, {"message": str(exc), "code": getattr(exc, "code", "invalid_input")}) from exc
 
 
 def _save_brep_result(out, recipe, built, original=None, controls=None):
@@ -150,7 +156,8 @@ def _save_brep_result(out, recipe, built, original=None, controls=None):
               "model": "experimental BRep recipe", "duration_seconds": built["diagnostics"]["build_seconds"],
               "evaluation": {"accepted": False, "failures": ["Drawing fidelity has not been evaluated."]},
               "diagnostics": built["diagnostics"], "controls": controls or {"primary_view": "front"},
-              "files": {"source": built["source"], "stl": built["stl"], "usd": built["usd"], "views": {}},
+              "files": {"source": built["source"], "stl": built["stl"], "usd": built["usd"], "views": built.get("views", {})},
+              "build": built.get("build"),
               "original_run_id": original}
     temporary = out / "result.pending.json"
     temporary.write_text(json.dumps(result, indent=2))
@@ -181,7 +188,7 @@ async def brep_from_result(run_id: str):
             shutil.copyfile(out / "input.png", candidate / "input.png")
         return _save_brep_result(candidate, recipe, built, run_id, original.get("controls"))
     except ValueError as exc:
-        raise HTTPException(422, {"message": str(exc)}) from exc
+        raise HTTPException(422, {"message": str(exc), "code": getattr(exc, "code", "invalid_input")}) from exc
 
 
 @app.post("/api/generate")
