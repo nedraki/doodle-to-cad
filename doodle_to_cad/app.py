@@ -19,6 +19,7 @@ from .pipeline import Pipeline
 from .brep import build_recipe, worker_python, RECIPE_PROMPT
 from .brep_recipe import recipe_params, validate_recipe
 from .build_contract import CAPABILITIES
+from .recipe_jobs import check_worker, run_recipe_job
 
 RUN_ID_RE = re.compile(r"^[0-9a-f]{6,32}$")
 app = FastAPI(title="Doodle to CAD", version="0.1.0")
@@ -39,7 +40,7 @@ JOB_ID_RE = re.compile(r"^[0-9a-f]{12}$")
 def _prune_jobs() -> None:
     stale = sorted(JOBS, key=lambda key: JOBS[key]["created"])[:-MAX_TRACKED_JOBS]
     for key in stale:
-        if JOBS[key]["status"] != "running":
+        if JOBS[key]["status"] not in {"running", "cancelling"}:
             del JOBS[key]
 
 
@@ -133,6 +134,26 @@ def brep_status():
         return {"configured": True}
     except ValueError:
         return {"configured": False}
+
+
+@app.post("/api/brep/jobs")
+async def submit_recipe_job(recipe: dict):
+    """Developer saved-recipe input; uses the existing status/cancel endpoints."""
+    try:
+        validate_recipe(recipe)
+    except ValueError as exc:
+        raise HTTPException(422, {"message": str(exc), "code": "invalid_input"}) from exc
+    try:
+        await check_worker()
+    except (ValueError, OSError, asyncio.TimeoutError) as exc:
+        raise HTTPException(422, {"message": str(exc) or "Worker check timed out", "code": getattr(exc, "code", "backend_unavailable")}) from exc
+    run_id = uuid.uuid4().hex[:12]
+    job = {"job_id": run_id, "kind": "recipe", "status": "running", "stage": "queued",
+           "created": time.monotonic(), "result": None, "error": None, "task": None}
+    JOBS[run_id] = job
+    _prune_jobs()
+    job["task"] = asyncio.create_task(run_recipe_job(job, recipe, settings.results_dir, _save_brep_result))
+    return {"job_id": run_id, "status": "running"}
 
 
 @app.post("/api/brep/build")
@@ -261,6 +282,13 @@ async def job_cancel(job_id: str):
     if not job: raise HTTPException(404, "Unknown job")
     if job["status"] == "running" and job["task"]:
         job["task"].cancel()
-        await asyncio.sleep(0)  # let the cancellation settle into the job record
+        if job.get("kind") == "recipe":
+            try:
+                await job["task"]
+            except asyncio.CancelledError:
+                pass
+            job.update(status="cancelled", stage="cancelled")
+        else:
+            await asyncio.sleep(0)  # let the cancellation settle into the job record
         return {"job_id": job_id, "status": job["status"]}
     return {"job_id": job_id, "status": job["status"]}
