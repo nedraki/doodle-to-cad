@@ -31,11 +31,24 @@ Do not repeat completed prototype work without a documented reason.
 - [#16](https://github.com/nedraki/doodle-to-cad/issues/16) defines user-requested repair after generation. Keep that product feature separate.
 - Share revision storage and candidate controls with [#16](https://github.com/nedraki/doodle-to-cad/issues/16). Do not create two competing implementations.
 
+## Branch policy
+
+Keep `main` at the pre-BRep version, `2672a6d`, during this project.
+Use `brep-integration` for BRep development and product tests.
+Create each new task branch from `brep-integration`.
+Set `brep-integration` as the base of each BRep task pull request.
+Merge a task only after its checks and user review pass.
+Do not merge BRep changes into `main` without a separate release review and explicit user approval.
+Use a separate test server and result directory for BRep work.
+
+PRs #35 and #36 are closed without merging. Their commits are preserved in `brep-integration`.
+They remain available as review history. Issue #18 still requires user review.
+
 ## Work rules
 
 1. Work on one task at a time, in the listed order.
 2. Read its dependencies and the current product state before implementation.
-3. Use a dedicated branch and one reviewable pull request for each task where practical.
+3. Create each task branch from `brep-integration`. Target its pull request at `brep-integration`.
 4. Keep the current OpenSCAD flow working. Make new behavior optional until its gate passes.
 5. Attach test results, a product demonstration, known limits, and recovery evidence to the issue.
 6. Request user review of the demonstrated result before starting the next task.
@@ -89,7 +102,8 @@ Never remove an unsupported feature silently or hide a backend switch.
 
 ## Ordered tasks
 
-Task 01 evidence is ready for user review in [PR #36](https://github.com/nedraki/doodle-to-cad/pull/36).
+Task 01 evidence is preserved in `brep-integration` and awaits user review.
+[PR #36](https://github.com/nedraki/doodle-to-cad/pull/36) is closed and retained as review history.
 See [issue #18](https://github.com/nedraki/doodle-to-cad/issues/18) for the recorded generation failure.
 All later tasks remain planned.
 
