@@ -1,0 +1,779 @@
+{
+  "bookend": {
+    "build": {
+      "version": 1,
+      "backend": "usd-brep",
+      "source_format": "brep-recipe-v2",
+      "ok": true,
+      "units": "mm",
+      "axes": {
+        "x": "width",
+        "y": "depth",
+        "z": "height"
+      },
+      "views": [
+        "isometric",
+        "front",
+        "top",
+        "right"
+      ],
+      "measurements": {
+        "watertight": true,
+        "components": 1,
+        "triangles": 100,
+        "extents_mm": [
+          60.0,
+          40.0,
+          80.0
+        ],
+        "volume_mm3": 31500.0
+      },
+      "diagnostics": [],
+      "drawing_evaluated": false
+    },
+    "diagnostics": {
+      "backend": "usd-brep",
+      "version": "1.0.0",
+      "recipe_version": 2,
+      "solid_volume_mm3": 31499.999999999985,
+      "mesh_volume_mm3": 31500.0,
+      "extents_mm": [
+        60.0,
+        40.0,
+        80.0
+      ],
+      "bounds_mm": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          60.0,
+          40.0,
+          80.0
+        ]
+      ],
+      "watertight": true,
+      "winding_consistent": true,
+      "euler_number": -6,
+      "triangles": 100,
+      "usd_roundtrip": true,
+      "operations": [
+        {
+          "id": "base",
+          "kind": "box",
+          "faces": 6
+        },
+        {
+          "id": "wall",
+          "kind": "box",
+          "faces": 6
+        },
+        {
+          "id": "body",
+          "kind": "union",
+          "faces": 8
+        },
+        {
+          "id": "cutter1",
+          "kind": "box",
+          "faces": 6
+        },
+        {
+          "id": "cut1",
+          "kind": "difference",
+          "faces": 12
+        },
+        {
+          "id": "cutter2",
+          "kind": "box",
+          "faces": 6
+        },
+        {
+          "id": "cut2",
+          "kind": "difference",
+          "faces": 16
+        },
+        {
+          "id": "cutter3",
+          "kind": "box",
+          "faces": 6
+        },
+        {
+          "id": "cut3",
+          "kind": "difference",
+          "faces": 20
+        },
+        {
+          "id": "cutter4",
+          "kind": "box",
+          "faces": 6
+        },
+        {
+          "id": "cut4",
+          "kind": "difference",
+          "faces": 24
+        }
+      ],
+      "connections": [],
+      "build_seconds": 0.124
+    },
+    "browser_errors": []
+  },
+  "wheel": {
+    "build": {
+      "version": 1,
+      "backend": "usd-brep",
+      "source_format": "brep-recipe-v2",
+      "ok": true,
+      "units": "mm",
+      "axes": {
+        "x": "width",
+        "y": "depth",
+        "z": "height"
+      },
+      "views": [
+        "isometric",
+        "front",
+        "top",
+        "right"
+      ],
+      "measurements": {
+        "watertight": true,
+        "components": 1,
+        "triangles": 1228,
+        "extents_mm": [
+          120.0,
+          120.0,
+          8.0
+        ],
+        "volume_mm3": 28879.644
+      },
+      "diagnostics": [],
+      "drawing_evaluated": false
+    },
+    "diagnostics": {
+      "backend": "usd-brep",
+      "version": "1.0.0",
+      "recipe_version": 2,
+      "solid_volume_mm3": 28893.994253296674,
+      "mesh_volume_mm3": 28879.64438485008,
+      "extents_mm": [
+        120.0,
+        120.0,
+        8.0
+      ],
+      "bounds_mm": [
+        [
+          -60.0,
+          -60.0,
+          0.0
+        ],
+        [
+          60.0,
+          60.0,
+          8.0
+        ]
+      ],
+      "watertight": true,
+      "winding_consistent": true,
+      "euler_number": -6,
+      "triangles": 1228,
+      "usd_roundtrip": true,
+      "operations": [
+        {
+          "id": "outer",
+          "kind": "cylinder",
+          "faces": 3
+        },
+        {
+          "id": "inner",
+          "kind": "cylinder",
+          "faces": 3
+        },
+        {
+          "id": "rim",
+          "kind": "difference",
+          "faces": 4
+        },
+        {
+          "id": "hub",
+          "kind": "cylinder",
+          "faces": 3
+        },
+        {
+          "id": "east",
+          "kind": "box",
+          "faces": 6
+        },
+        {
+          "id": "west",
+          "kind": "box",
+          "faces": 6
+        },
+        {
+          "id": "north",
+          "kind": "box",
+          "faces": 6
+        },
+        {
+          "id": "south",
+          "kind": "box",
+          "faces": 6
+        },
+        {
+          "id": "join0",
+          "kind": "union",
+          "faces": 6
+        },
+        {
+          "id": "join1",
+          "kind": "union",
+          "faces": 10
+        },
+        {
+          "id": "join2",
+          "kind": "union",
+          "faces": 14
+        },
+        {
+          "id": "join3",
+          "kind": "union",
+          "faces": 18
+        },
+        {
+          "id": "join4",
+          "kind": "union",
+          "faces": 19
+        }
+      ],
+      "connections": [
+        {
+          "id": "east_hub",
+          "overlap_mm3": 89.94245441778781,
+          "passed": true
+        },
+        {
+          "id": "east_rim",
+          "overlap_mm3": 97.33395129883876,
+          "passed": true
+        },
+        {
+          "id": "west_hub",
+          "overlap_mm3": 90.00992187879426,
+          "passed": true
+        },
+        {
+          "id": "west_rim",
+          "overlap_mm3": 97.3339512960172,
+          "passed": true
+        },
+        {
+          "id": "north_hub",
+          "overlap_mm3": 89.94243870657246,
+          "passed": true
+        },
+        {
+          "id": "north_rim",
+          "overlap_mm3": 97.30585801122092,
+          "passed": true
+        },
+        {
+          "id": "south_hub",
+          "overlap_mm3": 90.00992187879447,
+          "passed": true
+        },
+        {
+          "id": "south_rim",
+          "overlap_mm3": 97.33395129601635,
+          "passed": true
+        }
+      ],
+      "build_seconds": 0.249
+    },
+    "edited": {
+      "build": {
+        "version": 1,
+        "backend": "usd-brep",
+        "source_format": "brep-recipe-v2",
+        "ok": true,
+        "units": "mm",
+        "axes": {
+          "x": "width",
+          "y": "depth",
+          "z": "height"
+        },
+        "views": [
+          "isometric",
+          "front",
+          "top",
+          "right"
+        ],
+        "measurements": {
+          "watertight": true,
+          "components": 1,
+          "triangles": 1228,
+          "extents_mm": [
+            160.0,
+            160.0,
+            8.0
+          ],
+          "volume_mm3": 38750.915
+        },
+        "diagnostics": [],
+        "drawing_evaluated": false
+      },
+      "diagnostics": {
+        "backend": "usd-brep",
+        "version": "1.0.0",
+        "recipe_version": 2,
+        "solid_volume_mm3": 38767.20234423269,
+        "mesh_volume_mm3": 38750.915285822564,
+        "extents_mm": [
+          160.0,
+          160.0,
+          8.0
+        ],
+        "bounds_mm": [
+          [
+            -80.0,
+            -80.0,
+            0.0
+          ],
+          [
+            80.0,
+            80.0,
+            8.0
+          ]
+        ],
+        "watertight": true,
+        "winding_consistent": true,
+        "euler_number": -6,
+        "triangles": 1228,
+        "usd_roundtrip": true,
+        "operations": [
+          {
+            "id": "outer",
+            "kind": "cylinder",
+            "faces": 3
+          },
+          {
+            "id": "inner",
+            "kind": "cylinder",
+            "faces": 3
+          },
+          {
+            "id": "rim",
+            "kind": "difference",
+            "faces": 4
+          },
+          {
+            "id": "hub",
+            "kind": "cylinder",
+            "faces": 3
+          },
+          {
+            "id": "east",
+            "kind": "box",
+            "faces": 6
+          },
+          {
+            "id": "west",
+            "kind": "box",
+            "faces": 6
+          },
+          {
+            "id": "north",
+            "kind": "box",
+            "faces": 6
+          },
+          {
+            "id": "south",
+            "kind": "box",
+            "faces": 6
+          },
+          {
+            "id": "join0",
+            "kind": "union",
+            "faces": 6
+          },
+          {
+            "id": "join1",
+            "kind": "union",
+            "faces": 10
+          },
+          {
+            "id": "join2",
+            "kind": "union",
+            "faces": 14
+          },
+          {
+            "id": "join3",
+            "kind": "union",
+            "faces": 18
+          },
+          {
+            "id": "join4",
+            "kind": "union",
+            "faces": 19
+          }
+        ],
+        "connections": [
+          {
+            "id": "east_hub",
+            "overlap_mm3": 89.94245441778786,
+            "passed": true
+          },
+          {
+            "id": "east_rim",
+            "overlap_mm3": 96.97321298123792,
+            "passed": true
+          },
+          {
+            "id": "west_hub",
+            "overlap_mm3": 90.00992187879444,
+            "passed": true
+          },
+          {
+            "id": "west_rim",
+            "overlap_mm3": 96.97321298059478,
+            "passed": true
+          },
+          {
+            "id": "north_hub",
+            "overlap_mm3": 89.94243870657246,
+            "passed": true
+          },
+          {
+            "id": "north_rim",
+            "overlap_mm3": 96.97321298201217,
+            "passed": true
+          },
+          {
+            "id": "south_hub",
+            "overlap_mm3": 90.00992187879436,
+            "passed": true
+          },
+          {
+            "id": "south_rim",
+            "overlap_mm3": 96.9732129805953,
+            "passed": true
+          }
+        ],
+        "build_seconds": 0.244
+      },
+      "source_preserved": true
+    },
+    "browser_errors": []
+  },
+  "legacy": {
+    "build": {
+      "version": 1,
+      "backend": "usd-brep",
+      "source_format": "brep-recipe-v1",
+      "ok": true,
+      "units": "mm",
+      "axes": {
+        "x": "width",
+        "y": "depth",
+        "z": "height"
+      },
+      "views": [
+        "isometric",
+        "front",
+        "top",
+        "right"
+      ],
+      "measurements": {
+        "watertight": true,
+        "components": 1,
+        "triangles": 100,
+        "extents_mm": [
+          60.0,
+          40.0,
+          80.0
+        ],
+        "volume_mm3": 31500.0
+      },
+      "diagnostics": [],
+      "drawing_evaluated": false
+    },
+    "diagnostics": {
+      "backend": "usd-brep",
+      "version": "1.0.0",
+      "recipe_version": 1,
+      "solid_volume_mm3": 31499.999999999985,
+      "mesh_volume_mm3": 31500.0,
+      "extents_mm": [
+        60.0,
+        40.0,
+        80.0
+      ],
+      "bounds_mm": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          60.0,
+          40.0,
+          80.0
+        ]
+      ],
+      "watertight": true,
+      "winding_consistent": true,
+      "euler_number": -6,
+      "triangles": 100,
+      "usd_roundtrip": true,
+      "operations": [
+        {
+          "id": "base",
+          "kind": "box",
+          "faces": 6
+        },
+        {
+          "id": "wall",
+          "kind": "box",
+          "faces": 6
+        },
+        {
+          "id": "body",
+          "kind": "union",
+          "faces": 8
+        },
+        {
+          "id": "cutter1",
+          "kind": "box",
+          "faces": 6
+        },
+        {
+          "id": "cut1",
+          "kind": "difference",
+          "faces": 12
+        },
+        {
+          "id": "cutter2",
+          "kind": "box",
+          "faces": 6
+        },
+        {
+          "id": "cut2",
+          "kind": "difference",
+          "faces": 16
+        },
+        {
+          "id": "cutter3",
+          "kind": "box",
+          "faces": 6
+        },
+        {
+          "id": "cut3",
+          "kind": "difference",
+          "faces": 20
+        },
+        {
+          "id": "cutter4",
+          "kind": "box",
+          "faces": 6
+        },
+        {
+          "id": "cut4",
+          "kind": "difference",
+          "faces": 24
+        }
+      ],
+      "connections": [],
+      "build_seconds": 0.13
+    },
+    "migrated": {
+      "version": 1,
+      "backend": "usd-brep",
+      "source_format": "brep-recipe-v2",
+      "ok": true,
+      "units": "mm",
+      "axes": {
+        "x": "width",
+        "y": "depth",
+        "z": "height"
+      },
+      "views": [
+        "isometric",
+        "front",
+        "top",
+        "right"
+      ],
+      "measurements": {
+        "watertight": true,
+        "components": 1,
+        "triangles": 100,
+        "extents_mm": [
+          60.0,
+          40.0,
+          80.0
+        ],
+        "volume_mm3": 31350.0
+      },
+      "diagnostics": [],
+      "drawing_evaluated": false
+    },
+    "edited": {
+      "build": {
+        "version": 1,
+        "backend": "usd-brep",
+        "source_format": "brep-recipe-v1",
+        "ok": true,
+        "units": "mm",
+        "axes": {
+          "x": "width",
+          "y": "depth",
+          "z": "height"
+        },
+        "views": [
+          "isometric",
+          "front",
+          "top",
+          "right"
+        ],
+        "measurements": {
+          "watertight": true,
+          "components": 1,
+          "triangles": 100,
+          "extents_mm": [
+            60.0,
+            40.0,
+            80.0
+          ],
+          "volume_mm3": 31350.0
+        },
+        "diagnostics": [],
+        "drawing_evaluated": false
+      },
+      "diagnostics": {
+        "backend": "usd-brep",
+        "version": "1.0.0",
+        "recipe_version": 1,
+        "solid_volume_mm3": 31349.999999999985,
+        "mesh_volume_mm3": 31350.0,
+        "extents_mm": [
+          60.0,
+          40.0,
+          80.0
+        ],
+        "bounds_mm": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            60.0,
+            40.0,
+            80.0
+          ]
+        ],
+        "watertight": true,
+        "winding_consistent": true,
+        "euler_number": -6,
+        "triangles": 100,
+        "usd_roundtrip": true,
+        "operations": [
+          {
+            "id": "base",
+            "kind": "box",
+            "faces": 6
+          },
+          {
+            "id": "wall",
+            "kind": "box",
+            "faces": 6
+          },
+          {
+            "id": "body",
+            "kind": "union",
+            "faces": 8
+          },
+          {
+            "id": "cutter1",
+            "kind": "box",
+            "faces": 6
+          },
+          {
+            "id": "cut1",
+            "kind": "difference",
+            "faces": 12
+          },
+          {
+            "id": "cutter2",
+            "kind": "box",
+            "faces": 6
+          },
+          {
+            "id": "cut2",
+            "kind": "difference",
+            "faces": 16
+          },
+          {
+            "id": "cutter3",
+            "kind": "box",
+            "faces": 6
+          },
+          {
+            "id": "cut3",
+            "kind": "difference",
+            "faces": 20
+          },
+          {
+            "id": "cutter4",
+            "kind": "box",
+            "faces": 6
+          },
+          {
+            "id": "cut4",
+            "kind": "difference",
+            "faces": 24
+          }
+        ],
+        "connections": [],
+        "build_seconds": 0.137
+      },
+      "source_preserved": true
+    },
+    "browser_errors": []
+  },
+  "invalid": {
+    "body": {
+      "message": "Declared body must name the recipe output",
+      "code": "invalid_input"
+    },
+    "cycle": {
+      "message": "outer: dependency cycle, unknown dependency, or incorrect operation order",
+      "code": "invalid_input"
+    },
+    "dimension": {
+      "message": "radius must be positive",
+      "code": "invalid_input"
+    },
+    "evidence": {
+      "message": "outer: unknown evidence reference",
+      "code": "invalid_input"
+    },
+    "expression": {
+      "message": "Dimensions allow only numbers, parameter names and + - * /",
+      "code": "invalid_input"
+    },
+    "frame": {
+      "message": "Expected canonical world frame: X width, Y depth, Z height, origin [0,0,0]",
+      "code": "invalid_input"
+    },
+    "operation": {
+      "message": "Unsupported operation, duplicate ID or invalid fields",
+      "code": "invalid_input"
+    },
+    "unresolved": {
+      "message": "Resolve build values before construction: depth",
+      "code": "invalid_input"
+    }
+  }
+}

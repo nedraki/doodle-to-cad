@@ -1,12 +1,13 @@
 """Backend-neutral build boundary. Geometry success is not drawing approval."""
 from __future__ import annotations
 
+import json
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Literal
 
 Backend = Literal["openscad", "usd-brep"]
-SourceFormat = Literal["openscad", "brep-recipe-v1"]
+SourceFormat = Literal["openscad", "brep-recipe-v1", "brep-recipe-v2"]
 FailureCode = Literal["invalid_input", "backend_unavailable", "build_failed", "timeout", "invalid_output", "render_failed"]
 
 # X=width, Y=depth, Z=height; all distances are millimetres.
@@ -14,7 +15,7 @@ CAMERAS = {"isometric": "0,0,0,55,0,35,0", "front": "0,0,0,90,0,0,0",
            "top": "0,0,0,0,0,0,0", "right": "0,0,0,90,0,90,0"}
 CAPABILITIES = {
     "openscad": {"source_format": "openscad", "exports": ["stl"], "isolated_process": True, "views": list(CAMERAS), "parameter_edits": True},
-    "usd-brep": {"source_format": "brep-recipe-v1", "exports": ["stl", "usd"], "isolated_process": True, "views": list(CAMERAS), "parameter_edits": True},
+    "usd-brep": {"source_format": "brep-recipe-v1", "supported_source_formats": ["brep-recipe-v1", "brep-recipe-v2"], "exports": ["stl", "usd"], "isolated_process": True, "views": list(CAMERAS), "parameter_edits": True},
 }
 
 
@@ -27,7 +28,13 @@ class BuildInput:
 
     @property
     def source_format(self) -> SourceFormat:
-        return CAPABILITIES[self.backend]["source_format"]
+        if self.backend == "openscad":
+            return "openscad"
+        document = json.loads(self.source.read_text())
+        version = document.get("version") if isinstance(document, dict) else None
+        if type(version) is not int or version not in (1, 2):
+            raise ValueError("Expected BRep recipe version 1 or 2")
+        return f"brep-recipe-v{version}"
 
 
 @dataclass(frozen=True)
@@ -56,7 +63,8 @@ class BuildResult:
     def metadata(self) -> dict:
         """JSON metadata; paths are exposed by each application's URL mapping."""
         return {"version": 1, "backend": self.backend,
-                "source_format": CAPABILITIES[self.backend]["source_format"],
+                "source_format": (f"brep-recipe-v{self.backend_details.get('recipe_version', 1)}"
+                                  if self.backend == "usd-brep" else "openscad"),
                 "ok": self.ok, "units": "mm", "axes": {"x": "width", "y": "depth", "z": "height"},
                 "views": list(self.views), "measurements": self.measurements,
                 "diagnostics": [vars(d) for d in self.diagnostics],
