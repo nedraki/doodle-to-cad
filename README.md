@@ -350,6 +350,18 @@ successfully compiled geometry, never a broken half-state.
    (with label, description, unit, optional feature link) — internal
    constants stay hidden. See [`docs/parameter-metadata.md`](docs/parameter-metadata.md).
 
+### Experimental BRep detail editing
+
+An optional USD BRep backend adds recipe-based controls for individual hole sizes
+and positions, wall thicknesses, fillet radii, and curved sweeps. After installing
+the isolated worker, choose **BRep from original · experimental** on a generated
+part, inspect the reconstructed candidate, then use **Modify design**. Downloads
+include the recipe, STL, and BRep USDA. OpenSCAD remains the default.
+
+See [setup, supported operations, and limitations](docs/brep/README.md) and the
+[evaluation decision](docs/brep/DECISION.md). BRep reconstruction is experimental;
+a valid solid does not establish fidelity to the original drawing.
+
 ### Every stage, up close
 
 | Stage | What happens |

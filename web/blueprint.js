@@ -119,7 +119,8 @@
       if(!response.ok)throw new Error('No previous CAD result is available.');
       const result=await response.json();
       const inputResponse=await fetch(`/results/${result.id}/input.png`);
-      const input=inputResponse.ok?await inputResponse.blob():new Blob();
+      const input=inputResponse.ok?await inputResponse.blob():null;
+      if(!input)document.querySelector('#inputThumb').replaceChildren();
       render(result,input);
       document.querySelector('#deckTitle').textContent='RESULT — AGENTIC CAD GENERATION';
       document.querySelector('#inputTools').hidden=true;

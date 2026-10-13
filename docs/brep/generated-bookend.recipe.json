@@ -1,0 +1,284 @@
+{
+  "version": 1,
+  "units": "mm",
+  "name": "L-shaped bookend",
+  "parameters": {
+    "width": {
+      "value": 73.11,
+      "min": 30,
+      "max": 150,
+      "label": "Overall width",
+      "unit": "mm",
+      "group": "Body"
+    },
+    "depth": {
+      "value": 47.78,
+      "min": 20,
+      "max": 100,
+      "label": "Overall depth",
+      "unit": "mm",
+      "group": "Body"
+    },
+    "height": {
+      "value": 100.0,
+      "min": 50,
+      "max": 200,
+      "label": "Overall height",
+      "unit": "mm",
+      "group": "Body"
+    },
+    "thickness": {
+      "value": 10.0,
+      "min": 2,
+      "max": 20,
+      "label": "Wall thickness",
+      "unit": "mm",
+      "group": "Body"
+    },
+    "cut1_x": {
+      "value": 19.66,
+      "min": 0,
+      "max": 73.11,
+      "label": "Cutout 1 X Center",
+      "unit": "mm",
+      "group": "Cutouts"
+    },
+    "cut1_z": {
+      "value": 80.32,
+      "min": 0,
+      "max": 100.0,
+      "label": "Cutout 1 Z Center",
+      "unit": "mm",
+      "group": "Cutouts"
+    },
+    "cut1_w": {
+      "value": 22.44,
+      "min": 1,
+      "max": 73.11,
+      "label": "Cutout 1 Width",
+      "unit": "mm",
+      "group": "Cutouts"
+    },
+    "cut1_h": {
+      "value": 14.6,
+      "min": 1,
+      "max": 100.0,
+      "label": "Cutout 1 Height",
+      "unit": "mm",
+      "group": "Cutouts"
+    },
+    "cut2_x": {
+      "value": 40.77,
+      "min": 0,
+      "max": 73.11,
+      "label": "Cutout 2 X Center",
+      "unit": "mm",
+      "group": "Cutouts"
+    },
+    "cut2_z": {
+      "value": 80.32,
+      "min": 0,
+      "max": 100.0,
+      "label": "Cutout 2 Z Center",
+      "unit": "mm",
+      "group": "Cutouts"
+    },
+    "cut2_w": {
+      "value": 9.1,
+      "min": 1,
+      "max": 73.11,
+      "label": "Cutout 2 Width",
+      "unit": "mm",
+      "group": "Cutouts"
+    },
+    "cut2_h": {
+      "value": 36.61,
+      "min": 1,
+      "max": 100.0,
+      "label": "Cutout 2 Height",
+      "unit": "mm",
+      "group": "Cutouts"
+    },
+    "cut3_x": {
+      "value": 56.54,
+      "min": 0,
+      "max": 73.11,
+      "label": "Cutout 3 X Center",
+      "unit": "mm",
+      "group": "Cutouts"
+    },
+    "cut3_z": {
+      "value": 29.76,
+      "min": 0,
+      "max": 100.0,
+      "label": "Cutout 3 Z Center",
+      "unit": "mm",
+      "group": "Cutouts"
+    },
+    "cut3_w": {
+      "value": 9.1,
+      "min": 1,
+      "max": 73.11,
+      "label": "Cutout 3 Width",
+      "unit": "mm",
+      "group": "Cutouts"
+    },
+    "cut3_h": {
+      "value": 44.47,
+      "min": 1,
+      "max": 100.0,
+      "label": "Cutout 3 Height",
+      "unit": "mm",
+      "group": "Cutouts"
+    },
+    "cut4_x": {
+      "value": 13.32,
+      "min": 0,
+      "max": 73.11,
+      "label": "Cutout 4 X Center",
+      "unit": "mm",
+      "group": "Cutouts"
+    },
+    "cut4_z": {
+      "value": 29.76,
+      "min": 0,
+      "max": 100.0,
+      "label": "Cutout 4 Z Center",
+      "unit": "mm",
+      "group": "Cutouts"
+    },
+    "cut4_w": {
+      "value": 9.1,
+      "min": 1,
+      "max": 73.11,
+      "label": "Cutout 4 Width",
+      "unit": "mm",
+      "group": "Cutouts"
+    },
+    "cut4_h": {
+      "value": 36.61,
+      "min": 1,
+      "max": 100.0,
+      "label": "Cutout 4 Height",
+      "unit": "mm",
+      "group": "Cutouts"
+    }
+  },
+  "operations": [
+    {
+      "id": "vertical_plate",
+      "kind": "box",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "size": [
+        "width",
+        "thickness",
+        "height"
+      ]
+    },
+    {
+      "id": "horizontal_base",
+      "kind": "box",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "size": [
+        "width",
+        "depth",
+        "thickness"
+      ]
+    },
+    {
+      "id": "body_union",
+      "kind": "union",
+      "left": "vertical_plate",
+      "right": "horizontal_base"
+    },
+    {
+      "id": "cut1_cutter",
+      "kind": "box",
+      "origin": [
+        "cut1_x - cut1_w / 2",
+        -1,
+        "cut1_z - cut1_h / 2"
+      ],
+      "size": [
+        "cut1_w",
+        "thickness + 2",
+        "cut1_h"
+      ]
+    },
+    {
+      "id": "body_cut1",
+      "kind": "difference",
+      "left": "body_union",
+      "right": "cut1_cutter"
+    },
+    {
+      "id": "cut2_cutter",
+      "kind": "box",
+      "origin": [
+        "cut2_x - cut2_w / 2",
+        -1,
+        "cut2_z - cut2_h / 2"
+      ],
+      "size": [
+        "cut2_w",
+        "thickness + 2",
+        "cut2_h"
+      ]
+    },
+    {
+      "id": "body_cut2",
+      "kind": "difference",
+      "left": "body_cut1",
+      "right": "cut2_cutter"
+    },
+    {
+      "id": "cut3_cutter",
+      "kind": "box",
+      "origin": [
+        "cut3_x - cut3_w / 2",
+        -1,
+        "cut3_z - cut3_h / 2"
+      ],
+      "size": [
+        "cut3_w",
+        "thickness + 2",
+        "cut3_h"
+      ]
+    },
+    {
+      "id": "body_cut3",
+      "kind": "difference",
+      "left": "body_cut2",
+      "right": "cut3_cutter"
+    },
+    {
+      "id": "cut4_cutter",
+      "kind": "box",
+      "origin": [
+        "cut4_x - cut4_w / 2",
+        -1,
+        "cut4_z - cut4_h / 2"
+      ],
+      "size": [
+        "cut4_w",
+        "thickness + 2",
+        "cut4_h"
+      ]
+    },
+    {
+      "id": "final_body",
+      "kind": "difference",
+      "left": "body_cut3",
+      "right": "cut4_cutter"
+    }
+  ],
+  "output": "final_body"
+}

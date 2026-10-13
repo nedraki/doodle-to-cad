@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "units": "mm",
+  "name": "curved_pipe",
+  "parameters": {
+    "bend_radius": {
+      "value": 20,
+      "min": 12,
+      "max": 35,
+      "group": "Details"
+    },
+    "tube_radius": {
+      "value": 3,
+      "min": 1,
+      "max": 5,
+      "group": "Details"
+    },
+    "angle": {
+      "value": 90,
+      "min": 30,
+      "max": 180,
+      "group": "Details",
+      "unit": "\u00b0"
+    }
+  },
+  "operations": [
+    {
+      "id": "sweep",
+      "kind": "arc_pipe",
+      "origin": [
+        0,
+        0,
+        "tube_radius"
+      ],
+      "bend_radius": "bend_radius",
+      "radius": "tube_radius",
+      "angle": "angle"
+    }
+  ],
+  "output": "sweep"
+}

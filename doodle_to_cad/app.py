@@ -3,6 +3,7 @@ from __future__ import annotations
 import asyncio
 import json
 import re
+import shutil
 import time
 import uuid
 
@@ -15,6 +16,8 @@ from .model_client import CompatibleModelClient
 from .openscad import available
 from .params import extract_params, rewrite_params, validate_updates
 from .pipeline import Pipeline
+from .brep import build_recipe, worker_python, RECIPE_PROMPT
+from .brep_recipe import recipe_params, validate_recipe
 
 RUN_ID_RE = re.compile(r"^[0-9a-f]{6,32}$")
 app = FastAPI(title="Doodle to CAD", version="0.1.0")
@@ -61,10 +64,18 @@ def _run_dir(run_id: str):
     if not RUN_ID_RE.fullmatch(run_id):
         raise HTTPException(404, "Unknown run")
     out = settings.results_dir / run_id
-    scad = out / "model.scad"
+    scad = out / "model.recipe.json" if (out / "model.recipe.json").exists() else out / "model.scad"
     if not scad.exists():
         raise HTTPException(404, "Run has no model to edit")
     return out, scad
+
+
+@app.get("/api/results/{run_id}")
+def get_result(run_id: str):
+    out, _ = _run_dir(run_id)
+    if not (out / "result.json").exists():
+        raise HTTPException(404, "Run has no completed result")
+    return json.loads((out / "result.json").read_text())
 
 
 @app.get("/api/results/{run_id}/params")
@@ -72,7 +83,7 @@ def get_params(run_id: str):
     """Numeric top-level parameters the accepted model exposes for live editing."""
     out, scad = _run_dir(run_id)
     cached = out / "parameters.json"
-    params = [p.to_dict() for p in extract_params(scad.read_text())]
+    params = recipe_params(json.loads(scad.read_text())) if scad.suffix == ".json" else [p.to_dict() for p in extract_params(scad.read_text())]
     payload = {"run_id": run_id, "params": params}
     cached.write_text(json.dumps(payload, indent=2))
     return payload
@@ -86,6 +97,11 @@ def parametrize(run_id: str, updates: dict):
     so a reset is always one click away.
     """
     out, scad = _run_dir(run_id)
+    if scad.suffix == ".json":
+        try:
+            return build_recipe(out, json.loads(scad.read_text()), updates)
+        except ValueError as exc:
+            raise HTTPException(422, {"message": str(exc)}) from exc
     base = scad.read_text()
     try:
         validate_updates(base, updates)
@@ -102,6 +118,70 @@ def parametrize(run_id: str, updates: dict):
         return {"ok": False, "applied": applied,
                 "message": error or "Recompile produced no mesh — last successful geometry retained."}
     return {"ok": True, "applied": applied, "stl": stl_url, "scad": f"/results/{run_id}/{tag}.scad", "params": [p.to_dict() for p in extract_params(edited)]}
+
+
+@app.get("/api/brep")
+def brep_status():
+    try:
+        worker_python()
+        return {"configured": True}
+    except ValueError:
+        return {"configured": False}
+
+
+@app.post("/api/brep/build")
+def brep_build(recipe: dict):
+    """Build an explicit recipe without a model call (evaluation/import entrypoint)."""
+    try:
+        validate_recipe(recipe)
+        worker_python()
+        run_id = uuid.uuid4().hex[:12]
+        out = settings.results_dir / run_id
+        built = build_recipe(out, recipe)
+        return _save_brep_result(out, recipe, built)
+    except ValueError as exc:
+        raise HTTPException(422, {"message": str(exc)}) from exc
+
+
+def _save_brep_result(out, recipe, built, original=None, controls=None):
+    (out / "model.recipe.json").write_text(json.dumps(recipe, indent=2))
+    result = {"id": out.name, "backend": "usd-brep", "success": False,
+              "spec": {"object": recipe.get("name", "BRep part")},
+              "model": "experimental BRep recipe", "duration_seconds": built["diagnostics"]["build_seconds"],
+              "evaluation": {"accepted": False, "failures": ["Drawing fidelity has not been evaluated."]},
+              "diagnostics": built["diagnostics"], "controls": controls or {"primary_view": "front"},
+              "files": {"source": built["source"], "stl": built["stl"], "usd": built["usd"], "views": {}},
+              "original_run_id": original}
+    temporary = out / "result.pending.json"
+    temporary.write_text(json.dumps(result, indent=2))
+    temporary.replace(out / "result.json")
+    return result
+
+
+@app.post("/api/results/{run_id}/brep")
+async def brep_from_result(run_id: str):
+    """Create a separate candidate; translating code is not an exact conversion."""
+    out, source = _run_dir(run_id)
+    if source.suffix == ".json":
+        raise HTTPException(422, "This result already uses a BRep recipe")
+    try:
+        worker_python()
+        original = json.loads((out / "result.json").read_text())
+        candidate = settings.results_dir / uuid.uuid4().hex[:12]
+        candidate.mkdir(parents=True)
+        recipe = await pipeline._json_call([
+            {"role": "system", "content": RECIPE_PROMPT},
+            {"role": "user", "content": json.dumps({"spec": original.get("spec"), "scad": source.read_text()})},
+        ], candidate, "brep-recipe")
+        if "unsupported" in recipe:
+            raise ValueError(str(recipe["unsupported"]))
+        validate_recipe(recipe)
+        built = await asyncio.to_thread(build_recipe, candidate, recipe)
+        if (out / "input.png").exists():
+            shutil.copyfile(out / "input.png", candidate / "input.png")
+        return _save_brep_result(candidate, recipe, built, run_id, original.get("controls"))
+    except ValueError as exc:
+        raise HTTPException(422, {"message": str(exc)}) from exc
 
 
 @app.post("/api/generate")

@@ -1,0 +1,177 @@
+{
+  "source_run": "5bffe8554f0c",
+  "source_scad_sha256": "4443153d8d79ecda086166ed32ff9946034bcf0a80a21655056e561af7f6667d",
+  "model": "local-inference-lab/Qwen3.8-Flash-Next-NVFP4",
+  "parameters": 20,
+  "original": {
+    "volume_mm3": 86720.23442899999,
+    "extents_mm": [
+      73.11,
+      47.78,
+      100.0
+    ],
+    "euler_number": -6,
+    "section_bounds_xz_mm": [
+      [
+        0.0,
+        0.0,
+        73.11,
+        100.0
+      ],
+      [
+        8.44055,
+        73.02,
+        30.878,
+        87.62
+      ],
+      [
+        8.76954,
+        11.455,
+        17.8717,
+        48.065
+      ],
+      [
+        36.2224,
+        62.015,
+        45.3245,
+        98.625
+      ],
+      [
+        51.9922,
+        7.525,
+        61.0944,
+        51.995
+      ]
+    ]
+  },
+  "brep": {
+    "volume_mm3": 86722.40541065409,
+    "extents_mm": [
+      73.11000061035156,
+      47.779998779296875,
+      100.0
+    ],
+    "euler_number": -6,
+    "section_bounds_xz_mm": [
+      [
+        0.0,
+        0.0,
+        73.11,
+        100.0
+      ],
+      [
+        8.44,
+        73.02,
+        30.88,
+        87.62
+      ],
+      [
+        8.77,
+        11.455,
+        17.87,
+        48.065
+      ],
+      [
+        36.22,
+        62.015,
+        45.32,
+        98.625
+      ],
+      [
+        51.99,
+        7.525,
+        61.09,
+        51.995
+      ]
+    ]
+  },
+  "volume_difference_percent": 0.00250343148677073,
+  "max_section_bound_difference_mm": 0.0045000000000001705,
+  "edit": {
+    "backend": "usd-brep",
+    "version": "1.0.0",
+    "solid_volume_mm3": 86430.40549999996,
+    "mesh_volume_mm3": 86430.40535820201,
+    "extents_mm": [
+      73.11000061035156,
+      47.779998779296875,
+      100.0
+    ],
+    "bounds_mm": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        73.11000061035156,
+        47.779998779296875,
+        100.0
+      ]
+    ],
+    "watertight": true,
+    "winding_consistent": true,
+    "euler_number": -6,
+    "triangles": 108,
+    "usd_roundtrip": true,
+    "operations": [
+      {
+        "id": "vertical_plate",
+        "kind": "box",
+        "faces": 6
+      },
+      {
+        "id": "horizontal_base",
+        "kind": "box",
+        "faces": 6
+      },
+      {
+        "id": "body_union",
+        "kind": "union",
+        "faces": 8
+      },
+      {
+        "id": "cut1_cutter",
+        "kind": "box",
+        "faces": 6
+      },
+      {
+        "id": "body_cut1",
+        "kind": "difference",
+        "faces": 12
+      },
+      {
+        "id": "cut2_cutter",
+        "kind": "box",
+        "faces": 6
+      },
+      {
+        "id": "body_cut2",
+        "kind": "difference",
+        "faces": 16
+      },
+      {
+        "id": "cut3_cutter",
+        "kind": "box",
+        "faces": 6
+      },
+      {
+        "id": "body_cut3",
+        "kind": "difference",
+        "faces": 21
+      },
+      {
+        "id": "cut4_cutter",
+        "kind": "box",
+        "faces": 6
+      },
+      {
+        "id": "final_body",
+        "kind": "difference",
+        "faces": 25
+      }
+    ],
+    "build_seconds": 0.159
+  },
+  "note": "One translation of an existing accepted generation, not repeated drawing-to-CAD trials."
+}
