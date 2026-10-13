@@ -9,6 +9,8 @@ import tempfile
 import uuid
 
 from .brep_recipe import recipe_params, validate_recipe
+from .build_contract import BuildInput, BuildResult, BuildError, Diagnostic
+from .openscad import render_views, mesh_health
 
 WORKER = Path(__file__).resolve().parents[1] / "workers" / "brep" / "build.py"
 
@@ -16,16 +18,26 @@ WORKER = Path(__file__).resolve().parents[1] / "workers" / "brep" / "build.py"
 def worker_python():
     configured = os.getenv("DOODLE_BREP_PYTHON", str(WORKER.parent / ".venv" / "bin" / "python"))
     if not configured or not Path(configured).is_file():
-        raise ValueError("Set DOODLE_BREP_PYTHON to an isolated Python 3.12 worker; see docs/brep/README.md")
+        raise BuildError("backend_unavailable", "Set DOODLE_BREP_PYTHON to an isolated Python 3.12 worker; see docs/brep/README.md")
     return configured
 
 
-def build_recipe(out: Path, recipe: dict, updates: dict | None = None):
-    """Publish a unique immutable revision only after all worker checks pass."""
-    edited, _ = validate_recipe(recipe, updates)
-    python = worker_python()
+def build_brep(request: BuildInput, binary: str = "openscad") -> BuildResult:
+    """Publish one immutable revision after the isolated worker passes its checks."""
+    result = BuildResult("usd-brep", request.source)
+    try:
+        edited, _ = validate_recipe(json.loads(request.source.read_text()))
+    except (ValueError, OSError) as exc:
+        result.diagnostics.append(Diagnostic("invalid_input", str(exc)))
+        return result
+    try:
+        python = worker_python()
+    except ValueError as exc:
+        result.diagnostics.append(Diagnostic("backend_unavailable", str(exc)))
+        return result
+    out = request.output_dir
     out.mkdir(parents=True, exist_ok=True)
-    tag = f"brep-{uuid.uuid4().hex}"
+    published = out / f"brep-{uuid.uuid4().hex}"
     with tempfile.TemporaryDirectory(prefix=".brep-", dir=out) as tmp:
         staging = Path(tmp)
         source = staging / "model.recipe.json"
@@ -34,21 +46,67 @@ def build_recipe(out: Path, recipe: dict, updates: dict | None = None):
             process = subprocess.run([python, str(WORKER), str(source), str(staging)],
                                      capture_output=True, text=True, timeout=120,
                                      env={k: v for k, v in os.environ.items() if k not in {"PYTHONPATH", "PYTHONHOME"}})
-        except OSError as exc:
-            raise ValueError("Could not launch the configured BRep worker") from exc
-        except subprocess.TimeoutExpired as exc:
-            raise ValueError("BRep build timed out; last successful geometry retained") from exc
+        except OSError:
+            result.diagnostics.append(Diagnostic("backend_unavailable", "Could not launch the configured BRep worker"))
+            return result
+        except subprocess.TimeoutExpired:
+            result.diagnostics.append(Diagnostic("timeout", "BRep build timed out; last successful geometry retained"))
+            return result
+        result.log = process.stdout + process.stderr
         if process.returncode:
-            raise ValueError((process.stderr or process.stdout or "BRep worker crashed")[-2500:])
-        diagnostics = json.loads((staging / "diagnostics.json").read_text())
-        (staging / "worker.log").write_text(process.stdout + process.stderr)
-        # Rename within one filesystem; no published files are ever overwritten.
-        staging.rename(out / tag)
-    prefix = f"/results/{out.name}/{tag}"
+            result.diagnostics.append(Diagnostic("build_failed", (result.log or "BRep worker crashed")[-2500:]))
+            return result
+        try:
+            result.backend_details = json.loads((staging / "diagnostics.json").read_text())
+            for name in ("model.stl", "model.usda"):
+                if not (staging / name).stat().st_size:
+                    raise ValueError(f"Empty worker output: {name}")
+        except (OSError, ValueError) as exc:
+            result.diagnostics.append(Diagnostic("invalid_output", str(exc)))
+            return result
+        try:
+            result.measurements = mesh_health(staging / "model.stl")
+            if not result.measurements["watertight"] or result.measurements["components"] != 1:
+                raise ValueError("BRep STL must contain one watertight component")
+        except Exception as exc:
+            result.diagnostics.append(Diagnostic("invalid_output", str(exc)))
+            return result
+        if request.render:
+            # OpenSCAD renders the finished mesh; it does not build the BRep solid.
+            preview = staging / "preview.scad"
+            preview.write_text('import("model.stl");\n')
+            views, log = render_views(preview, staging, binary)
+            result.views = {name: published / path.name for name, path in views.items()}
+            if log:
+                result.diagnostics.append(Diagnostic("render_failed", log, "warning"))
+                result.log += "\n" + log
+        (staging / "worker.log").write_text(result.log)
+        staging.rename(published)
+    result.source = published / "model.recipe.json"
+    result.stl = published / "model.stl"
+    result.exports = {"usd": published / "model.usda"}
+    return result
+
+
+def build_recipe(out: Path, recipe: dict, updates: dict | None = None):
+    """Compatibility API for the existing recipe and parameter endpoints."""
+    from .config import settings
+    edited, _ = validate_recipe(recipe, updates)
+    out.mkdir(parents=True, exist_ok=True)
+    with tempfile.TemporaryDirectory(prefix=".input-", dir=out) as tmp:
+        source = Path(tmp) / "model.recipe.json"
+        source.write_text(json.dumps(edited))
+        result = build_brep(BuildInput("usd-brep", source, out), settings.openscad_bin)
+    if not result.ok:
+        error = next(d for d in result.diagnostics if d.severity == "error")
+        raise BuildError(error.code, error.message)
+    def url(path):
+        return f"/results/{out.name}/{path.relative_to(out).as_posix()}"
     return {"ok": True, "backend": "usd-brep", "applied": updates or {},
-            "stl": f"{prefix}/model.stl", "source": f"{prefix}/model.recipe.json",
-            "usd": f"{prefix}/model.usda", "diagnostics": diagnostics,
-            "params": recipe_params(edited)}
+            "stl": url(result.stl), "source": url(result.source),
+            "usd": url(result.exports["usd"]), "diagnostics": result.backend_details,
+            "views": {name: url(path) for name, path in result.views.items()},
+            "build": result.metadata(), "params": recipe_params(edited)}
 
 
 RECIPE_PROMPT = """Translate the supplied design and OpenSCAD into ONE editable BRep recipe.

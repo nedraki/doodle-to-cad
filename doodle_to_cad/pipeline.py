@@ -17,7 +17,7 @@ from .evaluation import assign_view_groups, evaluate_candidate
 from .design_plan import normalize_design_plan
 from .preflight import preflight_scad
 from .model_client import CompatibleModelClient, extract_json
-from .openscad import compile_and_render, mesh_health
+from .build_contract import build, BuildInput
 from .refine import refine_evidence
 from .sizes import derive_physical_sizes, normalize_dimensions, uniform_scale_scad
 
@@ -176,8 +176,11 @@ class Pipeline:
                 stage(f"compiling (attempt {number})")
                 preflight=preflight_scad(scad,spec)
                 if preflight["passed"]:
-                    stl,views,log=await asyncio.to_thread(compile_and_render,scad_path,attempt_dir,self.settings.openscad_bin)
-                else: stl,views,log=None,{},"PREFLIGHT: "+"; ".join(preflight["errors"])
+                    built = await asyncio.to_thread(build, BuildInput("openscad", scad_path, attempt_dir), self.settings.openscad_bin)
+                    stl, views, log = built.stl, built.views, built.log
+                else:
+                    built = None
+                    stl,views,log=None,{},"PREFLIGHT: "+"; ".join(preflight["errors"])
                 if stl or len(compiler_repairs) >= self.settings.code_validation_repairs:
                     break
                 repair_number=len(compiler_repairs)+1
@@ -194,7 +197,7 @@ class Pipeline:
                     [{"role":"system","content":COMPILER_REPAIR_PROMPT},{"role":"user","content":compiler_input}],
                     attempt_dir,f"compiler-repair-{repair_number:02d}",temperature=0,
                 )
-            health = await asyncio.to_thread(mesh_health, stl) if stl else None
+            health = built.measurements if stl else None
             # Deterministic size clamp: when the compiled max extent misses the
             # authoritative target by >5%, uniformly scale the named size
             # parameters and recompile (no LLM). Verified empirically — keep
@@ -211,12 +214,14 @@ class Pipeline:
                     if applied:
                         scaled_dir = attempt_dir / "uniform-scaled"; scaled_dir.mkdir(exist_ok=True)
                         scaled_path = scaled_dir / "model.scad"; scaled_path.write_text(scaled_scad)
-                        s_stl, s_views, s_log = await asyncio.to_thread(compile_and_render, scaled_path, scaled_dir, self.settings.openscad_bin)
-                        s_health = await asyncio.to_thread(mesh_health, s_stl) if s_stl else None
+                        scaled_build = await asyncio.to_thread(build, BuildInput("openscad", scaled_path, scaled_dir), self.settings.openscad_bin)
+                        s_stl, s_views, s_log = scaled_build.stl, scaled_build.views, scaled_build.log
+                        s_health = scaled_build.measurements if s_stl else None
                         if s_stl and s_health and s_health["extents_mm"]:
                             s_miss = abs(max(s_health["extents_mm"]) - target_mm) / target_mm
                             if s_miss < miss:
                                 scad, stl, views, health, log = scaled_scad, s_stl, s_views, s_health, s_log
+                                built = scaled_build
                                 scale_applied = {"factor": round(target_mm / actual_max, 4), "before_max_mm": actual_max,
                                                  "after_max_mm": max(s_health["extents_mm"]), "params": applied}
             evaluation = await asyncio.to_thread(
@@ -228,6 +233,7 @@ class Pipeline:
             def _rel(path: Path | None) -> str | None:
                 return path.relative_to(out).as_posix() if path else None
             record = {"attempt":number,"action":next_action,"preflight":preflight,"compiler_repairs":compiler_repairs,"uniform_scale":scale_applied,"evaluation":evaluation,"mesh_health":health,
+                      "build": built.metadata() if built else None,
                       "compile_log":log,"files":{"scad":_rel(attempt_dir/"model.scad"),"stl":_rel(stl),
                       "views":{k:_rel(v) for k,v in views.items()}}}
             candidate_rank=(sum(evaluation.get("mandatory_gates",{}).values()),evaluation["score"])
@@ -301,7 +307,7 @@ class Pipeline:
         repaired = len(attempts) > 1
         model = await self.client.discover()
         passed_mesh_gate = bool(selected["evaluation"]["accepted"])
-        result = {"id":run_id,"success":passed_mesh_gate,"model":model.selected,"model_source":model.source,"base_url":self.settings.base_url,"spec":spec,"geometry":evidence,"mesh_health":health,"evaluation":selected["evaluation"],"selected_attempt":selected["attempt"],"attempts":attempts,"controls":controls,"additional_view_count":len(additional_views),"repaired":repaired,"compile_log":log,"duration_seconds":round(time.monotonic()-started,2),"files":{"scad":f"/results/{run_id}/model.scad","stl":f"/results/{run_id}/model.stl" if stl else None,"attempts":f"/results/{run_id}/attempts.json","overlay":f"/results/{run_id}/geometry-overlay.png","views":{k:f"/results/{run_id}/{v.name}" for k,v in views.items()}}}
+        result = {"backend": "openscad", "build": selected.get("build"), "id":run_id,"success":passed_mesh_gate,"model":model.selected,"model_source":model.source,"base_url":self.settings.base_url,"spec":spec,"geometry":evidence,"mesh_health":health,"evaluation":selected["evaluation"],"selected_attempt":selected["attempt"],"attempts":attempts,"controls":controls,"additional_view_count":len(additional_views),"repaired":repaired,"compile_log":log,"duration_seconds":round(time.monotonic()-started,2),"files":{"scad":f"/results/{run_id}/model.scad","stl":f"/results/{run_id}/model.stl" if stl else None,"attempts":f"/results/{run_id}/attempts.json","overlay":f"/results/{run_id}/geometry-overlay.png","views":{k:f"/results/{run_id}/{v.name}" for k,v in views.items()}}}
         (out/"result.json").write_text(json.dumps(result,indent=2)); return result
 
     @staticmethod
