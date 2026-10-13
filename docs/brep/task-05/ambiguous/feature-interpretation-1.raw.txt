@@ -1,0 +1,32 @@
+```json
+{
+  "version": 1,
+  "object_hypothesis": "Rectangular planar object or face",
+  "features": [
+    {
+      "id": "rect_face",
+      "type": "body",
+      "description": "A single rectangular outline defining the extent of the object in the front view.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_0"
+        }
+      ],
+      "reason": "The image displays a closed rectangular loop with four vertices and straight edges, identified as the primary outer contour."
+    }
+  ],
+  "relationships": [],
+  "assumptions": [
+    "The object is assumed to be a solid block or a flat plate based on the single visible outline.",
+    "The view is assumed to be an orthographic projection of a planar face."
+  ],
+  "unresolved": [
+    "Depth (Y-axis dimension) is unknown.",
+    "Internal structure (hollow vs solid) is unknown.",
+    "Surface texture or material is unknown."
+  ],
+  "conflicts": []
+}
+```

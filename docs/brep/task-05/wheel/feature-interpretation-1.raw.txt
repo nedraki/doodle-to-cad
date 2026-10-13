@@ -1,0 +1,137 @@
+{
+  "version": 1,
+  "object_hypothesis": "A spoked wheel or disk assembly featuring a central hub, an outer rim, and eight radial spokes.",
+  "features": [
+    {
+      "id": "f_rim",
+      "type": "rim",
+      "description": "Outer circular boundary of the wheel assembly.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "The large circular contour in the front view defines the outer perimeter of the object."
+    },
+    {
+      "id": "f_hub",
+      "type": "hub",
+      "description": "Central circular element located at the geometric center of the wheel.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "A distinct circular region is visible at the center of the front view, serving as the anchor for the spokes."
+    },
+    {
+      "id": "f_spokes",
+      "type": "spoke",
+      "description": "Radial bars connecting the central hub to the outer rim.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "Linear segments radiating from the center to the perimeter are visible in the front view."
+    },
+    {
+      "id": "f_thickness",
+      "type": "body",
+      "description": "The depth or thickness of the wheel assembly.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_14"
+        }
+      ],
+      "reason": "The right view shows a narrow rectangular profile, indicating the object is a flat plate or disk with uniform thickness."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "r_spoke_hub",
+      "type": "connected",
+      "features": [
+        "f_spokes",
+        "f_hub"
+      ],
+      "description": "Spokes are attached to the central hub.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "The lines defining the spokes terminate directly at the boundary of the central hub."
+    },
+    {
+      "id": "r_spoke_rim",
+      "type": "connected",
+      "features": [
+        "f_spokes",
+        "f_rim"
+      ],
+      "description": "Spokes are attached to the inner face of the rim.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "The lines defining the spokes terminate directly at the inner boundary of the rim."
+    },
+    {
+      "id": "r_symmetry",
+      "type": "symmetry",
+      "features": [
+        "f_spokes"
+      ],
+      "description": "The spokes are arranged in a radially symmetric pattern.",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "The visual distribution of the spokes suggests a regular angular spacing (likely 45 degrees) around the center."
+    },
+    {
+      "id": "r_hollow",
+      "type": "hollow",
+      "features": [
+        "f_rim",
+        "f_hub",
+        "f_spokes"
+      ],
+      "description": "The space between the hub, rim, and spokes is open.",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "The distinct separation of the structural elements implies voids between them, typical of a spoked wheel design."
+    }
+  ],
+  "assumptions": [
+    "The object is a single rigid body.",
+    "The 'unassigned' views (1, 2, 3, 6) are likely detail views or fragments of the main geometry and are excluded from the primary structural hypothesis."
+  ],
+  "unresolved": [
+    "The specific function of the central hub (e.g., whether it contains a bore for an axle).",
+    "The exact material composition."
+  ],
+  "conflicts": []
+}

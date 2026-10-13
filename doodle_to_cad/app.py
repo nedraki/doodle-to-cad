@@ -212,6 +212,23 @@ async def brep_from_result(run_id: str):
         raise HTTPException(422, {"message": str(exc), "code": getattr(exc, "code", "invalid_input")}) from exc
 
 
+@app.post("/api/dev/interpret")
+async def interpret_drawing(image: UploadFile = File(...), primary_view: str = Form("front"),
+                            projection_standard: str = Form("third-angle")):
+    if image.content_type not in {"image/png", "image/jpeg", "image/webp"}:
+        raise HTTPException(415, "Upload PNG, JPEG, or WebP")
+    data = await image.read()
+    if len(data) > 15_000_000:
+        raise HTTPException(413, "Image exceeds 15 MB")
+    if primary_view not in {"front", "top", "right", "left", "rear"} or projection_standard not in {"first-angle", "third-angle"}:
+        raise HTTPException(422, "Invalid view controls")
+    try:
+        return await pipeline.interpret_features(data, image.content_type,
+            {"primary_view": primary_view, "projection_standard": projection_standard})
+    except ValueError as exc:
+        raise HTTPException(422, {"message": str(exc)}) from exc
+
+
 @app.post("/api/generate")
 async def generate(
     image: UploadFile = File(...), notes: str = Form(""), dimension: str = Form(""),

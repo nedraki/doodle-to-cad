@@ -1,0 +1,195 @@
+{
+  "id": "d7e681a85c75",
+  "interpretation": {
+    "version": 1,
+    "object_hypothesis": "A planar sheet or plate containing a 3x3 array of circular openings.",
+    "features": [
+      {
+        "id": "sheet_body",
+        "type": "body",
+        "description": "A large rectangular outer boundary defining the extent of the object.",
+        "status": "observed",
+        "evidence": [
+          {
+            "view_id": "view_1",
+            "region_id": "profile_contour_17"
+          }
+        ],
+        "reason": "The outermost contour in the view defines the primary silhouette of the object."
+      },
+      {
+        "id": "opening_group",
+        "type": "opening",
+        "description": "A collection of nine roughly circular shapes arranged in a grid within the sheet.",
+        "status": "observed",
+        "evidence": [
+          {
+            "view_id": "view_1",
+            "region_id": "view"
+          }
+        ],
+        "reason": "Visible internal contours distinct from the outer boundary suggest openings or holes."
+      }
+    ],
+    "relationships": [
+      {
+        "id": "grid_arrangement",
+        "type": "repeated",
+        "features": [
+          "opening_group"
+        ],
+        "description": "The openings are arranged in a regular 3x3 grid pattern.",
+        "status": "observed",
+        "evidence": [
+          {
+            "view_id": "view_1",
+            "region_id": "view"
+          }
+        ],
+        "reason": "Visual inspection of the layout shows three rows and three columns of similar shapes."
+      },
+      {
+        "id": "containment",
+        "type": "position",
+        "features": [
+          "opening_group",
+          "sheet_body"
+        ],
+        "description": "The openings are located within the boundaries of the sheet.",
+        "status": "observed",
+        "evidence": [
+          {
+            "view_id": "view_1",
+            "region_id": "view"
+          }
+        ],
+        "reason": "The internal contours are spatially enclosed by the outer rectangular contour."
+      }
+    ],
+    "assumptions": [
+      "The object is a single planar component.",
+      "The internal shapes represent through-holes or openings."
+    ],
+    "unresolved": [
+      "The thickness of the sheet.",
+      "The specific nature of the internal shapes (holes vs. surface pockets)."
+    ],
+    "conflicts": [],
+    "review": {
+      "reference_integrity_checked": true,
+      "drawing_fidelity_verified": false,
+      "policy_warnings": [],
+      "executable": false
+    }
+  },
+  "regions": [
+    {
+      "view_id": "view_1",
+      "direction": "front",
+      "sheet_bbox_normalized": [
+        0.161,
+        0.2253,
+        0.676,
+        0.5533
+      ],
+      "cad_mapping": {
+        "plane": "XZ",
+        "view_axis": "Y",
+        "u_maps_to": "+X",
+        "v_maps_to": "-Z"
+      },
+      "view_assignment": "spatial heuristic",
+      "region_id": "view",
+      "kind": "view",
+      "bbox_view_normalized": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "measured_span_pixels": {
+        "horizontal_axis_u": 676,
+        "vertical_axis_v": 415
+      }
+    },
+    {
+      "view_id": "view_1",
+      "direction": "front",
+      "sheet_bbox_normalized": [
+        0.161,
+        0.2253,
+        0.676,
+        0.5533
+      ],
+      "cad_mapping": {
+        "plane": "XZ",
+        "view_axis": "Y",
+        "u_maps_to": "+X",
+        "v_maps_to": "-Z"
+      },
+      "view_assignment": "spatial heuristic",
+      "region_id": "profile_contour_17",
+      "kind": "outer",
+      "profile_id": "contour_17",
+      "bbox_view_normalized": [
+        0.0118,
+        0.0145,
+        0.9749,
+        0.9711
+      ],
+      "center_view_normalized": [
+        0.4993,
+        0.5001
+      ],
+      "polygon_view_normalized": [
+        [
+          0.0207,
+          0.0289
+        ],
+        [
+          0.0266,
+          0.9736
+        ],
+        [
+          0.9778,
+          0.964
+        ],
+        [
+          0.9749,
+          0.0242
+        ],
+        [
+          0.034,
+          0.017
+        ],
+        [
+          0.9704,
+          0.041
+        ],
+        [
+          0.9704,
+          0.9543
+        ],
+        [
+          0.0311,
+          0.9568
+        ]
+      ],
+      "vertices": 8,
+      "circularity": 0.007,
+      "area_ratio_of_sheet": 0.01393
+    }
+  ],
+  "shared_axis_evidence": [],
+  "controls": {
+    "primary_view": "front",
+    "projection_standard": "third-angle"
+  },
+  "notes": "",
+  "default_generation_changed": false,
+  "files": {
+    "input": "/results/d7e681a85c75/input.png",
+    "overlay": "/results/d7e681a85c75/geometry-overlay.png",
+    "interpretation": "/results/d7e681a85c75/feature-evidence.json"
+  }
+}

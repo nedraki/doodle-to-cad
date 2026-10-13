@@ -1,0 +1,64 @@
+{
+  "wheel": {
+    "id": "8cb87523d3aa",
+    "notes": "",
+    "source": "benchmarks/brep-baseline/wheel/drawing.png",
+    "features": 4,
+    "relationships": 4,
+    "unresolved": [
+      "The specific function of the central hub (e.g., whether it contains a bore for an axle).",
+      "The exact material composition.",
+      "r_hollow: Outer outlines alone do not establish hidden wall or cavity geometry."
+    ],
+    "conflicts": []
+  },
+  "bookend": {
+    "id": "ca2271034351",
+    "notes": "",
+    "source": "benchmarks/cases/001_l_bookend_multiview/source/drawing.png",
+    "features": 6,
+    "relationships": 2,
+    "unresolved": [
+      "Depth of the openings (through vs. blind).",
+      "Thickness of the horizontal flange in the side view."
+    ],
+    "conflicts": []
+  },
+  "knob": {
+    "id": "7c2fc1edf4ea",
+    "notes": "",
+    "source": "benchmarks/cases/006_stepped_knob/source/drawing.png",
+    "features": 5,
+    "relationships": 2,
+    "unresolved": [
+      "Internal geometry (hollow vs solid).",
+      "Exact 3D shape (cylindrical vs prismatic) due to identical orthogonal views."
+    ],
+    "conflicts": []
+  },
+  "random": {
+    "id": "d7e681a85c75",
+    "notes": "",
+    "source": "benchmarks/cases/012_vent_grille_grid/source/drawing.png",
+    "features": 2,
+    "relationships": 2,
+    "unresolved": [
+      "The thickness of the sheet.",
+      "The specific nature of the internal shapes (holes vs. surface pockets)."
+    ],
+    "conflicts": []
+  },
+  "ambiguous": {
+    "id": "7754f1360115",
+    "notes": "",
+    "source": "benchmarks/feature-evidence/ambiguous-outline.png",
+    "features": 1,
+    "relationships": 0,
+    "unresolved": [
+      "Depth (Y-axis dimension) is unknown.",
+      "Internal structure (hollow vs solid) is unknown.",
+      "Surface texture or material is unknown."
+    ],
+    "conflicts": []
+  }
+}
