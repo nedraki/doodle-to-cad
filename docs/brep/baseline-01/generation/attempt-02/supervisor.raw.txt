@@ -1,0 +1,15 @@
+{
+  "action": "repair_scad",
+  "problems": [
+    "Front view projection is incorrect: shows L-profile (side view) instead of the rectangular backplate face.",
+    "Cutouts are not visible in the front view; they are hidden or oriented incorrectly relative to the camera.",
+    "Geometry orientation mismatch: The backplate normal is likely along Y, but front view expects normal along Y (looking from -Y or +Y) to see the face.",
+    "Missing cutouts in rendered front view (similarity 0.35)."
+  ],
+  "preserve": [
+    "L-shaped profile dimensions (width 73.05, depth 47.99, height 100).",
+    "Cutout definitions (rect and slots) and their relative positions on the backplate.",
+    "Single solid body topology."
+  ],
+  "instructions": "Rotate the entire model 90 degrees around the Z-axis so the backplate face is perpendicular to the Y-axis (facing the front camera). Ensure the backplate is the primary visible surface in the front view. Verify that the cutouts (rect and slots) are subtracted through the backplate thickness (Y-axis) and are clearly visible in the front projection. Adjust the cutout positions to match the source view centroids (u, v) relative to the backplate's width and height."
+}

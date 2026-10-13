@@ -1,0 +1,228 @@
+{
+  "run_id": "498951c1ba2b",
+  "params": [
+    {
+      "label": "Overall width",
+      "feature": {
+        "kind": "dimension",
+        "axis": "x",
+        "label": "Overall width"
+      },
+      "name": "width",
+      "value": 73.05,
+      "unit": "mm",
+      "group": null,
+      "description": "Changes the body width",
+      "low": 0.0,
+      "high": 146.1,
+      "step": 0.01
+    },
+    {
+      "label": "Overall depth",
+      "feature": {
+        "kind": "dimension",
+        "axis": "y",
+        "label": "Overall depth"
+      },
+      "name": "depth",
+      "value": 47.99,
+      "unit": "mm",
+      "group": null,
+      "description": "Changes the body depth",
+      "low": 0.0,
+      "high": 95.98,
+      "step": 0.01
+    },
+    {
+      "label": "Overall height",
+      "feature": {
+        "kind": "dimension",
+        "axis": "z",
+        "label": "Overall height"
+      },
+      "name": "height",
+      "value": 100.0,
+      "unit": "mm",
+      "group": null,
+      "description": "Changes the body height",
+      "low": 0.0,
+      "high": 200.0,
+      "step": 0.01
+    },
+    {
+      "label": "Backplate thickness",
+      "feature": {
+        "kind": "region",
+        "label": "Vertical backplate",
+        "min": [
+          0,
+          0,
+          0
+        ],
+        "max": [
+          73.05,
+          8.0,
+          100.0
+        ]
+      },
+      "name": "backplate_thickness",
+      "value": 8.0,
+      "unit": "mm",
+      "group": null,
+      "description": "Thickness of the vertical backplate",
+      "low": 0.0,
+      "high": 16.0,
+      "step": 0.01
+    },
+    {
+      "label": "Base thickness",
+      "feature": {
+        "kind": "region",
+        "label": "Horizontal base",
+        "min": [
+          0,
+          0,
+          0
+        ],
+        "max": [
+          73.05,
+          47.99,
+          8.0
+        ]
+      },
+      "name": "base_thickness",
+      "value": 8.0,
+      "unit": "mm",
+      "group": null,
+      "description": "Thickness of the horizontal base flange",
+      "low": 0.0,
+      "high": 16.0,
+      "step": 0.01
+    },
+    {
+      "label": "Rect cutout width",
+      "feature": {
+        "kind": "region",
+        "label": "Top-left rectangle cutout",
+        "min": [
+          4.60215,
+          7.0,
+          21.4
+        ],
+        "max": [
+          19.21215,
+          9.0,
+          36.4
+        ]
+      },
+      "name": "cutout_rect_w",
+      "value": 14.6,
+      "unit": "mm",
+      "group": null,
+      "description": "Width of the top-left rectangular cutout",
+      "low": 0.0,
+      "high": 29.2,
+      "step": 0.01
+    },
+    {
+      "label": "Rect cutout height",
+      "feature": {
+        "kind": "region",
+        "label": "Top-left rectangle cutout",
+        "min": [
+          4.60215,
+          7.0,
+          21.4
+        ],
+        "max": [
+          19.21215,
+          9.0,
+          36.4
+        ]
+      },
+      "name": "cutout_rect_h",
+      "value": 15.0,
+      "unit": "mm",
+      "group": null,
+      "description": "Height of the top-left rectangular cutout",
+      "low": 0.0,
+      "high": 30.0,
+      "step": 0.01
+    },
+    {
+      "label": "Slot width",
+      "feature": {
+        "kind": "region",
+        "label": "Slot cutouts",
+        "min": [
+          8.25465,
+          7.0,
+          8.799999999999999
+        ],
+        "max": [
+          61.2159,
+          9.0,
+          86.6
+        ]
+      },
+      "name": "cutout_slot_w",
+      "value": 9.0,
+      "unit": "mm",
+      "group": null,
+      "description": "Width of the vertical slot cutouts",
+      "low": 0.0,
+      "high": 18.0,
+      "step": 0.01
+    },
+    {
+      "label": "Top slot height",
+      "feature": {
+        "kind": "region",
+        "label": "Slot cutouts",
+        "min": [
+          8.25465,
+          7.0,
+          8.799999999999999
+        ],
+        "max": [
+          61.2159,
+          9.0,
+          86.6
+        ]
+      },
+      "name": "cutout_slot_h_top",
+      "value": 36.0,
+      "unit": "mm",
+      "group": null,
+      "description": "Height of the top-middle slot cutout",
+      "low": 0.0,
+      "high": 72.0,
+      "step": 0.01
+    },
+    {
+      "label": "Bottom slot height",
+      "feature": {
+        "kind": "region",
+        "label": "Slot cutouts",
+        "min": [
+          8.25465,
+          7.0,
+          8.799999999999999
+        ],
+        "max": [
+          61.2159,
+          9.0,
+          86.6
+        ]
+      },
+      "name": "cutout_slot_h_bot",
+      "value": 44.0,
+      "unit": "mm",
+      "group": null,
+      "description": "Height of the bottom slot cutouts",
+      "low": 0.0,
+      "high": 88.0,
+      "step": 0.01
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+[
+  {
+    "case": "bookend",
+    "health": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 100,
+      "extents_mm": [
+        80.0,
+        50.0,
+        100.0
+      ],
+      "volume_mm3": 30854.4
+    },
+    "reference_dimension_check": "pass"
+  },
+  {
+    "case": "curved_handle",
+    "health": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 17148,
+      "extents_mm": [
+        48.0,
+        54.0,
+        8.0
+      ],
+      "volume_mm3": 6170.452
+    },
+    "reference_dimension_check": "pass"
+  },
+  {
+    "case": "enclosure",
+    "health": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 48,
+      "extents_mm": [
+        120.0,
+        80.0,
+        40.0
+      ],
+      "volume_mm3": 67548.0
+    },
+    "reference_dimension_check": "pass"
+  },
+  {
+    "case": "transition",
+    "health": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 268,
+      "extents_mm": [
+        60.0,
+        40.0,
+        60.0
+      ],
+      "volume_mm3": 92140.133
+    },
+    "reference_dimension_check": "pass"
+  },
+  {
+    "case": "wheel",
+    "health": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 1244,
+      "extents_mm": [
+        120.0,
+        8.0,
+        120.0
+      ],
+      "volume_mm3": 43128.458
+    },
+    "reference_dimension_check": "pass"
+  }
+]

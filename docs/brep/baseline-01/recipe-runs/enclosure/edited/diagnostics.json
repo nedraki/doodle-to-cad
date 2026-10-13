@@ -1,0 +1,51 @@
+{
+  "backend": "usd-brep",
+  "version": "1.0.0",
+  "solid_volume_mm3": 24863.004187446968,
+  "mesh_volume_mm3": 24858.297321689563,
+  "extents_mm": [
+    60.0,
+    40.0,
+    25.0
+  ],
+  "bounds_mm": [
+    [
+      -2.220446049250313e-15,
+      0.0,
+      0.0
+    ],
+    [
+      60.0,
+      40.0,
+      25.0
+    ]
+  ],
+  "watertight": true,
+  "winding_consistent": true,
+  "euler_number": 2,
+  "triangles": 156,
+  "usd_roundtrip": true,
+  "operations": [
+    {
+      "id": "outer",
+      "kind": "box",
+      "faces": 6
+    },
+    {
+      "id": "rounded",
+      "kind": "fillet",
+      "faces": 10
+    },
+    {
+      "id": "pocket",
+      "kind": "box",
+      "faces": 6
+    },
+    {
+      "id": "enclosure",
+      "kind": "difference",
+      "faces": 15
+    }
+  ],
+  "build_seconds": 0.17
+}

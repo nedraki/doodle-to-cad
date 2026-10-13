@@ -1,0 +1,77 @@
+/* doodle-meta {"version":1,"parameters":{"width":{"label":"Overall width","description":"Changes the body width","unit":"mm","feature":"body_width"},"depth":{"label":"Overall depth","description":"Changes the body depth","unit":"mm","feature":"body_depth"},"height":{"label":"Overall height","description":"Changes the body height","unit":"mm","feature":"body_height"},"backplate_thickness":{"label":"Backplate thickness","description":"Thickness of the vertical backplate","unit":"mm","feature":"backplate"},"base_thickness":{"label":"Base thickness","description":"Thickness of the horizontal base flange","unit":"mm","feature":"base"},"cutout_rect_w":{"label":"Rect cutout width","description":"Width of the top-left rectangular cutout","unit":"mm","feature":"cutout_rect"},"cutout_rect_h":{"label":"Rect cutout height","description":"Height of the top-left rectangular cutout","unit":"mm","feature":"cutout_rect"},"cutout_slot_w":{"label":"Slot width","description":"Width of the vertical slot cutouts","unit":"mm","feature":"cutout_slot"},"cutout_slot_h_top":{"label":"Top slot height","description":"Height of the top-middle slot cutout","unit":"mm","feature":"cutout_slot"},"cutout_slot_h_bot":{"label":"Bottom slot height","description":"Height of the bottom slot cutouts","unit":"mm","feature":"cutout_slot"}},"features":{"body_width":{"kind":"dimension","axis":"x","label":"Overall width"},"body_depth":{"kind":"dimension","axis":"y","label":"Overall depth"},"body_height":{"kind":"dimension","axis":"z","label":"Overall height"},"backplate":{"kind":"region","label":"Vertical backplate","min":[0,0,0],"max":[{"parameter":"backplate_thickness"},{"parameter":"depth"},{"parameter":"height"}]},"base":{"kind":"region","label":"Horizontal base","min":[0,0,0],"max":[{"parameter":"width"},{"parameter":"depth"},{"parameter":"base_thickness"}]},"cutout_rect":{"kind":"region","label":"Top-left rectangle cutout","min":[{"parameter":"width","scale":0.1231,"offset":0},{"parameter":"backplate_thickness","offset":-1},{"parameter":"height","scale":0.7989,"offset":0}],"max":[{"parameter":"width","scale":0.4273,"offset":0},{"parameter":"backplate_thickness","offset":1},{"parameter":"height","scale":0.9447,"offset":0}]},"cutout_slot":{"kind":"region","label":"Slot cutouts","min":[{"parameter":"width","scale":0.12465,"offset":0},{"parameter":"backplate_thickness","offset":-1},{"parameter":"height","scale":0.4801,"offset":0}],"max":[{"parameter":"width","scale":0.83505,"offset":0},{"parameter":"backplate_thickness","offset":1},{"parameter":"height","scale":0.9135,"offset":0}]}}} */
+
+// --- Parameters ---
+width = 73.05;
+depth = 47.99;
+height = 100.0;
+backplate_thickness = 8.0;
+base_thickness = 8.0;
+
+// Cutout dimensions (derived from normalized view measurements)
+cutout_rect_w = 22.22;
+cutout_rect_h = 14.58;
+cutout_slot_w = 9.0;
+cutout_slot_h_top = 36.48;
+cutout_slot_h_bot = 44.23;
+
+// Cutout centers (derived from normalized view measurements)
+// Front view mapping: X = u * width, Z = (1 - v) * height
+rect_cx = 0.2752 * width;
+rect_cz = (1.0 - 0.2011) * height;
+
+slot_top_cx = 0.5597 * width;
+slot_top_cz = (1.0 - 0.2011) * height;
+
+slot_bl_cx = 0.1862 * width;
+slot_bl_cz = (1.0 - 0.7022) * height;
+
+slot_br_cx = 0.7735 * width;
+slot_br_cz = (1.0 - 0.7022) * height;
+
+// --- Modules ---
+module slot_cutter(w, h, cx, cz) {
+    // Vertical slot centered at (cx, cz) in XZ plane, cutting through Y
+    // Using a cube for simplicity as per intent (rectangle ideal shape)
+    // If rounded ends were strictly required by "slot" definition, we'd use hull of cylinders.
+    // Given "rectangle" ideal shape in intent_refinements, a rectangular cutout is appropriate.
+    translate([cx, -1, cz])
+        rotate([90, 0, 0])
+            cube([w, depth + 2, h], center=true);
+}
+
+module rect_cutter(w, h, cx, cz) {
+    translate([cx, -1, cz])
+        rotate([90, 0, 0])
+            cube([w, depth + 2, h], center=true);
+}
+
+// --- Main Design ---
+difference() {
+    // 1. Positive Body: L-Shape
+    union() {
+        // Vertical Backplate (Left side, full height)
+        // Extends from X=0 to backplate_thickness, Y=0 to depth, Z=0 to height
+        cube([backplate_thickness, depth, height]);
+        
+        // Horizontal Base (Bottom, extending right)
+        // Extends from X=0 to width, Y=0 to depth, Z=0 to base_thickness
+        // Note: Overlap with backplate is handled by union
+        cube([width, depth, base_thickness]);
+    }
+
+    // 2. Subtractive Cutouts (Through the backplate)
+    // All cutouts are on the vertical backplate (X < backplate_thickness)
+    // They cut along Y axis.
+    
+    // Top-Left Rectangle
+    rect_cutter(cutout_rect_w, cutout_rect_h, rect_cx, rect_cz);
+    
+    // Top-Middle Slot
+    slot_cutter(cutout_slot_w, cutout_slot_h_top, slot_top_cx, slot_top_cz);
+    
+    // Bottom-Left Slot
+    slot_cutter(cutout_slot_w, cutout_slot_h_bot, slot_bl_cx, slot_bl_cz);
+    
+    // Bottom-Right Slot
+    slot_cutter(cutout_slot_w, cutout_slot_h_bot, slot_br_cx, slot_br_cz);
+}

@@ -1,0 +1,396 @@
+[
+  {
+    "case": "bracket",
+    "build": {
+      "backend": "usd-brep",
+      "version": "1.0.0",
+      "solid_volume_mm3": 31499.999999999985,
+      "mesh_volume_mm3": 31500.0,
+      "extents_mm": [
+        60.0,
+        40.0,
+        80.0
+      ],
+      "bounds_mm": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          60.0,
+          40.0,
+          80.0
+        ]
+      ],
+      "watertight": true,
+      "winding_consistent": true,
+      "euler_number": -6,
+      "triangles": 100,
+      "usd_roundtrip": true,
+      "operations": [
+        {
+          "id": "base",
+          "kind": "box",
+          "faces": 6
+        },
+        {
+          "id": "wall",
+          "kind": "box",
+          "faces": 6
+        },
+        {
+          "id": "body",
+          "kind": "union",
+          "faces": 8
+        },
+        {
+          "id": "cutter1",
+          "kind": "box",
+          "faces": 6
+        },
+        {
+          "id": "cut1",
+          "kind": "difference",
+          "faces": 12
+        },
+        {
+          "id": "cutter2",
+          "kind": "box",
+          "faces": 6
+        },
+        {
+          "id": "cut2",
+          "kind": "difference",
+          "faces": 16
+        },
+        {
+          "id": "cutter3",
+          "kind": "box",
+          "faces": 6
+        },
+        {
+          "id": "cut3",
+          "kind": "difference",
+          "faces": 20
+        },
+        {
+          "id": "cutter4",
+          "kind": "box",
+          "faces": 6
+        },
+        {
+          "id": "cut4",
+          "kind": "difference",
+          "faces": 24
+        }
+      ],
+      "build_seconds": 0.126
+    },
+    "edit": {
+      "backend": "usd-brep",
+      "version": "1.0.0",
+      "solid_volume_mm3": 31349.999999999985,
+      "mesh_volume_mm3": 31350.0,
+      "extents_mm": [
+        60.0,
+        40.0,
+        80.0
+      ],
+      "bounds_mm": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          60.0,
+          40.0,
+          80.0
+        ]
+      ],
+      "watertight": true,
+      "winding_consistent": true,
+      "euler_number": -6,
+      "triangles": 100,
+      "usd_roundtrip": true,
+      "operations": [
+        {
+          "id": "base",
+          "kind": "box",
+          "faces": 6
+        },
+        {
+          "id": "wall",
+          "kind": "box",
+          "faces": 6
+        },
+        {
+          "id": "body",
+          "kind": "union",
+          "faces": 8
+        },
+        {
+          "id": "cutter1",
+          "kind": "box",
+          "faces": 6
+        },
+        {
+          "id": "cut1",
+          "kind": "difference",
+          "faces": 12
+        },
+        {
+          "id": "cutter2",
+          "kind": "box",
+          "faces": 6
+        },
+        {
+          "id": "cut2",
+          "kind": "difference",
+          "faces": 16
+        },
+        {
+          "id": "cutter3",
+          "kind": "box",
+          "faces": 6
+        },
+        {
+          "id": "cut3",
+          "kind": "difference",
+          "faces": 20
+        },
+        {
+          "id": "cutter4",
+          "kind": "box",
+          "faces": 6
+        },
+        {
+          "id": "cut4",
+          "kind": "difference",
+          "faces": 24
+        }
+      ],
+      "build_seconds": 0.131
+    },
+    "build_seconds": 0.19626112561672926,
+    "edit_seconds": 0.18793985294178128,
+    "openscad": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 100,
+      "extents_mm": [
+        60.0,
+        40.0,
+        80.0
+      ],
+      "volume_mm3": 31500.0
+    }
+  },
+  {
+    "case": "enclosure",
+    "build": {
+      "backend": "usd-brep",
+      "version": "1.0.0",
+      "solid_volume_mm3": 19522.196223438958,
+      "mesh_volume_mm3": 19517.480092719776,
+      "extents_mm": [
+        60.0,
+        40.0,
+        25.0
+      ],
+      "bounds_mm": [
+        [
+          -2.6645352591003757e-15,
+          0.0,
+          0.0
+        ],
+        [
+          60.0,
+          40.0,
+          25.0
+        ]
+      ],
+      "watertight": true,
+      "winding_consistent": true,
+      "euler_number": 2,
+      "triangles": 124,
+      "usd_roundtrip": true,
+      "operations": [
+        {
+          "id": "outer",
+          "kind": "box",
+          "faces": 6
+        },
+        {
+          "id": "rounded",
+          "kind": "fillet",
+          "faces": 10
+        },
+        {
+          "id": "pocket",
+          "kind": "box",
+          "faces": 6
+        },
+        {
+          "id": "enclosure",
+          "kind": "difference",
+          "faces": 15
+        }
+      ],
+      "build_seconds": 0.126
+    },
+    "edit": {
+      "backend": "usd-brep",
+      "version": "1.0.0",
+      "solid_volume_mm3": 24863.004187446968,
+      "mesh_volume_mm3": 24858.297321689563,
+      "extents_mm": [
+        60.0,
+        40.0,
+        25.0
+      ],
+      "bounds_mm": [
+        [
+          -2.220446049250313e-15,
+          0.0,
+          0.0
+        ],
+        [
+          60.0,
+          40.0,
+          25.0
+        ]
+      ],
+      "watertight": true,
+      "winding_consistent": true,
+      "euler_number": 2,
+      "triangles": 156,
+      "usd_roundtrip": true,
+      "operations": [
+        {
+          "id": "outer",
+          "kind": "box",
+          "faces": 6
+        },
+        {
+          "id": "rounded",
+          "kind": "fillet",
+          "faces": 10
+        },
+        {
+          "id": "pocket",
+          "kind": "box",
+          "faces": 6
+        },
+        {
+          "id": "enclosure",
+          "kind": "difference",
+          "faces": 15
+        }
+      ],
+      "build_seconds": 0.17
+    },
+    "build_seconds": 0.18205698812380433,
+    "edit_seconds": 0.2357253711670637,
+    "openscad": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 412,
+      "extents_mm": [
+        60.0,
+        40.0,
+        25.0
+      ],
+      "volume_mm3": 19521.935
+    }
+  },
+  {
+    "case": "curved_pipe",
+    "build": {
+      "backend": "usd-brep",
+      "version": "1.0.0",
+      "solid_volume_mm3": 888.4508518859202,
+      "mesh_volume_mm3": 881.5504054772958,
+      "extents_mm": [
+        23.0,
+        23.0,
+        6.000000021872221
+      ],
+      "bounds_mm": [
+        [
+          0.0,
+          -1.8369701465288538e-16,
+          -2.1872221367402744e-08
+        ],
+        [
+          23.0,
+          23.0,
+          6.0
+        ]
+      ],
+      "watertight": true,
+      "winding_consistent": true,
+      "euler_number": 2,
+      "triangles": 1120,
+      "usd_roundtrip": true,
+      "operations": [
+        {
+          "id": "sweep",
+          "kind": "arc_pipe",
+          "faces": 3
+        }
+      ],
+      "build_seconds": 0.137
+    },
+    "edit": {
+      "backend": "usd-brep",
+      "version": "1.0.0",
+      "solid_volume_mm3": 1975.7624654028518,
+      "mesh_volume_mm3": 1959.4081853659463,
+      "extents_mm": [
+        29.0,
+        29.0,
+        8.000001571513451
+      ],
+      "bounds_mm": [
+        [
+          0.0,
+          -2.4492937051703357e-16,
+          -6.178391345201817e-07
+        ],
+        [
+          29.0,
+          29.0,
+          8.000000953674316
+        ]
+      ],
+      "watertight": true,
+      "winding_consistent": true,
+      "euler_number": 2,
+      "triangles": 1156,
+      "usd_roundtrip": true,
+      "operations": [
+        {
+          "id": "sweep",
+          "kind": "arc_pipe",
+          "faces": 3
+        }
+      ],
+      "build_seconds": 0.177
+    },
+    "build_seconds": 0.20374595001339912,
+    "edit_seconds": 0.2526135975494981,
+    "openscad": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 8444,
+      "extents_mm": [
+        23.0,
+        23.0,
+        6.0
+      ],
+      "volume_mm3": 887.552
+    }
+  }
+]

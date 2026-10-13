@@ -1,0 +1,36 @@
+{
+  "backend": "usd-brep",
+  "version": "1.0.0",
+  "solid_volume_mm3": 888.4508518859202,
+  "mesh_volume_mm3": 881.5504054772958,
+  "extents_mm": [
+    23.0,
+    23.0,
+    6.000000021872221
+  ],
+  "bounds_mm": [
+    [
+      0.0,
+      -1.8369701465288538e-16,
+      -2.1872221367402744e-08
+    ],
+    [
+      23.0,
+      23.0,
+      6.0
+    ]
+  ],
+  "watertight": true,
+  "winding_consistent": true,
+  "euler_number": 2,
+  "triangles": 1120,
+  "usd_roundtrip": true,
+  "operations": [
+    {
+      "id": "sweep",
+      "kind": "arc_pipe",
+      "faces": 3
+    }
+  ],
+  "build_seconds": 0.137
+}

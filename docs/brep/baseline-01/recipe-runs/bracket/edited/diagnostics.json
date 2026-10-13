@@ -1,0 +1,86 @@
+{
+  "backend": "usd-brep",
+  "version": "1.0.0",
+  "solid_volume_mm3": 31349.999999999985,
+  "mesh_volume_mm3": 31350.0,
+  "extents_mm": [
+    60.0,
+    40.0,
+    80.0
+  ],
+  "bounds_mm": [
+    [
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      60.0,
+      40.0,
+      80.0
+    ]
+  ],
+  "watertight": true,
+  "winding_consistent": true,
+  "euler_number": -6,
+  "triangles": 100,
+  "usd_roundtrip": true,
+  "operations": [
+    {
+      "id": "base",
+      "kind": "box",
+      "faces": 6
+    },
+    {
+      "id": "wall",
+      "kind": "box",
+      "faces": 6
+    },
+    {
+      "id": "body",
+      "kind": "union",
+      "faces": 8
+    },
+    {
+      "id": "cutter1",
+      "kind": "box",
+      "faces": 6
+    },
+    {
+      "id": "cut1",
+      "kind": "difference",
+      "faces": 12
+    },
+    {
+      "id": "cutter2",
+      "kind": "box",
+      "faces": 6
+    },
+    {
+      "id": "cut2",
+      "kind": "difference",
+      "faces": 16
+    },
+    {
+      "id": "cutter3",
+      "kind": "box",
+      "faces": 6
+    },
+    {
+      "id": "cut3",
+      "kind": "difference",
+      "faces": 20
+    },
+    {
+      "id": "cutter4",
+      "kind": "box",
+      "faces": 6
+    },
+    {
+      "id": "cut4",
+      "kind": "difference",
+      "faces": 24
+    }
+  ],
+  "build_seconds": 0.131
+}

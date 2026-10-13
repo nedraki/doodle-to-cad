@@ -1,0 +1,215 @@
+{
+  "object": "L-shaped bookend",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "front",
+      "sheet_region": "left",
+      "constrains": "Width (X), Height (Z), and the layout of decorative cutouts (slots and rectangle) on the vertical face."
+    },
+    {
+      "direction": "right",
+      "sheet_region": "right",
+      "constrains": "Depth (Y), Height (Z), and the L-shaped cross-section profile (thickness of vertical back and horizontal base)."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "bookend_body",
+      "description": "Single L-shaped solid with vertical backplate and horizontal base, featuring through-cutouts on the backplate."
+    }
+  ],
+  "features": [
+    {
+      "id": "vertical_backplate",
+      "type": "extrusion",
+      "source_view": "view_1",
+      "description": "The main vertical rectangular face containing the cutouts."
+    },
+    {
+      "id": "horizontal_base",
+      "type": "extrusion",
+      "source_view": "view_2",
+      "description": "The bottom horizontal flange extending forward from the backplate."
+    },
+    {
+      "id": "cutout_rect_top_left",
+      "type": "through_hole",
+      "source_view": "view_1",
+      "description": "Rectangular cutout in the upper-left quadrant of the backplate."
+    },
+    {
+      "id": "cutout_slot_top_mid",
+      "type": "through_hole",
+      "source_view": "view_1",
+      "description": "Vertical slot cutout in the upper-middle area."
+    },
+    {
+      "id": "cutout_slot_bottom_left",
+      "type": "through_hole",
+      "source_view": "view_1",
+      "description": "Vertical slot cutout in the lower-left area."
+    },
+    {
+      "id": "cutout_slot_bottom_right",
+      "type": "through_hole",
+      "source_view": "view_1",
+      "description": "Vertical slot cutout in the lower-right area."
+    }
+  ],
+  "relations": [
+    {
+      "type": "perpendicular",
+      "target": "horizontal_base",
+      "reference": "vertical_backplate",
+      "angle": 90
+    },
+    {
+      "type": "contained_in",
+      "target": "cutout_rect_top_left",
+      "reference": "vertical_backplate"
+    },
+    {
+      "type": "contained_in",
+      "target": "cutout_slot_top_mid",
+      "reference": "vertical_backplate"
+    },
+    {
+      "type": "contained_in",
+      "target": "cutout_slot_bottom_left",
+      "reference": "vertical_backplate"
+    },
+    {
+      "type": "contained_in",
+      "target": "cutout_slot_bottom_right",
+      "reference": "vertical_backplate"
+    }
+  ],
+  "symmetry": "None",
+  "repetitions": [
+    {
+      "feature_id": "cutout_slot_top_mid",
+      "pattern": "manual",
+      "count": 1
+    },
+    {
+      "feature_id": "cutout_slot_bottom_left",
+      "pattern": "manual",
+      "count": 1
+    },
+    {
+      "feature_id": "cutout_slot_bottom_right",
+      "pattern": "manual",
+      "count": 1
+    }
+  ],
+  "dimensions": {
+    "max_width": 73.05,
+    "max_depth": 47.99,
+    "max_height": 100.0,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "Exact thickness of the base flange relative to the backplate (view_2 shows them roughly equal).",
+    "Exact depth of the base flange (Y-axis) relative to the height (view_2 aspect ratio suggests depth is roughly 1/3 to 1/2 of height)."
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "The object is modeled as a single L-profile extruded along the X-axis. The front view (view_1) defines the X-Z plane and the positions of the four cutouts. The right view (view_2) defines the Y-Z plane and the L-profile thickness. The cutouts are treated as subtractive through-holes on the vertical backplate.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "extrude",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_extrude_body",
+        "operation": "extrude",
+        "profile_plane": "YZ",
+        "direction_axis": "X",
+        "owner": "bookend_body",
+        "parameters": {
+          "depth": "max_width_from_view_1",
+          "start_point": "origin"
+        },
+        "source_views": [
+          "view_1",
+          "view_2"
+        ]
+      },
+      {
+        "id": "cutout_rect_top_left",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Rectangular cutout in the upper-left quadrant of the backplate."
+        },
+        "source_views": []
+      },
+      {
+        "id": "cutout_slot_top_mid",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Vertical slot cutout in the upper-middle area."
+        },
+        "source_views": []
+      },
+      {
+        "id": "cutout_slot_bottom_left",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Vertical slot cutout in the lower-left area."
+        },
+        "source_views": []
+      },
+      {
+        "id": "cutout_slot_bottom_right",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Vertical slot cutout in the lower-right area."
+        },
+        "source_views": []
+      }
+    ],
+    "unresolved_constraints": [
+      "Exact thickness of the base flange relative to the backplate (view_2 shows them roughly equal).",
+      "Exact depth of the base flange (Y-axis) relative to the height (view_2 aspect ratio suggests depth is roughly 1/3 to 1/2 of height)."
+    ]
+  },
+  "user_intent": {
+    "description": "L-shaped bookend",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "100"
+  },
+  "source_view_group_count": 2,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

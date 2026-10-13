@@ -1,0 +1,87 @@
+{
+  "schema_version": 1,
+  "id": "bookend",
+  "provenance": {
+    "kind": "existing_repository_reference",
+    "source_case": "001_l_bookend_multiview",
+    "authority": "See original case manifest. Intent confirmation can remain pending."
+  },
+  "dimensions_mm": {
+    "extents_xyz": [
+      80,
+      50,
+      100
+    ],
+    "wall": 3
+  },
+  "features": [
+    {
+      "id": "cut1",
+      "box_xz_mm": [
+        18.4,
+        18,
+        31.2,
+        59
+      ]
+    },
+    {
+      "id": "cut2",
+      "box_xz_mm": [
+        7.2,
+        72,
+        32.8,
+        90
+      ]
+    },
+    {
+      "id": "cut3",
+      "box_xz_mm": [
+        38.8,
+        42,
+        46,
+        73
+      ]
+    },
+    {
+      "id": "cut4",
+      "box_xz_mm": [
+        56.4,
+        20,
+        63.6,
+        57
+      ]
+    }
+  ],
+  "relations": [
+    "Base and panel overlap and form one solid.",
+    "Four cutouts pass through the panel along Y."
+  ],
+  "unknown": [
+    "Manufacturing method and material are not supplied.",
+    "Projection standard is not supplied.",
+    "Reference dimensions are CAD authority; not all are written on the doodle."
+  ],
+  "controls": {
+    "primary_view": "front",
+    "target_max_dimension_mm": 100,
+    "notes": ""
+  },
+  "expected": {
+    "components": 1,
+    "watertight": true
+  },
+  "tolerances": {
+    "reference_dimension_abs_mm": 0.05,
+    "generated_dimension_relative": 0.02,
+    "feature_position_abs_mm": 1.0,
+    "feature_size_abs_mm": 1.0,
+    "wall_thickness_abs_mm": 0.5,
+    "count_error": 0,
+    "connection_gap_mm": 0.0
+  },
+  "evidence_policy": "Fix these tolerances before future trials. Do not change them to pass a candidate. Log assumptions and unsupported checks.",
+  "sha256": {
+    "drawing.png": "5a3f4f2f11c2f37bf7e47001bdc6302cc2901afab888118cb787bf1455168dd2",
+    "reference.scad": "41231574a20a3c8bf256325a92881610116d34c4c52fd9b71f90ee22a38dbd03"
+  }
+}
