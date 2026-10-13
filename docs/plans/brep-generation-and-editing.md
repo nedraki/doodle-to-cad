@@ -89,7 +89,9 @@ Never remove an unsupported feature silently or hide a backend switch.
 
 ## Ordered tasks
 
-Only task 01 is ready for work. All later tasks are planned.
+Task 01 evidence is ready for user review in [PR #36](https://github.com/nedraki/doodle-to-cad/pull/36).
+See [issue #18](https://github.com/nedraki/doodle-to-cad/issues/18) for the recorded generation failure.
+All later tasks remain planned.
 
 - [ ] 01. [#18](https://github.com/nedraki/doodle-to-cad/issues/18) — Record the baseline and review the existing BRep prototype
 - [ ] 02. [#19](https://github.com/nedraki/doodle-to-cad/issues/19) — Use one build result contract for both backends
