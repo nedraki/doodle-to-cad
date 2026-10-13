@@ -71,7 +71,8 @@ def _run(raw_args: list[str], timeout: int, cwd: Path | None, docker_prefix: lis
         shell_cmd = ("Xvfb :99 -screen 0 1024x768x24 >/dev/null 2>&1 & XPID=$!; "
                      "DISPLAY=:99 openscad " + " ".join(shlex.quote(a) for a in file_args) +
                      "; RC=$?; kill $XPID 2>/dev/null; exit $RC")
-        cmd = docker_prefix + ["-v", f"{mount_root}:/work", "-w", "/work", os.getenv("DOODLE_OPENSCAD_DOCKER", "").strip(), "bash", "-c", shell_cmd]
+        job_label = ["--label", "doodle-to-cad.job=" + os.environ["DOODLE_JOB_ID"]] if os.getenv("DOODLE_JOB_ID") else []
+        cmd = docker_prefix + job_label + ["-v", f"{mount_root}:/work", "-w", "/work", os.getenv("DOODLE_OPENSCAD_DOCKER", "").strip(), "bash", "-c", shell_cmd]
     else:
         cmd = raw_args
     try:

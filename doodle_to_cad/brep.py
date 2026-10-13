@@ -22,7 +22,7 @@ def worker_python():
     return configured
 
 
-def build_brep(request: BuildInput, binary: str = "openscad") -> BuildResult:
+def build_brep(request: BuildInput, binary: str = "openscad", on_stage=lambda _: None) -> BuildResult:
     """Publish one immutable revision after the isolated worker passes its checks."""
     result = BuildResult("usd-brep", request.source)
     try:
@@ -42,6 +42,7 @@ def build_brep(request: BuildInput, binary: str = "openscad") -> BuildResult:
         staging = Path(tmp)
         source = staging / "model.recipe.json"
         source.write_text(json.dumps(edited, indent=2))
+        on_stage("building solid")
         try:
             process = subprocess.run([python, str(WORKER), str(source), str(staging)],
                                      capture_output=True, text=True, timeout=120,
@@ -64,6 +65,7 @@ def build_brep(request: BuildInput, binary: str = "openscad") -> BuildResult:
         except (OSError, ValueError) as exc:
             result.diagnostics.append(Diagnostic("invalid_output", str(exc)))
             return result
+        on_stage("checking mesh")
         try:
             result.measurements = mesh_health(staging / "model.stl")
             if not result.measurements["watertight"] or result.measurements["components"] != 1:
@@ -72,6 +74,7 @@ def build_brep(request: BuildInput, binary: str = "openscad") -> BuildResult:
             result.diagnostics.append(Diagnostic("invalid_output", str(exc)))
             return result
         if request.render:
+            on_stage("rendering views")
             # OpenSCAD renders the finished mesh; it does not build the BRep solid.
             preview = staging / "preview.scad"
             preview.write_text('import("model.stl");\n')
@@ -88,7 +91,7 @@ def build_brep(request: BuildInput, binary: str = "openscad") -> BuildResult:
     return result
 
 
-def build_recipe(out: Path, recipe: dict, updates: dict | None = None):
+def build_recipe(out: Path, recipe: dict, updates: dict | None = None, *, on_stage=lambda _: None):
     """Compatibility API for the existing recipe and parameter endpoints."""
     from .config import settings
     edited, _ = validate_recipe(recipe, updates)
@@ -96,7 +99,7 @@ def build_recipe(out: Path, recipe: dict, updates: dict | None = None):
     with tempfile.TemporaryDirectory(prefix=".input-", dir=out) as tmp:
         source = Path(tmp) / "model.recipe.json"
         source.write_text(json.dumps(edited))
-        result = build_brep(BuildInput("usd-brep", source, out), settings.openscad_bin)
+        result = build_brep(BuildInput("usd-brep", source, out), settings.openscad_bin, on_stage)
     if not result.ok:
         error = next(d for d in result.diagnostics if d.severity == "error")
         raise BuildError(error.code, error.message)

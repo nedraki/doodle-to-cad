@@ -1,0 +1,164 @@
+{
+  "result": {
+    "id": "5aaff3251c1e",
+    "backend": "usd-brep",
+    "success": false,
+    "spec": {
+      "object": "Bookend with four openings"
+    },
+    "model": "experimental BRep recipe",
+    "duration_seconds": 0.192,
+    "evaluation": {
+      "accepted": false,
+      "failures": [
+        "Drawing fidelity has not been evaluated."
+      ]
+    },
+    "diagnostics": {
+      "backend": "usd-brep",
+      "version": "1.0.0",
+      "recipe_version": 2,
+      "solid_volume_mm3": 31499.999999999985,
+      "mesh_volume_mm3": 31500,
+      "extents_mm": [
+        60,
+        40,
+        80
+      ],
+      "bounds_mm": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          60,
+          40,
+          80
+        ]
+      ],
+      "watertight": true,
+      "winding_consistent": true,
+      "euler_number": -6,
+      "triangles": 100,
+      "usd_roundtrip": true,
+      "operations": [
+        {
+          "id": "base",
+          "kind": "box",
+          "faces": 6
+        },
+        {
+          "id": "wall",
+          "kind": "box",
+          "faces": 6
+        },
+        {
+          "id": "body",
+          "kind": "union",
+          "faces": 8
+        },
+        {
+          "id": "cutter1",
+          "kind": "box",
+          "faces": 6
+        },
+        {
+          "id": "cut1",
+          "kind": "difference",
+          "faces": 12
+        },
+        {
+          "id": "cutter2",
+          "kind": "box",
+          "faces": 6
+        },
+        {
+          "id": "cut2",
+          "kind": "difference",
+          "faces": 16
+        },
+        {
+          "id": "cutter3",
+          "kind": "box",
+          "faces": 6
+        },
+        {
+          "id": "cut3",
+          "kind": "difference",
+          "faces": 20
+        },
+        {
+          "id": "cutter4",
+          "kind": "box",
+          "faces": 6
+        },
+        {
+          "id": "cut4",
+          "kind": "difference",
+          "faces": 24
+        }
+      ],
+      "connections": [],
+      "build_seconds": 0.192
+    },
+    "controls": {
+      "primary_view": "front"
+    },
+    "files": {
+      "source": "/results/5aaff3251c1e/brep-bd158bb4fdc04e4fbed37ba1258ac757/model.recipe.json",
+      "stl": "/results/5aaff3251c1e/brep-bd158bb4fdc04e4fbed37ba1258ac757/model.stl",
+      "usd": "/results/5aaff3251c1e/brep-bd158bb4fdc04e4fbed37ba1258ac757/model.usda",
+      "views": {
+        "isometric": "/results/5aaff3251c1e/brep-bd158bb4fdc04e4fbed37ba1258ac757/view-isometric.png",
+        "front": "/results/5aaff3251c1e/brep-bd158bb4fdc04e4fbed37ba1258ac757/view-front.png",
+        "top": "/results/5aaff3251c1e/brep-bd158bb4fdc04e4fbed37ba1258ac757/view-top.png",
+        "right": "/results/5aaff3251c1e/brep-bd158bb4fdc04e4fbed37ba1258ac757/view-right.png"
+      }
+    },
+    "build": {
+      "version": 1,
+      "backend": "usd-brep",
+      "source_format": "brep-recipe-v2",
+      "ok": true,
+      "units": "mm",
+      "axes": {
+        "x": "width",
+        "y": "depth",
+        "z": "height"
+      },
+      "views": [
+        "isometric",
+        "front",
+        "top",
+        "right"
+      ],
+      "measurements": {
+        "watertight": true,
+        "components": 1,
+        "triangles": 100,
+        "extents_mm": [
+          60,
+          40,
+          80
+        ],
+        "volume_mm3": 31500
+      },
+      "diagnostics": [],
+      "drawing_evaluated": false
+    },
+    "original_run_id": null
+  },
+  "reload_during_and_after_job": true,
+  "edits_and_downloads": true,
+  "cancellation": {
+    "status": "cancelled",
+    "stages": [
+      "building recipe",
+      "building solid"
+    ],
+    "observed_kernel_processes": 1,
+    "processes_stopped": true,
+    "no_published_result": true
+  }
+}
