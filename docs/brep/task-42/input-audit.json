@@ -1,0 +1,110 @@
+{
+  "contract_revision": "issue42-v1",
+  "contract_sha256": "680197da560e0effdd4c938fe2614f7e745ef2e8b7b0b5e201d44497b9a472f3",
+  "pillow_version": "12.3.0",
+  "checks": [
+    {
+      "id": "constant_radius_handle",
+      "image_size": [
+        1000,
+        650
+      ],
+      "sha256": "f16bb331607f1e4d5c0115955a63c01e39d51069ba81e1a88cdf219c2509b3dc",
+      "input_check": "pass"
+    },
+    {
+      "id": "rounded_housing",
+      "image_size": [
+        1200,
+        800
+      ],
+      "sha256": "5ce3aaf8cb3a145b015fdf6e4085efcb36a29678761700a36f5cd0163b2c803a",
+      "input_check": "pass"
+    },
+    {
+      "id": "bevelled_block",
+      "image_size": [
+        1200,
+        800
+      ],
+      "sha256": "e3bad75f74edf842852ccebe055ce0ee8d4e6f3f9c62e6b38bda4e33b2f3d59c",
+      "input_check": "pass"
+    },
+    {
+      "id": "rectangular_sweep",
+      "image_size": [
+        1200,
+        800
+      ],
+      "sha256": "1dfd61f8747e0c3bb78956420148d0a983b32d2134b170a20bc1dd1769cd2d55",
+      "input_check": "pass"
+    },
+    {
+      "id": "solid_transition",
+      "image_size": [
+        1000,
+        650
+      ],
+      "sha256": "8536b81a25e70f36e17f15542491eee6fe9b6fd0da3d192c9b718a6b104f0dc8",
+      "input_check": "pass"
+    },
+    {
+      "id": "ambiguous_outline",
+      "image_size": [
+        700,
+        500
+      ],
+      "sha256": "a8272e982dc6a716f421c0716984b0f11409091a5e588e90f420b71b98c94bd6",
+      "input_check": "pass"
+    },
+    {
+      "id": "wheel",
+      "image_size": [
+        1000,
+        650
+      ],
+      "sha256": "53ee34e2fb93172393dc27d485822cb03677afc9bcfc3ec36691e3cf174ab80a",
+      "input_check": "pass"
+    },
+    {
+      "id": "001_l_bookend_multiview",
+      "image_size": [
+        845,
+        542
+      ],
+      "sha256": "5a3f4f2f11c2f37bf7e47001bdc6302cc2901afab888118cb787bf1455168dd2",
+      "input_check": "pass"
+    },
+    {
+      "id": "006_stepped_knob",
+      "image_size": [
+        1000,
+        750
+      ],
+      "sha256": "4765bb63f92b926258323865d199bedadd0f0a398a9af8da8922fde95008d5b5",
+      "input_check": "pass"
+    },
+    {
+      "id": "104_cable_holder",
+      "image_size": [
+        1024,
+        768
+      ],
+      "sha256": "814cde61816147f97be056e736c26c081592f95c3de74cdfbe696c4c7bc312c9",
+      "input_check": "pass"
+    },
+    {
+      "id": "102_lcd_knob",
+      "image_size": [
+        1024,
+        768
+      ],
+      "sha256": "a8e42eb9f44830265b21ab408bb1632b12b6c501bc484bb8aee2e842e270c53d",
+      "input_check": "pass"
+    }
+  ],
+  "model_calls": 0,
+  "geometry_builds": 0,
+  "user_review": "pending",
+  "scope": "Input integrity only; no drawing-generation or geometry acceptance claim"
+}

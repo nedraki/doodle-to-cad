@@ -1,0 +1,721 @@
+{
+  "schema_version": 1,
+  "contract_revision": "issue42-v1",
+  "review_status": "pending",
+  "created_utc": "2026-10-14T20:50:28.555542+00:00",
+  "base_commit": "6eb322336d531d7ce1307d3ced3966c7f1756b76",
+  "cases": [
+    {
+      "id": "constant_radius_handle",
+      "drawing": "benchmarks/brep-baseline/curved_handle/drawing.png",
+      "sha256": "f16bb331607f1e4d5c0115955a63c01e39d51069ba81e1a88cdf219c2509b3dc",
+      "split": "development",
+      "provenance": "synthetic engineering diagram; proposed intent, user review pending",
+      "controls": {
+        "primary_view": "top",
+        "target_max_dimension_mm": 54,
+        "notes": "",
+        "object_type_hint": ""
+      },
+      "evidence_regions": [
+        {
+          "box_px": [
+            185,
+            205,
+            435,
+            490
+          ],
+          "feature": "U path with two straight ends"
+        },
+        {
+          "box_px": [
+            700,
+            210,
+            815,
+            345
+          ],
+          "feature": "circular section, diameter 8"
+        },
+        {
+          "box_px": [
+            110,
+            540,
+            490,
+            580
+          ],
+          "feature": "centreline R20, legs 30"
+        }
+      ],
+      "capability": {
+        "operations": [
+          "arc_pipe",
+          "cylinder",
+          "union"
+        ],
+        "status": "advertised; full drawing generation not demonstrated",
+        "issue": 43
+      },
+      "checks": [
+        {
+          "metric": "extents_xyz_mm",
+          "expected": [
+            48,
+            54,
+            8
+          ],
+          "tolerance": "2% per dimension",
+          "method": "measure in declared XYZ axes; no rotation or scale fitting"
+        },
+        {
+          "metric": "section_diameter_mm",
+          "expected": 8,
+          "tolerance": 1,
+          "method": "section at each leg and arc midpoint"
+        },
+        {
+          "metric": "bend_radius_mm",
+          "expected": 20,
+          "tolerance": 1,
+          "method": "fit centreline arc"
+        },
+        {
+          "metric": "leg_length_mm",
+          "expected": 30,
+          "tolerance": 1,
+          "method": "measure each straight path segment"
+        },
+        {
+          "metric": "path_endpoint_xyz_mm",
+          "expected": [
+            [
+              -20,
+              -30,
+              4
+            ],
+            [
+              20,
+              -30,
+              4
+            ]
+          ],
+          "tolerance": 1,
+          "method": "compare after translation to declared frame"
+        },
+        {
+          "metric": "path_tangent_join",
+          "expected": "continuous",
+          "tolerance": "5 degrees",
+          "method": "fit tangent on each side; inspect full cross-section at joins"
+        }
+      ],
+      "edit": {
+        "parameter": "bend radius",
+        "before": 20,
+        "after": 24,
+        "expected_extents_xyz_mm": [
+          56,
+          58,
+          8
+        ],
+        "preserve": [
+          "section diameter 8",
+          "straight lengths 30",
+          "path plane XY",
+          "one solid"
+        ],
+        "intentional_changes": [
+          "end spacing 40 to 48",
+          "overall width and depth"
+        ],
+        "tolerance_mm": 0.05
+      },
+      "unknown": [
+        "No mounting, material or load requirement. Joint continuity must not be replaced by a narrow bridge."
+      ],
+      "openscad_evidence": {
+        "kind": "hand-authored reference, not generated result",
+        "source": "benchmarks/brep-baseline/curved_handle/reference.scad",
+        "report": "docs/brep/baseline-01/reference-checks.json",
+        "observed": "one watertight component; 48 x 54 x 8 mm; no drawing inference trial"
+      }
+    },
+    {
+      "id": "rounded_housing",
+      "drawing": "benchmarks/brep-features/rounded_housing/drawing.png",
+      "sha256": "5ce3aaf8cb3a145b015fdf6e4085efcb36a29678761700a36f5cd0163b2c803a",
+      "split": "development",
+      "provenance": "synthetic engineering diagram; proposed intent, user review pending",
+      "controls": {
+        "primary_view": "top",
+        "target_max_dimension_mm": 80,
+        "notes": "",
+        "object_type_hint": ""
+      },
+      "evidence_regions": [
+        {
+          "box_px": [
+            65,
+            205,
+            555,
+            515
+          ],
+          "feature": "four rounded top corners"
+        },
+        {
+          "box_px": [
+            125,
+            160,
+            310,
+            200
+          ],
+          "feature": "R6 label"
+        },
+        {
+          "box_px": [
+            645,
+            205,
+            1175,
+            440
+          ],
+          "feature": "front height and straight vertical boundaries"
+        },
+        {
+          "box_px": [
+            65,
+            600,
+            1135,
+            685
+          ],
+          "feature": "solid blank, sharp perimeter, no cavity"
+        }
+      ],
+      "capability": {
+        "operations": [
+          "box",
+          "fillet"
+        ],
+        "selector": "parallel_z",
+        "status": "advertised; full drawing generation not demonstrated",
+        "issue": 43
+      },
+      "checks": [
+        {
+          "metric": "extents_xyz_mm",
+          "expected": [
+            80,
+            50,
+            30
+          ],
+          "tolerance": 0.5,
+          "method": "XYZ bounding box"
+        },
+        {
+          "metric": "vertical_corner_radius_mm",
+          "expected": 6,
+          "tolerance": 0.25,
+          "method": "fit each of four XY corner arcs at z=5,15,25"
+        },
+        {
+          "metric": "rounded_corner_count",
+          "expected": 4,
+          "tolerance": 0,
+          "method": "inspect sections and native faces"
+        },
+        {
+          "metric": "top_bottom_rim",
+          "expected": "sharp",
+          "tolerance": 0,
+          "method": "native edge/face inspection; no rounded rim"
+        },
+        {
+          "metric": "cavity_count",
+          "expected": 0,
+          "tolerance": 0,
+          "method": "cross-section at z=15"
+        }
+      ],
+      "edit": {
+        "parameter": "corner radius",
+        "before": 6,
+        "after": 8,
+        "preserve": [
+          "outer dimensions 80 x 50 x 30",
+          "centre",
+          "height",
+          "sharp top and bottom rim"
+        ],
+        "tolerance_mm": 0.05
+      },
+      "unknown": [
+        "This is a solid housing blank, not a hollow enclosure. Wall thickness is not part of this test."
+      ],
+      "openscad_evidence": {
+        "kind": "not run",
+        "reason": "new drawing; same-input live OpenSCAD comparison remains #43"
+      }
+    },
+    {
+      "id": "bevelled_block",
+      "drawing": "benchmarks/brep-features/bevelled_block/drawing.png",
+      "sha256": "e3bad75f74edf842852ccebe055ce0ee8d4e6f3f9c62e6b38bda4e33b2f3d59c",
+      "split": "development",
+      "provenance": "synthetic engineering diagram; proposed intent, user review pending",
+      "controls": {
+        "primary_view": "top",
+        "target_max_dimension_mm": 60,
+        "notes": "",
+        "object_type_hint": ""
+      },
+      "evidence_regions": [
+        {
+          "box_px": [
+            65,
+            205,
+            555,
+            535
+          ],
+          "feature": "top bevel boundaries"
+        },
+        {
+          "box_px": [
+            645,
+            205,
+            1135,
+            375
+          ],
+          "feature": "front bevel boundaries"
+        },
+        {
+          "box_px": [
+            65,
+            620,
+            1080,
+            710
+          ],
+          "feature": "all edges, 2 mm x45 degrees, overall dimensions"
+        }
+      ],
+      "capability": {
+        "operations": [
+          "box",
+          "chamfer"
+        ],
+        "status": "advertised global operation; confirm distance semantics before live trial",
+        "issue": 43
+      },
+      "checks": [
+        {
+          "metric": "extents_xyz_mm",
+          "expected": [
+            60,
+            40,
+            20
+          ],
+          "tolerance": 0.5,
+          "method": "XYZ bounding box"
+        },
+        {
+          "metric": "bevel_setback_mm",
+          "expected": 2,
+          "tolerance": 0.25,
+          "method": "measure each original edge away from three-edge corners"
+        },
+        {
+          "metric": "bevel_angle_deg",
+          "expected": 45,
+          "tolerance": 2,
+          "method": "fit bevel face normals"
+        },
+        {
+          "metric": "treatment",
+          "expected": "flat bevel on all 12 original edges",
+          "tolerance": 0,
+          "method": "native faces plus orthogonal views; reject rounded replacement"
+        }
+      ],
+      "edit": {
+        "parameter": "bevel size",
+        "before": 2,
+        "after": 3,
+        "preserve": [
+          "outer dimensions 60 x 40 x 20",
+          "centre",
+          "flat face treatment"
+        ],
+        "tolerance_mm": 0.05
+      },
+      "unknown": [
+        "Three-edge corner patch topology is not fixed. Global chamfer support does not imply arbitrary edge selection."
+      ],
+      "openscad_evidence": {
+        "kind": "not run",
+        "reason": "new drawing; same-input live OpenSCAD comparison remains #43"
+      }
+    },
+    {
+      "id": "rectangular_sweep",
+      "drawing": "benchmarks/brep-features/rectangular_sweep/drawing.png",
+      "sha256": "1dfd61f8747e0c3bb78956420148d0a983b32d2134b170a20bc1dd1769cd2d55",
+      "split": "development",
+      "provenance": "synthetic engineering diagram; proposed intent, user review pending",
+      "controls": {
+        "primary_view": "top",
+        "target_max_dimension_mm": 60,
+        "notes": "",
+        "object_type_hint": ""
+      },
+      "evidence_regions": [
+        {
+          "box_px": [
+            150,
+            210,
+            490,
+            650
+          ],
+          "feature": "S path and two straight ends"
+        },
+        {
+          "box_px": [
+            755,
+            250,
+            1115,
+            490
+          ],
+          "feature": "6 x4 rectangular section and orientation"
+        },
+        {
+          "box_px": [
+            70,
+            655,
+            1150,
+            755
+          ],
+          "feature": "two R20 quarter bends, ends 10, end offset"
+        }
+      ],
+      "capability": {
+        "operations": [
+          "positioned_profile",
+          "bounded_sweep"
+        ],
+        "status": "missing; circular arc_pipe alone cannot preserve this rectangular section",
+        "issue": 27
+      },
+      "checks": [
+        {
+          "metric": "extents_xyz_mm",
+          "expected": [
+            46,
+            60,
+            4
+          ],
+          "tolerance": 0.5,
+          "method": "XY path; Z thickness"
+        },
+        {
+          "metric": "section_width_thickness_mm",
+          "expected": [
+            6,
+            4
+          ],
+          "tolerance": 0.25,
+          "method": "normal sections on both straight ends and each bend midpoint"
+        },
+        {
+          "metric": "bend_radius_mm",
+          "expected": [
+            20,
+            20
+          ],
+          "tolerance": 0.5,
+          "method": "fit both centreline quarter arcs"
+        },
+        {
+          "metric": "end_centre_offset_xy_mm",
+          "expected": [
+            40,
+            60
+          ],
+          "tolerance": 0.5,
+          "method": "measure cap centroids"
+        },
+        {
+          "metric": "end_straight_length_mm",
+          "expected": [
+            10,
+            10
+          ],
+          "tolerance": 0.5,
+          "method": "fit tangent changes"
+        },
+        {
+          "metric": "path_and_frame",
+          "expected": "two opposite tangent quarter turns; thickness along Z",
+          "tolerance": "5 degrees tangent mismatch",
+          "method": "section frames and top outline; reject circular tube substitution"
+        }
+      ],
+      "edit": {
+        "parameter": "section width",
+        "before": 6,
+        "after": 8,
+        "expected_extents_xyz_mm": [
+          48,
+          60,
+          4
+        ],
+        "preserve": [
+          "centreline path",
+          "end centre offset 40 x60",
+          "section thickness 4",
+          "frame orientation"
+        ],
+        "tolerance_mm": 0.05
+      },
+      "unknown": [
+        "No arbitrary spline or spatial path is required. Equivalent geometry may pass the drawing check, but the general-sweep capability check also requires a sweep recipe."
+      ],
+      "openscad_evidence": {
+        "kind": "not run",
+        "reason": "new drawing; compare only supported capabilities in #27"
+      }
+    },
+    {
+      "id": "solid_transition",
+      "drawing": "benchmarks/brep-baseline/transition/drawing.png",
+      "sha256": "8536b81a25e70f36e17f15542491eee6fe9b6fd0da3d192c9b718a6b104f0dc8",
+      "split": "development",
+      "provenance": "synthetic engineering diagram; proposed intent, user review pending",
+      "controls": {
+        "primary_view": "front",
+        "target_max_dimension_mm": 60,
+        "notes": "",
+        "object_type_hint": ""
+      },
+      "evidence_regions": [
+        {
+          "box_px": [
+            60,
+            150,
+            320,
+            375
+          ],
+          "feature": "60 x40 bottom rectangle"
+        },
+        {
+          "box_px": [
+            400,
+            170,
+            565,
+            375
+          ],
+          "feature": "top circle diameter30"
+        },
+        {
+          "box_px": [
+            670,
+            170,
+            935,
+            485
+          ],
+          "feature": "height60, solid transition"
+        }
+      ],
+      "capability": {
+        "operations": [
+          "positioned_profile",
+          "loft"
+        ],
+        "status": "missing; no generated loft yet",
+        "issue": 28
+      },
+      "checks": [
+        {
+          "metric": "extents_xyz_mm",
+          "expected": [
+            60,
+            40,
+            60
+          ],
+          "tolerance": "2% per dimension",
+          "method": "XYZ bounds"
+        },
+        {
+          "metric": "bottom_rectangle_mm",
+          "expected": [
+            60,
+            40
+          ],
+          "tolerance": 1,
+          "method": "bottom boundary"
+        },
+        {
+          "metric": "top_diameter_mm",
+          "expected": 30,
+          "tolerance": 1,
+          "method": "top boundary circle fit"
+        },
+        {
+          "metric": "profile_axis_offset_xy_mm",
+          "expected": [
+            0,
+            0
+          ],
+          "tolerance": 1,
+          "method": "compare cap centres"
+        },
+        {
+          "metric": "solid_and_orientation",
+          "expected": "capped, untwisted, one solid",
+          "tolerance": 0,
+          "method": "native solid and sections; human review of twist"
+        }
+      ],
+      "edit": {
+        "parameter": "top diameter",
+        "before": 30,
+        "after": 36,
+        "preserve": [
+          "bottom rectangle 60 x40",
+          "height60",
+          "common axis",
+          "solid capped construction"
+        ],
+        "tolerance_mm": 0.05
+      },
+      "unknown": [
+        "Intermediate surface is not uniquely specified. Do not compare it to the convex-hull reference as an exact target. No hollow passage."
+      ],
+      "openscad_evidence": {
+        "kind": "hand-authored convex-hull reference, not generated loft",
+        "source": "benchmarks/brep-baseline/transition/reference.scad",
+        "report": "docs/brep/baseline-01/reference-checks.json",
+        "observed": "one watertight component; 60 x40 x60 mm"
+      }
+    },
+    {
+      "id": "ambiguous_outline",
+      "drawing": "benchmarks/feature-evidence/ambiguous-outline.png",
+      "sha256": "a8272e982dc6a716f421c0716984b0f11409091a5e588e90f420b71b98c94bd6",
+      "split": "development",
+      "provenance": "synthetic engineering diagram; proposed intent, user review pending",
+      "controls": {
+        "primary_view": "front",
+        "target_max_dimension_mm": 80,
+        "notes": "",
+        "object_type_hint": ""
+      },
+      "evidence_regions": [
+        {
+          "box_px": [
+            95,
+            95,
+            605,
+            405
+          ],
+          "feature": "single rectangular outline only"
+        }
+      ],
+      "capability": {
+        "operations": [],
+        "status": "insufficient evidence; record uncertainty now, question flow in #25",
+        "issue": 25
+      },
+      "checks": [
+        {
+          "metric": "interpretation",
+          "expected": "depth, hollow/solid and edge treatment unresolved",
+          "tolerance": 0,
+          "method": "human review of saved interpretation"
+        },
+        {
+          "metric": "acceptance",
+          "expected": "not drawing-approved",
+          "tolerance": 0,
+          "method": "status inspection; fail if unsupported hidden details are asserted as facts"
+        }
+      ],
+      "edit": null,
+      "unknown": [
+        "No depth, cavity, wall thickness or radius supplied. Target80 fixes only overall scale. A disclosed default remains an assumption."
+      ],
+      "openscad_evidence": {
+        "kind": "not applicable",
+        "reason": "no unique reference solid"
+      }
+    }
+  ],
+  "regressions": [
+    {
+      "id": "wheel",
+      "drawing": "benchmarks/brep-baseline/wheel/drawing.png",
+      "sha256": "53ee34e2fb93172393dc27d485822cb03677afc9bcfc3ec36691e3cf174ab80a"
+    },
+    {
+      "id": "001_l_bookend_multiview",
+      "drawing": "benchmarks/cases/001_l_bookend_multiview/source/drawing.png",
+      "sha256": "5a3f4f2f11c2f37bf7e47001bdc6302cc2901afab888118cb787bf1455168dd2"
+    },
+    {
+      "id": "006_stepped_knob",
+      "drawing": "benchmarks/cases/006_stepped_knob/source/drawing.png",
+      "sha256": "4765bb63f92b926258323865d199bedadd0f0a398a9af8da8922fde95008d5b5"
+    },
+    {
+      "id": "104_cable_holder",
+      "drawing": "benchmarks/cases/104_cable_holder/source/drawing.png",
+      "sha256": "814cde61816147f97be056e736c26c081592f95c3de74cdfbe696c4c7bc312c9"
+    },
+    {
+      "id": "102_lcd_knob",
+      "drawing": "benchmarks/cases/102_lcd_knob/source/drawing.png",
+      "sha256": "a8e42eb9f44830265b21ab408bb1632b12b6c501bc484bb8aee2e842e270c53d"
+    }
+  ],
+  "random_selection": {
+    "method": "secrets.choice over sorted development cases; exclude fixed cases",
+    "eligible": [
+      "002_greek_vase_silhouette",
+      "003_front_grille_multiview",
+      "004_flat_mounting_plate",
+      "005_bolt_flange",
+      "007_angle_bracket_holes",
+      "008_open_enclosure_window",
+      "009_hex_prism_knob",
+      "010_nameplate_slots_vents",
+      "011_wall_hook",
+      "012_vent_grille_grid",
+      "013_wedge_ramp",
+      "101_bltouch_bracket",
+      "102_lcd_knob",
+      "103_y_motor_holder"
+    ],
+    "selected": "102_lcd_knob",
+    "purpose": "reserved for first implementation trial; selected before any trial",
+    "redraw_policy": "no redraw after observing results; save a new selection record for later trials"
+  },
+  "global_checks": {
+    "components": 1,
+    "watertight": true,
+    "minimum_z_mm": 0,
+    "minimum_z_tolerance_mm": 0.001,
+    "publication": "failed or unverified if a required feature check fails",
+    "edit_policy": "measure change against requested value, using the feature tolerance; compare protected dimensions to the pre-edit candidate within 0.05 mm",
+    "measurement_status": "proposed checks, not implemented measurements"
+  },
+  "model_input_policy": {
+    "allow": [
+      "drawing bytes",
+      "normal controls",
+      "production capability description"
+    ],
+    "deny": [
+      "this contract",
+      "expected measurements",
+      "reference SCAD or recipe",
+      "evidence pixel boxes",
+      "reference renders"
+    ],
+    "live_calls_in_this_task": 0
+  }
+}
