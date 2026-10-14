@@ -31,6 +31,10 @@ def build(source, output):
             elif op["axis"] == "y":
                 sm.rotate(body, (0, 0, 0), (1, 0, 0), -90)
             sm.translate(body, tuple(op["origin"]))
+        elif kind == "rotate":
+            body = bodies[op["body"]].copy()
+            axis = tuple(1 if name == op["axis"] else 0 for name in "xyz")
+            sm.rotate(body, tuple(op["origin"]), axis, op["angle"])
         elif kind in ("union", "difference"):
             operation = sm.boolean_union if kind == "union" else sm.boolean_difference
             body = operation(bodies[op["left"]].copy(), bodies[op["right"]].copy())

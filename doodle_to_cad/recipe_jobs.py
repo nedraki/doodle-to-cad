@@ -64,7 +64,7 @@ async def _stop(process, job_id):
     await _docker_cleanup(job_id)
 
 
-async def run_recipe_job(job, recipe, results_dir: Path, save_result):
+async def run_recipe_job(job, recipe, results_dir: Path, save_result, *, prepare=None):
     job_id = job['job_id']
     process = None
     temporary = None
@@ -73,6 +73,10 @@ async def run_recipe_job(job, recipe, results_dir: Path, save_result):
         temporary = tempfile.TemporaryDirectory(prefix='.recipe-job-', dir=results_dir.parent)
         out = Path(temporary.name) / job_id
         out.mkdir()
+        if prepare is not None:
+            job['stage'] = 'interpreting drawing'
+            async with asyncio.timeout(600):
+                recipe = await prepare(out)
         (out / 'input.recipe.json').write_text(json.dumps(recipe))
         with (out / 'runner.log').open('wb') as log:
             launch = asyncio.create_task(asyncio.create_subprocess_exec(
@@ -110,7 +114,7 @@ async def run_recipe_job(job, recipe, results_dir: Path, save_result):
         job.update(status='cancelling', stage='cancelling', error={'message': 'Recipe job cancelled', 'code': 'cancelled'})
         raise
     except asyncio.TimeoutError:
-        job.update(status="error", stage="failed", error={"message": "Recipe job exceeded 900 seconds", "code": "timeout"})
+        job.update(status="error", stage="failed", error={"message": "BRep job exceeded its stage time limit", "code": "timeout"})
     except Exception as exc:
         job.update(status='error', stage='failed', error={'message': str(exc), 'code': getattr(exc, 'code', 'build_failed')})
     finally:
@@ -119,6 +123,12 @@ async def run_recipe_job(job, recipe, results_dir: Path, save_result):
                 await _stop(process, job_id)
         finally:
             if temporary is not None:
+                # Direct generation retains inputs, model outputs and failures for review.
+                # A failed run has no result.json and cannot replace a completed result.
+                if prepare is not None and out.exists():
+                    (out / 'result.json').unlink(missing_ok=True)
+                    (out / 'failure.json').write_text(json.dumps(job.get('error'), indent=2))
+                    out.rename(results_dir / job_id)
                 temporary.cleanup()
             if job['status'] == 'cancelling':
                 job.update(status='cancelled', stage='cancelled')

@@ -14,6 +14,7 @@ FIELDS = {
     "difference": {"left", "right"},
     "fillet": {"body", "radius", "selector"},
     "chamfer": {"body", "radius"},
+    "rotate": {"body", "origin", "axis", "angle"},
     "arc_pipe": {"origin", "bend_radius", "radius", "angle"},
 }
 
@@ -117,8 +118,10 @@ def validate_recipe(recipe, updates=None):
                     raise ValueError(f"{field} must be positive")
         if "size" in item and min(item["size"]) <= 0:
             raise ValueError("Box sizes must be positive")
-        if kind == "cylinder" and op["axis"] not in ("x", "y", "z"):
-            raise ValueError("Cylinder axis must be x, y or z")
+        if kind in ("cylinder", "rotate") and op["axis"] not in ("x", "y", "z"):
+            raise ValueError("Axis must be x, y or z")
+        if kind == "rotate" and item["angle"] > 360:
+            raise ValueError("Rotation angle must be positive and at most 360 degrees")
         if kind == "arc_pipe" and (item["radius"] >= item["bend_radius"] or item["angle"] > 270):
             raise ValueError("Pipe requires radius < bend_radius and angle ≤ 270°")
         if kind == "fillet" and op["selector"] not in ("all", "parallel_x", "parallel_y", "parallel_z"):
@@ -126,7 +129,7 @@ def validate_recipe(recipe, updates=None):
         resolved.append(item)
         seen.add(op["id"])
     if not isinstance(recipe.get("output"), str) or recipe["output"] not in seen:
-        raise ValueError("Output must name a constructed body")
+        raise ValueError("Top-level output must name a constructed operation ID; include output at the recipe root")
     return edited, resolved
 
 

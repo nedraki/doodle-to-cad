@@ -96,13 +96,13 @@ class Pipeline:
         self.settings, self.client = settings, client
         self._structured_thinking_healthy = True
 
-    async def interpret_features(self, image: bytes, mime: str, controls=None):
+    async def interpret_features(self, image: bytes, mime: str, controls=None, *, out=None):
         """Opt-in evidence pass. Never changes the default generation prompt."""
         from .feature_evidence import PROMPT, region_catalog, validate_interpretation, shared_axis_evidence, view_assignment_evidence
         controls = controls or {}
-        run_id = uuid.uuid4().hex[:12]
-        out = self.settings.results_dir / run_id
-        out.mkdir(parents=True)
+        out = out or self.settings.results_dir / uuid.uuid4().hex[:12]
+        run_id = out.name
+        out.mkdir(parents=True, exist_ok=True)
         input_name = "input.png" if mime == "image/png" else ("input.jpg" if mime == "image/jpeg" else "input.webp")
         (out / input_name).write_bytes(image)
         evidence, overlay = await asyncio.to_thread(analyze_image, image)

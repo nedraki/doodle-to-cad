@@ -235,7 +235,7 @@ async def generate(
     object_type: str = Form(""), method: str = Form("3D print"), primary_view: str = Form("front"),
     projection_standard: str = Form("third-angle"),
     strict_watertight: bool = Form(True), view_directions: str = Form("[]"),
-    refine_mode: str = Form("regularize"),
+    refine_mode: str = Form("regularize"), backend: str = Form("openscad"),
     additional_views: list[UploadFile] = File(default=[]),
 ):
     if image.content_type not in {"image/png","image/jpeg","image/webp"}: raise HTTPException(415,"Upload PNG, JPEG, or WebP")
@@ -249,6 +249,13 @@ async def generate(
         controls = {"object_type_hint": object_type, "method": method, "primary_view": primary_view, "projection_standard": projection_standard, "strict_watertight": strict_watertight, "refine_mode": "as_drawn" if refine_mode == "as_drawn" else "regularize"}
     except json.JSONDecodeError as exc:
         raise HTTPException(422, {"message": f"view_directions is not valid JSON: {exc}", "error_type": type(exc).__name__, "stage": "request"}) from exc
+
+    if backend not in {"openscad", "usd-brep"}:
+        raise HTTPException(422, "Unknown generation backend")
+    if backend == "usd-brep":
+        from .direct_brep import submit_direct_job
+        return await submit_direct_job(data, image.content_type, notes, dimension, extra, controls,
+                                       pipeline, settings.results_dir, JOBS, _prune_jobs, _save_brep_result)
 
     run_id = uuid.uuid4().hex[:12]
     job = {"job_id": run_id, "status": "running", "stage": "queued", "created": time.monotonic(),

@@ -21,7 +21,7 @@ function loadImage(file,canvas){if(!file)return;const im=new Image;im.onload=()=
 $('#drawView').onclick=()=>{extraCanvas.clear();$('#viewDialog').showModal()};document.querySelectorAll('.close').forEach(b=>b.onclick=()=>$('#viewDialog').close());$('#saveView').onclick=async()=>{extras.push({direction:$('#viewDirection').value,blob:await extraCanvas.blob()});$('#viewDialog').close();renderExtras()};$('#uploadView').onchange=e=>{if(e.target.files[0]){extras.push({direction:'additional',blob:e.target.files[0]});renderExtras()}e.target.value=''};
 function renderExtras(){$('#viewList').innerHTML=extras.map((e,i)=>`<div class="view-item"><img src="${URL.createObjectURL(e.blob)}"><span>${e.direction}</span><button type="button" data-remove="${i}">×</button></div>`).join('');document.querySelectorAll('[data-remove]').forEach(b=>b.onclick=()=>{extras.splice(+b.dataset.remove,1);renderExtras()})}
 async function health(){try{const h=await fetch('/api/health?refresh=true').then(r=>r.json());$('#health').textContent=`model: ${h.agentic.selected_model||'unavailable'} · ${h.openscad.available?'OpenSCAD ready':'OpenSCAD missing'}`}catch{$('#health').textContent='pipeline offline'}}health();
-const STAGE_LABELS={queued:'Queued…',analyzing:'Reading ink and geometry…',interpreting:'Building the object and part graph…',generating:'Authoring parametric OpenSCAD…',finalizing:'Preparing the 3D model…'};
+const STAGE_LABELS={'interpreting drawing':'Reading drawing features…','planning BRep recipe':'Creating the BRep construction recipe…','building recipe':'Starting BRep worker…','building solid':'Building and checking the solid…','checking mesh':'Checking the exported mesh…','rendering views':'Rendering the part…','publishing recipe':'Saving the BRep candidate…',queued:'Queued…',analyzing:'Reading ink and geometry…',interpreting:'Building the object and part graph…',generating:'Authoring parametric OpenSCAD…',finalizing:'Preparing the 3D model…'};
 function stageLabel(stage){if(!stage)return'Working…';const m=/^(\w+) \(attempt (\d)\)$/.exec(stage);if(m){if(m[1]==='compiling')return`Compiling STL — attempt ${m[2]} of 3…`;if(m[1]==='supervising')return`CAD supervisor reviewing attempt ${m[2]}…`}return STAGE_LABELS[stage]||'Working…'}
 function showError(message,aborted){show('error');$('#error').innerHTML=`<h2>GENERATION STOPPED</h2><p>${escapeHtml(message)}</p><button type="button" id="returnToDrawing">← Return to drawing</button>`;$('#returnToDrawing').onclick=()=>{$('#inputTools').hidden=false;$('#deckTitle').textContent='BLUEPRINT DECK — FRONT & PROJECTED VIEWS';show('blueprint')};void aborted}
 function escapeHtml(value){const el=document.createElement('div');el.textContent=String(value);return el.innerHTML.replaceAll('"','&quot;')}
@@ -328,4 +328,13 @@ $('#restoreScad').onclick=async()=>{
     const loaded=await viewer.replaceStl(original.files.stl,[],()=>currentRun===run);
     if(loaded&&currentRun===run)render(original,null,true);
   }catch(error){if(currentRun===run)$('#resultText').textContent=error.message;}
+};
+
+const defaultGenerationHelp=document.querySelector('#generationHelp').textContent;
+form.backend.onchange=()=>{
+  const direct=form.backend.value==='usd-brep';
+  document.querySelector('#backendHelp').hidden=!direct;
+  document.querySelector('#generationHelp').textContent=direct
+    ? 'The agent reads the drawing and creates an editable BRep recipe. The worker checks the solid and mesh. Drawing fidelity remains unverified.'
+    : defaultGenerationHelp;
 };
