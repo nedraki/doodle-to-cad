@@ -11,7 +11,7 @@ from .brep_recipe import validate_recipe
 from .build_contract import BuildError
 from .recipe_jobs import check_worker, run_recipe_job
 
-PROMPT_VERSION = 'drawing-brep-3'
+PROMPT_VERSION = 'drawing-brep-4'
 PROMPT = """Construct ONE editable BRep part directly from the drawing and measured evidence.
 Return valid JSON only. Never return Python or OpenSCAD. If the part needs an unsupported operation, return {"unsupported":"specific reason"}.
 
@@ -41,8 +41,73 @@ Preserve measured proportions, feature counts, unequal sizes and the declared ma
 Box origin is its minimum corner and its endpoint equals origin + size. Compute joint endpoints explicitly. Extend joined material into both owners by a positive overlap. Never subtract away required joint overlap. Cutters must cross the wall they cut.
 Use rotation for diagonal features and radial patterns. Loft, arbitrary profiles and arbitrary sweeps are unsupported. Do not replace them silently with another construction.
 For missing depth or dimensions, choose explicit conservative assumptions and expose parameters. Do not silently discard unresolved drawing details. Return unsupported if uncertainty prevents a supported construction.
+Check placement and dimensions with numeric arithmetic before returning the recipe:
+- A cylinder along X or Y extends one radius below its centre in Z. Put its centre at least that radius above Z=0.
+- A connector endpoint is origin + length, not origin + a radius. Keep it inside the outer envelope while extending it into its owners.
+- Stacked bodies that meet at one plane have zero overlap volume. Extend the internal member into each owner; retain the intended outer heights. The overlap must meet the declared min_volume_mm3, including after later cuts.
 The interpretation can contain mistakes; check the original image. Evidence is not proof of drawing fidelity.
 """
+
+
+CORRECTABLE = {"placement_failed", "dimension_exceeded", "connection_failed"}
+
+
+def validate_correction(before, after):
+    """A construction correction cannot remove features or weaken required joints."""
+    validate_recipe(after)
+    if after.get('version') != 2 or after['output'] != before['output']:
+        raise ValueError('Keep version 2 and the same output operation')
+    features = lambda r: {op['id']: op['kind'] for op in r['operations']}
+    if features(before) != features(after):
+        raise ValueError('Construction correction must preserve all feature IDs and operation kinds')
+    links = lambda r: {op['id']: {k: op[k] for k in ('left', 'right', 'body') if k in op} for op in r['operations']}
+    if links(before) != links(after):
+        raise ValueError('Construction correction must preserve feature dependencies')
+    if before['constraints'] != after['constraints']:
+        raise ValueError('Do not remove, change or weaken required connection constraints')
+    if not set(before['parameters']).issubset(after['parameters']):
+        raise ValueError('Keep existing editable parameter names')
+    allowed = {'origin','size','radius','height','bend_radius'}
+    original_ops = {op['id']:op for op in before['operations']}
+    for op in after['operations']:
+        original = original_ops[op['id']]
+        if {k:v for k,v in op.items() if k not in allowed} != {k:v for k,v in original.items() if k not in allowed}:
+            raise ValueError('Only numeric geometry fields may change; preserve axes and feature evidence')
+    if before['parameters'].keys() != after['parameters'].keys():
+        raise ValueError('Keep the same parameter names')
+    for name, parameter in before['parameters'].items():
+        if {k:v for k,v in parameter.items() if k != 'value'} != {k:v for k,v in after['parameters'][name].items() if k != 'value'}:
+            raise ValueError('Keep parameter ranges and metadata unchanged')
+    if before == after:
+        raise ValueError('Construction correction made no change')
+
+
+CORRECTION_PROMPT_VERSION = 'construction-numeric-fields-2'
+CORRECTION_PROMPT = """Correct a measured BRep construction failure. Return the complete version 2 recipe as JSON only.
+Preserve every feature ID, operation kind, dependency, cylinder axis, rotation angle, output and connection constraint exactly.
+Change only operation origin, size, radius, height or bend_radius fields and existing parameter values within their ranges. Keep every other operation field unchanged.
+A cylinder uses height, not size. A box uses size, not height. Use quoted arithmetic expressions for dimensions. Never use null placeholders.
+For negative minimum Z, raise primitive Z coordinates AND rotation pivot Z coordinates consistently. A cylinder along X or Y extends one radius below its centre in Z. Changing a diameter alone does not put the part on Z=0.
+For oversize connectors, compute endpoint = origin + length. Shorten the connector to stay inside its outer owner while retaining positive overlap. Do not shrink the whole design to hide protrusions.
+For stacked zero-overlap joints, extend the internal member into BOTH owners while keeping the outer envelope unchanged. Lower its origin AND increase its height to overlap both ends. Meet the declared minimum volume; never weaken that requirement.
+Return actual changes that resolve the diagnostic. Do not repeat the unchanged recipe. Preserve intended shape and feature count. This is a construction correction, not a drawing-fidelity judgment.
+"""
+
+
+async def correct_construction(pipeline, out, recipe, failure, attempt, maximum):
+    if failure['code'] not in CORRECTABLE:
+        raise BuildError(failure['code'], failure['message'])
+    request = {'failed_recipe':recipe,'diagnostic':failure,'maximum_dimension_mm':maximum}
+    (out/'construction-correction-prompt.txt').write_text(CORRECTION_PROMPT)
+    (out/f'construction-correction-{attempt}.request.json').write_text(json.dumps(request,indent=2))
+    messages = [{'role':'system','content':CORRECTION_PROMPT}, {'role':'user','content':json.dumps(request)}]
+    corrected = await pipeline._json_call(messages,out,f'construction-correction-{attempt}',temperature=0)
+    try:
+        validate_correction(recipe, corrected)
+    except ValueError as exc:
+        raise BuildError('invalid_recipe', f'Construction correction rejected: {exc}') from exc
+    (out/f'construction-correction-{attempt}.recipe.json').write_text(json.dumps(corrected,indent=2))
+    return corrected
 
 
 async def submit_direct_job(image, mime, notes, dimension, extra, controls,
@@ -66,6 +131,7 @@ async def submit_direct_job(image, mime, notes, dimension, extra, controls,
     jobs[run_id] = job
     prune()
     provenance = {'path':'drawing-to-brep','backend':'usd-brep','prompt_version':PROMPT_VERSION,
+                  'correction_prompt_version':CORRECTION_PROMPT_VERSION,'max_construction_corrections':2,
                   'model':None,'notes':notes,'maximum_dimension_mm':maximum,'controls':controls,
                   'generated_scad':False,'drawing_fidelity_verified':False,'attempts':[]}
 
@@ -102,10 +168,15 @@ async def submit_direct_job(image, mime, notes, dimension, extra, controls,
                 messages += [{'role':'assistant','content':json.dumps(raw)},
                              {'role':'user','content':'Correct only the recipe schema: '+str(exc)}]
 
+    async def repair(out, recipe, failure, attempt):
+        return await correct_construction(pipeline, out, recipe, failure, attempt, maximum)
+
     def publish(out, recipe, built):
         extents = built['build']['measurements']['extents_mm']
         if max(extents) > maximum + .5:
-            raise BuildError('dimension_exceeded','BRep exceeds the requested maximum dimension')
+            raise BuildError('dimension_exceeded',f'BRep extents_mm={extents} exceed requested maximum {maximum} mm')
+        provenance['construction_attempts'] = json.loads((out/'build-history.json').read_text())
+        (out/'generation.json').write_text(json.dumps(provenance,indent=2))
         result = save_result(out,recipe,built,controls=controls)
         result.update(model=provenance['model'],generation=provenance,
                       duration_seconds=round(time.monotonic()-job['created'],2))
@@ -114,5 +185,5 @@ async def submit_direct_job(image, mime, notes, dimension, extra, controls,
         (out/'result.json').write_text(json.dumps(result,indent=2))
         return result
 
-    job['task'] = asyncio.create_task(run_recipe_job(job,None,results_dir,publish,prepare=prepare))
+    job['task'] = asyncio.create_task(run_recipe_job(job,None,results_dir,publish,prepare=prepare,repair=repair))
     return {'job_id':run_id,'status':'running'}

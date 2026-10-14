@@ -1,0 +1,155 @@
+```json
+{
+  "version": 1,
+  "object_hypothesis": "Wheel",
+  "features": [
+    {
+      "id": "outer_rim",
+      "type": "rim",
+      "description": "Outer circular boundary of the wheel",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "Visible as the primary outer contour in the front view."
+    },
+    {
+      "id": "inner_rim",
+      "type": "rim",
+      "description": "Inner circular boundary of the wheel rim",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "Visible as the inner boundary of the rim structure in the front view."
+    },
+    {
+      "id": "hub",
+      "type": "hub",
+      "description": "Central circular hub",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "Visible as the central circular feature in the front view."
+    },
+    {
+      "id": "spokes",
+      "type": "spoke",
+      "description": "Radial spokes connecting hub to rim",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "Visible as linear features radiating from the hub to the rim in the front view."
+    },
+    {
+      "id": "wheel_thickness",
+      "type": "body",
+      "description": "Thickness of the wheel",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_14"
+        }
+      ],
+      "reason": "Visible as the width of the rectangular profile in the right view."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "spoke_to_hub",
+      "type": "connected",
+      "features": [
+        "spokes",
+        "hub"
+      ],
+      "description": "Spokes are connected to the hub",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "Visible connection points between spokes and hub in the front view."
+    },
+    {
+      "id": "spoke_to_rim",
+      "type": "connected",
+      "features": [
+        "spokes",
+        "inner_rim"
+      ],
+      "description": "Spokes are connected to the inner rim",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "Visible connection points between spokes and inner rim in the front view."
+    },
+    {
+      "id": "rim_thickness",
+      "type": "shared_dimension",
+      "features": [
+        "outer_rim",
+        "inner_rim"
+      ],
+      "description": "Thickness of the rim",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "Inferred from the distance between outer and inner rim boundaries in the front view."
+    },
+    {
+      "id": "wheel_symmetry",
+      "type": "symmetry",
+      "features": [
+        "outer_rim",
+        "inner_rim",
+        "hub",
+        "spokes"
+      ],
+      "description": "Symmetry of the wheel",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "Inferred from the regular arrangement of spokes and circular boundaries in the front view."
+    }
+  ],
+  "assumptions": [
+    "The wheel is axisymmetric.",
+    "The spokes are evenly spaced.",
+    "The hub is centered within the wheel."
+  ],
+  "unresolved": [
+    "Exact dimensions of the wheel components.",
+    "Material properties of the wheel."
+  ],
+  "conflicts": []
+}
+```

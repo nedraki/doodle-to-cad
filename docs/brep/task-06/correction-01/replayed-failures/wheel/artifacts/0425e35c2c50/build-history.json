@@ -1,0 +1,26 @@
+[
+  {
+    "attempt": 1,
+    "status": "failed",
+    "error": {
+      "code": "placement_failed",
+      "message": "Expected Z=0 and extents within 256 mm; minimum_z_mm=-66, extents_mm=[132.0, 8.000000000000004, 132.0]"
+    }
+  },
+  {
+    "attempt": 2,
+    "status": "failed",
+    "error": {
+      "code": "placement_failed",
+      "message": "Expected Z=0 and extents within 256 mm; minimum_z_mm=-56, extents_mm=[112.0, 8.000000000000004, 112.0]"
+    }
+  },
+  {
+    "attempt": 3,
+    "status": "failed",
+    "error": {
+      "code": "placement_failed",
+      "message": "Expected Z=0 and extents within 256 mm; minimum_z_mm=-62, extents_mm=[124.0, 8.000000000000004, 124.0]"
+    }
+  }
+]

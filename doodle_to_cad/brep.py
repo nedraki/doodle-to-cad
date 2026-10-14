@@ -55,7 +55,10 @@ def build_brep(request: BuildInput, binary: str = "openscad", on_stage=lambda _:
             return result
         result.log = process.stdout + process.stderr
         if process.returncode:
-            result.diagnostics.append(Diagnostic("build_failed", (result.log or "BRep worker crashed")[-2500:]))
+            failure_path = staging / "construction-error.json"
+            failure = json.loads(failure_path.read_text()) if failure_path.exists() else {}
+            result.diagnostics.append(Diagnostic(failure.get("code", "build_failed"),
+                                                 failure.get("message", (result.log or "BRep worker crashed")[-2500:])))
             return result
         try:
             result.backend_details = json.loads((staging / "diagnostics.json").read_text())

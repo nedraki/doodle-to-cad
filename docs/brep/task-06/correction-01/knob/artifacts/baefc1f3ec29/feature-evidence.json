@@ -1,0 +1,405 @@
+{
+  "id": "baefc1f3ec29",
+  "interpretation": {
+    "version": 1,
+    "object_hypothesis": "A stepped mechanical component, likely a flanged bushing or spacer, featuring a central neck and flanges at both ends.",
+    "features": [
+      {
+        "id": "body",
+        "type": "body",
+        "description": "The main solid volume of the object defined by the outer contours in both views.",
+        "status": "observed",
+        "evidence": [
+          {
+            "view_id": "view_1",
+            "region_id": "profile_contour_3"
+          },
+          {
+            "view_id": "view_2",
+            "region_id": "profile_contour_1"
+          }
+        ],
+        "reason": "Visible as the primary closed polygon in both the front and right views."
+      },
+      {
+        "id": "top_flange",
+        "type": "flange",
+        "description": "The uppermost section of the object, appearing wider than the central section.",
+        "status": "observed",
+        "evidence": [
+          {
+            "view_id": "view_1",
+            "region_id": "profile_contour_3"
+          },
+          {
+            "view_id": "view_2",
+            "region_id": "profile_contour_1"
+          }
+        ],
+        "reason": "Identified by the stepped geometry at the top of the profile in both views."
+      },
+      {
+        "id": "bottom_flange",
+        "type": "flange",
+        "description": "The lowermost section of the object, appearing wider than the central section.",
+        "status": "observed",
+        "evidence": [
+          {
+            "view_id": "view_1",
+            "region_id": "profile_contour_3"
+          },
+          {
+            "view_id": "view_2",
+            "region_id": "profile_contour_1"
+          }
+        ],
+        "reason": "Identified by the stepped geometry at the bottom of the profile in both views."
+      },
+      {
+        "id": "central_neck",
+        "type": "neck",
+        "description": "The central section of the object connecting the top and bottom flanges, appearing narrower than the flanges.",
+        "status": "observed",
+        "evidence": [
+          {
+            "view_id": "view_1",
+            "region_id": "profile_contour_3"
+          },
+          {
+            "view_id": "view_2",
+            "region_id": "profile_contour_1"
+          }
+        ],
+        "reason": "Visible as the indented central region between the upper and lower steps."
+      }
+    ],
+    "relationships": [
+      {
+        "id": "flange_neck_connection",
+        "type": "connected",
+        "features": [
+          "top_flange",
+          "central_neck",
+          "bottom_flange"
+        ],
+        "description": "The central neck connects the top and bottom flanges.",
+        "status": "inferred",
+        "evidence": [
+          {
+            "view_id": "view_1",
+            "region_id": "profile_contour_3"
+          },
+          {
+            "view_id": "view_2",
+            "region_id": "profile_contour_1"
+          }
+        ],
+        "reason": "The continuous outer boundary in both views implies a single connected solid."
+      },
+      {
+        "id": "view_consistency",
+        "type": "other",
+        "features": [
+          "body"
+        ],
+        "description": "The front and right views display nearly identical stepped profiles.",
+        "status": "observed",
+        "evidence": [
+          {
+            "view_id": "view_1",
+            "region_id": "profile_contour_3"
+          },
+          {
+            "view_id": "view_2",
+            "region_id": "profile_contour_1"
+          }
+        ],
+        "reason": "The polygon shapes and dimensions are consistent across both views, suggesting rotational symmetry or a prismatic shape."
+      }
+    ],
+    "assumptions": [
+      "The object is a single solid piece.",
+      "The views represent orthogonal projections (Front and Right) of the same object."
+    ],
+    "unresolved": [
+      "Internal geometry (e.g., whether the object is hollow or solid).",
+      "Exact cross-sectional shape (circular vs. square) due to lack of top view."
+    ],
+    "conflicts": [],
+    "review": {
+      "reference_integrity_checked": true,
+      "drawing_fidelity_verified": false,
+      "policy_warnings": [],
+      "executable": false
+    }
+  },
+  "regions": [
+    {
+      "view_id": "view_1",
+      "direction": "front",
+      "sheet_bbox_normalized": [
+        0.016,
+        0.304,
+        0.421,
+        0.392
+      ],
+      "cad_mapping": {
+        "plane": "XZ",
+        "view_axis": "Y",
+        "u_maps_to": "+X",
+        "v_maps_to": "-Z"
+      },
+      "view_assignment": "spatial heuristic",
+      "region_id": "view",
+      "kind": "view",
+      "bbox_view_normalized": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "measured_span_pixels": {
+        "horizontal_axis_u": 421,
+        "vertical_axis_v": 294
+      }
+    },
+    {
+      "view_id": "view_1",
+      "direction": "front",
+      "sheet_bbox_normalized": [
+        0.016,
+        0.304,
+        0.421,
+        0.392
+      ],
+      "cad_mapping": {
+        "plane": "XZ",
+        "view_axis": "Y",
+        "u_maps_to": "+X",
+        "v_maps_to": "-Z"
+      },
+      "view_assignment": "spatial heuristic",
+      "region_id": "profile_contour_3",
+      "kind": "outer",
+      "profile_id": "contour_3",
+      "bbox_view_normalized": [
+        0.019,
+        0.0204,
+        0.9596,
+        0.9592
+      ],
+      "center_view_normalized": [
+        0.4988,
+        0.5
+      ],
+      "polygon_view_normalized": [
+        [
+          0.0214,
+          0.0543
+        ],
+        [
+          0.0499,
+          0.289
+        ],
+        [
+          0.285,
+          0.2857
+        ],
+        [
+          0.2874,
+          0.7482
+        ],
+        [
+          0.0808,
+          0.7449
+        ],
+        [
+          0.0784,
+          0.9625
+        ],
+        [
+          0.9287,
+          0.9457
+        ],
+        [
+          0.8979,
+          0.7824
+        ],
+        [
+          0.6983,
+          0.7212
+        ],
+        [
+          0.6936,
+          0.3094
+        ],
+        [
+          0.9691,
+          0.2926
+        ],
+        [
+          0.9549,
+          0.0408
+        ]
+      ],
+      "vertices": 12,
+      "circularity": 0.312,
+      "area_ratio_of_sheet": 0.09921
+    },
+    {
+      "view_id": "view_2",
+      "direction": "right",
+      "sheet_bbox_normalized": [
+        0.558,
+        0.312,
+        0.42,
+        0.3827
+      ],
+      "cad_mapping": {
+        "plane": "YZ",
+        "view_axis": "X",
+        "u_maps_to": "+Y",
+        "v_maps_to": "-Z"
+      },
+      "view_assignment": "spatial heuristic",
+      "region_id": "view",
+      "kind": "view",
+      "bbox_view_normalized": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "measured_span_pixels": {
+        "horizontal_axis_u": 420,
+        "vertical_axis_v": 287
+      }
+    },
+    {
+      "view_id": "view_2",
+      "direction": "right",
+      "sheet_bbox_normalized": [
+        0.558,
+        0.312,
+        0.42,
+        0.3827
+      ],
+      "cad_mapping": {
+        "plane": "YZ",
+        "view_axis": "X",
+        "u_maps_to": "+Y",
+        "v_maps_to": "-Z"
+      },
+      "view_assignment": "spatial heuristic",
+      "region_id": "profile_contour_1",
+      "kind": "outer",
+      "profile_id": "contour_1",
+      "bbox_view_normalized": [
+        0.019,
+        0.0209,
+        0.9595,
+        0.9582
+      ],
+      "center_view_normalized": [
+        0.4988,
+        0.4999
+      ],
+      "polygon_view_normalized": [
+        [
+          0.9762,
+          0.0243
+        ],
+        [
+          0.0405,
+          0.0243
+        ],
+        [
+          0.0238,
+          0.2788
+        ],
+        [
+          0.2857,
+          0.2718
+        ],
+        [
+          0.2857,
+          0.7387
+        ],
+        [
+          0.0786,
+          0.7559
+        ],
+        [
+          0.0738,
+          0.9441
+        ],
+        [
+          0.9,
+          0.972
+        ],
+        [
+          0.9024,
+          0.7492
+        ],
+        [
+          0.6905,
+          0.7455
+        ],
+        [
+          0.6929,
+          0.3692
+        ],
+        [
+          0.9714,
+          0.3031
+        ]
+      ],
+      "vertices": 12,
+      "circularity": 0.298,
+      "area_ratio_of_sheet": 0.09742
+    }
+  ],
+  "shared_axis_evidence": [
+    {
+      "axis": "Z",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "view"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "view"
+        }
+      ],
+      "measured_spans_pixels": [
+        294,
+        287
+      ],
+      "relative_difference": 0.0238,
+      "status": "consistent_spans",
+      "assumption": "Views use the same drawing scale and their assigned directions are correct.",
+      "physical_dimension_verified": false
+    }
+  ],
+  "view_assignment_review": {
+    "excluded_from_direction_assignment": [],
+    "rule": "Groups below 5% of the largest group box area remain unassigned; they may be text or detail views.",
+    "regions_retained": true
+  },
+  "controls": {
+    "object_type_hint": "",
+    "method": "3D print",
+    "primary_view": "front",
+    "projection_standard": "third-angle",
+    "strict_watertight": true,
+    "refine_mode": "regularize"
+  },
+  "notes": "",
+  "default_generation_changed": false,
+  "files": {
+    "input": "/results/baefc1f3ec29/input.png",
+    "overlay": "/results/baefc1f3ec29/geometry-overlay.png",
+    "interpretation": "/results/baefc1f3ec29/feature-evidence.json"
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "run_id": "baefc1f3ec29",
+  "params": [
+    {
+      "name": "total_height",
+      "value": 120,
+      "low": 50,
+      "high": 200,
+      "step": 0.01,
+      "label": "total height",
+      "unit": "mm",
+      "description": "Total height of the component",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "flange_width",
+      "value": 100,
+      "low": 40,
+      "high": 200,
+      "step": 0.01,
+      "label": "flange width",
+      "unit": "mm",
+      "description": "Width of the top and bottom flanges",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "neck_width",
+      "value": 40,
+      "low": 10,
+      "high": 100,
+      "step": 0.01,
+      "label": "neck width",
+      "unit": "mm",
+      "description": "Width of the central neck",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "flange_thickness",
+      "value": 20,
+      "low": 5,
+      "high": 50,
+      "step": 0.01,
+      "label": "flange thickness",
+      "unit": "mm",
+      "description": "Thickness of the top and bottom flanges",
+      "group": "Details",
+      "feature": null
+    }
+  ]
+}

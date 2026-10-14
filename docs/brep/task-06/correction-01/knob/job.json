@@ -1,0 +1,166 @@
+{
+  "job_id": "baefc1f3ec29",
+  "status": "done",
+  "stage": "done",
+  "result": {
+    "id": "baefc1f3ec29",
+    "backend": "usd-brep",
+    "success": false,
+    "spec": {
+      "object": "stepped_bushing"
+    },
+    "model": "local-inference-lab/Qwen3.8-Flash-Next-NVFP4",
+    "duration_seconds": 36.07,
+    "evaluation": {
+      "accepted": false,
+      "failures": [
+        "Drawing fidelity has not been evaluated."
+      ]
+    },
+    "diagnostics": {
+      "backend": "usd-brep",
+      "version": "1.0.0",
+      "recipe_version": 2,
+      "solid_volume_mm3": 528000.0,
+      "mesh_volume_mm3": 528000.0,
+      "extents_mm": [
+        100.0,
+        100.0,
+        120.0
+      ],
+      "bounds_mm": [
+        [
+          -50.0,
+          -50.0,
+          0.0
+        ],
+        [
+          50.0,
+          50.0,
+          120.0
+        ]
+      ],
+      "watertight": true,
+      "winding_consistent": true,
+      "euler_number": 2,
+      "triangles": 44,
+      "usd_roundtrip": true,
+      "volume_relative_accuracy": 1e-08,
+      "usd_volume_mm3": 528000.0,
+      "operations": [
+        {
+          "id": "bottom_flange",
+          "kind": "box",
+          "faces": 6
+        },
+        {
+          "id": "top_flange",
+          "kind": "box",
+          "faces": 6
+        },
+        {
+          "id": "central_neck",
+          "kind": "box",
+          "faces": 6
+        },
+        {
+          "id": "part",
+          "kind": "union",
+          "faces": 11
+        },
+        {
+          "id": "final_part",
+          "kind": "union",
+          "faces": 16
+        }
+      ],
+      "connections": [],
+      "build_seconds": 0.127
+    },
+    "controls": {
+      "object_type_hint": "",
+      "method": "3D print",
+      "primary_view": "front",
+      "projection_standard": "third-angle",
+      "strict_watertight": true,
+      "refine_mode": "regularize"
+    },
+    "files": {
+      "source": "/results/baefc1f3ec29/brep-efd89f023053490bb187658992fac804/model.recipe.json",
+      "stl": "/results/baefc1f3ec29/brep-efd89f023053490bb187658992fac804/model.stl",
+      "usd": "/results/baefc1f3ec29/brep-efd89f023053490bb187658992fac804/model.usda",
+      "views": {
+        "isometric": "/results/baefc1f3ec29/brep-efd89f023053490bb187658992fac804/view-isometric.png",
+        "front": "/results/baefc1f3ec29/brep-efd89f023053490bb187658992fac804/view-front.png",
+        "top": "/results/baefc1f3ec29/brep-efd89f023053490bb187658992fac804/view-top.png",
+        "right": "/results/baefc1f3ec29/brep-efd89f023053490bb187658992fac804/view-right.png"
+      },
+      "evidence": "/results/baefc1f3ec29/feature-evidence.json",
+      "generation": "/results/baefc1f3ec29/generation.json"
+    },
+    "build": {
+      "version": 1,
+      "backend": "usd-brep",
+      "source_format": "brep-recipe-v2",
+      "ok": true,
+      "units": "mm",
+      "axes": {
+        "x": "width",
+        "y": "depth",
+        "z": "height"
+      },
+      "views": [
+        "isometric",
+        "front",
+        "top",
+        "right"
+      ],
+      "measurements": {
+        "watertight": true,
+        "components": 1,
+        "triangles": 44,
+        "extents_mm": [
+          100.0,
+          100.0,
+          120.0
+        ],
+        "volume_mm3": 528000.0
+      },
+      "diagnostics": [],
+      "drawing_evaluated": false
+    },
+    "original_run_id": null,
+    "generation": {
+      "path": "drawing-to-brep",
+      "backend": "usd-brep",
+      "prompt_version": "drawing-brep-4",
+      "model": "local-inference-lab/Qwen3.8-Flash-Next-NVFP4",
+      "notes": "",
+      "maximum_dimension_mm": 120.0,
+      "controls": {
+        "object_type_hint": "",
+        "method": "3D print",
+        "primary_view": "front",
+        "projection_standard": "third-angle",
+        "strict_watertight": true,
+        "refine_mode": "regularize"
+      },
+      "generated_scad": false,
+      "drawing_fidelity_verified": false,
+      "attempts": [
+        {
+          "attempt": 1,
+          "schema_valid": true
+        }
+      ],
+      "construction_attempts": [
+        {
+          "attempt": 1,
+          "status": "built"
+        }
+      ]
+    }
+  },
+  "error": null,
+  "elapsed_seconds": 36.1
+}

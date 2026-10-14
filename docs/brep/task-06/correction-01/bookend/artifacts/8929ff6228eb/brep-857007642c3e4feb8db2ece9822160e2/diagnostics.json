@@ -1,0 +1,88 @@
+{
+  "backend": "usd-brep",
+  "version": "1.0.0",
+  "recipe_version": 2,
+  "solid_volume_mm3": 125760.0,
+  "mesh_volume_mm3": 125760.0,
+  "extents_mm": [
+    100.0,
+    40.0,
+    120.0
+  ],
+  "bounds_mm": [
+    [
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      100.0,
+      40.0,
+      120.0
+    ]
+  ],
+  "watertight": true,
+  "winding_consistent": true,
+  "euler_number": -6,
+  "triangles": 100,
+  "usd_roundtrip": true,
+  "operations": [
+    {
+      "id": "base_plate",
+      "kind": "box",
+      "faces": 6
+    },
+    {
+      "id": "back_wall",
+      "kind": "box",
+      "faces": 6
+    },
+    {
+      "id": "l_bracket",
+      "kind": "union",
+      "faces": 8
+    },
+    {
+      "id": "cut_top_left",
+      "kind": "box",
+      "faces": 6
+    },
+    {
+      "id": "cut_center",
+      "kind": "box",
+      "faces": 6
+    },
+    {
+      "id": "cut_bottom_left",
+      "kind": "box",
+      "faces": 6
+    },
+    {
+      "id": "cut_bottom_right",
+      "kind": "box",
+      "faces": 6
+    },
+    {
+      "id": "step1",
+      "kind": "difference",
+      "faces": 12
+    },
+    {
+      "id": "step2",
+      "kind": "difference",
+      "faces": 16
+    },
+    {
+      "id": "step3",
+      "kind": "difference",
+      "faces": 20
+    },
+    {
+      "id": "final_part",
+      "kind": "difference",
+      "faces": 24
+    }
+  ],
+  "connections": [],
+  "build_seconds": 0.124
+}

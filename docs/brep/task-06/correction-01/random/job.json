@@ -1,0 +1,206 @@
+{
+  "job_id": "83d09530fa45",
+  "status": "done",
+  "stage": "done",
+  "result": {
+    "id": "83d09530fa45",
+    "backend": "usd-brep",
+    "success": false,
+    "spec": {
+      "object": "staggered_plate"
+    },
+    "model": "local-inference-lab/Qwen3.8-Flash-Next-NVFP4",
+    "duration_seconds": 61.69,
+    "evaluation": {
+      "accepted": false,
+      "failures": [
+        "Drawing fidelity has not been evaluated."
+      ]
+    },
+    "diagnostics": {
+      "backend": "usd-brep",
+      "version": "1.0.0",
+      "recipe_version": 2,
+      "solid_volume_mm3": 62469.02680042261,
+      "mesh_volume_mm3": 62476.32390838008,
+      "extents_mm": [
+        10.0,
+        58.0,
+        120.0
+      ],
+      "bounds_mm": [
+        [
+          -3.6739402930577075e-16,
+          0.0,
+          0.0
+        ],
+        [
+          10.0,
+          58.0,
+          120.0
+        ]
+      ],
+      "watertight": true,
+      "winding_consistent": true,
+      "euler_number": -10,
+      "triangles": 244,
+      "usd_roundtrip": true,
+      "volume_relative_accuracy": 1e-08,
+      "usd_volume_mm3": 62469.02681143281,
+      "operations": [
+        {
+          "id": "base_plate",
+          "kind": "box",
+          "faces": 6
+        },
+        {
+          "id": "central_hole",
+          "kind": "cylinder",
+          "faces": 3
+        },
+        {
+          "id": "slot_1",
+          "kind": "box",
+          "faces": 6
+        },
+        {
+          "id": "slot_2",
+          "kind": "box",
+          "faces": 6
+        },
+        {
+          "id": "slot_3",
+          "kind": "box",
+          "faces": 6
+        },
+        {
+          "id": "slot_4",
+          "kind": "box",
+          "faces": 6
+        },
+        {
+          "id": "slot_5",
+          "kind": "box",
+          "faces": 6
+        },
+        {
+          "id": "cut_hole",
+          "kind": "difference",
+          "faces": 7
+        },
+        {
+          "id": "cut_slot_1",
+          "kind": "difference",
+          "faces": 11
+        },
+        {
+          "id": "cut_slot_2",
+          "kind": "difference",
+          "faces": 15
+        },
+        {
+          "id": "cut_slot_3",
+          "kind": "difference",
+          "faces": 19
+        },
+        {
+          "id": "cut_slot_4",
+          "kind": "difference",
+          "faces": 23
+        },
+        {
+          "id": "final_part",
+          "kind": "difference",
+          "faces": 27
+        }
+      ],
+      "connections": [],
+      "build_seconds": 0.146
+    },
+    "controls": {
+      "object_type_hint": "",
+      "method": "3D print",
+      "primary_view": "front",
+      "projection_standard": "third-angle",
+      "strict_watertight": true,
+      "refine_mode": "regularize"
+    },
+    "files": {
+      "source": "/results/83d09530fa45/brep-c1882723356e41efb07560c15b8f4df2/model.recipe.json",
+      "stl": "/results/83d09530fa45/brep-c1882723356e41efb07560c15b8f4df2/model.stl",
+      "usd": "/results/83d09530fa45/brep-c1882723356e41efb07560c15b8f4df2/model.usda",
+      "views": {
+        "isometric": "/results/83d09530fa45/brep-c1882723356e41efb07560c15b8f4df2/view-isometric.png",
+        "front": "/results/83d09530fa45/brep-c1882723356e41efb07560c15b8f4df2/view-front.png",
+        "top": "/results/83d09530fa45/brep-c1882723356e41efb07560c15b8f4df2/view-top.png",
+        "right": "/results/83d09530fa45/brep-c1882723356e41efb07560c15b8f4df2/view-right.png"
+      },
+      "evidence": "/results/83d09530fa45/feature-evidence.json",
+      "generation": "/results/83d09530fa45/generation.json"
+    },
+    "build": {
+      "version": 1,
+      "backend": "usd-brep",
+      "source_format": "brep-recipe-v2",
+      "ok": true,
+      "units": "mm",
+      "axes": {
+        "x": "width",
+        "y": "depth",
+        "z": "height"
+      },
+      "views": [
+        "isometric",
+        "front",
+        "top",
+        "right"
+      ],
+      "measurements": {
+        "watertight": true,
+        "components": 1,
+        "triangles": 244,
+        "extents_mm": [
+          10.0,
+          58.0,
+          120.0
+        ],
+        "volume_mm3": 62476.324
+      },
+      "diagnostics": [],
+      "drawing_evaluated": false
+    },
+    "original_run_id": null,
+    "generation": {
+      "path": "drawing-to-brep",
+      "backend": "usd-brep",
+      "prompt_version": "drawing-brep-4",
+      "model": "local-inference-lab/Qwen3.8-Flash-Next-NVFP4",
+      "notes": "",
+      "maximum_dimension_mm": 120.0,
+      "controls": {
+        "object_type_hint": "",
+        "method": "3D print",
+        "primary_view": "front",
+        "projection_standard": "third-angle",
+        "strict_watertight": true,
+        "refine_mode": "regularize"
+      },
+      "generated_scad": false,
+      "drawing_fidelity_verified": false,
+      "attempts": [
+        {
+          "attempt": 1,
+          "schema_valid": true
+        }
+      ],
+      "construction_attempts": [
+        {
+          "attempt": 1,
+          "status": "built"
+        }
+      ]
+    }
+  },
+  "error": null,
+  "elapsed_seconds": 62.1
+}

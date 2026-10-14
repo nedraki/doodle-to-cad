@@ -1,0 +1,18 @@
+[
+  {
+    "attempt": 1,
+    "status": "failed",
+    "error": {
+      "code": "connection_failed",
+      "message": "joint1: required connection failed between bottom_flange and neck (required overlap 100 mm3): overlap 0 mm3 is too small"
+    }
+  },
+  {
+    "attempt": 2,
+    "status": "failed",
+    "error": {
+      "code": "connection_failed",
+      "message": "joint2: required connection failed between neck and top_flange (required overlap 100 mm3): overlap 0 mm3 is too small"
+    }
+  }
+]

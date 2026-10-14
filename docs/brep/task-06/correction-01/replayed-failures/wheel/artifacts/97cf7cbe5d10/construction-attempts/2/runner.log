@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sparkie/playground/doodle-to-cad/doodle_to_cad/recipe_job_worker.py", line 24, in <module>
+    main()
+  File "/home/sparkie/playground/doodle-to-cad/doodle_to_cad/recipe_job_worker.py", line 16, in main
+    result = build_recipe(out, json.loads((out / 'input.recipe.json').read_text()), on_stage=stage)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sparkie/playground/doodle-to-cad/doodle_to_cad/brep.py", line 108, in build_recipe
+    raise BuildError(error.code, error.message)
+doodle_to_cad.build_contract.BuildError: Expected Z=0 and extents within 256 mm; minimum_z_mm=-6, extents_mm=[132.0, 8.000000000000004, 132.0]

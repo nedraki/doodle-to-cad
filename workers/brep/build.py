@@ -1,6 +1,7 @@
 """One build per isolated Python 3.12 process. Never import in the web process."""
 import json
 import math
+import os
 from pathlib import Path
 import sys
 import time
@@ -8,6 +9,7 @@ from importlib.metadata import version
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 from doodle_to_cad.brep_recipe import validate_recipe
+from doodle_to_cad.build_contract import BuildError
 
 
 def build(source, output):
@@ -76,9 +78,11 @@ def build(source, output):
             if not math.isfinite(retained_volume) or retained_volume < check["min_volume_mm3"]:
                 raise ValueError("final body removed the required connection")
         except Exception as exc:
-            raise ValueError(f"{check['id']}: required connection failed: {exc}") from exc
+            raise BuildError("connection_failed", f"{check['id']}: required connection failed between {check['left']} and {check['right']} (required overlap {check['min_volume_mm3']} mm3): {exc}") from exc
         connections.append({"id": check["id"], "overlap_mm3": retained_volume, "passed": True})
-    volume = body.volume()
+    # The API defaults to 1e-3 relative integration accuracy. Request accuracy
+    # tighter than the 1e-5 export gate on both sides of the comparison.
+    volume = body.volume(relative_accuracy=1e-8)
     if not math.isfinite(volume) or volume <= 0:
         raise ValueError("Invalid solid volume")
     poly = sm.tessellate(body, chord_height_tolerance=0.05)
@@ -94,11 +98,16 @@ def build(source, output):
     # Do not repair winding: known kernel defects must fail visibly.
     if not np.isfinite(mesh.vertices).all() or not mesh.is_watertight or not mesh.is_winding_consistent or mesh.volume <= 0:
         raise ValueError("Independent mesh validation failed")
-    if len(mesh.split()) != 1 or max(mesh.extents) > 256.001 or abs(mesh.bounds[0, 2]) > 0.001:
-        raise ValueError(
-            "Expected one connected part on Z=0 within the 256 mm build cube; "
-            f"components={len(mesh.split())}, minimum_z_mm={mesh.bounds[0, 2]:.6g}, "
-            f"extents_mm={mesh.extents.tolist()}")
+    components = len(mesh.split())
+    if components != 1:
+        raise BuildError("disconnected_output", f"Expected one connected part; components={components}")
+    maximum = float(os.getenv('DOODLE_BREP_MAX_DIMENSION', '256'))
+    if not math.isfinite(maximum) or not 1 <= maximum <= 256:
+        raise ValueError('Invalid build maximum dimension')
+    if max(mesh.extents) > min(256.001, maximum + .5) or abs(mesh.bounds[0, 2]) > 0.001:
+        raise BuildError("placement_failed",
+            f"Expected Z=0 and extents within requested maximum {maximum:g} mm; "
+            f"minimum_z_mm={mesh.bounds[0, 2]:.6g}, extents_mm={mesh.extents.tolist()}")
     if abs(mesh.volume-volume)/volume > 0.02:
         raise ValueError("Mesh volume differs from solid by more than 2%")
     mesh.export(str(output / "model.stl"))
@@ -114,8 +123,8 @@ def build(source, output):
         rest = '(\n    metersPerUnit = 0.001\n    upAxis = "Z"\n)\n' + rest
     usd.write_text(header + "\n" + rest)
     imported = sm.usd.import_breps(str(usd))
-    if len(imported) != 1 or abs(imported[0].volume()-volume)/volume > 1e-5:
-        raise ValueError("USD round-trip volume check failed")
+    if len(imported) != 1 or abs(imported[0].volume(relative_accuracy=1e-8)-volume)/volume > 1e-5:
+        raise ValueError(f"USD round-trip volume check failed: original_volume_mm3={volume:.12g}; reloaded_volumes_mm3={[item.volume(relative_accuracy=1e-8) for item in imported]}")
     reloaded = trimesh.load(output / "model.stl", force="mesh")
     if not reloaded.is_watertight or not reloaded.is_winding_consistent:
         raise ValueError("Exported STL validation failed")
@@ -123,7 +132,7 @@ def build(source, output):
                    "mesh_volume_mm3": mesh.volume, "extents_mm": mesh.extents.tolist(),
                    "bounds_mm": mesh.bounds.tolist(), "watertight": True, "winding_consistent": True,
                    "euler_number": int(mesh.euler_number), "triangles": len(mesh.faces),
-                   "usd_roundtrip": True, "operations": history, "connections": connections,
+                   "usd_roundtrip": True, "volume_relative_accuracy": 1e-8, "usd_volume_mm3": imported[0].volume(relative_accuracy=1e-8), "operations": history, "connections": connections,
                    "build_seconds": round(time.monotonic()-started, 3)}
     (output / "diagnostics.json").write_text(json.dumps(diagnostics, indent=2))
 
@@ -132,5 +141,7 @@ if __name__ == "__main__":
     try:
         build(Path(sys.argv[1]), Path(sys.argv[2]))
     except Exception as exc:
+        (Path(sys.argv[2]) / "construction-error.json").write_text(json.dumps({
+            "code": getattr(exc, "code", "build_failed"), "message": str(exc)}))
         print(f"BRep build failed: {exc}", file=sys.stderr)
         sys.exit(1)

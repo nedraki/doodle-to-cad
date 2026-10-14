@@ -9,10 +9,11 @@ import httpx
 from playwright.sync_api import sync_playwright
 
 ROOT=Path(__file__).resolve().parents[1]
-OUT=ROOT/'docs/brep/task-06'
+OUT=Path(os.getenv('BREP_EVIDENCE_DIR',str(ROOT/'docs/brep/task-06')))
 BASE=os.getenv('DOODLE_TEST_URL','http://127.0.0.1:8086')
 summary=json.loads((OUT/'summary.json').read_text())
-report={}
+requested=set(filter(None,os.getenv('BREP_CASES','').split(',')))
+report=json.loads((OUT/'product-report.json').read_text()) if requested and (OUT/'product-report.json').exists() else {}
 with sync_playwright() as p:
  browser=p.chromium.launch(headless=True,executable_path=os.getenv('CHROMIUM_EXECUTABLE','/home/sparkie/.cache/ms-playwright/chromium-1243/chrome-linux-arm64/chrome'),args=['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader','--ignore-gpu-blocklist'])
  page=browser.new_page(viewport={'width':1600,'height':1200})
@@ -22,6 +23,7 @@ with sync_playwright() as p:
  page.select_option('[name=backend]','usd-brep')
  assert page.locator('#backendHelp').is_visible()
  for name,case in summary.items():
+    if requested and name not in requested:continue
     page.goto(BASE)
     target=OUT/name
     state=httpx.get(BASE+'/api/generate/'+case['id']).json()
@@ -34,7 +36,7 @@ with sync_playwright() as p:
     assert result['generation']['generated_scad'] is False and not result['success']
     assert result['build']['source_format']=='brep-recipe-v2'
     assert 'score' not in result['evaluation']
-    local=ROOT/'results/brep-direct-product'/case['id']
+    local=Path(os.getenv('DOODLE_TEST_RESULTS_DIR',str(ROOT/'results/brep-direct-product')))/case['id']
     for scad in local.rglob('*.scad'):
         assert scad.name=='preview.scad' and scad.read_text()=='import("model.stl");\n'
     page.evaluate('(r)=>render(r,null)',result)

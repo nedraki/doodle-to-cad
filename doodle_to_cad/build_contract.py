@@ -10,7 +10,7 @@ from .brep_recipe import FIELDS
 
 Backend = Literal["openscad", "usd-brep"]
 SourceFormat = Literal["openscad", "brep-recipe-v1", "brep-recipe-v2"]
-FailureCode = Literal["invalid_input", "backend_unavailable", "build_failed", "timeout", "invalid_output", "render_failed", "unsupported_construction", "invalid_recipe", "dimension_exceeded"]
+FailureCode = Literal["invalid_input", "backend_unavailable", "build_failed", "timeout", "invalid_output", "render_failed", "unsupported_construction", "invalid_recipe", "dimension_exceeded", "placement_failed", "connection_failed", "disconnected_output"]
 
 # X=width, Y=depth, Z=height; all distances are millimetres.
 CAMERAS = {"isometric": "0,0,0,55,0,35,0", "front": "0,0,0,90,0,0,0",

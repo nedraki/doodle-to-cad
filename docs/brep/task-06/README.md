@@ -1,5 +1,7 @@
 # Task 06 — Direct BRep generation
 
+See the [latest construction correction report](correction-01/README.md) for repeat tests. All four fresh builds now pass. Drawing errors and an original-wheel repair failure remain. The initial results below are retained as history.
+
 ## Scope
 
 Select **Direct BRep (experimental)** in the drawing form. The app reads one drawing sheet, interprets its features, asks the model for a version 2 recipe, and builds the recipe in the isolated worker. It does not generate or translate OpenSCAD part code.

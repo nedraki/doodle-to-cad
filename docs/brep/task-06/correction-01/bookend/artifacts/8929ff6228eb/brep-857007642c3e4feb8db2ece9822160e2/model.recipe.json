@@ -1,0 +1,290 @@
+{
+  "version": 2,
+  "units": "mm",
+  "name": "l_bracket_plate",
+  "parameters": {
+    "width": {
+      "value": 100.0,
+      "min": 50,
+      "max": 150,
+      "label": "Width",
+      "unit": "mm",
+      "description": "Overall width of the bracket (X-axis)"
+    },
+    "height": {
+      "value": 120.0,
+      "min": 60,
+      "max": 180,
+      "label": "Height",
+      "unit": "mm",
+      "description": "Overall height of the bracket (Z-axis)"
+    },
+    "depth": {
+      "value": 40.0,
+      "min": 20,
+      "max": 60,
+      "label": "Depth",
+      "unit": "mm",
+      "description": "Overall depth of the bracket (Y-axis)"
+    },
+    "thickness": {
+      "value": 10.0,
+      "min": 5,
+      "max": 20,
+      "label": "Thickness",
+      "unit": "mm",
+      "description": "Thickness of the L-bracket walls"
+    }
+  },
+  "operations": [
+    {
+      "id": "base_plate",
+      "kind": "box",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "size": [
+        "width",
+        "depth",
+        "thickness"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "back_wall",
+      "kind": "box",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "size": [
+        "width",
+        "thickness",
+        "height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "l_bracket",
+      "kind": "union",
+      "left": "base_plate",
+      "right": "back_wall",
+      "frame": "world",
+      "depends_on": [
+        "base_plate",
+        "back_wall"
+      ],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "cut_top_left",
+      "kind": "box",
+      "origin": [
+        "width*0.1",
+        "-1",
+        "height*0.7"
+      ],
+      "size": [
+        "width*0.3",
+        "thickness+2",
+        "height*0.2"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "cut_center",
+      "kind": "box",
+      "origin": [
+        "width*0.45",
+        "-1",
+        "height*0.4"
+      ],
+      "size": [
+        "width*0.1",
+        "thickness+2",
+        "height*0.3"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "cut_bottom_left",
+      "kind": "box",
+      "origin": [
+        "width*0.25",
+        "-1",
+        "height*0.1"
+      ],
+      "size": [
+        "width*0.15",
+        "thickness+2",
+        "height*0.4"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e4"
+      ]
+    },
+    {
+      "id": "cut_bottom_right",
+      "kind": "box",
+      "origin": [
+        "width*0.68",
+        "-1",
+        "height*0.1"
+      ],
+      "size": [
+        "width*0.13",
+        "thickness+2",
+        "height*0.4"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e5"
+      ]
+    },
+    {
+      "id": "step1",
+      "kind": "difference",
+      "left": "l_bracket",
+      "right": "cut_top_left",
+      "frame": "world",
+      "depends_on": [
+        "l_bracket",
+        "cut_top_left"
+      ],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "step2",
+      "kind": "difference",
+      "left": "step1",
+      "right": "cut_center",
+      "frame": "world",
+      "depends_on": [
+        "step1",
+        "cut_center"
+      ],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "step3",
+      "kind": "difference",
+      "left": "step2",
+      "right": "cut_bottom_left",
+      "frame": "world",
+      "depends_on": [
+        "step2",
+        "cut_bottom_left"
+      ],
+      "evidence": [
+        "e4"
+      ]
+    },
+    {
+      "id": "final_part",
+      "kind": "difference",
+      "left": "step3",
+      "right": "cut_bottom_right",
+      "frame": "world",
+      "depends_on": [
+        "step3",
+        "cut_bottom_right"
+      ],
+      "evidence": [
+        "e5"
+      ]
+    }
+  ],
+  "output": "final_part",
+  "frames": {
+    "world": {
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    }
+  },
+  "bodies": [
+    {
+      "id": "part",
+      "output": "final_part"
+    }
+  ],
+  "evidence": {
+    "observed": [
+      {
+        "id": "e1",
+        "text": "L-shaped profile observed in the right view (side view)."
+      },
+      {
+        "id": "e2",
+        "text": "Rectangular cutout in the upper-left quadrant of the front view."
+      },
+      {
+        "id": "e3",
+        "text": "Vertical rectangular cutout in the center of the front view."
+      },
+      {
+        "id": "e4",
+        "text": "Vertical rectangular cutout in the lower-left quadrant of the front view."
+      },
+      {
+        "id": "e5",
+        "text": "Vertical rectangular cutout in the lower-right quadrant of the front view."
+      }
+    ],
+    "inferred": [
+      {
+        "id": "e6",
+        "text": "The object is a single solid piece formed by an L-bracket."
+      }
+    ],
+    "assumptions": [
+      {
+        "id": "e7",
+        "text": "The cutouts are through-holes extending through the thickness of the back wall."
+      },
+      {
+        "id": "e8",
+        "text": "The thickness of the bracket walls is uniform and assumed to be 10mm."
+      },
+      {
+        "id": "e9",
+        "text": "The depth of the bracket is assumed to be 40mm based on the side view proportions."
+      }
+    ],
+    "unresolved": []
+  },
+  "constraints": []
+}

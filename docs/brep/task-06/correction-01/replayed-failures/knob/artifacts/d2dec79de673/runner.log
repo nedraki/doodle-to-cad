@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sparkie/playground/doodle-to-cad/doodle_to_cad/recipe_job_worker.py", line 24, in <module>
+    main()
+  File "/home/sparkie/playground/doodle-to-cad/doodle_to_cad/recipe_job_worker.py", line 16, in main
+    result = build_recipe(out, json.loads((out / 'input.recipe.json').read_text()), on_stage=stage)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sparkie/playground/doodle-to-cad/doodle_to_cad/brep.py", line 108, in build_recipe
+    raise BuildError(error.code, error.message)
+doodle_to_cad.build_contract.BuildError: joint2: required connection failed between neck and top_flange (required overlap 100 mm3): overlap 0 mm3 is too small

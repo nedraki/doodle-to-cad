@@ -166,3 +166,96 @@ def test_direct_job_publishes_native_recipe_and_provenance(tmp_path,monkeypatch)
     for scad in (tmp_path/job).rglob('*.scad'):
         assert scad.name=='preview.scad'
         assert scad.read_text()=='import("model.stl");\n'
+
+
+def test_correction_cannot_weaken_joints_or_drop_features():
+    import copy
+    recipe=json.loads(Path('benchmarks/brep-v2/wheel.json').read_text())
+    weakened=copy.deepcopy(recipe)
+    weakened['constraints'][0]['min_volume_mm3']=.001
+    with pytest.raises(ValueError,match='weaken'):
+        direct_brep.validate_correction(recipe,weakened)
+    added=copy.deepcopy(recipe)
+    added['operations'].insert(0,{'id':'extra','kind':'box','size':[1,1,1],'origin':[0,0,0],
+                                  'frame':'world','depends_on':[],'evidence':[]})
+    with pytest.raises(ValueError,match='feature IDs'):
+        direct_brep.validate_correction(recipe,added)
+    with pytest.raises(ValueError,match='no change'):
+        direct_brep.validate_correction(recipe,recipe)
+
+
+@pytest.mark.skipif(not __import__('os').getenv('DOODLE_BREP_PYTHON'),reason='Isolated worker not configured')
+@pytest.mark.parametrize('mode',['placement','size','exhausted','cancel'])
+def test_bounded_construction_correction_with_real_worker(tmp_path,monkeypatch,mode):
+    from doodle_to_cad.construction_recipe import migrate_v1
+    monkeypatch.setattr(app,'settings',replace(app.settings,results_dir=tmp_path))
+    def recipe(z,width=20):
+        return migrate_v1({'version':1,'units':'mm','parameters':{},'operations':[
+            {'id':'body','kind':'box','origin':[0,0,z],'size':[width,10,10]}],'output':'body'})
+    calls=[]
+    async def interpret(image,mime,controls,*,out):
+        (out/'feature-evidence.json').write_text('{}')
+        return {}
+    async def model(messages,out,label,**kwargs):
+        calls.append(label)
+        if label.startswith('direct-recipe'):
+            return recipe(0,200) if mode=='size' else recipe(-2)
+        payload=json.loads(messages[1]['content'])
+        assert payload['diagnostic']['code'] in {'placement_failed','dimension_exceeded'}
+        if mode=='cancel':await asyncio.sleep(60)
+        if mode=='exhausted':return recipe(-2/len(calls))
+        return recipe(0)
+    async def discover():return type('Model',(),{'selected':'fixture-model'})()
+    monkeypatch.setattr(app.pipeline,'interpret_features',interpret)
+    monkeypatch.setattr(app.pipeline,'_json_call',model)
+    monkeypatch.setattr(app.pipeline.client,'discover',discover)
+    with TestClient(app.app) as client:
+        response=client.post('/api/generate',files={'image':('drawing.png',IMAGE,'image/png')},data={'backend':'usd-brep'})
+        job=response.json()['job_id']
+        for _ in range(900):
+            state=client.get('/api/generate/'+job).json()
+            if mode=='cancel' and len(calls)>1:
+                client.post('/api/generate/'+job+'/cancel')
+            if state['status'] not in {'running','cancelling'}:break
+            time.sleep(.05)
+        out=tmp_path/job
+        history=json.loads((out/'build-history.json').read_text())
+        assert history[0]['status']=='failed'
+        assert (out/'construction-attempts/1/recipe.json').exists()
+        if mode in {'placement','size'}:
+            assert state['status']=='done',state
+            assert len(calls)==2 and history[-1]['status']=='built'
+            assert state['result']['generation']['construction_attempts']==history
+            assert state['result']['success'] is False
+        else:
+            assert state['status']==('cancelled' if mode=='cancel' else 'error'),state
+            assert not (out/'result.json').exists()
+            assert len(calls)==(2 if mode=='cancel' else 3)
+            assert len(history)==(1 if mode=='cancel' else 3)
+
+
+@pytest.mark.skipif(not __import__('os').getenv('DOODLE_BREP_PYTHON'),reason='Isolated worker not configured')
+def test_usd_comparison_requests_sufficient_volume_accuracy(tmp_path):
+    from doodle_to_cad.brep import build_brep
+    from doodle_to_cad.build_contract import BuildInput
+    # This unchanged live-generated recipe fails the 1e-5 export gate when
+    # volume() uses its default 1e-3 integration accuracy.
+    source=Path('benchmarks/brep-v2/volume-precision-wheel.json')
+    result=build_brep(BuildInput('usd-brep',source,tmp_path,render=False))
+    assert result.ok,result.log
+    d=result.backend_details
+    assert d['volume_relative_accuracy']==1e-8
+    assert abs(d['solid_volume_mm3']-d['usd_volume_mm3'])/d['solid_volume_mm3']<1e-5
+
+
+def test_numeric_correction_cannot_change_axes_or_parameter_ranges():
+    import copy
+    recipe=json.loads(Path('benchmarks/brep-v2/wheel.json').read_text())
+    changed=copy.deepcopy(recipe)
+    next(op for op in changed['operations'] if op['kind']=='cylinder')['axis']='y'
+    with pytest.raises(ValueError,match='numeric geometry'):
+        direct_brep.validate_correction(recipe,changed)
+    changed=copy.deepcopy(recipe)
+    next(iter(changed['parameters'].values()))['max']+=1
+    with pytest.raises(ValueError,match='ranges'):
+        direct_brep.validate_correction(recipe,changed)

@@ -1,0 +1,65 @@
+{
+  "run_id": "e743731b0409",
+  "params": [
+    {
+      "name": "outer_diameter",
+      "value": 120,
+      "low": 50,
+      "high": 500,
+      "step": 0.01,
+      "label": "Outer Diameter",
+      "unit": "mm",
+      "description": "Overall diameter of the wheel",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "thickness",
+      "value": 8,
+      "low": 1,
+      "high": 50,
+      "step": 0.01,
+      "label": "Thickness",
+      "unit": "mm",
+      "description": "Axial thickness of the wheel",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "rim_width",
+      "value": 6,
+      "low": 1,
+      "high": 20,
+      "step": 0.01,
+      "label": "Rim Width",
+      "unit": "mm",
+      "description": "Radial thickness of the outer rim",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "hub_diameter",
+      "value": 30,
+      "low": 10,
+      "high": 60,
+      "step": 0.01,
+      "label": "Hub Diameter",
+      "unit": "mm",
+      "description": "Diameter of the central hub",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "spoke_width",
+      "value": 6,
+      "low": 1,
+      "high": 20,
+      "step": 0.01,
+      "label": "Spoke Width",
+      "unit": "mm",
+      "description": "Width of each spoke",
+      "group": "Details",
+      "feature": null
+    }
+  ]
+}

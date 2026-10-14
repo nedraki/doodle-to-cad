@@ -1,0 +1,187 @@
+{
+  "ok": true,
+  "backend": "usd-brep",
+  "applied": {
+    "width": 102
+  },
+  "stl": "/results/8929ff6228eb/brep-678712626d034cd9aa0e4cbf7f67ea1a/model.stl",
+  "source": "/results/8929ff6228eb/brep-678712626d034cd9aa0e4cbf7f67ea1a/model.recipe.json",
+  "usd": "/results/8929ff6228eb/brep-678712626d034cd9aa0e4cbf7f67ea1a/model.usda",
+  "diagnostics": {
+    "backend": "usd-brep",
+    "version": "1.0.0",
+    "recipe_version": 2,
+    "solid_volume_mm3": 128275.2,
+    "mesh_volume_mm3": 128275.20057678223,
+    "extents_mm": [
+      102.0,
+      40.0,
+      120.0
+    ],
+    "bounds_mm": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        102.0,
+        40.0,
+        120.0
+      ]
+    ],
+    "watertight": true,
+    "winding_consistent": true,
+    "euler_number": -6,
+    "triangles": 100,
+    "usd_roundtrip": true,
+    "volume_relative_accuracy": 1e-08,
+    "usd_volume_mm3": 128275.19999999997,
+    "operations": [
+      {
+        "id": "base_plate",
+        "kind": "box",
+        "faces": 6
+      },
+      {
+        "id": "back_wall",
+        "kind": "box",
+        "faces": 6
+      },
+      {
+        "id": "l_bracket",
+        "kind": "union",
+        "faces": 8
+      },
+      {
+        "id": "cut_top_left",
+        "kind": "box",
+        "faces": 6
+      },
+      {
+        "id": "cut_center",
+        "kind": "box",
+        "faces": 6
+      },
+      {
+        "id": "cut_bottom_left",
+        "kind": "box",
+        "faces": 6
+      },
+      {
+        "id": "cut_bottom_right",
+        "kind": "box",
+        "faces": 6
+      },
+      {
+        "id": "step1",
+        "kind": "difference",
+        "faces": 12
+      },
+      {
+        "id": "step2",
+        "kind": "difference",
+        "faces": 16
+      },
+      {
+        "id": "step3",
+        "kind": "difference",
+        "faces": 20
+      },
+      {
+        "id": "final_part",
+        "kind": "difference",
+        "faces": 24
+      }
+    ],
+    "connections": [],
+    "build_seconds": 0.206
+  },
+  "views": {
+    "isometric": "/results/8929ff6228eb/brep-678712626d034cd9aa0e4cbf7f67ea1a/view-isometric.png",
+    "front": "/results/8929ff6228eb/brep-678712626d034cd9aa0e4cbf7f67ea1a/view-front.png",
+    "top": "/results/8929ff6228eb/brep-678712626d034cd9aa0e4cbf7f67ea1a/view-top.png",
+    "right": "/results/8929ff6228eb/brep-678712626d034cd9aa0e4cbf7f67ea1a/view-right.png"
+  },
+  "build": {
+    "version": 1,
+    "backend": "usd-brep",
+    "source_format": "brep-recipe-v2",
+    "ok": true,
+    "units": "mm",
+    "axes": {
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    },
+    "views": [
+      "isometric",
+      "front",
+      "top",
+      "right"
+    ],
+    "measurements": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 100,
+      "extents_mm": [
+        102.0,
+        40.0,
+        120.0
+      ],
+      "volume_mm3": 128275.201
+    },
+    "diagnostics": [],
+    "drawing_evaluated": false
+  },
+  "params": [
+    {
+      "name": "width",
+      "value": 102.0,
+      "low": 50,
+      "high": 150,
+      "step": 0.01,
+      "label": "Width",
+      "unit": "mm",
+      "description": "Overall width of the bracket (X-axis)",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "height",
+      "value": 120.0,
+      "low": 60,
+      "high": 180,
+      "step": 0.01,
+      "label": "Height",
+      "unit": "mm",
+      "description": "Overall height of the bracket (Z-axis)",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "depth",
+      "value": 40.0,
+      "low": 20,
+      "high": 60,
+      "step": 0.01,
+      "label": "Depth",
+      "unit": "mm",
+      "description": "Overall depth of the bracket (Y-axis)",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "thickness",
+      "value": 10.0,
+      "low": 5,
+      "high": 20,
+      "step": 0.01,
+      "label": "Thickness",
+      "unit": "mm",
+      "description": "Thickness of the L-bracket walls",
+      "group": "Details",
+      "feature": null
+    }
+  ]
+}

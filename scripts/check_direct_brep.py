@@ -8,7 +8,7 @@ import time
 import httpx
 
 ROOT=Path(__file__).resolve().parents[1]
-OUT=ROOT/'docs/brep/task-06'
+OUT=Path(os.getenv('BREP_EVIDENCE_DIR',str(ROOT/'docs/brep/task-06')))
 BASE=os.getenv('DOODLE_TEST_URL','http://127.0.0.1:8086')
 OUT.mkdir(parents=True,exist_ok=True)
 selection=OUT/'selection.json'
@@ -30,14 +30,14 @@ with httpx.Client(base_url=BASE,timeout=60) as client:
     response=client.post('/api/generate',files={'image':('drawing.png',path.read_bytes(),'image/png')},data={'backend':'usd-brep','notes':'','dimension':'120'})
     response.raise_for_status();job=response.json()['job_id']
     print(name,job,'started',flush=True)
-    deadline=time.monotonic()+1000
+    deadline=time.monotonic()+2400
     while time.monotonic()<deadline:
         status=client.get('/api/generate/'+job).json()
         if status['status'] not in ('running','cancelling'):break
         time.sleep(2)
     else:raise TimeoutError(job)
     (target/'job.json').write_text(json.dumps(status,indent=2))
-    source=ROOT/'results/brep-direct-product'/job
+    source=Path(os.getenv('DOODLE_TEST_RESULTS_DIR',str(ROOT/'results/brep-direct-product')))/job
     # Complete audit bundle: input, interpretation, prompts, recipe, logs, native outputs.
     if source.exists():shutil.copytree(source,target/'artifacts'/job,dirs_exist_ok=True)
     summary[name]={'id':job,'source':str(path.relative_to(ROOT)),'status':status['status'],'error':status.get('error')}

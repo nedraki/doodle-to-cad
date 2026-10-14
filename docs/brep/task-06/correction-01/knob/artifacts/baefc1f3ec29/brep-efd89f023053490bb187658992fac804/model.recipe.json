@@ -1,0 +1,149 @@
+{
+  "version": 2,
+  "units": "mm",
+  "name": "stepped_bushing",
+  "parameters": {
+    "total_height": {
+      "value": 120.0,
+      "min": 50,
+      "max": 200,
+      "description": "Total height of the component"
+    },
+    "flange_width": {
+      "value": 100.0,
+      "min": 40,
+      "max": 200,
+      "description": "Width of the top and bottom flanges"
+    },
+    "neck_width": {
+      "value": 40.0,
+      "min": 10,
+      "max": 100,
+      "description": "Width of the central neck"
+    },
+    "flange_thickness": {
+      "value": 20.0,
+      "min": 5,
+      "max": 50,
+      "description": "Thickness of the top and bottom flanges"
+    }
+  },
+  "operations": [
+    {
+      "id": "bottom_flange",
+      "kind": "box",
+      "origin": [
+        "-flange_width/2",
+        "-flange_width/2",
+        0
+      ],
+      "size": [
+        "flange_width",
+        "flange_width",
+        "flange_thickness"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "top_flange",
+      "kind": "box",
+      "origin": [
+        "-flange_width/2",
+        "-flange_width/2",
+        "total_height - flange_thickness"
+      ],
+      "size": [
+        "flange_width",
+        "flange_width",
+        "flange_thickness"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "central_neck",
+      "kind": "box",
+      "origin": [
+        "-neck_width/2",
+        "-neck_width/2",
+        "flange_thickness"
+      ],
+      "size": [
+        "neck_width",
+        "neck_width",
+        "total_height - 2 * flange_thickness"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "part",
+      "kind": "union",
+      "left": "bottom_flange",
+      "right": "central_neck",
+      "frame": "world",
+      "depends_on": [
+        "bottom_flange",
+        "central_neck"
+      ],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "final_part",
+      "kind": "union",
+      "left": "part",
+      "right": "top_flange",
+      "frame": "world",
+      "depends_on": [
+        "part",
+        "top_flange"
+      ],
+      "evidence": [
+        "e1"
+      ]
+    }
+  ],
+  "output": "final_part",
+  "frames": {
+    "world": {
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    }
+  },
+  "bodies": [
+    {
+      "id": "part",
+      "output": "final_part"
+    }
+  ],
+  "evidence": {
+    "observed": [],
+    "inferred": [],
+    "assumptions": [
+      {
+        "id": "e1",
+        "text": "Assumed square cross-section for all sections (flanges and neck) based on the identical profiles in the front and right views. Assumed solid construction."
+      }
+    ],
+    "unresolved": []
+  },
+  "constraints": []
+}
