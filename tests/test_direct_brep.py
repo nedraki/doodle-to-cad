@@ -259,3 +259,20 @@ def test_numeric_correction_cannot_change_axes_or_parameter_ranges():
     next(iter(changed['parameters'].values()))['max']+=1
     with pytest.raises(ValueError,match='ranges'):
         direct_brep.validate_correction(recipe,changed)
+
+
+@pytest.mark.parametrize('change',['evidence','body_identity','name'])
+def test_numeric_correction_preserves_recipe_context(change):
+    import copy
+    recipe=json.loads(Path('benchmarks/brep-v2/wheel.json').read_text())
+    changed=copy.deepcopy(recipe)
+    # A real numeric correction does not authorize rewriting its supporting evidence.
+    next(op for op in changed['operations'] if op['kind']=='cylinder')['height']=9
+    if change=='evidence':
+        changed['evidence']['assumptions'].append({'id':'new_claim','text':'New unsupported claim'})
+    elif change=='body_identity':
+        changed['bodies'][0]['id']='replacement_part'
+    else:
+        changed['name']='replacement name'
+    with pytest.raises(ValueError,match='metadata, body identity and evidence'):
+        direct_brep.validate_correction(recipe,changed)

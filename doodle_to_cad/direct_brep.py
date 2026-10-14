@@ -78,13 +78,17 @@ def validate_correction(before, after):
     for name, parameter in before['parameters'].items():
         if {k:v for k,v in parameter.items() if k != 'value'} != {k:v for k,v in after['parameters'][name].items() if k != 'value'}:
             raise ValueError('Keep parameter ranges and metadata unchanged')
+    mutable = {'operations', 'parameters'}
+    if {k:v for k,v in before.items() if k not in mutable} != {k:v for k,v in after.items() if k not in mutable}:
+        raise ValueError('Keep recipe metadata, body identity and evidence unchanged')
     if before == after:
         raise ValueError('Construction correction made no change')
 
 
-CORRECTION_PROMPT_VERSION = 'construction-numeric-fields-2'
+CORRECTION_PROMPT_VERSION = 'construction-numeric-fields-3'
 CORRECTION_PROMPT = """Correct a measured BRep construction failure. Return the complete version 2 recipe as JSON only.
 Preserve every feature ID, operation kind, dependency, cylinder axis, rotation angle, output and connection constraint exactly.
+Keep recipe metadata, body declarations, frames and evidence text unchanged.
 Change only operation origin, size, radius, height or bend_radius fields and existing parameter values within their ranges. Keep every other operation field unchanged.
 A cylinder uses height, not size. A box uses size, not height. Use quoted arithmetic expressions for dimensions. Never use null placeholders.
 For negative minimum Z, raise primitive Z coordinates AND rotation pivot Z coordinates consistently. A cylinder along X or Y extends one radius below its centre in Z. Changing a diameter alone does not put the part on Z=0.
