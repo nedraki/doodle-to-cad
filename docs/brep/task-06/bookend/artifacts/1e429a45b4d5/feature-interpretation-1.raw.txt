@@ -1,0 +1,140 @@
+```json
+{
+  "version": 1,
+  "object_hypothesis": "L-shaped bracket or mounting plate with internal cutouts",
+  "features": [
+    {
+      "id": "body_plate",
+      "type": "body",
+      "description": "Main planar body with rectangular profile in front view and L-shaped profile in right view",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_0"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_10"
+        }
+      ],
+      "reason": "View 1 shows a large rectangular boundary; View 2 shows an L-shaped boundary consistent with a bent plate or bracket."
+    },
+    {
+      "id": "opening_top_left",
+      "type": "opening",
+      "description": "Rectangular cutout located in the upper-left quadrant of the front face",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_8"
+        }
+      ],
+      "reason": "Closed internal contour detected in the upper-left region of the front view."
+    },
+    {
+      "id": "opening_center",
+      "type": "opening",
+      "description": "Vertical rectangular cutout located in the central region",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_6"
+        }
+      ],
+      "reason": "Closed internal contour detected in the center of the front view."
+    },
+    {
+      "id": "opening_bottom_left",
+      "type": "opening",
+      "description": "Vertical rectangular cutout located in the lower-left region",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_4"
+        }
+      ],
+      "reason": "Closed internal contour detected in the lower-left region of the front view."
+    },
+    {
+      "id": "opening_bottom_right",
+      "type": "opening",
+      "description": "Vertical rectangular cutout located in the lower-right region",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_2"
+        }
+      ],
+      "reason": "Closed internal contour detected in the lower-right region of the front view."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "rel_openings_in_body",
+      "type": "connected",
+      "features": [
+        "body_plate",
+        "opening_top_left",
+        "opening_center",
+        "opening_bottom_left",
+        "opening_bottom_right"
+      ],
+      "description": "Internal openings are contained within the boundaries of the main body",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_0"
+        },
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_8"
+        },
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_6"
+        },
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_4"
+        },
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_2"
+        }
+      ],
+      "reason": "The internal contours are spatially located inside the outer contour in the front view."
+    },
+    {
+      "id": "rel_l_shape",
+      "type": "other",
+      "features": [
+        "body_plate"
+      ],
+      "description": "The body exhibits an L-shaped cross-section",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_10"
+        }
+      ],
+      "reason": "The right view clearly depicts an L-shaped profile, indicating a bend or flange relative to the main face."
+    }
+  ],
+  "assumptions": [
+    "The object is a single continuous piece (e.g., sheet metal or machined block) rather than two separate parts placed side-by-side.",
+    "The internal contours in the front view represent through-holes or pockets, as no depth information is provided."
+  ],
+  "unresolved": [
+    "Depth of the internal openings (through-holes vs. blind pockets).",
+    "Exact thickness of the flange section in the L-shape (View 2 shows a single outline, implying uniform thickness or a specific bend geometry not fully detailed)."
+  ],
+  "conflicts": []
+}
+```

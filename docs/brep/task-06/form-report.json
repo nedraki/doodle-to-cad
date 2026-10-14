@@ -1,0 +1,35 @@
+{
+  "submitted_through_product": true,
+  "default": "openscad",
+  "selected": "usd-brep",
+  "state": {
+    "job_id": "33a7e68e6179",
+    "status": "cancelled",
+    "stage": "cancelled",
+    "result": null,
+    "error": {
+      "message": "Recipe job cancelled",
+      "code": "cancelled"
+    },
+    "elapsed_seconds": 2.0
+  },
+  "generation": {
+    "path": "drawing-to-brep",
+    "backend": "usd-brep",
+    "prompt_version": "drawing-brep-3",
+    "model": "local-inference-lab/Qwen3.8-Flash-Next-NVFP4",
+    "notes": "",
+    "maximum_dimension_mm": 120.0,
+    "controls": {
+      "object_type_hint": "",
+      "method": "3D print",
+      "primary_view": "front",
+      "projection_standard": "third-angle",
+      "strict_watertight": true,
+      "refine_mode": "regularize"
+    },
+    "generated_scad": false,
+    "drawing_fidelity_verified": false,
+    "attempts": []
+  }
+}

@@ -1,0 +1,128 @@
+{
+  "version": 1,
+  "object_hypothesis": "Spoked wheel or disk assembly",
+  "features": [
+    {
+      "id": "outer_rim",
+      "type": "rim",
+      "description": "Outer circular boundary of the wheel",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "High circularity (0.898) and large area in the front view define the primary outer boundary."
+    },
+    {
+      "id": "central_hub",
+      "type": "hub",
+      "description": "Central circular region",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "view"
+        }
+      ],
+      "reason": "Visible in the center of the front view; OpenCV did not isolate a specific contour ID for the hub, but the geometry is clearly present in the view."
+    },
+    {
+      "id": "spoke_group",
+      "type": "spoke",
+      "description": "Radial structural members connecting hub to rim",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "view"
+        }
+      ],
+      "reason": "Visible as linear segments in the front view. OpenCV did not isolate individual spoke contours, but the view clearly shows the spoke pattern."
+    },
+    {
+      "id": "wheel_thickness",
+      "type": "body",
+      "description": "Axial depth of the wheel",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_14"
+        }
+      ],
+      "reason": "The right view shows a rectangular profile representing the thickness of the object."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "spoke_connectivity",
+      "type": "connected",
+      "features": [
+        "spoke_group",
+        "central_hub",
+        "outer_rim"
+      ],
+      "description": "Spokes connect the central hub to the outer rim",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "view"
+        }
+      ],
+      "reason": "In the front view, spokes visually bridge the gap between the hub and rim, implying a structural connection."
+    },
+    {
+      "id": "spoke_symmetry",
+      "type": "symmetry",
+      "features": [
+        "spoke_group"
+      ],
+      "description": "Spokes are arranged with rotational symmetry",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "view"
+        }
+      ],
+      "reason": "The visual pattern in the front view suggests equal angular spacing of the spokes."
+    },
+    {
+      "id": "profile_thickness",
+      "type": "shared_dimension",
+      "features": [
+        "outer_rim",
+        "wheel_thickness"
+      ],
+      "description": "The right view profile corresponds to the thickness of the front view object",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        },
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_14"
+        }
+      ],
+      "reason": "The vertical span of the right view aligns with the vertical span of the front view, indicating they represent the same object's thickness."
+    }
+  ],
+  "assumptions": [
+    "View 4 represents the primary face of the object.",
+    "View 5 represents the side profile of the object.",
+    "The object is a single rigid body."
+  ],
+  "unresolved": [
+    "Exact number of spokes (OpenCV did not isolate individual spoke contours).",
+    "Internal geometry of the hub (solid vs hollow).",
+    "Exact thickness value (no scale provided in measured regions)."
+  ],
+  "conflicts": [
+    "None."
+  ]
+}

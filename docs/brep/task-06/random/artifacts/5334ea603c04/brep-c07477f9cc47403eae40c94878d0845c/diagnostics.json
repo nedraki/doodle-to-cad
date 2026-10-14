@@ -1,0 +1,98 @@
+{
+  "backend": "usd-brep",
+  "version": "1.0.0",
+  "recipe_version": 2,
+  "solid_volume_mm3": 69873.60621595453,
+  "mesh_volume_mm3": 69878.16322649097,
+  "extents_mm": [
+    10.0,
+    61.20000076293945,
+    120.0
+  ],
+  "bounds_mm": [
+    [
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      10.0,
+      61.20000076293945,
+      120.0
+    ]
+  ],
+  "watertight": true,
+  "winding_consistent": true,
+  "euler_number": -8,
+  "triangles": 240,
+  "usd_roundtrip": true,
+  "operations": [
+    {
+      "id": "base",
+      "kind": "box",
+      "faces": 6
+    },
+    {
+      "id": "hole",
+      "kind": "cylinder",
+      "faces": 3
+    },
+    {
+      "id": "cut_hole",
+      "kind": "difference",
+      "faces": 8
+    },
+    {
+      "id": "slot1",
+      "kind": "box",
+      "faces": 6
+    },
+    {
+      "id": "cut1",
+      "kind": "difference",
+      "faces": 12
+    },
+    {
+      "id": "slot2",
+      "kind": "box",
+      "faces": 6
+    },
+    {
+      "id": "cut2",
+      "kind": "difference",
+      "faces": 16
+    },
+    {
+      "id": "slot3",
+      "kind": "box",
+      "faces": 6
+    },
+    {
+      "id": "cut3",
+      "kind": "difference",
+      "faces": 20
+    },
+    {
+      "id": "slot4",
+      "kind": "box",
+      "faces": 6
+    },
+    {
+      "id": "cut4",
+      "kind": "difference",
+      "faces": 24
+    },
+    {
+      "id": "slot5",
+      "kind": "box",
+      "faces": 6
+    },
+    {
+      "id": "part",
+      "kind": "difference",
+      "faces": 28
+    }
+  ],
+  "connections": [],
+  "build_seconds": 0.218
+}

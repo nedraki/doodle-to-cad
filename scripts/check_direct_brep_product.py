@@ -1,6 +1,7 @@
 """Product checks for saved direct BRep runs; no fabricated geometry or screenshots."""
 import json
 import os
+import re
 from pathlib import Path
 import shutil
 
@@ -21,6 +22,7 @@ with sync_playwright() as p:
  page.select_option('[name=backend]','usd-brep')
  assert page.locator('#backendHelp').is_visible()
  for name,case in summary.items():
+    page.goto(BASE)
     target=OUT/name
     state=httpx.get(BASE+'/api/generate/'+case['id']).json()
     if state['status']!='done':
@@ -44,7 +46,11 @@ with sync_playwright() as p:
     for key in ('stl','usd','source','evidence','generation'):
         response=httpx.get(BASE+result['files'][key]);response.raise_for_status();assert response.content
     params=httpx.get(BASE+'/api/results/'+case['id']+'/params').json()['params']
-    candidates=[v for v in params if v['low']<v['value']<v['high'] and v['unit']!='count']
+    recipe=httpx.get(BASE+result['files']['source']).json()
+    operation_text=json.dumps(recipe['operations'])
+    used={v['name'] for v in params if re.search(r'\b'+re.escape(v['name'])+r'\b',operation_text)}
+    unused=[v['name'] for v in params if v['name'] not in used]
+    candidates=[v for v in params if v['name'] in used and v['low']<v['value']<v['high'] and v['unit']!='count']
     assert candidates,'Expected an editable dimension'
     param=candidates[0]
     value=round(min(param['high'],param['value']*1.02),2)
@@ -55,6 +61,7 @@ with sync_playwright() as p:
     edited=pending.value.json()
     (target/'edit.json').write_text(json.dumps(edited,indent=2))
     if edited.get('ok'):
+        assert edited['build']['measurements'] != result['build']['measurements'], 'Parameter edit did not change measured geometry'
         page.wait_for_function('(url)=>document.querySelector("#stl").getAttribute("href")===url',arg=edited['stl'])
         for key,selector in [('stl','#stl'),('source','#scad'),('usd','#usd')]:
             assert page.locator(selector).get_attribute('href')==edited[key]
@@ -71,7 +78,7 @@ with sync_playwright() as p:
     # Include edited revisions in the archived native outputs.
     shutil.copytree(local,target/'artifacts'/case['id'],dirs_exist_ok=True)
     report[name]={'status':'done','downloaded':['stl','usd','source','evidence','generation'],'reloaded_original':True,
-                  'parameter':param['name'],'value':value,'edit_ok':edited.get('ok',False),
+                  'parameter':param['name'],'value':value,'edit_ok':edited.get('ok',False),'unused_parameters':unused,
                   'measurements':result['build']['measurements']}
  assert not errors,errors
  browser.close()

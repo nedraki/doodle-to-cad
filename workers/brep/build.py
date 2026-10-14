@@ -95,7 +95,10 @@ def build(source, output):
     if not np.isfinite(mesh.vertices).all() or not mesh.is_watertight or not mesh.is_winding_consistent or mesh.volume <= 0:
         raise ValueError("Independent mesh validation failed")
     if len(mesh.split()) != 1 or max(mesh.extents) > 256.001 or abs(mesh.bounds[0, 2]) > 0.001:
-        raise ValueError("Expected one connected part on Z=0 within the 256 mm build cube")
+        raise ValueError(
+            "Expected one connected part on Z=0 within the 256 mm build cube; "
+            f"components={len(mesh.split())}, minimum_z_mm={mesh.bounds[0, 2]:.6g}, "
+            f"extents_mm={mesh.extents.tolist()}")
     if abs(mesh.volume-volume)/volume > 0.02:
         raise ValueError("Mesh volume differs from solid by more than 2%")
     mesh.export(str(output / "model.stl"))

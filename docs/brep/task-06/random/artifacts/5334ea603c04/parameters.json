@@ -1,0 +1,101 @@
+{
+  "run_id": "5334ea603c04",
+  "params": [
+    {
+      "name": "width",
+      "value": 36,
+      "low": 10,
+      "high": 100,
+      "step": 0.01,
+      "label": "Width",
+      "unit": "mm",
+      "description": "Width of the bracket (X)",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "depth",
+      "value": 60,
+      "low": 10,
+      "high": 200,
+      "step": 0.01,
+      "label": "Depth",
+      "unit": "mm",
+      "description": "Depth of the bracket (Y)",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "height",
+      "value": 120,
+      "low": 10,
+      "high": 300,
+      "step": 0.01,
+      "label": "Height",
+      "unit": "mm",
+      "description": "Height of the bracket (Z)",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "thickness",
+      "value": 10,
+      "low": 1,
+      "high": 50,
+      "step": 0.01,
+      "label": "Thickness",
+      "unit": "mm",
+      "description": "Thickness of the bracket (X)",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "hole_diameter",
+      "value": 12,
+      "low": 1,
+      "high": 50,
+      "step": 0.01,
+      "label": "Hole Diameter",
+      "unit": "mm",
+      "description": "Diameter of the central hole",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "slot_width",
+      "value": 6,
+      "low": 1,
+      "high": 20,
+      "step": 0.01,
+      "label": "Slot Width",
+      "unit": "mm",
+      "description": "Width of the slots (Y)",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "slot_height",
+      "value": 10,
+      "low": 1,
+      "high": 50,
+      "step": 0.01,
+      "label": "Slot Height",
+      "unit": "mm",
+      "description": "Height of the slots (Z)",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "slot_pitch",
+      "value": 20,
+      "low": 1,
+      "high": 100,
+      "step": 0.01,
+      "label": "Slot Pitch",
+      "unit": "mm",
+      "description": "Vertical pitch between slots",
+      "group": "Details",
+      "feature": null
+    }
+  ]
+}

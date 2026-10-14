@@ -1,0 +1,71 @@
+{
+  "wheel": {
+    "status": "error",
+    "error": {
+      "message": "BRep build failed: Expected one connected part on Z=0 within the 256 mm build cube\n",
+      "code": "build_failed"
+    }
+  },
+  "bookend": {
+    "status": "done",
+    "downloaded": [
+      "stl",
+      "usd",
+      "source",
+      "evidence",
+      "generation"
+    ],
+    "reloaded_original": true,
+    "parameter": "width",
+    "value": 102.0,
+    "edit_ok": true,
+    "unused_parameters": [],
+    "measurements": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 96,
+      "extents_mm": [
+        100.0,
+        30.0,
+        120.0
+      ],
+      "volume_mm3": 63750.0
+    }
+  },
+  "knob": {
+    "status": "error",
+    "error": {
+      "message": "BRep build failed: joint1: required connection failed: overlap 0 mm3 is too small\n",
+      "code": "build_failed"
+    }
+  },
+  "random": {
+    "status": "done",
+    "downloaded": [
+      "stl",
+      "usd",
+      "source",
+      "evidence",
+      "generation"
+    ],
+    "reloaded_original": true,
+    "parameter": "depth",
+    "value": 61.2,
+    "edit_ok": true,
+    "unused_parameters": [
+      "width",
+      "slot_pitch"
+    ],
+    "measurements": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 240,
+      "extents_mm": [
+        10.0,
+        60.0,
+        120.0
+      ],
+      "volume_mm3": 68438.162
+    }
+  }
+}

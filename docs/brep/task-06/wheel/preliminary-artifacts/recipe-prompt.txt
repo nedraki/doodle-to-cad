@@ -1,0 +1,47 @@
+Construct ONE editable BRep recipe directly from the drawing, measured evidence and interpretation. No OpenSCAD source is supplied or permitted.
+Return JSON only, never Python. Preserve positions, holes, dimensions and canonical
+X=width, Y=depth, Z=height in mm, with lowest Z=0. Do not invent details.
+This is an experimental translation: if unsupported, return {"unsupported":"reason"}.
+Schema: {"version":1,"units":"mm","name":"part","parameters":{
+"width":{"value":60,"min":30,"max":100,"label":"Width","unit":"mm","group":"Body"}},
+"operations":[{"id":"body","kind":"box","origin":[0,0,0],"size":["width",40,5]}],"output":"body"}.
+Dimensions are finite numbers or short arithmetic strings using parameter names,
++ - * / and parentheses only. Each parameter needs numeric value, min, max;
+optional label, unit, description, group. Expose individual hole widths, heights,
+positions, wall thicknesses and existing fillet radii with useful bounded ranges.
+Operations in dependency order, exactly these fields:
+box: id,kind,origin (3 coordinates),size (3 positive dimensions).
+cylinder: id,kind,origin (base centre),radius,height,axis (x/y/z).
+union/difference: id,kind,left,right (earlier operation IDs).
+fillet: id,kind,body,radius,selector (all/parallel_x/parallel_y/parallel_z).
+chamfer: id,kind,body,radius (all edges; radius is width across chamfer).
+arc_pipe: id,kind,origin (arc centre),bend_radius,radius,angle (0<angle<=270).
+arc_pipe is a solid circular profile swept along an XY arc from +X anticlockwise.
+Use booleans for pockets/enclosures. Cutters must cross the owning wall.
+Fillet selectors are geometric and are recomputed on each rebuild. No edge indices.
+Maximum 64 parameters, 128 operations; output names the final operation.
+ Unsupported geometry must be reported.
+
+Use VERSION 2, not the version 1 example above. Add these required fields:
+frames: {"world":{"origin":[0,0,0],"x":"width","y":"depth","z":"height"}}.
+bodies: [{"id":"part","output":"FINAL_OPERATION_ID"}].
+evidence: {"observed":[{"id":"e1","text":"drawing observation"}],"inferred":[],"assumptions":[],"unresolved":[]}.
+Each evidence entry has only id and text. IDs must be unique identifiers.
+Every operation also needs frame:"world", depends_on:[earlier body IDs used by this operation], evidence:[evidence IDs].
+constraints: [{"id":"joint1","kind":"connected","left":"feature1","right":"feature2","min_volume_mm3":0.01}].
+Add connection constraints for intended material joints, not mere containment or visual alignment.
+Use positive volume overlaps for joints. Tangent contact alone is insufficient.
+The whole sheet depicts one object. Front is XZ; depth is Y. All geometry must have lowest Z=0.
+The supplied maximum dimension controls scale. Preserve measured proportions and unequal feature sizes.
+For missing depth or dimensions choose explicit conservative assumptions and expose parameters.
+Do not present assumptions as observations. Do not silently discard unresolved drawing details.
+If uncertainty prevents a supported construction, return {"unsupported":"specific reason"}.
+Additional supported operation:
+rotate: id,kind,body (earlier operation),origin (pivot point),axis (x/y/z),angle (degrees, 0<angle<=360),frame,depends_on,evidence.
+Rotation uses the right-hand rule about a world axis through the pivot. It copies the input body.
+Boxes are axis-aligned when created; use rotate for diagonal features such as wheel spokes.
+For radial patterns, rotate a seed spoke about the hub centre. Union the rotated spokes with the hub and rim.
+Lofts, arbitrary profiles and arbitrary sweeps are NOT supported.
+Do not substitute a different feature count or orientation to fit the supported operations.
+Evidence describes the input, not proof of drawing fidelity. The interpretation may contain mistakes; check the original image.
+Return only a version 2 recipe or the unsupported object.

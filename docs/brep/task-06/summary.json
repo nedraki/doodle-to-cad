@@ -1,0 +1,32 @@
+{
+  "wheel": {
+    "id": "b84fcad7db3f",
+    "source": "benchmarks/brep-baseline/wheel/drawing.png",
+    "status": "error",
+    "error": {
+      "message": "BRep build failed: Expected one connected part on Z=0 within the 256 mm build cube\n",
+      "code": "build_failed"
+    }
+  },
+  "bookend": {
+    "id": "1e429a45b4d5",
+    "source": "benchmarks/cases/001_l_bookend_multiview/source/drawing.png",
+    "status": "done",
+    "error": null
+  },
+  "knob": {
+    "id": "4c52461e6c88",
+    "source": "benchmarks/cases/006_stepped_knob/source/drawing.png",
+    "status": "error",
+    "error": {
+      "message": "BRep build failed: joint1: required connection failed: overlap 0 mm3 is too small\n",
+      "code": "build_failed"
+    }
+  },
+  "random": {
+    "id": "5334ea603c04",
+    "source": "benchmarks/cases/104_cable_holder/source/drawing.png",
+    "status": "done",
+    "error": null
+  }
+}
