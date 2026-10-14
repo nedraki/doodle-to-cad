@@ -1,0 +1,155 @@
+```json
+{
+  "version": 1,
+  "object_hypothesis": "L-shaped bracket with a vertical face containing multiple rectangular cutouts",
+  "features": [
+    {
+      "id": "body_front",
+      "type": "body",
+      "description": "Rectangular outer boundary of the front view",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_0"
+        }
+      ],
+      "reason": "Closed polygon defining the extent of the object in the front view."
+    },
+    {
+      "id": "body_side",
+      "type": "body",
+      "description": "L-shaped outer boundary of the right view",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_10"
+        }
+      ],
+      "reason": "Closed polygon defining the extent of the object in the right view."
+    },
+    {
+      "id": "opening_top",
+      "type": "opening",
+      "description": "Rectangular cutout located in the upper-left quadrant of the front face",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_8"
+        }
+      ],
+      "reason": "Internal closed loop in the front view."
+    },
+    {
+      "id": "opening_center",
+      "type": "opening",
+      "description": "Vertical rectangular cutout located in the center of the front face",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_6"
+        }
+      ],
+      "reason": "Internal closed loop in the front view."
+    },
+    {
+      "id": "opening_left",
+      "type": "opening",
+      "description": "Vertical rectangular cutout located in the lower-left quadrant of the front face",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_4"
+        }
+      ],
+      "reason": "Internal closed loop in the front view."
+    },
+    {
+      "id": "opening_right",
+      "type": "opening",
+      "description": "Vertical rectangular cutout located in the lower-right quadrant of the front face",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_2"
+        }
+      ],
+      "reason": "Internal closed loop in the front view."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "rel_openings_in_body",
+      "type": "connected",
+      "features": [
+        "opening_top",
+        "opening_center",
+        "opening_left",
+        "opening_right",
+        "body_front"
+      ],
+      "description": "The four openings are contained within the front body boundary",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_0"
+        },
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_8"
+        },
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_6"
+        },
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_4"
+        },
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_2"
+        }
+      ],
+      "reason": "Geometric containment of internal contours within the outer contour."
+    },
+    {
+      "id": "rel_views_aligned",
+      "type": "other",
+      "features": [
+        "body_front",
+        "body_side"
+      ],
+      "description": "Front and Right views share vertical alignment (Z-axis)",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_0"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_10"
+        }
+      ],
+      "reason": "Standard orthographic projection alignment implies shared height."
+    }
+  ],
+  "assumptions": [
+    "The object is a single solid piece.",
+    "The internal contours in the front view represent through-holes or pockets.",
+    "The views are aligned orthographically."
+  ],
+  "unresolved": [
+    "Depth of the openings (through vs. blind).",
+    "Thickness of the horizontal flange in the side view."
+  ],
+  "conflicts": []
+}
+```

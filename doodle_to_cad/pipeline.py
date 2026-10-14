@@ -96,6 +96,43 @@ class Pipeline:
         self.settings, self.client = settings, client
         self._structured_thinking_healthy = True
 
+    async def interpret_features(self, image: bytes, mime: str, controls=None):
+        """Opt-in evidence pass. Never changes the default generation prompt."""
+        from .feature_evidence import PROMPT, region_catalog, validate_interpretation, shared_axis_evidence, view_assignment_evidence
+        controls = controls or {}
+        run_id = uuid.uuid4().hex[:12]
+        out = self.settings.results_dir / run_id
+        out.mkdir(parents=True)
+        input_name = "input.png" if mime == "image/png" else ("input.jpg" if mime == "image/jpeg" else "input.webp")
+        (out / input_name).write_bytes(image)
+        evidence, overlay = await asyncio.to_thread(analyze_image, image)
+        assignment_input = view_assignment_evidence(evidence)
+        assigned = assign_view_groups(assignment_input, controls.get("primary_view", "front"), controls.get("projection_standard", "third-angle"))
+        evidence = label_view_geometry(evidence, assigned)
+        catalog = region_catalog(evidence)
+        (out / "geometry-overlay.png").write_bytes(overlay)
+        (out / "geometry.json").write_text(json.dumps(evidence, indent=2))
+        content = [{"type":"text","text": "No descriptive notes supplied. Measured region catalog: " + json.dumps(catalog)},
+                   {"type":"image_url","image_url":{"url": self.client.image_url(image,mime)}}]
+        messages = [{"role":"system","content":PROMPT},{"role":"user","content":content}]
+        for attempt in range(2):
+            raw = await self._json_call(messages, out, f"feature-interpretation-{attempt+1}", temperature=0)
+            try:
+                interpretation = validate_interpretation(raw, catalog)
+                break
+            except ValueError as exc:
+                if attempt: raise
+                messages += [{"role":"assistant","content":json.dumps(raw)},
+                             {"role":"user","content":"Correct the schema or references only: " + str(exc)}]
+        result = {"id":run_id, "interpretation":interpretation, "regions":catalog,
+                  "shared_axis_evidence":shared_axis_evidence(catalog),
+                  "view_assignment_review":assignment_input["interpretation_view_filter"],
+                  "controls":controls, "notes":"", "default_generation_changed":False,
+                  "files":{"input":f"/results/{run_id}/{input_name}", "overlay":f"/results/{run_id}/geometry-overlay.png",
+                           "interpretation":f"/results/{run_id}/feature-evidence.json"}}
+        (out / "feature-evidence.json").write_text(json.dumps(result, indent=2))
+        return result
+
     async def generate(self, image: bytes, mime: str, notes: str, dimension: str,
                        additional_views: list[tuple[str, bytes, str]] | None = None,
                        controls: dict[str, Any] | None = None,

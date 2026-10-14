@@ -1,0 +1,133 @@
+{
+  "id": "7754f1360115",
+  "interpretation": {
+    "version": 1,
+    "object_hypothesis": "Rectangular planar object or face",
+    "features": [
+      {
+        "id": "rect_face",
+        "type": "body",
+        "description": "A single rectangular outline defining the extent of the object in the front view.",
+        "status": "observed",
+        "evidence": [
+          {
+            "view_id": "view_1",
+            "region_id": "profile_contour_0"
+          }
+        ],
+        "reason": "The image displays a closed rectangular loop with four vertices and straight edges, identified as the primary outer contour."
+      }
+    ],
+    "relationships": [],
+    "assumptions": [
+      "The object is assumed to be a solid block or a flat plate based on the single visible outline.",
+      "The view is assumed to be an orthographic projection of a planar face."
+    ],
+    "unresolved": [
+      "Depth (Y-axis dimension) is unknown.",
+      "Internal structure (hollow vs solid) is unknown.",
+      "Surface texture or material is unknown."
+    ],
+    "conflicts": [],
+    "review": {
+      "reference_integrity_checked": true,
+      "drawing_fidelity_verified": false,
+      "policy_warnings": [],
+      "executable": false
+    }
+  },
+  "regions": [
+    {
+      "view_id": "view_1",
+      "direction": "front",
+      "sheet_bbox_normalized": [
+        0.1329,
+        0.188,
+        0.74,
+        0.63
+      ],
+      "cad_mapping": {
+        "plane": "XZ",
+        "view_axis": "Y",
+        "u_maps_to": "+X",
+        "v_maps_to": "-Z"
+      },
+      "view_assignment": "spatial heuristic",
+      "region_id": "view",
+      "kind": "view",
+      "bbox_view_normalized": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "measured_span_pixels": {
+        "horizontal_axis_u": 518,
+        "vertical_axis_v": 315
+      }
+    },
+    {
+      "view_id": "view_1",
+      "direction": "front",
+      "sheet_bbox_normalized": [
+        0.1329,
+        0.188,
+        0.74,
+        0.63
+      ],
+      "cad_mapping": {
+        "plane": "XZ",
+        "view_axis": "Y",
+        "u_maps_to": "+X",
+        "v_maps_to": "-Z"
+      },
+      "view_assignment": "spatial heuristic",
+      "region_id": "profile_contour_0",
+      "kind": "outer",
+      "profile_id": "contour_0",
+      "bbox_view_normalized": [
+        0.0096,
+        0.0127,
+        0.9788,
+        0.9746
+      ],
+      "center_view_normalized": [
+        0.4989,
+        0.5
+      ],
+      "polygon_view_normalized": [
+        [
+          0.0096,
+          0.019
+        ],
+        [
+          0.0135,
+          0.9841
+        ],
+        [
+          0.9865,
+          0.9778
+        ],
+        [
+          0.9826,
+          0.0127
+        ]
+      ],
+      "vertices": 4,
+      "circularity": 0.742,
+      "area_ratio_of_sheet": 0.44237
+    }
+  ],
+  "shared_axis_evidence": [],
+  "controls": {
+    "primary_view": "front",
+    "projection_standard": "third-angle"
+  },
+  "notes": "",
+  "default_generation_changed": false,
+  "files": {
+    "input": "/results/7754f1360115/input.png",
+    "overlay": "/results/7754f1360115/geometry-overlay.png",
+    "interpretation": "/results/7754f1360115/feature-evidence.json"
+  }
+}
