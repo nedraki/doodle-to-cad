@@ -1,0 +1,148 @@
+{
+  "version": 1,
+  "object_hypothesis": "A stepped mechanical component, likely a pulley or flanged hub, characterized by a central neck and two opposing flanges.",
+  "features": [
+    {
+      "id": "body_1",
+      "type": "body",
+      "description": "The main solid body of the component, defined by the outer silhouette in both views.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_3"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_1"
+        }
+      ],
+      "reason": "The continuous outer boundary in both views defines the extent of the solid material."
+    },
+    {
+      "id": "flange_top",
+      "type": "flange",
+      "description": "The upper flange section, appearing as a wide horizontal band at the top of the profile.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_3"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_1"
+        }
+      ],
+      "reason": "The polygon vertices indicate a significant width at the top (v < 0.3) compared to the central section."
+    },
+    {
+      "id": "flange_bottom",
+      "type": "flange",
+      "description": "The lower flange section, appearing as a wide horizontal band at the bottom of the profile.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_3"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_1"
+        }
+      ],
+      "reason": "The polygon vertices indicate a significant width at the bottom (v > 0.7) compared to the central section."
+    },
+    {
+      "id": "neck",
+      "type": "neck",
+      "description": "The central connecting section between the top and bottom flanges, narrower than the flanges.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_3"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_1"
+        }
+      ],
+      "reason": "The polygon vertices show a constriction in width between the upper and lower flange regions."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "rel_symmetry",
+      "type": "symmetry",
+      "features": [
+        "flange_top",
+        "flange_bottom"
+      ],
+      "description": "The top and bottom flanges appear to be mirror images of each other across the horizontal centerline.",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_3"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_1"
+        }
+      ],
+      "reason": "The vertical distribution of vertices in both views suggests a balanced, symmetrical structure."
+    },
+    {
+      "id": "rel_axisymmetry",
+      "type": "symmetry",
+      "features": [
+        "body_1"
+      ],
+      "description": "The object is likely axisymmetric (rotationally symmetric) around a central vertical axis.",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_3"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_1"
+        }
+      ],
+      "reason": "The front and right views present nearly identical 2D profiles, which is characteristic of a body of revolution."
+    },
+    {
+      "id": "rel_connect",
+      "type": "connected",
+      "features": [
+        "flange_top",
+        "neck",
+        "flange_bottom"
+      ],
+      "description": "The neck connects the top and bottom flanges.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_3"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_1"
+        }
+      ],
+      "reason": "The continuous polygon boundary links the wide top and bottom sections through the narrower middle section."
+    }
+  ],
+  "assumptions": [
+    "The 'front' and 'right' views are orthogonal projections of the same object.",
+    "The object is a single solid piece without internal assembly."
+  ],
+  "unresolved": [
+    "The presence of a central hole (bore) is not explicitly defined by an inner contour in the provided data.",
+    "The exact 3D shape of the flange edges (e.g., chamfered vs. flat) is not fully resolved."
+  ],
+  "conflicts": []
+}

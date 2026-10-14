@@ -1,0 +1,482 @@
+{
+  "failed_recipe": {
+    "version": 2,
+    "units": "mm",
+    "name": "spoked_wheel",
+    "parameters": {
+      "outer_diameter": {
+        "value": 120,
+        "min": 50,
+        "max": 500,
+        "label": "Outer Diameter",
+        "unit": "mm",
+        "description": "Outer diameter of the wheel rim"
+      },
+      "thickness": {
+        "value": 8,
+        "min": 1,
+        "max": 50,
+        "label": "Thickness",
+        "unit": "mm",
+        "description": "Thickness of the wheel (Y-axis)"
+      },
+      "rim_width": {
+        "value": 6,
+        "min": 2,
+        "max": 20,
+        "label": "Rim Width",
+        "unit": "mm",
+        "description": "Radial width of the rim"
+      },
+      "hub_diameter": {
+        "value": 30,
+        "min": 10,
+        "max": 80,
+        "label": "Hub Diameter",
+        "unit": "mm",
+        "description": "Diameter of the central hub"
+      },
+      "spoke_width": {
+        "value": 6,
+        "min": 2,
+        "max": 20,
+        "label": "Spoke Width",
+        "unit": "mm",
+        "description": "Width of each spoke"
+      }
+    },
+    "operations": [
+      {
+        "id": "rim_outer",
+        "kind": "cylinder",
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "radius": "outer_diameter/2",
+        "height": "thickness",
+        "axis": "y",
+        "frame": "world",
+        "depends_on": [],
+        "evidence": [
+          "e1"
+        ]
+      },
+      {
+        "id": "rim_inner",
+        "kind": "cylinder",
+        "origin": [
+          0,
+          -1,
+          0
+        ],
+        "radius": "outer_diameter/2 - rim_width",
+        "height": "thickness+2",
+        "axis": "y",
+        "frame": "world",
+        "depends_on": [],
+        "evidence": [
+          "e2"
+        ]
+      },
+      {
+        "id": "rim",
+        "kind": "difference",
+        "left": "rim_outer",
+        "right": "rim_inner",
+        "frame": "world",
+        "depends_on": [
+          "rim_outer",
+          "rim_inner"
+        ],
+        "evidence": [
+          "e1",
+          "e2"
+        ]
+      },
+      {
+        "id": "hub",
+        "kind": "cylinder",
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "radius": "hub_diameter/2",
+        "height": "thickness",
+        "axis": "y",
+        "frame": "world",
+        "depends_on": [],
+        "evidence": [
+          "e3"
+        ]
+      },
+      {
+        "id": "spoke_0",
+        "kind": "box",
+        "origin": [
+          "hub_diameter/2 - 1",
+          0,
+          "-spoke_width/2"
+        ],
+        "size": [
+          "outer_diameter/2 - hub_diameter/2 + rim_width + 1",
+          "thickness",
+          "spoke_width"
+        ],
+        "frame": "world",
+        "depends_on": [],
+        "evidence": [
+          "e4"
+        ]
+      },
+      {
+        "id": "spoke_1",
+        "kind": "rotate",
+        "body": "spoke_0",
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "axis": "y",
+        "angle": 45,
+        "frame": "world",
+        "depends_on": [
+          "spoke_0"
+        ],
+        "evidence": [
+          "e4"
+        ]
+      },
+      {
+        "id": "spoke_2",
+        "kind": "rotate",
+        "body": "spoke_0",
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "axis": "y",
+        "angle": 90,
+        "frame": "world",
+        "depends_on": [
+          "spoke_0"
+        ],
+        "evidence": [
+          "e4"
+        ]
+      },
+      {
+        "id": "spoke_3",
+        "kind": "rotate",
+        "body": "spoke_0",
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "axis": "y",
+        "angle": 135,
+        "frame": "world",
+        "depends_on": [
+          "spoke_0"
+        ],
+        "evidence": [
+          "e4"
+        ]
+      },
+      {
+        "id": "spoke_4",
+        "kind": "rotate",
+        "body": "spoke_0",
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "axis": "y",
+        "angle": 180,
+        "frame": "world",
+        "depends_on": [
+          "spoke_0"
+        ],
+        "evidence": [
+          "e4"
+        ]
+      },
+      {
+        "id": "spoke_5",
+        "kind": "rotate",
+        "body": "spoke_0",
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "axis": "y",
+        "angle": 225,
+        "frame": "world",
+        "depends_on": [
+          "spoke_0"
+        ],
+        "evidence": [
+          "e4"
+        ]
+      },
+      {
+        "id": "spoke_6",
+        "kind": "rotate",
+        "body": "spoke_0",
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "axis": "y",
+        "angle": 270,
+        "frame": "world",
+        "depends_on": [
+          "spoke_0"
+        ],
+        "evidence": [
+          "e4"
+        ]
+      },
+      {
+        "id": "spoke_7",
+        "kind": "rotate",
+        "body": "spoke_0",
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "axis": "y",
+        "angle": 315,
+        "frame": "world",
+        "depends_on": [
+          "spoke_0"
+        ],
+        "evidence": [
+          "e4"
+        ]
+      },
+      {
+        "id": "wheel",
+        "kind": "union",
+        "left": "rim",
+        "right": "hub",
+        "frame": "world",
+        "depends_on": [
+          "rim",
+          "hub"
+        ],
+        "evidence": [
+          "e1",
+          "e3"
+        ]
+      },
+      {
+        "id": "wheel_s1",
+        "kind": "union",
+        "left": "wheel",
+        "right": "spoke_0",
+        "frame": "world",
+        "depends_on": [
+          "wheel",
+          "spoke_0"
+        ],
+        "evidence": [
+          "e4"
+        ]
+      },
+      {
+        "id": "wheel_s2",
+        "kind": "union",
+        "left": "wheel_s1",
+        "right": "spoke_1",
+        "frame": "world",
+        "depends_on": [
+          "wheel_s1",
+          "spoke_1"
+        ],
+        "evidence": [
+          "e4"
+        ]
+      },
+      {
+        "id": "wheel_s3",
+        "kind": "union",
+        "left": "wheel_s2",
+        "right": "spoke_2",
+        "frame": "world",
+        "depends_on": [
+          "wheel_s2",
+          "spoke_2"
+        ],
+        "evidence": [
+          "e4"
+        ]
+      },
+      {
+        "id": "wheel_s4",
+        "kind": "union",
+        "left": "wheel_s3",
+        "right": "spoke_3",
+        "frame": "world",
+        "depends_on": [
+          "wheel_s3",
+          "spoke_3"
+        ],
+        "evidence": [
+          "e4"
+        ]
+      },
+      {
+        "id": "wheel_s5",
+        "kind": "union",
+        "left": "wheel_s4",
+        "right": "spoke_4",
+        "frame": "world",
+        "depends_on": [
+          "wheel_s4",
+          "spoke_4"
+        ],
+        "evidence": [
+          "e4"
+        ]
+      },
+      {
+        "id": "wheel_s6",
+        "kind": "union",
+        "left": "wheel_s5",
+        "right": "spoke_5",
+        "frame": "world",
+        "depends_on": [
+          "wheel_s5",
+          "spoke_5"
+        ],
+        "evidence": [
+          "e4"
+        ]
+      },
+      {
+        "id": "wheel_s7",
+        "kind": "union",
+        "left": "wheel_s6",
+        "right": "spoke_6",
+        "frame": "world",
+        "depends_on": [
+          "wheel_s6",
+          "spoke_6"
+        ],
+        "evidence": [
+          "e4"
+        ]
+      },
+      {
+        "id": "wheel_final",
+        "kind": "union",
+        "left": "wheel_s7",
+        "right": "spoke_7",
+        "frame": "world",
+        "depends_on": [
+          "wheel_s7",
+          "spoke_7"
+        ],
+        "evidence": [
+          "e4"
+        ]
+      }
+    ],
+    "output": "wheel_final",
+    "frames": {
+      "world": {
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "x": "width",
+        "y": "depth",
+        "z": "height"
+      }
+    },
+    "bodies": [
+      {
+        "id": "part",
+        "output": "wheel_final"
+      }
+    ],
+    "evidence": {
+      "observed": [
+        {
+          "id": "e1",
+          "text": "Outer diameter 120 mm from drawing text."
+        },
+        {
+          "id": "e2",
+          "text": "Rim thickness observed in front view."
+        },
+        {
+          "id": "e3",
+          "text": "Hub observed in front view."
+        },
+        {
+          "id": "e4",
+          "text": "8 spokes observed in front view."
+        }
+      ],
+      "inferred": [
+        {
+          "id": "e5",
+          "text": "Spokes are rectangular prisms."
+        },
+        {
+          "id": "e6",
+          "text": "Rim is a cylindrical ring."
+        }
+      ],
+      "assumptions": [
+        {
+          "id": "e7",
+          "text": "Assumed rim width 6 mm."
+        },
+        {
+          "id": "e8",
+          "text": "Assumed hub diameter 30 mm."
+        },
+        {
+          "id": "e9",
+          "text": "Assumed spoke width 6 mm."
+        }
+      ],
+      "unresolved": []
+    },
+    "constraints": [
+      {
+        "id": "joint1",
+        "kind": "connected",
+        "left": "rim",
+        "right": "spoke_0",
+        "min_volume_mm3": 0.01
+      },
+      {
+        "id": "joint2",
+        "kind": "connected",
+        "left": "hub",
+        "right": "spoke_0",
+        "min_volume_mm3": 0.01
+      }
+    ]
+  },
+  "diagnostic": {
+    "code": "placement_failed",
+    "message": "Expected Z=0 and extents within 256 mm; minimum_z_mm=-66, extents_mm=[132.0, 8.000000000000004, 132.0]"
+  },
+  "maximum_dimension_mm": 120,
+  "instruction": "Correct the measured construction error only. Return the complete version 2 recipe. Preserve all operation IDs and kinds, parameter names, feature count, orientation and intended shape. Keep every connection constraint exactly unchanged. Do not remove constraints or lower overlap thresholds. Adjust origins, lengths and internal overlaps to meet the contract. Keep overall dimensions within the request. For oversize connectors, correct their endpoints; do not shrink the whole design to hide protruding features. Ensure the whole part rests on Z=0. Do not claim drawing fidelity has been checked."
+}

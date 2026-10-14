@@ -1,0 +1,263 @@
+{
+  "id": "e743731b0409",
+  "backend": "usd-brep",
+  "success": false,
+  "spec": {
+    "object": "spoked_wheel"
+  },
+  "model": "local-inference-lab/Qwen3.8-Flash-Next-NVFP4",
+  "duration_seconds": 164.34,
+  "evaluation": {
+    "accepted": false,
+    "failures": [
+      "Drawing fidelity has not been evaluated."
+    ]
+  },
+  "diagnostics": {
+    "backend": "usd-brep",
+    "version": "1.0.0",
+    "recipe_version": 2,
+    "solid_volume_mm3": 37859.22752578388,
+    "mesh_volume_mm3": 37847.970952471864,
+    "extents_mm": [
+      120.0,
+      120.0,
+      8.0
+    ],
+    "bounds_mm": [
+      [
+        -60.0,
+        -60.0,
+        0.0
+      ],
+      [
+        60.0,
+        60.0,
+        8.0
+      ]
+    ],
+    "watertight": true,
+    "winding_consistent": true,
+    "euler_number": -14,
+    "triangles": 1244,
+    "usd_roundtrip": true,
+    "volume_relative_accuracy": 1e-08,
+    "usd_volume_mm3": 37859.22752495529,
+    "operations": [
+      {
+        "id": "rim_outer",
+        "kind": "cylinder",
+        "faces": 3
+      },
+      {
+        "id": "rim_inner",
+        "kind": "cylinder",
+        "faces": 3
+      },
+      {
+        "id": "rim",
+        "kind": "difference",
+        "faces": 4
+      },
+      {
+        "id": "hub",
+        "kind": "cylinder",
+        "faces": 3
+      },
+      {
+        "id": "spoke_0",
+        "kind": "box",
+        "faces": 6
+      },
+      {
+        "id": "spoke_1",
+        "kind": "rotate",
+        "faces": 6
+      },
+      {
+        "id": "spoke_2",
+        "kind": "rotate",
+        "faces": 6
+      },
+      {
+        "id": "spoke_3",
+        "kind": "rotate",
+        "faces": 6
+      },
+      {
+        "id": "spoke_4",
+        "kind": "rotate",
+        "faces": 6
+      },
+      {
+        "id": "spoke_5",
+        "kind": "rotate",
+        "faces": 6
+      },
+      {
+        "id": "spoke_6",
+        "kind": "rotate",
+        "faces": 6
+      },
+      {
+        "id": "spoke_7",
+        "kind": "rotate",
+        "faces": 6
+      },
+      {
+        "id": "wheel",
+        "kind": "union",
+        "faces": 7
+      },
+      {
+        "id": "wheel_s1",
+        "kind": "union",
+        "faces": 10
+      },
+      {
+        "id": "wheel_s2",
+        "kind": "union",
+        "faces": 18
+      },
+      {
+        "id": "wheel_s3",
+        "kind": "union",
+        "faces": 26
+      },
+      {
+        "id": "wheel_s4",
+        "kind": "union",
+        "faces": 34
+      },
+      {
+        "id": "wheel_s5",
+        "kind": "union",
+        "faces": 42
+      },
+      {
+        "id": "wheel_s6",
+        "kind": "union",
+        "faces": 50
+      },
+      {
+        "id": "wheel_s7",
+        "kind": "union",
+        "faces": 58
+      },
+      {
+        "id": "wheel_final",
+        "kind": "union",
+        "faces": 66
+      }
+    ],
+    "connections": [
+      {
+        "id": "joint1",
+        "overlap_mm3": 43.170780375105025,
+        "passed": true
+      },
+      {
+        "id": "joint2",
+        "overlap_mm3": 288.1335008964302,
+        "passed": true
+      }
+    ],
+    "build_seconds": 0.363
+  },
+  "controls": {
+    "object_type_hint": "",
+    "method": "3D print",
+    "primary_view": "front",
+    "projection_standard": "third-angle",
+    "strict_watertight": true,
+    "refine_mode": "regularize"
+  },
+  "files": {
+    "source": "/results/e743731b0409/brep-9d2ab9e37ed347ae9e945fd2957a629a/model.recipe.json",
+    "stl": "/results/e743731b0409/brep-9d2ab9e37ed347ae9e945fd2957a629a/model.stl",
+    "usd": "/results/e743731b0409/brep-9d2ab9e37ed347ae9e945fd2957a629a/model.usda",
+    "views": {
+      "isometric": "/results/e743731b0409/brep-9d2ab9e37ed347ae9e945fd2957a629a/view-isometric.png",
+      "front": "/results/e743731b0409/brep-9d2ab9e37ed347ae9e945fd2957a629a/view-front.png",
+      "top": "/results/e743731b0409/brep-9d2ab9e37ed347ae9e945fd2957a629a/view-top.png",
+      "right": "/results/e743731b0409/brep-9d2ab9e37ed347ae9e945fd2957a629a/view-right.png"
+    },
+    "evidence": "/results/e743731b0409/feature-evidence.json",
+    "generation": "/results/e743731b0409/generation.json"
+  },
+  "build": {
+    "version": 1,
+    "backend": "usd-brep",
+    "source_format": "brep-recipe-v2",
+    "ok": true,
+    "units": "mm",
+    "axes": {
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    },
+    "views": [
+      "isometric",
+      "front",
+      "top",
+      "right"
+    ],
+    "measurements": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 1244,
+      "extents_mm": [
+        120.0,
+        120.0,
+        8.0
+      ],
+      "volume_mm3": 37847.971
+    },
+    "diagnostics": [],
+    "drawing_evaluated": false
+  },
+  "original_run_id": null,
+  "generation": {
+    "path": "drawing-to-brep",
+    "backend": "usd-brep",
+    "prompt_version": "drawing-brep-4",
+    "model": "local-inference-lab/Qwen3.8-Flash-Next-NVFP4",
+    "notes": "",
+    "maximum_dimension_mm": 120.0,
+    "controls": {
+      "object_type_hint": "",
+      "method": "3D print",
+      "primary_view": "front",
+      "projection_standard": "third-angle",
+      "strict_watertight": true,
+      "refine_mode": "regularize"
+    },
+    "generated_scad": false,
+    "drawing_fidelity_verified": false,
+    "attempts": [
+      {
+        "attempt": 1,
+        "schema_valid": false,
+        "error": "rim: dependency cycle, unknown dependency, or incorrect operation order"
+      },
+      {
+        "attempt": 2,
+        "schema_valid": true
+      }
+    ],
+    "construction_attempts": [
+      {
+        "attempt": 1,
+        "status": "failed",
+        "error": {
+          "code": "connection_failed",
+          "message": "joint2: required connection failed between spoke_0 and rim (required overlap 1.0 mm3): overlap 0 mm3 is too small"
+        }
+      },
+      {
+        "attempt": 2,
+        "status": "built"
+      }
+    ]
+  }
+}

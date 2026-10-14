@@ -1,0 +1,196 @@
+{
+  "id": "5334ea603c04",
+  "backend": "usd-brep",
+  "success": false,
+  "spec": {
+    "object": "bracket"
+  },
+  "model": "local-inference-lab/Qwen3.8-Flash-Next-NVFP4",
+  "duration_seconds": 170.99,
+  "evaluation": {
+    "accepted": false,
+    "failures": [
+      "Drawing fidelity has not been evaluated."
+    ]
+  },
+  "diagnostics": {
+    "backend": "usd-brep",
+    "version": "1.0.0",
+    "recipe_version": 2,
+    "solid_volume_mm3": 68433.60621533789,
+    "mesh_volume_mm3": 68438.16195419004,
+    "extents_mm": [
+      10.0,
+      60.0,
+      120.0
+    ],
+    "bounds_mm": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        10.0,
+        60.0,
+        120.0
+      ]
+    ],
+    "watertight": true,
+    "winding_consistent": true,
+    "euler_number": -8,
+    "triangles": 240,
+    "usd_roundtrip": true,
+    "operations": [
+      {
+        "id": "base",
+        "kind": "box",
+        "faces": 6
+      },
+      {
+        "id": "hole",
+        "kind": "cylinder",
+        "faces": 3
+      },
+      {
+        "id": "cut_hole",
+        "kind": "difference",
+        "faces": 8
+      },
+      {
+        "id": "slot1",
+        "kind": "box",
+        "faces": 6
+      },
+      {
+        "id": "cut1",
+        "kind": "difference",
+        "faces": 12
+      },
+      {
+        "id": "slot2",
+        "kind": "box",
+        "faces": 6
+      },
+      {
+        "id": "cut2",
+        "kind": "difference",
+        "faces": 16
+      },
+      {
+        "id": "slot3",
+        "kind": "box",
+        "faces": 6
+      },
+      {
+        "id": "cut3",
+        "kind": "difference",
+        "faces": 20
+      },
+      {
+        "id": "slot4",
+        "kind": "box",
+        "faces": 6
+      },
+      {
+        "id": "cut4",
+        "kind": "difference",
+        "faces": 24
+      },
+      {
+        "id": "slot5",
+        "kind": "box",
+        "faces": 6
+      },
+      {
+        "id": "part",
+        "kind": "difference",
+        "faces": 28
+      }
+    ],
+    "connections": [],
+    "build_seconds": 0.194
+  },
+  "controls": {
+    "object_type_hint": "",
+    "method": "3D print",
+    "primary_view": "front",
+    "projection_standard": "third-angle",
+    "strict_watertight": true,
+    "refine_mode": "regularize"
+  },
+  "files": {
+    "source": "/results/5334ea603c04/brep-52a1bec90f6f40b7908f1d12e17555c4/model.recipe.json",
+    "stl": "/results/5334ea603c04/brep-52a1bec90f6f40b7908f1d12e17555c4/model.stl",
+    "usd": "/results/5334ea603c04/brep-52a1bec90f6f40b7908f1d12e17555c4/model.usda",
+    "views": {
+      "isometric": "/results/5334ea603c04/brep-52a1bec90f6f40b7908f1d12e17555c4/view-isometric.png",
+      "front": "/results/5334ea603c04/brep-52a1bec90f6f40b7908f1d12e17555c4/view-front.png",
+      "top": "/results/5334ea603c04/brep-52a1bec90f6f40b7908f1d12e17555c4/view-top.png",
+      "right": "/results/5334ea603c04/brep-52a1bec90f6f40b7908f1d12e17555c4/view-right.png"
+    },
+    "evidence": "/results/5334ea603c04/feature-evidence.json",
+    "generation": "/results/5334ea603c04/generation.json"
+  },
+  "build": {
+    "version": 1,
+    "backend": "usd-brep",
+    "source_format": "brep-recipe-v2",
+    "ok": true,
+    "units": "mm",
+    "axes": {
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    },
+    "views": [
+      "isometric",
+      "front",
+      "top",
+      "right"
+    ],
+    "measurements": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 240,
+      "extents_mm": [
+        10.0,
+        60.0,
+        120.0
+      ],
+      "volume_mm3": 68438.162
+    },
+    "diagnostics": [],
+    "drawing_evaluated": false
+  },
+  "original_run_id": null,
+  "generation": {
+    "path": "drawing-to-brep",
+    "backend": "usd-brep",
+    "prompt_version": "drawing-brep-3",
+    "model": "local-inference-lab/Qwen3.8-Flash-Next-NVFP4",
+    "notes": "",
+    "maximum_dimension_mm": 120.0,
+    "controls": {
+      "object_type_hint": "",
+      "method": "3D print",
+      "primary_view": "front",
+      "projection_standard": "third-angle",
+      "strict_watertight": true,
+      "refine_mode": "regularize"
+    },
+    "generated_scad": false,
+    "drawing_fidelity_verified": false,
+    "attempts": [
+      {
+        "attempt": 1,
+        "schema_valid": false,
+        "error": "hole: dependencies must match body references"
+      },
+      {
+        "attempt": 2,
+        "schema_valid": true
+      }
+    ]
+  }
+}

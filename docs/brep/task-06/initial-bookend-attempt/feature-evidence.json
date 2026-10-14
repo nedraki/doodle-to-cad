@@ -1,0 +1,598 @@
+{
+  "id": "5c69c01c0ff4",
+  "interpretation": {
+    "version": 1,
+    "object_hypothesis": "A flat plate or panel with a complex internal cutout pattern, viewed from the front and side.",
+    "features": [
+      {
+        "id": "plate_body",
+        "type": "body",
+        "description": "The main rectangular body of the object, appearing as a flat plate.",
+        "status": "observed",
+        "evidence": [
+          {
+            "view_id": "view_1",
+            "region_id": "profile_contour_0"
+          },
+          {
+            "view_id": "view_2",
+            "region_id": "profile_contour_10"
+          }
+        ],
+        "reason": "View 1 shows a large rectangular outer boundary. View 2 shows a thin profile consistent with a plate."
+      },
+      {
+        "id": "cutout_top_left",
+        "type": "opening",
+        "description": "A roughly rectangular opening located in the upper-left quadrant of the plate.",
+        "status": "observed",
+        "evidence": [
+          {
+            "view_id": "view_1",
+            "region_id": "profile_contour_8"
+          }
+        ],
+        "reason": "An internal contour is visible in the upper-left area of the front view."
+      },
+      {
+        "id": "cutout_center",
+        "type": "opening",
+        "description": "A vertical rectangular opening located in the center of the plate.",
+        "status": "observed",
+        "evidence": [
+          {
+            "view_id": "view_1",
+            "region_id": "profile_contour_6"
+          }
+        ],
+        "reason": "An internal contour is visible in the central area of the front view."
+      },
+      {
+        "id": "cutout_bottom_left",
+        "type": "opening",
+        "description": "A vertical rectangular opening located in the lower-left quadrant of the plate.",
+        "status": "observed",
+        "evidence": [
+          {
+            "view_id": "view_1",
+            "region_id": "profile_contour_4"
+          }
+        ],
+        "reason": "An internal contour is visible in the lower-left area of the front view."
+      },
+      {
+        "id": "cutout_bottom_right",
+        "type": "opening",
+        "description": "A vertical rectangular opening located in the lower-right quadrant of the plate.",
+        "status": "observed",
+        "evidence": [
+          {
+            "view_id": "view_1",
+            "region_id": "profile_contour_2"
+          }
+        ],
+        "reason": "An internal contour is visible in the lower-right area of the front view."
+      },
+      {
+        "id": "plate_thickness",
+        "type": "other",
+        "description": "The thickness of the plate, represented by the width of the profile in the side view.",
+        "status": "observed",
+        "evidence": [
+          {
+            "view_id": "view_2",
+            "region_id": "profile_contour_10"
+          }
+        ],
+        "reason": "The side view shows a thin profile, indicating the object is a plate with a specific thickness."
+      }
+    ],
+    "relationships": [
+      {
+        "id": "openings_in_plate",
+        "type": "position",
+        "features": [
+          "plate_body",
+          "cutout_top_left",
+          "cutout_center",
+          "cutout_bottom_left",
+          "cutout_bottom_right"
+        ],
+        "description": "The four openings are positioned within the boundaries of the main plate body.",
+        "status": "observed",
+        "evidence": [
+          {
+            "view_id": "view_1",
+            "region_id": "profile_contour_0"
+          },
+          {
+            "view_id": "view_1",
+            "region_id": "profile_contour_8"
+          },
+          {
+            "view_id": "view_1",
+            "region_id": "profile_contour_6"
+          },
+          {
+            "view_id": "view_1",
+            "region_id": "profile_contour_4"
+          },
+          {
+            "view_id": "view_1",
+            "region_id": "profile_contour_2"
+          }
+        ],
+        "reason": "The internal contours are spatially contained within the outer contour in the front view."
+      },
+      {
+        "id": "plate_profile",
+        "type": "connected",
+        "features": [
+          "plate_body",
+          "plate_thickness"
+        ],
+        "description": "The main body has a uniform thickness as seen in the side view.",
+        "status": "inferred",
+        "evidence": [
+          {
+            "view_id": "view_1",
+            "region_id": "profile_contour_0"
+          },
+          {
+            "view_id": "view_2",
+            "region_id": "profile_contour_10"
+          }
+        ],
+        "reason": "The side view profile corresponds to the thickness of the object shown in the front view."
+      }
+    ],
+    "assumptions": [
+      "The object is a single, solid piece.",
+      "The internal contours in the front view represent through-holes or cutouts.",
+      "The side view represents the thickness of the plate."
+    ],
+    "unresolved": [
+      "The exact depth of the cutouts (whether they are through-holes or blind pockets).",
+      "The precise shape of the cutouts (e.g., are the corners rounded or sharp?).",
+      "The material of the object."
+    ],
+    "conflicts": [
+      "None identified."
+    ],
+    "review": {
+      "reference_integrity_checked": true,
+      "drawing_fidelity_verified": false,
+      "policy_warnings": [],
+      "executable": false
+    }
+  },
+  "regions": [
+    {
+      "view_id": "view_1",
+      "direction": "front",
+      "sheet_bbox_normalized": [
+        0.0414,
+        0.0959,
+        0.4237,
+        0.8063
+      ],
+      "cad_mapping": {
+        "plane": "XZ",
+        "view_axis": "Y",
+        "u_maps_to": "+X",
+        "v_maps_to": "-Z"
+      },
+      "view_assignment": "spatial heuristic",
+      "region_id": "view",
+      "kind": "view",
+      "bbox_view_normalized": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "measured_span_pixels": {
+        "horizontal_axis_u": 358,
+        "vertical_axis_v": 437
+      }
+    },
+    {
+      "view_id": "view_1",
+      "direction": "front",
+      "sheet_bbox_normalized": [
+        0.0414,
+        0.0959,
+        0.4237,
+        0.8063
+      ],
+      "cad_mapping": {
+        "plane": "XZ",
+        "view_axis": "Y",
+        "u_maps_to": "+X",
+        "v_maps_to": "-Z"
+      },
+      "view_assignment": "spatial heuristic",
+      "region_id": "profile_contour_0",
+      "kind": "outer",
+      "profile_id": "contour_0",
+      "bbox_view_normalized": [
+        0.0196,
+        0.0092,
+        0.9608,
+        0.9816
+      ],
+      "center_view_normalized": [
+        0.5001,
+        0.5001
+      ],
+      "polygon_view_normalized": [
+        [
+          0.9554,
+          0.0092
+        ],
+        [
+          0.0335,
+          0.0115
+        ],
+        [
+          0.0281,
+          0.9634
+        ],
+        [
+          0.9637,
+          0.9794
+        ]
+      ],
+      "vertices": 4,
+      "circularity": 0.728,
+      "area_ratio_of_sheet": 0.3035
+    },
+    {
+      "view_id": "view_1",
+      "direction": "front",
+      "sheet_bbox_normalized": [
+        0.0414,
+        0.0959,
+        0.4237,
+        0.8063
+      ],
+      "cad_mapping": {
+        "plane": "XZ",
+        "view_axis": "Y",
+        "u_maps_to": "+X",
+        "v_maps_to": "-Z"
+      },
+      "view_assignment": "spatial heuristic",
+      "region_id": "profile_contour_8",
+      "kind": "internal",
+      "profile_id": "contour_8",
+      "bbox_view_normalized": [
+        0.123,
+        0.0985,
+        0.2988,
+        0.1968
+      ],
+      "center_view_normalized": [
+        0.2724,
+        0.1968
+      ],
+      "polygon_view_normalized": [
+        [
+          0.4078,
+          0.1167
+        ],
+        [
+          0.3547,
+          0.0985
+        ],
+        [
+          0.1258,
+          0.1145
+        ],
+        [
+          0.1341,
+          0.2907
+        ],
+        [
+          0.4163,
+          0.2907
+        ],
+        [
+          0.3967,
+          0.2128
+        ]
+      ],
+      "vertices": 6,
+      "circularity": 0.721,
+      "area_ratio_of_sheet": 0.01757
+    },
+    {
+      "view_id": "view_1",
+      "direction": "front",
+      "sheet_bbox_normalized": [
+        0.0414,
+        0.0959,
+        0.4237,
+        0.8063
+      ],
+      "cad_mapping": {
+        "plane": "XZ",
+        "view_axis": "Y",
+        "u_maps_to": "+X",
+        "v_maps_to": "-Z"
+      },
+      "view_assignment": "spatial heuristic",
+      "region_id": "profile_contour_6",
+      "kind": "internal",
+      "profile_id": "contour_6",
+      "bbox_view_normalized": [
+        0.4777,
+        0.2701,
+        0.1173,
+        0.3135
+      ],
+      "center_view_normalized": [
+        0.5362,
+        0.4268
+      ],
+      "polygon_view_normalized": [
+        [
+          0.4777,
+          0.2701
+        ],
+        [
+          0.4888,
+          0.5675
+        ],
+        [
+          0.5839,
+          0.5813
+        ],
+        [
+          0.5839,
+          0.2838
+        ]
+      ],
+      "vertices": 4,
+      "circularity": 0.501,
+      "area_ratio_of_sheet": 0.01034
+    },
+    {
+      "view_id": "view_1",
+      "direction": "front",
+      "sheet_bbox_normalized": [
+        0.0414,
+        0.0959,
+        0.4237,
+        0.8063
+      ],
+      "cad_mapping": {
+        "plane": "XZ",
+        "view_axis": "Y",
+        "u_maps_to": "+X",
+        "v_maps_to": "-Z"
+      },
+      "view_assignment": "spatial heuristic",
+      "region_id": "profile_contour_4",
+      "kind": "internal",
+      "profile_id": "contour_4",
+      "bbox_view_normalized": [
+        0.2403,
+        0.4028,
+        0.1732,
+        0.4027
+      ],
+      "center_view_normalized": [
+        0.3269,
+        0.6041
+      ],
+      "polygon_view_normalized": [
+        [
+          0.2599,
+          0.4028
+        ],
+        [
+          0.2514,
+          0.7895
+        ],
+        [
+          0.4022,
+          0.8032
+        ],
+        [
+          0.3967,
+          0.4142
+        ]
+      ],
+      "vertices": 4,
+      "circularity": 0.523,
+      "area_ratio_of_sheet": 0.0198
+    },
+    {
+      "view_id": "view_1",
+      "direction": "front",
+      "sheet_bbox_normalized": [
+        0.0414,
+        0.0959,
+        0.4237,
+        0.8063
+      ],
+      "cad_mapping": {
+        "plane": "XZ",
+        "view_axis": "Y",
+        "u_maps_to": "+X",
+        "v_maps_to": "-Z"
+      },
+      "view_assignment": "spatial heuristic",
+      "region_id": "profile_contour_2",
+      "kind": "internal",
+      "profile_id": "contour_2",
+      "bbox_view_normalized": [
+        0.6788,
+        0.4188,
+        0.1369,
+        0.3891
+      ],
+      "center_view_normalized": [
+        0.7472,
+        0.6133
+      ],
+      "polygon_view_normalized": [
+        [
+          0.6899,
+          0.4188
+        ],
+        [
+          0.6788,
+          0.7346
+        ],
+        [
+          0.718,
+          0.8055
+        ],
+        [
+          0.7989,
+          0.7849
+        ],
+        [
+          0.8017,
+          0.4302
+        ]
+      ],
+      "vertices": 5,
+      "circularity": 0.498,
+      "area_ratio_of_sheet": 0.01509
+    },
+    {
+      "view_id": "view_2",
+      "direction": "right",
+      "sheet_bbox_normalized": [
+        0.574,
+        0.0849,
+        0.3787,
+        0.8413
+      ],
+      "cad_mapping": {
+        "plane": "YZ",
+        "view_axis": "X",
+        "u_maps_to": "+Y",
+        "v_maps_to": "-Z"
+      },
+      "view_assignment": "spatial heuristic",
+      "region_id": "view",
+      "kind": "view",
+      "bbox_view_normalized": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "measured_span_pixels": {
+        "horizontal_axis_u": 320,
+        "vertical_axis_v": 456
+      }
+    },
+    {
+      "view_id": "view_2",
+      "direction": "right",
+      "sheet_bbox_normalized": [
+        0.574,
+        0.0849,
+        0.3787,
+        0.8413
+      ],
+      "cad_mapping": {
+        "plane": "YZ",
+        "view_axis": "X",
+        "u_maps_to": "+Y",
+        "v_maps_to": "-Z"
+      },
+      "view_assignment": "spatial heuristic",
+      "region_id": "profile_contour_10",
+      "kind": "outer",
+      "profile_id": "contour_10",
+      "bbox_view_normalized": [
+        0.0217,
+        0.0088,
+        0.9562,
+        0.9825
+      ],
+      "center_view_normalized": [
+        0.4999,
+        0.4999
+      ],
+      "polygon_view_normalized": [
+        [
+          0.0375,
+          0.0153
+        ],
+        [
+          0.0718,
+          0.9715
+        ],
+        [
+          0.9686,
+          0.9891
+        ],
+        [
+          0.9406,
+          0.9276
+        ],
+        [
+          0.1687,
+          0.9013
+        ],
+        [
+          0.1532,
+          0.0439
+        ]
+      ],
+      "vertices": 6,
+      "circularity": 0.12,
+      "area_ratio_of_sheet": 0.0457
+    }
+  ],
+  "shared_axis_evidence": [
+    {
+      "axis": "Z",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "view"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "view"
+        }
+      ],
+      "measured_spans_pixels": [
+        437,
+        456
+      ],
+      "relative_difference": 0.0417,
+      "status": "consistent_spans",
+      "assumption": "Views use the same drawing scale and their assigned directions are correct.",
+      "physical_dimension_verified": false
+    }
+  ],
+  "view_assignment_review": {
+    "excluded_from_direction_assignment": [],
+    "rule": "Groups below 5% of the largest group box area remain unassigned; they may be text or detail views.",
+    "regions_retained": true
+  },
+  "controls": {
+    "object_type_hint": "",
+    "method": "3D print",
+    "primary_view": "front",
+    "projection_standard": "third-angle",
+    "strict_watertight": true,
+    "refine_mode": "regularize"
+  },
+  "notes": "",
+  "default_generation_changed": false,
+  "files": {
+    "input": "/results/5c69c01c0ff4/input.png",
+    "overlay": "/results/5c69c01c0ff4/geometry-overlay.png",
+    "interpretation": "/results/5c69c01c0ff4/feature-evidence.json"
+  }
+}

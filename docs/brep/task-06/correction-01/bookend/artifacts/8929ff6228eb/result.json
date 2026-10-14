@@ -1,0 +1,187 @@
+{
+  "id": "8929ff6228eb",
+  "backend": "usd-brep",
+  "success": false,
+  "spec": {
+    "object": "l_bracket_plate"
+  },
+  "model": "local-inference-lab/Qwen3.8-Flash-Next-NVFP4",
+  "duration_seconds": 52.17,
+  "evaluation": {
+    "accepted": false,
+    "failures": [
+      "Drawing fidelity has not been evaluated."
+    ]
+  },
+  "diagnostics": {
+    "backend": "usd-brep",
+    "version": "1.0.0",
+    "recipe_version": 2,
+    "solid_volume_mm3": 125760.0,
+    "mesh_volume_mm3": 125760.0,
+    "extents_mm": [
+      100.0,
+      40.0,
+      120.0
+    ],
+    "bounds_mm": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        100.0,
+        40.0,
+        120.0
+      ]
+    ],
+    "watertight": true,
+    "winding_consistent": true,
+    "euler_number": -6,
+    "triangles": 100,
+    "usd_roundtrip": true,
+    "operations": [
+      {
+        "id": "base_plate",
+        "kind": "box",
+        "faces": 6
+      },
+      {
+        "id": "back_wall",
+        "kind": "box",
+        "faces": 6
+      },
+      {
+        "id": "l_bracket",
+        "kind": "union",
+        "faces": 8
+      },
+      {
+        "id": "cut_top_left",
+        "kind": "box",
+        "faces": 6
+      },
+      {
+        "id": "cut_center",
+        "kind": "box",
+        "faces": 6
+      },
+      {
+        "id": "cut_bottom_left",
+        "kind": "box",
+        "faces": 6
+      },
+      {
+        "id": "cut_bottom_right",
+        "kind": "box",
+        "faces": 6
+      },
+      {
+        "id": "step1",
+        "kind": "difference",
+        "faces": 12
+      },
+      {
+        "id": "step2",
+        "kind": "difference",
+        "faces": 16
+      },
+      {
+        "id": "step3",
+        "kind": "difference",
+        "faces": 20
+      },
+      {
+        "id": "final_part",
+        "kind": "difference",
+        "faces": 24
+      }
+    ],
+    "connections": [],
+    "build_seconds": 0.124
+  },
+  "controls": {
+    "object_type_hint": "",
+    "method": "3D print",
+    "primary_view": "front",
+    "projection_standard": "third-angle",
+    "strict_watertight": true,
+    "refine_mode": "regularize"
+  },
+  "files": {
+    "source": "/results/8929ff6228eb/brep-857007642c3e4feb8db2ece9822160e2/model.recipe.json",
+    "stl": "/results/8929ff6228eb/brep-857007642c3e4feb8db2ece9822160e2/model.stl",
+    "usd": "/results/8929ff6228eb/brep-857007642c3e4feb8db2ece9822160e2/model.usda",
+    "views": {
+      "isometric": "/results/8929ff6228eb/brep-857007642c3e4feb8db2ece9822160e2/view-isometric.png",
+      "front": "/results/8929ff6228eb/brep-857007642c3e4feb8db2ece9822160e2/view-front.png",
+      "top": "/results/8929ff6228eb/brep-857007642c3e4feb8db2ece9822160e2/view-top.png",
+      "right": "/results/8929ff6228eb/brep-857007642c3e4feb8db2ece9822160e2/view-right.png"
+    },
+    "evidence": "/results/8929ff6228eb/feature-evidence.json",
+    "generation": "/results/8929ff6228eb/generation.json"
+  },
+  "build": {
+    "version": 1,
+    "backend": "usd-brep",
+    "source_format": "brep-recipe-v2",
+    "ok": true,
+    "units": "mm",
+    "axes": {
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    },
+    "views": [
+      "isometric",
+      "front",
+      "top",
+      "right"
+    ],
+    "measurements": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 100,
+      "extents_mm": [
+        100.0,
+        40.0,
+        120.0
+      ],
+      "volume_mm3": 125760.0
+    },
+    "diagnostics": [],
+    "drawing_evaluated": false
+  },
+  "original_run_id": null,
+  "generation": {
+    "path": "drawing-to-brep",
+    "backend": "usd-brep",
+    "prompt_version": "drawing-brep-4",
+    "model": "local-inference-lab/Qwen3.8-Flash-Next-NVFP4",
+    "notes": "",
+    "maximum_dimension_mm": 120.0,
+    "controls": {
+      "object_type_hint": "",
+      "method": "3D print",
+      "primary_view": "front",
+      "projection_standard": "third-angle",
+      "strict_watertight": true,
+      "refine_mode": "regularize"
+    },
+    "generated_scad": false,
+    "drawing_fidelity_verified": false,
+    "attempts": [
+      {
+        "attempt": 1,
+        "schema_valid": true
+      }
+    ],
+    "construction_attempts": [
+      {
+        "attempt": 1,
+        "status": "built"
+      }
+    ]
+  }
+}

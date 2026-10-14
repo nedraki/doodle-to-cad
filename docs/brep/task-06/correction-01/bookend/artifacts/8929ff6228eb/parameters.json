@@ -1,0 +1,53 @@
+{
+  "run_id": "8929ff6228eb",
+  "params": [
+    {
+      "name": "width",
+      "value": 100,
+      "low": 50,
+      "high": 150,
+      "step": 0.01,
+      "label": "Width",
+      "unit": "mm",
+      "description": "Overall width of the bracket (X-axis)",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "height",
+      "value": 120,
+      "low": 60,
+      "high": 180,
+      "step": 0.01,
+      "label": "Height",
+      "unit": "mm",
+      "description": "Overall height of the bracket (Z-axis)",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "depth",
+      "value": 40,
+      "low": 20,
+      "high": 60,
+      "step": 0.01,
+      "label": "Depth",
+      "unit": "mm",
+      "description": "Overall depth of the bracket (Y-axis)",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "thickness",
+      "value": 10,
+      "low": 5,
+      "high": 20,
+      "step": 0.01,
+      "label": "Thickness",
+      "unit": "mm",
+      "description": "Thickness of the L-bracket walls",
+      "group": "Details",
+      "feature": null
+    }
+  ]
+}

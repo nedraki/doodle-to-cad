@@ -64,7 +64,7 @@ async def _stop(process, job_id):
     await _docker_cleanup(job_id)
 
 
-async def run_recipe_job(job, recipe, results_dir: Path, save_result):
+async def run_recipe_job(job, recipe, results_dir: Path, save_result, *, prepare=None, repair=None):
     job_id = job['job_id']
     process = None
     temporary = None
@@ -73,44 +73,76 @@ async def run_recipe_job(job, recipe, results_dir: Path, save_result):
         temporary = tempfile.TemporaryDirectory(prefix='.recipe-job-', dir=results_dir.parent)
         out = Path(temporary.name) / job_id
         out.mkdir()
-        (out / 'input.recipe.json').write_text(json.dumps(recipe))
-        with (out / 'runner.log').open('wb') as log:
-            launch = asyncio.create_task(asyncio.create_subprocess_exec(
-                sys.executable, '-m', 'doodle_to_cad.recipe_job_worker', str(out), cwd=ROOT,
-                env={**os.environ, 'DOODLE_JOB_ID': job_id}, start_new_session=True,
-                stdout=log, stderr=log))
+        if prepare is not None:
+            job['stage'] = 'interpreting drawing'
+            async with asyncio.timeout(600):
+                recipe = await prepare(out)
+        history = []
+        for attempt in range(1, 4 if repair is not None else 2):
+            attempt_dir = out / 'construction-attempts' / str(attempt)
+            attempt_dir.mkdir(parents=True)
+            (attempt_dir / 'recipe.json').write_text(json.dumps(recipe, indent=2))
+            for stale in ('error.json', 'built.json', 'stage.txt'):
+                (out / stale).unlink(missing_ok=True)
+            record = {'attempt': attempt, 'status': 'building'}
+            history.append(record)
             try:
-                process = await asyncio.shield(launch)
-            except asyncio.CancelledError:
-                process = await launch
-                raise
-            job['worker_pid'] = process.pid
-            job['stage'] = 'building recipe'
-            async with asyncio.timeout(900):
-                while process.returncode is None:
-                    stage = out / 'stage.txt'
-                    if stage.exists():
-                        job['stage'] = stage.read_text()
+                (out / 'input.recipe.json').write_text(json.dumps(recipe))
+                with (out / 'runner.log').open('wb') as log:
+                    launch = asyncio.create_task(asyncio.create_subprocess_exec(
+                        sys.executable, '-m', 'doodle_to_cad.recipe_job_worker', str(out), cwd=ROOT,
+                        env={**os.environ, 'DOODLE_JOB_ID': job_id}, start_new_session=True,
+                        stdout=log, stderr=log))
                     try:
-                        await asyncio.wait_for(process.wait(), .1)
-                    except asyncio.TimeoutError:
-                        pass
-            if process.returncode:
-                error_file = out / 'error.json'
-                error = json.loads(error_file.read_text()) if error_file.exists() else {'message': 'Recipe worker stopped unexpectedly', 'code': 'build_failed'}
-                raise BuildError(error['code'], error['message'])
-            job['stage'] = 'publishing recipe'
-            built = json.loads((out / 'built.json').read_text())
-            result = save_result(out, recipe, built)
-            # No await between publication and registry update: cancellation
-            # cannot expose a half-published current result.
-            out.rename(results_dir / job_id)
-            job.update(status='done', stage='done', result=result)
+                        process = await asyncio.shield(launch)
+                    except asyncio.CancelledError:
+                        process = await launch
+                        raise
+                    job['worker_pid'] = process.pid
+                    job['stage'] = 'building recipe'
+                    async with asyncio.timeout(900):
+                        while process.returncode is None:
+                            stage = out / 'stage.txt'
+                            if stage.exists():
+                                job['stage'] = stage.read_text()
+                            try:
+                                await asyncio.wait_for(process.wait(), .1)
+                            except asyncio.TimeoutError:
+                                pass
+                    if process.returncode:
+                        error_file = out / 'error.json'
+                        error = json.loads(error_file.read_text()) if error_file.exists() else {'message': 'Recipe worker stopped unexpectedly', 'code': 'build_failed'}
+                        raise BuildError(error['code'], error['message'])
+                    job['stage'] = 'publishing recipe'
+                    built = json.loads((out / 'built.json').read_text())
+                    # Complete subprocess cleanup before advertising a terminal result.
+                    await _stop(process, job_id)
+                    process = None
+                    record['status'] = 'built'
+                    (out / 'build-history.json').write_text(json.dumps(history, indent=2))
+                    result = save_result(out, recipe, built)
+                out.rename(results_dir / job_id)
+                job.update(status='done', stage='done', result=result)
+                break
+            except BuildError as exc:
+                record.update(status='failed', error={'code': exc.code, 'message': str(exc)})
+                (out / 'build-history.json').write_text(json.dumps(history, indent=2))
+                (attempt_dir / 'failure.json').write_text(json.dumps(record['error'], indent=2))
+                if (out / 'runner.log').exists():
+                    shutil.copyfile(out / 'runner.log', attempt_dir / 'runner.log')
+                if process is not None:
+                    await _stop(process, job_id)
+                    process = None
+                if repair is None or attempt == 3:
+                    raise
+                job['stage'] = 'correcting BRep construction'
+                async with asyncio.timeout(600):
+                    recipe = await repair(out, recipe, record['error'], attempt)
     except asyncio.CancelledError:
         job.update(status='cancelling', stage='cancelling', error={'message': 'Recipe job cancelled', 'code': 'cancelled'})
         raise
     except asyncio.TimeoutError:
-        job.update(status="error", stage="failed", error={"message": "Recipe job exceeded 900 seconds", "code": "timeout"})
+        job.update(status="error", stage="failed", error={"message": "BRep job exceeded its stage time limit", "code": "timeout"})
     except Exception as exc:
         job.update(status='error', stage='failed', error={'message': str(exc), 'code': getattr(exc, 'code', 'build_failed')})
     finally:
@@ -119,6 +151,12 @@ async def run_recipe_job(job, recipe, results_dir: Path, save_result):
                 await _stop(process, job_id)
         finally:
             if temporary is not None:
+                # Direct generation retains inputs, model outputs and failures for review.
+                # A failed run has no result.json and cannot replace a completed result.
+                if prepare is not None and out.exists():
+                    (out / 'result.json').unlink(missing_ok=True)
+                    (out / 'failure.json').write_text(json.dumps(job.get('error'), indent=2))
+                    out.rename(results_dir / job_id)
                 temporary.cleanup()
             if job['status'] == 'cancelling':
                 job.update(status='cancelled', stage='cancelled')

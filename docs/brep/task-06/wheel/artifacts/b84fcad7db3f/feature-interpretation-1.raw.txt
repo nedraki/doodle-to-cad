@@ -1,0 +1,155 @@
+```json
+{
+  "version": 1,
+  "object_hypothesis": "A spoked wheel with a central hub and outer rim.",
+  "features": [
+    {
+      "id": "f_outer_rim",
+      "type": "rim",
+      "description": "Outer circular boundary of the wheel.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "Visible as the primary outer contour in the front view."
+    },
+    {
+      "id": "f_inner_rim",
+      "type": "rim",
+      "description": "Inner circular boundary of the rim, defining the rim's thickness.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "Visible as a concentric inner circle in the front view, creating a ring shape."
+    },
+    {
+      "id": "f_hub",
+      "type": "hub",
+      "description": "Central circular hub.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "Visible as the central circle in the front view."
+    },
+    {
+      "id": "f_spokes",
+      "type": "spoke",
+      "description": "A set of eight radial spokes connecting the hub to the rim.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "Visible as eight distinct radial lines in the front view."
+    },
+    {
+      "id": "f_thickness",
+      "type": "body",
+      "description": "The thickness of the wheel body.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_14"
+        }
+      ],
+      "reason": "Visible as the width of the rectangular profile in the right-side view."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "r_spokes_to_hub",
+      "type": "connected",
+      "features": [
+        "f_spokes",
+        "f_hub"
+      ],
+      "description": "The spokes are connected to the central hub.",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "The spokes visually terminate at the hub's circumference in the front view."
+    },
+    {
+      "id": "r_spokes_to_rim",
+      "type": "connected",
+      "features": [
+        "f_spokes",
+        "f_inner_rim"
+      ],
+      "description": "The spokes are connected to the inner rim.",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "The spokes visually terminate at the inner rim's circumference in the front view."
+    },
+    {
+      "id": "r_spoke_symmetry",
+      "type": "symmetry",
+      "features": [
+        "f_spokes"
+      ],
+      "description": "The eight spokes are arranged with rotational symmetry.",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "The spokes appear evenly spaced around the hub in the front view."
+    },
+    {
+      "id": "r_rim_hub_concentric",
+      "type": "shared_dimension",
+      "features": [
+        "f_outer_rim",
+        "f_inner_rim",
+        "f_hub"
+      ],
+      "description": "The outer rim, inner rim, and hub are concentric.",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "The circular features share a common center in the front view."
+    }
+  ],
+  "assumptions": [
+    "The object is a single, solid piece.",
+    "The views are orthographic projections of the same object."
+  ],
+  "unresolved": [
+    "The exact 3D shape of the spokes (e.g., rectangular, circular cross-section).",
+    "Whether the hub has a central hole or is solid.",
+    "The exact 3D shape of the rim's cross-section."
+  ],
+  "conflicts": [
+    "The small, unassigned views (1, 2, 3, 6) show complex, non-circular profiles that do not clearly correspond to any feature in the main front or right-side views."
+  ]
+}
+```

@@ -1,0 +1,154 @@
+```json
+{
+  "version": 1,
+  "object_hypothesis": "L-shaped bracket or plate with rectangular cutouts",
+  "features": [
+    {
+      "id": "body_front",
+      "type": "body",
+      "description": "Rectangular outer boundary of the front view",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_0"
+        }
+      ],
+      "reason": "Closed polygon defining the extent of the object in the front view."
+    },
+    {
+      "id": "body_side",
+      "type": "body",
+      "description": "L-shaped outer boundary of the right view",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_10"
+        }
+      ],
+      "reason": "Closed polygon defining the extent of the object in the right view."
+    },
+    {
+      "id": "opening_top_left",
+      "type": "opening",
+      "description": "Rectangular cutout located in the upper-left quadrant of the front view",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_8"
+        }
+      ],
+      "reason": "Internal closed contour in the front view."
+    },
+    {
+      "id": "opening_center",
+      "type": "opening",
+      "description": "Vertical rectangular cutout located in the center of the front view",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_6"
+        }
+      ],
+      "reason": "Internal closed contour in the front view."
+    },
+    {
+      "id": "opening_bottom_left",
+      "type": "opening",
+      "description": "Vertical rectangular cutout located in the lower-left quadrant of the front view",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_4"
+        }
+      ],
+      "reason": "Internal closed contour in the front view."
+    },
+    {
+      "id": "opening_bottom_right",
+      "type": "opening",
+      "description": "Vertical rectangular cutout located in the lower-right quadrant of the front view",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_2"
+        }
+      ],
+      "reason": "Internal closed contour in the front view."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "rel_openings_in_body",
+      "type": "other",
+      "features": [
+        "body_front",
+        "opening_top_left",
+        "opening_center",
+        "opening_bottom_left",
+        "opening_bottom_right"
+      ],
+      "description": "The four internal contours are located within the boundary of the front body.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_0"
+        },
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_8"
+        },
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_6"
+        },
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_4"
+        },
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_2"
+        }
+      ],
+      "reason": "Geometric containment of internal regions within the outer region in the 2D view."
+    },
+    {
+      "id": "rel_view_correspondence",
+      "type": "other",
+      "features": [
+        "body_front",
+        "body_side"
+      ],
+      "description": "The front and right views represent the same object from orthogonal directions.",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "view"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "view"
+        }
+      ],
+      "reason": "Standard multiview drawing convention implies these are projections of a single 3D object."
+    }
+  ],
+  "assumptions": [
+    "The object is a single solid piece.",
+    "The internal contours in the front view represent through-holes or pockets."
+  ],
+  "unresolved": [
+    "The depth of the cutouts (through-holes vs. blind pockets) is not defined by the side view.",
+    "The exact thickness of the flange in the side view is not explicitly dimensioned."
+  ],
+  "conflicts": []
+}
+```

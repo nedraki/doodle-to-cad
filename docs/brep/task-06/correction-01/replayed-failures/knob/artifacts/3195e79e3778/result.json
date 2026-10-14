@@ -1,0 +1,155 @@
+{
+  "id": "3195e79e3778",
+  "backend": "usd-brep",
+  "success": false,
+  "spec": {
+    "object": "stepped_pulley"
+  },
+  "model": "local-inference-lab/Qwen3.8-Flash-Next-NVFP4",
+  "duration_seconds": 0.291,
+  "evaluation": {
+    "accepted": false,
+    "failures": [
+      "Drawing fidelity has not been evaluated."
+    ]
+  },
+  "diagnostics": {
+    "backend": "usd-brep",
+    "version": "1.0.0",
+    "recipe_version": 2,
+    "solid_volume_mm3": 673155.3393972814,
+    "mesh_volume_mm3": 672725.3727859247,
+    "extents_mm": [
+      120.0,
+      120.0,
+      120.0
+    ],
+    "bounds_mm": [
+      [
+        -60.0,
+        -60.0,
+        0.0
+      ],
+      [
+        60.0,
+        60.0,
+        120.0
+      ]
+    ],
+    "watertight": true,
+    "winding_consistent": true,
+    "euler_number": 2,
+    "triangles": 1276,
+    "usd_roundtrip": true,
+    "volume_relative_accuracy": 1e-08,
+    "usd_volume_mm3": 673155.3500082252,
+    "operations": [
+      {
+        "id": "bottom_flange",
+        "kind": "cylinder",
+        "faces": 3
+      },
+      {
+        "id": "neck",
+        "kind": "cylinder",
+        "faces": 3
+      },
+      {
+        "id": "top_flange",
+        "kind": "cylinder",
+        "faces": 3
+      },
+      {
+        "id": "union_1",
+        "kind": "union",
+        "faces": 5
+      },
+      {
+        "id": "final_part",
+        "kind": "union",
+        "faces": 7
+      }
+    ],
+    "connections": [
+      {
+        "id": "joint1",
+        "overlap_mm3": 1809.9957895509497,
+        "passed": true
+      },
+      {
+        "id": "joint2",
+        "overlap_mm3": 1809.9343175500744,
+        "passed": true
+      }
+    ],
+    "build_seconds": 0.291
+  },
+  "controls": {
+    "primary_view": "front"
+  },
+  "files": {
+    "source": "/results/3195e79e3778/brep-cf926d47a69d401eae51dbf74f74a0c9/model.recipe.json",
+    "stl": "/results/3195e79e3778/brep-cf926d47a69d401eae51dbf74f74a0c9/model.stl",
+    "usd": "/results/3195e79e3778/brep-cf926d47a69d401eae51dbf74f74a0c9/model.usda",
+    "views": {
+      "isometric": "/results/3195e79e3778/brep-cf926d47a69d401eae51dbf74f74a0c9/view-isometric.png",
+      "front": "/results/3195e79e3778/brep-cf926d47a69d401eae51dbf74f74a0c9/view-front.png",
+      "top": "/results/3195e79e3778/brep-cf926d47a69d401eae51dbf74f74a0c9/view-top.png",
+      "right": "/results/3195e79e3778/brep-cf926d47a69d401eae51dbf74f74a0c9/view-right.png"
+    }
+  },
+  "build": {
+    "version": 1,
+    "backend": "usd-brep",
+    "source_format": "brep-recipe-v2",
+    "ok": true,
+    "units": "mm",
+    "axes": {
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    },
+    "views": [
+      "isometric",
+      "front",
+      "top",
+      "right"
+    ],
+    "measurements": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 1276,
+      "extents_mm": [
+        120.0,
+        120.0,
+        120.0
+      ],
+      "volume_mm3": 672725.373
+    },
+    "diagnostics": [],
+    "drawing_evaluated": false
+  },
+  "original_run_id": null,
+  "generation": {
+    "path": "saved-failure-correction",
+    "source_run": "4c52461e6c88",
+    "model": "local-inference-lab/Qwen3.8-Flash-Next-NVFP4",
+    "prompt_version": "drawing-brep-4",
+    "maximum_dimension_mm": 120,
+    "drawing_fidelity_verified": false,
+    "construction_attempts": [
+      {
+        "attempt": 1,
+        "status": "failed",
+        "error": {
+          "code": "connection_failed",
+          "message": "joint1: required connection failed between bottom_flange and neck (required overlap 100 mm3): overlap 0 mm3 is too small"
+        }
+      },
+      {
+        "attempt": 2,
+        "status": "built"
+      }
+    ]
+  }
+}

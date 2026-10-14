@@ -1,0 +1,124 @@
+{
+  "version": 1,
+  "object_hypothesis": "Spoked wheel or disk assembly",
+  "features": [
+    {
+      "id": "outer_rim",
+      "type": "rim",
+      "description": "Outer circular boundary of the wheel structure",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "High circularity (0.898) and large area in the front view indicate a primary circular body."
+    },
+    {
+      "id": "central_hub",
+      "type": "hub",
+      "description": "Central circular region acting as the hub",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "view"
+        }
+      ],
+      "reason": "Visible central circle in the front view (view_4) from which spokes radiate. OpenCV did not isolate this specific contour, but it is visually distinct."
+    },
+    {
+      "id": "spokes",
+      "type": "spoke",
+      "description": "Radial bars connecting the hub to the rim",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "view"
+        }
+      ],
+      "reason": "Linear features radiating from the center to the perimeter in the front view. Count appears to be 8."
+    },
+    {
+      "id": "side_profile",
+      "type": "body",
+      "description": "Rectangular side profile indicating thickness",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_14"
+        }
+      ],
+      "reason": "Narrow rectangular shape in the right view (view_5) corresponding to the wheel's thickness."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "spoke_connectivity",
+      "type": "connected",
+      "features": [
+        "spokes",
+        "central_hub",
+        "outer_rim"
+      ],
+      "description": "Spokes connect the central hub to the outer rim",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "view"
+        }
+      ],
+      "reason": "Visual continuity in the front view suggests connection, though hidden depth continuity is not proven."
+    },
+    {
+      "id": "symmetry",
+      "type": "symmetry",
+      "features": [
+        "spokes",
+        "outer_rim"
+      ],
+      "description": "Radial symmetry of the wheel",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "view"
+        }
+      ],
+      "reason": "Even distribution of spokes and circular outer boundary suggests rotational symmetry."
+    },
+    {
+      "id": "thickness_consistency",
+      "type": "shared_dimension",
+      "features": [
+        "outer_rim",
+        "spokes",
+        "central_hub"
+      ],
+      "description": "Uniform thickness across components",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_14"
+        }
+      ],
+      "reason": "The right view shows a single uniform rectangular profile, implying the rim, spokes, and hub share the same thickness."
+    }
+  ],
+  "assumptions": [
+    "The object is a planar wheel structure.",
+    "The 'Right' view represents the thickness of the entire assembly.",
+    "The central circle is a solid hub or a hole (ambiguous without hidden line detail)."
+  ],
+  "unresolved": [
+    "Whether the central hub is solid or a hole.",
+    "Exact number of spokes (visual count is 8, but not explicitly measured).",
+    "Internal structure of the rim (hollow vs solid)."
+  ],
+  "conflicts": []
+}

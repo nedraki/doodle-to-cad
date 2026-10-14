@@ -1,0 +1,175 @@
+{
+  "version": 2,
+  "units": "mm",
+  "name": "stepped_pulley",
+  "parameters": {
+    "total_height": {
+      "value": 120,
+      "min": 60,
+      "max": 200,
+      "label": "Total Height",
+      "description": "Overall height of the component"
+    },
+    "flange_diameter": {
+      "value": 120,
+      "min": 60,
+      "max": 200,
+      "label": "Flange Diameter",
+      "description": "Outer diameter of the top and bottom flanges"
+    },
+    "neck_diameter": {
+      "value": 48,
+      "min": 20,
+      "max": 100,
+      "label": "Neck Diameter",
+      "description": "Diameter of the central neck section"
+    },
+    "flange_thickness": {
+      "value": 24,
+      "min": 10,
+      "max": 50,
+      "label": "Flange Thickness",
+      "description": "Thickness of the top and bottom flanges"
+    }
+  },
+  "operations": [
+    {
+      "id": "bottom_flange",
+      "kind": "cylinder",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "radius": "flange_diameter / 2",
+      "height": "flange_thickness",
+      "axis": "z",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "neck",
+      "kind": "cylinder",
+      "origin": [
+        0,
+        0,
+        "flange_thickness - 5"
+      ],
+      "radius": "neck_diameter / 2",
+      "height": "total_height - 2 * flange_thickness + 10",
+      "axis": "z",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "top_flange",
+      "kind": "cylinder",
+      "origin": [
+        0,
+        0,
+        "total_height - flange_thickness"
+      ],
+      "radius": "flange_diameter / 2",
+      "height": "flange_thickness",
+      "axis": "z",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "union_1",
+      "kind": "union",
+      "left": "bottom_flange",
+      "right": "neck",
+      "frame": "world",
+      "depends_on": [
+        "bottom_flange",
+        "neck"
+      ],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "final_part",
+      "kind": "union",
+      "left": "union_1",
+      "right": "top_flange",
+      "frame": "world",
+      "depends_on": [
+        "union_1",
+        "top_flange"
+      ],
+      "evidence": [
+        "e1"
+      ]
+    }
+  ],
+  "output": "final_part",
+  "frames": {
+    "world": {
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    }
+  },
+  "bodies": [
+    {
+      "id": "part",
+      "output": "final_part"
+    }
+  ],
+  "evidence": {
+    "observed": [],
+    "inferred": [
+      {
+        "id": "e1",
+        "text": "Object is a stepped pulley/hub with two flanges and a central neck, inferred from symmetric front and right views."
+      }
+    ],
+    "assumptions": [
+      {
+        "id": "e2",
+        "text": "Assumed axisymmetric geometry (cylindrical) based on identical front and right profiles."
+      },
+      {
+        "id": "e3",
+        "text": "Assumed flange thickness is 20% of total height based on visual proportions."
+      },
+      {
+        "id": "e4",
+        "text": "Assumed neck diameter is 40% of flange diameter based on visual proportions."
+      }
+    ],
+    "unresolved": []
+  },
+  "constraints": [
+    {
+      "id": "joint1",
+      "kind": "connected",
+      "left": "bottom_flange",
+      "right": "neck",
+      "min_volume_mm3": 100
+    },
+    {
+      "id": "joint2",
+      "kind": "connected",
+      "left": "neck",
+      "right": "top_flange",
+      "min_volume_mm3": 100
+    }
+  ]
+}

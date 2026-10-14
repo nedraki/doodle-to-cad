@@ -1,0 +1,100 @@
+{
+  "backend": "usd-brep",
+  "version": "1.0.0",
+  "recipe_version": 2,
+  "solid_volume_mm3": 63861.02678369505,
+  "mesh_volume_mm3": 63868.32380822528,
+  "extents_mm": [
+    10.0,
+    59.15999984741211,
+    120.0
+  ],
+  "bounds_mm": [
+    [
+      -3.6739402930577075e-16,
+      0.0,
+      0.0
+    ],
+    [
+      10.0,
+      59.15999984741211,
+      120.0
+    ]
+  ],
+  "watertight": true,
+  "winding_consistent": true,
+  "euler_number": -10,
+  "triangles": 244,
+  "usd_roundtrip": true,
+  "volume_relative_accuracy": 1e-08,
+  "usd_volume_mm3": 63861.02681327818,
+  "operations": [
+    {
+      "id": "base_plate",
+      "kind": "box",
+      "faces": 6
+    },
+    {
+      "id": "central_hole",
+      "kind": "cylinder",
+      "faces": 3
+    },
+    {
+      "id": "slot_1",
+      "kind": "box",
+      "faces": 6
+    },
+    {
+      "id": "slot_2",
+      "kind": "box",
+      "faces": 6
+    },
+    {
+      "id": "slot_3",
+      "kind": "box",
+      "faces": 6
+    },
+    {
+      "id": "slot_4",
+      "kind": "box",
+      "faces": 6
+    },
+    {
+      "id": "slot_5",
+      "kind": "box",
+      "faces": 6
+    },
+    {
+      "id": "cut_hole",
+      "kind": "difference",
+      "faces": 7
+    },
+    {
+      "id": "cut_slot_1",
+      "kind": "difference",
+      "faces": 11
+    },
+    {
+      "id": "cut_slot_2",
+      "kind": "difference",
+      "faces": 15
+    },
+    {
+      "id": "cut_slot_3",
+      "kind": "difference",
+      "faces": 19
+    },
+    {
+      "id": "cut_slot_4",
+      "kind": "difference",
+      "faces": 23
+    },
+    {
+      "id": "final_part",
+      "kind": "difference",
+      "faces": 27
+    }
+  ],
+  "connections": [],
+  "build_seconds": 0.241
+}

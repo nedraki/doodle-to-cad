@@ -1,0 +1,157 @@
+{
+  "ok": true,
+  "backend": "usd-brep",
+  "applied": {
+    "total_height": 122.4
+  },
+  "stl": "/results/baefc1f3ec29/brep-57f1a3602d61461caf4086c039e62f08/model.stl",
+  "source": "/results/baefc1f3ec29/brep-57f1a3602d61461caf4086c039e62f08/model.recipe.json",
+  "usd": "/results/baefc1f3ec29/brep-57f1a3602d61461caf4086c039e62f08/model.usda",
+  "diagnostics": {
+    "backend": "usd-brep",
+    "version": "1.0.0",
+    "recipe_version": 2,
+    "solid_volume_mm3": 531839.9999999998,
+    "mesh_volume_mm3": 531840.0024414062,
+    "extents_mm": [
+      100.0,
+      100.0,
+      122.4000015258789
+    ],
+    "bounds_mm": [
+      [
+        -50.0,
+        -50.0,
+        0.0
+      ],
+      [
+        50.0,
+        50.0,
+        122.4000015258789
+      ]
+    ],
+    "watertight": true,
+    "winding_consistent": true,
+    "euler_number": 2,
+    "triangles": 44,
+    "usd_roundtrip": true,
+    "volume_relative_accuracy": 1e-08,
+    "usd_volume_mm3": 531839.9999999998,
+    "operations": [
+      {
+        "id": "bottom_flange",
+        "kind": "box",
+        "faces": 6
+      },
+      {
+        "id": "top_flange",
+        "kind": "box",
+        "faces": 6
+      },
+      {
+        "id": "central_neck",
+        "kind": "box",
+        "faces": 6
+      },
+      {
+        "id": "part",
+        "kind": "union",
+        "faces": 11
+      },
+      {
+        "id": "final_part",
+        "kind": "union",
+        "faces": 16
+      }
+    ],
+    "connections": [],
+    "build_seconds": 0.204
+  },
+  "views": {
+    "isometric": "/results/baefc1f3ec29/brep-57f1a3602d61461caf4086c039e62f08/view-isometric.png",
+    "front": "/results/baefc1f3ec29/brep-57f1a3602d61461caf4086c039e62f08/view-front.png",
+    "top": "/results/baefc1f3ec29/brep-57f1a3602d61461caf4086c039e62f08/view-top.png",
+    "right": "/results/baefc1f3ec29/brep-57f1a3602d61461caf4086c039e62f08/view-right.png"
+  },
+  "build": {
+    "version": 1,
+    "backend": "usd-brep",
+    "source_format": "brep-recipe-v2",
+    "ok": true,
+    "units": "mm",
+    "axes": {
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    },
+    "views": [
+      "isometric",
+      "front",
+      "top",
+      "right"
+    ],
+    "measurements": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 44,
+      "extents_mm": [
+        100.0,
+        100.0,
+        122.4
+      ],
+      "volume_mm3": 531840.002
+    },
+    "diagnostics": [],
+    "drawing_evaluated": false
+  },
+  "params": [
+    {
+      "name": "total_height",
+      "value": 122.4,
+      "low": 50,
+      "high": 200,
+      "step": 0.01,
+      "label": "total height",
+      "unit": "mm",
+      "description": "Total height of the component",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "flange_width",
+      "value": 100.0,
+      "low": 40,
+      "high": 200,
+      "step": 0.01,
+      "label": "flange width",
+      "unit": "mm",
+      "description": "Width of the top and bottom flanges",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "neck_width",
+      "value": 40.0,
+      "low": 10,
+      "high": 100,
+      "step": 0.01,
+      "label": "neck width",
+      "unit": "mm",
+      "description": "Width of the central neck",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "flange_thickness",
+      "value": 20.0,
+      "low": 5,
+      "high": 50,
+      "step": 0.01,
+      "label": "flange thickness",
+      "unit": "mm",
+      "description": "Thickness of the top and bottom flanges",
+      "group": "Details",
+      "feature": null
+    }
+  ]
+}

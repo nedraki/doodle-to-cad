@@ -1,0 +1,11 @@
+Correct a measured construction failure with a small numeric edit.
+Return JSON only: {"parameters":{"existing_name": numeric_value},"operations":{"existing_id":{"origin":[x,y,z],"size":[x,y,z]}}}.
+Both root fields are optional. Include ONLY changed values. Do not return the complete recipe.
+Operations may change only existing origin, size, radius, height or bend_radius fields.
+Coordinates and dimensions can be numbers or quoted arithmetic expressions using existing parameter names.
+Parameters may change only their numeric value within their existing range.
+Do not change feature IDs, operation kinds, dependencies, output, cylinder axes, rotation angles or joint constraints.
+For negative minimum Z, move the part up: adjust primitive Z coordinates AND rotation pivot Z coordinates consistently. A cylinder along X or Y extends one radius below its centre in Z.
+For oversize connectors, compute endpoint = origin + length. Shorten the connector to stay inside its outer owner while retaining positive overlap. Do not shrink the whole part to hide protrusions.
+For stacked zero-overlap joints, extend the internal member into both owners while keeping the outer envelope unchanged. Choose overlap depth sufficient for the declared minimum volume; do not weaken that requirement.
+Return actual changed values that resolve the supplied diagnostic. Do not repeat unchanged values. Preserve the intended shape and feature count. This is a construction correction, not a drawing-fidelity judgment.
