@@ -11,10 +11,13 @@ from fastapi import HTTPException
 from .brep_recipe import validate_recipe
 from .build_contract import BuildError
 from .recipe_jobs import check_worker, run_recipe_job
+from .construction_intent import PROMPT as INTENT_PROMPT, PROMPT_VERSION as INTENT_VERSION, validate_plan
 
-PROMPT_VERSION = 'drawing-brep-4'
+PROMPT_VERSION = 'drawing-brep-9'
 PROMPT = """Construct ONE editable BRep part directly from the drawing and measured evidence.
 Return valid JSON only. Never return Python or OpenSCAD. If the part needs an unsupported operation, return {"unsupported":"specific reason"}.
+
+First resolve the path plane and cross-section from the drawing labels. A path shown in TOP lies in XY; its thickness is along Z. A circular end section applies to straight segments as well as bends. A rectangular longitudinal silhouette does not make the section rectangular: use cylinders for circular-section straight segments. Moving a part above the bed is a translation through origins, not a rotation.
 
 Complete minimal version 2 recipe example (all root fields are required):
 {"version":2,"units":"mm","name":"plate","parameters":{"width":{"value":60,"min":30,"max":100}},"operations":[{"id":"plate","kind":"box","origin":[0,0,0],"size":["width",40,5],"frame":"world","depends_on":[],"evidence":["e1"]}],"output":"plate","frames":{"world":{"origin":[0,0,0],"x":"width","y":"depth","z":"height"}},"bodies":[{"id":"part","output":"plate"}],"evidence":{"observed":[],"inferred":[],"assumptions":[{"id":"e1","text":"Assumed plate thickness 5 mm."}],"unresolved":[]},"constraints":[]}
@@ -31,21 +34,25 @@ cylinder: origin (base centre),radius,height,axis (x/y/z).
 union/difference: left,right (earlier operation IDs).
 rotate: body,origin (pivot),axis (x/y/z),angle (degrees, 0<angle<=360). Right-hand rotation of a COPY about the world axis through the pivot.
 fillet: body,radius,selector (all/parallel_x/parallel_y/parallel_z).
-chamfer: body,radius (width across all chamfered edges).
+chamfer: body,radius (straight-line width ACROSS the bevel face, applied to all edges). For a 45-degree bevel with setback C along each adjoining face, radius = C * 1.4142135623730951. Expose C as a parameter and use a quoted expression for radius.
 arc_pipe: origin (arc centre),bend_radius,radius,angle (0<angle<=270). Circular solid profile swept along an XY arc from +X anticlockwise. radius < bend_radius.
 - Each evidence category contains entries with only id,text. Keep observed, inferred, assumptions and unresolved separate. Unresolved construction values prevent building.
-- constraints contains material joints: {"id":"joint1","kind":"connected","left":"feature1","right":"feature2","min_volume_mm3":0.01}. Both features must occur in final construction. Do not confuse containment with material connection.
+- constraints contains ONLY intentionally overlapping volumetric material joints. Do not add these constraints to tangential pipe/leg joints with matching end faces; those have zero intersection volume even when their union is one connected solid. Full-face fused joints are checked through the final connected solid, not an invented positive overlap requirement. Each volumetric joint has the form: {"id":"joint1","kind":"connected","left":"feature1","right":"feature2","min_volume_mm3":0.01}. Both features must occur in final construction. Do not confuse containment with material connection.
 
 GEOMETRY:
 The whole drawing sheet depicts ONE object. X=width, Y=depth, Z=height. Front projection is XZ, top is XY, right is YZ. A circular feature seen in front has its cylinder axis along Y, not Z. Lowest Z must be zero, including rotated bodies.
 Preserve measured proportions, feature counts, unequal sizes and the declared maximum dimension. Keep one connected final solid. Expose useful dimension parameters.
-Box origin is its minimum corner and its endpoint equals origin + size. Compute joint endpoints explicitly. Extend joined material into both owners by a positive overlap. Never subtract away required joint overlap. Cutters must cross the wall they cut.
+Box origin is its minimum corner and its endpoint equals origin + size. Compute joint endpoints explicitly. For a volumetric joint, extend joined material into both owners by a positive overlap. Full matching end faces can instead be fused by union into one solid; do not claim positive overlap volume for that face-to-face joint. Gaps and edge-only contact are invalid. Never subtract away required joint overlap. Cutters must cross the wall they cut.
 Use rotation for diagonal features and radial patterns. Loft, arbitrary profiles and arbitrary sweeps are unsupported. Do not replace them silently with another construction.
 For missing depth or dimensions, choose explicit conservative assumptions and expose parameters. Do not silently discard unresolved drawing details. Return unsupported if uncertainty prevents a supported construction.
 Check placement and dimensions with numeric arithmetic before returning the recipe:
 - A cylinder along X or Y extends one radius below its centre in Z. Put its centre at least that radius above Z=0.
 - A connector endpoint is origin + length, not origin + a radius. Keep it inside the outer envelope while extending it into its owners.
 - Stacked bodies that meet at one plane have zero overlap volume. Extend the internal member into each owner; retain the intended outer heights. The overlap must meet the declared min_volume_mm3, including after later cuts.
+Use the visible shape, not just its object name. Preserve rounded transitions and flat bevels when the drawing shows them. Use a fillet only on the indicated edge family; rounding vertical corners must not round a sharp top or bottom rim.
+For a curved circular-section path, use arc_pipe and any visible straight segments. Its centreline radius differs from its inner and outer radii. Preserve the section size and endpoint positions. Do not replace a curve by a box.
+Expose the actual bend radius, section size and edge-treatment size as useful parameters. Reference these parameters in operation fields and dependent origins. An editable radius must also move connected endpoints and the section centre above the bed where required. Preserve dimensions that the edit is not meant to change.
+Follow the planned axes, cross-sections and endpoint arithmetic in the construction_plan. The plan is an interpretation, not proof: report contradictions with the original image instead of silently changing its feature types.
 The interpretation can contain mistakes; check the original image. Evidence is not proof of drawing fidelity.
 """
 
@@ -137,7 +144,7 @@ async def submit_direct_job(image, mime, notes, dimension, extra, controls,
     prune()
     provenance = {'path':'drawing-to-brep','backend':'usd-brep','prompt_version':PROMPT_VERSION,
                   'correction_prompt_version':CORRECTION_PROMPT_VERSION,'max_construction_corrections':2,
-                  'model':None,'notes':notes,'maximum_dimension_mm':maximum,'controls':controls,
+                  'construction_plan_version':INTENT_VERSION,'model':None,'notes':notes,'maximum_dimension_mm':maximum,'controls':controls,
                   'generated_scad':False,'drawing_fidelity_verified':False,'attempts':[]}
 
     async def prepare(out):
@@ -148,8 +155,21 @@ async def submit_direct_job(image, mime, notes, dimension, extra, controls,
         provenance['model'] = (await pipeline.client.discover()).selected
         (out/'generation.json').write_text(json.dumps(provenance,indent=2))
         evidence = await pipeline.interpret_features(image, mime, controls, out=out)
+        job['stage'] = 'planning BRep geometry'
+        intent_request = {'controls':controls,'maximum_dimension_mm':maximum,'notes':notes}
+        (out/'construction-plan-prompt.txt').write_text(INTENT_PROMPT)
+        (out/'construction-plan-request.json').write_text(json.dumps(intent_request,indent=2))
+        intent_messages = [{'role':'system','content':INTENT_PROMPT},{'role':'user','content':[
+            {'type':'text','text':json.dumps(intent_request)},
+            {'type':'image_url','image_url':{'url':pipeline.client.image_url(image,mime)}}]}]
+        raw_plan = await pipeline._json_call(intent_messages,out,'construction-plan',temperature=0)
+        try:
+            plan = validate_plan(raw_plan)
+        except ValueError as exc:
+            raise BuildError('invalid_recipe', 'Construction plan rejected: '+str(exc)) from exc
+        (out/'construction-plan.json').write_text(json.dumps(plan,indent=2))
         job['stage'] = 'planning BRep recipe'
-        payload = {'evidence':evidence,'notes':notes,'maximum_dimension_mm':maximum,'controls':controls}
+        payload = {'evidence':evidence,'construction_plan':plan,'notes':notes,'maximum_dimension_mm':maximum,'controls':controls}
         (out/'recipe-request.json').write_text(json.dumps(payload,indent=2))
         messages = [{'role':'system','content':PROMPT},{'role':'user','content':[
             {'type':'text','text':json.dumps(payload)},
@@ -195,6 +215,7 @@ async def submit_direct_job(image, mime, notes, dimension, extra, controls,
         result['files']['drawing_checks'] = f'/results/{run_id}/drawing-checks.json'
         result.update(model=provenance['model'],generation=provenance,
                       duration_seconds=round(time.monotonic()-job['created'],2))
+        result['files']['construction_plan'] = f'/results/{run_id}/construction-plan.json'
         result['files']['evidence'] = f'/results/{run_id}/feature-evidence.json'
         result['files']['generation'] = f'/results/{run_id}/generation.json'
         (out/'result.json').write_text(json.dumps(result,indent=2))

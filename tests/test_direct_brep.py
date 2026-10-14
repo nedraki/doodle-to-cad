@@ -11,6 +11,9 @@ from doodle_to_cad import app, direct_brep
 
 IMAGE=Path('benchmarks/feature-evidence/ambiguous-outline.png').read_bytes()
 
+PLAN={'view_frame':'Front XZ; depth along Y','features':[{'id':'body','shape':'box','section':'rectangular','axis_or_plane':'XYZ','dimensions':'test fixture','placement':'at origin','evidence':'controlled test fixture'}],'connections':[],'edit_rules':[],'unresolved':[]}
+
+
 
 def test_default_generation_keeps_openscad(monkeypatch):
     seen=[]
@@ -48,7 +51,7 @@ def test_direct_rejects_separate_views_and_missing_worker(monkeypatch):
         assert response.status_code==422 and response.json()['detail']['code']=='backend_unavailable'
 
 
-@pytest.mark.parametrize('mode',['unsupported','schema','cancel'])
+@pytest.mark.parametrize('mode',['unsupported','schema','cancel','plan'])
 def test_failure_is_saved_without_result_or_fallback(tmp_path,monkeypatch,mode):
     monkeypatch.setattr(app,'settings',replace(app.settings,results_dir=tmp_path))
     async def worker():pass
@@ -58,6 +61,7 @@ def test_failure_is_saved_without_result_or_fallback(tmp_path,monkeypatch,mode):
         if mode=='cancel':await asyncio.sleep(60)
         return {'interpretation':{'unresolved':['depth']}}
     async def model(*args,**kwargs):
+        if args[2]=='construction-plan':return {'broken':True} if mode=='plan' else PLAN
         return {'unsupported':'Arbitrary loft is unsupported'} if mode=='unsupported' else {'version':1}
     async def discover():return type('Model',(),{'selected':'test-model'})()
     async def forbidden(*a,**kw):pytest.fail('Must not call OpenSCAD generation')
@@ -79,7 +83,7 @@ def test_failure_is_saved_without_result_or_fallback(tmp_path,monkeypatch,mode):
     assert json.loads((tmp_path/job/'generation.json').read_text())['backend']=='usd-brep'
     assert not list((tmp_path/job).rglob('*.scad'))
     if mode=='unsupported':assert state['error']['code']=='unsupported_construction'
-    if mode=='schema':assert state['error']['code']=='invalid_recipe'
+    if mode in {'schema','plan'}:assert state['error']['code']=='invalid_recipe'
 
 
 def test_rotation_is_bounded_and_does_not_mutate_source():
@@ -136,6 +140,7 @@ def test_direct_job_publishes_native_recipe_and_provenance(tmp_path,monkeypatch)
         (out/'feature-evidence.json').write_text(json.dumps(evidence))
         return evidence
     async def model(messages,out,label,**kwargs):
+        if label=='construction-plan':return PLAN
         assert 'scad' not in json.loads(messages[1]['content'][0]['text'])
         (out/(label+'.raw.txt')).write_text(json.dumps(recipe))
         return recipe
@@ -197,6 +202,7 @@ def test_bounded_construction_correction_with_real_worker(tmp_path,monkeypatch,m
         (out/'feature-evidence.json').write_text('{}')
         return {}
     async def model(messages,out,label,**kwargs):
+        if label=='construction-plan':return PLAN
         calls.append(label)
         if label.startswith('direct-recipe'):
             return recipe(0,200) if mode=='size' else recipe(-2)

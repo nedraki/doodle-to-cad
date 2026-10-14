@@ -54,6 +54,8 @@ def build_brep(request: BuildInput, binary: str = "openscad", on_stage=lambda _:
             result.diagnostics.append(Diagnostic("timeout", "BRep build timed out; last successful geometry retained"))
             return result
         result.log = process.stdout + process.stderr
+        if process.returncode and not result.log.strip():
+            result.log = f"BRep worker exited with status {process.returncode}; no diagnostic output"
         if process.returncode:
             failure_path = staging / "construction-error.json"
             failure = json.loads(failure_path.read_text()) if failure_path.exists() else {}
