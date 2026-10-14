@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "units": "mm",
+  "parameters": {},
+  "operations": [
+    {
+      "id": "box",
+      "kind": "box",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "size": [
+        80,
+        50,
+        30
+      ]
+    },
+    {
+      "id": "rounded",
+      "kind": "fillet",
+      "body": "box",
+      "radius": 6,
+      "selector": "parallel_z"
+    }
+  ],
+  "output": "rounded"
+}

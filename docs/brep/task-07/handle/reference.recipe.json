@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "units": "mm",
+  "parameters": {},
+  "operations": [
+    {
+      "id": "arc",
+      "kind": "arc_pipe",
+      "origin": [
+        0,
+        0,
+        4
+      ],
+      "bend_radius": 20,
+      "radius": 4,
+      "angle": 180
+    },
+    {
+      "id": "left",
+      "kind": "cylinder",
+      "origin": [
+        -20,
+        -30,
+        4
+      ],
+      "axis": "y",
+      "height": 30,
+      "radius": 4
+    },
+    {
+      "id": "right",
+      "kind": "cylinder",
+      "origin": [
+        20,
+        -30,
+        4
+      ],
+      "axis": "y",
+      "height": 30,
+      "radius": 4
+    },
+    {
+      "id": "join",
+      "kind": "union",
+      "left": "arc",
+      "right": "left"
+    },
+    {
+      "id": "part",
+      "kind": "union",
+      "left": "join",
+      "right": "right"
+    }
+  ],
+  "output": "part"
+}
