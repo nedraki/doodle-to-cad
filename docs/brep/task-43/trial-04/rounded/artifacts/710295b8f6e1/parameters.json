@@ -1,0 +1,53 @@
+{
+  "run_id": "710295b8f6e1",
+  "params": [
+    {
+      "name": "width",
+      "value": 80,
+      "low": 10,
+      "high": 200,
+      "step": 0.01,
+      "label": "Width",
+      "unit": "mm",
+      "description": "Overall width along X axis",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "depth",
+      "value": 50,
+      "low": 10,
+      "high": 200,
+      "step": 0.01,
+      "label": "Depth",
+      "unit": "mm",
+      "description": "Overall depth along Y axis",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "height",
+      "value": 30,
+      "low": 1,
+      "high": 100,
+      "step": 0.01,
+      "label": "Height",
+      "unit": "mm",
+      "description": "Overall height along Z axis",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "corner_radius",
+      "value": 6,
+      "low": 0.1,
+      "high": 25,
+      "step": 0.01,
+      "label": "Corner Radius",
+      "unit": "mm",
+      "description": "Radius of the 4 vertical corner fillets",
+      "group": "Details",
+      "feature": null
+    }
+  ]
+}

@@ -1,0 +1,146 @@
+{
+  "version": 1,
+  "object_hypothesis": "Curved handle with U-shaped profile and circular cross-section",
+  "features": [
+    {
+      "id": "body_main",
+      "type": "body",
+      "description": "Main U-shaped body of the handle",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_19"
+        },
+        {
+          "view_id": "view_6",
+          "region_id": "profile_contour_5"
+        }
+      ],
+      "reason": "View 5 shows the primary U-shape outline. View 6 (Top) shows the planar extent of the legs."
+    },
+    {
+      "id": "cross_section",
+      "type": "profile",
+      "description": "Circular cross-section of the handle",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_3",
+          "region_id": "profile_contour_17"
+        }
+      ],
+      "reason": "View 3 (Right) displays a circular profile, consistent with the 'END SECTION' label and the circular shape of contour_17."
+    },
+    {
+      "id": "leg_left",
+      "type": "body",
+      "description": "Left vertical leg of the handle",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_19"
+        }
+      ],
+      "reason": "Inferred from the left vertical segment of the U-shape in View 5."
+    },
+    {
+      "id": "leg_right",
+      "type": "body",
+      "description": "Right vertical leg of the handle",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_19"
+        }
+      ],
+      "reason": "Inferred from the right vertical segment of the U-shape in View 5."
+    },
+    {
+      "id": "bend_top",
+      "type": "body",
+      "description": "Curved top section connecting the legs",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_19"
+        }
+      ],
+      "reason": "Inferred from the curved upper segment of the U-shape in View 5."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "rel_legs_bend",
+      "type": "connected",
+      "features": [
+        "leg_left",
+        "leg_right",
+        "bend_top"
+      ],
+      "description": "Legs are connected by the top bend",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_19"
+        }
+      ],
+      "reason": "The continuous outline in View 5 shows the legs merging into the curved top."
+    },
+    {
+      "id": "rel_cross_section",
+      "type": "shared_dimension",
+      "features": [
+        "body_main",
+        "cross_section"
+      ],
+      "description": "The body has a uniform circular cross-section",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_3",
+          "region_id": "profile_contour_17"
+        },
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_19"
+        }
+      ],
+      "reason": "View 3 shows a circular profile. View 5 shows a constant width for the U-shape, implying a uniform cross-section."
+    },
+    {
+      "id": "rel_symmetry",
+      "type": "symmetry",
+      "features": [
+        "leg_left",
+        "leg_right"
+      ],
+      "description": "The handle exhibits bilateral symmetry",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_19"
+        }
+      ],
+      "reason": "The U-shape in View 5 appears symmetric about the vertical axis."
+    }
+  ],
+  "assumptions": [
+    "View 5 represents the primary front elevation of the object.",
+    "View 3 represents the side elevation (Right view) showing the cross-section.",
+    "View 6 represents the top view showing the planar footprint.",
+    "The object is a solid rod bent into a U-shape."
+  ],
+  "unresolved": [
+    "Exact dimensions of the bend radius and leg length (text notes suggest R20 and 30mm but are not measured regions).",
+    "Internal structure (hollow vs solid) is not explicitly defined by the outer contours alone, though 'diameter 8mm' implies solid."
+  ],
+  "conflicts": [
+    "View 1, 2, and 4 contain noisy, low-circularity contours that do not clearly map to the main geometry and may be artifacts or unrelated details."
+  ]
+}

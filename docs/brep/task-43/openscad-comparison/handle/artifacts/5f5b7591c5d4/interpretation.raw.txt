@@ -1,0 +1,159 @@
+{
+  "object": "Curved Handle",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "top",
+      "sheet_region": "view_5",
+      "what_it_constrains": "The planar profile of the handle (inverted U-shape), defining the bend radius and leg lengths."
+    },
+    {
+      "direction": "front",
+      "sheet_region": "view_3",
+      "what_it_constrains": "The cross-section of the handle, defining the circular profile and diameter."
+    },
+    {
+      "direction": "left",
+      "sheet_region": "view_2",
+      "what_it_constrains": "The side elevation, confirming the height and curvature."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "handle_body",
+      "type": "swept_profile",
+      "material": "plastic",
+      "description": "A single continuous rod bent into an inverted U-shape."
+    }
+  ],
+  "features": [
+    {
+      "id": "bend",
+      "type": "curved_segment",
+      "parameters": {
+        "radius": 20,
+        "angle": 180,
+        "centerline_radius": true
+      }
+    },
+    {
+      "id": "legs",
+      "type": "straight_segments",
+      "parameters": {
+        "length": 30,
+        "count": 2
+      }
+    },
+    {
+      "id": "cross_section",
+      "type": "circle",
+      "parameters": {
+        "diameter": 8
+      }
+    }
+  ],
+  "relations": [
+    {
+      "type": "sweep",
+      "profile": "cross_section",
+      "path": "bend_and_legs",
+      "description": "The circular cross-section is swept along the path defined by the two straight legs and the semi-circular bend."
+    }
+  ],
+  "symmetry": {
+    "type": "planar",
+    "axis": "vertical_centerline_of_handle",
+    "description": "The object is symmetric about the vertical plane bisecting the handle."
+  },
+  "repetitions": [
+    {
+      "feature": "legs",
+      "count": 2,
+      "description": "Two identical straight legs extending downwards."
+    }
+  ],
+  "dimensions": [
+    {
+      "feature": "bend",
+      "dimension_type": "radius",
+      "value": 20,
+      "unit": "mm",
+      "source": "text_annotation"
+    },
+    {
+      "feature": "legs",
+      "dimension_type": "length",
+      "value": 30,
+      "unit": "mm",
+      "source": "text_annotation"
+    },
+    {
+      "feature": "cross_section",
+      "dimension_type": "diameter",
+      "value": 8,
+      "unit": "mm",
+      "source": "text_annotation"
+    }
+  ],
+  "uncertainties": [
+    "The 'top' view in the drawing actually depicts the front elevation (inverted U), while the 'end section' depicts the cross-section. The CAD mapping assumes the inverted U is the primary profile plane."
+  ],
+  "interpretation_conflicts": [
+    "The label 'TOP (XY)' is placed above the inverted U view, but geometrically this view represents the front face (XZ plane) of the object relative to the sweep direction. The 'END SECTION' represents the cross-section."
+  ],
+  "generation_notes": "The object is a standard handle. The geometry is fully defined by the sweep of a circle (d=8mm) along a path consisting of two straight segments (L=30mm) and a semi-circle (R=20mm). The maximum dimension is the total height (30mm leg + 20mm radius = 50mm) or width (40mm + 8mm = 48mm).",
+  "construction_plan": {
+    "family": "sweep",
+    "operations": [
+      {
+        "id": "create_path",
+        "operation": "create_sketch",
+        "owner": "handle_body",
+        "profile_plane": "XZ",
+        "direction_axis": "Y",
+        "parameters": {
+          "geometry": "inverted_u",
+          "leg_length": 30,
+          "bend_radius": 20
+        },
+        "source_views": [
+          "view_5"
+        ]
+      },
+      {
+        "id": "create_profile",
+        "operation": "create_sketch",
+        "owner": "handle_body",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "parameters": {
+          "shape": "circle",
+          "diameter": 8
+        },
+        "source_views": [
+          "view_3"
+        ]
+      },
+      {
+        "id": "sweep_profile",
+        "operation": "sweep",
+        "owner": "handle_body",
+        "profile_plane": "XY",
+        "direction_axis": "Y",
+        "parameters": {
+          "path_id": "create_path",
+          "profile_id": "create_profile",
+          "orientation": "fixed"
+        },
+        "source_views": [
+          "view_5",
+          "view_3"
+        ]
+      }
+    ],
+    "unresolved_constraints": []
+  }
+}

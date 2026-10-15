@@ -1,0 +1,36 @@
+```json
+{
+  "view_frame": "The drawing uses a third-angle projection with two primary views. The TOP view (XY) defines the planar footprint, where X is the width (80mm) and Y is the depth (50mm). The FRONT view (XZ) defines the elevation, where X is the width (80mm) and Z is the height (30mm). The world origin (0,0,0) is located at the bottom-front-left corner of the bounding box.",
+  "features": [
+    {
+      "id": "housing_blank",
+      "shape": "Extruded rounded rectangle (prism)",
+      "section": "Rounded rectangle: 80mm (X) x 50mm (Y) with R6 corner fillets",
+      "axis_or_plane": "Extruded along the Z-axis",
+      "dimensions": [
+        "Length (X): 80",
+        "Width (Y): 50",
+        "Height (Z): 30",
+        "Corner Radius (XY): R6"
+      ],
+      "placement": "Centered at (40, 25, 15). The solid occupies the volume from X=0 to 80, Y=0 to 50, and Z=0 to 30. The XY profile consists of straight segments at X=0, X=80, Y=0, and Y=50, connected by quarter-circle arcs of radius 6 centered at (6,6), (74,6), (74,44), and (6,44).",
+      "evidence": "Top view shows a rectangle with rounded corners labeled '4 corners: R6' and dimensions 80 and 50. Front view shows a rectangle with dimensions 80 and 30. Notes state 'Solid blank' and 'Same corner shape through the full height'."
+    }
+  ],
+  "connections": [
+    "The vertical edges of the Front view (XZ) align with the straight vertical edges of the Top view (XY).",
+    "The horizontal dimension 80 is shared between the Top and Front views.",
+    "The height 30 in the Front view corresponds to the extrusion depth of the Top view profile."
+  ],
+  "edit_rules": [
+    "Changing the Corner Radius (R6) modifies the XY profile but does not affect the overall bounding box dimensions (80x50) or the height (30).",
+    "Changing the Height (30) scales the Z-axis only; the XY profile remains constant.",
+    "Changing the Length (80) or Width (50) scales the XY profile; the corner radius (R6) remains constant unless explicitly edited.",
+    "Top and bottom perimeter edges (Z=0 and Z=30) must remain sharp (90 degrees) regardless of corner radius changes."
+  ],
+  "unresolved": [
+    "The specific material or surface finish is not defined.",
+    "The orientation of the part relative to the print bed is not specified (though Z is typically the build axis)."
+  ]
+}
+```

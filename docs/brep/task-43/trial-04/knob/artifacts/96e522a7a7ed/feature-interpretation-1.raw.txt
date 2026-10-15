@@ -1,0 +1,167 @@
+```json
+{
+  "version": 1,
+  "object_hypothesis": "A stepped mechanical component, likely a pulley or spool, featuring a central web and two opposing flanges.",
+  "features": [
+    {
+      "id": "body",
+      "type": "body",
+      "description": "The main solid volume of the component defined by the outer boundaries in both views.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_3"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_1"
+        }
+      ],
+      "reason": "Visible as the primary closed polygon in both the front and right views."
+    },
+    {
+      "id": "top_flange",
+      "type": "flange",
+      "description": "The upper horizontal section of the component, appearing wider than the central section.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_3"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_1"
+        }
+      ],
+      "reason": "Identified by the stepped geometry at the top of the profile in both views."
+    },
+    {
+      "id": "bottom_flange",
+      "type": "flange",
+      "description": "The lower horizontal section of the component, appearing wider than the central section.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_3"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_1"
+        }
+      ],
+      "reason": "Identified by the stepped geometry at the bottom of the profile in both views."
+    },
+    {
+      "id": "central_web",
+      "type": "body",
+      "description": "The narrower vertical section connecting the top and bottom flanges.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_3"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_1"
+        }
+      ],
+      "reason": "Visible as the central region between the flanges in both views."
+    },
+    {
+      "id": "central_axis",
+      "type": "other",
+      "description": "A small dash mark located near the geometric center of the component.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "view"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "view"
+        }
+      ],
+      "reason": "Visible as a distinct mark in the center of the web in both views, likely indicating a center of rotation or axis."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "flange_web_connection",
+      "type": "connected",
+      "features": [
+        "top_flange",
+        "bottom_flange",
+        "central_web"
+      ],
+      "description": "The top and bottom flanges are connected by the central web.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_3"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_1"
+        }
+      ],
+      "reason": "The continuous outline in both views shows the web physically joining the flanges."
+    },
+    {
+      "id": "view_consistency",
+      "type": "other",
+      "features": [
+        "body"
+      ],
+      "description": "The front and right views display nearly identical stepped profiles.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_3"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_1"
+        }
+      ],
+      "reason": "The polygon shapes in both views are geometrically similar, suggesting a symmetrical or rotational object."
+    },
+    {
+      "id": "axis_alignment",
+      "type": "position",
+      "features": [
+        "central_axis",
+        "body"
+      ],
+      "description": "The central axis mark is positioned within the central web.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "view"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "view"
+        }
+      ],
+      "reason": "The mark is visually located in the center of the web area in both views."
+    }
+  ],
+  "assumptions": [
+    "The object is likely rotationally symmetric (e.g., a pulley) because the front and right views are identical.",
+    "The central dash marks represent a central axis of rotation."
+  ],
+  "unresolved": [
+    "The exact 3D shape (cylindrical vs. prismatic) is not definitively proven by the two views alone.",
+    "The presence of a central hole or bore is not explicitly drawn, only implied by the axis mark."
+  ],
+  "conflicts": []
+}
+```

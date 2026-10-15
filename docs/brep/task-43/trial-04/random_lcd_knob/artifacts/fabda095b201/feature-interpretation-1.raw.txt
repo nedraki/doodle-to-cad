@@ -1,0 +1,147 @@
+{
+  "version": 1,
+  "object_hypothesis": "A three-armed component with a central circular hub and three radial arms, featuring a trapezoidal cross-section.",
+  "features": [
+    {
+      "id": "hub_body",
+      "type": "body",
+      "description": "Central circular body of the component.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_4"
+        }
+      ],
+      "reason": "The central region of the top view (view_1) shows a continuous circular boundary."
+    },
+    {
+      "id": "arm_1",
+      "type": "body",
+      "description": "Radial arm extending from the hub towards the upper-right.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_4"
+        }
+      ],
+      "reason": "A distinct rectangular protrusion is visible in the top view at the upper-right position."
+    },
+    {
+      "id": "arm_2",
+      "type": "body",
+      "description": "Radial arm extending from the hub towards the lower-right.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_4"
+        }
+      ],
+      "reason": "A distinct rectangular protrusion is visible in the top view at the lower-right position."
+    },
+    {
+      "id": "arm_3",
+      "type": "body",
+      "description": "Radial arm extending from the hub towards the left.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_4"
+        }
+      ],
+      "reason": "A distinct rectangular protrusion is visible in the top view at the left position."
+    },
+    {
+      "id": "trapezoidal_profile",
+      "type": "profile",
+      "description": "Trapezoidal cross-section shape of the component.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_2"
+        },
+        {
+          "view_id": "view_3",
+          "region_id": "profile_contour_1"
+        }
+      ],
+      "reason": "Both front (view_2) and right (view_3) views display a trapezoidal outline, indicating a tapered body."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "arm_connectivity",
+      "type": "connected",
+      "features": [
+        "hub_body",
+        "arm_1",
+        "arm_2",
+        "arm_3"
+      ],
+      "description": "The three arms are connected to the central hub.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_4"
+        }
+      ],
+      "reason": "The contour in the top view is a single continuous path connecting the arms to the hub."
+    },
+    {
+      "id": "radial_symmetry",
+      "type": "symmetry",
+      "features": [
+        "arm_1",
+        "arm_2",
+        "arm_3"
+      ],
+      "description": "The arms are arranged radially around the hub.",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_4"
+        }
+      ],
+      "reason": "The arms are spaced approximately 120 degrees apart in the top view, suggesting a radial arrangement."
+    },
+    {
+      "id": "profile_consistency",
+      "type": "shared_dimension",
+      "features": [
+        "trapezoidal_profile",
+        "hub_body",
+        "arm_1",
+        "arm_2",
+        "arm_3"
+      ],
+      "description": "The trapezoidal profile applies to the entire component.",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_2"
+        },
+        {
+          "view_id": "view_3",
+          "region_id": "profile_contour_1"
+        }
+      ],
+      "reason": "The side views show a uniform trapezoidal height and taper across the width of the object, implying the shape is consistent for both the hub and arms."
+    }
+  ],
+  "assumptions": [
+    "The object is a single solid piece.",
+    "The top view represents the widest part of the object (the top of the trapezoid)."
+  ],
+  "unresolved": [
+    "Exact thickness of the arms relative to the hub.",
+    "Whether the arms are perfectly straight or slightly curved."
+  ],
+  "conflicts": []
+}

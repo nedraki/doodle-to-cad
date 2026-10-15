@@ -1,0 +1,30 @@
+{
+  "view_frame": "The drawing presents a 'TOP (XY)' view and an 'END SECTION' view. The world coordinate system is defined with X as width (horizontal on the sheet), Y as depth (vertical on the sheet), and Z as height (perpendicular to the sheet). The 'TOP (XY)' view displays the planar projection of the handle's centreline. The 'END SECTION' view displays the cross-section of the handle, which is circular.",
+  "features": [
+    {
+      "id": "handle_centreline",
+      "shape": "Path",
+      "section": "Circular",
+      "axis_or_plane": "XY Plane",
+      "dimensions": [
+        "R20",
+        "30",
+        "8"
+      ],
+      "placement": "The path consists of two straight segments and one arc. The centre of the arc is at (0, 30). The arc has a radius of 20 and spans from angle 0 to 180 degrees. The right straight leg runs from (20, 0) to (20, 30). The left straight leg runs from (-20, 0) to (-20, 30). The entire path is located at Z=4, which is the radius of the circular section, to lift the part off the bed.",
+      "evidence": "The 'TOP (XY)' view shows a U-shaped path. The text 'Bend centreline R20; straight legs 30 mm' defines the geometry. The 'END SECTION' view shows a circle with 'diameter 8 mm'."
+    }
+  ],
+  "connections": [
+    "The right straight leg connects to the arc at point (20, 30).",
+    "The left straight leg connects to the arc at point (-20, 30)."
+  ],
+  "edit_rules": [
+    "Changing the 'Bend centreline R20' value will move the arc's endpoints and the top of the handle, altering the overall width.",
+    "Changing the 'straight legs 30 mm' value will move the arc's centre and the top of the handle, altering the overall height.",
+    "Changing the 'diameter 8 mm' value will change the thickness of the handle and its height off the bed (Z=radius)."
+  ],
+  "unresolved": [
+    "The absolute position of the part relative to the origin is assumed based on the symmetry of the drawing. The origin (0,0) is placed at the midpoint between the two leg ends."
+  ]
+}

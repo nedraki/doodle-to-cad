@@ -1,0 +1,526 @@
+{
+  "handle": {
+    "id": "5f5b7591c5d4",
+    "pipeline_accepted": false,
+    "evaluation": {
+      "score": 92.3,
+      "valid_mesh": true,
+      "accepted": false,
+      "mandatory_gates": {
+        "compiled": true,
+        "topology": true,
+        "dimensions": false,
+        "shape_sanity": false,
+        "features": true,
+        "projections": true,
+        "build_envelope": true
+      },
+      "scores": {
+        "topology": 45,
+        "dimensions": 18.1,
+        "features": 20,
+        "projections": 9.2
+      },
+      "projection_similarity": {
+        "top": 0.61
+      },
+      "profile_topology": {
+        "top": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 3,
+          "crop_internal_profiles": 0,
+          "source_aspect": 4.35,
+          "rendered_aspect": 5.375,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": [
+            [
+              0.411,
+              0.169
+            ]
+          ]
+        }
+      },
+      "failures": [
+        "maximum dimension is 49 mm; target is 54 mm (tolerance 5%)",
+        "degenerate or implausible axis dimensions: X=49 mm vs expected 16.73 mm"
+      ]
+    },
+    "measurements": {
+      "status": "failed",
+      "extents_mm": [
+        49.0,
+        8.9507,
+        48.73159
+      ],
+      "expected_extents_mm": [
+        48,
+        54,
+        8
+      ],
+      "dimensions_passed": false,
+      "geometry_passed": true,
+      "sections": [
+        {
+          "status": "failed",
+          "symmetric_boundary_error_mm": 45.149,
+          "tolerance_mm": 1,
+          "sampling_spacing_mm": 0.1,
+          "axis": 2,
+          "position_mm": 4,
+          "loops": 1
+        },
+        {
+          "status": "failed",
+          "reason": "Required section is absent"
+        }
+      ],
+      "world_bounds_mm": [
+        [
+          -24.5,
+          -4.47535,
+          9.38421
+        ],
+        [
+          24.5,
+          4.47535,
+          58.1158
+        ]
+      ],
+      "scope": "Independent mesh dimensions and sections; does not replace human view/intent review"
+    },
+    "duration_seconds": 210.23,
+    "parameters": [
+      {
+        "label": "Bend Radius",
+        "feature": {
+          "kind": "dimension",
+          "axis": "z",
+          "label": "Bend Radius"
+        },
+        "name": "bend_radius",
+        "value": 20.0,
+        "unit": "mm",
+        "group": null,
+        "description": "Radius of the semi-circular top bend",
+        "low": 0.0,
+        "high": 40.0,
+        "step": 0.01
+      },
+      {
+        "label": "Leg Length",
+        "feature": {
+          "kind": "dimension",
+          "axis": "z",
+          "label": "Leg Length"
+        },
+        "name": "leg_length",
+        "value": 33.75,
+        "unit": "mm",
+        "group": null,
+        "description": "Length of the straight legs extending downwards",
+        "low": 0.0,
+        "high": 67.5,
+        "step": 0.01
+      },
+      {
+        "label": "Rod Diameter",
+        "feature": {
+          "kind": "dimension",
+          "axis": "x",
+          "label": "Rod Diameter"
+        },
+        "name": "rod_diameter",
+        "value": 9.0,
+        "unit": "mm",
+        "group": null,
+        "description": "Diameter of the circular cross-section",
+        "low": 0.0,
+        "high": 18.0,
+        "step": 0.01
+      }
+    ]
+  },
+  "rounded": {
+    "id": "6f706c6b9710",
+    "pipeline_accepted": true,
+    "evaluation": {
+      "score": 97.0,
+      "valid_mesh": true,
+      "accepted": true,
+      "mandatory_gates": {
+        "compiled": true,
+        "topology": true,
+        "dimensions": true,
+        "shape_sanity": true,
+        "features": true,
+        "projections": true,
+        "build_envelope": true
+      },
+      "scores": {
+        "topology": 45,
+        "dimensions": 20.0,
+        "features": 20,
+        "projections": 12.0
+      },
+      "projection_similarity": {
+        "top": 0.925,
+        "right": 0.673
+      },
+      "profile_topology": {
+        "top": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 0,
+          "source_aspect": 1.413,
+          "rendered_aspect": 1.593,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": []
+        },
+        "right": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 2,
+          "crop_internal_profiles": 0,
+          "source_aspect": 2.745,
+          "rendered_aspect": 1.8,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": [
+            [
+              0.496,
+              0.493
+            ],
+            [
+              0.033,
+              0.495
+            ]
+          ]
+        }
+      },
+      "failures": []
+    },
+    "measurements": {
+      "status": "failed",
+      "extents_mm": [
+        80.0,
+        50.36,
+        27.73
+      ],
+      "expected_extents_mm": [
+        80,
+        50,
+        30
+      ],
+      "dimensions_passed": false,
+      "geometry_passed": true,
+      "sections": [
+        {
+          "status": "failed",
+          "symmetric_boundary_error_mm": 0.36083,
+          "tolerance_mm": 0.25,
+          "sampling_spacing_mm": 0.1,
+          "axis": 2,
+          "position_mm": 0.01,
+          "loops": 1
+        },
+        {
+          "status": "failed",
+          "symmetric_boundary_error_mm": 0.36345,
+          "tolerance_mm": 0.25,
+          "sampling_spacing_mm": 0.1,
+          "axis": 2,
+          "position_mm": 5,
+          "loops": 1
+        },
+        {
+          "status": "failed",
+          "symmetric_boundary_error_mm": 0.36345,
+          "tolerance_mm": 0.25,
+          "sampling_spacing_mm": 0.1,
+          "axis": 2,
+          "position_mm": 15,
+          "loops": 1
+        },
+        {
+          "status": "failed",
+          "symmetric_boundary_error_mm": 0.36345,
+          "tolerance_mm": 0.25,
+          "sampling_spacing_mm": 0.1,
+          "axis": 2,
+          "position_mm": 25,
+          "loops": 1
+        },
+        {
+          "status": "failed",
+          "reason": "Required section is absent"
+        }
+      ],
+      "world_bounds_mm": [
+        [
+          -40.0,
+          -25.18,
+          0.0
+        ],
+        [
+          40.0,
+          25.18,
+          27.73
+        ]
+      ],
+      "scope": "Independent mesh dimensions and sections; does not replace human view/intent review"
+    },
+    "duration_seconds": 72.86,
+    "parameters": [
+      {
+        "label": "Overall width",
+        "feature": {
+          "kind": "dimension",
+          "axis": "x",
+          "label": "Overall width"
+        },
+        "name": "width",
+        "value": 80.0,
+        "unit": "mm",
+        "group": null,
+        "description": "Changes the body width along X",
+        "low": 0.0,
+        "high": 160.0,
+        "step": 0.01
+      },
+      {
+        "label": "Overall depth",
+        "feature": {
+          "kind": "dimension",
+          "axis": "y",
+          "label": "Overall depth"
+        },
+        "name": "depth",
+        "value": 50.36,
+        "unit": "mm",
+        "group": null,
+        "description": "Changes the body depth along Y",
+        "low": 0.0,
+        "high": 100.72,
+        "step": 0.01
+      },
+      {
+        "label": "Overall height",
+        "feature": {
+          "kind": "dimension",
+          "axis": "z",
+          "label": "Overall height"
+        },
+        "name": "height",
+        "value": 27.73,
+        "unit": "mm",
+        "group": null,
+        "description": "Changes the body height along Z",
+        "low": 0.0,
+        "high": 55.46,
+        "step": 0.01
+      },
+      {
+        "label": "Corner radius",
+        "feature": {
+          "kind": "region",
+          "label": "Corner fillet",
+          "min": [
+            0,
+            0,
+            0
+          ],
+          "max": [
+            6.0,
+            6.0,
+            27.73
+          ]
+        },
+        "name": "corner_radius",
+        "value": 6.0,
+        "unit": "mm",
+        "group": null,
+        "description": "Radius of the vertical corner fillets",
+        "low": 0.0,
+        "high": 12.0,
+        "step": 0.01
+      }
+    ]
+  },
+  "bevel": {
+    "id": "09b67225eae9",
+    "pipeline_accepted": false,
+    "evaluation": {
+      "score": 93.5,
+      "valid_mesh": true,
+      "accepted": false,
+      "mandatory_gates": {
+        "compiled": true,
+        "topology": true,
+        "dimensions": true,
+        "shape_sanity": true,
+        "features": true,
+        "projections": false,
+        "build_envelope": true
+      },
+      "scores": {
+        "topology": 45,
+        "dimensions": 20.0,
+        "features": 20,
+        "projections": 8.5
+      },
+      "projection_similarity": {
+        "top": 0.288,
+        "right": 0.848
+      },
+      "profile_topology": {
+        "top": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 0,
+          "source_aspect": 14.088,
+          "rendered_aspect": 2.392,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": []
+        },
+        "right": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 0,
+          "source_aspect": 4.324,
+          "rendered_aspect": 6.0,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": []
+        }
+      },
+      "failures": [
+        "CAD projections poorly match the drawing: top similarity 0.29 (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly."
+      ]
+    },
+    "measurements": {
+      "status": "failed",
+      "extents_mm": [
+        60.0,
+        25.18,
+        4.27
+      ],
+      "expected_extents_mm": [
+        60,
+        40,
+        20
+      ],
+      "dimensions_passed": false,
+      "geometry_passed": true,
+      "sections": [
+        {
+          "status": "failed",
+          "reason": "Required section is absent"
+        },
+        {
+          "status": "failed",
+          "symmetric_boundary_error_mm": 15.73008,
+          "tolerance_mm": 0.25,
+          "sampling_spacing_mm": 0.1,
+          "axis": 1,
+          "position_mm": 20,
+          "loops": 1
+        },
+        {
+          "status": "failed",
+          "symmetric_boundary_error_mm": 20.29249,
+          "tolerance_mm": 0.25,
+          "sampling_spacing_mm": 0.1,
+          "axis": 0,
+          "position_mm": 30,
+          "loops": 1
+        }
+      ],
+      "world_bounds_mm": [
+        [
+          -30.0,
+          -12.59,
+          0.0
+        ],
+        [
+          30.0,
+          12.59,
+          4.27
+        ]
+      ],
+      "scope": "Independent mesh dimensions and sections; does not replace human view/intent review"
+    },
+    "duration_seconds": 519.77,
+    "parameters": [
+      {
+        "label": "Overall width",
+        "feature": {
+          "kind": "dimension",
+          "axis": "x",
+          "label": "Overall width"
+        },
+        "name": "width",
+        "value": 60.0,
+        "unit": "mm",
+        "group": null,
+        "description": "Changes the body width along X",
+        "low": 0.0,
+        "high": 120.0,
+        "step": 0.01
+      },
+      {
+        "label": "Overall depth",
+        "feature": {
+          "kind": "dimension",
+          "axis": "y",
+          "label": "Overall depth"
+        },
+        "name": "depth",
+        "value": 25.18,
+        "unit": "mm",
+        "group": null,
+        "description": "Changes the body depth along Y",
+        "low": 0.0,
+        "high": 50.36,
+        "step": 0.01
+      },
+      {
+        "label": "Overall height",
+        "feature": {
+          "kind": "dimension",
+          "axis": "z",
+          "label": "Overall height"
+        },
+        "name": "height",
+        "value": 4.27,
+        "unit": "mm",
+        "group": null,
+        "description": "Changes the body height along Z",
+        "low": 0.0,
+        "high": 8.54,
+        "step": 0.01
+      },
+      {
+        "label": "Chamfer size",
+        "feature": {
+          "kind": "region",
+          "label": "Edge Chamfers",
+          "min": [
+            0,
+            0,
+            0
+          ],
+          "max": [
+            60.0,
+            25.18,
+            4.27
+          ]
+        },
+        "name": "chamfer_size",
+        "value": 2.0,
+        "unit": "mm",
+        "group": null,
+        "description": "Size of the 45-degree chamfer on all edges",
+        "low": 0.0,
+        "high": 4.0,
+        "step": 0.01
+      }
+    ]
+  }
+}

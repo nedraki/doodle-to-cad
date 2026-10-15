@@ -1,0 +1,139 @@
+```json
+{
+  "version": 1,
+  "object_hypothesis": "Spoked wheel component",
+  "features": [
+    {
+      "id": "f_rim",
+      "type": "rim",
+      "description": "Outer circular boundary of the wheel",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "Visible as the primary outer contour in the front view."
+    },
+    {
+      "id": "f_hub",
+      "type": "hub",
+      "description": "Central circular hub",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "Visible as the inner circular contour in the front view."
+    },
+    {
+      "id": "f_spokes",
+      "type": "spoke",
+      "description": "Radial spokes connecting hub to rim",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "Visible as linear segments connecting the central hub to the outer rim in the front view."
+    },
+    {
+      "id": "f_body",
+      "type": "body",
+      "description": "Main planar body of the wheel",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_14"
+        }
+      ],
+      "reason": "Visible as a rectangular profile in the right view, indicating the wheel's thickness."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "r_spoke_hub",
+      "type": "connected",
+      "features": [
+        "f_spokes",
+        "f_hub"
+      ],
+      "description": "Spokes connect to the central hub",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "Visible junctions between spoke lines and the hub circle in the front view."
+    },
+    {
+      "id": "r_spoke_rim",
+      "type": "connected",
+      "features": [
+        "f_spokes",
+        "f_rim"
+      ],
+      "description": "Spokes connect to the outer rim",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "Visible junctions between spoke lines and the rim circle in the front view."
+    },
+    {
+      "id": "r_spoke_repeat",
+      "type": "repeated",
+      "features": [
+        "f_spokes"
+      ],
+      "description": "Multiple spokes arranged radially",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "Multiple distinct spoke segments are visible in the front view."
+    },
+    {
+      "id": "r_symmetry",
+      "type": "symmetry",
+      "features": [
+        "f_rim",
+        "f_hub",
+        "f_spokes"
+      ],
+      "description": "Radial symmetry of the wheel structure",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "The arrangement of spokes and concentric circles suggests rotational symmetry."
+    }
+  ],
+  "assumptions": [
+    "The object is a single rigid body.",
+    "The front view represents the primary face of the wheel."
+  ],
+  "unresolved": [
+    "Internal structure of the hub (e.g., bore hole).",
+    "Exact thickness of the rim and spokes."
+  ],
+  "conflicts": []
+}
+```

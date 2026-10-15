@@ -1,0 +1,145 @@
+{
+  "ok": true,
+  "backend": "usd-brep",
+  "applied": {
+    "bend_radius": 24
+  },
+  "stl": "/results/fd25f0d2381a/brep-7ec62d11d6474ca1bbf48d8c1cddc36b/model.stl",
+  "source": "/results/fd25f0d2381a/brep-7ec62d11d6474ca1bbf48d8c1cddc36b/model.recipe.json",
+  "usd": "/results/fd25f0d2381a/brep-7ec62d11d6474ca1bbf48d8c1cddc36b/model.usda",
+  "diagnostics": {
+    "backend": "usd-brep",
+    "version": "1.0.0",
+    "recipe_version": 2,
+    "solid_volume_mm3": 6805.850339348775,
+    "mesh_volume_mm3": 6755.870758698174,
+    "extents_mm": [
+      56.0,
+      57.993038177490234,
+      8.0
+    ],
+    "bounds_mm": [
+      [
+        -28.0,
+        -2.4492937051703357e-16,
+        -8.87557597489347e-16
+      ],
+      [
+        28.0,
+        57.993038177490234,
+        8.0
+      ]
+    ],
+    "watertight": true,
+    "winding_consistent": true,
+    "euler_number": 2,
+    "triangles": 2236,
+    "usd_roundtrip": true,
+    "volume_relative_accuracy": 1e-08,
+    "usd_volume_mm3": 6805.850461191736,
+    "operations": [
+      {
+        "id": "left_leg",
+        "kind": "cylinder",
+        "faces": 3
+      },
+      {
+        "id": "right_leg",
+        "kind": "cylinder",
+        "faces": 3
+      },
+      {
+        "id": "arch",
+        "kind": "arc_pipe",
+        "faces": 3
+      },
+      {
+        "id": "handle",
+        "kind": "union",
+        "faces": 6
+      },
+      {
+        "id": "handle_final",
+        "kind": "union",
+        "faces": 5
+      }
+    ],
+    "connections": [],
+    "build_seconds": 1.947
+  },
+  "views": {
+    "isometric": "/results/fd25f0d2381a/brep-7ec62d11d6474ca1bbf48d8c1cddc36b/view-isometric.png",
+    "front": "/results/fd25f0d2381a/brep-7ec62d11d6474ca1bbf48d8c1cddc36b/view-front.png",
+    "top": "/results/fd25f0d2381a/brep-7ec62d11d6474ca1bbf48d8c1cddc36b/view-top.png",
+    "right": "/results/fd25f0d2381a/brep-7ec62d11d6474ca1bbf48d8c1cddc36b/view-right.png"
+  },
+  "build": {
+    "version": 1,
+    "backend": "usd-brep",
+    "source_format": "brep-recipe-v2",
+    "ok": true,
+    "units": "mm",
+    "axes": {
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    },
+    "views": [
+      "isometric",
+      "front",
+      "top",
+      "right"
+    ],
+    "measurements": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 2236,
+      "extents_mm": [
+        56.0,
+        57.993,
+        8.0
+      ],
+      "volume_mm3": 6755.871
+    },
+    "diagnostics": [],
+    "drawing_evaluated": false
+  },
+  "params": [
+    {
+      "name": "bend_radius",
+      "value": 24.0,
+      "low": 10,
+      "high": 50,
+      "step": 0.01,
+      "label": "Bend Centreline Radius",
+      "unit": "mm",
+      "description": "Rebuilds the saved construction recipe",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "leg_length",
+      "value": 30.0,
+      "low": 10,
+      "high": 100,
+      "step": 0.01,
+      "label": "Straight Leg Length",
+      "unit": "mm",
+      "description": "Rebuilds the saved construction recipe",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "section_diameter",
+      "value": 8.0,
+      "low": 2,
+      "high": 20,
+      "step": 0.01,
+      "label": "Section Diameter",
+      "unit": "mm",
+      "description": "Rebuilds the saved construction recipe",
+      "group": "Details",
+      "feature": null
+    }
+  ]
+}

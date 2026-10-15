@@ -1,0 +1,174 @@
+{
+  "version": 1,
+  "object_hypothesis": "Curved handle with U-shaped profile and circular cross-section",
+  "features": [
+    {
+      "id": "body_main",
+      "type": "body",
+      "description": "Main U-shaped body of the handle",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_19"
+        }
+      ],
+      "reason": "View 5 shows a large U-shaped contour consistent with the handle body."
+    },
+    {
+      "id": "profile_leg_left",
+      "type": "profile",
+      "description": "Left leg of the U-shaped handle",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_19"
+        }
+      ],
+      "reason": "Left vertical segment of the U-shape in View 5."
+    },
+    {
+      "id": "profile_leg_right",
+      "type": "profile",
+      "description": "Right leg of the U-shaped handle",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_19"
+        }
+      ],
+      "reason": "Right vertical segment of the U-shape in View 5."
+    },
+    {
+      "id": "profile_bend",
+      "type": "profile",
+      "description": "Curved bend connecting the legs",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_19"
+        }
+      ],
+      "reason": "Top curved segment of the U-shape in View 5."
+    },
+    {
+      "id": "cross_section_circle",
+      "type": "profile",
+      "description": "Circular cross-section of the handle",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_3",
+          "region_id": "profile_contour_17"
+        }
+      ],
+      "reason": "View 3 shows a circular contour representing the cross-section."
+    },
+    {
+      "id": "end_left",
+      "type": "profile",
+      "description": "Left end of the handle",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_41"
+        }
+      ],
+      "reason": "View 1 shows a profile consistent with the end of a leg."
+    },
+    {
+      "id": "end_right",
+      "type": "profile",
+      "description": "Right end of the handle",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_21"
+        }
+      ],
+      "reason": "View 2 shows a profile consistent with the end of a leg."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "rel_legs_bend",
+      "type": "connected",
+      "features": [
+        "profile_leg_left",
+        "profile_leg_right",
+        "profile_bend"
+      ],
+      "description": "Legs are connected by the bend",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_19"
+        }
+      ],
+      "reason": "The U-shape in View 5 shows the legs and bend as a continuous contour."
+    },
+    {
+      "id": "rel_cross_section",
+      "type": "shared_dimension",
+      "features": [
+        "body_main",
+        "cross_section_circle"
+      ],
+      "description": "Body has circular cross-section",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_3",
+          "region_id": "profile_contour_17"
+        },
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_19"
+        }
+      ],
+      "reason": "View 3 shows a circle, and View 5 shows the body width consistent with a circular cross-section."
+    },
+    {
+      "id": "rel_ends_body",
+      "type": "connected",
+      "features": [
+        "end_left",
+        "end_right",
+        "body_main"
+      ],
+      "description": "Ends are part of the body",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_41"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_21"
+        },
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_19"
+        }
+      ],
+      "reason": "Views 1 and 2 show ends that align with the legs in View 5."
+    }
+  ],
+  "assumptions": [
+    "The object is a single continuous piece.",
+    "The circular cross-section is uniform along the length.",
+    "The bend is a smooth curve."
+  ],
+  "unresolved": [
+    "Exact thickness of the handle material.",
+    "Whether the ends are open or capped."
+  ],
+  "conflicts": []
+}

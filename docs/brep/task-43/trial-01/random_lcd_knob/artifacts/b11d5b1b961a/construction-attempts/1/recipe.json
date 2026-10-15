@@ -1,0 +1,330 @@
+{
+  "version": 2,
+  "units": "mm",
+  "name": "three_arm_knob",
+  "parameters": {
+    "hub_diameter": {
+      "value": 30,
+      "min": 10,
+      "max": 50,
+      "label": "Hub Diameter",
+      "unit": "mm"
+    },
+    "hub_height": {
+      "value": 10,
+      "min": 5,
+      "max": 20,
+      "label": "Hub Height",
+      "unit": "mm"
+    },
+    "base_bottom_diameter": {
+      "value": 15,
+      "min": 5,
+      "max": 30,
+      "label": "Base Bottom Diameter",
+      "unit": "mm"
+    },
+    "base_height": {
+      "value": 10,
+      "min": 5,
+      "max": 20,
+      "label": "Base Height",
+      "unit": "mm"
+    },
+    "arm_length": {
+      "value": 10,
+      "min": 5,
+      "max": 20,
+      "label": "Arm Length",
+      "unit": "mm"
+    },
+    "arm_width": {
+      "value": 6,
+      "min": 2,
+      "max": 15,
+      "label": "Arm Width",
+      "unit": "mm"
+    }
+  },
+  "operations": [
+    {
+      "id": "base",
+      "kind": "cylinder",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "radius": "base_bottom_diameter/2",
+      "height": "base_height",
+      "axis": "z",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "hub",
+      "kind": "cylinder",
+      "origin": [
+        0,
+        0,
+        "base_height - 0.1"
+      ],
+      "radius": "hub_diameter/2",
+      "height": "hub_height",
+      "axis": "z",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "arm1",
+      "kind": "box",
+      "origin": [
+        "hub_diameter/2 - 1",
+        "-arm_width/2",
+        "base_height"
+      ],
+      "size": [
+        "arm_length",
+        "arm_width",
+        "hub_height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "arm1_rot",
+      "kind": "rotate",
+      "body": "arm1",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "axis": "z",
+      "angle": 60,
+      "frame": "world",
+      "depends_on": [
+        "arm1"
+      ],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "arm2",
+      "kind": "box",
+      "origin": [
+        "hub_diameter/2 - 1",
+        "-arm_width/2",
+        "base_height"
+      ],
+      "size": [
+        "arm_length",
+        "arm_width",
+        "hub_height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "arm2_rot",
+      "kind": "rotate",
+      "body": "arm2",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "axis": "z",
+      "angle": 180,
+      "frame": "world",
+      "depends_on": [
+        "arm2"
+      ],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "arm3",
+      "kind": "box",
+      "origin": [
+        "hub_diameter/2 - 1",
+        "-arm_width/2",
+        "base_height"
+      ],
+      "size": [
+        "arm_length",
+        "arm_width",
+        "hub_height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "arm3_rot",
+      "kind": "rotate",
+      "body": "arm3",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "axis": "z",
+      "angle": 300,
+      "frame": "world",
+      "depends_on": [
+        "arm3"
+      ],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "part",
+      "kind": "union",
+      "left": "base",
+      "right": "hub",
+      "frame": "world",
+      "depends_on": [
+        "base",
+        "hub"
+      ],
+      "evidence": [
+        "e1",
+        "e2"
+      ]
+    },
+    {
+      "id": "part_arm1",
+      "kind": "union",
+      "left": "part",
+      "right": "arm1_rot",
+      "frame": "world",
+      "depends_on": [
+        "part",
+        "arm1_rot"
+      ],
+      "evidence": [
+        "e1",
+        "e2",
+        "e3"
+      ]
+    },
+    {
+      "id": "part_arm2",
+      "kind": "union",
+      "left": "part_arm1",
+      "right": "arm2_rot",
+      "frame": "world",
+      "depends_on": [
+        "part_arm1",
+        "arm2_rot"
+      ],
+      "evidence": [
+        "e1",
+        "e2",
+        "e3"
+      ]
+    },
+    {
+      "id": "part_final",
+      "kind": "union",
+      "left": "part_arm2",
+      "right": "arm3_rot",
+      "frame": "world",
+      "depends_on": [
+        "part_arm2",
+        "arm3_rot"
+      ],
+      "evidence": [
+        "e1",
+        "e2",
+        "e3"
+      ]
+    }
+  ],
+  "output": "part_final",
+  "frames": {
+    "world": {
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    }
+  },
+  "bodies": [
+    {
+      "id": "part",
+      "output": "part_final"
+    }
+  ],
+  "evidence": {
+    "observed": [],
+    "inferred": [],
+    "assumptions": [
+      {
+        "id": "e1",
+        "text": "Assumed base is a cylinder with bottom diameter 15mm and height 10mm."
+      },
+      {
+        "id": "e2",
+        "text": "Assumed hub is a cylinder with diameter 30mm and height 10mm."
+      },
+      {
+        "id": "e3",
+        "text": "Assumed arms are rectangular boxes (10mm length, 6mm width, 10mm height) spaced 120 degrees apart."
+      }
+    ],
+    "unresolved": []
+  },
+  "constraints": [
+    {
+      "id": "joint1",
+      "kind": "connected",
+      "left": "base",
+      "right": "hub",
+      "min_volume_mm3": 0.01
+    },
+    {
+      "id": "joint2",
+      "kind": "connected",
+      "left": "hub",
+      "right": "arm1_rot",
+      "min_volume_mm3": 0.01
+    },
+    {
+      "id": "joint3",
+      "kind": "connected",
+      "left": "hub",
+      "right": "arm2_rot",
+      "min_volume_mm3": 0.01
+    },
+    {
+      "id": "joint4",
+      "kind": "connected",
+      "left": "hub",
+      "right": "arm3_rot",
+      "min_volume_mm3": 0.01
+    }
+  ]
+}

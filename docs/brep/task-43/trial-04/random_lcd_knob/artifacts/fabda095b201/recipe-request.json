@@ -1,0 +1,633 @@
+{
+  "evidence": {
+    "id": "fabda095b201",
+    "interpretation": {
+      "version": 1,
+      "object_hypothesis": "A three-armed component with a central circular hub and three radial arms, featuring a trapezoidal cross-section.",
+      "features": [
+        {
+          "id": "hub_body",
+          "type": "body",
+          "description": "Central circular body of the component.",
+          "status": "observed",
+          "evidence": [
+            {
+              "view_id": "view_1",
+              "region_id": "profile_contour_4"
+            }
+          ],
+          "reason": "The central region of the top view (view_1) shows a continuous circular boundary."
+        },
+        {
+          "id": "arm_1",
+          "type": "body",
+          "description": "Radial arm extending from the hub towards the upper-right.",
+          "status": "observed",
+          "evidence": [
+            {
+              "view_id": "view_1",
+              "region_id": "profile_contour_4"
+            }
+          ],
+          "reason": "A distinct rectangular protrusion is visible in the top view at the upper-right position."
+        },
+        {
+          "id": "arm_2",
+          "type": "body",
+          "description": "Radial arm extending from the hub towards the lower-right.",
+          "status": "observed",
+          "evidence": [
+            {
+              "view_id": "view_1",
+              "region_id": "profile_contour_4"
+            }
+          ],
+          "reason": "A distinct rectangular protrusion is visible in the top view at the lower-right position."
+        },
+        {
+          "id": "arm_3",
+          "type": "body",
+          "description": "Radial arm extending from the hub towards the left.",
+          "status": "observed",
+          "evidence": [
+            {
+              "view_id": "view_1",
+              "region_id": "profile_contour_4"
+            }
+          ],
+          "reason": "A distinct rectangular protrusion is visible in the top view at the left position."
+        },
+        {
+          "id": "trapezoidal_profile",
+          "type": "profile",
+          "description": "Trapezoidal cross-section shape of the component.",
+          "status": "observed",
+          "evidence": [
+            {
+              "view_id": "view_2",
+              "region_id": "profile_contour_2"
+            },
+            {
+              "view_id": "view_3",
+              "region_id": "profile_contour_1"
+            }
+          ],
+          "reason": "Both front (view_2) and right (view_3) views display a trapezoidal outline, indicating a tapered body."
+        }
+      ],
+      "relationships": [
+        {
+          "id": "arm_connectivity",
+          "type": "connected",
+          "features": [
+            "hub_body",
+            "arm_1",
+            "arm_2",
+            "arm_3"
+          ],
+          "description": "The three arms are connected to the central hub.",
+          "status": "inferred",
+          "evidence": [
+            {
+              "view_id": "view_1",
+              "region_id": "profile_contour_4"
+            }
+          ],
+          "reason": "The contour in the top view is a single continuous path connecting the arms to the hub.",
+          "model_status": "observed",
+          "review_note": "Visible projected continuity does not prove a connected 3D solid."
+        },
+        {
+          "id": "radial_symmetry",
+          "type": "symmetry",
+          "features": [
+            "arm_1",
+            "arm_2",
+            "arm_3"
+          ],
+          "description": "The arms are arranged radially around the hub.",
+          "status": "inferred",
+          "evidence": [
+            {
+              "view_id": "view_1",
+              "region_id": "profile_contour_4"
+            }
+          ],
+          "reason": "The arms are spaced approximately 120 degrees apart in the top view, suggesting a radial arrangement."
+        },
+        {
+          "id": "profile_consistency",
+          "type": "shared_dimension",
+          "features": [
+            "trapezoidal_profile",
+            "hub_body",
+            "arm_1",
+            "arm_2",
+            "arm_3"
+          ],
+          "description": "The trapezoidal profile applies to the entire component.",
+          "status": "inferred",
+          "evidence": [
+            {
+              "view_id": "view_2",
+              "region_id": "profile_contour_2"
+            },
+            {
+              "view_id": "view_3",
+              "region_id": "profile_contour_1"
+            }
+          ],
+          "reason": "The side views show a uniform trapezoidal height and taper across the width of the object, implying the shape is consistent for both the hub and arms."
+        }
+      ],
+      "assumptions": [
+        "The object is a single solid piece.",
+        "The top view represents the widest part of the object (the top of the trapezoid)."
+      ],
+      "unresolved": [
+        "Exact thickness of the arms relative to the hub.",
+        "Whether the arms are perfectly straight or slightly curved."
+      ],
+      "conflicts": [],
+      "review": {
+        "reference_integrity_checked": true,
+        "drawing_fidelity_verified": false,
+        "policy_warnings": [
+          "arm_connectivity: Visible projected continuity does not prove a connected 3D solid."
+        ],
+        "executable": false
+      }
+    },
+    "regions": [
+      {
+        "view_id": "view_1",
+        "direction": "top",
+        "sheet_bbox_normalized": [
+          0.3789,
+          0.0286,
+          0.2432,
+          0.3594
+        ],
+        "cad_mapping": {
+          "plane": "XY",
+          "view_axis": "Z",
+          "u_maps_to": "+X",
+          "v_maps_to": "-Y"
+        },
+        "view_assignment": "spatial heuristic",
+        "region_id": "view",
+        "kind": "view",
+        "bbox_view_normalized": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "measured_span_pixels": {
+          "horizontal_axis_u": 249,
+          "vertical_axis_v": 276
+        }
+      },
+      {
+        "view_id": "view_1",
+        "direction": "top",
+        "sheet_bbox_normalized": [
+          0.3789,
+          0.0286,
+          0.2432,
+          0.3594
+        ],
+        "cad_mapping": {
+          "plane": "XY",
+          "view_axis": "Z",
+          "u_maps_to": "+X",
+          "v_maps_to": "-Y"
+        },
+        "view_assignment": "spatial heuristic",
+        "region_id": "profile_contour_4",
+        "kind": "outer",
+        "profile_id": "contour_4",
+        "bbox_view_normalized": [
+          0.0321,
+          0.022,
+          0.9317,
+          0.9566
+        ],
+        "center_view_normalized": [
+          0.4979,
+          0.5
+        ],
+        "polygon_view_normalized": [
+          [
+            0.8754,
+            0.022
+          ],
+          [
+            0.743,
+            0.2212
+          ],
+          [
+            0.4457,
+            0.2574
+          ],
+          [
+            0.2932,
+            0.4602
+          ],
+          [
+            0.0321,
+            0.4747
+          ],
+          [
+            0.0604,
+            0.5509
+          ],
+          [
+            0.301,
+            0.5509
+          ],
+          [
+            0.514,
+            0.7755
+          ],
+          [
+            0.743,
+            0.7755
+          ],
+          [
+            0.8956,
+            0.9747
+          ],
+          [
+            0.9597,
+            0.9204
+          ],
+          [
+            0.8273,
+            0.7284
+          ],
+          [
+            0.9478,
+            0.4494
+          ],
+          [
+            0.8351,
+            0.2755
+          ],
+          [
+            0.9597,
+            0.0618
+          ]
+        ],
+        "vertices": 15,
+        "circularity": 0.358,
+        "area_ratio_of_sheet": 0.03232
+      },
+      {
+        "view_id": "view_2",
+        "direction": "front",
+        "sheet_bbox_normalized": [
+          0.3818,
+          0.5247,
+          0.2402,
+          0.1029
+        ],
+        "cad_mapping": {
+          "plane": "XZ",
+          "view_axis": "Y",
+          "u_maps_to": "+X",
+          "v_maps_to": "-Z"
+        },
+        "view_assignment": "spatial heuristic",
+        "region_id": "view",
+        "kind": "view",
+        "bbox_view_normalized": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "measured_span_pixels": {
+          "horizontal_axis_u": 246,
+          "vertical_axis_v": 79
+        }
+      },
+      {
+        "view_id": "view_2",
+        "direction": "front",
+        "sheet_bbox_normalized": [
+          0.3818,
+          0.5247,
+          0.2402,
+          0.1029
+        ],
+        "cad_mapping": {
+          "plane": "XZ",
+          "view_axis": "Y",
+          "u_maps_to": "+X",
+          "v_maps_to": "-Z"
+        },
+        "view_assignment": "spatial heuristic",
+        "region_id": "profile_contour_2",
+        "kind": "outer",
+        "profile_id": "contour_2",
+        "bbox_view_normalized": [
+          0.0325,
+          0.0768,
+          0.9309,
+          0.8474
+        ],
+        "center_view_normalized": [
+          0.4983,
+          0.5005
+        ],
+        "polygon_view_normalized": [
+          [
+            0.0325,
+            0.2031
+          ],
+          [
+            0.179,
+            0.9116
+          ],
+          [
+            0.8701,
+            0.8989
+          ],
+          [
+            0.9596,
+            0.3673
+          ],
+          [
+            0.9475,
+            0.1652
+          ]
+        ],
+        "vertices": 5,
+        "circularity": 0.532,
+        "area_ratio_of_sheet": 0.01656
+      },
+      {
+        "view_id": "view_3",
+        "direction": "right",
+        "sheet_bbox_normalized": [
+          0.7471,
+          0.526,
+          0.2529,
+          0.1016
+        ],
+        "cad_mapping": {
+          "plane": "YZ",
+          "view_axis": "X",
+          "u_maps_to": "+Y",
+          "v_maps_to": "-Z"
+        },
+        "view_assignment": "spatial heuristic",
+        "region_id": "view",
+        "kind": "view",
+        "bbox_view_normalized": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "measured_span_pixels": {
+          "horizontal_axis_u": 259,
+          "vertical_axis_v": 78
+        }
+      },
+      {
+        "view_id": "view_3",
+        "direction": "right",
+        "sheet_bbox_normalized": [
+          0.7471,
+          0.526,
+          0.2529,
+          0.1016
+        ],
+        "cad_mapping": {
+          "plane": "YZ",
+          "view_axis": "X",
+          "u_maps_to": "+Y",
+          "v_maps_to": "-Z"
+        },
+        "view_assignment": "spatial heuristic",
+        "region_id": "profile_contour_1",
+        "kind": "outer",
+        "profile_id": "contour_1",
+        "bbox_view_normalized": [
+          0.0308,
+          0.0778,
+          0.9692,
+          0.8455
+        ],
+        "center_view_normalized": [
+          0.5152,
+          0.5
+        ],
+        "polygon_view_normalized": [
+          [
+            0.0308,
+            0.2057
+          ],
+          [
+            0.1467,
+            0.8976
+          ],
+          [
+            0.9075,
+            0.8976
+          ],
+          [
+            0.996,
+            0.5768
+          ],
+          [
+            0.9035,
+            0.8337
+          ],
+          [
+            0.1507,
+            0.8337
+          ],
+          [
+            0.0577,
+            0.2057
+          ],
+          [
+            0.996,
+            0.1417
+          ]
+        ],
+        "vertices": 8,
+        "circularity": 0.028,
+        "area_ratio_of_sheet": 0.00367
+      }
+    ],
+    "shared_axis_evidence": [
+      {
+        "axis": "X",
+        "evidence": [
+          {
+            "view_id": "view_1",
+            "region_id": "view"
+          },
+          {
+            "view_id": "view_2",
+            "region_id": "view"
+          }
+        ],
+        "measured_spans_pixels": [
+          249,
+          246
+        ],
+        "relative_difference": 0.012,
+        "status": "consistent_spans",
+        "assumption": "Views use the same drawing scale and their assigned directions are correct.",
+        "physical_dimension_verified": false
+      },
+      {
+        "axis": "Y",
+        "evidence": [
+          {
+            "view_id": "view_1",
+            "region_id": "view"
+          },
+          {
+            "view_id": "view_3",
+            "region_id": "view"
+          }
+        ],
+        "measured_spans_pixels": [
+          276,
+          259
+        ],
+        "relative_difference": 0.0616,
+        "status": "consistent_spans",
+        "assumption": "Views use the same drawing scale and their assigned directions are correct.",
+        "physical_dimension_verified": false
+      },
+      {
+        "axis": "Z",
+        "evidence": [
+          {
+            "view_id": "view_2",
+            "region_id": "view"
+          },
+          {
+            "view_id": "view_3",
+            "region_id": "view"
+          }
+        ],
+        "measured_spans_pixels": [
+          79,
+          78
+        ],
+        "relative_difference": 0.0127,
+        "status": "consistent_spans",
+        "assumption": "Views use the same drawing scale and their assigned directions are correct.",
+        "physical_dimension_verified": false
+      }
+    ],
+    "view_assignment_review": {
+      "excluded_from_direction_assignment": [],
+      "rule": "Groups below 5% of the largest group box area remain unassigned; they may be text or detail views.",
+      "regions_retained": true
+    },
+    "controls": {
+      "object_type_hint": "",
+      "method": "3D print",
+      "primary_view": "front",
+      "projection_standard": "third-angle",
+      "strict_watertight": true,
+      "refine_mode": "regularize"
+    },
+    "notes": "",
+    "default_generation_changed": false,
+    "files": {
+      "input": "/results/fabda095b201/input.png",
+      "overlay": "/results/fabda095b201/geometry-overlay.png",
+      "interpretation": "/results/fabda095b201/feature-evidence.json"
+    }
+  },
+  "construction_plan": {
+    "view_frame": "The drawing presents three orthographic views in third-angle projection. The primary view (top-left) is the Front view, showing the X (width) and Z (height) axes. The view below it is the Top view, showing the X (width) and Y (depth) axes. The view to the right is the Right Side view, showing the Y (depth) and Z (height) axes.",
+    "features": [
+      {
+        "id": "central_body",
+        "shape": "Cylinder",
+        "section": "Circle",
+        "axis_or_plane": "Y-axis (Depth)",
+        "dimensions": [
+          "Diameter: ~30mm (estimated from Front view)",
+          "Depth: ~10mm (estimated from Top view)"
+        ],
+        "placement": "Centered at X=0, Z=0. Extends from Y=0 to Y=10mm.",
+        "evidence": "Front view shows a central circle. Top view shows a rectangular profile corresponding to the cylinder's depth."
+      },
+      {
+        "id": "left_tab",
+        "shape": "Rectangular Prism",
+        "section": "Rectangle",
+        "axis_or_plane": "X-axis (Width)",
+        "dimensions": [
+          "Length: ~10mm (estimated)",
+          "Height: ~5mm (estimated)",
+          "Depth: ~10mm (matches body)"
+        ],
+        "placement": "Attached to the left side of the central body. Extends from X=-15mm to X=-25mm. Centered vertically at Z=0.",
+        "evidence": "Front view shows a rectangular tab extending left. Top view shows the tab's depth profile."
+      },
+      {
+        "id": "top_right_tab",
+        "shape": "Rectangular Prism",
+        "section": "Rectangle",
+        "axis_or_plane": "Diagonal (approx 45 deg)",
+        "dimensions": [
+          "Length: ~10mm (estimated)",
+          "Width: ~5mm (estimated)",
+          "Depth: ~10mm (matches body)"
+        ],
+        "placement": "Attached to the upper-right quadrant of the central body. Extends outward from the circle perimeter.",
+        "evidence": "Front view shows a tab extending diagonally up and right. Top view shows the tab's depth profile."
+      },
+      {
+        "id": "bottom_right_tab",
+        "shape": "Rectangular Prism",
+        "section": "Rectangle",
+        "axis_or_plane": "Diagonal (approx -45 deg)",
+        "dimensions": [
+          "Length: ~10mm (estimated)",
+          "Width: ~5mm (estimated)",
+          "Depth: ~10mm (matches body)"
+        ],
+        "placement": "Attached to the lower-right quadrant of the central body. Extends outward from the circle perimeter.",
+        "evidence": "Front view shows a tab extending diagonally down and right. Top view shows the tab's depth profile."
+      }
+    ],
+    "connections": [
+      "The left_tab, top_right_tab, and bottom_right_tab are fused to the central_body.",
+      "All features share the same depth (Y-axis extent) to form a single watertight solid."
+    ],
+    "edit_rules": [
+      "Changing the central_body diameter requires adjusting the attachment points of all three tabs to maintain tangency or overlap.",
+      "Changing the depth (Y-axis) applies uniformly to all features.",
+      "Tab angles are fixed relative to the central body unless the body is rotated."
+    ],
+    "unresolved": [
+      "Exact dimensions are not provided; all values are estimates based on visual proportions.",
+      "The precise angle of the diagonal tabs is estimated at 45 degrees but could vary.",
+      "The specific shape of the tab ends (flat vs rounded) is ambiguous in the sketch."
+    ]
+  },
+  "notes": "",
+  "maximum_dimension_mm": 50.0,
+  "controls": {
+    "object_type_hint": "",
+    "method": "3D print",
+    "primary_view": "front",
+    "projection_standard": "third-angle",
+    "strict_watertight": true,
+    "refine_mode": "regularize"
+  }
+}

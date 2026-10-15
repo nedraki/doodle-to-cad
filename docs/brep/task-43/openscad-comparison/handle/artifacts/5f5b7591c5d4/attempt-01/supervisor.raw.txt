@@ -1,0 +1,15 @@
+{
+  "action": "repair_scad",
+  "problems": [
+    "Dimensions are incorrect: Max dimension is 49mm, target is 54mm.",
+    "Leg length parameter (33.75) deviates from spec (30).",
+    "Rod diameter parameter (9) deviates from spec (8).",
+    "Torus intersection logic is flawed, potentially creating a full ring or incorrect geometry."
+  ],
+  "preserve": [
+    "Overall inverted U-shape topology.",
+    "Sweep-based construction strategy.",
+    "Symmetry about the vertical centerline."
+  ],
+  "instructions": "Update parameters to match spec: leg_length=30, rod_diameter=8, bend_radius=20. Fix the torus intersection to strictly keep the upper half (Z >= leg_length) relative to the bend center. Ensure the total height (leg_length + bend_radius + rod_radius) equals 54mm. Verify the legs are cylinders extending downwards from the bend."
+}

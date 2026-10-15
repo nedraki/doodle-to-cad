@@ -1,0 +1,53 @@
+{
+  "run_id": "08f7fa3a3d77",
+  "params": [
+    {
+      "name": "width",
+      "value": 100,
+      "low": 50,
+      "high": 150,
+      "step": 0.01,
+      "label": "Width",
+      "unit": "mm",
+      "description": "Overall width of the bracket (X)",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "height",
+      "value": 120,
+      "low": 60,
+      "high": 180,
+      "step": 0.01,
+      "label": "Height",
+      "unit": "mm",
+      "description": "Overall height of the bracket (Z)",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "depth",
+      "value": 80,
+      "low": 40,
+      "high": 120,
+      "step": 0.01,
+      "label": "Depth",
+      "unit": "mm",
+      "description": "Overall depth of the base (Y)",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "thickness",
+      "value": 10,
+      "low": 5,
+      "high": 20,
+      "step": 0.01,
+      "label": "Thickness",
+      "unit": "mm",
+      "description": "Uniform thickness of the L-profile",
+      "group": "Details",
+      "feature": null
+    }
+  ]
+}

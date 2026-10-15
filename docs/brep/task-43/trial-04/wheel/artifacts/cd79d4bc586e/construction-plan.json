@@ -1,0 +1,58 @@
+{
+  "view_frame": "Front view (XZ) shows the wheel face with X as horizontal width and Z as vertical height. Right view (YZ) shows the side profile with Y as depth (thickness) and Z as height. The wheel is centered at the origin (0,0,0) in the world frame.",
+  "features": [
+    {
+      "id": "rim",
+      "shape": "annulus",
+      "section": "rectangular",
+      "axis_or_plane": "Y-axis (extruded along Y)",
+      "dimensions": [
+        "OD 120 mm",
+        "thickness 8 mm",
+        "rim_width 10 mm (assumed)"
+      ],
+      "placement": "Centered at (0,0,0). Outer radius 60 mm, inner radius 50 mm (60 - 10). Extends from Y = -4 mm to Y = +4 mm.",
+      "evidence": "Front view shows two concentric circles. Right view shows a rectangle of height 120 mm and width 8 mm. Label 'OD 120 mm; thickness 8 mm'."
+    },
+    {
+      "id": "hub",
+      "shape": "cylinder",
+      "section": "circular",
+      "axis_or_plane": "Y-axis",
+      "dimensions": [
+        "hub_diameter 30 mm (assumed)",
+        "thickness 8 mm"
+      ],
+      "placement": "Centered at (0,0,0). Radius 15 mm. Extends from Y = -4 mm to Y = +4 mm.",
+      "evidence": "Front view shows a central circle. Right view shows the same thickness as the rim."
+    },
+    {
+      "id": "spokes",
+      "shape": "box",
+      "section": "rectangular",
+      "axis_or_plane": "Radial in XZ plane, extruded along Y",
+      "dimensions": [
+        "spoke_width 10 mm (assumed)",
+        "thickness 8 mm",
+        "spoke_length 35 mm (derived: 50 - 15)"
+      ],
+      "placement": "8 spokes arranged radially at 45-degree intervals. Each spoke connects the hub (radius 15 mm) to the rim (radius 50 mm). Extends from Y = -4 mm to Y = +4 mm.",
+      "evidence": "Front view shows 8 radial lines connecting the hub to the rim. Label '8 spokes'."
+    }
+  ],
+  "connections": [
+    "Spokes connect the hub to the rim.",
+    "All components share the same thickness (8 mm) and are centered on the Y-axis."
+  ],
+  "edit_rules": [
+    "Changing OD affects rim outer radius and spoke length.",
+    "Changing thickness affects the Y-dimension of all components.",
+    "Changing spoke count requires re-distributing spokes radially.",
+    "Changing hub diameter affects spoke length and inner connection point."
+  ],
+  "unresolved": [
+    "Rim width (radial thickness) is not explicitly dimensioned; assumed 10 mm.",
+    "Hub diameter is not explicitly dimensioned; assumed 30 mm.",
+    "Spoke width is not explicitly dimensioned; assumed 10 mm."
+  ]
+}

@@ -1,0 +1,137 @@
+{
+  "run_id": "2bcf17c897d7",
+  "params": [
+    {
+      "name": "width",
+      "value": 15,
+      "low": 10,
+      "high": 30,
+      "step": 0.01,
+      "label": "Width",
+      "unit": "mm",
+      "description": "Width of the bracket (X dimension)",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "height",
+      "value": 100,
+      "low": 50,
+      "high": 200,
+      "step": 0.01,
+      "label": "Height",
+      "unit": "mm",
+      "description": "Total height of the bracket (Z dimension)",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "depth",
+      "value": 10,
+      "low": 5,
+      "high": 20,
+      "step": 0.01,
+      "label": "Depth",
+      "unit": "mm",
+      "description": "Thickness of the bracket (Y dimension)",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "top_notch_radius",
+      "value": 5,
+      "low": 2,
+      "high": 10,
+      "step": 0.01,
+      "label": "Top Notch Radius",
+      "unit": "mm",
+      "description": "Radius of the top semi-circular notch",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "bottom_notch_radius",
+      "value": 2.5,
+      "low": 1,
+      "high": 5,
+      "step": 0.01,
+      "label": "Bottom Notch Radius",
+      "unit": "mm",
+      "description": "Radius of the bottom semi-circular notch",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "central_hole_radius",
+      "value": 3,
+      "low": 1,
+      "high": 8,
+      "step": 0.01,
+      "label": "Central Hole Radius",
+      "unit": "mm",
+      "description": "Radius of the central circular hole",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "central_hole_z",
+      "value": 80,
+      "low": 50,
+      "high": 95,
+      "step": 0.01,
+      "label": "Central Hole Z",
+      "unit": "mm",
+      "description": "Z position of the central hole center",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "slot_width",
+      "value": 4,
+      "low": 2,
+      "high": 8,
+      "step": 0.01,
+      "label": "Slot Width",
+      "unit": "mm",
+      "description": "Width of the rectangular slots",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "slot_height",
+      "value": 6,
+      "low": 3,
+      "high": 12,
+      "step": 0.01,
+      "label": "Slot Height",
+      "unit": "mm",
+      "description": "Height of the rectangular slots",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "slot_spacing",
+      "value": 15,
+      "low": 5,
+      "high": 30,
+      "step": 0.01,
+      "label": "Slot Spacing",
+      "unit": "mm",
+      "description": "Vertical spacing between slot centers",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "slot_start_z",
+      "value": 15,
+      "low": 5,
+      "high": 30,
+      "step": 0.01,
+      "label": "Slot Start Z",
+      "unit": "mm",
+      "description": "Z position of the first slot center",
+      "group": "Details",
+      "feature": null
+    }
+  ]
+}

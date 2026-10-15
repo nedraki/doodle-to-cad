@@ -1,0 +1,133 @@
+{
+  "object": "Rounded Housing Blank",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "top",
+      "sheet_region": "view_6",
+      "constrains": "XY profile (80mm x 50mm) and corner fillets (R6)"
+    },
+    {
+      "direction": "right",
+      "sheet_region": "view_5",
+      "constrains": "YZ profile (50mm width x 30mm height) and vertical extrusion"
+    },
+    {
+      "direction": "front",
+      "sheet_region": "view_1",
+      "constrains": "XZ profile (80mm width x 30mm height)"
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "part_1",
+      "name": "Housing Blank",
+      "description": "Solid rectangular block with rounded corners."
+    }
+  ],
+  "features": [
+    {
+      "id": "feat_1",
+      "part_id": "part_1",
+      "type": "extrusion",
+      "description": "Main body extruded from the rounded rectangle profile."
+    },
+    {
+      "id": "feat_2",
+      "part_id": "part_1",
+      "type": "fillet",
+      "description": "4 vertical corner fillets (R6)."
+    }
+  ],
+  "relations": [
+    {
+      "type": "coincidence",
+      "target_a": "feat_1",
+      "target_b": "feat_2",
+      "description": "Fillets are applied to the vertical edges of the extrusion."
+    }
+  ],
+  "symmetry": {
+    "planes": [
+      "XZ",
+      "YZ"
+    ],
+    "axes": [
+      "Z"
+    ]
+  },
+  "repetitions": [
+    {
+      "feature_id": "feat_2",
+      "count": 4,
+      "pattern": "rectangular"
+    }
+  ],
+  "dimensions": {
+    "length": 80.0,
+    "width": 50.0,
+    "height": 30.0,
+    "radius": 6.0,
+    "max_width": 80.0,
+    "max_depth": 50.36,
+    "max_height": 27.73,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "The 'view_5' (Right) shows internal lines which might suggest a cavity, but the text explicitly states 'Solid blank' and 'No cavity'. The lines are interpreted as hidden lines or artifacts of the drawing style for the solid block."
+  ],
+  "interpretation_conflicts": [
+    "View 5 (Right) shows vertical lines that could be interpreted as a hollow shell or internal features, but the text 'Solid blank' and 'No cavity' overrides this visual evidence."
+  ],
+  "generation_notes": "The object is a simple solid block. The top view defines the footprint (80x50) with R6 corners. The right view defines the height (30). The text confirms it is a solid blank with sharp top/bottom edges.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "extrude",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_2",
+        "operation": "extrude",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "owner": "part_1",
+        "parameters": {
+          "depth": 30
+        },
+        "source_views": [
+          "view_5"
+        ]
+      }
+    ],
+    "unresolved_constraints": [
+      "The 'view_5' (Right) shows internal lines which might suggest a cavity, but the text explicitly states 'Solid blank' and 'No cavity'. The lines are interpreted as hidden lines or artifacts of the drawing style for the solid block."
+    ]
+  },
+  "user_intent": {
+    "description": "",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "80"
+  },
+  "source_view_group_count": 8,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

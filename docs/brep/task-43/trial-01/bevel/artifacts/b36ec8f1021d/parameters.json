@@ -1,0 +1,53 @@
+{
+  "run_id": "b36ec8f1021d",
+  "params": [
+    {
+      "name": "width",
+      "value": 60,
+      "low": 10,
+      "high": 1000,
+      "step": 0.01,
+      "label": "Width (X)",
+      "unit": "mm",
+      "description": "Rebuilds the saved construction recipe",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "depth",
+      "value": 40,
+      "low": 10,
+      "high": 1000,
+      "step": 0.01,
+      "label": "Depth (Y)",
+      "unit": "mm",
+      "description": "Rebuilds the saved construction recipe",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "height",
+      "value": 20,
+      "low": 10,
+      "high": 1000,
+      "step": 0.01,
+      "label": "Height (Z)",
+      "unit": "mm",
+      "description": "Rebuilds the saved construction recipe",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "chamfer_setback",
+      "value": 2,
+      "low": 0.1,
+      "high": 10,
+      "step": 0.01,
+      "label": "Chamfer Setback",
+      "unit": "mm",
+      "description": "Rebuilds the saved construction recipe",
+      "group": "Details",
+      "feature": null
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "view_frame": "The drawing presents a 'TOP (XY)' view and an 'END SECTION' view. The world coordinate system is defined with X as width (horizontal in Top view), Y as depth (vertical in Top view), and Z as height (vertical in Front view, perpendicular to the Top view plane). The part is a curved handle lying in the XY plane.",
+  "features": [
+    {
+      "id": "handle_path",
+      "shape": "Sweep of circular profile along a U-shaped path",
+      "section": "Circle",
+      "axis_or_plane": "XY plane",
+      "dimensions": [
+        "diameter 8 mm",
+        "R20 mm (centreline radius)",
+        "30 mm (straight leg length)"
+      ],
+      "placement": "The path consists of two straight segments and one semicircular arc. The arc is centered at (0, 0) with radius 20 mm, spanning from angle 0 to 180 degrees (from +X to -X). The right straight leg extends from (20, 0) to (20, -30). The left straight leg extends from (-20, 0) to (-20, -30). The entire path lies in the XY plane at Z=0.",
+      "evidence": "Top view shows a U-shaped path with parallel outlines. Text annotation 'Bend centreline R20; straight legs 30 mm' confirms the geometry. End section shows a circle labeled 'diameter 8 mm'."
+    }
+  ],
+  "connections": [
+    "The right straight leg connects tangentially to the right end of the semicircular arc at (20, 0).",
+    "The left straight leg connects tangentially to the left end of the semicircular arc at (-20, 0)."
+  ],
+  "edit_rules": [
+    "Changing the 'diameter' parameter updates the sweep radius for all segments (straight and curved).",
+    "Changing the 'R20' parameter updates the arc radius and the X-coordinates of the straight legs (X = +/- R).",
+    "Changing the '30 mm' parameter updates the Y-coordinate of the leg ends (Y = -Length)."
+  ],
+  "unresolved": [
+    "The drawing does not specify the Z-height (thickness) of the part relative to a base, implying it is a standalone wire or the view is a projection of a 3D object where Z is the axis of the circular cross-section. Given 'TOP (XY)' and 'END SECTION', the part is likely a 3D sweep in the XY plane with thickness along Z, or a flat profile. However, 'END SECTION' usually implies a cut perpendicular to the path. If the path is in XY, the end section is in YZ or XZ. The circular end section suggests a round bar. The 'TOP' view shows the path. The 'END SECTION' shows the cross-section. This implies the part is a round bar bent into a U-shape in the XY plane. The 'strict_watertight' constraint implies a solid 3D object.",
+    "The orientation of the 'END SECTION' relative to the world axes is not explicitly drawn with axes, but standard convention implies it is the cross-section of the path. If the path is in XY, the cross-section is perpendicular to the path tangent. At the ends (legs), the tangent is along Y, so the cross-section is in XZ. At the top of the arc, the tangent is along X, so the cross-section is in YZ. The drawing shows a single 'END SECTION', likely representing the uniform circular cross-section of the sweep."
+  ]
+}

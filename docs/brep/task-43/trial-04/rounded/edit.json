@@ -1,0 +1,142 @@
+{
+  "ok": true,
+  "backend": "usd-brep",
+  "applied": {
+    "corner_radius": 8
+  },
+  "stl": "/results/710295b8f6e1/brep-2775f08f6adc46759d9187c36a98d7c2/model.stl",
+  "source": "/results/710295b8f6e1/brep-2775f08f6adc46759d9187c36a98d7c2/model.recipe.json",
+  "usd": "/results/710295b8f6e1/brep-2775f08f6adc46759d9187c36a98d7c2/model.usda",
+  "diagnostics": {
+    "backend": "usd-brep",
+    "version": "1.0.0",
+    "recipe_version": 2,
+    "solid_volume_mm3": 118351.85790089863,
+    "mesh_volume_mm3": 118336.24225437966,
+    "extents_mm": [
+      80.0,
+      50.0,
+      30.0
+    ],
+    "bounds_mm": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        80.0,
+        50.0,
+        30.0
+      ]
+    ],
+    "watertight": true,
+    "winding_consistent": true,
+    "euler_number": 2,
+    "triangles": 236,
+    "usd_roundtrip": true,
+    "volume_relative_accuracy": 1e-08,
+    "usd_volume_mm3": 118351.85790089864,
+    "operations": [
+      {
+        "id": "base_block",
+        "kind": "box",
+        "faces": 6
+      },
+      {
+        "id": "final_part",
+        "kind": "fillet",
+        "faces": 10
+      }
+    ],
+    "connections": [],
+    "build_seconds": 0.228
+  },
+  "views": {
+    "isometric": "/results/710295b8f6e1/brep-2775f08f6adc46759d9187c36a98d7c2/view-isometric.png",
+    "front": "/results/710295b8f6e1/brep-2775f08f6adc46759d9187c36a98d7c2/view-front.png",
+    "top": "/results/710295b8f6e1/brep-2775f08f6adc46759d9187c36a98d7c2/view-top.png",
+    "right": "/results/710295b8f6e1/brep-2775f08f6adc46759d9187c36a98d7c2/view-right.png"
+  },
+  "build": {
+    "version": 1,
+    "backend": "usd-brep",
+    "source_format": "brep-recipe-v2",
+    "ok": true,
+    "units": "mm",
+    "axes": {
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    },
+    "views": [
+      "isometric",
+      "front",
+      "top",
+      "right"
+    ],
+    "measurements": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 236,
+      "extents_mm": [
+        80.0,
+        50.0,
+        30.0
+      ],
+      "volume_mm3": 118336.242
+    },
+    "diagnostics": [],
+    "drawing_evaluated": false
+  },
+  "params": [
+    {
+      "name": "width",
+      "value": 80.0,
+      "low": 10,
+      "high": 200,
+      "step": 0.01,
+      "label": "Width",
+      "unit": "mm",
+      "description": "Overall width along X axis",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "depth",
+      "value": 50.0,
+      "low": 10,
+      "high": 200,
+      "step": 0.01,
+      "label": "Depth",
+      "unit": "mm",
+      "description": "Overall depth along Y axis",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "height",
+      "value": 30.0,
+      "low": 1,
+      "high": 100,
+      "step": 0.01,
+      "label": "Height",
+      "unit": "mm",
+      "description": "Overall height along Z axis",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "corner_radius",
+      "value": 8.0,
+      "low": 0.1,
+      "high": 25,
+      "step": 0.01,
+      "label": "Corner Radius",
+      "unit": "mm",
+      "description": "Radius of the 4 vertical corner fillets",
+      "group": "Details",
+      "feature": null
+    }
+  ]
+}

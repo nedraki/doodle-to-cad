@@ -1,0 +1,1128 @@
+{
+  "handle": {
+    "status": "build_failed",
+    "error": {
+      "message": "BRep worker crashed",
+      "code": "build_failed"
+    }
+  },
+  "rounded": {
+    "original": {
+      "status": "passed",
+      "extents_mm": [
+        80.0,
+        50.0,
+        30.0
+      ],
+      "expected_extents_mm": [
+        80,
+        50,
+        30
+      ],
+      "dimensions_passed": true,
+      "geometry_passed": true,
+      "sections": [
+        {
+          "status": "passed",
+          "symmetric_boundary_error_mm": 0.05497,
+          "tolerance_mm": 0.25,
+          "sampling_spacing_mm": 0.1,
+          "axis": 2,
+          "position_mm": 0.01,
+          "loops": 1
+        },
+        {
+          "status": "passed",
+          "symmetric_boundary_error_mm": 0.05535,
+          "tolerance_mm": 0.25,
+          "sampling_spacing_mm": 0.1,
+          "axis": 2,
+          "position_mm": 5,
+          "loops": 1
+        },
+        {
+          "status": "passed",
+          "symmetric_boundary_error_mm": 0.05365,
+          "tolerance_mm": 0.25,
+          "sampling_spacing_mm": 0.1,
+          "axis": 2,
+          "position_mm": 15,
+          "loops": 1
+        },
+        {
+          "status": "passed",
+          "symmetric_boundary_error_mm": 0.05535,
+          "tolerance_mm": 0.25,
+          "sampling_spacing_mm": 0.1,
+          "axis": 2,
+          "position_mm": 25,
+          "loops": 1
+        },
+        {
+          "status": "passed",
+          "symmetric_boundary_error_mm": 0.05497,
+          "tolerance_mm": 0.25,
+          "sampling_spacing_mm": 0.1,
+          "axis": 2,
+          "position_mm": 29.99,
+          "loops": 1
+        }
+      ],
+      "world_bounds_mm": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          80.0,
+          50.0,
+          30.0
+        ]
+      ],
+      "scope": "Independent mesh dimensions and sections; does not replace human view/intent review"
+    },
+    "drawing_checks": {
+      "version": 1,
+      "accepted": false,
+      "status": "unverified",
+      "build_status": "passed",
+      "geometry_status": "passed",
+      "projection_status": "passed",
+      "checks": [
+        {
+          "name": "connected solid",
+          "status": "passed",
+          "detail": {
+            "watertight": true,
+            "components": 1
+          }
+        },
+        {
+          "name": "requested maximum",
+          "status": "passed",
+          "detail": {
+            "actual_mm": 80.0,
+            "limit_mm": 80.0,
+            "tolerance_mm": 0.5
+          }
+        },
+        {
+          "name": "top projection",
+          "status": "passed",
+          "detail": {
+            "similarity": 0.925,
+            "minimum": 0.45
+          }
+        },
+        {
+          "name": "right projection",
+          "status": "passed",
+          "detail": {
+            "similarity": 0.623,
+            "minimum": 0.45
+          }
+        },
+        {
+          "name": "dimensions and detailed features",
+          "status": "unverified",
+          "detail": "Projection checks cannot prove radii, bevel angles, hidden depth or section shape. Review measured features and view assignments."
+        }
+      ],
+      "projection_similarity": {
+        "top": 0.925,
+        "right": 0.623
+      },
+      "profile_topology": {
+        "top": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 0,
+          "source_aspect": 1.413,
+          "rendered_aspect": 1.597,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": []
+        },
+        "right": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 2,
+          "crop_internal_profiles": 0,
+          "source_aspect": 2.745,
+          "rendered_aspect": 1.675,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": [
+            [
+              0.496,
+              0.494
+            ],
+            [
+              0.035,
+              0.495
+            ]
+          ]
+        }
+      },
+      "failures": [
+        "Detailed drawing features and view assignments require review."
+      ],
+      "scope": "Partial automatic checks. No drawing acceptance from solid validity alone."
+    },
+    "edited": {
+      "status": "passed",
+      "extents_mm": [
+        80.0,
+        50.0,
+        30.0
+      ],
+      "expected_extents_mm": [
+        80,
+        50,
+        30
+      ],
+      "dimensions_passed": true,
+      "geometry_passed": true,
+      "sections": [
+        {
+          "status": "passed",
+          "symmetric_boundary_error_mm": 0.04972,
+          "tolerance_mm": 0.25,
+          "sampling_spacing_mm": 0.1,
+          "axis": 2,
+          "position_mm": 0.01,
+          "loops": 1
+        },
+        {
+          "status": "passed",
+          "symmetric_boundary_error_mm": 0.05425,
+          "tolerance_mm": 0.25,
+          "sampling_spacing_mm": 0.1,
+          "axis": 2,
+          "position_mm": 5,
+          "loops": 1
+        },
+        {
+          "status": "passed",
+          "symmetric_boundary_error_mm": 0.057,
+          "tolerance_mm": 0.25,
+          "sampling_spacing_mm": 0.1,
+          "axis": 2,
+          "position_mm": 15,
+          "loops": 1
+        },
+        {
+          "status": "passed",
+          "symmetric_boundary_error_mm": 0.05425,
+          "tolerance_mm": 0.25,
+          "sampling_spacing_mm": 0.1,
+          "axis": 2,
+          "position_mm": 25,
+          "loops": 1
+        },
+        {
+          "status": "passed",
+          "symmetric_boundary_error_mm": 0.04972,
+          "tolerance_mm": 0.25,
+          "sampling_spacing_mm": 0.1,
+          "axis": 2,
+          "position_mm": 29.99,
+          "loops": 1
+        }
+      ],
+      "world_bounds_mm": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          80.0,
+          50.0,
+          30.0
+        ]
+      ],
+      "scope": "Independent mesh dimensions and sections; does not replace human view/intent review"
+    },
+    "protected_dimensions_passed": true
+  },
+  "bevel": {
+    "original": {
+      "status": "passed",
+      "extents_mm": [
+        60.0,
+        40.0,
+        20.0
+      ],
+      "expected_extents_mm": [
+        60,
+        40,
+        20
+      ],
+      "dimensions_passed": true,
+      "geometry_passed": true,
+      "sections": [
+        {
+          "status": "passed",
+          "symmetric_boundary_error_mm": 0.04877,
+          "tolerance_mm": 0.25,
+          "sampling_spacing_mm": 0.1,
+          "axis": 2,
+          "position_mm": 10,
+          "loops": 1
+        },
+        {
+          "status": "passed",
+          "symmetric_boundary_error_mm": 0.04877,
+          "tolerance_mm": 0.25,
+          "sampling_spacing_mm": 0.1,
+          "axis": 1,
+          "position_mm": 20,
+          "loops": 1
+        },
+        {
+          "status": "passed",
+          "symmetric_boundary_error_mm": 0.04972,
+          "tolerance_mm": 0.25,
+          "sampling_spacing_mm": 0.1,
+          "axis": 0,
+          "position_mm": 30,
+          "loops": 1
+        }
+      ],
+      "world_bounds_mm": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          60.0,
+          40.0,
+          20.0
+        ]
+      ],
+      "scope": "Independent mesh dimensions and sections; does not replace human view/intent review"
+    },
+    "drawing_checks": {
+      "version": 1,
+      "accepted": false,
+      "status": "failed",
+      "build_status": "passed",
+      "geometry_status": "passed",
+      "projection_status": "failed",
+      "checks": [
+        {
+          "name": "connected solid",
+          "status": "passed",
+          "detail": {
+            "watertight": true,
+            "components": 1
+          }
+        },
+        {
+          "name": "requested maximum",
+          "status": "passed",
+          "detail": {
+            "actual_mm": 60.0,
+            "limit_mm": 60.0,
+            "tolerance_mm": 0.5
+          }
+        },
+        {
+          "name": "top projection",
+          "status": "passed",
+          "detail": {
+            "similarity": 0.652,
+            "minimum": 0.45
+          }
+        },
+        {
+          "name": "right projection",
+          "status": "failed",
+          "detail": {
+            "similarity": 0.237,
+            "minimum": 0.45
+          }
+        },
+        {
+          "name": "right openings",
+          "status": "failed",
+          "detail": {
+            "expected_at_least": 1,
+            "actual": 0
+          }
+        },
+        {
+          "name": "right opening positions",
+          "status": "failed",
+          "detail": {
+            "fidelity": 0.0,
+            "minimum": 0.5,
+            "missing": [
+              [
+                0.499,
+                0.497
+              ]
+            ]
+          }
+        },
+        {
+          "name": "dimensions and detailed features",
+          "status": "unverified",
+          "detail": "Projection checks cannot prove radii, bevel angles, hidden depth or section shape. Review measured features and view assignments."
+        }
+      ],
+      "projection_similarity": {
+        "top": 0.652,
+        "right": 0.237
+      },
+      "profile_topology": {
+        "top": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 0,
+          "source_aspect": 11.656,
+          "rendered_aspect": 1.493,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": []
+        },
+        "right": {
+          "source_internal_profiles": 1,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 1,
+          "source_aspect": 3.028,
+          "rendered_aspect": 2.0,
+          "source_opening_centroids": [
+            [
+              0.499,
+              0.497
+            ]
+          ],
+          "rendered_opening_centroids": [],
+          "missing_opening_centroids": [
+            [
+              0.499,
+              0.497
+            ]
+          ],
+          "feature_position_fidelity": 0.0
+        }
+      },
+      "failures": [
+        "right projection",
+        "right openings",
+        "right opening positions",
+        "Detailed drawing features and view assignments require review."
+      ],
+      "scope": "Partial automatic checks. No drawing acceptance from solid validity alone."
+    },
+    "edited": {
+      "status": "passed",
+      "extents_mm": [
+        60.0,
+        40.0,
+        20.0
+      ],
+      "expected_extents_mm": [
+        60,
+        40,
+        20
+      ],
+      "dimensions_passed": true,
+      "geometry_passed": true,
+      "sections": [
+        {
+          "status": "passed",
+          "symmetric_boundary_error_mm": 0.04933,
+          "tolerance_mm": 0.25,
+          "sampling_spacing_mm": 0.1,
+          "axis": 2,
+          "position_mm": 10,
+          "loops": 1
+        },
+        {
+          "status": "passed",
+          "symmetric_boundary_error_mm": 0.04933,
+          "tolerance_mm": 0.25,
+          "sampling_spacing_mm": 0.1,
+          "axis": 1,
+          "position_mm": 20,
+          "loops": 1
+        },
+        {
+          "status": "passed",
+          "symmetric_boundary_error_mm": 0.04933,
+          "tolerance_mm": 0.25,
+          "sampling_spacing_mm": 0.1,
+          "axis": 0,
+          "position_mm": 30,
+          "loops": 1
+        }
+      ],
+      "world_bounds_mm": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          60.0,
+          40.0,
+          20.0
+        ]
+      ],
+      "scope": "Independent mesh dimensions and sections; does not replace human view/intent review"
+    },
+    "protected_dimensions_passed": true
+  },
+  "wheel": {
+    "original": {
+      "scope": "regression geometry only; use saved drawing checks for interpretation",
+      "extents_mm": [
+        120.0,
+        120.0,
+        8.0
+      ],
+      "watertight": true,
+      "components": 1
+    },
+    "drawing_checks": {
+      "version": 1,
+      "accepted": false,
+      "status": "failed",
+      "build_status": "passed",
+      "geometry_status": "passed",
+      "projection_status": "failed",
+      "checks": [
+        {
+          "name": "connected solid",
+          "status": "passed",
+          "detail": {
+            "watertight": true,
+            "components": 1
+          }
+        },
+        {
+          "name": "requested maximum",
+          "status": "passed",
+          "detail": {
+            "actual_mm": 120.0,
+            "limit_mm": 120.0,
+            "tolerance_mm": 0.5
+          }
+        },
+        {
+          "name": "front projection",
+          "status": "failed",
+          "detail": {
+            "similarity": 0.4,
+            "minimum": 0.45
+          }
+        },
+        {
+          "name": "front openings",
+          "status": "passed",
+          "detail": {
+            "expected_at_least": 1,
+            "actual": 1
+          }
+        },
+        {
+          "name": "front opening positions",
+          "status": "passed",
+          "detail": {
+            "fidelity": 1.0,
+            "minimum": 0.5,
+            "missing": []
+          }
+        },
+        {
+          "name": "right projection",
+          "status": "failed",
+          "detail": {
+            "similarity": 0.145,
+            "minimum": 0.45
+          }
+        },
+        {
+          "name": "dimensions and detailed features",
+          "status": "unverified",
+          "detail": "Projection checks cannot prove radii, bevel angles, hidden depth or section shape. Review measured features and view assignments."
+        }
+      ],
+      "projection_similarity": {
+        "front": 0.4,
+        "right": 0.145
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 1,
+          "rendered_internal_profiles": 1,
+          "crop_internal_profiles": 1,
+          "source_aspect": 1.014,
+          "rendered_aspect": 15.583,
+          "source_opening_centroids": [
+            [
+              0.499,
+              0.499
+            ]
+          ],
+          "rendered_opening_centroids": [
+            [
+              0.344,
+              0.464
+            ]
+          ],
+          "feature_position_fidelity": 1.0
+        },
+        "right": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 1,
+          "crop_internal_profiles": 0,
+          "source_aspect": 0.111,
+          "rendered_aspect": 15.583,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": [
+            [
+              0.344,
+              0.464
+            ]
+          ]
+        }
+      },
+      "failures": [
+        "front projection",
+        "right projection",
+        "Detailed drawing features and view assignments require review."
+      ],
+      "scope": "Partial automatic checks. No drawing acceptance from solid validity alone."
+    },
+    "edited": {
+      "scope": "regression geometry only; use saved drawing checks for interpretation",
+      "extents_mm": [
+        122.4000015258789,
+        122.4000015258789,
+        8.0
+      ],
+      "watertight": true,
+      "components": 1
+    }
+  },
+  "bookend": {
+    "original": {
+      "scope": "regression geometry only; use saved drawing checks for interpretation",
+      "extents_mm": [
+        100.0,
+        80.0,
+        120.0
+      ],
+      "watertight": true,
+      "components": 1
+    },
+    "drawing_checks": {
+      "version": 1,
+      "accepted": false,
+      "status": "unverified",
+      "build_status": "passed",
+      "geometry_status": "passed",
+      "projection_status": "passed",
+      "checks": [
+        {
+          "name": "connected solid",
+          "status": "passed",
+          "detail": {
+            "watertight": true,
+            "components": 1
+          }
+        },
+        {
+          "name": "requested maximum",
+          "status": "passed",
+          "detail": {
+            "actual_mm": 120.0,
+            "limit_mm": 120.0,
+            "tolerance_mm": 0.5
+          }
+        },
+        {
+          "name": "front projection",
+          "status": "passed",
+          "detail": {
+            "similarity": 0.89,
+            "minimum": 0.45
+          }
+        },
+        {
+          "name": "front openings",
+          "status": "passed",
+          "detail": {
+            "expected_at_least": 4,
+            "actual": 4
+          }
+        },
+        {
+          "name": "front opening positions",
+          "status": "passed",
+          "detail": {
+            "fidelity": 1.0,
+            "minimum": 0.5,
+            "missing": []
+          }
+        },
+        {
+          "name": "right projection",
+          "status": "passed",
+          "detail": {
+            "similarity": 0.866,
+            "minimum": 0.45
+          }
+        },
+        {
+          "name": "dimensions and detailed features",
+          "status": "unverified",
+          "detail": "Projection checks cannot prove radii, bevel angles, hidden depth or section shape. Review measured features and view assignments."
+        }
+      ],
+      "projection_similarity": {
+        "front": 0.89,
+        "right": 0.866
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 4,
+          "rendered_internal_profiles": 4,
+          "crop_internal_profiles": 4,
+          "source_aspect": 0.822,
+          "rendered_aspect": 0.834,
+          "source_opening_centroids": [
+            [
+              0.755,
+              0.614
+            ],
+            [
+              0.316,
+              0.612
+            ],
+            [
+              0.535,
+              0.421
+            ],
+            [
+              0.257,
+              0.191
+            ]
+          ],
+          "rendered_opening_centroids": [
+            [
+              0.258,
+              0.199
+            ],
+            [
+              0.533,
+              0.413
+            ],
+            [
+              0.325,
+              0.599
+            ],
+            [
+              0.743,
+              0.594
+            ]
+          ],
+          "feature_position_fidelity": 1.0
+        },
+        "right": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 0,
+          "source_aspect": 0.702,
+          "rendered_aspect": 0.669,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": []
+        }
+      },
+      "failures": [
+        "Detailed drawing features and view assignments require review."
+      ],
+      "scope": "Partial automatic checks. No drawing acceptance from solid validity alone."
+    },
+    "edited": {
+      "scope": "regression geometry only; use saved drawing checks for interpretation",
+      "extents_mm": [
+        102.0,
+        80.0,
+        120.0
+      ],
+      "watertight": true,
+      "components": 1
+    }
+  },
+  "knob": {
+    "original": {
+      "scope": "regression geometry only; use saved drawing checks for interpretation",
+      "extents_mm": [
+        120.0,
+        40.0,
+        80.0
+      ],
+      "watertight": true,
+      "components": 1
+    },
+    "drawing_checks": {
+      "version": 1,
+      "accepted": false,
+      "status": "unverified",
+      "build_status": "passed",
+      "geometry_status": "passed",
+      "projection_status": "passed",
+      "checks": [
+        {
+          "name": "connected solid",
+          "status": "passed",
+          "detail": {
+            "watertight": true,
+            "components": 1
+          }
+        },
+        {
+          "name": "requested maximum",
+          "status": "passed",
+          "detail": {
+            "actual_mm": 120.0,
+            "limit_mm": 120.0,
+            "tolerance_mm": 0.5
+          }
+        },
+        {
+          "name": "front projection",
+          "status": "passed",
+          "detail": {
+            "similarity": 0.667,
+            "minimum": 0.45
+          }
+        },
+        {
+          "name": "right projection",
+          "status": "passed",
+          "detail": {
+            "similarity": 0.474,
+            "minimum": 0.45
+          }
+        },
+        {
+          "name": "dimensions and detailed features",
+          "status": "unverified",
+          "detail": "Projection checks cannot prove radii, bevel angles, hidden depth or section shape. Review measured features and view assignments."
+        }
+      ],
+      "projection_similarity": {
+        "front": 0.667,
+        "right": 0.474
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 0,
+          "source_aspect": 1.432,
+          "rendered_aspect": 1.493,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": []
+        },
+        "right": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 0,
+          "source_aspect": 1.463,
+          "rendered_aspect": 0.5,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": []
+        }
+      },
+      "failures": [
+        "Detailed drawing features and view assignments require review."
+      ],
+      "scope": "Partial automatic checks. No drawing acceptance from solid validity alone."
+    },
+    "edited": {
+      "scope": "regression geometry only; use saved drawing checks for interpretation",
+      "extents_mm": [
+        122.4000015258789,
+        40.0,
+        80.0
+      ],
+      "watertight": true,
+      "components": 1
+    }
+  },
+  "cable_holder": {
+    "original": {
+      "scope": "regression geometry only; use saved drawing checks for interpretation",
+      "extents_mm": [
+        15.0,
+        10.0,
+        100.0
+      ],
+      "watertight": true,
+      "components": 1
+    },
+    "drawing_checks": {
+      "version": 1,
+      "accepted": false,
+      "status": "failed",
+      "build_status": "passed",
+      "geometry_status": "passed",
+      "projection_status": "failed",
+      "checks": [
+        {
+          "name": "connected solid",
+          "status": "passed",
+          "detail": {
+            "watertight": true,
+            "components": 1
+          }
+        },
+        {
+          "name": "requested maximum",
+          "status": "passed",
+          "detail": {
+            "actual_mm": 100.0,
+            "limit_mm": 120.0,
+            "tolerance_mm": 0.5
+          }
+        },
+        {
+          "name": "front projection",
+          "status": "passed",
+          "detail": {
+            "similarity": 0.631,
+            "minimum": 0.45
+          }
+        },
+        {
+          "name": "top projection",
+          "status": "failed",
+          "detail": {
+            "similarity": 0.35,
+            "minimum": 0.45
+          }
+        },
+        {
+          "name": "top openings",
+          "status": "passed",
+          "detail": {
+            "expected_at_least": 1,
+            "actual": 1
+          }
+        },
+        {
+          "name": "top opening positions",
+          "status": "failed",
+          "detail": {
+            "fidelity": 0.0,
+            "minimum": 0.5,
+            "missing": [
+              [
+                0.492,
+                0.557
+              ]
+            ]
+          }
+        },
+        {
+          "name": "right projection",
+          "status": "failed",
+          "detail": {
+            "similarity": 0.35,
+            "minimum": 0.45
+          }
+        },
+        {
+          "name": "right openings",
+          "status": "failed",
+          "detail": {
+            "expected_at_least": 5,
+            "actual": 0
+          }
+        },
+        {
+          "name": "right opening positions",
+          "status": "failed",
+          "detail": {
+            "fidelity": 0.0,
+            "minimum": 0.5,
+            "missing": [
+              [
+                0.307,
+                0.831
+              ],
+              [
+                0.576,
+                0.68
+              ],
+              [
+                0.31,
+                0.507
+              ],
+              [
+                0.579,
+                0.335
+              ],
+              [
+                0.307,
+                0.159
+              ]
+            ]
+          }
+        },
+        {
+          "name": "dimensions and detailed features",
+          "status": "unverified",
+          "detail": "Projection checks cannot prove radii, bevel angles, hidden depth or section shape. Review measured features and view assignments."
+        }
+      ],
+      "projection_similarity": {
+        "front": 0.631,
+        "top": 0.35,
+        "right": 0.35
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 5,
+          "crop_internal_profiles": 0,
+          "source_aspect": 0.302,
+          "rendered_aspect": 0.149,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": [
+            [
+              0.494,
+              0.222
+            ],
+            [
+              0.494,
+              0.399
+            ],
+            [
+              0.494,
+              0.549
+            ],
+            [
+              0.494,
+              0.699
+            ],
+            [
+              0.494,
+              0.849
+            ]
+          ]
+        },
+        "top": {
+          "source_internal_profiles": 1,
+          "rendered_internal_profiles": 1,
+          "crop_internal_profiles": 1,
+          "source_aspect": 0.627,
+          "rendered_aspect": 1.5,
+          "source_opening_centroids": [
+            [
+              0.492,
+              0.557
+            ]
+          ],
+          "rendered_opening_centroids": [
+            [
+              0.705,
+              0.485
+            ]
+          ],
+          "missing_opening_centroids": [
+            [
+              0.492,
+              0.557
+            ]
+          ],
+          "feature_position_fidelity": 0.0
+        },
+        "right": {
+          "source_internal_profiles": 5,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 5,
+          "source_aspect": 0.489,
+          "rendered_aspect": 0.1,
+          "source_opening_centroids": [
+            [
+              0.307,
+              0.831
+            ],
+            [
+              0.576,
+              0.68
+            ],
+            [
+              0.31,
+              0.507
+            ],
+            [
+              0.579,
+              0.335
+            ],
+            [
+              0.307,
+              0.159
+            ]
+          ],
+          "rendered_opening_centroids": [],
+          "missing_opening_centroids": [
+            [
+              0.307,
+              0.831
+            ],
+            [
+              0.576,
+              0.68
+            ],
+            [
+              0.31,
+              0.507
+            ],
+            [
+              0.579,
+              0.335
+            ],
+            [
+              0.307,
+              0.159
+            ]
+          ],
+          "feature_position_fidelity": 0.0
+        }
+      },
+      "failures": [
+        "top projection",
+        "top opening positions",
+        "right projection",
+        "right openings",
+        "right opening positions",
+        "Detailed drawing features and view assignments require review."
+      ],
+      "scope": "Partial automatic checks. No drawing acceptance from solid validity alone."
+    },
+    "edited": {
+      "scope": "regression geometry only; use saved drawing checks for interpretation",
+      "extents_mm": [
+        15.300000190734863,
+        10.0,
+        100.0
+      ],
+      "watertight": true,
+      "components": 1
+    }
+  },
+  "random_lcd_knob": {
+    "status": "build_failed",
+    "error": {
+      "message": "SmApiChamferFillet failed: SM_ERR (1001) at SmPyFillets.cpp:18",
+      "code": "build_failed"
+    }
+  }
+}

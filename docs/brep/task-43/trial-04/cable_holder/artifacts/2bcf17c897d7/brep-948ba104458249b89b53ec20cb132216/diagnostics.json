@@ -1,0 +1,120 @@
+{
+  "backend": "usd-brep",
+  "version": "1.0.0",
+  "recipe_version": 2,
+  "solid_volume_mm3": 13056.779691039337,
+  "mesh_volume_mm3": 13061.317719918778,
+  "extents_mm": [
+    15.0,
+    10.0,
+    100.0
+  ],
+  "bounds_mm": [
+    [
+      -7.5,
+      -5.0,
+      0.0
+    ],
+    [
+      7.5,
+      5.0,
+      100.0
+    ]
+  ],
+  "watertight": true,
+  "winding_consistent": true,
+  "euler_number": -8,
+  "triangles": 348,
+  "usd_roundtrip": true,
+  "volume_relative_accuracy": 1e-08,
+  "usd_volume_mm3": 13056.779769378196,
+  "operations": [
+    {
+      "id": "main_body",
+      "kind": "box",
+      "faces": 6
+    },
+    {
+      "id": "top_notch_cutter",
+      "kind": "cylinder",
+      "faces": 3
+    },
+    {
+      "id": "body_with_top_notch",
+      "kind": "difference",
+      "faces": 8
+    },
+    {
+      "id": "bottom_notch_cutter",
+      "kind": "cylinder",
+      "faces": 3
+    },
+    {
+      "id": "body_with_notches",
+      "kind": "difference",
+      "faces": 10
+    },
+    {
+      "id": "central_hole_cutter",
+      "kind": "cylinder",
+      "faces": 3
+    },
+    {
+      "id": "body_with_hole",
+      "kind": "difference",
+      "faces": 11
+    },
+    {
+      "id": "slot_1_cutter",
+      "kind": "box",
+      "faces": 6
+    },
+    {
+      "id": "body_with_slot_1",
+      "kind": "difference",
+      "faces": 15
+    },
+    {
+      "id": "slot_2_cutter",
+      "kind": "box",
+      "faces": 6
+    },
+    {
+      "id": "body_with_slot_2",
+      "kind": "difference",
+      "faces": 19
+    },
+    {
+      "id": "slot_3_cutter",
+      "kind": "box",
+      "faces": 6
+    },
+    {
+      "id": "body_with_slot_3",
+      "kind": "difference",
+      "faces": 23
+    },
+    {
+      "id": "slot_4_cutter",
+      "kind": "box",
+      "faces": 6
+    },
+    {
+      "id": "body_with_slot_4",
+      "kind": "difference",
+      "faces": 27
+    },
+    {
+      "id": "slot_5_cutter",
+      "kind": "box",
+      "faces": 6
+    },
+    {
+      "id": "final_part",
+      "kind": "difference",
+      "faces": 31
+    }
+  ],
+  "connections": [],
+  "build_seconds": 0.256
+}

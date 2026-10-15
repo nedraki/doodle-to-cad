@@ -1,0 +1,143 @@
+```json
+{
+  "version": 1,
+  "object_hypothesis": "Bevelled rectangular block",
+  "features": [
+    {
+      "id": "body_main",
+      "type": "body",
+      "description": "Rectangular prism with chamfered edges",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_102"
+        },
+        {
+          "view_id": "view_6",
+          "region_id": "profile_contour_106"
+        }
+      ],
+      "reason": "View 5 and View 6 show large rectangular outlines with chamfered corners, consistent with the main body of a block."
+    },
+    {
+      "id": "chamfer_top",
+      "type": "profile",
+      "description": "Chamfered edge profile on the top view",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_8",
+          "region_id": "profile_contour_31"
+        }
+      ],
+      "reason": "View 8 (Top) shows a profile with angled corners, indicating a chamfer or bevel on the vertical edges."
+    },
+    {
+      "id": "chamfer_side",
+      "type": "profile",
+      "description": "Chamfered edge profile on the side view",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_3",
+          "region_id": "profile_contour_123"
+        },
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_114"
+        }
+      ],
+      "reason": "Views 3 and 4 show small profiles with angled corners, representing the chamfered edges seen from the side."
+    },
+    {
+      "id": "chamfer_front",
+      "type": "profile",
+      "description": "Chamfered edge profile on the front view",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_187"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_149"
+        }
+      ],
+      "reason": "Views 1 and 2 show profiles with angled corners, representing the chamfered edges seen from the front."
+    },
+    {
+      "id": "inner_contour",
+      "type": "other",
+      "description": "Inner rectangular contour",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_104"
+        }
+      ],
+      "reason": "View 5 contains an inner rectangular contour (contour_104) inside the main body outline. This likely represents the inner boundary of the chamfered faces."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "rel_chamfer_body",
+      "type": "connected",
+      "features": [
+        "body_main",
+        "chamfer_top",
+        "chamfer_side",
+        "chamfer_front"
+      ],
+      "description": "Chamfers are located at the edges of the main body",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_102"
+        },
+        {
+          "view_id": "view_6",
+          "region_id": "profile_contour_106"
+        }
+      ],
+      "reason": "The chamfer profiles (views 1-4, 8) correspond to the corner cuts visible on the main body outlines (views 5, 6)."
+    },
+    {
+      "id": "rel_inner_outer",
+      "type": "position",
+      "features": [
+        "inner_contour",
+        "body_main"
+      ],
+      "description": "Inner contour is concentric to the outer body",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_104"
+        },
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_102"
+        }
+      ],
+      "reason": "In View 5, the inner contour (104) is positioned inside the outer contour (102) with a consistent offset."
+    }
+  ],
+  "assumptions": [
+    "The object is a solid block as indicated by the title 'BEVELLED BLOCK' and the lack of hidden lines indicating a shell.",
+    "The 'chamfer' profiles in views 1-4 and 8 represent the 2D projection of the 3D chamfered edges.",
+    "View 5 corresponds to the Front view (XZ plane) and View 6 corresponds to the Top view (XY plane) based on aspect ratios and standard orthographic layout."
+  ],
+  "unresolved": [
+    "The exact depth of the chamfer is not directly measurable from the 2D contours without scale.",
+    "The specific orientation of the chamfer (e.g., 45 degrees) is assumed based on the visual symmetry of the corner cuts."
+  ],
+  "conflicts": [
+    "None."
+  ]
+}
+```

@@ -1,0 +1,261 @@
+{
+  "version": 2,
+  "units": "mm",
+  "name": "three_arm_component",
+  "parameters": {
+    "hub_diameter": {
+      "value": 30,
+      "min": 10,
+      "max": 100,
+      "label": "Hub Diameter",
+      "description": "Diameter of the central circular hub"
+    },
+    "component_height": {
+      "value": 10,
+      "min": 1,
+      "max": 50,
+      "label": "Component Height",
+      "description": "Thickness of the component (Z-axis)"
+    },
+    "arm_length": {
+      "value": 10,
+      "min": 1,
+      "max": 50,
+      "label": "Arm Length",
+      "description": "Length of the arms extending from the hub"
+    },
+    "arm_width": {
+      "value": 5,
+      "min": 1,
+      "max": 20,
+      "label": "Arm Width",
+      "description": "Width of the arms"
+    },
+    "taper_offset": {
+      "value": 2,
+      "min": 0,
+      "max": 10,
+      "label": "Taper Offset",
+      "description": "Horizontal inset of the bottom face relative to the top face"
+    }
+  },
+  "operations": [
+    {
+      "id": "hub_top",
+      "kind": "cylinder",
+      "origin": [
+        0,
+        0,
+        "component_height"
+      ],
+      "radius": "hub_diameter/2",
+      "height": "component_height",
+      "axis": "z",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "arm1_top",
+      "kind": "box",
+      "origin": [
+        "hub_diameter/2 - 1",
+        "-arm_width/2",
+        "component_height"
+      ],
+      "size": [
+        "arm_length",
+        "arm_width",
+        "component_height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "arm2_top",
+      "kind": "box",
+      "origin": [
+        "hub_diameter/2 - 1",
+        "-arm_width/2",
+        "component_height"
+      ],
+      "size": [
+        "arm_length",
+        "arm_width",
+        "component_height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "arm2_rot",
+      "kind": "rotate",
+      "body": "arm2_top",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "axis": "z",
+      "angle": 240,
+      "frame": "world",
+      "depends_on": [
+        "arm2_top"
+      ],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "arm3_top",
+      "kind": "box",
+      "origin": [
+        "hub_diameter/2 - 1",
+        "-arm_width/2",
+        "component_height"
+      ],
+      "size": [
+        "arm_length",
+        "arm_width",
+        "component_height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "arm3_rot",
+      "kind": "rotate",
+      "body": "arm3_top",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "axis": "z",
+      "angle": 120,
+      "frame": "world",
+      "depends_on": [
+        "arm3_top"
+      ],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "top_union",
+      "kind": "union",
+      "left": "hub_top",
+      "right": "arm1_top",
+      "frame": "world",
+      "depends_on": [
+        "hub_top",
+        "arm1_top"
+      ],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "top_union2",
+      "kind": "union",
+      "left": "top_union",
+      "right": "arm2_rot",
+      "frame": "world",
+      "depends_on": [
+        "top_union",
+        "arm2_rot"
+      ],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "top_union3",
+      "kind": "union",
+      "left": "top_union2",
+      "right": "arm3_rot",
+      "frame": "world",
+      "depends_on": [
+        "top_union2",
+        "arm3_rot"
+      ],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "chamfered",
+      "kind": "chamfer",
+      "body": "top_union3",
+      "radius": "taper_offset * 1.4142135623730951",
+      "frame": "world",
+      "depends_on": [
+        "top_union3"
+      ],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "final_part",
+      "kind": "rotate",
+      "body": "chamfered",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "axis": "z",
+      "angle": 180,
+      "frame": "world",
+      "depends_on": [
+        "chamfered"
+      ],
+      "evidence": [
+        "e1"
+      ]
+    }
+  ],
+  "output": "final_part",
+  "frames": {
+    "world": {
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    }
+  },
+  "bodies": [
+    {
+      "id": "part",
+      "output": "final_part"
+    }
+  ],
+  "evidence": {
+    "observed": [],
+    "inferred": [],
+    "assumptions": [
+      {
+        "id": "e1",
+        "text": "Assumed component is a single solid piece with a central hub and three radial arms spaced 120 degrees apart. The trapezoidal profile is achieved by chamfering the bottom edges of the top-view shape. Dimensions are estimated from the drawing proportions."
+      }
+    ],
+    "unresolved": []
+  },
+  "constraints": []
+}

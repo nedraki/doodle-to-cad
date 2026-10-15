@@ -1,0 +1,188 @@
+{
+  "handle": {
+    "original": {
+      "status": "passed",
+      "extents_mm": [
+        48.0,
+        53.99403381347656,
+        8.000000203998283
+      ],
+      "expected_extents_mm": [
+        48,
+        54,
+        8
+      ],
+      "dimensions_passed": true,
+      "geometry_passed": true,
+      "sections": [
+        {
+          "status": "passed",
+          "symmetric_boundary_error_mm": 0.05864,
+          "tolerance_mm": 1,
+          "sampling_spacing_mm": 0.1,
+          "axis": 2,
+          "position_mm": 4,
+          "loops": 1
+        },
+        {
+          "status": "passed",
+          "symmetric_boundary_error_mm": 0.05081,
+          "tolerance_mm": 1,
+          "sampling_spacing_mm": 0.1,
+          "axis": 1,
+          "position_mm": -15,
+          "loops": 2
+        }
+      ],
+      "world_bounds_mm": [
+        [
+          -24.0,
+          -2.4492937051703357e-16,
+          -2.0399828315476043e-07
+        ],
+        [
+          24.0,
+          53.99403381347656,
+          8.0
+        ]
+      ],
+      "scope": "Independent mesh dimensions and sections; does not replace human view/intent review"
+    },
+    "drawing_checks": {
+      "version": 1,
+      "accepted": false,
+      "status": "failed",
+      "build_status": "passed",
+      "geometry_status": "passed",
+      "projection_status": "failed",
+      "checks": [
+        {
+          "name": "connected solid",
+          "status": "passed",
+          "detail": {
+            "watertight": true,
+            "components": 1
+          }
+        },
+        {
+          "name": "requested maximum",
+          "status": "passed",
+          "detail": {
+            "actual_mm": 53.994,
+            "limit_mm": 54.0,
+            "tolerance_mm": 0.5
+          }
+        },
+        {
+          "name": "top projection",
+          "status": "failed",
+          "detail": {
+            "similarity": 0.196,
+            "minimum": 0.45
+          }
+        },
+        {
+          "name": "right projection",
+          "status": "failed",
+          "detail": {
+            "similarity": 0.224,
+            "minimum": 0.45
+          }
+        },
+        {
+          "name": "dimensions and detailed features",
+          "status": "unverified",
+          "detail": "Projection checks cannot prove radii, bevel angles, hidden depth or section shape. Review measured features and view assignments."
+        }
+      ],
+      "projection_similarity": {
+        "top": 0.196,
+        "right": 0.224
+      },
+      "profile_topology": {
+        "top": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 0,
+          "source_aspect": 9.455,
+          "rendered_aspect": 0.888,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": []
+        },
+        "right": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 3,
+          "crop_internal_profiles": 0,
+          "source_aspect": 1.075,
+          "rendered_aspect": 6.793,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": [
+            [
+              0.514,
+              0.734
+            ],
+            [
+              0.835,
+              0.608
+            ]
+          ]
+        }
+      },
+      "failures": [
+        "top projection",
+        "right projection",
+        "Detailed drawing features and view assignments require review."
+      ],
+      "scope": "Partial automatic checks. No drawing acceptance from solid validity alone."
+    },
+    "edited": {
+      "status": "passed",
+      "extents_mm": [
+        56.0,
+        57.993038177490234,
+        8.0
+      ],
+      "expected_extents_mm": [
+        56,
+        58,
+        8
+      ],
+      "dimensions_passed": true,
+      "geometry_passed": true,
+      "sections": [
+        {
+          "status": "passed",
+          "symmetric_boundary_error_mm": 0.06135,
+          "tolerance_mm": 1,
+          "sampling_spacing_mm": 0.1,
+          "axis": 2,
+          "position_mm": 4,
+          "loops": 1
+        },
+        {
+          "status": "passed",
+          "symmetric_boundary_error_mm": 0.05081,
+          "tolerance_mm": 1,
+          "sampling_spacing_mm": 0.1,
+          "axis": 1,
+          "position_mm": -15,
+          "loops": 2
+        }
+      ],
+      "world_bounds_mm": [
+        [
+          -28.0,
+          -2.4492937051703357e-16,
+          -8.87557597489347e-16
+        ],
+        [
+          28.0,
+          57.993038177490234,
+          8.0
+        ]
+      ],
+      "scope": "Independent mesh dimensions and sections; does not replace human view/intent review"
+    },
+    "protected_dimensions_passed": true
+  }
+}

@@ -1,0 +1,140 @@
+{
+  "backend": "usd-brep",
+  "version": "1.0.0",
+  "recipe_version": 2,
+  "solid_volume_mm3": 57244.39164341258,
+  "mesh_volume_mm3": 57235.17897400644,
+  "extents_mm": [
+    122.4000015258789,
+    122.4000015258789,
+    8.0
+  ],
+  "bounds_mm": [
+    [
+      -61.20000076293945,
+      -61.20000076293945,
+      0.0
+    ],
+    [
+      61.20000076293945,
+      61.20000076293945,
+      8.0
+    ]
+  ],
+  "watertight": true,
+  "winding_consistent": true,
+  "euler_number": -14,
+  "triangles": 1084,
+  "usd_roundtrip": true,
+  "volume_relative_accuracy": 1e-08,
+  "usd_volume_mm3": 57244.39164484405,
+  "operations": [
+    {
+      "id": "rim",
+      "kind": "cylinder",
+      "faces": 3
+    },
+    {
+      "id": "rim_inner",
+      "kind": "cylinder",
+      "faces": 3
+    },
+    {
+      "id": "rim_ring",
+      "kind": "difference",
+      "faces": 4
+    },
+    {
+      "id": "hub",
+      "kind": "cylinder",
+      "faces": 3
+    },
+    {
+      "id": "spoke_0",
+      "kind": "box",
+      "faces": 6
+    },
+    {
+      "id": "spoke_1",
+      "kind": "rotate",
+      "faces": 6
+    },
+    {
+      "id": "spoke_2",
+      "kind": "rotate",
+      "faces": 6
+    },
+    {
+      "id": "spoke_3",
+      "kind": "rotate",
+      "faces": 6
+    },
+    {
+      "id": "spoke_4",
+      "kind": "rotate",
+      "faces": 6
+    },
+    {
+      "id": "spoke_5",
+      "kind": "rotate",
+      "faces": 6
+    },
+    {
+      "id": "spoke_6",
+      "kind": "rotate",
+      "faces": 6
+    },
+    {
+      "id": "spoke_7",
+      "kind": "rotate",
+      "faces": 6
+    },
+    {
+      "id": "spokes_0_1",
+      "kind": "union",
+      "faces": 12
+    },
+    {
+      "id": "spokes_0_2",
+      "kind": "union",
+      "faces": 18
+    },
+    {
+      "id": "spokes_0_3",
+      "kind": "union",
+      "faces": 24
+    },
+    {
+      "id": "spokes_0_4",
+      "kind": "union",
+      "faces": 30
+    },
+    {
+      "id": "spokes_0_5",
+      "kind": "union",
+      "faces": 36
+    },
+    {
+      "id": "spokes_0_6",
+      "kind": "union",
+      "faces": 42
+    },
+    {
+      "id": "spokes_all",
+      "kind": "union",
+      "faces": 48
+    },
+    {
+      "id": "wheel_body",
+      "kind": "union",
+      "faces": 7
+    },
+    {
+      "id": "wheel_final",
+      "kind": "union",
+      "faces": 66
+    }
+  ],
+  "connections": [],
+  "build_seconds": 0.389
+}

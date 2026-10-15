@@ -1,0 +1,52 @@
+/* doodle-meta {"version":1,"parameters":{"width":{"label":"Overall width","description":"Changes the body width along X","unit":"mm","feature":"body_width"},"depth":{"label":"Overall depth","description":"Changes the body depth along Y","unit":"mm","feature":"body_depth"},"height":{"label":"Overall height","description":"Changes the body height along Z","unit":"mm","feature":"body_height"},"chamfer_size":{"label":"Chamfer size","description":"Size of the 45-degree chamfer on all edges","unit":"mm","feature":"chamfer"}},"features":{"body_width":{"kind":"dimension","axis":"x","label":"Overall width"},"body_depth":{"kind":"dimension","axis":"y","label":"Overall depth"},"body_height":{"kind":"dimension","axis":"z","label":"Overall height"},"chamfer":{"kind":"region","label":"Edge Chamfers","min":[0,0,0],"max":[{"parameter":"width","scale":1,"offset":0},{"parameter":"depth","scale":1,"offset":0},{"parameter":"height","scale":1,"offset":0}]}}} */
+
+// Parameters
+width = 60.0;
+depth = 25.18;
+height = 4.27;
+chamfer_size = 2.0;
+
+// Derived constants
+eps = 0.01;
+
+// Module for a single chamfer cutter (a triangular prism)
+// The prism is oriented such that its triangular cross-section is in the XY plane
+// and it extends along Z.
+// It cuts the corner at (x_sign * width/2, y_sign * depth/2).
+module chamfer_cutter(x_sign, y_sign) {
+    // Define the triangle vertices in the local XY plane relative to the corner
+    // The corner is at (x_sign * width/2, y_sign * depth/2)
+    // The cut removes material inside the triangle defined by:
+    // (cx, cy), (cx - x_sign*chamfer_size, cy), (cx, cy - y_sign*chamfer_size)
+    
+    cx = x_sign * width / 2;
+    cy = y_sign * depth / 2;
+    
+    // Points of the triangle
+    p1 = [cx, cy];
+    p2 = [cx - x_sign * chamfer_size, cy];
+    p3 = [cx, cy - y_sign * chamfer_size];
+    
+    // Create the polygon and extrude it along Z
+    // We need to extend the cutter beyond the block in Z to ensure clean cuts
+    translate([0, 0, -eps])
+    linear_extrude(height = height + 2*eps)
+    polygon([p1, p2, p3]);
+}
+
+// Main design
+difference() {
+    // Base block
+    translate([0, 0, height/2])
+    cube([width, depth, height], center=true);
+    
+    // Subtract chamfers on all 4 vertical edges
+    // Top-Right (X+, Y+)
+    chamfer_cutter(1, 1);
+    // Top-Left (X-, Y+)
+    chamfer_cutter(-1, 1);
+    // Bottom-Right (X+, Y-)
+    chamfer_cutter(1, -1);
+    // Bottom-Left (X-, Y-)
+    chamfer_cutter(-1, -1);
+}

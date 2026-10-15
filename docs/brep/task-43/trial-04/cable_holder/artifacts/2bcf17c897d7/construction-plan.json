@@ -1,0 +1,80 @@
+{
+  "view_frame": "Third-angle projection. Front view (bottom-left) shows the XZ plane (width and height). Top view (top-center) shows the XY plane (width and depth). Right view (bottom-right) shows the YZ plane (depth and height). The object is a vertical flat bar.",
+  "features": [
+    {
+      "id": "main_body",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "width: 15",
+        "height: 100",
+        "depth: 10"
+      ],
+      "placement": "Centred at X=0, Y=0. Extends from Z=0 to Z=100.",
+      "evidence": "Front view shows a tall rectangle. Top view shows a narrow rectangle. Right view shows a tall rectangle."
+    },
+    {
+      "id": "top_notch",
+      "shape": "cylindrical_cutout",
+      "section": "circle",
+      "axis_or_plane": "Y",
+      "dimensions": [
+        "radius: 5",
+        "depth: 10"
+      ],
+      "placement": "Centred at X=0, Z=100. Axis along Y.",
+      "evidence": "Top view shows a concave arc at the top edge. Right view shows a corresponding curve at the top."
+    },
+    {
+      "id": "bottom_notch",
+      "shape": "cylindrical_cutout",
+      "section": "circle",
+      "axis_or_plane": "Y",
+      "dimensions": [
+        "radius: 2.5",
+        "depth: 10"
+      ],
+      "placement": "Centred at X=0, Z=0. Axis along Y.",
+      "evidence": "Top view shows a convex arc at the bottom edge. Right view shows a corresponding curve at the bottom."
+    },
+    {
+      "id": "central_hole",
+      "shape": "cylindrical_hole",
+      "section": "circle",
+      "axis_or_plane": "Y",
+      "dimensions": [
+        "radius: 3",
+        "depth: 10"
+      ],
+      "placement": "Centred at X=0, Z=80. Axis along Y.",
+      "evidence": "Top view shows a circle in the upper half. Right view shows a circle in the upper half."
+    },
+    {
+      "id": "side_holes",
+      "shape": "cylindrical_holes",
+      "section": "circle",
+      "axis_or_plane": "Y",
+      "dimensions": [
+        "radius: 2",
+        "depth: 10"
+      ],
+      "placement": "Centred at X=0, Y=0. Z positions: 15, 35, 55, 75.",
+      "evidence": "Right view shows four small circles arranged vertically."
+    }
+  ],
+  "connections": [
+    "main_body is the base solid.",
+    "top_notch, bottom_notch, central_hole, and side_holes are subtractive features from main_body."
+  ],
+  "edit_rules": [
+    "Changing main_body width requires updating the X positions of all holes and notches to maintain centring.",
+    "Changing main_body height requires updating the Z positions of all holes and notches to maintain relative spacing.",
+    "Changing main_body depth requires updating the depth of all holes and notches to ensure they pass through."
+  ],
+  "unresolved": [
+    "Exact dimensions are estimated from the drawing.",
+    "The exact shape of the top and bottom notches is inferred as circular arcs.",
+    "The exact shape of the side holes is inferred as circular."
+  ]
+}
