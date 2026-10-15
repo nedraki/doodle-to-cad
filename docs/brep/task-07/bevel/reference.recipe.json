@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "units": "mm",
+  "parameters": {},
+  "operations": [
+    {
+      "id": "box",
+      "kind": "box",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "size": [
+        60,
+        40,
+        20
+      ]
+    },
+    {
+      "id": "bevel",
+      "kind": "chamfer",
+      "body": "box",
+      "radius": 2.8284271247461903
+    }
+  ],
+  "output": "bevel"
+}

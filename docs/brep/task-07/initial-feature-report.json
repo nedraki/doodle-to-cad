@@ -1,0 +1,134 @@
+{
+  "rounded": {
+    "build": "passed",
+    "measurements": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 140,
+      "extents_mm": [
+        80.0,
+        50.0,
+        30.0
+      ],
+      "volume_mm3": 119051.028
+    },
+    "positive": [
+      {
+        "status": "passed",
+        "symmetric_boundary_error_mm": 0.05535,
+        "tolerance_mm": 0.25,
+        "sampling_spacing_mm": 0.1,
+        "axis": 2,
+        "position_mm": 5,
+        "loops": 1
+      },
+      {
+        "status": "passed",
+        "symmetric_boundary_error_mm": 0.05365,
+        "tolerance_mm": 0.25,
+        "sampling_spacing_mm": 0.1,
+        "axis": 2,
+        "position_mm": 15,
+        "loops": 1
+      },
+      {
+        "status": "passed",
+        "symmetric_boundary_error_mm": 0.05535,
+        "tolerance_mm": 0.25,
+        "sampling_spacing_mm": 0.1,
+        "axis": 2,
+        "position_mm": 25,
+        "loops": 1
+      }
+    ],
+    "wrong_sharp_or_straight_candidate": {
+      "status": "failed",
+      "symmetric_boundary_error_mm": 2.48528,
+      "tolerance_mm": 0.25,
+      "sampling_spacing_mm": 0.1,
+      "axis": 2,
+      "position_mm": 5,
+      "loops": 1
+    },
+    "source": "deterministic reference, not generated"
+  },
+  "bevel": {
+    "build": "passed",
+    "measurements": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 60,
+      "extents_mm": [
+        60.0,
+        40.0,
+        20.0
+      ],
+      "volume_mm3": 47088.0
+    },
+    "positive": [
+      {
+        "status": "passed",
+        "symmetric_boundary_error_mm": 0.05,
+        "tolerance_mm": 0.25,
+        "sampling_spacing_mm": 0.1,
+        "axis": 2,
+        "position_mm": 5,
+        "loops": 1
+      },
+      {
+        "status": "passed",
+        "symmetric_boundary_error_mm": 0.04877,
+        "tolerance_mm": 0.25,
+        "sampling_spacing_mm": 0.1,
+        "axis": 2,
+        "position_mm": 10,
+        "loops": 1
+      },
+      {
+        "status": "passed",
+        "symmetric_boundary_error_mm": 0.05,
+        "tolerance_mm": 0.25,
+        "sampling_spacing_mm": 0.1,
+        "axis": 2,
+        "position_mm": 15,
+        "loops": 1
+      }
+    ],
+    "wrong_sharp_or_straight_candidate": {
+      "status": "failed",
+      "symmetric_boundary_error_mm": 1.41505,
+      "tolerance_mm": 0.25,
+      "sampling_spacing_mm": 0.1,
+      "axis": 2,
+      "position_mm": 5,
+      "loops": 1
+    },
+    "source": "deterministic reference, not generated"
+  },
+  "handle": {
+    "build": "failed",
+    "diagnostics": [
+      "SmApiBooleanUnion failed: SM_ERR (1001) at SmPyBooleans.cpp:59"
+    ]
+  },
+  "section_type": {
+    "rectangular": {
+      "status": "passed",
+      "symmetric_boundary_error_mm": 0.0,
+      "tolerance_mm": 0.25,
+      "sampling_spacing_mm": 0.1,
+      "axis": 2,
+      "position_mm": 0,
+      "loops": 1
+    },
+    "wrong_circle": {
+      "status": "failed",
+      "symmetric_boundary_error_mm": 2.0,
+      "tolerance_mm": 0.25,
+      "sampling_spacing_mm": 0.1,
+      "axis": 2,
+      "position_mm": 0,
+      "loops": 1
+    }
+  }
+}

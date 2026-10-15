@@ -86,9 +86,12 @@ function initializeResultVersion(run){
   $('#brepDetails').hidden=isBrep||!brepConfigured;
   $('#restoreScad').hidden=!isBrep||!run.original_run_id;
   if(isBrep){
-    $('#statusBadge').textContent='BRep candidate · solid and mesh checked';
+    const drawing=run.evaluation?.status||'unverified';
+    $('#statusBadge').textContent=`Build: passed · Geometry: passed · Drawing: ${drawing}`;
     $('#resultTitle').textContent='INSPECT DETAILS BEFORE PRINTING';
-    $('#resultText').textContent='The solid and mesh passed geometry checks. Drawing fidelity has not been evaluated. Modify design exposes the saved recipe’s detail parameters.';
+    $('#resultText').textContent=run.evaluation?.checks
+      ? run.evaluation.checks.map(c=>`${c.name}: ${c.status}`).join(' · ')
+      : 'The solid and mesh passed geometry checks. Drawing fidelity has not been evaluated.';
     resultVersion.original={badge:$('#statusBadge').textContent,title:$('#resultTitle').textContent,text:$('#resultText').textContent};
   }
   $('#originalStl').href=run.files.stl||'#';$('#originalStl').hidden=!run.files.stl;
@@ -103,9 +106,9 @@ function setResultEditState(phase){
   $('#resultTitle').textContent=edited?'EDITED MODEL — COMPILED ONLY':original.title;
   $('#resultText').textContent=edited?'Parameter edits compiled successfully. Geometric validation has not been rerun. Downloads match the displayed model; original generation and attempt history remain available.':original.text;
   if(edited&&currentRun?.backend==='usd-brep'){
-    $('#statusBadge').textContent=phase==='failed'?'Update failed · showing last valid BRep':phase==='updating'?'Updating · showing last valid BRep':'Edited BRep · solid and mesh checked';
+    $('#statusBadge').textContent=phase==='failed'?'Update failed · showing last valid BRep':phase==='updating'?'Updating · showing last valid BRep':'Build: passed · Geometry: passed · Drawing: unverified after edit';
     $('#resultTitle').textContent='EDITED BREP CANDIDATE';
-    $('#resultText').textContent='Recipe rebuilt and solid/mesh checks passed. Drawing fidelity has not been evaluated. Downloads match the displayed part.';
+    $('#resultText').textContent='Recipe rebuilt and solid/mesh checks passed. Drawing checks have not been rerun for this edit. Downloads match the displayed part.';
   }
   $('#statusBadge').dataset.state=phase;
 }
@@ -335,6 +338,6 @@ form.backend.onchange=()=>{
   const direct=form.backend.value==='usd-brep';
   document.querySelector('#backendHelp').hidden=!direct;
   document.querySelector('#generationHelp').textContent=direct
-    ? 'The agent reads the drawing and creates an editable BRep recipe. The worker checks the solid and mesh. Drawing fidelity remains unverified.'
+    ? 'The agent reads the drawing and creates an editable BRep recipe. The worker checks the solid, mesh and drawing projections. Detailed features still require review.'
     : defaultGenerationHelp;
 };

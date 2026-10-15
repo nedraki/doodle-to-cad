@@ -4,6 +4,7 @@ import json
 import math
 import time
 import uuid
+from pathlib import Path
 
 from fastapi import HTTPException
 
@@ -182,6 +183,16 @@ async def submit_direct_job(image, mime, notes, dimension, extra, controls,
         provenance['construction_attempts'] = json.loads((out/'build-history.json').read_text())
         (out/'generation.json').write_text(json.dumps(provenance,indent=2))
         result = save_result(out,recipe,built,controls=controls)
+        from .brep_checks import evaluate_drawing
+        from .feature_evidence import view_assignment_evidence
+        geometry_path = out/'geometry.json'
+        geometry = json.loads(geometry_path.read_text()) if geometry_path.exists() else {}
+        views = {name:out/Path(url).relative_to('/results/'+run_id) for name,url in built.get('views',{}).items()}
+        evaluation = evaluate_drawing(image, view_assignment_evidence(geometry), views,
+                                      built['build']['measurements'], controls, maximum)
+        result['evaluation'] = evaluation
+        (out/'drawing-checks.json').write_text(json.dumps(evaluation,indent=2))
+        result['files']['drawing_checks'] = f'/results/{run_id}/drawing-checks.json'
         result.update(model=provenance['model'],generation=provenance,
                       duration_seconds=round(time.monotonic()-job['created'],2))
         result['files']['evidence'] = f'/results/{run_id}/feature-evidence.json'
