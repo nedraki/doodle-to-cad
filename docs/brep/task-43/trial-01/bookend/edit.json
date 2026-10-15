@@ -1,0 +1,283 @@
+{
+  "ok": true,
+  "backend": "usd-brep",
+  "applied": {
+    "width": 102
+  },
+  "stl": "/results/f93b743503c5/brep-d229cf3721ac4cec8230f13f2f5d8536/model.stl",
+  "source": "/results/f93b743503c5/brep-d229cf3721ac4cec8230f13f2f5d8536/model.recipe.json",
+  "usd": "/results/f93b743503c5/brep-d229cf3721ac4cec8230f13f2f5d8536/model.usda",
+  "diagnostics": {
+    "backend": "usd-brep",
+    "version": "1.0.0",
+    "recipe_version": 2,
+    "solid_volume_mm3": 67250.00000000003,
+    "mesh_volume_mm3": 67250.00009536743,
+    "extents_mm": [
+      102.0,
+      40.0,
+      120.0
+    ],
+    "bounds_mm": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        102.0,
+        40.0,
+        120.0
+      ]
+    ],
+    "watertight": true,
+    "winding_consistent": true,
+    "euler_number": -6,
+    "triangles": 100,
+    "usd_roundtrip": true,
+    "volume_relative_accuracy": 1e-08,
+    "usd_volume_mm3": 67250.00000000003,
+    "operations": [
+      {
+        "id": "base_plate",
+        "kind": "box",
+        "faces": 6
+      },
+      {
+        "id": "cutout_flange",
+        "kind": "box",
+        "faces": 6
+      },
+      {
+        "id": "l_profile",
+        "kind": "difference",
+        "faces": 8
+      },
+      {
+        "id": "hole_1",
+        "kind": "box",
+        "faces": 6
+      },
+      {
+        "id": "hole_2",
+        "kind": "box",
+        "faces": 6
+      },
+      {
+        "id": "hole_3",
+        "kind": "box",
+        "faces": 6
+      },
+      {
+        "id": "hole_4",
+        "kind": "box",
+        "faces": 6
+      },
+      {
+        "id": "cut_h1",
+        "kind": "difference",
+        "faces": 12
+      },
+      {
+        "id": "cut_h2",
+        "kind": "difference",
+        "faces": 16
+      },
+      {
+        "id": "cut_h3",
+        "kind": "difference",
+        "faces": 20
+      },
+      {
+        "id": "final_part",
+        "kind": "difference",
+        "faces": 24
+      }
+    ],
+    "connections": [],
+    "build_seconds": 0.212
+  },
+  "views": {
+    "isometric": "/results/f93b743503c5/brep-d229cf3721ac4cec8230f13f2f5d8536/view-isometric.png",
+    "front": "/results/f93b743503c5/brep-d229cf3721ac4cec8230f13f2f5d8536/view-front.png",
+    "top": "/results/f93b743503c5/brep-d229cf3721ac4cec8230f13f2f5d8536/view-top.png",
+    "right": "/results/f93b743503c5/brep-d229cf3721ac4cec8230f13f2f5d8536/view-right.png"
+  },
+  "build": {
+    "version": 1,
+    "backend": "usd-brep",
+    "source_format": "brep-recipe-v2",
+    "ok": true,
+    "units": "mm",
+    "axes": {
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    },
+    "views": [
+      "isometric",
+      "front",
+      "top",
+      "right"
+    ],
+    "measurements": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 100,
+      "extents_mm": [
+        102.0,
+        40.0,
+        120.0
+      ],
+      "volume_mm3": 67250.0
+    },
+    "diagnostics": [],
+    "drawing_evaluated": false
+  },
+  "params": [
+    {
+      "name": "width",
+      "value": 102.0,
+      "low": 50,
+      "high": 200,
+      "step": 0.01,
+      "label": "Width",
+      "unit": "mm",
+      "description": "Overall width of the plate (X)",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "height",
+      "value": 120.0,
+      "low": 60,
+      "high": 240,
+      "step": 0.01,
+      "label": "Height",
+      "unit": "mm",
+      "description": "Overall height of the plate (Z)",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "depth",
+      "value": 40.0,
+      "low": 10,
+      "high": 100,
+      "step": 0.01,
+      "label": "Depth",
+      "unit": "mm",
+      "description": "Overall depth of the L-profile (Y)",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "thickness",
+      "value": 5.0,
+      "low": 1,
+      "high": 20,
+      "step": 0.01,
+      "label": "Thickness",
+      "unit": "mm",
+      "description": "Thickness of the vertical and horizontal sections",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "hole_w1",
+      "value": 25.0,
+      "low": 5,
+      "high": 50,
+      "step": 0.01,
+      "label": "Hole 1 Width",
+      "unit": "mm",
+      "description": "Width of the top-left hole",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "hole_h1",
+      "value": 20.0,
+      "low": 5,
+      "high": 50,
+      "step": 0.01,
+      "label": "Hole 1 Height",
+      "unit": "mm",
+      "description": "Height of the top-left hole",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "hole_w2",
+      "value": 12.0,
+      "low": 5,
+      "high": 30,
+      "step": 0.01,
+      "label": "Hole 2 Width",
+      "unit": "mm",
+      "description": "Width of the center hole",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "hole_h2",
+      "value": 35.0,
+      "low": 10,
+      "high": 60,
+      "step": 0.01,
+      "label": "Hole 2 Height",
+      "unit": "mm",
+      "description": "Height of the center hole",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "hole_w3",
+      "value": 18.0,
+      "low": 5,
+      "high": 40,
+      "step": 0.01,
+      "label": "Hole 3 Width",
+      "unit": "mm",
+      "description": "Width of the bottom-left hole",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "hole_h3",
+      "value": 45.0,
+      "low": 10,
+      "high": 80,
+      "step": 0.01,
+      "label": "Hole 3 Height",
+      "unit": "mm",
+      "description": "Height of the bottom-left hole",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "hole_w4",
+      "value": 14.0,
+      "low": 5,
+      "high": 30,
+      "step": 0.01,
+      "label": "Hole 4 Width",
+      "unit": "mm",
+      "description": "Width of the bottom-right hole",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "hole_h4",
+      "value": 45.0,
+      "low": 10,
+      "high": 80,
+      "step": 0.01,
+      "label": "Hole 4 Height",
+      "unit": "mm",
+      "description": "Height of the bottom-right hole",
+      "group": "Details",
+      "feature": null
+    }
+  ]
+}

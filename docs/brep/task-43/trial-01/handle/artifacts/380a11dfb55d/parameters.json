@@ -1,0 +1,41 @@
+{
+  "run_id": "380a11dfb55d",
+  "params": [
+    {
+      "name": "bend_radius",
+      "value": 20,
+      "low": 10,
+      "high": 50,
+      "step": 0.01,
+      "label": "Bend Centreline Radius",
+      "unit": "mm",
+      "description": "Rebuilds the saved construction recipe",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "leg_length",
+      "value": 30,
+      "low": 10,
+      "high": 100,
+      "step": 0.01,
+      "label": "Straight Leg Length",
+      "unit": "mm",
+      "description": "Rebuilds the saved construction recipe",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "section_diameter",
+      "value": 8,
+      "low": 2,
+      "high": 20,
+      "step": 0.01,
+      "label": "Cross-section Diameter",
+      "unit": "mm",
+      "description": "Rebuilds the saved construction recipe",
+      "group": "Details",
+      "feature": null
+    }
+  ]
+}

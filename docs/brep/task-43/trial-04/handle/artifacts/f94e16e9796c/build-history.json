@@ -1,0 +1,18 @@
+[
+  {
+    "attempt": 1,
+    "status": "failed",
+    "error": {
+      "code": "connection_failed",
+      "message": "joint1: required connection failed between leg_left and bend (required overlap 0.01 mm3): overlap 0 mm3 is too small"
+    }
+  },
+  {
+    "attempt": 2,
+    "status": "failed",
+    "error": {
+      "code": "build_failed",
+      "message": "BRep worker crashed"
+    }
+  }
+]

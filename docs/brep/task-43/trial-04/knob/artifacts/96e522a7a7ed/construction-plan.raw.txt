@@ -1,0 +1,36 @@
+{
+  "view_frame": "The drawing presents two orthographic views of a single object, likely a mechanical component or bracket. The view on the left is identified as the Front view, displaying the object's width (X-axis) and height (Z-axis). The view on the right is identified as the Right view, displaying the object's depth (Y-axis) and height (Z-axis). The object is centered on the origin (0,0,0) in the X and Y axes.",
+  "features": [
+    {
+      "id": "main_body",
+      "shape": "Extruded Profile",
+      "section": "I-beam cross-section",
+      "axis_or_plane": "XY plane (extruded along Z)",
+      "dimensions": [
+        "Width: 120 mm",
+        "Height: 80 mm",
+        "Depth: 40 mm",
+        "Flange Thickness: 10 mm",
+        "Web Thickness: 15 mm"
+      ],
+      "placement": "Centered at (0,0,0). Extents: X[-60, 60], Y[-20, 20], Z[-40, 40].",
+      "evidence": "The Front view shows the I-beam profile with top and bottom flanges and a central web. The Right view shows the rectangular depth profile."
+    }
+  ],
+  "connections": [
+    "The top flange connects to the top of the central web.",
+    "The bottom flange connects to the bottom of the central web.",
+    "The central web connects the top and bottom flanges."
+  ],
+  "edit_rules": [
+    "Changing the Width (X) scales the flanges horizontally.",
+    "Changing the Height (Z) scales the flanges vertically and the web length.",
+    "Changing the Depth (Y) extrudes the entire profile along the Y-axis.",
+    "Changing Flange Thickness adjusts the vertical height of the top and bottom bars.",
+    "Changing Web Thickness adjusts the horizontal width of the central vertical bar."
+  ],
+  "unresolved": [
+    "Exact fillet radii at the inner corners of the I-beam are not specified.",
+    "Surface finish requirements are not specified."
+  ]
+}

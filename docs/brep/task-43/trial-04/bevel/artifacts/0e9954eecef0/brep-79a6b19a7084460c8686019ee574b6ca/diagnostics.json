@@ -1,0 +1,45 @@
+{
+  "backend": "usd-brep",
+  "version": "1.0.0",
+  "recipe_version": 2,
+  "solid_volume_mm3": 47088.000000822714,
+  "mesh_volume_mm3": 47088.0,
+  "extents_mm": [
+    60.0,
+    40.0,
+    20.0
+  ],
+  "bounds_mm": [
+    [
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      60.0,
+      40.0,
+      20.0
+    ]
+  ],
+  "watertight": true,
+  "winding_consistent": true,
+  "euler_number": 2,
+  "triangles": 60,
+  "usd_roundtrip": true,
+  "volume_relative_accuracy": 1e-08,
+  "usd_volume_mm3": 47087.99999836436,
+  "operations": [
+    {
+      "id": "base_block",
+      "kind": "box",
+      "faces": 6
+    },
+    {
+      "id": "bevelled_block",
+      "kind": "chamfer",
+      "faces": 18
+    }
+  ],
+  "connections": [],
+  "build_seconds": 0.208
+}

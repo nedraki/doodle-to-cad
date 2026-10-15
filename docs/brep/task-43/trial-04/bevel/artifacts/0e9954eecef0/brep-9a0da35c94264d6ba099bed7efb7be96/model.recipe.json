@@ -1,0 +1,123 @@
+{
+  "version": 2,
+  "units": "mm",
+  "name": "bevelled_block",
+  "parameters": {
+    "width": {
+      "value": 60.0,
+      "min": 10,
+      "max": 1000,
+      "label": "Width",
+      "unit": "mm",
+      "description": "Overall width of the block along X"
+    },
+    "depth": {
+      "value": 40.0,
+      "min": 10,
+      "max": 1000,
+      "label": "Depth",
+      "unit": "mm",
+      "description": "Overall depth of the block along Y"
+    },
+    "height": {
+      "value": 20.0,
+      "min": 10,
+      "max": 1000,
+      "label": "Height",
+      "unit": "mm",
+      "description": "Overall height of the block along Z"
+    },
+    "bevel_size": {
+      "value": 3.0,
+      "min": 0.1,
+      "max": 10,
+      "label": "Bevel Size",
+      "unit": "mm",
+      "description": "Setback distance for the 45-degree chamfer on all edges"
+    }
+  },
+  "operations": [
+    {
+      "id": "base_block",
+      "kind": "box",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "size": [
+        "width",
+        "depth",
+        "height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1",
+        "e2"
+      ]
+    },
+    {
+      "id": "bevelled_block",
+      "kind": "chamfer",
+      "body": "base_block",
+      "radius": "bevel_size * 1.4142135623730951",
+      "frame": "world",
+      "depends_on": [
+        "base_block"
+      ],
+      "evidence": [
+        "e3"
+      ]
+    }
+  ],
+  "output": "bevelled_block",
+  "frames": {
+    "world": {
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    }
+  },
+  "bodies": [
+    {
+      "id": "part",
+      "output": "bevelled_block"
+    }
+  ],
+  "evidence": {
+    "observed": [
+      {
+        "id": "e1",
+        "text": "Outer dimensions 60 x 40 x 20 mm specified in drawing text and dimension lines."
+      },
+      {
+        "id": "e2",
+        "text": "Solid block indicated by drawing title and lack of hidden lines."
+      },
+      {
+        "id": "e3",
+        "text": "Note 'All edges: 2 mm x 45 degrees' specifies chamfer size and angle."
+      }
+    ],
+    "inferred": [
+      {
+        "id": "e4",
+        "text": "Chamfers are applied to all 12 edges of the rectangular prism."
+      }
+    ],
+    "assumptions": [
+      {
+        "id": "e5",
+        "text": "The block is positioned with its lowest Z at 0."
+      }
+    ],
+    "unresolved": []
+  },
+  "constraints": []
+}

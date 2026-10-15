@@ -1,0 +1,126 @@
+```json
+{
+  "version": 1,
+  "object_hypothesis": "A rectangular block with chamfered edges (bevelled block).",
+  "features": [
+    {
+      "id": "block_body",
+      "type": "body",
+      "description": "The main rectangular volume of the object.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_102"
+        },
+        {
+          "view_id": "view_6",
+          "region_id": "profile_contour_106"
+        }
+      ],
+      "reason": "Large rectangular outlines in views 5 and 6 define the primary shape."
+    },
+    {
+      "id": "chamfer_edges",
+      "type": "profile",
+      "description": "Angled cuts at the corners of the block profiles.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_187"
+        },
+        {
+          "view_id": "view_3",
+          "region_id": "profile_contour_123"
+        },
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_114"
+        },
+        {
+          "view_id": "view_8",
+          "region_id": "profile_contour_31"
+        }
+      ],
+      "reason": "Small polygonal regions at the corners of the main views indicate chamfers."
+    },
+    {
+      "id": "inner_contour",
+      "type": "other",
+      "description": "A rectangular line inside the main outline.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_104"
+        }
+      ],
+      "reason": "An internal rectangular contour is visible within the main body outline in view 5."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "chamfer_consistency",
+      "type": "repeated",
+      "features": [
+        "chamfer_edges"
+      ],
+      "description": "Chamfers appear consistently at corners across multiple views.",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_187"
+        },
+        {
+          "view_id": "view_3",
+          "region_id": "profile_contour_123"
+        },
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_114"
+        },
+        {
+          "view_id": "view_8",
+          "region_id": "profile_contour_31"
+        }
+      ],
+      "reason": "Similar small angled features are detected at corners in different views, suggesting a uniform chamfer."
+    },
+    {
+      "id": "body_containment",
+      "type": "other",
+      "features": [
+        "block_body",
+        "inner_contour"
+      ],
+      "description": "The inner contour is contained within the block body.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_102"
+        },
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_104"
+        }
+      ],
+      "reason": "The inner contour is spatially located inside the outer body contour in view 5."
+    }
+  ],
+  "assumptions": [
+    "The object is a solid block as indicated by the title 'BEVELLED BLOCK' and 'Solid block' note.",
+    "The views represent orthographic projections of a single 3D object.",
+    "The inner contour in view 5 represents a surface feature or edge, not a hole, given the 'Solid block' description."
+  ],
+  "unresolved": [
+    "The exact nature of the inner contour in view 5 (e.g., is it a raised face, a recessed face, or just a line?).",
+    "The precise 3D geometry of the chamfers (e.g., are they uniform on all edges?)."
+  ],
+  "conflicts": [
+    "The 'Solid block' description conflicts with the presence of an inner contour which might suggest a cavity or hole if not for the text."
+  ]
+}
+```

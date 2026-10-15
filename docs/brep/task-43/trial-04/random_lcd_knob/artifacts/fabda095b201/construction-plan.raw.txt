@@ -1,0 +1,72 @@
+```json
+{
+  "view_frame": "The drawing presents three orthographic views in third-angle projection. The primary view (top-left) is the Front view, showing the X (width) and Z (height) axes. The view below it is the Top view, showing the X (width) and Y (depth) axes. The view to the right is the Right Side view, showing the Y (depth) and Z (height) axes.",
+  "features": [
+    {
+      "id": "central_body",
+      "shape": "Cylinder",
+      "section": "Circle",
+      "axis_or_plane": "Y-axis (Depth)",
+      "dimensions": [
+        "Diameter: ~30mm (estimated from Front view)",
+        "Depth: ~10mm (estimated from Top view)"
+      ],
+      "placement": "Centered at X=0, Z=0. Extends from Y=0 to Y=10mm.",
+      "evidence": "Front view shows a central circle. Top view shows a rectangular profile corresponding to the cylinder's depth."
+    },
+    {
+      "id": "left_tab",
+      "shape": "Rectangular Prism",
+      "section": "Rectangle",
+      "axis_or_plane": "X-axis (Width)",
+      "dimensions": [
+        "Length: ~10mm (estimated)",
+        "Height: ~5mm (estimated)",
+        "Depth: ~10mm (matches body)"
+      ],
+      "placement": "Attached to the left side of the central body. Extends from X=-15mm to X=-25mm. Centered vertically at Z=0.",
+      "evidence": "Front view shows a rectangular tab extending left. Top view shows the tab's depth profile."
+    },
+    {
+      "id": "top_right_tab",
+      "shape": "Rectangular Prism",
+      "section": "Rectangle",
+      "axis_or_plane": "Diagonal (approx 45 deg)",
+      "dimensions": [
+        "Length: ~10mm (estimated)",
+        "Width: ~5mm (estimated)",
+        "Depth: ~10mm (matches body)"
+      ],
+      "placement": "Attached to the upper-right quadrant of the central body. Extends outward from the circle perimeter.",
+      "evidence": "Front view shows a tab extending diagonally up and right. Top view shows the tab's depth profile."
+    },
+    {
+      "id": "bottom_right_tab",
+      "shape": "Rectangular Prism",
+      "section": "Rectangle",
+      "axis_or_plane": "Diagonal (approx -45 deg)",
+      "dimensions": [
+        "Length: ~10mm (estimated)",
+        "Width: ~5mm (estimated)",
+        "Depth: ~10mm (matches body)"
+      ],
+      "placement": "Attached to the lower-right quadrant of the central body. Extends outward from the circle perimeter.",
+      "evidence": "Front view shows a tab extending diagonally down and right. Top view shows the tab's depth profile."
+    }
+  ],
+  "connections": [
+    "The left_tab, top_right_tab, and bottom_right_tab are fused to the central_body.",
+    "All features share the same depth (Y-axis extent) to form a single watertight solid."
+  ],
+  "edit_rules": [
+    "Changing the central_body diameter requires adjusting the attachment points of all three tabs to maintain tangency or overlap.",
+    "Changing the depth (Y-axis) applies uniformly to all features.",
+    "Tab angles are fixed relative to the central body unless the body is rotated."
+  ],
+  "unresolved": [
+    "Exact dimensions are not provided; all values are estimates based on visual proportions.",
+    "The precise angle of the diagonal tabs is estimated at 45 degrees but could vary.",
+    "The specific shape of the tab ends (flat vs rounded) is ambiguous in the sketch."
+  ]
+}
+```

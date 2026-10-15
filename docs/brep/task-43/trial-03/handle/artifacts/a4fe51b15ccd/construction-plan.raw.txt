@@ -1,0 +1,29 @@
+{
+  "view_frame": "The drawing presents a 'TOP (XY)' view and an 'END SECTION' view. The world coordinate system is defined with X as width (horizontal in top view), Y as depth (vertical in top view), and Z as height (vertical in front view, perpendicular to the top view plane). The part is a curved handle lying in the XY plane.",
+  "features": [
+    {
+      "id": "handle_path",
+      "shape": "Sweep of circular profile along a U-shaped path",
+      "section": "Circular, diameter 8 mm",
+      "axis_or_plane": "Path lies in the XY plane (Z=4 mm). The path consists of two straight segments parallel to the Y-axis and a semicircular arc centered on the X-axis.",
+      "dimensions": [
+        "Section diameter: 8 mm",
+        "Bend centreline radius: 20 mm",
+        "Straight legs length: 30 mm"
+      ],
+      "placement": "The path centreline is at Z=4 mm (half of 8 mm diameter) to rest on the bed. The semicircular arc is centered at (0, 30) with radius 20 mm, spanning from (20, 30) to (-20, 30) in the XY plane. The right straight leg runs from (20, 30) to (20, 0). The left straight leg runs from (-20, 30) to (-20, 0).",
+      "evidence": "Top view shows a U-shaped path. Text annotation states 'Bend centreline R20; straight legs 30 mm'. End section shows a circle labeled 'diameter 8 mm'."
+    }
+  ],
+  "connections": [
+    "The right straight leg connects to the right end of the semicircular arc at (20, 30).",
+    "The left straight leg connects to the left end of the semicircular arc at (-20, 30)."
+  ],
+  "edit_rules": [
+    "Changing the section diameter requires updating the Z-offset of the path centreline to maintain contact with the bed (Z = diameter / 2).",
+    "Changing the bend radius or leg length requires recalculating the coordinates of the arc center and the endpoints of the straight legs to maintain tangency and closure."
+  ],
+  "unresolved": [
+    "The absolute position of the part relative to the origin in X and Y is assumed to be symmetric about the Y-axis (X=0) and starting at Y=0, as no datum is explicitly marked."
+  ]
+}

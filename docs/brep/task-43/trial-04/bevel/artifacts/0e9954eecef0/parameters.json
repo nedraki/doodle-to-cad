@@ -1,0 +1,53 @@
+{
+  "run_id": "0e9954eecef0",
+  "params": [
+    {
+      "name": "width",
+      "value": 60,
+      "low": 10,
+      "high": 1000,
+      "step": 0.01,
+      "label": "Width",
+      "unit": "mm",
+      "description": "Overall width of the block along X",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "depth",
+      "value": 40,
+      "low": 10,
+      "high": 1000,
+      "step": 0.01,
+      "label": "Depth",
+      "unit": "mm",
+      "description": "Overall depth of the block along Y",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "height",
+      "value": 20,
+      "low": 10,
+      "high": 1000,
+      "step": 0.01,
+      "label": "Height",
+      "unit": "mm",
+      "description": "Overall height of the block along Z",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "bevel_size",
+      "value": 2,
+      "low": 0.1,
+      "high": 10,
+      "step": 0.01,
+      "label": "Bevel Size",
+      "unit": "mm",
+      "description": "Setback distance for the 45-degree chamfer on all edges",
+      "group": "Details",
+      "feature": null
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "action": "repair_scad",
+  "problems": [
+    "Top view similarity is very low (0.18), indicating incorrect aspect ratio or chamfer visibility.",
+    "Right view similarity is low (0.61), suggesting chamfers are not projecting correctly.",
+    "Evaluation flags Z=20mm as implausible against expected 4.27mm (likely a metric mismatch, but geometry is the primary issue).",
+    "Chamfer cutters in the code are overly complex and likely failing to produce the correct 45-degree profile in all views."
+  ],
+  "preserve": [
+    "Overall bounding box dimensions (60x40x20).",
+    "Solid block topology (no internal cuts).",
+    "Chamfer size parameter (2mm)."
+  ],
+  "instructions": "Rewrite the chamfer logic to ensure correct 45-degree cuts on all 12 edges. Replace the complex manual cutter modules with a robust method: create the base cube, then subtract 12 rotated triangular prisms (or use a hull of offset vertices) to guarantee the chamfers appear in Top, Front, and Right views. Ensure the Top view shows the 60x40 rectangle with 2mm corner cuts, and the Front view shows the 60x20 rectangle with 2mm corner cuts. Verify the mesh remains watertight.",
+  "confidence": 0.95
+}

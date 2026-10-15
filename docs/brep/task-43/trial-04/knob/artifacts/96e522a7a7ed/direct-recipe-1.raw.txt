@@ -1,0 +1,162 @@
+```json
+{
+  "version": 2,
+  "units": "mm",
+  "name": "stepped_component",
+  "parameters": {
+    "width": {
+      "value": 120,
+      "min": 60,
+      "max": 240,
+      "label": "Width",
+      "description": "Total width of the flanges (X-axis)"
+    },
+    "height": {
+      "value": 80,
+      "min": 40,
+      "max": 160,
+      "label": "Height",
+      "description": "Total height of the component (Z-axis)"
+    },
+    "depth": {
+      "value": 40,
+      "min": 20,
+      "max": 80,
+      "label": "Depth",
+      "description": "Total depth of the component (Y-axis)"
+    },
+    "flange_thickness": {
+      "value": 10,
+      "min": 5,
+      "max": 20,
+      "label": "Flange Thickness",
+      "description": "Vertical thickness of the top and bottom flanges"
+    },
+    "web_thickness": {
+      "value": 15,
+      "min": 5,
+      "max": 30,
+      "label": "Web Thickness",
+      "description": "Horizontal width of the central web"
+    }
+  },
+  "operations": [
+    {
+      "id": "top_flange",
+      "kind": "box",
+      "origin": [
+        "-width/2",
+        "-depth/2",
+        "height - flange_thickness"
+      ],
+      "size": [
+        "width",
+        "depth",
+        "flange_thickness"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "bottom_flange",
+      "kind": "box",
+      "origin": [
+        "-width/2",
+        "-depth/2",
+        "0"
+      ],
+      "size": [
+        "width",
+        "depth",
+        "flange_thickness"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "central_web",
+      "kind": "box",
+      "origin": [
+        "-web_thickness/2",
+        "-depth/2",
+        "0"
+      ],
+      "size": [
+        "web_thickness",
+        "depth",
+        "height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "union_1",
+      "kind": "union",
+      "left": "top_flange",
+      "right": "bottom_flange",
+      "frame": "world",
+      "depends_on": [
+        "top_flange",
+        "bottom_flange"
+      ],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "final_part",
+      "kind": "union",
+      "left": "union_1",
+      "right": "central_web",
+      "frame": "world",
+      "depends_on": [
+        "union_1",
+        "central_web"
+      ],
+      "evidence": [
+        "e1"
+      ]
+    }
+  ],
+  "output": "final_part",
+  "frames": {
+    "world": {
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    }
+  },
+  "bodies": [
+    {
+      "id": "part",
+      "output": "final_part"
+    }
+  ],
+  "evidence": {
+    "observed": [],
+    "inferred": [],
+    "assumptions": [
+      {
+        "id": "e1",
+        "text": "Assumed dimensions based on construction plan: Width 120mm, Height 80mm, Depth 40mm, Flange Thickness 10mm, Web Thickness 15mm. The object is modeled as an I-beam extruded along the Y-axis."
+      }
+    ],
+    "unresolved": []
+  },
+  "constraints": []
+}
+```

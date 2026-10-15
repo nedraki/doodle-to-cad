@@ -1,0 +1,40 @@
+Construct ONE editable BRep part directly from the drawing and measured evidence.
+Return valid JSON only. Never return Python or OpenSCAD. If the part needs an unsupported operation, return {"unsupported":"specific reason"}.
+
+First resolve the path plane and cross-section from the drawing labels. A path shown in TOP lies in XY; its thickness is along Z. A circular end section applies to straight segments as well as bends. A rectangular longitudinal silhouette does not make the section rectangular: use cylinders for circular-section straight segments. Moving a part above the bed is a translation through origins, not a rotation.
+
+Complete minimal version 2 recipe example (all root fields are required):
+{"version":2,"units":"mm","name":"plate","parameters":{"width":{"value":60,"min":30,"max":100}},"operations":[{"id":"plate","kind":"box","origin":[0,0,0],"size":["width",40,5],"frame":"world","depends_on":[],"evidence":["e1"]}],"output":"plate","frames":{"world":{"origin":[0,0,0],"x":"width","y":"depth","z":"height"}},"bodies":[{"id":"part","output":"plate"}],"evidence":{"observed":[],"inferred":[],"assumptions":[{"id":"e1","text":"Assumed plate thickness 5 mm."}],"unresolved":[]},"constraints":[]}
+
+SCHEMA:
+- Always include TOP-LEVEL output. It and bodies[0].output must name the final operation ID.
+- IDs are unique identifiers: letters, digits, underscores, starting with a letter.
+- Parameters: at most 64. Each needs numeric value,min,max. Optional label,unit,description,group.
+- Dimensions are finite numbers or QUOTED arithmetic strings using parameter names and + - * / parentheses only. Example: [0,"-width/2",0]. Bare arithmetic is invalid JSON. No trig functions or references to operation fields.
+- Every operation has id,kind,frame:"world",depends_on:[earlier input body IDs],evidence:[IDs from recipe.evidence]. At most 128 operations, in dependency order.
+- Add exactly the fields listed for its kind:
+box: origin (minimum corner),size (three positive lengths along X,Y,Z).
+cylinder: origin (base centre),radius,height,axis (x/y/z).
+union/difference: left,right (earlier operation IDs).
+rotate: body,origin (pivot),axis (x/y/z),angle (degrees, 0<angle<=360). Right-hand rotation of a COPY about the world axis through the pivot.
+fillet: body,radius,selector (all/parallel_x/parallel_y/parallel_z).
+chamfer: body,radius (straight-line width ACROSS the bevel face, applied to all edges). For a 45-degree bevel with setback C along each adjoining face, radius = C * 1.4142135623730951. Expose C as a parameter and use a quoted expression for radius.
+arc_pipe: origin (arc centre),bend_radius,radius,angle (0<angle<=270). Circular solid profile swept along an XY arc from +X anticlockwise. radius < bend_radius.
+- Each evidence category contains entries with only id,text. Keep observed, inferred, assumptions and unresolved separate. Unresolved construction values prevent building.
+- constraints contains material joints: {"id":"joint1","kind":"connected","left":"feature1","right":"feature2","min_volume_mm3":0.01}. Both features must occur in final construction. Do not confuse containment with material connection.
+
+GEOMETRY:
+The whole drawing sheet depicts ONE object. X=width, Y=depth, Z=height. Front projection is XZ, top is XY, right is YZ. A circular feature seen in front has its cylinder axis along Y, not Z. Lowest Z must be zero, including rotated bodies.
+Preserve measured proportions, feature counts, unequal sizes and the declared maximum dimension. Keep one connected final solid. Expose useful dimension parameters.
+Box origin is its minimum corner and its endpoint equals origin + size. Compute joint endpoints explicitly. For a volumetric joint, extend joined material into both owners by a positive overlap. Full matching end faces can instead be fused by union into one solid; do not claim positive overlap volume for that face-to-face joint. Gaps and edge-only contact are invalid. Never subtract away required joint overlap. Cutters must cross the wall they cut.
+Use rotation for diagonal features and radial patterns. Loft, arbitrary profiles and arbitrary sweeps are unsupported. Do not replace them silently with another construction.
+For missing depth or dimensions, choose explicit conservative assumptions and expose parameters. Do not silently discard unresolved drawing details. Return unsupported if uncertainty prevents a supported construction.
+Check placement and dimensions with numeric arithmetic before returning the recipe:
+- A cylinder along X or Y extends one radius below its centre in Z. Put its centre at least that radius above Z=0.
+- A connector endpoint is origin + length, not origin + a radius. Keep it inside the outer envelope while extending it into its owners.
+- Stacked bodies that meet at one plane have zero overlap volume. Extend the internal member into each owner; retain the intended outer heights. The overlap must meet the declared min_volume_mm3, including after later cuts.
+Use the visible shape, not just its object name. Preserve rounded transitions and flat bevels when the drawing shows them. Use a fillet only on the indicated edge family; rounding vertical corners must not round a sharp top or bottom rim.
+For a curved circular-section path, use arc_pipe and any visible straight segments. Its centreline radius differs from its inner and outer radii. Preserve the section size and endpoint positions. Do not replace a curve by a box.
+Expose the actual bend radius, section size and edge-treatment size as useful parameters. Reference these parameters in operation fields and dependent origins. An editable radius must also move connected endpoints and the section centre above the bed where required. Preserve dimensions that the edit is not meant to change.
+Follow the planned axes, cross-sections and endpoint arithmetic in the construction_plan. The plan is an interpretation, not proof: report contradictions with the original image instead of silently changing its feature types.
+The interpretation can contain mistakes; check the original image. Evidence is not proof of drawing fidelity.

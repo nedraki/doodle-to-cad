@@ -1,0 +1,841 @@
+{
+  "evidence": {
+    "id": "380a11dfb55d",
+    "interpretation": {
+      "version": 1,
+      "object_hypothesis": "Curved handle with U-shaped profile and circular cross-section",
+      "features": [
+        {
+          "id": "handle_body",
+          "type": "body",
+          "description": "Main U-shaped body of the handle",
+          "status": "observed",
+          "evidence": [
+            {
+              "view_id": "view_5",
+              "region_id": "profile_contour_19"
+            }
+          ],
+          "reason": "View 5 shows a large U-shaped contour consistent with the handle's main body."
+        },
+        {
+          "id": "cross_section",
+          "type": "profile",
+          "description": "Circular cross-section of the handle",
+          "status": "observed",
+          "evidence": [
+            {
+              "view_id": "view_3",
+              "region_id": "profile_contour_17"
+            }
+          ],
+          "reason": "View 3 shows a circular contour, labeled 'END SECTION' with diameter 8 mm."
+        },
+        {
+          "id": "leg_left",
+          "type": "body",
+          "description": "Left leg of the U-shaped handle",
+          "status": "observed",
+          "evidence": [
+            {
+              "view_id": "view_5",
+              "region_id": "profile_contour_19"
+            }
+          ],
+          "reason": "Left vertical segment of the U-shape in View 5."
+        },
+        {
+          "id": "leg_right",
+          "type": "body",
+          "description": "Right leg of the U-shaped handle",
+          "status": "observed",
+          "evidence": [
+            {
+              "view_id": "view_5",
+              "region_id": "profile_contour_19"
+            }
+          ],
+          "reason": "Right vertical segment of the U-shape in View 5."
+        },
+        {
+          "id": "bend",
+          "type": "body",
+          "description": "Curved top section connecting the legs",
+          "status": "observed",
+          "evidence": [
+            {
+              "view_id": "view_5",
+              "region_id": "profile_contour_19"
+            }
+          ],
+          "reason": "Curved top section of the U-shape in View 5."
+        }
+      ],
+      "relationships": [
+        {
+          "id": "leg_bend_connection",
+          "type": "connected",
+          "features": [
+            "leg_left",
+            "leg_right",
+            "bend"
+          ],
+          "description": "Legs are connected by the curved bend",
+          "status": "inferred",
+          "evidence": [
+            {
+              "view_id": "view_5",
+              "region_id": "profile_contour_19"
+            }
+          ],
+          "reason": "The U-shape in View 5 shows the legs connecting to the bend.",
+          "model_status": "observed",
+          "review_note": "Visible projected continuity does not prove a connected 3D solid."
+        },
+        {
+          "id": "cross_section_consistency",
+          "type": "shared_dimension",
+          "features": [
+            "handle_body",
+            "cross_section"
+          ],
+          "description": "The handle body has a consistent circular cross-section",
+          "status": "inferred",
+          "evidence": [
+            {
+              "view_id": "view_3",
+              "region_id": "profile_contour_17"
+            },
+            {
+              "view_id": "view_5",
+              "region_id": "profile_contour_19"
+            }
+          ],
+          "reason": "The circular cross-section in View 3 is consistent with the uniform width of the handle in View 5."
+        },
+        {
+          "id": "leg_symmetry",
+          "type": "symmetry",
+          "features": [
+            "leg_left",
+            "leg_right"
+          ],
+          "description": "The legs are symmetric",
+          "status": "inferred",
+          "evidence": [
+            {
+              "view_id": "view_5",
+              "region_id": "profile_contour_19"
+            }
+          ],
+          "reason": "The U-shape in View 5 appears symmetric, suggesting the legs are of equal length and width."
+        }
+      ],
+      "assumptions": [
+        "The handle is a single continuous piece.",
+        "The cross-section is uniform throughout the handle."
+      ],
+      "unresolved": [
+        "Exact dimensions of the handle legs and bend.",
+        "Material properties of the handle."
+      ],
+      "conflicts": [
+        "None identified."
+      ],
+      "review": {
+        "reference_integrity_checked": true,
+        "drawing_fidelity_verified": false,
+        "policy_warnings": [
+          "leg_bend_connection: Visible projected continuity does not prove a connected 3D solid."
+        ],
+        "executable": false
+      }
+    },
+    "regions": [
+      {
+        "view_id": "view_1",
+        "direction": "unassigned",
+        "sheet_bbox_normalized": [
+          0.017,
+          0.0185,
+          0.222,
+          0.0308
+        ],
+        "cad_mapping": {},
+        "view_assignment": "spatial heuristic",
+        "region_id": "view",
+        "kind": "view",
+        "bbox_view_normalized": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "measured_span_pixels": {
+          "horizontal_axis_u": 222,
+          "vertical_axis_v": 20
+        }
+      },
+      {
+        "view_id": "view_1",
+        "direction": "unassigned",
+        "sheet_bbox_normalized": [
+          0.017,
+          0.0185,
+          0.222,
+          0.0308
+        ],
+        "cad_mapping": {},
+        "view_assignment": "spatial heuristic",
+        "region_id": "profile_contour_41",
+        "kind": "outer",
+        "profile_id": "contour_41",
+        "bbox_view_normalized": [
+          0.2252,
+          0.25,
+          0.1532,
+          0.5
+        ],
+        "center_view_normalized": [
+          0.3018,
+          0.4968
+        ],
+        "polygon_view_normalized": [
+          [
+            0.3739,
+            0.6981
+          ],
+          [
+            0.3649,
+            0.2987
+          ],
+          [
+            0.3288,
+            0.25
+          ],
+          [
+            0.3063,
+            0.3994
+          ],
+          [
+            0.3018,
+            0.2987
+          ],
+          [
+            0.2838,
+            0.3994
+          ],
+          [
+            0.2703,
+            0.2987
+          ],
+          [
+            0.2613,
+            0.4968
+          ],
+          [
+            0.2523,
+            0.2987
+          ],
+          [
+            0.2432,
+            0.4481
+          ],
+          [
+            0.2252,
+            0.2987
+          ],
+          [
+            0.2252,
+            0.6494
+          ],
+          [
+            0.2387,
+            0.5487
+          ],
+          [
+            0.2928,
+            0.6494
+          ],
+          [
+            0.3018,
+            0.5487
+          ],
+          [
+            0.3063,
+            0.6494
+          ]
+        ],
+        "vertices": 16,
+        "circularity": 0.221,
+        "area_ratio_of_sheet": 0.00029
+      },
+      {
+        "view_id": "view_2",
+        "direction": "unassigned",
+        "sheet_bbox_normalized": [
+          0.683,
+          0.0877,
+          0.083,
+          0.0308
+        ],
+        "cad_mapping": {},
+        "view_assignment": "spatial heuristic",
+        "region_id": "view",
+        "kind": "view",
+        "bbox_view_normalized": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "measured_span_pixels": {
+          "horizontal_axis_u": 83,
+          "vertical_axis_v": 20
+        }
+      },
+      {
+        "view_id": "view_2",
+        "direction": "unassigned",
+        "sheet_bbox_normalized": [
+          0.683,
+          0.0877,
+          0.083,
+          0.0308
+        ],
+        "cad_mapping": {},
+        "view_assignment": "spatial heuristic",
+        "region_id": "profile_contour_21",
+        "kind": "outer",
+        "profile_id": "contour_21",
+        "bbox_view_normalized": [
+          0.6145,
+          0.25,
+          0.2771,
+          0.5
+        ],
+        "center_view_normalized": [
+          0.753,
+          0.5
+        ],
+        "polygon_view_normalized": [
+          [
+            0.6145,
+            0.25
+          ],
+          [
+            0.6265,
+            0.6494
+          ],
+          [
+            0.6506,
+            0.6494
+          ],
+          [
+            0.6627,
+            0.3506
+          ],
+          [
+            0.6747,
+            0.6494
+          ],
+          [
+            0.759,
+            0.6981
+          ],
+          [
+            0.8313,
+            0.5487
+          ],
+          [
+            0.8554,
+            0.6981
+          ],
+          [
+            0.8795,
+            0.6494
+          ],
+          [
+            0.8795,
+            0.2987
+          ]
+        ],
+        "vertices": 10,
+        "circularity": 0.323,
+        "area_ratio_of_sheet": 0.00023
+      },
+      {
+        "view_id": "view_3",
+        "direction": "right",
+        "sheet_bbox_normalized": [
+          0.712,
+          0.3308,
+          0.1,
+          0.1431
+        ],
+        "cad_mapping": {
+          "plane": "YZ",
+          "view_axis": "X",
+          "u_maps_to": "+Y",
+          "v_maps_to": "-Z"
+        },
+        "view_assignment": "spatial heuristic",
+        "region_id": "view",
+        "kind": "view",
+        "bbox_view_normalized": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "measured_span_pixels": {
+          "horizontal_axis_u": 100,
+          "vertical_axis_v": 93
+        }
+      },
+      {
+        "view_id": "view_3",
+        "direction": "right",
+        "sheet_bbox_normalized": [
+          0.712,
+          0.3308,
+          0.1,
+          0.1431
+        ],
+        "cad_mapping": {
+          "plane": "YZ",
+          "view_axis": "X",
+          "u_maps_to": "+Y",
+          "v_maps_to": "-Z"
+        },
+        "view_assignment": "spatial heuristic",
+        "region_id": "profile_contour_17",
+        "kind": "outer",
+        "profile_id": "contour_17",
+        "bbox_view_normalized": [
+          0.08,
+          0.0538,
+          0.83,
+          0.8924
+        ],
+        "center_view_normalized": [
+          0.495,
+          0.4997
+        ],
+        "polygon_view_normalized": [
+          [
+            0.43,
+            0.0538
+          ],
+          [
+            0.15,
+            0.2474
+          ],
+          [
+            0.08,
+            0.559
+          ],
+          [
+            0.26,
+            0.8595
+          ],
+          [
+            0.55,
+            0.935
+          ],
+          [
+            0.83,
+            0.7414
+          ],
+          [
+            0.9,
+            0.4298
+          ],
+          [
+            0.72,
+            0.1286
+          ]
+        ],
+        "vertices": 8,
+        "circularity": 0.892,
+        "area_ratio_of_sheet": 0.00807
+      },
+      {
+        "view_id": "view_4",
+        "direction": "unassigned",
+        "sheet_bbox_normalized": [
+          0.697,
+          0.4877,
+          0.088,
+          0.0308
+        ],
+        "cad_mapping": {},
+        "view_assignment": "spatial heuristic",
+        "region_id": "view",
+        "kind": "view",
+        "bbox_view_normalized": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "measured_span_pixels": {
+          "horizontal_axis_u": 88,
+          "vertical_axis_v": 20
+        }
+      },
+      {
+        "view_id": "view_4",
+        "direction": "unassigned",
+        "sheet_bbox_normalized": [
+          0.697,
+          0.4877,
+          0.088,
+          0.0308
+        ],
+        "cad_mapping": {},
+        "view_assignment": "spatial heuristic",
+        "region_id": "profile_contour_15",
+        "kind": "outer",
+        "profile_id": "contour_15",
+        "bbox_view_normalized": [
+          0.0909,
+          0.2987,
+          0.4773,
+          0.4481
+        ],
+        "center_view_normalized": [
+          0.3295,
+          0.5227
+        ],
+        "polygon_view_normalized": [
+          [
+            0.0909,
+            0.4481
+          ],
+          [
+            0.1136,
+            0.6981
+          ],
+          [
+            0.4091,
+            0.6494
+          ],
+          [
+            0.4205,
+            0.5487
+          ],
+          [
+            0.4432,
+            0.6494
+          ],
+          [
+            0.5568,
+            0.6494
+          ],
+          [
+            0.5568,
+            0.3506
+          ],
+          [
+            0.5227,
+            0.4481
+          ],
+          [
+            0.4545,
+            0.3506
+          ],
+          [
+            0.2841,
+            0.3506
+          ],
+          [
+            0.25,
+            0.4481
+          ],
+          [
+            0.1364,
+            0.2987
+          ]
+        ],
+        "vertices": 12,
+        "circularity": 0.264,
+        "area_ratio_of_sheet": 0.00034
+      },
+      {
+        "view_id": "view_5",
+        "direction": "unassigned",
+        "sheet_bbox_normalized": [
+          0.181,
+          0.3154,
+          0.262,
+          0.4369
+        ],
+        "cad_mapping": {},
+        "view_assignment": "spatial heuristic",
+        "region_id": "view",
+        "kind": "view",
+        "bbox_view_normalized": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "measured_span_pixels": {
+          "horizontal_axis_u": 262,
+          "vertical_axis_v": 284
+        }
+      },
+      {
+        "view_id": "view_5",
+        "direction": "unassigned",
+        "sheet_bbox_normalized": [
+          0.181,
+          0.3154,
+          0.262,
+          0.4369
+        ],
+        "cad_mapping": {},
+        "view_assignment": "spatial heuristic",
+        "region_id": "profile_contour_19",
+        "kind": "outer",
+        "profile_id": "contour_19",
+        "bbox_view_normalized": [
+          0.0305,
+          0.0176,
+          0.9351,
+          0.9648
+        ],
+        "center_view_normalized": [
+          0.4981,
+          0.4999
+        ],
+        "polygon_view_normalized": [
+          [
+            0.2099,
+            0.1092
+          ],
+          [
+            0.042,
+            0.3626
+          ],
+          [
+            0.0305,
+            0.9718
+          ],
+          [
+            0.1985,
+            0.9718
+          ],
+          [
+            0.2405,
+            0.3062
+          ],
+          [
+            0.5305,
+            0.1726
+          ],
+          [
+            0.7786,
+            0.3591
+          ],
+          [
+            0.7939,
+            0.9718
+          ],
+          [
+            0.9542,
+            0.9789
+          ],
+          [
+            0.8588,
+            0.1794
+          ],
+          [
+            0.5305,
+            0.0176
+          ]
+        ],
+        "vertices": 11,
+        "circularity": 0.186,
+        "area_ratio_of_sheet": 0.04144
+      },
+      {
+        "view_id": "view_6",
+        "direction": "top",
+        "sheet_bbox_normalized": [
+          0.113,
+          0.8415,
+          0.208,
+          0.0338
+        ],
+        "cad_mapping": {
+          "plane": "XY",
+          "view_axis": "Z",
+          "u_maps_to": "+X",
+          "v_maps_to": "-Y"
+        },
+        "view_assignment": "spatial heuristic",
+        "region_id": "view",
+        "kind": "view",
+        "bbox_view_normalized": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "measured_span_pixels": {
+          "horizontal_axis_u": 208,
+          "vertical_axis_v": 22
+        }
+      },
+      {
+        "view_id": "view_6",
+        "direction": "top",
+        "sheet_bbox_normalized": [
+          0.113,
+          0.8415,
+          0.208,
+          0.0338
+        ],
+        "cad_mapping": {
+          "plane": "XY",
+          "view_axis": "Z",
+          "u_maps_to": "+X",
+          "v_maps_to": "-Y"
+        },
+        "view_assignment": "spatial heuristic",
+        "region_id": "profile_contour_5",
+        "kind": "outer",
+        "profile_id": "contour_5",
+        "bbox_view_normalized": [
+          0.1635,
+          0.2751,
+          0.2452,
+          0.4083
+        ],
+        "center_view_normalized": [
+          0.2861,
+          0.4793
+        ],
+        "polygon_view_normalized": [
+          [
+            0.4038,
+            0.4112
+          ],
+          [
+            0.3173,
+            0.2751
+          ],
+          [
+            0.3125,
+            0.4112
+          ],
+          [
+            0.2308,
+            0.3195
+          ],
+          [
+            0.1683,
+            0.3639
+          ],
+          [
+            0.1635,
+            0.503
+          ],
+          [
+            0.1731,
+            0.6391
+          ],
+          [
+            0.2067,
+            0.6391
+          ],
+          [
+            0.2356,
+            0.4556
+          ],
+          [
+            0.2452,
+            0.5917
+          ],
+          [
+            0.3125,
+            0.503
+          ],
+          [
+            0.351,
+            0.5917
+          ],
+          [
+            0.3606,
+            0.4556
+          ],
+          [
+            0.3942,
+            0.6391
+          ]
+        ],
+        "vertices": 14,
+        "circularity": 0.188,
+        "area_ratio_of_sheet": 0.00038
+      }
+    ],
+    "shared_axis_evidence": [
+      {
+        "axis": "Y",
+        "evidence": [
+          {
+            "view_id": "view_3",
+            "region_id": "view"
+          },
+          {
+            "view_id": "view_6",
+            "region_id": "view"
+          }
+        ],
+        "measured_spans_pixels": [
+          100,
+          22
+        ],
+        "relative_difference": 0.78,
+        "status": "review_required",
+        "assumption": "Views use the same drawing scale and their assigned directions are correct.",
+        "physical_dimension_verified": false
+      }
+    ],
+    "view_assignment_review": {
+      "excluded_from_direction_assignment": [
+        "view_2",
+        "view_4"
+      ],
+      "rule": "Groups below 5% of the largest group box area remain unassigned; they may be text or detail views.",
+      "regions_retained": true
+    },
+    "controls": {
+      "object_type_hint": "",
+      "method": "3D print",
+      "primary_view": "top",
+      "projection_standard": "third-angle",
+      "strict_watertight": true,
+      "refine_mode": "regularize"
+    },
+    "notes": "",
+    "default_generation_changed": false,
+    "files": {
+      "input": "/results/380a11dfb55d/input.png",
+      "overlay": "/results/380a11dfb55d/geometry-overlay.png",
+      "interpretation": "/results/380a11dfb55d/feature-evidence.json"
+    }
+  },
+  "notes": "",
+  "maximum_dimension_mm": 54.0,
+  "controls": {
+    "object_type_hint": "",
+    "method": "3D print",
+    "primary_view": "top",
+    "projection_standard": "third-angle",
+    "strict_watertight": true,
+    "refine_mode": "regularize"
+  }
+}

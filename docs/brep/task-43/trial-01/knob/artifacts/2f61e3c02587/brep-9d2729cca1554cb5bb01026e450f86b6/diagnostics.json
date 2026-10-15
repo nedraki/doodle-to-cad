@@ -1,0 +1,60 @@
+{
+  "backend": "usd-brep",
+  "version": "1.0.0",
+  "recipe_version": 2,
+  "solid_volume_mm3": 849599.9999999998,
+  "mesh_volume_mm3": 849600.0061035156,
+  "extents_mm": [
+    100.0,
+    100.0,
+    122.4000015258789
+  ],
+  "bounds_mm": [
+    [
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      100.0,
+      100.0,
+      122.4000015258789
+    ]
+  ],
+  "watertight": true,
+  "winding_consistent": true,
+  "euler_number": 2,
+  "triangles": 44,
+  "usd_roundtrip": true,
+  "volume_relative_accuracy": 1e-08,
+  "usd_volume_mm3": 849599.9999999998,
+  "operations": [
+    {
+      "id": "bottom_flange",
+      "kind": "box",
+      "faces": 6
+    },
+    {
+      "id": "top_flange",
+      "kind": "box",
+      "faces": 6
+    },
+    {
+      "id": "central_neck",
+      "kind": "box",
+      "faces": 6
+    },
+    {
+      "id": "union_1",
+      "kind": "union",
+      "faces": 10
+    },
+    {
+      "id": "final_part",
+      "kind": "union",
+      "faces": 14
+    }
+  ],
+  "connections": [],
+  "build_seconds": 0.206
+}

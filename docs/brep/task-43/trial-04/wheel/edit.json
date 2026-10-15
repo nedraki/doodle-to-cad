@@ -1,0 +1,260 @@
+{
+  "ok": true,
+  "backend": "usd-brep",
+  "applied": {
+    "outer_diameter": 122.4
+  },
+  "stl": "/results/cd79d4bc586e/brep-1fb97a2f2e4a4bc185eaff5ad11d572a/model.stl",
+  "source": "/results/cd79d4bc586e/brep-1fb97a2f2e4a4bc185eaff5ad11d572a/model.recipe.json",
+  "usd": "/results/cd79d4bc586e/brep-1fb97a2f2e4a4bc185eaff5ad11d572a/model.usda",
+  "diagnostics": {
+    "backend": "usd-brep",
+    "version": "1.0.0",
+    "recipe_version": 2,
+    "solid_volume_mm3": 57200.775059610285,
+    "mesh_volume_mm3": 57182.608314435,
+    "extents_mm": [
+      122.4000015258789,
+      122.4000015258789,
+      8.0
+    ],
+    "bounds_mm": [
+      [
+        -61.20000076293945,
+        -61.20000076293945,
+        0.0
+      ],
+      [
+        61.20000076293945,
+        61.20000076293945,
+        8.0
+      ]
+    ],
+    "watertight": true,
+    "winding_consistent": true,
+    "euler_number": -14,
+    "triangles": 1052,
+    "usd_roundtrip": true,
+    "volume_relative_accuracy": 1e-08,
+    "usd_volume_mm3": 57200.77383401997,
+    "operations": [
+      {
+        "id": "rim_outer",
+        "kind": "cylinder",
+        "faces": 3
+      },
+      {
+        "id": "rim_inner_cut",
+        "kind": "cylinder",
+        "faces": 3
+      },
+      {
+        "id": "rim",
+        "kind": "difference",
+        "faces": 4
+      },
+      {
+        "id": "hub",
+        "kind": "cylinder",
+        "faces": 3
+      },
+      {
+        "id": "spoke_0",
+        "kind": "box",
+        "faces": 6
+      },
+      {
+        "id": "spoke_1",
+        "kind": "rotate",
+        "faces": 6
+      },
+      {
+        "id": "spoke_2",
+        "kind": "rotate",
+        "faces": 6
+      },
+      {
+        "id": "spoke_3",
+        "kind": "rotate",
+        "faces": 6
+      },
+      {
+        "id": "spoke_4",
+        "kind": "rotate",
+        "faces": 6
+      },
+      {
+        "id": "spoke_5",
+        "kind": "rotate",
+        "faces": 6
+      },
+      {
+        "id": "spoke_6",
+        "kind": "rotate",
+        "faces": 6
+      },
+      {
+        "id": "spoke_7",
+        "kind": "rotate",
+        "faces": 6
+      },
+      {
+        "id": "wheel",
+        "kind": "union",
+        "faces": 7
+      },
+      {
+        "id": "wheel_1",
+        "kind": "union",
+        "faces": 7
+      },
+      {
+        "id": "wheel_2",
+        "kind": "union",
+        "faces": 11
+      },
+      {
+        "id": "wheel_3",
+        "kind": "union",
+        "faces": 15
+      },
+      {
+        "id": "wheel_4",
+        "kind": "union",
+        "faces": 19
+      },
+      {
+        "id": "wheel_5",
+        "kind": "union",
+        "faces": 23
+      },
+      {
+        "id": "wheel_6",
+        "kind": "union",
+        "faces": 27
+      },
+      {
+        "id": "wheel_7",
+        "kind": "union",
+        "faces": 31
+      },
+      {
+        "id": "wheel_final",
+        "kind": "union",
+        "faces": 35
+      }
+    ],
+    "connections": [
+      {
+        "id": "joint1",
+        "overlap_mm3": 137.39186175816147,
+        "passed": true
+      },
+      {
+        "id": "joint2",
+        "overlap_mm3": 166.51976176454662,
+        "passed": true
+      }
+    ],
+    "build_seconds": 0.405
+  },
+  "views": {
+    "isometric": "/results/cd79d4bc586e/brep-1fb97a2f2e4a4bc185eaff5ad11d572a/view-isometric.png",
+    "front": "/results/cd79d4bc586e/brep-1fb97a2f2e4a4bc185eaff5ad11d572a/view-front.png",
+    "top": "/results/cd79d4bc586e/brep-1fb97a2f2e4a4bc185eaff5ad11d572a/view-top.png",
+    "right": "/results/cd79d4bc586e/brep-1fb97a2f2e4a4bc185eaff5ad11d572a/view-right.png"
+  },
+  "build": {
+    "version": 1,
+    "backend": "usd-brep",
+    "source_format": "brep-recipe-v2",
+    "ok": true,
+    "units": "mm",
+    "axes": {
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    },
+    "views": [
+      "isometric",
+      "front",
+      "top",
+      "right"
+    ],
+    "measurements": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 1052,
+      "extents_mm": [
+        122.4,
+        122.4,
+        8.0
+      ],
+      "volume_mm3": 57182.608
+    },
+    "diagnostics": [],
+    "drawing_evaluated": false
+  },
+  "params": [
+    {
+      "name": "outer_diameter",
+      "value": 122.4,
+      "low": 50,
+      "high": 200,
+      "step": 0.01,
+      "label": "Outer Diameter",
+      "unit": "mm",
+      "description": "Rebuilds the saved construction recipe",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "thickness",
+      "value": 8.0,
+      "low": 2,
+      "high": 20,
+      "step": 0.01,
+      "label": "Thickness",
+      "unit": "mm",
+      "description": "Rebuilds the saved construction recipe",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "rim_width",
+      "value": 10.0,
+      "low": 5,
+      "high": 30,
+      "step": 0.01,
+      "label": "Rim Width",
+      "unit": "mm",
+      "description": "Rebuilds the saved construction recipe",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "hub_diameter",
+      "value": 30.0,
+      "low": 10,
+      "high": 60,
+      "step": 0.01,
+      "label": "Hub Diameter",
+      "unit": "mm",
+      "description": "Rebuilds the saved construction recipe",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "spoke_width",
+      "value": 10.0,
+      "low": 2,
+      "high": 30,
+      "step": 0.01,
+      "label": "Spoke Width",
+      "unit": "mm",
+      "description": "Rebuilds the saved construction recipe",
+      "group": "Details",
+      "feature": null
+    }
+  ]
+}

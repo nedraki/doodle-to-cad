@@ -1,0 +1,85 @@
+{
+  "version": 1,
+  "accepted": false,
+  "status": "unverified",
+  "build_status": "passed",
+  "geometry_status": "passed",
+  "projection_status": "passed",
+  "checks": [
+    {
+      "name": "connected solid",
+      "status": "passed",
+      "detail": {
+        "watertight": true,
+        "components": 1
+      }
+    },
+    {
+      "name": "requested maximum",
+      "status": "passed",
+      "detail": {
+        "actual_mm": 80.0,
+        "limit_mm": 80.0,
+        "tolerance_mm": 0.5
+      }
+    },
+    {
+      "name": "top projection",
+      "status": "passed",
+      "detail": {
+        "similarity": 0.925,
+        "minimum": 0.45
+      }
+    },
+    {
+      "name": "right projection",
+      "status": "passed",
+      "detail": {
+        "similarity": 0.623,
+        "minimum": 0.45
+      }
+    },
+    {
+      "name": "dimensions and detailed features",
+      "status": "unverified",
+      "detail": "Projection checks cannot prove radii, bevel angles, hidden depth or section shape. Review measured features and view assignments."
+    }
+  ],
+  "projection_similarity": {
+    "top": 0.925,
+    "right": 0.623
+  },
+  "profile_topology": {
+    "top": {
+      "source_internal_profiles": 0,
+      "rendered_internal_profiles": 0,
+      "crop_internal_profiles": 0,
+      "source_aspect": 1.413,
+      "rendered_aspect": 1.597,
+      "source_opening_centroids": [],
+      "rendered_opening_centroids": []
+    },
+    "right": {
+      "source_internal_profiles": 0,
+      "rendered_internal_profiles": 2,
+      "crop_internal_profiles": 0,
+      "source_aspect": 2.745,
+      "rendered_aspect": 1.675,
+      "source_opening_centroids": [],
+      "rendered_opening_centroids": [
+        [
+          0.496,
+          0.494
+        ],
+        [
+          0.035,
+          0.495
+        ]
+      ]
+    }
+  },
+  "failures": [
+    "Detailed drawing features and view assignments require review."
+  ],
+  "scope": "Partial automatic checks. No drawing acceptance from solid validity alone."
+}

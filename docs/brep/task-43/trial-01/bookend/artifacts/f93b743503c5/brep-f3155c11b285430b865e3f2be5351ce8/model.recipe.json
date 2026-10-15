@@ -1,0 +1,342 @@
+{
+  "version": 2,
+  "units": "mm",
+  "name": "l_bracket_plate",
+  "parameters": {
+    "width": {
+      "value": 100.0,
+      "min": 50,
+      "max": 200,
+      "label": "Width",
+      "description": "Overall width of the plate (X)"
+    },
+    "height": {
+      "value": 120.0,
+      "min": 60,
+      "max": 240,
+      "label": "Height",
+      "description": "Overall height of the plate (Z)"
+    },
+    "depth": {
+      "value": 40.0,
+      "min": 10,
+      "max": 100,
+      "label": "Depth",
+      "description": "Overall depth of the L-profile (Y)"
+    },
+    "thickness": {
+      "value": 5.0,
+      "min": 1,
+      "max": 20,
+      "label": "Thickness",
+      "description": "Thickness of the vertical and horizontal sections"
+    },
+    "hole_w1": {
+      "value": 25.0,
+      "min": 5,
+      "max": 50,
+      "label": "Hole 1 Width",
+      "description": "Width of the top-left hole"
+    },
+    "hole_h1": {
+      "value": 20.0,
+      "min": 5,
+      "max": 50,
+      "label": "Hole 1 Height",
+      "description": "Height of the top-left hole"
+    },
+    "hole_w2": {
+      "value": 12.0,
+      "min": 5,
+      "max": 30,
+      "label": "Hole 2 Width",
+      "description": "Width of the center hole"
+    },
+    "hole_h2": {
+      "value": 35.0,
+      "min": 10,
+      "max": 60,
+      "label": "Hole 2 Height",
+      "description": "Height of the center hole"
+    },
+    "hole_w3": {
+      "value": 18.0,
+      "min": 5,
+      "max": 40,
+      "label": "Hole 3 Width",
+      "description": "Width of the bottom-left hole"
+    },
+    "hole_h3": {
+      "value": 45.0,
+      "min": 10,
+      "max": 80,
+      "label": "Hole 3 Height",
+      "description": "Height of the bottom-left hole"
+    },
+    "hole_w4": {
+      "value": 14.0,
+      "min": 5,
+      "max": 30,
+      "label": "Hole 4 Width",
+      "description": "Width of the bottom-right hole"
+    },
+    "hole_h4": {
+      "value": 45.0,
+      "min": 10,
+      "max": 80,
+      "label": "Hole 4 Height",
+      "description": "Height of the bottom-right hole"
+    }
+  },
+  "operations": [
+    {
+      "id": "base_plate",
+      "kind": "box",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "size": [
+        "width",
+        "depth",
+        "height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "cutout_flange",
+      "kind": "box",
+      "origin": [
+        0,
+        "thickness",
+        "thickness"
+      ],
+      "size": [
+        "width",
+        "depth - thickness",
+        "height - thickness"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "l_profile",
+      "kind": "difference",
+      "left": "base_plate",
+      "right": "cutout_flange",
+      "frame": "world",
+      "depends_on": [
+        "base_plate",
+        "cutout_flange"
+      ],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "hole_1",
+      "kind": "box",
+      "origin": [
+        "width * 0.15",
+        "-1",
+        "height * 0.75"
+      ],
+      "size": [
+        "hole_w1",
+        "depth + 2",
+        "hole_h1"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "hole_2",
+      "kind": "box",
+      "origin": [
+        "width * 0.48",
+        "-1",
+        "height * 0.45"
+      ],
+      "size": [
+        "hole_w2",
+        "depth + 2",
+        "hole_h2"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e4"
+      ]
+    },
+    {
+      "id": "hole_3",
+      "kind": "box",
+      "origin": [
+        "width * 0.25",
+        "-1",
+        "height * 0.15"
+      ],
+      "size": [
+        "hole_w3",
+        "depth + 2",
+        "hole_h3"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e5"
+      ]
+    },
+    {
+      "id": "hole_4",
+      "kind": "box",
+      "origin": [
+        "width * 0.68",
+        "-1",
+        "height * 0.15"
+      ],
+      "size": [
+        "hole_w4",
+        "depth + 2",
+        "hole_h4"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e6"
+      ]
+    },
+    {
+      "id": "cut_h1",
+      "kind": "difference",
+      "left": "l_profile",
+      "right": "hole_1",
+      "frame": "world",
+      "depends_on": [
+        "l_profile",
+        "hole_1"
+      ],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "cut_h2",
+      "kind": "difference",
+      "left": "cut_h1",
+      "right": "hole_2",
+      "frame": "world",
+      "depends_on": [
+        "cut_h1",
+        "hole_2"
+      ],
+      "evidence": [
+        "e4"
+      ]
+    },
+    {
+      "id": "cut_h3",
+      "kind": "difference",
+      "left": "cut_h2",
+      "right": "hole_3",
+      "frame": "world",
+      "depends_on": [
+        "cut_h2",
+        "hole_3"
+      ],
+      "evidence": [
+        "e5"
+      ]
+    },
+    {
+      "id": "final_part",
+      "kind": "difference",
+      "left": "cut_h3",
+      "right": "hole_4",
+      "frame": "world",
+      "depends_on": [
+        "cut_h3",
+        "hole_4"
+      ],
+      "evidence": [
+        "e6"
+      ]
+    }
+  ],
+  "output": "final_part",
+  "frames": {
+    "world": {
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    }
+  },
+  "bodies": [
+    {
+      "id": "part",
+      "output": "final_part"
+    }
+  ],
+  "evidence": {
+    "observed": [
+      {
+        "id": "e1",
+        "text": "Main rectangular body observed in front view."
+      },
+      {
+        "id": "e2",
+        "text": "L-shaped profile observed in right view."
+      },
+      {
+        "id": "e3",
+        "text": "Top-left rectangular cutout observed in front view."
+      },
+      {
+        "id": "e4",
+        "text": "Center vertical rectangular cutout observed in front view."
+      },
+      {
+        "id": "e5",
+        "text": "Bottom-left vertical rectangular cutout observed in front view."
+      },
+      {
+        "id": "e6",
+        "text": "Bottom-right vertical rectangular cutout observed in front view."
+      }
+    ],
+    "inferred": [
+      {
+        "id": "e7",
+        "text": "Cutouts are through-holes based on typical bracket design."
+      }
+    ],
+    "assumptions": [
+      {
+        "id": "e8",
+        "text": "Assumed uniform thickness of 5mm for the L-profile."
+      },
+      {
+        "id": "e9",
+        "text": "Assumed depth of 40mm based on L-profile proportions."
+      }
+    ],
+    "unresolved": []
+  },
+  "constraints": []
+}

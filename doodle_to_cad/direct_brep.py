@@ -13,7 +13,7 @@ from .build_contract import BuildError
 from .recipe_jobs import check_worker, run_recipe_job
 from .construction_intent import PROMPT as INTENT_PROMPT, PROMPT_VERSION as INTENT_VERSION, validate_plan
 
-PROMPT_VERSION = 'drawing-brep-9'
+PROMPT_VERSION = 'drawing-brep-10'
 PROMPT = """Construct ONE editable BRep part directly from the drawing and measured evidence.
 Return valid JSON only. Never return Python or OpenSCAD. If the part needs an unsupported operation, return {"unsupported":"specific reason"}.
 
@@ -30,7 +30,7 @@ SCHEMA:
 - Every operation has id,kind,frame:"world",depends_on:[earlier input body IDs],evidence:[IDs from recipe.evidence]. At most 128 operations, in dependency order.
 - Add exactly the fields listed for its kind:
 box: origin (minimum corner),size (three positive lengths along X,Y,Z).
-cylinder: origin (base centre),radius,height,axis (x/y/z).
+cylinder: origin (base centre),radius,height,axis (x/y/z). Height is positive; the cylinder extends from origin in the POSITIVE axis direction. For a segment that runs from a joint toward negative Y, put its origin at joint_y - height so its positive-Y endpoint meets the joint. Apply the same rule on X and Z. Compute both endpoints; text claiming a negative direction does not change this geometry.
 union/difference: left,right (earlier operation IDs).
 rotate: body,origin (pivot),axis (x/y/z),angle (degrees, 0<angle<=360). Right-hand rotation of a COPY about the world axis through the pivot.
 fillet: body,radius,selector (all/parallel_x/parallel_y/parallel_z).

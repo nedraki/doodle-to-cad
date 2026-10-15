@@ -1,0 +1,142 @@
+{
+  "version": 1,
+  "object_hypothesis": "Curved handle with U-shaped profile and circular cross-section",
+  "features": [
+    {
+      "id": "f_body",
+      "type": "body",
+      "description": "Main U-shaped body of the handle",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_19"
+        }
+      ],
+      "reason": "View 5 shows the primary U-shaped silhouette with two legs and a connecting arch."
+    },
+    {
+      "id": "f_cross_section",
+      "type": "profile",
+      "description": "Circular cross-section of the handle",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_3",
+          "region_id": "profile_contour_17"
+        }
+      ],
+      "reason": "View 3 (labeled 'END SECTION') displays a circular profile, consistent with a round bar or tube."
+    },
+    {
+      "id": "f_leg_left",
+      "type": "body",
+      "description": "Left vertical leg of the handle",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_19"
+        }
+      ],
+      "reason": "Left vertical segment of the U-shape in View 5."
+    },
+    {
+      "id": "f_leg_right",
+      "type": "body",
+      "description": "Right vertical leg of the handle",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_19"
+        }
+      ],
+      "reason": "Right vertical segment of the U-shape in View 5."
+    },
+    {
+      "id": "f_arch",
+      "type": "body",
+      "description": "Curved arch connecting the legs",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_19"
+        }
+      ],
+      "reason": "Top curved segment of the U-shape in View 5."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "r_legs_arch",
+      "type": "connected",
+      "features": [
+        "f_leg_left",
+        "f_leg_right",
+        "f_arch"
+      ],
+      "description": "Legs are connected by the arch",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_19"
+        }
+      ],
+      "reason": "The contour in View 5 is a single continuous loop forming the U-shape."
+    },
+    {
+      "id": "r_body_section",
+      "type": "shared_dimension",
+      "features": [
+        "f_body",
+        "f_cross_section"
+      ],
+      "description": "Body has the circular cross-section",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_19"
+        },
+        {
+          "view_id": "view_3",
+          "region_id": "profile_contour_17"
+        }
+      ],
+      "reason": "View 3 shows the end section as circular, implying the body (View 5) is a sweep of this profile."
+    },
+    {
+      "id": "r_symmetry",
+      "type": "symmetry",
+      "features": [
+        "f_leg_left",
+        "f_leg_right"
+      ],
+      "description": "Legs are symmetric about the vertical axis",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_19"
+        }
+      ],
+      "reason": "Visual symmetry of the U-shape in View 5 suggests equal leg lengths and positions."
+    }
+  ],
+  "assumptions": [
+    "View 5 represents the main elevation or plan view of the handle.",
+    "View 3 represents the cross-section of the handle.",
+    "The object is a solid or hollow tube with a constant circular cross-section."
+  ],
+  "unresolved": [
+    "Whether the handle is solid or hollow (wall thickness not visible).",
+    "Exact dimensions of the legs and arch radius (text annotations not processed as measured regions).",
+    "Orientation of the handle relative to the views (e.g., is View 5 top or front?)."
+  ],
+  "conflicts": [
+    "View 1, 2, 4, 6 show small, irregular contours that do not clearly correspond to the main handle geometry in View 5 or View 3. These may be noise or unrelated details."
+  ]
+}

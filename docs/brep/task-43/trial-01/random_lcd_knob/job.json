@@ -1,0 +1,349 @@
+{
+  "job_id": "b11d5b1b961a",
+  "status": "done",
+  "stage": "done",
+  "result": {
+    "id": "b11d5b1b961a",
+    "backend": "usd-brep",
+    "success": false,
+    "spec": {
+      "object": "three_arm_knob"
+    },
+    "model": "local-inference-lab/Qwen3.8-Flash-Next-NVFP4",
+    "duration_seconds": 126.67,
+    "evaluation": {
+      "version": 1,
+      "accepted": false,
+      "status": "failed",
+      "build_status": "passed",
+      "geometry_status": "passed",
+      "projection_status": "failed",
+      "checks": [
+        {
+          "name": "connected solid",
+          "status": "passed",
+          "detail": {
+            "watertight": true,
+            "components": 1
+          }
+        },
+        {
+          "name": "requested maximum",
+          "status": "passed",
+          "detail": {
+            "actual_mm": 44.569,
+            "limit_mm": 50.0,
+            "tolerance_mm": 0.5
+          }
+        },
+        {
+          "name": "front projection",
+          "status": "failed",
+          "detail": {
+            "similarity": 0.431,
+            "minimum": 0.45
+          }
+        },
+        {
+          "name": "top projection",
+          "status": "passed",
+          "detail": {
+            "similarity": 0.842,
+            "minimum": 0.45
+          }
+        },
+        {
+          "name": "right projection",
+          "status": "failed",
+          "detail": {
+            "similarity": 0.254,
+            "minimum": 0.45
+          }
+        },
+        {
+          "name": "dimensions and detailed features",
+          "status": "unverified",
+          "detail": "Projection checks cannot prove radii, bevel angles, hidden depth or section shape. Review measured features and view assignments."
+        }
+      ],
+      "projection_similarity": {
+        "front": 0.431,
+        "top": 0.842,
+        "right": 0.254
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 4,
+          "crop_internal_profiles": 0,
+          "source_aspect": 3.114,
+          "rendered_aspect": 1.941,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": [
+            [
+              0.794,
+              0.246
+            ],
+            [
+              0.308,
+              0.338
+            ]
+          ]
+        },
+        "top": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 0,
+          "source_aspect": 0.906,
+          "rendered_aspect": 0.878,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": []
+        },
+        "right": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 6,
+          "crop_internal_profiles": 0,
+          "source_aspect": 3.321,
+          "rendered_aspect": 2.224,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": [
+            [
+              0.729,
+              0.251
+            ],
+            [
+              0.652,
+              0.308
+            ],
+            [
+              0.536,
+              0.376
+            ],
+            [
+              0.963,
+              0.244
+            ],
+            [
+              0.157,
+              0.245
+            ],
+            [
+              0.032,
+              0.244
+            ]
+          ]
+        }
+      },
+      "failures": [
+        "front projection",
+        "right projection",
+        "Detailed drawing features and view assignments require review."
+      ],
+      "scope": "Partial automatic checks. No drawing acceptance from solid validity alone."
+    },
+    "diagnostics": {
+      "backend": "usd-brep",
+      "version": "1.0.0",
+      "recipe_version": 2,
+      "solid_volume_mm3": 10457.786370903546,
+      "mesh_volume_mm3": 10442.356052486344,
+      "extents_mm": [
+        39.0,
+        44.569217681884766,
+        20.0
+      ],
+      "bounds_mm": [
+        [
+          -24.0,
+          -22.284608840942383,
+          0.0
+        ],
+        [
+          15.0,
+          22.284608840942383,
+          20.0
+        ]
+      ],
+      "watertight": true,
+      "winding_consistent": true,
+      "euler_number": 2,
+      "triangles": 508,
+      "usd_roundtrip": true,
+      "volume_relative_accuracy": 1e-08,
+      "usd_volume_mm3": 10457.786408096064,
+      "operations": [
+        {
+          "id": "base",
+          "kind": "cylinder",
+          "faces": 3
+        },
+        {
+          "id": "hub",
+          "kind": "cylinder",
+          "faces": 3
+        },
+        {
+          "id": "arm1",
+          "kind": "box",
+          "faces": 6
+        },
+        {
+          "id": "arm1_rot",
+          "kind": "rotate",
+          "faces": 6
+        },
+        {
+          "id": "arm2",
+          "kind": "box",
+          "faces": 6
+        },
+        {
+          "id": "arm2_rot",
+          "kind": "rotate",
+          "faces": 6
+        },
+        {
+          "id": "arm3",
+          "kind": "box",
+          "faces": 6
+        },
+        {
+          "id": "arm3_rot",
+          "kind": "rotate",
+          "faces": 6
+        },
+        {
+          "id": "part",
+          "kind": "union",
+          "faces": 5
+        },
+        {
+          "id": "part_arm1",
+          "kind": "union",
+          "faces": 11
+        },
+        {
+          "id": "part_arm2",
+          "kind": "union",
+          "faces": 17
+        },
+        {
+          "id": "part_final",
+          "kind": "union",
+          "faces": 23
+        }
+      ],
+      "connections": [
+        {
+          "id": "joint1",
+          "overlap_mm3": 17.675139244514234,
+          "passed": true
+        },
+        {
+          "id": "joint2",
+          "overlap_mm3": 53.42383221319246,
+          "passed": true
+        },
+        {
+          "id": "joint3",
+          "overlap_mm3": 53.423826435141706,
+          "passed": true
+        },
+        {
+          "id": "joint4",
+          "overlap_mm3": 53.423803847200396,
+          "passed": true
+        }
+      ],
+      "build_seconds": 0.28
+    },
+    "controls": {
+      "object_type_hint": "",
+      "method": "3D print",
+      "primary_view": "front",
+      "projection_standard": "third-angle",
+      "strict_watertight": true,
+      "refine_mode": "regularize"
+    },
+    "files": {
+      "source": "/results/b11d5b1b961a/brep-129366d6baa54f8cb1b125efa0ca5585/model.recipe.json",
+      "stl": "/results/b11d5b1b961a/brep-129366d6baa54f8cb1b125efa0ca5585/model.stl",
+      "usd": "/results/b11d5b1b961a/brep-129366d6baa54f8cb1b125efa0ca5585/model.usda",
+      "views": {
+        "isometric": "/results/b11d5b1b961a/brep-129366d6baa54f8cb1b125efa0ca5585/view-isometric.png",
+        "front": "/results/b11d5b1b961a/brep-129366d6baa54f8cb1b125efa0ca5585/view-front.png",
+        "top": "/results/b11d5b1b961a/brep-129366d6baa54f8cb1b125efa0ca5585/view-top.png",
+        "right": "/results/b11d5b1b961a/brep-129366d6baa54f8cb1b125efa0ca5585/view-right.png"
+      },
+      "drawing_checks": "/results/b11d5b1b961a/drawing-checks.json",
+      "evidence": "/results/b11d5b1b961a/feature-evidence.json",
+      "generation": "/results/b11d5b1b961a/generation.json"
+    },
+    "build": {
+      "version": 1,
+      "backend": "usd-brep",
+      "source_format": "brep-recipe-v2",
+      "ok": true,
+      "units": "mm",
+      "axes": {
+        "x": "width",
+        "y": "depth",
+        "z": "height"
+      },
+      "views": [
+        "isometric",
+        "front",
+        "top",
+        "right"
+      ],
+      "measurements": {
+        "watertight": true,
+        "components": 1,
+        "triangles": 508,
+        "extents_mm": [
+          39.0,
+          44.569,
+          20.0
+        ],
+        "volume_mm3": 10442.356
+      },
+      "diagnostics": [],
+      "drawing_evaluated": false
+    },
+    "original_run_id": null,
+    "generation": {
+      "path": "drawing-to-brep",
+      "backend": "usd-brep",
+      "prompt_version": "drawing-brep-5",
+      "correction_prompt_version": "construction-numeric-fields-3",
+      "max_construction_corrections": 2,
+      "model": "local-inference-lab/Qwen3.8-Flash-Next-NVFP4",
+      "notes": "",
+      "maximum_dimension_mm": 50.0,
+      "controls": {
+        "object_type_hint": "",
+        "method": "3D print",
+        "primary_view": "front",
+        "projection_standard": "third-angle",
+        "strict_watertight": true,
+        "refine_mode": "regularize"
+      },
+      "generated_scad": false,
+      "drawing_fidelity_verified": false,
+      "attempts": [
+        {
+          "attempt": 1,
+          "schema_valid": true
+        }
+      ],
+      "construction_attempts": [
+        {
+          "attempt": 1,
+          "status": "built"
+        }
+      ]
+    }
+  },
+  "error": null,
+  "elapsed_seconds": 128.2
+}

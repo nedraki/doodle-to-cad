@@ -1,0 +1,301 @@
+{
+  "ok": true,
+  "backend": "usd-brep",
+  "applied": {
+    "width": 15.3
+  },
+  "stl": "/results/2bcf17c897d7/brep-02486fd540e443d6bf73585438600e06/model.stl",
+  "source": "/results/2bcf17c897d7/brep-02486fd540e443d6bf73585438600e06/model.recipe.json",
+  "usd": "/results/2bcf17c897d7/brep-02486fd540e443d6bf73585438600e06/model.usda",
+  "diagnostics": {
+    "backend": "usd-brep",
+    "version": "1.0.0",
+    "recipe_version": 2,
+    "solid_volume_mm3": 13356.779691039337,
+    "mesh_volume_mm3": 13361.317910653643,
+    "extents_mm": [
+      15.300000190734863,
+      10.0,
+      100.0
+    ],
+    "bounds_mm": [
+      [
+        -7.650000095367432,
+        -5.0,
+        0.0
+      ],
+      [
+        7.650000095367432,
+        5.0,
+        100.0
+      ]
+    ],
+    "watertight": true,
+    "winding_consistent": true,
+    "euler_number": -8,
+    "triangles": 348,
+    "usd_roundtrip": true,
+    "volume_relative_accuracy": 1e-08,
+    "usd_volume_mm3": 13356.779769378198,
+    "operations": [
+      {
+        "id": "main_body",
+        "kind": "box",
+        "faces": 6
+      },
+      {
+        "id": "top_notch_cutter",
+        "kind": "cylinder",
+        "faces": 3
+      },
+      {
+        "id": "body_with_top_notch",
+        "kind": "difference",
+        "faces": 8
+      },
+      {
+        "id": "bottom_notch_cutter",
+        "kind": "cylinder",
+        "faces": 3
+      },
+      {
+        "id": "body_with_notches",
+        "kind": "difference",
+        "faces": 10
+      },
+      {
+        "id": "central_hole_cutter",
+        "kind": "cylinder",
+        "faces": 3
+      },
+      {
+        "id": "body_with_hole",
+        "kind": "difference",
+        "faces": 11
+      },
+      {
+        "id": "slot_1_cutter",
+        "kind": "box",
+        "faces": 6
+      },
+      {
+        "id": "body_with_slot_1",
+        "kind": "difference",
+        "faces": 15
+      },
+      {
+        "id": "slot_2_cutter",
+        "kind": "box",
+        "faces": 6
+      },
+      {
+        "id": "body_with_slot_2",
+        "kind": "difference",
+        "faces": 19
+      },
+      {
+        "id": "slot_3_cutter",
+        "kind": "box",
+        "faces": 6
+      },
+      {
+        "id": "body_with_slot_3",
+        "kind": "difference",
+        "faces": 23
+      },
+      {
+        "id": "slot_4_cutter",
+        "kind": "box",
+        "faces": 6
+      },
+      {
+        "id": "body_with_slot_4",
+        "kind": "difference",
+        "faces": 27
+      },
+      {
+        "id": "slot_5_cutter",
+        "kind": "box",
+        "faces": 6
+      },
+      {
+        "id": "final_part",
+        "kind": "difference",
+        "faces": 31
+      }
+    ],
+    "connections": [],
+    "build_seconds": 0.299
+  },
+  "views": {
+    "isometric": "/results/2bcf17c897d7/brep-02486fd540e443d6bf73585438600e06/view-isometric.png",
+    "front": "/results/2bcf17c897d7/brep-02486fd540e443d6bf73585438600e06/view-front.png",
+    "top": "/results/2bcf17c897d7/brep-02486fd540e443d6bf73585438600e06/view-top.png",
+    "right": "/results/2bcf17c897d7/brep-02486fd540e443d6bf73585438600e06/view-right.png"
+  },
+  "build": {
+    "version": 1,
+    "backend": "usd-brep",
+    "source_format": "brep-recipe-v2",
+    "ok": true,
+    "units": "mm",
+    "axes": {
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    },
+    "views": [
+      "isometric",
+      "front",
+      "top",
+      "right"
+    ],
+    "measurements": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 348,
+      "extents_mm": [
+        15.3,
+        10.0,
+        100.0
+      ],
+      "volume_mm3": 13361.318
+    },
+    "diagnostics": [],
+    "drawing_evaluated": false
+  },
+  "params": [
+    {
+      "name": "width",
+      "value": 15.3,
+      "low": 10,
+      "high": 30,
+      "step": 0.01,
+      "label": "Width",
+      "unit": "mm",
+      "description": "Width of the bracket (X dimension)",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "height",
+      "value": 100.0,
+      "low": 50,
+      "high": 200,
+      "step": 0.01,
+      "label": "Height",
+      "unit": "mm",
+      "description": "Total height of the bracket (Z dimension)",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "depth",
+      "value": 10.0,
+      "low": 5,
+      "high": 20,
+      "step": 0.01,
+      "label": "Depth",
+      "unit": "mm",
+      "description": "Thickness of the bracket (Y dimension)",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "top_notch_radius",
+      "value": 5.0,
+      "low": 2,
+      "high": 10,
+      "step": 0.01,
+      "label": "Top Notch Radius",
+      "unit": "mm",
+      "description": "Radius of the top semi-circular notch",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "bottom_notch_radius",
+      "value": 2.5,
+      "low": 1,
+      "high": 5,
+      "step": 0.01,
+      "label": "Bottom Notch Radius",
+      "unit": "mm",
+      "description": "Radius of the bottom semi-circular notch",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "central_hole_radius",
+      "value": 3.0,
+      "low": 1,
+      "high": 8,
+      "step": 0.01,
+      "label": "Central Hole Radius",
+      "unit": "mm",
+      "description": "Radius of the central circular hole",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "central_hole_z",
+      "value": 80.0,
+      "low": 50,
+      "high": 95,
+      "step": 0.01,
+      "label": "Central Hole Z",
+      "unit": "mm",
+      "description": "Z position of the central hole center",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "slot_width",
+      "value": 4.0,
+      "low": 2,
+      "high": 8,
+      "step": 0.01,
+      "label": "Slot Width",
+      "unit": "mm",
+      "description": "Width of the rectangular slots",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "slot_height",
+      "value": 6.0,
+      "low": 3,
+      "high": 12,
+      "step": 0.01,
+      "label": "Slot Height",
+      "unit": "mm",
+      "description": "Height of the rectangular slots",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "slot_spacing",
+      "value": 15.0,
+      "low": 5,
+      "high": 30,
+      "step": 0.01,
+      "label": "Slot Spacing",
+      "unit": "mm",
+      "description": "Vertical spacing between slot centers",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "slot_start_z",
+      "value": 15.0,
+      "low": 5,
+      "high": 30,
+      "step": 0.01,
+      "label": "Slot Start Z",
+      "unit": "mm",
+      "description": "Z position of the first slot center",
+      "group": "Details",
+      "feature": null
+    }
+  ]
+}

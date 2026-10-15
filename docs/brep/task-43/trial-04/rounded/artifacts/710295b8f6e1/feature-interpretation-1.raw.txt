@@ -1,0 +1,110 @@
+{
+  "version": 1,
+  "object_hypothesis": "Rounded Housing Blank",
+  "features": [
+    {
+      "id": "body_main",
+      "type": "body",
+      "description": "Rectangular block with rounded corners",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_6",
+          "region_id": "profile_contour_151"
+        },
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_147"
+        }
+      ],
+      "reason": "View 6 (Top) shows a rectangular outline with rounded corners. View 5 (Right) shows a rectangular profile consistent with a block."
+    },
+    {
+      "id": "corner_rounding",
+      "type": "profile",
+      "description": "Rounded corners (R6)",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_6",
+          "region_id": "profile_contour_151"
+        }
+      ],
+      "reason": "View 6 shows curved transitions at the corners of the rectangular outline. The drawing annotation explicitly labels '4 corners: R6'."
+    },
+    {
+      "id": "front_face",
+      "type": "wall",
+      "description": "Front face of the block",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_147"
+        }
+      ],
+      "reason": "View 5 (Right) displays a rectangular face. The vertical lines near the edges in the drawing (not isolated as separate regions) suggest the side faces of the rounded corners."
+    },
+    {
+      "id": "top_face",
+      "type": "wall",
+      "description": "Top face of the block",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_6",
+          "region_id": "profile_contour_151"
+        }
+      ],
+      "reason": "View 6 (Top) shows the planar surface of the block."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "rel_corner_body",
+      "type": "connected",
+      "features": [
+        "corner_rounding",
+        "body_main"
+      ],
+      "description": "Rounded corners are part of the main body perimeter",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_6",
+          "region_id": "profile_contour_151"
+        }
+      ],
+      "reason": "The rounded corners are integral to the outline of the body in the top view."
+    },
+    {
+      "id": "rel_face_body",
+      "type": "connected",
+      "features": [
+        "front_face",
+        "body_main"
+      ],
+      "description": "Front face is a side of the main body",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_147"
+        }
+      ],
+      "reason": "The rectangular profile in the right view corresponds to the side of the block defined in the top view."
+    }
+  ],
+  "assumptions": [
+    "The object is a solid block as stated in the drawing notes ('Solid blank', 'No cavity').",
+    "The vertical lines in the Front view (view_5) represent the edges of the rounded corners, though they were not isolated as separate regions by OpenCV.",
+    "The 'unassigned' views (1, 2, 3, 4, 7, 8) are likely noise or artifacts from the drawing sheet (e.g., text, dimension lines) and are ignored for the 3D model."
+  ],
+  "unresolved": [
+    "Exact height of the block (drawing says 30, but no measured region confirms this dimension directly).",
+    "Exact width and depth (drawing says 80 and 50, but no measured region confirms these dimensions directly)."
+  ],
+  "conflicts": [
+    "None."
+  ]
+}

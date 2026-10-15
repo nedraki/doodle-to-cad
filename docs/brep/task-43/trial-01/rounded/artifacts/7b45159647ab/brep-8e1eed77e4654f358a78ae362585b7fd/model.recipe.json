@@ -1,0 +1,129 @@
+{
+  "version": 2,
+  "units": "mm",
+  "name": "rounded_housing_blank",
+  "parameters": {
+    "width": {
+      "value": 80.0,
+      "min": 10,
+      "max": 200,
+      "label": "Width",
+      "unit": "mm",
+      "description": "Length of the block along X axis"
+    },
+    "depth": {
+      "value": 50.0,
+      "min": 10,
+      "max": 200,
+      "label": "Depth",
+      "unit": "mm",
+      "description": "Length of the block along Y axis"
+    },
+    "height": {
+      "value": 30.0,
+      "min": 1,
+      "max": 100,
+      "label": "Height",
+      "unit": "mm",
+      "description": "Height of the block along Z axis"
+    },
+    "corner_radius": {
+      "value": 8.0,
+      "min": 0.1,
+      "max": 25,
+      "label": "Corner Radius",
+      "unit": "mm",
+      "description": "Radius of the vertical corner fillets"
+    }
+  },
+  "operations": [
+    {
+      "id": "base_block",
+      "kind": "box",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "size": [
+        "width",
+        "depth",
+        "height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1",
+        "e2",
+        "e3"
+      ]
+    },
+    {
+      "id": "final_part",
+      "kind": "fillet",
+      "body": "base_block",
+      "radius": "corner_radius",
+      "selector": "parallel_z",
+      "frame": "world",
+      "depends_on": [
+        "base_block"
+      ],
+      "evidence": [
+        "e4"
+      ]
+    }
+  ],
+  "output": "final_part",
+  "frames": {
+    "world": {
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    }
+  },
+  "bodies": [
+    {
+      "id": "part",
+      "output": "final_part"
+    }
+  ],
+  "evidence": {
+    "observed": [
+      {
+        "id": "e1",
+        "text": "Top view shows rectangular outline with dimensions 80mm (X) and 50mm (Y)."
+      },
+      {
+        "id": "e2",
+        "text": "Front view shows rectangular outline with dimensions 80mm (X) and 30mm (Z)."
+      },
+      {
+        "id": "e3",
+        "text": "Drawing notes state 'Solid blank' and 'No cavity'."
+      },
+      {
+        "id": "e4",
+        "text": "Top view annotation '4 corners: R6' indicates vertical fillets."
+      }
+    ],
+    "inferred": [
+      {
+        "id": "e5",
+        "text": "The object is a uniform extrusion of the top profile."
+      }
+    ],
+    "assumptions": [
+      {
+        "id": "e6",
+        "text": "The block is centered at the origin in XY for symmetry, though origin placement is arbitrary for a single part."
+      }
+    ],
+    "unresolved": []
+  },
+  "constraints": []
+}

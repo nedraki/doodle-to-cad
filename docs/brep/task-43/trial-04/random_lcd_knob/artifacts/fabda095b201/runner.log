@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/tmp/doodle-brep-43/doodle_to_cad/recipe_job_worker.py", line 33, in <module>
+    main()
+  File "/tmp/doodle-brep-43/doodle_to_cad/recipe_job_worker.py", line 25, in main
+    result = build_recipe(out, json.loads((out / 'input.recipe.json').read_text()), on_stage=stage)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/doodle-brep-43/doodle_to_cad/brep.py", line 110, in build_recipe
+    raise BuildError(error.code, error.message)
+doodle_to_cad.build_contract.BuildError: SmApiChamferFillet failed: SM_ERR (1001) at SmPyFillets.cpp:18

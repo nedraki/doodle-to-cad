@@ -1,0 +1,36 @@
+```openscad
+/* doodle-meta {"version":1,"parameters":{"width":{"label":"Overall width","description":"Changes the body width along X","unit":"mm","feature":"body_width"},"depth":{"label":"Overall depth","description":"Changes the body depth along Y","unit":"mm","feature":"body_depth"},"height":{"label":"Overall height","description":"Changes the body height along Z","unit":"mm","feature":"body_height"},"corner_radius":{"label":"Corner radius","description":"Radius of the vertical corner fillets","unit":"mm","feature":"corner_fillet"}},"features":{"body_width":{"kind":"dimension","axis":"x","label":"Overall width"},"body_depth":{"kind":"dimension","axis":"y","label":"Overall depth"},"body_height":{"kind":"dimension","axis":"z","label":"Overall height"},"corner_fillet":{"kind":"region","label":"Corner fillet","min":[0,0,0],"max":[{"parameter":"corner_radius","scale":1,"offset":0},{"parameter":"corner_radius","scale":1,"offset":0},{"parameter":"height","scale":1,"offset":0}]}}} */
+
+// Parameters
+width = 80.0;
+depth = 50.36;
+height = 27.73;
+corner_radius = 6.0;
+
+// Derived sizes (not editable)
+$fn = 48;
+
+// Module for a rounded rectangle prism centered at origin in XY, extruded along Z
+module rounded_rect_prism(w, d, h, r) {
+    // Create a 2D rounded rectangle and extrude it
+    // The polygon is defined in XY plane, then extruded along Z
+    // We need to place it so the bottom is at Z=0
+    translate([0, 0, -h/2]) {
+        linear_extrude(height=h) {
+            hull() {
+                // Four corner circles
+                translate([w/2 - r, d/2 - r, 0]) circle(r=r);
+                translate([-w/2 + r, d/2 - r, 0]) circle(r=r);
+                translate([-w/2 + r, -d/2 + r, 0]) circle(r=r);
+                translate([w/2 - r, -d/2 + r, 0]) circle(r=r);
+            }
+        }
+    }
+}
+
+// Main design
+// Place the solid so its bottom sits on Z=0
+translate([0, 0, height/2]) {
+    rounded_rect_prism(width, depth, height, corner_radius);
+}
+```

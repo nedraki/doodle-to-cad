@@ -1,0 +1,65 @@
+{
+  "run_id": "7e8c4edd8a46",
+  "params": [
+    {
+      "name": "outer_diameter",
+      "value": 120,
+      "low": 50,
+      "high": 500,
+      "step": 0.01,
+      "label": "Outer Diameter",
+      "unit": "mm",
+      "description": "Rebuilds the saved construction recipe",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "thickness",
+      "value": 8,
+      "low": 1,
+      "high": 50,
+      "step": 0.01,
+      "label": "Thickness",
+      "unit": "mm",
+      "description": "Rebuilds the saved construction recipe",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "rim_width",
+      "value": 10,
+      "low": 2,
+      "high": 30,
+      "step": 0.01,
+      "label": "Rim Width",
+      "unit": "mm",
+      "description": "Rebuilds the saved construction recipe",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "hub_diameter",
+      "value": 30,
+      "low": 10,
+      "high": 60,
+      "step": 0.01,
+      "label": "Hub Diameter",
+      "unit": "mm",
+      "description": "Rebuilds the saved construction recipe",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "spoke_width",
+      "value": 10,
+      "low": 2,
+      "high": 30,
+      "step": 0.01,
+      "label": "Spoke Width",
+      "unit": "mm",
+      "description": "Rebuilds the saved construction recipe",
+      "group": "Details",
+      "feature": null
+    }
+  ]
+}

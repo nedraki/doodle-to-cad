@@ -1,0 +1,41 @@
+{
+  "view_frame": "The drawing uses a third-angle projection with two primary views: TOP (XY) and FRONT (XZ). The world coordinate system is defined as X = Width (60mm), Y = Depth (40mm), and Z = Height (20mm). The origin (0,0,0) is located at the bottom-left-front corner of the block's bounding box.",
+  "features": [
+    {
+      "id": "block_body",
+      "shape": "Rectangular Prism",
+      "section": "N/A (Solid)",
+      "axis_or_plane": "XYZ",
+      "dimensions": [
+        "60",
+        "40",
+        "20"
+      ],
+      "placement": "Centred at (30, 20, 10). Extends from (0,0,0) to (60,40,20).",
+      "evidence": "Outer dimensions text '60 x 40 x 20' and dimension lines on TOP and FRONT views."
+    },
+    {
+      "id": "edge_bevels",
+      "shape": "Chamfer",
+      "section": "Triangular",
+      "axis_or_plane": "All 12 edges of the block",
+      "dimensions": [
+        "2 mm x 45 degrees"
+      ],
+      "placement": "Applied to all edges of the block_body. The bevel cuts 2mm from each adjacent face along the edge.",
+      "evidence": "Text note 'All edges: 2 mm x 45 degrees' and the chamfered corners visible in both TOP and FRONT views."
+    }
+  ],
+  "connections": [
+    "The block is a single solid piece.",
+    "The bevels are continuous cuts along the intersection of the block's faces."
+  ],
+  "edit_rules": [
+    "If the block dimensions (60, 40, 20) are changed, the bevel size (2mm) remains constant unless explicitly scaled.",
+    "If the bevel size is changed, the outer envelope dimensions (60, 40, 20) must remain fixed; the bevel cuts inward from the original sharp corners.",
+    "The bevel angle is fixed at 45 degrees relative to the adjacent faces."
+  ],
+  "unresolved": [
+    "The drawing does not specify if the bevels are applied to the internal corners of the chamfered edges (edge-on-edge bevels), though standard 'All edges' usually implies the 12 primary edges of the cuboid."
+  ]
+}
