@@ -13,7 +13,7 @@ from .build_contract import BuildError
 from .recipe_jobs import check_worker, run_recipe_job
 from .construction_intent import PROMPT as INTENT_PROMPT, PROMPT_VERSION as INTENT_VERSION, validate_plan
 
-PROMPT_VERSION = 'drawing-brep-10'
+PROMPT_VERSION = 'drawing-brep-11'
 PROMPT = """Construct ONE editable BRep part directly from the drawing and measured evidence.
 Return valid JSON only. Never return Python or OpenSCAD. If the part needs an unsupported operation, return {"unsupported":"specific reason"}.
 
@@ -53,6 +53,7 @@ Use the visible shape, not just its object name. Preserve rounded transitions an
 For a curved circular-section path, use arc_pipe and any visible straight segments. Its centreline radius differs from its inner and outer radii. Preserve the section size and endpoint positions. Do not replace a curve by a box.
 Expose the actual bend radius, section size and edge-treatment size as useful parameters. Reference these parameters in operation fields and dependent origins. An editable radius must also move connected endpoints and the section centre above the bed where required. Preserve dimensions that the edit is not meant to change.
 Follow the planned axes, cross-sections and endpoint arithmetic in the construction_plan. The plan is an interpretation, not proof: report contradictions with the original image instead of silently changing its feature types.
+Clarification answers are authoritative for their named opening. Never replace a through-hole/recess answer or recess depth with an assumption. If opening extent remains unresolved without an answer or clear drawing evidence, return unsupported. Other plan uncertainties must be resolved into explicitly disclosed assumptions under the construction-plan default policy, or remain unresolved in recipe evidence and fail validation.
 The interpretation can contain mistakes; check the original image. Evidence is not proof of drawing fidelity.
 """
 
@@ -162,14 +163,29 @@ async def submit_direct_job(image, mime, notes, dimension, extra, controls,
         intent_messages = [{'role':'system','content':INTENT_PROMPT},{'role':'user','content':[
             {'type':'text','text':json.dumps(intent_request)},
             {'type':'image_url','image_url':{'url':pipeline.client.image_url(image,mime)}}]}]
-        raw_plan = await pipeline._json_call(intent_messages,out,'construction-plan',temperature=0)
-        try:
-            plan = validate_plan(raw_plan)
-        except ValueError as exc:
-            raise BuildError('invalid_recipe', 'Construction plan rejected: '+str(exc)) from exc
+        from .clarification import ask_opening
+        answers=[];history=[]
+        for round_number in range(4):
+            label='construction-plan' if not round_number else f'construction-plan-answer-{round_number}'
+            raw_plan = await pipeline._json_call(intent_messages,out,label,temperature=0)
+            try:
+                plan = validate_plan(raw_plan)
+            except ValueError as exc:
+                raise BuildError('invalid_recipe', 'Construction plan rejected: '+str(exc)) from exc
+            (out/(label+'.json')).write_text(json.dumps(plan,indent=2))
+            question=plan.get('clarification')
+            if not question:
+                break
+            if round_number==3 or any(a['feature_id']==question['feature_id'] for a in answers):
+                raise BuildError('unresolved_design','The drawing still leaves an opening unclear after clarification. No part was built.')
+            answer=await ask_opening(job,out,question,maximum,history)
+            answers.append(answer)
+            intent_request['clarification_answers']=answers
+            (out/f'construction-plan-answer-{round_number+1}-request.json').write_text(json.dumps(intent_request,indent=2))
+            intent_messages[1]['content'][0]['text']=json.dumps(intent_request)
         (out/'construction-plan.json').write_text(json.dumps(plan,indent=2))
         job['stage'] = 'planning BRep recipe'
-        payload = {'evidence':evidence,'construction_plan':plan,'notes':notes,'maximum_dimension_mm':maximum,'controls':controls}
+        payload = {'clarification_answers':answers,'evidence':evidence,'construction_plan':plan,'notes':notes,'maximum_dimension_mm':maximum,'controls':controls}
         (out/'recipe-request.json').write_text(json.dumps(payload,indent=2))
         messages = [{'role':'system','content':PROMPT},{'role':'user','content':[
             {'type':'text','text':json.dumps(payload)},
@@ -215,6 +231,8 @@ async def submit_direct_job(image, mime, notes, dimension, extra, controls,
         result['files']['drawing_checks'] = f'/results/{run_id}/drawing-checks.json'
         result.update(model=provenance['model'],generation=provenance,
                       duration_seconds=round(time.monotonic()-job['created'],2))
+        if (out/'clarifications.json').exists():
+            result['files']['clarifications'] = f'/results/{run_id}/clarifications.json'
         result['files']['construction_plan'] = f'/results/{run_id}/construction-plan.json'
         result['files']['evidence'] = f'/results/{run_id}/feature-evidence.json'
         result['files']['generation'] = f'/results/{run_id}/generation.json'

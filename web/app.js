@@ -21,7 +21,7 @@ function loadImage(file,canvas){if(!file)return;const im=new Image;im.onload=()=
 $('#drawView').onclick=()=>{extraCanvas.clear();$('#viewDialog').showModal()};document.querySelectorAll('.close').forEach(b=>b.onclick=()=>$('#viewDialog').close());$('#saveView').onclick=async()=>{extras.push({direction:$('#viewDirection').value,blob:await extraCanvas.blob()});$('#viewDialog').close();renderExtras()};$('#uploadView').onchange=e=>{if(e.target.files[0]){extras.push({direction:'additional',blob:e.target.files[0]});renderExtras()}e.target.value=''};
 function renderExtras(){$('#viewList').innerHTML=extras.map((e,i)=>`<div class="view-item"><img src="${URL.createObjectURL(e.blob)}"><span>${e.direction}</span><button type="button" data-remove="${i}">×</button></div>`).join('');document.querySelectorAll('[data-remove]').forEach(b=>b.onclick=()=>{extras.splice(+b.dataset.remove,1);renderExtras()})}
 async function health(){try{const h=await fetch('/api/health?refresh=true').then(r=>r.json());$('#health').textContent=`model: ${h.agentic.selected_model||'unavailable'} · ${h.openscad.available?'OpenSCAD ready':'OpenSCAD missing'}`}catch{$('#health').textContent='pipeline offline'}}health();
-const STAGE_LABELS={'planning BRep geometry':'Planning drawing planes, sections and connections…','correcting BRep construction':'Correcting measured BRep construction errors…','interpreting drawing':'Reading drawing features…','planning BRep recipe':'Creating the BRep construction recipe…','building recipe':'Starting BRep worker…','building solid':'Building and checking the solid…','checking mesh':'Checking the exported mesh…','rendering views':'Rendering the part…','publishing recipe':'Saving the BRep candidate…',queued:'Queued…',analyzing:'Reading ink and geometry…',interpreting:'Building the object and part graph…',generating:'Authoring parametric OpenSCAD…',finalizing:'Preparing the 3D model…'};
+const STAGE_LABELS={'waiting for your answer':'Waiting for your answer…','planning BRep geometry':'Planning drawing planes, sections and connections…','correcting BRep construction':'Correcting measured BRep construction errors…','interpreting drawing':'Reading drawing features…','planning BRep recipe':'Creating the BRep construction recipe…','building recipe':'Starting BRep worker…','building solid':'Building and checking the solid…','checking mesh':'Checking the exported mesh…','rendering views':'Rendering the part…','publishing recipe':'Saving the BRep candidate…',queued:'Queued…',analyzing:'Reading ink and geometry…',interpreting:'Building the object and part graph…',generating:'Authoring parametric OpenSCAD…',finalizing:'Preparing the 3D model…'};
 function stageLabel(stage){if(!stage)return'Working…';const m=/^(\w+) \(attempt (\d)\)$/.exec(stage);if(m){if(m[1]==='compiling')return`Compiling STL — attempt ${m[2]} of 3…`;if(m[1]==='supervising')return`CAD supervisor reviewing attempt ${m[2]}…`}return STAGE_LABELS[stage]||'Working…'}
 function showError(message,aborted){show('error');$('#error').innerHTML=`<h2>GENERATION STOPPED</h2><p>${escapeHtml(message)}</p><button type="button" id="returnToDrawing">← Return to drawing</button>`;$('#returnToDrawing').onclick=()=>{$('#inputTools').hidden=false;$('#deckTitle').textContent='BLUEPRINT DECK — FRONT & PROJECTED VIEWS';show('blueprint')};void aborted}
 function escapeHtml(value){const el=document.createElement('div');el.textContent=String(value);return el.innerHTML.replaceAll('"','&quot;')}
@@ -41,6 +41,7 @@ async function pollJob(id,onStage){
     if(!res.ok)throw Error(`Status check failed (HTTP ${res.status}).`);
     failures=0;
     const job=await res.json();
+    showClarification(id,job);
     onStage(job);
     if(job.status==='done')return job;
     if(job.status==='error')throw Error(job.error?.message||'Generation failed.');
@@ -68,7 +69,7 @@ form.onsubmit=async e=>{
     if(job.status==='cancelled')throw Object.assign(new Error('Mission aborted.'),{name:'AbortError'});
     render(job.result,blob);
   }catch(err){showError(err.name==='AbortError'?'Mission aborted.':err.message,err.name==='AbortError')}
-  finally{clearInterval(tick);$('#abort').hidden=true;$('#launch').hidden=false;jobId=null;jobAbort=null;health()}
+  finally{hideClarification();clearInterval(tick);$('#abort').hidden=true;$('#launch').hidden=false;jobId=null;jobAbort=null;health()}
 };
 $('#abort').onclick=async()=>{if(jobId){try{await fetch(`/api/generate/${jobId}/cancel`,{method:'POST'})}catch{}jobAbort?.abort()}else jobAbort?.abort()};
 let currentRun=null;function render(d,input,meshLoaded=false){show('result');const ev=d.evaluation||{},attempts=d.attempts||[];currentRun=d;$('#statusBadge').textContent=d.success?`✓ CAD accepted · ${ev.score??'—'}/100`:`⚠ revision needed · ${ev.score??'—'}/100`;$('#dimensionBadge').textContent=`target ${d.generation?.maximum_dimension_mm??form.dimension.value} mm`;if(input)$('#inputThumb').innerHTML=`<img src="${URL.createObjectURL(input)}">YOUR INPUT`;$('#views').innerHTML=Object.entries(d.files.views||{}).map(([n,u])=>`<figure><img src="${u}?t=${Date.now()}"><figcaption>Original · ${n}</figcaption></figure>`).join('');$('#views').className='static-strip';$('#views').hidden=true;{const t=document.querySelector('[data-views-toggle]');if(t)t.classList.remove('active')}hideParamPanel();if(window.CadViewer&&d.files.stl){try{viewer=viewer||new CadViewer($('#viewerWrap'));if(!meshLoaded)viewer.showStl(d.files.stl,d.controls?.primary_view)}catch(e){$('#viewerWrap').insertAdjacentHTML('beforeend','<div class="viewer-fallback">WebGL unavailable — see static renders below</div>')}}else if(!window.CadViewer){$('#viewerWrap').hidden=true}$('#resultTitle').textContent=d.success?'DONE — CAD SUPERVISOR ACCEPTED':'MISSION NEEDS REVISION';const failures=(ev.failures||[]).join(' · ');$('#resultText').textContent=d.success?`${d.spec.object||'Design'} · best of ${attempts.length||1} attempt(s) · generated by ${d.model} in ${d.duration_seconds}s.`:`${failures||'The candidate did not reach the configured acceptance score.'} Best candidate: attempt ${d.selected_attempt||1}.`;const report=$('#attemptReport');if(report)report.innerHTML=attempts.map(a=>`<article class="attempt ${a.attempt===d.selected_attempt?'selected':''}"><b>#${a.attempt} · ${a.action||'generate'} · ${a.evaluation.score}/100</b><span>${Object.entries(a.evaluation.scores||{}).map(([k,v])=>`${k} ${v}`).join(' · ')}</span><p>${(a.evaluation.failures||[]).join(' · ')||'No deterministic failures.'}</p>${a.supervisor?`<p>Supervisor: ${a.supervisor.action} — ${a.supervisor.instructions||''}</p>`:''}</article>`).join('');$('#scad').href=d.files.source||d.files.scad;$('#stl').href=d.files.stl||'#';$('#stl').hidden=!d.files.stl;initializeResultVersion(d)}
@@ -341,3 +342,27 @@ form.backend.onchange=()=>{
     ? 'The agent reads the drawing and creates an editable BRep recipe. The worker checks the solid, mesh and drawing projections. Detailed features still require review.'
     : defaultGenerationHelp;
 };
+
+
+// Ask about one identified opening while retaining the original generation job.
+let clarificationId=null;
+function hideClarification(){$('#working').classList.remove('awaiting-answer');document.querySelector('#clarificationPanel')?.remove();clarificationId=null}
+function showClarification(id,job){
+  if(job.status!=='waiting_for_answer'||!job.question){hideClarification();return}
+  const q=job.question;if(clarificationId===q.id)return;
+  hideClarification();clarificationId=q.id;
+  const panel=document.createElement('section');panel.id='clarificationPanel';
+  panel.style.cssText='background:#fff9ed;color:#182d36;padding:24px;border:3px solid #ff593c;border-radius:18px;max-width:600px;margin:20px auto;text-align:left';
+  panel.innerHTML=`<h2>One detail before we build</h2><p><b>${escapeHtml(q.feature_label)}</b></p><p>${escapeHtml(q.reason)}</p><h3>${escapeHtml(q.text)}</h3><form id="clarificationForm"><label><input type="radio" name="openingChoice" value="through" required> Yes — make a through-hole</label><label><input type="radio" name="openingChoice" value="recess" required> No — leave a bottom</label><label id="recessDepthLabel" hidden>Recess depth (mm)<input name="depth" type="number" min="0.01" max="${Number(q.maximum_depth_mm)}" step="any"></label><p id="answerError" role="alert"></p><button type="submit">Continue with this answer</button><button type="button" id="cancelQuestion">Cancel generation</button></form><p>Your drawing is kept. We will save your answer with the design.</p>`;
+  $('#working').append(panel);$('#working').classList.add('awaiting-answer');
+  const answerForm=panel.querySelector('form');
+  answerForm.onchange=()=>{const recess=answerForm.elements.openingChoice.value==='recess';panel.querySelector('#recessDepthLabel').hidden=!recess;answerForm.elements.depth.required=recess};
+  answerForm.onsubmit=async event=>{
+    event.preventDefault();const button=answerForm.querySelector('[type=submit]');button.disabled=true;
+    const choice=answerForm.elements.openingChoice.value;
+    const payload={question_id:q.id,choice};if(choice==='recess')payload.depth_mm=Number(answerForm.elements.depth.value);
+    try{const res=await fetch(`/api/generate/${id}/answer`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});const data=await res.json();if(!res.ok)throw Error(typeof data.detail==='string'?data.detail:'Could not save this answer.');hideClarification();$('#workText').textContent='Continuing with your answer…'}
+    catch(error){panel.querySelector('#answerError').textContent=error.message;button.disabled=false}
+  };
+  panel.querySelector('#cancelQuestion').onclick=()=>$('#abort').click();
+}
