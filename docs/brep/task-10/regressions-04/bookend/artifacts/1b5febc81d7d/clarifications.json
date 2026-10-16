@@ -1,0 +1,24 @@
+[
+  {
+    "question": {
+      "feature_id": "opening_top_left",
+      "feature_label": "Top-left rectangular outline on the vertical face",
+      "reason": "The drawing shows a rectangular outline on the front face but does not indicate if it is a through-hole or a blind recess. The side view does not show internal lines that would clarify the depth.",
+      "kind": "opening_extent",
+      "id": "743b699bf630449bbfadccaa2d2aa15f",
+      "text": "Should this hole go all the way through the part?",
+      "maximum_depth_mm": 120.0,
+      "choices": [
+        {
+          "id": "through",
+          "label": "Yes \u2014 make a through-hole"
+        },
+        {
+          "id": "recess",
+          "label": "No \u2014 leave a bottom"
+        }
+      ]
+    },
+    "status": "cancelled"
+  }
+]

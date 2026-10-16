@@ -1,0 +1,72 @@
+{
+  "view_frame": "The drawing presents two views of a flat plate. The top view (primary) shows the XY plane (width and depth). The bottom view shows the same XY plane with three circular features, likely representing through-holes or recesses. The Z-axis represents the thickness of the plate, which is not explicitly dimensioned.",
+  "features": [
+    {
+      "id": "plate_body",
+      "shape": "rectangular_plate",
+      "section": "rectangular",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "ASSUMED_thickness",
+        "ASSUMED_width",
+        "ASSUMED_depth"
+      ],
+      "placement": "Centered at (0,0,0) in XY. Extends from -width/2 to +width/2 in X, -depth/2 to +depth/2 in Y, and 0 to thickness in Z.",
+      "evidence": "Two rectangular outlines are visible. The top view shows the outer boundary. The bottom view shows the same boundary with internal features."
+    },
+    {
+      "id": "hole_1",
+      "shape": "circular_hole",
+      "section": "circular",
+      "axis_or_plane": "Z",
+      "dimensions": [
+        "ASSUMED_hole_diameter"
+      ],
+      "placement": "Centered at approximately (-width/4, 0) in XY. Extends through the full thickness in Z.",
+      "evidence": "A circular feature is visible in the bottom view, located on the left side of the plate."
+    },
+    {
+      "id": "hole_2",
+      "shape": "circular_hole",
+      "section": "circular",
+      "axis_or_plane": "Z",
+      "dimensions": [
+        "ASSUMED_hole_diameter"
+      ],
+      "placement": "Centered at approximately (0, 0) in XY. Extends through the full thickness in Z.",
+      "evidence": "A circular feature is visible in the bottom view, located in the center of the plate."
+    },
+    {
+      "id": "hole_3",
+      "shape": "circular_hole",
+      "section": "circular",
+      "axis_or_plane": "Z",
+      "dimensions": [
+        "ASSUMED_hole_diameter"
+      ],
+      "placement": "Centered at approximately (width/4, 0) in XY. Extends through the full thickness in Z.",
+      "evidence": "A circular feature is visible in the bottom view, located on the right side of the plate."
+    }
+  ],
+  "connections": [
+    "hole_1, hole_2, and hole_3 are cutouts from plate_body."
+  ],
+  "edit_rules": [
+    "Changing plate_body dimensions (width, depth, thickness) scales the entire part.",
+    "Changing hole_diameter scales all three holes uniformly.",
+    "Hole positions are relative to the plate center and width."
+  ],
+  "unresolved": [
+    "The thickness of the plate is not dimensioned.",
+    "The width and depth of the plate are not dimensioned.",
+    "The diameter of the holes is not dimensioned.",
+    "The exact positions of the holes are estimated from the drawing and not dimensioned.",
+    "It is unclear if the circular features are through-holes or blind recesses."
+  ],
+  "clarification": {
+    "feature_id": "hole_1",
+    "feature_label": "Left circular feature",
+    "reason": "The drawing does not specify if the circular features are through-holes or blind recesses.",
+    "kind": "opening_extent"
+  }
+}

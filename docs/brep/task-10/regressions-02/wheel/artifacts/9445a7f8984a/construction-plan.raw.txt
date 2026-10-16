@@ -1,0 +1,38 @@
+{
+  "view_frame": "The drawing presents a wheel in two views. The FRONT view is in the XZ plane (X horizontal, Z vertical), showing the wheel face. The RIGHT view is in the YZ plane (Y depth, Z vertical), showing the wheel's thickness. The Y-axis represents the thickness direction, perpendicular to the wheel face.",
+  "features": [
+    {
+      "id": "wheel_body",
+      "shape": "annulus_with_spokes",
+      "section": "rectangular",
+      "axis_or_plane": "Y",
+      "dimensions": [
+        "OD 120 mm",
+        "thickness 8 mm",
+        "8 spokes",
+        "ASSUMED rim_width 10 mm",
+        "ASSUMED hub_diameter 30 mm",
+        "ASSUMED spoke_width 10 mm"
+      ],
+      "placement": "Centered at (0, 0, 0). The wheel face lies in the XZ plane. The body extends from Y = -4 mm to Y = +4 mm. The outer radius is 60 mm. The inner radius of the rim is 50 mm (60 - 10). The hub outer radius is 15 mm. Spokes connect the hub to the rim.",
+      "evidence": "Front view shows a circular wheel with 8 spokes. Text annotation states 'OD 120 mm; thickness 8 mm; 8 spokes'. Right view shows a rectangle of uniform height and width, confirming the thickness."
+    }
+  ],
+  "connections": [
+    "The 8 spokes are radially connected to the hub and the rim.",
+    "The rim is a continuous circular band connected to the spokes."
+  ],
+  "edit_rules": [
+    "Changing OD 120 mm updates the outer radius and the length of the spokes.",
+    "Changing thickness 8 mm updates the Y-axis extent of the entire wheel.",
+    "Changing the number of spokes updates the angular spacing and count of spoke features.",
+    "Changing ASSUMED rim_width updates the inner radius of the rim and the length of the spokes.",
+    "Changing ASSUMED hub_diameter updates the hub radius and the length of the spokes.",
+    "Changing ASSUMED spoke_width updates the width of the spoke rectangles."
+  ],
+  "unresolved": [
+    "The width of the rim is not dimensioned.",
+    "The diameter of the central hub is not dimensioned.",
+    "The width of the spokes is not dimensioned."
+  ]
+}

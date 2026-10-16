@@ -1,0 +1,33 @@
+{
+  "view_frame": "The drawing presents two views of a flat part. The left view is the Front view (XZ plane), showing the part's width (X) and height (Z). The right view is the Top view (XY plane), showing the part's width (X) and depth (Y). The part is a flat plate with a constant thickness along the Y-axis.",
+  "features": [
+    {
+      "id": "part_body",
+      "shape": "Closed XY profile extruded along Z",
+      "section": "Rectangular",
+      "axis_or_plane": "XY plane",
+      "dimensions": [
+        "ASSUMED thickness: 5mm",
+        "ASSUMED width: 100mm",
+        "ASSUMED height: 60mm"
+      ],
+      "placement": "Centered at origin (0,0,0). The profile is defined in the XY plane and extruded along the Z-axis. The outline consists of a central rectangular body with flared top and bottom sections, creating a 'T' or 'I' beam-like silhouette.",
+      "evidence": "The right view shows the closed outline of the part in the XY plane. The left view shows the corresponding height and width, confirming the flat nature of the part."
+    }
+  ],
+  "connections": [
+    "The top and bottom flanges are connected to the central web by vertical segments.",
+    "The outer corners of the flanges are connected to the inner corners by horizontal segments."
+  ],
+  "edit_rules": [
+    "Changing the thickness (Y dimension) scales the part along the Y-axis only.",
+    "Changing the width (X dimension) scales the part along the X-axis only.",
+    "Changing the height (Z dimension) scales the part along the Z-axis only.",
+    "Modifying the profile in the XY plane changes the shape of the flanges and web."
+  ],
+  "unresolved": [
+    "The exact dimensions of the part are not provided in the drawing. Assumptions have been made for width, height, and thickness.",
+    "The exact shape of the flanges (e.g., whether they are perfectly rectangular or have slight tapers) is not clear from the drawing."
+  ],
+  "clarification": null
+}

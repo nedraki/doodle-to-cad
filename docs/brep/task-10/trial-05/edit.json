@@ -1,0 +1,137 @@
+{
+  "ok": true,
+  "backend": "usd-brep",
+  "applied": {
+    "section_height": 10
+  },
+  "stl": "/results/8f7f9e2e4b27/brep-3e9b0ff86448408190043a638abb8748/model.stl",
+  "source": "/results/8f7f9e2e4b27/brep-3e9b0ff86448408190043a638abb8748/model.recipe.json",
+  "usd": "/results/8f7f9e2e4b27/brep-3e9b0ff86448408190043a638abb8748/model.usda",
+  "diagnostics": {
+    "backend": "usd-brep",
+    "version": "1.0.0",
+    "recipe_version": 2,
+    "solid_volume_mm3": 5569.908296595915,
+    "mesh_volume_mm3": 5563.856357797711,
+    "extents_mm": [
+      46.0,
+      37.99991226196289,
+      10.000000000866772
+    ],
+    "bounds_mm": [
+      [
+        -23.0,
+        -1.8369701465288538e-16,
+        -8.667721540511764e-10
+      ],
+      [
+        23.0,
+        37.99991226196289,
+        10.0
+      ]
+    ],
+    "watertight": true,
+    "winding_consistent": true,
+    "euler_number": 2,
+    "triangles": 276,
+    "usd_roundtrip": true,
+    "volume_relative_accuracy": 1e-08,
+    "usd_volume_mm3": 5569.912005330354,
+    "operations": [
+      {
+        "id": "handle",
+        "kind": "sweep",
+        "faces": 12
+      }
+    ],
+    "connections": [],
+    "build_seconds": 0.673
+  },
+  "views": {
+    "isometric": "/results/8f7f9e2e4b27/brep-3e9b0ff86448408190043a638abb8748/view-isometric.png",
+    "front": "/results/8f7f9e2e4b27/brep-3e9b0ff86448408190043a638abb8748/view-front.png",
+    "top": "/results/8f7f9e2e4b27/brep-3e9b0ff86448408190043a638abb8748/view-top.png",
+    "right": "/results/8f7f9e2e4b27/brep-3e9b0ff86448408190043a638abb8748/view-right.png"
+  },
+  "build": {
+    "version": 1,
+    "backend": "usd-brep",
+    "source_format": "brep-recipe-v2",
+    "ok": true,
+    "units": "mm",
+    "axes": {
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    },
+    "views": [
+      "isometric",
+      "front",
+      "top",
+      "right"
+    ],
+    "measurements": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 276,
+      "extents_mm": [
+        46.0,
+        38.0,
+        10.0
+      ],
+      "volume_mm3": 5563.856
+    },
+    "diagnostics": [],
+    "drawing_evaluated": false
+  },
+  "params": [
+    {
+      "name": "bend_radius",
+      "value": 20.0,
+      "low": 10,
+      "high": 60,
+      "step": 0.01,
+      "label": "Centreline radius",
+      "unit": "mm",
+      "description": "Centreline radius of the 180-degree bend (R20).",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "leg_length",
+      "value": 15.0,
+      "low": 5,
+      "high": 60,
+      "step": 0.01,
+      "label": "Straight leg length",
+      "unit": "mm",
+      "description": "Length of each straight leg (15).",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "section_width",
+      "value": 6.0,
+      "low": 2,
+      "high": 20,
+      "step": 0.01,
+      "label": "Section width",
+      "unit": "mm",
+      "description": "In-plane width of the rectangular section (6).",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "section_height",
+      "value": 10.0,
+      "low": 2,
+      "high": 30,
+      "step": 0.01,
+      "label": "Section height",
+      "unit": "mm",
+      "description": "Z height of the rectangular section (8).",
+      "group": "Details",
+      "feature": null
+    }
+  ]
+}

@@ -1,0 +1,86 @@
+{
+  "view_frame": "Front view (bottom-left) shows the XZ plane (width and height). Top view (top-center) shows the XY plane (width and depth). Right view (bottom-right) shows the YZ plane (depth and height). The object is a flat, elongated part.",
+  "features": [
+    {
+      "id": "main_body",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "ASSUMED_WIDTH",
+        "ASSUMED_DEPTH",
+        "ASSUMED_HEIGHT"
+      ],
+      "placement": "Centered at (0, 0, 0). Extends from -ASSUMED_WIDTH/2 to +ASSUMED_WIDTH/2 in X, -ASSUMED_DEPTH/2 to +ASSUMED_DEPTH/2 in Y, and -ASSUMED_HEIGHT/2 to +ASSUMED_HEIGHT/2 in Z.",
+      "evidence": "Visible as a tall rectangle in the Front view, a short rectangle in the Top view, and a tall rectangle in the Right view."
+    },
+    {
+      "id": "top_notch",
+      "shape": "cylindrical_cutout",
+      "section": "circle",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "ASSUMED_NOTCH_RADIUS"
+      ],
+      "placement": "Centered at (0, 0, ASSUMED_HEIGHT/2). The cutout extends downwards from the top face.",
+      "evidence": "Visible as a curved indentation at the top edge in the Top view."
+    },
+    {
+      "id": "bottom_notch",
+      "shape": "cylindrical_cutout",
+      "section": "circle",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "ASSUMED_NOTCH_RADIUS"
+      ],
+      "placement": "Centered at (0, 0, -ASSUMED_HEIGHT/2). The cutout extends upwards from the bottom face.",
+      "evidence": "Visible as a curved indentation at the bottom edge in the Top view."
+    },
+    {
+      "id": "central_hole",
+      "shape": "cylindrical_hole",
+      "section": "circle",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "ASSUMED_HOLE_RADIUS"
+      ],
+      "placement": "Centered at (0, 0, 0). The hole passes through the entire depth (Y-axis).",
+      "evidence": "Visible as a circle in the center of the Top view."
+    },
+    {
+      "id": "side_holes",
+      "shape": "rectangular_holes",
+      "section": "rectangle",
+      "axis_or_plane": "YZ",
+      "dimensions": [
+        "ASSUMED_SIDE_HOLE_WIDTH",
+        "ASSUMED_SIDE_HOLE_HEIGHT"
+      ],
+      "placement": "Five holes arranged vertically along the Y-axis on the right face (X = +ASSUMED_WIDTH/2). They are centered at Y = 0, with Z positions distributed along the height.",
+      "evidence": "Visible as five small rectangles in the Right view."
+    }
+  ],
+  "connections": [
+    "main_body is the base feature.",
+    "top_notch, bottom_notch, central_hole, and side_holes are subtractive features applied to main_body."
+  ],
+  "edit_rules": [
+    "Changing ASSUMED_WIDTH affects the width of main_body and the position of side_holes.",
+    "Changing ASSUMED_HEIGHT affects the height of main_body and the Z-positions of side_holes.",
+    "Changing ASSUMED_DEPTH affects the depth of main_body and the length of central_hole.",
+    "Changing ASSUMED_NOTCH_RADIUS affects the size of top_notch and bottom_notch.",
+    "Changing ASSUMED_HOLE_RADIUS affects the size of central_hole.",
+    "Changing ASSUMED_SIDE_HOLE_WIDTH or ASSUMED_SIDE_HOLE_HEIGHT affects the size of side_holes."
+  ],
+  "unresolved": [
+    "Exact dimensions for all features (width, depth, height, hole sizes, notch sizes) are missing from the drawing.",
+    "The exact vertical spacing and starting position of the five side holes are not dimensioned.",
+    "The depth of the top and bottom notches is not specified (assumed to be a simple cutout)."
+  ],
+  "clarification": {
+    "feature_id": "side_holes",
+    "feature_label": "Five rectangular holes on the right face",
+    "reason": "The drawing shows five holes but does not specify their exact vertical positions or spacing.",
+    "kind": "opening_extent"
+  }
+}

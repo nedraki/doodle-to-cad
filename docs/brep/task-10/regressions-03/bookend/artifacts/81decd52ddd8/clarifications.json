@@ -1,0 +1,24 @@
+[
+  {
+    "question": {
+      "feature_id": "opening_top_left",
+      "feature_label": "Top-left rectangular opening in the vertical wall",
+      "reason": "The drawing shows a rectangular outline in the Front view but does not indicate if this is a through-hole or a blind recess. The Right Side view does not show hidden lines for this feature.",
+      "kind": "opening_extent",
+      "id": "6741ed39f8fe40c382f98fa6bef2834d",
+      "text": "Should this hole go all the way through the part?",
+      "maximum_depth_mm": 120.0,
+      "choices": [
+        {
+          "id": "through",
+          "label": "Yes \u2014 make a through-hole"
+        },
+        {
+          "id": "recess",
+          "label": "No \u2014 leave a bottom"
+        }
+      ]
+    },
+    "status": "cancelled"
+  }
+]

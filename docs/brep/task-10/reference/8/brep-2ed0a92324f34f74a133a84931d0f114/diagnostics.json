@@ -1,0 +1,40 @@
+{
+  "backend": "usd-brep",
+  "version": "1.0.0",
+  "recipe_version": 2,
+  "solid_volume_mm3": 4455.92842676693,
+  "mesh_volume_mm3": 4451.085064521443,
+  "extents_mm": [
+    46.0,
+    37.99991226196289,
+    8.000000000693417
+  ],
+  "bounds_mm": [
+    [
+      0.0,
+      -1.8369701465288538e-16,
+      -6.934176011164084e-10
+    ],
+    [
+      46.0,
+      37.99991226196289,
+      8.0
+    ]
+  ],
+  "watertight": true,
+  "winding_consistent": true,
+  "euler_number": 2,
+  "triangles": 276,
+  "usd_roundtrip": true,
+  "volume_relative_accuracy": 1e-08,
+  "usd_volume_mm3": 4455.930248734059,
+  "operations": [
+    {
+      "id": "handle",
+      "kind": "sweep",
+      "faces": 12
+    }
+  ],
+  "connections": [],
+  "build_seconds": 0.719
+}

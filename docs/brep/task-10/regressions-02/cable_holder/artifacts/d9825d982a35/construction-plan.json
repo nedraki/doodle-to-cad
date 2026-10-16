@@ -1,0 +1,62 @@
+{
+  "view_frame": "The drawing presents three orthographic views in third-angle projection. The primary view (bottom-left) is the Front view, showing the X (width) and Z (height) axes. The view above it (top-center) is the Top view, showing the X (width) and Y (depth) axes. The view to the right (bottom-right) is the Right view, showing the Y (depth) and Z (height) axes. The object is a flat, elongated part with a constant thickness along the Y-axis.",
+  "features": [
+    {
+      "id": "main_body",
+      "shape": "extruded_profile",
+      "section": "constant_thickness",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "ASSUMED_thickness: 5mm",
+        "ASSUMED_length: 100mm",
+        "ASSUMED_width: 20mm"
+      ],
+      "placement": "Centered at origin (0,0,0). The profile lies in the XY plane. The extrusion is along the Z-axis. The profile outline is defined by the Top view: a rectangular base with a concave arc at the top edge and a convex arc at the bottom edge. The Right view confirms the constant thickness along the Y-axis.",
+      "evidence": "Top view shows the outline with curved ends. Right view shows a rectangular profile with holes, indicating constant thickness. Front view shows the side profile."
+    },
+    {
+      "id": "central_hole",
+      "shape": "cylinder",
+      "section": "circular",
+      "axis_or_plane": "Y",
+      "dimensions": [
+        "ASSUMED_diameter: 4mm"
+      ],
+      "placement": "Centered at (0, 0, 0) in the XY plane. The cylinder axis is parallel to the Y-axis, passing through the center of the main body.",
+      "evidence": "Top view shows a circular hole in the center. Right view shows a corresponding circular hole."
+    },
+    {
+      "id": "side_holes",
+      "shape": "cylinder",
+      "section": "circular",
+      "axis_or_plane": "Y",
+      "dimensions": [
+        "ASSUMED_diameter: 3mm",
+        "ASSUMED_spacing: 20mm"
+      ],
+      "placement": "Five holes arranged in a staggered pattern along the length of the part. The holes are centered on the Y-axis. The first hole is at (0, 0, 10), the second at (5, 0, 30), the third at (-5, 0, 50), the fourth at (5, 0, 70), and the fifth at (0, 0, 90).",
+      "evidence": "Right view shows five circular holes arranged in a staggered pattern. Top view does not show these holes, implying they are on the side faces."
+    }
+  ],
+  "connections": [
+    "The central hole is a through-hole along the Y-axis.",
+    "The side holes are through-holes along the Y-axis."
+  ],
+  "edit_rules": [
+    "Changing the thickness of the main body will affect the depth of all holes.",
+    "Changing the diameter of the central hole will affect its size in the Top and Right views.",
+    "Changing the diameter of the side holes will affect their size in the Right view.",
+    "Changing the spacing of the side holes will affect their positions in the Right view."
+  ],
+  "unresolved": [
+    "The exact dimensions of the main body (length, width, thickness) are not provided and are assumed.",
+    "The exact diameters of the holes are not provided and are assumed.",
+    "The exact spacing of the side holes is not provided and is assumed."
+  ],
+  "clarification": {
+    "feature_id": "side_holes",
+    "feature_label": "Side holes in the Right view",
+    "reason": "The drawing does not specify whether the side holes are through-holes or recesses.",
+    "kind": "opening_extent"
+  }
+}

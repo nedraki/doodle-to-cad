@@ -8,6 +8,7 @@ import re
 
 NAME = re.compile(r"^[A-Za-z][A-Za-z0-9_]{0,63}$")
 FIELDS = {
+    "sweep": {"origin", "plane", "frame_rule", "section_width", "section_height", "path"},
     "extrude": {"origin", "plane", "direction", "depth", "loops"},
     "box": {"origin", "size"},
     "cylinder": {"origin", "radius", "height", "axis"},
@@ -127,6 +128,12 @@ def validate_recipe(recipe, updates=None):
             raise ValueError("Pipe requires radius < bend_radius and angle ≤ 270°")
         if kind == "fillet" and op["selector"] not in ("all", "parallel_x", "parallel_y", "parallel_z"):
             raise ValueError("Fillet selector must be all or parallel_x/y/z")
+        if kind == 'sweep':
+            from .planar_sweep import resolve_sweep
+            try:
+                item.update(resolve_sweep(op,values,scalar))
+            except ValueError as exc:
+                raise ValueError(f"{op['id']}: {exc}") from exc
         if kind == 'extrude':
             if op['plane'] != 'xy' or type(op['direction']) is not int or op['direction'] not in (-1,1):
                 raise ValueError('Extrusion currently supports plane xy only and direction 1 or -1')

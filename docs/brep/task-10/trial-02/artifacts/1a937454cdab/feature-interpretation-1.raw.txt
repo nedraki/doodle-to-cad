@@ -1,0 +1,126 @@
+{
+  "version": 1,
+  "object_hypothesis": "Bent handle with a 180-degree arch and straight legs, featuring a rectangular cross-section.",
+  "features": [
+    {
+      "id": "arch_body",
+      "type": "body",
+      "description": "Curved arch section of the handle.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_7",
+          "region_id": "profile_contour_316"
+        }
+      ],
+      "reason": "Visible as the primary curved shape in the top view."
+    },
+    {
+      "id": "straight_legs",
+      "type": "body",
+      "description": "Two straight segments extending from the arch.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_7",
+          "region_id": "profile_contour_316"
+        }
+      ],
+      "reason": "Visible as the parallel vertical lines extending downwards in the top view."
+    },
+    {
+      "id": "rectangular_section",
+      "type": "profile",
+      "description": "Rectangular cross-section of the handle.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_8",
+          "region_id": "profile_contour_208"
+        }
+      ],
+      "reason": "Visible as a small rectangle in the right view, corresponding to the handle's thickness."
+    },
+    {
+      "id": "flat_ends",
+      "type": "body",
+      "description": "Termination points of the handle legs.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_7",
+          "region_id": "profile_contour_316"
+        }
+      ],
+      "reason": "Visible as the horizontal closing lines at the bottom of the legs in the top view."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "arch_leg_connection",
+      "type": "connected",
+      "features": [
+        "arch_body",
+        "straight_legs"
+      ],
+      "description": "The straight legs are continuous with the curved arch.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_7",
+          "region_id": "profile_contour_316"
+        }
+      ],
+      "reason": "The contour lines flow continuously from the curve to the straight sections without breaks."
+    },
+    {
+      "id": "section_consistency",
+      "type": "shared_dimension",
+      "features": [
+        "arch_body",
+        "straight_legs",
+        "rectangular_section"
+      ],
+      "description": "The rectangular section applies to the entire length of the handle.",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_7",
+          "region_id": "profile_contour_316"
+        },
+        {
+          "view_id": "view_8",
+          "region_id": "profile_contour_208"
+        }
+      ],
+      "reason": "The uniform width of the arch and legs in the top view implies a constant cross-section, supported by the single section view."
+    },
+    {
+      "id": "symmetry",
+      "type": "symmetry",
+      "features": [
+        "arch_body",
+        "straight_legs"
+      ],
+      "description": "The handle is symmetrical about a vertical axis.",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_7",
+          "region_id": "profile_contour_316"
+        }
+      ],
+      "reason": "The left and right sides of the arch and legs appear to be mirror images in the top view."
+    }
+  ],
+  "assumptions": [
+    "The object is a single solid part.",
+    "The cross-section is uniform throughout the entire length of the handle.",
+    "The bend is a perfect 180-degree semi-circle."
+  ],
+  "unresolved": [
+    "Exact material properties.",
+    "Surface finish details."
+  ],
+  "conflicts": []
+}

@@ -1,0 +1,57 @@
+I'll build this as a single rectangular-section sweep: two straight legs tangent to a 180° arc, with the section kept upright along Z.
+
+```json
+{
+  "version": 2,
+  "units": "mm",
+  "name": "bent_handle",
+  "parameters": {
+    "bend_radius": {"value": 20, "min": 10, "max": 60, "label": "Centreline radius", "unit": "mm", "description": "Centreline radius of the 180-degree bend (R20)."},
+    "leg_length": {"value": 15, "min": 5, "max": 60, "label": "Straight leg length", "unit": "mm", "description": "Length of each straight leg (15)."},
+    "section_width": {"value": 6, "min": 2, "max": 20, "label": "Section width", "unit": "mm", "description": "In-plane width of the rectangular section (6)."},
+    "section_height": {"value": 8, "min": 2, "max": 30, "label": "Section height", "unit": "mm", "description": "Z height of the rectangular section (8)."}
+  },
+  "operations": [
+    {
+      "id": "handle",
+      "kind": "sweep",
+      "origin": [0, 0, 0],
+      "plane": "xy",
+      "frame_rule": "normal_to_path_z_up",
+      "section_width": "section_width",
+      "section_height": "section_height",
+      "path": [
+        {"kind": "line", "start": [-20, 0], "end": [-20, 15]},
+        {"kind": "arc", "center": [0, 15], "radius": 20, "start_angle": 180, "end_angle": 360},
+        {"kind": "line", "start": [20, 15], "end": [20, 0]}
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": ["e1", "e2", "e3", "e4", "e5"]
+    }
+  ],
+  "output": "handle",
+  "frames": {
+    "world": {"origin": [0, 0, 0], "x": "width", "y": "depth", "z": "height"}
+  },
+  "bodies": [
+    {"id": "part", "output": "handle"}
+  ],
+  "evidence": {
+    "observed": [
+      {"id": "e1", "text": "TOP view shows a U-shaped path: two straight legs tangent to a 180-degree arch."},
+      {"id": "e2", "text": "Labels: 180 bend, Centreline radius R20, Inner R17, Outer R23, Overall width 46."},
+      {"id": "e3", "text": "END SECTION shows a rectangle 6 wide by 8 high (Z height)."},
+      {"id": "e4", "text": "Labels: Both straight ends 15 long; Same 6 x 8 section throughout; Flat ends, no holes; no rounding of section corners."}
+    ],
+    "inferred": [
+      {"id": "e5", "text": "Section remains upright along Z; the rectangular section centre follows the path at Z = section_height/2, so the bottom sits on the bed (Z=0)."}
+    ],
+    "assumptions": [
+      {"id": "a1", "text": "The part is a single connected solid swept from one continuous path (straight-arc-straight)."}
+    ],
+    "unresolved": []
+  },
+  "constraints": []
+}
+```

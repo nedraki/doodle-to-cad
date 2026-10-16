@@ -1,0 +1,69 @@
+{
+  "view_frame": "The drawing presents two views of a flat plate. The top view (primary) shows the XY plane outline. The bottom view shows the same XY plane outline with three internal circular features. The Z axis represents the thickness of the plate, perpendicular to the view plane.",
+  "features": [
+    {
+      "id": "plate_body",
+      "shape": "extruded_polygon",
+      "section": "rectangular",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "ASSUMED_thickness",
+        "ASSUMED_width",
+        "ASSUMED_height"
+      ],
+      "placement": "Centered at (0,0) in XY. Extents defined by the outer boundary loop.",
+      "evidence": "Outer rectangular boundary visible in both views."
+    },
+    {
+      "id": "hole_1",
+      "shape": "cylinder",
+      "section": "circular",
+      "axis_or_plane": "Z",
+      "dimensions": [
+        "ASSUMED_hole_diameter"
+      ],
+      "placement": "Located in the left third of the plate, vertically centered.",
+      "evidence": "Leftmost circular feature in the bottom view."
+    },
+    {
+      "id": "hole_2",
+      "shape": "cylinder",
+      "section": "circular",
+      "axis_or_plane": "Z",
+      "dimensions": [
+        "ASSUMED_hole_diameter"
+      ],
+      "placement": "Located in the center of the plate, vertically centered.",
+      "evidence": "Middle circular feature in the bottom view."
+    },
+    {
+      "id": "hole_3",
+      "shape": "cylinder",
+      "section": "circular",
+      "axis_or_plane": "Z",
+      "dimensions": [
+        "ASSUMED_hole_diameter"
+      ],
+      "placement": "Located in the right third of the plate, vertically centered.",
+      "evidence": "Rightmost circular feature in the bottom view."
+    }
+  ],
+  "connections": [
+    "hole_1, hole_2, and hole_3 are subtracted from plate_body."
+  ],
+  "edit_rules": [
+    "Changing ASSUMED_thickness scales the Z dimension of plate_body and the height of all holes.",
+    "Changing ASSUMED_width or ASSUMED_height scales the XY extents of plate_body.",
+    "Changing ASSUMED_hole_diameter scales the radius of all three holes."
+  ],
+  "unresolved": [
+    "The extent of the circular features (through-hole vs. recess) is not explicitly defined by a section view or label.",
+    "No dimensions are provided for the plate or holes; all dimensions are currently assumptions."
+  ],
+  "clarification": {
+    "feature_id": "hole_1",
+    "feature_label": "Leftmost circular feature",
+    "reason": "The drawing does not specify if the circular features are through-holes or blind recesses.",
+    "kind": "opening_extent"
+  }
+}

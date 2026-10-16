@@ -1,0 +1,158 @@
+```json
+{
+  "version": 1,
+  "object_hypothesis": "A flat, L-shaped plate or bracket containing four internal rectangular cutouts.",
+  "features": [
+    {
+      "id": "plate_body",
+      "type": "body",
+      "description": "The main structural component, appearing as a large rectangular face in the front view and an L-shaped profile in the right view.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_0"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_10"
+        }
+      ],
+      "reason": "The outer boundary in view_1 defines the face, while the outer boundary in view_2 defines the thickness and L-shaped cross-section."
+    },
+    {
+      "id": "cutout_top_left",
+      "type": "opening",
+      "description": "A roughly square internal contour located in the upper-left quadrant of the front view.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_8"
+        }
+      ],
+      "reason": "An internal closed loop detected within the main body boundary."
+    },
+    {
+      "id": "cutout_center",
+      "type": "opening",
+      "description": "A vertical rectangular internal contour located in the upper-central region of the front view.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_6"
+        }
+      ],
+      "reason": "An internal closed loop detected within the main body boundary."
+    },
+    {
+      "id": "cutout_bottom_left",
+      "type": "opening",
+      "description": "A vertical rectangular internal contour located in the lower-left region of the front view.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_4"
+        }
+      ],
+      "reason": "An internal closed loop detected within the main body boundary."
+    },
+    {
+      "id": "cutout_bottom_right",
+      "type": "opening",
+      "description": "A vertical rectangular internal contour located in the lower-right region of the front view.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_2"
+        }
+      ],
+      "reason": "An internal closed loop detected within the main body boundary."
+    },
+    {
+      "id": "l_profile",
+      "type": "profile",
+      "description": "The cross-sectional shape of the object, showing a vertical wall and a horizontal base.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_10"
+        }
+      ],
+      "reason": "The outer contour in the right view clearly depicts an L-shape."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "cutouts_in_plate",
+      "type": "position",
+      "features": [
+        "plate_body",
+        "cutout_top_left",
+        "cutout_center",
+        "cutout_bottom_left",
+        "cutout_bottom_right"
+      ],
+      "description": "The four internal contours are positioned within the boundaries of the main plate body.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_0"
+        },
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_8"
+        },
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_6"
+        },
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_4"
+        },
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_2"
+        }
+      ],
+      "reason": "Geometric containment of the internal regions within the outer region in the front view."
+    },
+    {
+      "id": "plate_profile",
+      "type": "other",
+      "features": [
+        "plate_body",
+        "l_profile"
+      ],
+      "description": "The plate body possesses the L-shaped cross-section defined in the right view.",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_0"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_10"
+        }
+      ],
+      "reason": "The right view provides the depth profile for the object shown in the front view."
+    }
+  ],
+  "assumptions": [
+    "The internal contours in the front view represent through-holes or cutouts, as is standard for this type of schematic.",
+    "The views are orthographic projections aligned with the X, Y, and Z axes."
+  ],
+  "unresolved": [
+    "The depth of the cutouts (whether they are through-holes or blind pockets) is not explicitly defined by the right view, which shows a uniform L-profile without internal lines.",
+    "The exact thickness of the vertical wall versus the horizontal base in the L-profile is not quantified."
+  ],
+  "conflicts": []
+}
+```

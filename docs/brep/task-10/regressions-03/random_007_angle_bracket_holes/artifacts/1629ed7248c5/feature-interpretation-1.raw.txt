@@ -1,0 +1,130 @@
+{
+  "version": 1,
+  "object_hypothesis": "Rectangular plate with three internal features",
+  "features": [
+    {
+      "id": "plate_body",
+      "type": "body",
+      "description": "Rectangular plate outline",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_8"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_0"
+        }
+      ],
+      "reason": "Outer contours in both views define the primary rectangular shape."
+    },
+    {
+      "id": "feature_left",
+      "type": "opening",
+      "description": "Left internal feature",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_2"
+        }
+      ],
+      "reason": "Internal contour detected in the front view."
+    },
+    {
+      "id": "feature_center",
+      "type": "opening",
+      "description": "Center internal feature",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_4"
+        }
+      ],
+      "reason": "Internal contour detected in the front view."
+    },
+    {
+      "id": "feature_right",
+      "type": "opening",
+      "description": "Right internal feature",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_6"
+        }
+      ],
+      "reason": "Internal contour detected in the front view."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "features_in_plate",
+      "type": "position",
+      "features": [
+        "plate_body",
+        "feature_left",
+        "feature_center",
+        "feature_right"
+      ],
+      "description": "Three features are positioned within the plate body",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_0"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_2"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_4"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_6"
+        }
+      ],
+      "reason": "Internal contours are spatially contained within the outer contour in the front view."
+    },
+    {
+      "id": "feature_alignment",
+      "type": "repeated",
+      "features": [
+        "feature_left",
+        "feature_center",
+        "feature_right"
+      ],
+      "description": "Three features arranged in a row",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_2"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_4"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_6"
+        }
+      ],
+      "reason": "The three internal features are aligned horizontally in the front view."
+    }
+  ],
+  "assumptions": [
+    "The object is a solid plate.",
+    "The internal features are through-holes or pockets."
+  ],
+  "unresolved": [
+    "Depth of internal features",
+    "Exact shape of internal features (circular vs polygonal)"
+  ],
+  "conflicts": []
+}

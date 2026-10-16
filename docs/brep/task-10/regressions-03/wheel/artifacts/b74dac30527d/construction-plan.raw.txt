@@ -1,0 +1,60 @@
+{
+  "view_frame": "Front view is XZ plane (X horizontal, Z vertical). Right view is YZ plane (Y depth, Z vertical). Top view (implied) is XY plane. The wheel axis is along Y.",
+  "features": [
+    {
+      "id": "rim",
+      "shape": "annulus",
+      "section": "rectangular",
+      "axis_or_plane": "Y",
+      "dimensions": [
+        "OD 120 mm",
+        "thickness 8 mm",
+        "ASSUMED rim width 10 mm"
+      ],
+      "placement": "Centered at (0,0,0). Outer radius 60 mm, inner radius 50 mm. Extends from Y=-4 to Y=4.",
+      "evidence": "Front view shows outer and inner circles. Text 'OD 120 mm; thickness 8 mm'."
+    },
+    {
+      "id": "hub",
+      "shape": "cylinder",
+      "section": "circular",
+      "axis_or_plane": "Y",
+      "dimensions": [
+        "ASSUMED hub diameter 30 mm",
+        "thickness 8 mm"
+      ],
+      "placement": "Centered at (0,0,0). Radius 15 mm. Extends from Y=-4 to Y=4.",
+      "evidence": "Front view shows central circle. Text 'thickness 8 mm'."
+    },
+    {
+      "id": "spokes",
+      "shape": "rectangular_prism",
+      "section": "rectangular",
+      "axis_or_plane": "radial in XZ",
+      "dimensions": [
+        "8 spokes",
+        "ASSUMED spoke width 8 mm",
+        "thickness 8 mm"
+      ],
+      "placement": "8 spokes radiating from hub to rim. Spoke 1 along +X axis. Spoke 2 at 45 deg. Spoke 3 along +Z axis. Spoke 4 at 135 deg. Spoke 5 along -X axis. Spoke 6 at 225 deg. Spoke 7 along -Z axis. Spoke 8 at 315 deg. Each spoke extends radially from r=15 to r=50. Extends from Y=-4 to Y=4.",
+      "evidence": "Front view shows 8 radial lines connecting hub and rim. Text '8 spokes'."
+    }
+  ],
+  "connections": [
+    "Spokes connect hub outer surface to rim inner surface.",
+    "Rim, hub, and spokes share the same Y-axis extent (thickness 8 mm)."
+  ],
+  "edit_rules": [
+    "Changing OD 120 mm updates rim outer radius and spoke outer endpoints.",
+    "Changing thickness 8 mm updates Y-axis extent of all features.",
+    "Changing spoke count updates angular spacing of spokes.",
+    "Changing ASSUMED rim width updates rim inner radius and spoke inner endpoints.",
+    "Changing ASSUMED hub diameter updates hub radius and spoke inner endpoints.",
+    "Changing ASSUMED spoke width updates spoke cross-section width."
+  ],
+  "unresolved": [
+    "Rim width (radial thickness) is not dimensioned.",
+    "Hub diameter is not dimensioned.",
+    "Spoke width is not dimensioned."
+  ]
+}

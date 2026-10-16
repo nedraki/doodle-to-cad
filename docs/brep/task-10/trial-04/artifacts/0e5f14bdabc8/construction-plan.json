@@ -1,0 +1,32 @@
+{
+  "view_frame": "The drawing provides a TOP view in the XY plane and an END SECTION view. The world axes are defined as X (width, horizontal in TOP), Y (depth, vertical in TOP), and Z (height, vertical in END SECTION). The part lies flat in the XY plane with its section height along Z.",
+  "features": [
+    {
+      "id": "handle_body",
+      "shape": "swept_path",
+      "section": "rectangle",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "6",
+        "8",
+        "R20",
+        "15",
+        "180"
+      ],
+      "placement": "The path consists of two straight segments and one 180-degree arc. The arc centre is at (0, 15). The arc spans from angle 180\u00b0 to 0\u00b0 (clockwise traversal). The left straight segment runs from (-20, 15) to (-20, 0). The right straight segment runs from (20, 15) to (20, 0). The section is a 6mm (width) x 8mm (height) rectangle, centred on the path and upright along Z.",
+      "evidence": "TOP view shows a U-shaped path with '180\u00b0 bend', 'Centreline radius R20', 'Both straight ends: 15 long'. END SECTION shows a rectangle '6' wide and '8 (Z height)' tall. Text states 'Same 6 x 8 section throughout' and 'Section remains upright along Z'."
+    }
+  ],
+  "connections": [
+    "The left straight segment connects tangentially to the arc at (-20, 15).",
+    "The right straight segment connects tangentially to the arc at (20, 15)."
+  ],
+  "edit_rules": [
+    "Changing the centreline radius (R20) moves the arc centre and the endpoints of the straight segments, preserving the overall width if the straight segments are also adjusted or if the width is derived.",
+    "Changing the straight length (15) moves the arc centre along Y, shifting the entire bend up or down.",
+    "Changing the section width (6) changes the inner and outer radii of the bend (R_inner = R_centre - w/2, R_outer = R_centre + w/2) but does not change the path centreline.",
+    "Changing the section height (8) changes the Z extent of the part but does not affect the XY path geometry."
+  ],
+  "unresolved": [],
+  "clarification": null
+}

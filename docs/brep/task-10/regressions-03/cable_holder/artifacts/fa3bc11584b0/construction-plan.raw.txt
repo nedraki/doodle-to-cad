@@ -1,0 +1,61 @@
+{
+ "view_frame": "The drawing presents three views of a flat, elongated part. The primary view is the Front view (bottom-left), showing the part's length (Z) and width (X). The Top view (bottom-right) shows the length (Z) and depth (Y), revealing the part's thickness and surface features. The Right view (top-center) shows the depth (Y) and height (Z), revealing the cross-sectional profile. The world axes are defined as X (width), Y (depth/thickness), and Z (height/length).",
+ "features": [
+  {
+   "id": "main_body",
+   "shape": "Extruded Profile",
+   "section": "Closed XY profile",
+   "axis_or_plane": "XY",
+   "dimensions": [
+    "Length: ~100mm (estimated from aspect ratio)",
+    "Width: ~15mm (estimated from aspect ratio)",
+    "Thickness: ASSUMED 3mm (uniform body thickness)",
+    "Top notch depth: ~2mm (estimated)",
+    "Top notch width: ~10mm (estimated)"
+   ],
+   "placement": "Centred at X=0, Y=0. Extends from Z=0 to Z=100. The profile is defined in the XY plane at Z=0 and extruded along Z.",
+   "evidence": "The Front view shows a long rectangular body with a notch at the top. The Right view confirms the notch and the overall thickness. The Top view shows the rectangular footprint."
+  },
+  {
+   "id": "central_hole",
+   "shape": "Circular Hole",
+   "section": "Circle",
+   "axis_or_plane": "XY",
+   "dimensions": [
+    "Diameter: ~4mm (estimated from aspect ratio)",
+    "Position: Centred in X, located at Z=80 (estimated from aspect ratio)"
+   ],
+   "placement": "Centred at X=0, Y=0. Located at Z=80. The hole axis is along Y.",
+   "evidence": "The Right view shows a circular hole in the upper section of the part. The Top view shows the hole as a small rectangle (representing the through-hole in the thin section)."
+  },
+  {
+   "id": "surface_slots",
+   "shape": "Rectangular Slots",
+   "section": "Rectangle",
+   "axis_or_plane": "XY",
+   "dimensions": [
+    "Slot width: ~2mm (estimated)",
+    "Slot length: ~4mm (estimated)",
+    "Spacing: ~15mm (estimated)",
+    "Count: 5"
+   ],
+   "placement": "Centred in X. Located at Z=10, 25, 40, 55, 70. The slots are through-holes along Y.",
+   "evidence": "The Top view shows five rectangular features arranged in a line along the length of the part. The Front view shows corresponding breaks in the outline, confirming they are through-features."
+  }
+ ],
+ "connections": [
+  "The central hole is located within the main body.",
+  "The surface slots are located within the main body."
+ ],
+ "edit_rules": [
+  "Changing the main body length will move the slots and the central hole proportionally if they are constrained to the ends.",
+  "Changing the main body width will move the slots and the central hole proportionally if they are constrained to the sides.",
+  "Changing the thickness will affect the depth of the slots and the hole.",
+  "Changing the slot dimensions will affect the spacing and the overall length of the part if constrained."
+ ],
+ "unresolved": [
+  "The exact dimensions of the part are not provided and are estimated from the aspect ratio.",
+  "The exact position of the central hole and the slots are not provided and are estimated from the aspect ratio.",
+  "The exact depth of the top notch is not provided and is estimated from the aspect ratio."
+ ]
+}
