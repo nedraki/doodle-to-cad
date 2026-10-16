@@ -33,7 +33,7 @@ def test_native_rectangular_sweep_and_height_edit(tmp_path,height):
  assert b.backend_details['solid_volume_mm3']==pytest.approx(6*height*(30+20*math.pi),rel=1e-5)
 
 @pytest.mark.skipif(not os.getenv('DOODLE_BREP_PYTHON'),reason='Worker not configured')
-@pytest.mark.parametrize('start_angle',[0,45,90])
+@pytest.mark.parametrize('start_angle',[0,45,90,315])
 def test_quarter_bend_keeps_rectangular_frame(tmp_path,start_angle):
  r=recipe();o=r['operations'][0];o['path']=[{'kind':'arc','center':[23,23],'radius':20,'start_angle':start_angle,'end_angle':start_angle+90}]
  p=tmp_path/'recipe.json';p.write_text(json.dumps(r));b=build_brep(BuildInput('usd-brep',p,tmp_path,render=False))

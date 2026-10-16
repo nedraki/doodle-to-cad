@@ -1,0 +1,257 @@
+create_skin_primitive create_skin_primitive(curves_per_profile: List[int], curves: List[usd_brep._omni_solid.Curve], degree: int = 1, cap_ends: bool = True) -> usd_brep._omni_solid.Brep
+
+Pure: returns new Brep; inputs unchanged.
+Create a lofted solid (skin) from a set of cross-section profile curves.
+
+Args:
+    curves_per_profile: Number of curves in each cross-section profile.
+        At least two positive counts are required, and
+        ``sum(curves_per_profile)`` must equal ``len(curves)``.
+    curves: All profile curve segments concatenated, in profile order.
+    degree: Degree in the loft direction. ``1`` = linear (default),
+        ``2`` = quadratic, ``3`` = cubic. Must be 1, 2, or 3.
+    cap_ends: If ``True`` (default), cap the first and last profiles
+        to close the solid. Intermediate profiles guide the loft and do
+        not create transverse faces.
+
+Returns:
+    Brep: lofted solid.
+
+Notes:
+    Input Curves remain valid and unchanged after both successful and failed calls.
+    Planar profiles may contain matching outer and inner loops.
+
+See Also:
+    create_skin_from_faces: Loft between boundary loops of existing faces.
+    create_swung_primitive: Surface of revolution from XY/XZ profiles.
+
+Wraps: SmApiCreateSkinPrimitive
+
+create_skin_surface create_skin_surface(profiles: List[usd_brep._omni_solid.BSplineCurve]) -> usd_brep._omni_solid.Surface
+
+Create a lofted (skinned) surface through a sequence of profile curves.
+
+Args:
+    profiles: Ordered list of B-spline profile curves. Must contain at
+        least two profiles.
+
+Returns:
+    Surface: lofted surface passing through every profile.
+
+Notes:
+    Best results require compatible parameterizations across all
+    profiles. If they differ, call ``make_curves_compatible`` first.
+
+See Also:
+    create_ruled_surface: Two-curve case (linear ruling).
+    make_curves_compatible: Reparameterize profiles to share knots.
+
+Wraps: SmApiCreateSkin
+
+create_blend_primitive create_blend_primitive(brep: usd_brep._omni_solid.Brep, edge1: usd_brep._omni_solid.Edge, face1: usd_brep._omni_solid.Face, edge2: usd_brep._omni_solid.Edge, face2: usd_brep._omni_solid.Face, same_dir_curves: bool = True) -> usd_brep._omni_solid.Face
+
+Create a G2 blend surface between two boundary edges on existing faces.
+
+Args:
+    brep: Brep that will own the resulting blend face.
+    edge1: First boundary edge on ``face1``.
+    face1: Target surface at the start of the blend.
+    edge2: Second boundary edge on ``face2``.
+    face2: Target surface at the end of the blend.
+    same_dir_curves: If ``True`` (default), blend between the start of
+        ``edge1``'s curve and the start of ``edge2``'s curve. If ``False``,
+        blend from the start of ``edge1``'s curve to the end of ``edge2``'s
+        curve.
+
+Returns:
+    Face: resulting blend face inserted into ``brep``.
+
+Notes:
+    "Blend" here means a continuity-controlled connecting patch (G2 by
+    default in the kernel), distinct from edge-rounding fillets in the
+    ``fillet_*`` family. Obtain ``edge`` and ``face`` handles from stable
+    topology queries (``brep.faces()``, ``face.edges()``, ``edge.faces()``).
+
+Wraps: SmApiCreateBlendPrimitive
+
+create_swung_primitive create_swung_primitive(xy_curves: List[usd_brep._omni_solid.Curve], xz_curves: List[usd_brep._omni_solid.Curve], scale: float = 1.0) -> usd_brep._omni_solid.Brep
+
+Create a swung solid from XY and XZ profile curves.
+
+Args:
+    xy_curves: Curves defining the XY profile.
+    xz_curves: Curves defining the XZ profile.
+    scale: Scale factor (default 1.0). Must be positive.
+
+Returns:
+    Brep: swung solid.
+
+See Also:
+    create_skin_primitive: Lofted solid from cross-section profile curves.
+
+Wraps: SmApiCreateSwungPrimitive
+
+create_planar_faces create_planar_faces(curves: List[usd_brep._omni_solid.Curve]) -> usd_brep._omni_solid.Brep
+
+Consumes: curves; returns new Brep.
+
+Build a sheet-body Brep made of planar faces from one or more closed
+planar curve loops.
+
+Args:
+    curves: Coplanar curves forming one or more closed loops. Curves
+        may be supplied in any order and any orientation, but they
+        must not intersect each other and each endpoint must be
+        coincident with exactly one other endpoint. Consumed on
+        success: the new faces use them, so do not reuse them.
+        On failure, the curves remain owned by the caller.
+
+Returns:
+    Brep: sheet-body Brep whose faces are the planar regions bounded
+    by the input loops.
+
+Notes:
+    The plane of the result is inferred from the input curves; do not
+    pass a plane normal. Multiple coplanar loops produce one face per
+    loop (or with-holes faces if loops nest), all packed into a single
+    Brep. Returns a sheet body (open shell), not a manifold solid -
+    use ``linear_sweep`` to extrude into a solid.
+
+See Also:
+    create_plane: Single-rectangle planar sheet.
+    linear_sweep: Solid extrusion of a closed profile.
+
+Wraps: SmApiCreatePlanarFaces
+
+create_curve create_curve(points: List[tuple]) -> usd_brep._omni_solid.Curve
+
+Create a B-spline curve from a sequence of control points.
+
+Args:
+    points: Ordered list of control points ``(x, y, z)``. Must contain
+        at least four points.
+
+Returns:
+    Curve: B-spline curve approximating the control polygon.
+
+Notes:
+    The result is degree 3 (cubic) with knots spanning ``[0, 1]``;
+    the interior knots are not evenly spaced. The curve approximates the
+    control points but is not guaranteed to pass through them.
+
+See Also:
+    create_canonical_curve: Full B-spline spec with explicit knots,
+        weights, degree, and form.
+    create_curve_approx_points: Fit (approximate) a curve to points.
+    create_curve_interp_points: Interpolate (pass through) points.
+
+Wraps: SmApiCreateCurve
+
+create_circle create_circle(center: tuple, radius: float) -> usd_brep._omni_solid.Circle
+
+Create an analytic circle in the XY plane.
+
+Args:
+    center: Center of the circle as ``(x, y, z)``. Each coordinate must
+        be a valid double in ``[-1e18, 1e18]``. The circle lies in the
+        plane Z = ``center.z``.
+    radius: Radius of the circle. Must be a valid double in
+        ``[-1e18, 1e18]`` and greater than ``SM_EFF_ZERO`` (1e-12).
+        An out-of-range ``center``/``radius``, a ``radius`` at or below
+        1e-12, or a center whose magnitude dwarfs the radius so the
+        extents collapse in double precision (e.g. ``center=(1e18,0,0)``
+        with ``radius=1``) raises ``RuntimeError``
+        (``SM_ERR_INVALID_INPUT``).
+
+Returns:
+    Circle: closed analytic circle. It is a ``BSplineCurve`` (so it
+        works anywhere a curve is accepted) and additionally exposes
+        ``center()``, ``radius()``, ``normal()``, ``x_axis()``, and
+        ``y_axis()``.
+
+Notes:
+    The circle is constructed in the world XY plane and translated to
+    ``center`` (``x_axis`` = +X, ``y_axis`` = +Y, ``normal`` = +Z).
+    For circles in non-axis-aligned planes use the C-API overload
+    that takes an explicit axis placement (not currently bound).
+
+See Also:
+    create_arc: Open circular arc with start/end angles.
+    create_ellipse: Ellipse with two principal radii.
+
+Wraps: SmApiCreateCircle
+
+create_skin_from_faces create_skin_from_faces(faces: List[usd_brep._omni_solid.Face], degree: int = 1) -> tuple
+
+Create a lofted solid between matching loops on a sequence of faces.
+
+Args:
+    faces: Sequence of faces whose boundary loops should be lofted between.
+    degree: Degree in the loft direction. ``1`` = linear (default),
+        ``2`` = quadratic, ``3`` = cubic. Must be 1, 2, or 3.
+
+Returns:
+    tuple: ``(new_faces, brep)`` where ``new_faces`` is the list of
+    resulting lofted faces and ``brep`` is the lofted solid.
+
+See Also:
+    create_skin_primitive: Loft from raw cross-section curves instead of faces.
+
+Wraps: SmApiCreateSkinFromFaces
+
+make_curves_compatible make_curves_compatible(curves: List[usd_brep._omni_solid.BSplineCurve]) -> None
+
+Reparameterize a list of B-spline curves to share a compatible knot vector.
+
+Args:
+    curves: B-spline curves to make compatible. Must contain at least
+        two curves. The curves are modified in place, one at a time,
+        so a failure can leave some of them already modified.
+
+Notes:
+    Required before operations that need aligned parameterizations
+    across curves, e.g. skinning (``create_skin_surface``) and ruled
+    surfaces (``create_ruled_surface``). The original curve handles
+    are preserved but their internal knot vectors are rewritten.
+
+See Also:
+    create_skin_surface: Lofted surface across multiple compatible
+        curves.
+    create_ruled_surface: Linear ruling between two compatible
+        curves.
+
+Wraps: SmApiMakeCurvesCompatible
+
+stitch_into_solid stitch_into_solid(brep: usd_brep._omni_solid.Brep) -> tuple
+
+Mutates: brep; returns (brep, is_solid, stitched_edges, max_vertex_gap, max_edge_gap).
+
+Stitch a Brep aiming for a manifold solid result.
+
+Args:
+    brep: Brep to stitch in place. Typically a collection of loose
+        faces from an import.
+
+Returns:
+    tuple[Brep, bool, int, float, float]: ``(brep, is_solid,
+    stitched_edges, max_vertex_gap, max_edge_gap)`` where
+    ``is_solid`` is ``True`` only if every edge ended up shared by
+    exactly two faces. The first element is the same brep handle
+    (for chaining).
+
+Notes:
+    Uses the kernel default tolerance. If ``is_solid`` is ``False``
+    the gap values tell you how much room the unstitched edges
+    needed - either widen tolerance with ``stitch_into_shell`` or
+    diagnose the geometry directly. Common failure causes: gaps
+    larger than tolerance, overlapping faces, or non-manifold
+    topology (more than two faces sharing an edge).
+
+See Also:
+    stitch_into_shell: Looser tolerance variant.
+    stitch_advanced: Per-flag control over the stitch.
+    is_manifold_solid: Final validation check after stitching.
+    unify_normals: Make face normals consistent post-stitch.
+
+Wraps: SmApiStitchIntoSolid
+

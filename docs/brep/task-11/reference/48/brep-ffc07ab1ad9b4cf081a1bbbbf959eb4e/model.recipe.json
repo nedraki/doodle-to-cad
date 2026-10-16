@@ -1,0 +1,75 @@
+{
+  "version": 2,
+  "units": "mm",
+  "name": "transition",
+  "parameters": {
+    "rectangle_width": {
+      "value": 48.0,
+      "min": 20,
+      "max": 50
+    },
+    "length": {
+      "value": 50.0,
+      "min": 20,
+      "max": 80
+    }
+  },
+  "operations": [
+    {
+      "id": "transition",
+      "kind": "loft",
+      "plane": "xy",
+      "correspondence": "rectangle_corners_to_circle_diagonals",
+      "profiles": [
+        {
+          "shape": "rectangle",
+          "center": [
+            0,
+            0,
+            0
+          ],
+          "width": "rectangle_width",
+          "height": 30
+        },
+        {
+          "shape": "circle",
+          "center": [
+            0,
+            0,
+            "length"
+          ],
+          "radius": 10
+        }
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": []
+    }
+  ],
+  "output": "transition",
+  "frames": {
+    "world": {
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    }
+  },
+  "bodies": [
+    {
+      "id": "part",
+      "output": "transition"
+    }
+  ],
+  "evidence": {
+    "observed": [],
+    "inferred": [],
+    "assumptions": [],
+    "unresolved": []
+  },
+  "constraints": []
+}

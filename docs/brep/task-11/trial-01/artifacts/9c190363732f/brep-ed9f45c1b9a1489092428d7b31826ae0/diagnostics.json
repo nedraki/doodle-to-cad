@@ -1,0 +1,40 @@
+{
+  "backend": "usd-brep",
+  "version": "1.0.0",
+  "recipe_version": 2,
+  "solid_volume_mm3": 40885.53344099346,
+  "mesh_volume_mm3": 40873.53105991438,
+  "extents_mm": [
+    48.0,
+    30.0,
+    50.0
+  ],
+  "bounds_mm": [
+    [
+      -24.0,
+      -15.0,
+      0.0
+    ],
+    [
+      24.0,
+      15.0,
+      50.0
+    ]
+  ],
+  "watertight": true,
+  "winding_consistent": true,
+  "euler_number": 2,
+  "triangles": 6040,
+  "usd_roundtrip": true,
+  "volume_relative_accuracy": 1e-08,
+  "usd_volume_mm3": 40885.53344099347,
+  "operations": [
+    {
+      "id": "transition",
+      "kind": "loft",
+      "faces": 6
+    }
+  ],
+  "connections": [],
+  "build_seconds": 0.357
+}

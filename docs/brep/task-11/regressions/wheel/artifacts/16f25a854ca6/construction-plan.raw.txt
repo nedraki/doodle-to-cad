@@ -1,0 +1,40 @@
+```json
+{
+  "view_frame": "Front view (XZ) displays the wheel face with X as width and Z as height. Right view (YZ) displays the wheel thickness with Y as depth and Z as height. The wheel is centered at the origin (0,0,0).",
+  "features": [
+    {
+      "id": "wheel_body",
+      "shape": "Revolved solid (Torus-like rim with central hub and radial spokes)",
+      "section": "Rectangular cross-section (8mm thickness)",
+      "axis_or_plane": "YZ plane (extrusion along Y)",
+      "dimensions": [
+        "OD 120 mm",
+        "thickness 8 mm",
+        "8 spokes",
+        "ASSUMED rim_width 10 mm",
+        "ASSUMED hub_diameter 30 mm",
+        "ASSUMED spoke_width 8 mm"
+      ],
+      "placement": "Centered at (0,0,0). Extends from Y=-4 to Y=4. Outer radius 60mm. Inner radius 50mm (rim). Hub radius 15mm. Spokes connect hub to rim.",
+      "evidence": "Front view shows concentric circles and 8 radial lines. Right view shows a single rectangle. Text labels 'OD 120 mm; thickness 8 mm; 8 spokes'."
+    }
+  ],
+  "connections": [
+    "Rim, hub, and spokes are a single continuous solid.",
+    "Spokes are tangent to the hub and rim inner surfaces."
+  ],
+  "edit_rules": [
+    "Changing OD updates the outer radius of the rim.",
+    "Changing thickness updates the Y-dimension of the entire body.",
+    "Changing spoke count updates the angular spacing of the spokes.",
+    "Changing rim_width updates the inner radius of the rim (OD - 2*rim_width).",
+    "Changing hub_diameter updates the inner radius of the hub."
+  ],
+  "unresolved": [
+    "Rim width (radial thickness of the outer ring) is not dimensioned.",
+    "Hub diameter is not dimensioned.",
+    "Spoke width is not dimensioned."
+  ],
+  "clarification": null
+}
+```

@@ -1,0 +1,61 @@
+```json
+{
+  "view_frame": "The drawing presents three views in a third-angle projection layout. The primary view (top-left) is the Front view, showing the X (width) and Z (height) axes. The view below it (bottom-left) is the Top view, showing the X (width) and Y (depth) axes. The view to the right (bottom-right) is the Right Side view, showing the Y (depth) and Z (height) axes. The object is a flat plate with a varying thickness profile.",
+  "features": [
+    {
+      "id": "main_body",
+      "shape": "Extruded Profile",
+      "section": "Closed XY Profile",
+      "axis_or_plane": "XY Plane",
+      "dimensions": [
+        "ASSUMED: Uniform thickness (Y-depth) of 10mm",
+        "ASSUMED: Overall Width (X) of 100mm",
+        "ASSUMED: Overall Height (Z) of 100mm"
+      ],
+      "placement": "Centered at origin (0,0,0). The profile is defined in the XY plane and extruded along the Z axis. The profile shape corresponds to the outline seen in the Front view (top-left).",
+      "evidence": "The top-left view shows a closed loop with a vertical right edge, a horizontal bottom edge, a diagonal bottom-left edge, a horizontal shelf, a curved inner cutout, and a chamfered top-left corner. The bottom-left view confirms the object is a flat plate with a wedge-like thickness profile."
+    },
+    {
+      "id": "hole_top",
+      "shape": "Cylinder",
+      "section": "Circle",
+      "axis_or_plane": "Z Axis",
+      "dimensions": [
+        "ASSUMED: Diameter 10mm"
+      ],
+      "placement": "Located in the upper vertical section of the main body. Coordinates (X, Y) are estimated based on the visual center of the upper mass in the Front view.",
+      "evidence": "A circular feature is visible in the upper right quadrant of the Front view (top-left). It is represented as a circle in the Right Side view (bottom-right), confirming it is a through-hole along the Z axis."
+    },
+    {
+      "id": "hole_shelf",
+      "shape": "Cylinder",
+      "section": "Circle",
+      "axis_or_plane": "Z Axis",
+      "dimensions": [
+        "ASSUMED: Diameter 10mm"
+      ],
+      "placement": "Located on the horizontal shelf section of the main body. Coordinates (X, Y) are estimated based on the visual center of the shelf in the Front view.",
+      "evidence": "A circular feature is visible on the left protruding shelf in the Front view (top-left). It is represented as a circle in the Right Side view (bottom-right), confirming it is a through-hole along the Z axis."
+    }
+  ],
+  "connections": [
+    "The two holes (hole_top, hole_shelf) are subtractive features within the main_body.",
+    "The Top view (bottom-left) and Right Side view (bottom-right) are orthographic projections of the main_body and holes."
+  ],
+  "edit_rules": [
+    "Changing the overall thickness (Y-depth) in the Top view must update the extrusion depth of the main_body.",
+    "Changing the position of a hole in the Front view must update the (X, Y) coordinates of the corresponding cylinder feature.",
+    "Changing the diameter of a hole must update the radius of the corresponding cylinder feature."
+  ],
+  "unresolved": [
+    "The exact dimensions (width, height, thickness, hole diameters) are not provided in the drawing and are currently set as assumptions.",
+    "The specific curvature of the inner cutout in the Front view is approximated; precise control points or radius are missing."
+  ],
+  "clarification": {
+    "feature_id": "main_body",
+    "feature_label": "Main Body Thickness",
+    "reason": "The Top view shows a wedge shape, but the Right Side view shows a uniform rectangle. This is a conflict in the drawing's projection logic. The Top view suggests varying thickness, while the Side view suggests constant thickness. The current plan assumes constant thickness based on the Side view, but this contradicts the Top view.",
+    "kind": "opening_extent"
+  }
+}
+```
