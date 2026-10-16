@@ -23,7 +23,7 @@ def test_wait_answer_bounds_stale_and_saved_evidence(tmp_path):
             waiting=asyncio.create_task(ask_opening(job,tmp_path,PLAN['clarification'],40,history))
             await asyncio.sleep(.1) # Human thinking does not consume preparation timeout.
             q=job['question'];assert not timer.expired()
-            for payload,status in [({'question_id':'stale','choice':'through'},409),({'question_id':q['id'],'choice':'recess','depth_mm':0},422),({'question_id':q['id'],'choice':'recess','depth_mm':float('nan')},422),({'question_id':q['id'],'choice':'recess','depth_mm':True},422),({'question_id':q['id'],'choice':'recess'},422)]:
+            for payload,status in [({'question_id':q['id'],'choice':[]},422),({'question_id':'stale','choice':'through'},409),({'question_id':q['id'],'choice':'recess','depth_mm':0},422),({'question_id':q['id'],'choice':'recess','depth_mm':float('nan')},422),({'question_id':q['id'],'choice':'recess','depth_mm':True},422),({'question_id':q['id'],'choice':'recess'},422)]:
                 with pytest.raises(HTTPException) as error:accept_answer(job,payload)
                 assert error.value.status_code==status and not waiting.done()
             payload={'question_id':q['id'],'choice':'recess','depth_mm':5}

@@ -16,7 +16,7 @@ def accept_answer(job, payload):
     if payload.get('question_id')!=question['id']:
         raise HTTPException(409, 'This answer belongs to a different question.')
     choice=payload.get('choice')
-    if choice not in {'through','recess'}:raise HTTPException(422, 'Choose through-hole or recess.')
+    if not isinstance(choice,str) or choice not in {'through','recess'}:raise HTTPException(422, 'Choose through-hole or recess.')
     answer={'question_id':question['id'],'feature_id':question['feature_id'],'choice':choice}
     if choice=='recess':
         depth=payload.get('depth_mm')
