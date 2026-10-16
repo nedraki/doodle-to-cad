@@ -65,3 +65,14 @@ def test_arc_intersections_and_complexity_are_rejected(failure):
         o['loops'][1]=[{'kind':'arc','center':[12,15],'radius':4,'start_angle':0,'end_angle':180},{'kind':'arc','center':[12,15],'radius':4,'start_angle':180,'end_angle':360}]
     if failure=='too_many_edges':o['loops'][0]*=20
     with pytest.raises(ValueError):validate_recipe(r)
+
+
+@pytest.mark.skipif(not os.getenv('DOODLE_BREP_PYTHON'),reason='Worker not configured')
+def test_periodic_arc_angles_keep_the_same_profile(tmp_path):
+    r=recipe();arc=r['operations'][0]['loops'][0][2]
+    arc['start_angle']+=360;arc['end_angle']+=360
+    path=tmp_path/'recipe.json';path.write_text(json.dumps(r))
+    result=build_brep(BuildInput('usd-brep',path,tmp_path,render=False))
+    assert result.ok,result.log
+    from scripts.check_profile_product import measure
+    assert measure(result.stl,6)['passed']

@@ -1,0 +1,64 @@
+{
+  "view_frame": "The drawing presents three orthographic views in third-angle projection. The Front view (bottom-left) shows the XZ plane (Width vs Height). The Top view (top-center) shows the XY plane (Width vs Depth). The Right view (bottom-right) shows the YZ plane (Depth vs Height). The object is a flat plate with a constant thickness (Y-axis) and a complex profile in the XZ plane.",
+  "features": [
+    {
+      "id": "main_body",
+      "shape": "extrusion",
+      "section": "closed_profile",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "ASSUMED: thickness_mm",
+        "ASSUMED: overall_height_mm",
+        "ASSUMED: overall_width_mm"
+      ],
+      "placement": "Extrude the profile defined in the Front view along the Y-axis (Depth) by thickness_mm. The profile is centered on X=0 and extends from Z=0 to Z=overall_height_mm.",
+      "evidence": "The Front view shows a continuous outline with a forked bottom (two prongs) and a curved top (concave). The Top view confirms a uniform thickness."
+    },
+    {
+      "id": "center_hole",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "ASSUMED: hole_diameter_mm",
+        "ASSUMED: hole_center_height_mm"
+      ],
+      "placement": "A circular cutout centered at X=0, Z=hole_center_height_mm, extending through the full thickness (Y-axis).",
+      "evidence": "A circular shape is visible in the center of the Front view. The Right view shows corresponding hidden lines (implied by the holes) or simply the presence of the hole in the profile."
+    },
+    {
+      "id": "side_slots",
+      "shape": "box",
+      "section": "rectangle",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "ASSUMED: slot_width_mm",
+        "ASSUMED: slot_height_mm",
+        "ASSUMED: slot_count",
+        "ASSUMED: slot_spacing_mm"
+      ],
+      "placement": "A series of rectangular cutouts arranged in a staggered pattern along the length of the part. The Right view shows 5 distinct rectangular openings.",
+      "evidence": "The Right view displays 5 rectangular shapes arranged vertically. The Front view does not explicitly show these as through-holes (no hidden lines drawn), but the Right view confirms their presence on the face."
+    }
+  ],
+  "connections": [
+    "The main_body is the base solid.",
+    "The center_hole is subtracted from the main_body.",
+    "The side_slots are subtracted from the main_body."
+  ],
+  "edit_rules": [
+    "Changing overall_height_mm must scale the vertical positions of the center_hole and side_slots proportionally.",
+    "Changing thickness_mm affects the extrusion depth but not the profile shape.",
+    "Changing hole_diameter_mm must maintain the hole within the bounds of the main_body profile."
+  ],
+  "unresolved": [
+    "The extent of the side_slots (through-hole vs. recess) is not explicitly defined. The Right view shows them as outlines, but the Front view lacks hidden lines to confirm they go all the way through. However, given the '3D print' context and typical part design, they are likely through-holes. If they are recesses, the depth is unknown.",
+    "The exact dimensions (height, width, thickness, hole size) are missing and must be assumed or provided."
+  ],
+  "clarification": {
+    "feature_id": "side_slots",
+    "feature_label": "Rectangular openings on the face",
+    "reason": "The drawing shows the openings in the Right view but does not show hidden lines in the Front view to confirm if they are through-holes or blind pockets.",
+    "kind": "opening_extent"
+  }
+}

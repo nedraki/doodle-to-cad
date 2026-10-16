@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/tmp/doodle-brep-28/scripts/probe_loft_kernel.py", line 8, in <module>
+    circle=[sm.create_arc((0,0,50),10,a,a+90) for a in [45,135,225,315]]
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: SmApiCreateArc failed: SM_ERR_INVALID_INPUT (1007) at SmPyCurves.cpp:78

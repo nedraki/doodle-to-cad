@@ -1,0 +1,24 @@
+[
+  {
+    "question": {
+      "feature_id": "main_body",
+      "feature_label": "Main Body Thickness",
+      "reason": "The Top view shows a wedge shape, but the Right Side view shows a uniform rectangle. This is a conflict in the drawing's projection logic. The Top view suggests varying thickness, while the Side view suggests constant thickness. The current plan assumes constant thickness based on the Side view, but this contradicts the Top view.",
+      "kind": "opening_extent",
+      "id": "17f709ed50f5432c94ad1d624bff7e20",
+      "text": "Should this hole go all the way through the part?",
+      "maximum_depth_mm": 120.0,
+      "choices": [
+        {
+          "id": "through",
+          "label": "Yes \u2014 make a through-hole"
+        },
+        {
+          "id": "recess",
+          "label": "No \u2014 leave a bottom"
+        }
+      ]
+    },
+    "status": "cancelled"
+  }
+]

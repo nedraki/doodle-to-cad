@@ -1,0 +1,53 @@
+{
+  "run_id": "9c190363732f",
+  "params": [
+    {
+      "name": "base_width",
+      "value": 40,
+      "low": 10,
+      "high": 100,
+      "step": 0.01,
+      "label": "Base Width",
+      "unit": "mm",
+      "description": "Width of the rectangular base along X",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "base_depth",
+      "value": 30,
+      "low": 10,
+      "high": 100,
+      "step": 0.01,
+      "label": "Base Depth",
+      "unit": "mm",
+      "description": "Depth of the rectangular base along Y",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "top_diameter",
+      "value": 20,
+      "low": 5,
+      "high": 100,
+      "step": 0.01,
+      "label": "Top Diameter",
+      "unit": "mm",
+      "description": "Diameter of the circular top",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "height",
+      "value": 50,
+      "low": 10,
+      "high": 200,
+      "step": 0.01,
+      "label": "Height",
+      "unit": "mm",
+      "description": "Total height of the transition piece along Z",
+      "group": "Details",
+      "feature": null
+    }
+  ]
+}

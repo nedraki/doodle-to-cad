@@ -12,6 +12,13 @@ from doodle_to_cad.brep_recipe import validate_recipe
 from doodle_to_cad.build_contract import BuildError
 
 
+def arc_curve(sm, center, radius, start, end):
+    """Keep periodic angles in the kernel range without changing the arc."""
+    sweep=end-start
+    normalized_end=end % 360 or 360
+    return sm.create_arc(center,radius,normalized_end-sweep,normalized_end)
+
+
 def build(source, output):
     started = time.monotonic()
     if sys.version_info[:2] != (3, 12) or version("usd-brep") != "1.0.0":
@@ -24,7 +31,16 @@ def build(source, output):
     bodies, history = {}, []
     for op in operations:
         kind = op["kind"]
-        if kind == 'sweep':
+        if kind == 'loft':
+            rectangle,circle=op['profiles'];x,y,z=rectangle['center'];w,h=rectangle['width']/2,rectangle['height']/2
+            points=[(x+w,y+h,z),(x-w,y+h,z),(x-w,y-h,z),(x+w,y-h,z),(x+w,y+h,z)]
+            curves=[sm.create_line_segment(a,b) for a,b in zip(points,points[1:])]
+            curves += [arc_curve(sm,tuple(circle['center']),circle['radius'],angle,angle+90) for angle in [45,135,225,315]]
+            try:
+                body=sm.create_skin_primitive([4,4],curves,degree=1,cap_ends=True)
+            except Exception as exc:
+                raise ValueError(f"{op['id']}: rectangular-to-round loft failed: {exc}") from exc
+        elif kind == 'sweep':
             from doodle_to_cad.planar_sweep import tangent
             from doodle_to_cad.planar_profile import endpoints
             path=[];z=op['section_height']/2
@@ -32,7 +48,7 @@ def build(source, output):
                 if edge['kind']=='line':
                     path.append(sm.create_line_segment((*edge['start'],z),(*edge['end'],z)))
                 else:
-                    path.append(sm.create_arc((*edge['center'],z),edge['radius'],edge['start_angle'],edge['end_angle']))
+                    path.append(arc_curve(sm,(*edge['center'],z),edge['radius'],edge['start_angle'],edge['end_angle']))
             start=endpoints(op['path'][0])[0];t=tangent(op['path'][0]);n=[t[1],-t[0]]
             points=[(start[0]+u*n[0],start[1]+u*n[1],v) for u,v in [(-op['section_width']/2,0),(op['section_width']/2,0),(op['section_width']/2,2*z),(-op['section_width']/2,2*z),(-op['section_width']/2,0)]]
             profile=[sm.create_line_segment(a,b) for a,b in zip(points,points[1:])]
@@ -48,7 +64,7 @@ def build(source, output):
                     if edge['kind']=='line':
                         curves.append(sm.create_line_segment((*edge['start'],0),(*edge['end'],0)))
                     else:
-                        curves.append(sm.create_arc((*edge['center'],0),edge['radius'],edge['start_angle'],edge['end_angle']))
+                        curves.append(arc_curve(sm,(*edge['center'],0),edge['radius'],edge['start_angle'],edge['end_angle']))
             body=sm.linear_sweep(curves,(0,0,op['direction']),op['depth'],cap_ends=True)
             sm.translate(body,tuple(op['origin']))
         elif kind == "box":
@@ -85,7 +101,7 @@ def build(source, output):
                     raise ValueError(f"{op['id']}: selector matched no edges")
                 sm.fillet_edges(body, edges, radius=op["radius"])
         elif kind == "arc_pipe":
-            path = sm.create_arc(tuple(op["origin"]), op["bend_radius"], 0, op["angle"])
+            path = arc_curve(sm,tuple(op["origin"]), op["bend_radius"], 0, op["angle"])
             body = sm.pipe_sweep(path, radius=op["radius"], cap_ends=True)
         if not body.is_manifold_solid():
             raise ValueError(f"{op['id']}: kernel produced an invalid solid")
@@ -112,7 +128,10 @@ def build(source, output):
     volume = body.volume(relative_accuracy=1e-8)
     if not math.isfinite(volume) or volume <= 0:
         raise ValueError("Invalid solid volume")
-    poly = sm.tessellate(body, chord_height_tolerance=0.05)
+    # Loft faces can span the full transition; bound triangle length so
+    # intermediate sections retain the profile correspondence.
+    mesh_options={'max_edge_length':2.0} if any(o['kind']=='loft' for o in operations) else {}
+    poly = sm.tessellate(body, chord_height_tolerance=0.05, **mesh_options)
     arrays = poly.to_mesh_arrays()
     stream, triangles, cursor = arrays["faces"], [], 0
     while cursor < len(stream):

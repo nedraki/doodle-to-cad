@@ -8,6 +8,7 @@ import re
 
 NAME = re.compile(r"^[A-Za-z][A-Za-z0-9_]{0,63}$")
 FIELDS = {
+    "loft": {"profiles", "plane", "correspondence"},
     "sweep": {"origin", "plane", "frame_rule", "section_width", "section_height", "path"},
     "extrude": {"origin", "plane", "direction", "depth", "loops"},
     "box": {"origin", "size"},
@@ -128,6 +129,12 @@ def validate_recipe(recipe, updates=None):
             raise ValueError("Pipe requires radius < bend_radius and angle ≤ 270°")
         if kind == "fillet" and op["selector"] not in ("all", "parallel_x", "parallel_y", "parallel_z"):
             raise ValueError("Fillet selector must be all or parallel_x/y/z")
+        if kind == 'loft':
+            from .loft_profiles import resolve_loft
+            try:
+                item['profiles']=resolve_loft(op,values,scalar)
+            except ValueError as exc:
+                raise ValueError(f"{op['id']}: {exc}") from exc
         if kind == 'sweep':
             from .planar_sweep import resolve_sweep
             try:

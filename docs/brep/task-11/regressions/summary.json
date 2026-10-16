@@ -1,0 +1,46 @@
+{
+  "wheel": {
+    "job": "16f25a854ca6",
+    "status": "done",
+    "question_requested": false,
+    "error": null,
+    "drawing_status": "failed"
+  },
+  "bookend": {
+    "job": "c07cf1fed474",
+    "status": "cancelled",
+    "question_requested": true,
+    "error": {
+      "message": "Recipe job cancelled",
+      "code": "cancelled"
+    },
+    "drawing_status": null
+  },
+  "knob": {
+    "job": "f05272ad501a",
+    "status": "done",
+    "question_requested": false,
+    "error": null,
+    "drawing_status": "unverified"
+  },
+  "cable_holder": {
+    "job": "f566cdfe355b",
+    "status": "cancelled",
+    "question_requested": true,
+    "error": {
+      "message": "Recipe job cancelled",
+      "code": "cancelled"
+    },
+    "drawing_status": null
+  },
+  "random_103_y_motor_holder": {
+    "job": "3b7848861ef8",
+    "status": "cancelled",
+    "question_requested": true,
+    "error": {
+      "message": "Recipe job cancelled",
+      "code": "cancelled"
+    },
+    "drawing_status": null
+  }
+}
