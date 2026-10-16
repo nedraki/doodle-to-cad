@@ -1,0 +1,114 @@
+{
+  "view_frame": "The drawing presents two views. The left view is the Front view (XZ plane), showing the object's width (X) and height (Z). The right view is the Side view (YZ plane), showing the object's depth (Y) and height (Z). The object is an L-shaped bracket with a vertical backplate and a horizontal base.",
+  "features": [
+    {
+      "id": "backplate",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "ASSUMED_WIDTH",
+        "ASSUMED_HEIGHT",
+        "ASSUMED_THICKNESS"
+      ],
+      "placement": "Centered at X=0, Z=ASSUMED_HEIGHT/2. Extends from Y=0 to Y=ASSUMED_THICKNESS.",
+      "evidence": "The large rectangular outline in the Front view and the vertical leg of the L-shape in the Side view."
+    },
+    {
+      "id": "base",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "ASSUMED_WIDTH",
+        "ASSUMED_DEPTH",
+        "ASSUMED_THICKNESS"
+      ],
+      "placement": "Centered at X=0, Y=ASSUMED_DEPTH/2. Extends from Z=0 to Z=ASSUMED_THICKNESS.",
+      "evidence": "The horizontal leg of the L-shape in the Side view."
+    },
+    {
+      "id": "opening_1",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "ASSUMED_OPENING_1_WIDTH",
+        "ASSUMED_OPENING_1_HEIGHT",
+        "ASSUMED_THICKNESS"
+      ],
+      "placement": "Centered at X=-ASSUMED_WIDTH/4, Z=3*ASSUMED_HEIGHT/4. Extends from Y=0 to Y=ASSUMED_THICKNESS.",
+      "evidence": "The top-left rectangular outline in the Front view."
+    },
+    {
+      "id": "opening_2",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "ASSUMED_OPENING_2_WIDTH",
+        "ASSUMED_OPENING_2_HEIGHT",
+        "ASSUMED_THICKNESS"
+      ],
+      "placement": "Centered at X=0, Z=ASSUMED_HEIGHT/2. Extends from Y=0 to Y=ASSUMED_THICKNESS.",
+      "evidence": "The central vertical rectangular outline in the Front view."
+    },
+    {
+      "id": "opening_3",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "ASSUMED_OPENING_3_WIDTH",
+        "ASSUMED_OPENING_3_HEIGHT",
+        "ASSUMED_THICKNESS"
+      ],
+      "placement": "Centered at X=-ASSUMED_WIDTH/4, Z=ASSUMED_HEIGHT/4. Extends from Y=0 to Y=ASSUMED_THICKNESS.",
+      "evidence": "The bottom-left vertical rectangular outline in the Front view."
+    },
+    {
+      "id": "opening_4",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "ASSUMED_OPENING_4_WIDTH",
+        "ASSUMED_OPENING_4_HEIGHT",
+        "ASSUMED_THICKNESS"
+      ],
+      "placement": "Centered at X=ASSUMED_WIDTH/4, Z=ASSUMED_HEIGHT/4. Extends from Y=0 to Y=ASSUMED_THICKNESS.",
+      "evidence": "The bottom-right vertical rectangular outline in the Front view."
+    }
+  ],
+  "connections": [
+    "backplate and base are joined at the corner (X=0, Y=0, Z=0) to form an L-shape.",
+    "openings_1, 2, 3, 4 are subtracted from the backplate."
+  ],
+  "edit_rules": [
+    "Changing ASSUMED_WIDTH updates the width of the backplate, base, and the X-positions of the openings.",
+    "Changing ASSUMED_HEIGHT updates the height of the backplate and the Z-positions of the openings.",
+    "Changing ASSUMED_DEPTH updates the depth of the base.",
+    "Changing ASSUMED_THICKNESS updates the thickness of the backplate, base, and the depth of the openings.",
+    "Changing opening dimensions updates the size of the respective opening."
+  ],
+  "unresolved": [
+    "ASSUMED_WIDTH",
+    "ASSUMED_HEIGHT",
+    "ASSUMED_DEPTH",
+    "ASSUMED_THICKNESS",
+    "ASSUMED_OPENING_1_WIDTH",
+    "ASSUMED_OPENING_1_HEIGHT",
+    "ASSUMED_OPENING_2_WIDTH",
+    "ASSUMED_OPENING_2_HEIGHT",
+    "ASSUMED_OPENING_3_WIDTH",
+    "ASSUMED_OPENING_3_HEIGHT",
+    "ASSUMED_OPENING_4_WIDTH",
+    "ASSUMED_OPENING_4_HEIGHT"
+  ],
+  "clarification": {
+    "feature_id": "opening_1",
+    "feature_label": "Top-left rectangular opening in the backplate",
+    "reason": "The drawing shows the outline of the opening but does not specify if it is a through-hole or a recessed pocket.",
+    "kind": "opening_extent"
+  }
+}

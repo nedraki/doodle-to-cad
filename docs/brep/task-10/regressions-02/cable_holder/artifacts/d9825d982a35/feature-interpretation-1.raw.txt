@@ -1,0 +1,218 @@
+{
+  "version": 1,
+  "object_hypothesis": "A rectangular plate or block featuring a central circular hole on one face and a series of five rectangular slots on the opposing face.",
+  "features": [
+    {
+      "id": "body_plate",
+      "type": "body",
+      "description": "The main rectangular body of the object.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_14"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_2"
+        },
+        {
+          "view_id": "view_3",
+          "region_id": "profile_contour_0"
+        }
+      ],
+      "reason": "Visible as the primary outer contour in all three views."
+    },
+    {
+      "id": "central_hole",
+      "type": "opening",
+      "description": "A circular opening located in the center of the top view.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "A distinct circular contour is visible in the center of the top view."
+    },
+    {
+      "id": "slot_1",
+      "type": "opening",
+      "description": "The topmost rectangular slot in the right view.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_12"
+        }
+      ],
+      "reason": "Visible as a small rectangular contour near the top of the right view."
+    },
+    {
+      "id": "slot_2",
+      "type": "opening",
+      "description": "The second rectangular slot from the top in the right view.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_10"
+        }
+      ],
+      "reason": "Visible as a small rectangular contour in the upper-middle section of the right view."
+    },
+    {
+      "id": "slot_3",
+      "type": "opening",
+      "description": "The middle rectangular slot in the right view.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_8"
+        }
+      ],
+      "reason": "Visible as a small rectangular contour in the center of the right view."
+    },
+    {
+      "id": "slot_4",
+      "type": "opening",
+      "description": "The fourth rectangular slot from the top in the right view.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_6"
+        }
+      ],
+      "reason": "Visible as a small rectangular contour in the lower-middle section of the right view."
+    },
+    {
+      "id": "slot_5",
+      "type": "opening",
+      "description": "The bottommost rectangular slot in the right view.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_4"
+        }
+      ],
+      "reason": "Visible as a small rectangular contour near the bottom of the right view."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "slots_repeated",
+      "type": "repeated",
+      "features": [
+        "slot_1",
+        "slot_2",
+        "slot_3",
+        "slot_4",
+        "slot_5"
+      ],
+      "description": "The five rectangular slots appear to be a repeated feature pattern.",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_12"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_10"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_8"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_6"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_4"
+        }
+      ],
+      "reason": "The slots share similar shapes and are arranged in a linear sequence."
+    },
+    {
+      "id": "hole_in_body",
+      "type": "position",
+      "features": [
+        "central_hole",
+        "body_plate"
+      ],
+      "description": "The central hole is located within the main body.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_16"
+        },
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_14"
+        }
+      ],
+      "reason": "The hole contour is spatially contained within the body contour in the top view."
+    },
+    {
+      "id": "slots_in_body",
+      "type": "position",
+      "features": [
+        "slot_1",
+        "slot_2",
+        "slot_3",
+        "slot_4",
+        "slot_5",
+        "body_plate"
+      ],
+      "description": "The slots are located within the main body.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_12"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_10"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_8"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_6"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_4"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_2"
+        }
+      ],
+      "reason": "The slot contours are spatially contained within the body contour in the right view."
+    }
+  ],
+  "assumptions": [
+    "The object is a single solid piece.",
+    "The views represent orthogonal projections of the same object."
+  ],
+  "unresolved": [
+    "The depth of the central hole (through-hole vs. blind hole).",
+    "The depth of the rectangular slots (through-slots vs. blind pockets).",
+    "The exact 3D shape of the top and bottom edges of the object (curved vs. flat)."
+  ],
+  "conflicts": [
+    "The top view (view_1) shows a curved top edge, while the front view (view_3) shows a straight top edge.",
+    "The top view (view_1) shows a curved bottom edge, while the front view (view_3) shows a straight bottom edge."
+  ]
+}

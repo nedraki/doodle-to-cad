@@ -1,0 +1,94 @@
+INFO:     Started server process [3274673]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8100 (Press CTRL+C to quit)
+INFO:     127.0.0.1:42932 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42978 - "GET /static/direct-views.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42972 - "GET /static/blueprint.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42958 - "GET /static/state.css?v=3 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42984 - "GET /static/viewer.css?v=4 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42946 - "GET /static/style.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42980 - "GET /static/continuous-sheet.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42978 - "GET /static/vendor/STLLoader.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42984 - "GET /static/app.js?v=9 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42958 - "GET /static/viewer.js?v=3 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42946 - "GET /static/vendor/three.min.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42980 - "GET /static/blueprint.js?v=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42972 - "GET /static/vendor/OrbitControls.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42958 - "GET /static/feature-evidence.js?v=1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42978 - "GET /static/recipe-jobs.js?v=1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42958 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:42978 - "GET /api/brep HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42946 - "GET /api/health?refresh=true HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42946 - "POST /api/generate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42994 - "GET /api/generate/437610d8461b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42946 - "GET /api/generate/437610d8461b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43000 - "GET /api/generate/437610d8461b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42946 - "GET /api/generate/437610d8461b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51544 - "GET /api/generate/437610d8461b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42946 - "GET /api/generate/437610d8461b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51546 - "GET /api/generate/437610d8461b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42946 - "GET /api/generate/437610d8461b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51556 - "GET /api/generate/437610d8461b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42946 - "GET /api/generate/437610d8461b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51568 - "GET /api/generate/437610d8461b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42946 - "GET /api/generate/437610d8461b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51574 - "GET /api/generate/437610d8461b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42946 - "GET /api/generate/437610d8461b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39064 - "GET /api/generate/437610d8461b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42946 - "GET /api/generate/437610d8461b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39074 - "GET /api/generate/437610d8461b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42946 - "GET /api/generate/437610d8461b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39078 - "GET /api/generate/437610d8461b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42946 - "GET /api/generate/437610d8461b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39082 - "GET /api/generate/437610d8461b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42946 - "GET /api/generate/437610d8461b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39090 - "GET /api/generate/437610d8461b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42946 - "GET /api/generate/437610d8461b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37192 - "GET /api/generate/437610d8461b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42946 - "GET /api/generate/437610d8461b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37204 - "GET /api/generate/437610d8461b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42946 - "GET /api/generate/437610d8461b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37212 - "GET /api/generate/437610d8461b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42946 - "GET /api/generate/437610d8461b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37228 - "GET /api/generate/437610d8461b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42946 - "GET /api/generate/437610d8461b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37242 - "GET /api/generate/437610d8461b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42946 - "GET /api/generate/437610d8461b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50388 - "POST /api/generate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50396 - "GET /api/generate/437610d8461b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50388 - "GET /api/generate/a8a75fba5d64 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42946 - "GET /api/generate/437610d8461b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50388 - "GET /api/generate/a8a75fba5d64 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50402 - "GET /api/generate/437610d8461b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42946 - "GET /api/generate/437610d8461b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50388 - "GET /api/generate/a8a75fba5d64 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50404 - "GET /api/generate/437610d8461b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42946 - "GET /api/generate/437610d8461b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50388 - "GET /api/generate/a8a75fba5d64 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50414 - "GET /api/generate/437610d8461b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42946 - "GET /api/generate/437610d8461b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50388 - "GET /api/generate/a8a75fba5d64 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50428 - "GET /api/generate/437610d8461b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42946 - "GET /api/generate/437610d8461b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50388 - "GET /api/generate/a8a75fba5d64 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56814 - "GET /api/generate/437610d8461b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42946 - "GET /api/generate/437610d8461b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50388 - "GET /api/generate/a8a75fba5d64 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56816 - "GET /api/generate/437610d8461b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42946 - "GET /api/generate/437610d8461b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50388 - "GET /api/generate/a8a75fba5d64 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56828 - "GET /api/generate/437610d8461b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42946 - "GET /api/generate/437610d8461b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50388 - "GET /api/generate/a8a75fba5d64 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56838 - "GET /api/generate/437610d8461b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42946 - "GET /api/generate/437610d8461b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50388 - "GET /api/generate/a8a75fba5d64 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56852 - "GET /api/generate/437610d8461b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42946 - "GET /api/generate/437610d8461b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50388 - "GET /api/generate/a8a75fba5d64 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34070 - "GET /api/generate/437610d8461b HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [3274673]

@@ -1,0 +1,19 @@
+{
+  "feature_id": "hole_1",
+  "feature_label": "Leftmost circular feature",
+  "reason": "The drawing does not specify if the circular features are through-holes or blind recesses.",
+  "kind": "opening_extent",
+  "id": "ea6cb6edc7664093ae8e6e6826b4e3b5",
+  "text": "Should this hole go all the way through the part?",
+  "maximum_depth_mm": 120.0,
+  "choices": [
+    {
+      "id": "through",
+      "label": "Yes \u2014 make a through-hole"
+    },
+    {
+      "id": "recess",
+      "label": "No \u2014 leave a bottom"
+    }
+  ]
+}

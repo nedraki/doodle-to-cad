@@ -1,0 +1,252 @@
+{
+  "id": "8f7f9e2e4b27",
+  "backend": "usd-brep",
+  "success": false,
+  "spec": {
+    "object": "bent_handle"
+  },
+  "model": "local-inference-lab/Qwen3.8-Flash-Next-NVFP4",
+  "duration_seconds": 135.56,
+  "evaluation": {
+    "version": 1,
+    "accepted": false,
+    "status": "unverified",
+    "build_status": "passed",
+    "geometry_status": "passed",
+    "projection_status": "passed",
+    "checks": [
+      {
+        "name": "connected solid",
+        "status": "passed",
+        "detail": {
+          "watertight": true,
+          "components": 1
+        }
+      },
+      {
+        "name": "requested maximum",
+        "status": "passed",
+        "detail": {
+          "actual_mm": 46.0,
+          "limit_mm": 46.0,
+          "tolerance_mm": 0.5
+        }
+      },
+      {
+        "name": "top projection",
+        "status": "passed",
+        "detail": {
+          "similarity": 0.959,
+          "minimum": 0.45
+        }
+      },
+      {
+        "name": "right projection",
+        "status": "passed",
+        "detail": {
+          "similarity": 0.958,
+          "minimum": 0.45
+        }
+      },
+      {
+        "name": "dimensions and detailed features",
+        "status": "unverified",
+        "detail": "Projection checks cannot prove radii, bevel angles, hidden depth or section shape. Review measured features and view assignments."
+      }
+    ],
+    "projection_similarity": {
+      "top": 0.959,
+      "right": 0.958
+    },
+    "profile_topology": {
+      "top": {
+        "source_internal_profiles": 0,
+        "rendered_internal_profiles": 0,
+        "crop_internal_profiles": 0,
+        "source_aspect": 1.203,
+        "rendered_aspect": 1.21,
+        "source_opening_centroids": [],
+        "rendered_opening_centroids": []
+      },
+      "right": {
+        "source_internal_profiles": 0,
+        "rendered_internal_profiles": 8,
+        "crop_internal_profiles": 0,
+        "source_aspect": 4.247,
+        "rendered_aspect": 4.771,
+        "source_opening_centroids": [],
+        "rendered_opening_centroids": [
+          [
+            0.82,
+            0.487
+          ],
+          [
+            0.755,
+            0.486
+          ],
+          [
+            0.705,
+            0.486
+          ],
+          [
+            0.653,
+            0.486
+          ],
+          [
+            0.597,
+            0.486
+          ],
+          [
+            0.54,
+            0.486
+          ],
+          [
+            0.482,
+            0.486
+          ],
+          [
+            0.225,
+            0.486
+          ]
+        ]
+      }
+    },
+    "failures": [
+      "Detailed drawing features and view assignments require review."
+    ],
+    "scope": "Partial automatic checks. No drawing acceptance from solid validity alone."
+  },
+  "diagnostics": {
+    "backend": "usd-brep",
+    "version": "1.0.0",
+    "recipe_version": 2,
+    "solid_volume_mm3": 4455.928661349341,
+    "mesh_volume_mm3": 4451.085084291387,
+    "extents_mm": [
+      46.0,
+      37.99991226196289,
+      8.000000000693417
+    ],
+    "bounds_mm": [
+      [
+        -23.0,
+        -1.8369701465288538e-16,
+        -6.934176011164084e-10
+      ],
+      [
+        23.0,
+        37.99991226196289,
+        8.0
+      ]
+    ],
+    "watertight": true,
+    "winding_consistent": true,
+    "euler_number": 2,
+    "triangles": 276,
+    "usd_roundtrip": true,
+    "volume_relative_accuracy": 1e-08,
+    "usd_volume_mm3": 4455.92878981421,
+    "operations": [
+      {
+        "id": "handle",
+        "kind": "sweep",
+        "faces": 12
+      }
+    ],
+    "connections": [],
+    "build_seconds": 0.627
+  },
+  "controls": {
+    "object_type_hint": "",
+    "method": "3D print",
+    "primary_view": "top",
+    "projection_standard": "third-angle",
+    "strict_watertight": true,
+    "refine_mode": "regularize"
+  },
+  "files": {
+    "source": "/results/8f7f9e2e4b27/brep-ff9948369f1148709c3833b6523c2771/model.recipe.json",
+    "stl": "/results/8f7f9e2e4b27/brep-ff9948369f1148709c3833b6523c2771/model.stl",
+    "usd": "/results/8f7f9e2e4b27/brep-ff9948369f1148709c3833b6523c2771/model.usda",
+    "views": {
+      "isometric": "/results/8f7f9e2e4b27/brep-ff9948369f1148709c3833b6523c2771/view-isometric.png",
+      "front": "/results/8f7f9e2e4b27/brep-ff9948369f1148709c3833b6523c2771/view-front.png",
+      "top": "/results/8f7f9e2e4b27/brep-ff9948369f1148709c3833b6523c2771/view-top.png",
+      "right": "/results/8f7f9e2e4b27/brep-ff9948369f1148709c3833b6523c2771/view-right.png"
+    },
+    "drawing_checks": "/results/8f7f9e2e4b27/drawing-checks.json",
+    "construction_plan": "/results/8f7f9e2e4b27/construction-plan.json",
+    "evidence": "/results/8f7f9e2e4b27/feature-evidence.json",
+    "generation": "/results/8f7f9e2e4b27/generation.json"
+  },
+  "build": {
+    "version": 1,
+    "backend": "usd-brep",
+    "source_format": "brep-recipe-v2",
+    "ok": true,
+    "units": "mm",
+    "axes": {
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    },
+    "views": [
+      "isometric",
+      "front",
+      "top",
+      "right"
+    ],
+    "measurements": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 276,
+      "extents_mm": [
+        46.0,
+        38.0,
+        8.0
+      ],
+      "volume_mm3": 4451.085
+    },
+    "diagnostics": [],
+    "drawing_evaluated": false
+  },
+  "original_run_id": null,
+  "generation": {
+    "path": "drawing-to-brep",
+    "backend": "usd-brep",
+    "prompt_version": "drawing-brep-16",
+    "correction_prompt_version": "construction-numeric-fields-3",
+    "max_construction_corrections": 2,
+    "construction_plan_version": "construction-intent-9",
+    "model": "local-inference-lab/Qwen3.8-Flash-Next-NVFP4",
+    "notes": "",
+    "maximum_dimension_mm": 46.0,
+    "controls": {
+      "object_type_hint": "",
+      "method": "3D print",
+      "primary_view": "top",
+      "projection_standard": "third-angle",
+      "strict_watertight": true,
+      "refine_mode": "regularize"
+    },
+    "generated_scad": false,
+    "drawing_fidelity_verified": false,
+    "attempts": [
+      {
+        "attempt": 1,
+        "schema_valid": false,
+        "error": "handle: Sweep join 1: incoming tangent [0.0, 1.0] differs from outgoing tangent [-1.2246467991473532e-16, -1.0]. Reorder the path or correct arc angles; every join must be tangent and forward."
+      },
+      {
+        "attempt": 2,
+        "schema_valid": true
+      }
+    ],
+    "construction_attempts": [
+      {
+        "attempt": 1,
+        "status": "built"
+      }
+    ]
+  }
+}

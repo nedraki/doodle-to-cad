@@ -24,7 +24,24 @@ def build(source, output):
     bodies, history = {}, []
     for op in operations:
         kind = op["kind"]
-        if kind == 'extrude':
+        if kind == 'sweep':
+            from doodle_to_cad.planar_sweep import tangent
+            from doodle_to_cad.planar_profile import endpoints
+            path=[];z=op['section_height']/2
+            for edge in op['path']:
+                if edge['kind']=='line':
+                    path.append(sm.create_line_segment((*edge['start'],z),(*edge['end'],z)))
+                else:
+                    path.append(sm.create_arc((*edge['center'],z),edge['radius'],edge['start_angle'],edge['end_angle']))
+            start=endpoints(op['path'][0])[0];t=tangent(op['path'][0]);n=[t[1],-t[0]]
+            points=[(start[0]+u*n[0],start[1]+u*n[1],v) for u,v in [(-op['section_width']/2,0),(op['section_width']/2,0),(op['section_width']/2,2*z),(-op['section_width']/2,2*z),(-op['section_width']/2,0)]]
+            profile=[sm.create_line_segment(a,b) for a,b in zip(points,points[1:])]
+            try:
+                body=sm.sweep_along_planar_path(profile,path,move_profile=True,cap_ends=sm.CapEnds.BOTH)
+            except Exception as exc:
+                raise ValueError(f"{op['id']}: rectangular sweep failed: {exc}") from exc
+            sm.translate(body,tuple(op['origin']))
+        elif kind == 'extrude':
             curves=[]
             for loop in op['loops']:
                 for edge in loop:
