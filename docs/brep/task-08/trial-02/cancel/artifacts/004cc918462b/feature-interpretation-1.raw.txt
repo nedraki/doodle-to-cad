@@ -1,0 +1,68 @@
+{
+  "version": 1,
+  "object_hypothesis": "Rectangular block with a central circular opening",
+  "features": [
+    {
+      "id": "block_body",
+      "type": "body",
+      "description": "Rectangular block body (40 wide x 30 deep x 12 thick)",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_40"
+        },
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_21"
+        }
+      ],
+      "reason": "View 4 shows a large rectangular outline consistent with the block's top face. View 5 shows a profile consistent with the block's side thickness."
+    },
+    {
+      "id": "central_opening",
+      "type": "opening",
+      "description": "Circular opening (Ø8) centered on the top face",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_45"
+        }
+      ],
+      "reason": "View 4 contains an internal circular contour (profile_contour_45) located centrally within the block outline, matching the annotation 'Opening centred in top face'."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "opening_in_block",
+      "type": "position",
+      "features": [
+        "central_opening",
+        "block_body"
+      ],
+      "description": "The circular opening is positioned centrally within the block body",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_45"
+        },
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_40"
+        }
+      ],
+      "reason": "In view 4, the internal circular contour is spatially located in the center of the outer rectangular contour."
+    }
+  ],
+  "assumptions": [
+    "View 4 represents the Top (XY) view as indicated by the text label.",
+    "The circular opening penetrates the block (blind or through hole) as implied by the term 'opening'."
+  ],
+  "unresolved": [
+    "The depth of the circular opening (whether it is a through-hole or a blind pocket) is not explicitly defined by the visible geometry.",
+    "The specific mapping of Views 1, 2, and 3 to the block's side profiles is ambiguous due to the lack of distinct geometric features in those regions."
+  ],
+  "conflicts": []
+}

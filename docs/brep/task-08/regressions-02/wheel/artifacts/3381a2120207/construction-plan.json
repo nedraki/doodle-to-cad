@@ -1,0 +1,57 @@
+{
+  "view_frame": "Front view (XZ plane) displays the wheel face with radial symmetry. Right view (YZ plane) displays the side profile, showing the wheel's thickness along the Y-axis. The wheel is centered at the origin (0,0,0).",
+  "features": [
+    {
+      "id": "rim",
+      "shape": "annulus",
+      "section": "rectangular",
+      "axis_or_plane": "Y",
+      "dimensions": [
+        "OD 120 mm",
+        "thickness 8 mm",
+        "ASSUMED rim_width 10 mm"
+      ],
+      "placement": "Centered at (0,0,0). Outer radius 60 mm. Inner radius 50 mm (60 - 10). Extends from Y=-4 to Y=4.",
+      "evidence": "Front view shows outer and inner concentric circles. Caption states 'OD 120 mm' and 'thickness 8 mm'."
+    },
+    {
+      "id": "hub",
+      "shape": "cylinder",
+      "section": "circular",
+      "axis_or_plane": "Y",
+      "dimensions": [
+        "thickness 8 mm",
+        "ASSUMED hub_diameter 30 mm"
+      ],
+      "placement": "Centered at (0,0,0). Radius 15 mm. Extends from Y=-4 to Y=4.",
+      "evidence": "Front view shows central circle. Caption implies uniform thickness."
+    },
+    {
+      "id": "spokes",
+      "shape": "box_array",
+      "section": "rectangular",
+      "axis_or_plane": "Y",
+      "dimensions": [
+        "8 spokes",
+        "thickness 8 mm",
+        "ASSUMED spoke_width 8 mm"
+      ],
+      "placement": "8 radial segments connecting hub (r=15) to rim (r=50). Each spoke is a box of width 8 mm, length 35 mm (50-15), and thickness 8 mm (Y=-4 to Y=4). Spaced at 45-degree intervals in XZ plane.",
+      "evidence": "Front view shows 8 radial lines connecting hub to rim. Caption states '8 spokes'."
+    }
+  ],
+  "connections": [
+    "Spokes connect hub outer surface to rim inner surface.",
+    "All features share the same Y-axis thickness range (-4 to 4 mm)."
+  ],
+  "edit_rules": [
+    "Changing OD updates rim outer radius and spoke length.",
+    "Changing thickness updates Y-axis extent of all features.",
+    "Changing spoke count updates angular spacing and spoke width if total width is constrained."
+  ],
+  "unresolved": [
+    "Rim width (radial thickness) is not dimensioned; assumed 10 mm.",
+    "Hub diameter is not dimensioned; assumed 30 mm.",
+    "Spoke width is not dimensioned; assumed 8 mm."
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "version": 1,
+  "object_hypothesis": "Rectangular block with a central circular opening",
+  "features": [
+    {
+      "id": "block_body",
+      "type": "body",
+      "description": "Rectangular block outline",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_40"
+        }
+      ],
+      "reason": "View 4 shows a large rectangular contour consistent with the block body."
+    },
+    {
+      "id": "central_opening",
+      "type": "opening",
+      "description": "Circular opening in the center of the block",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_45"
+        }
+      ],
+      "reason": "View 4 shows an internal circular contour within the block outline."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "opening_in_block",
+      "type": "position",
+      "features": [
+        "central_opening",
+        "block_body"
+      ],
+      "description": "The opening is positioned within the block body",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_45"
+        },
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_40"
+        }
+      ],
+      "reason": "The internal contour (opening) is spatially contained within the outer contour (block) in View 4."
+    }
+  ],
+  "assumptions": [
+    "View 4 represents the top view of the object.",
+    "The circular contour in View 4 represents a through-hole or pocket."
+  ],
+  "unresolved": [
+    "Depth of the opening (through-hole vs. pocket).",
+    "Exact dimensions of the block and opening (text provided but not measured from pixels).",
+    "Nature of features in Views 1, 2, 3, and 5 (likely noise or unrelated marks)."
+  ],
+  "conflicts": [
+    "Views 1, 2, 3, and 5 contain small, irregular contours that do not align with the main block geometry in View 4."
+  ]
+}

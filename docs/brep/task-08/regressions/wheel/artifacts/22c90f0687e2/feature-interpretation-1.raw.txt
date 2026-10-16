@@ -1,0 +1,124 @@
+```json
+{
+  "version": 1,
+  "object_hypothesis": "A spoked wheel with a central hub, rim, and eight radial spokes.",
+  "features": [
+    {
+      "id": "rim",
+      "type": "rim",
+      "description": "Outer circular boundary of the wheel.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "Visible as the primary outer contour in the front view."
+    },
+    {
+      "id": "hub",
+      "type": "hub",
+      "description": "Central circular body of the wheel.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "Visible as the central circular feature in the front view."
+    },
+    {
+      "id": "spokes",
+      "type": "spoke",
+      "description": "Radial bars connecting the hub to the rim.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "Visible as linear segments connecting the hub and rim in the front view."
+    },
+    {
+      "id": "wheel_thickness",
+      "type": "body",
+      "description": "Axial thickness of the wheel.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_14"
+        }
+      ],
+      "reason": "Visible as the width of the rectangular profile in the right view."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "spoke_connectivity",
+      "type": "connected",
+      "features": [
+        "spokes",
+        "hub",
+        "rim"
+      ],
+      "description": "Spokes connect the hub to the rim.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "Visible joins between spokes, hub, and rim in the front view."
+    },
+    {
+      "id": "spoke_repetition",
+      "type": "repeated",
+      "features": [
+        "spokes"
+      ],
+      "description": "Eight spokes are arranged radially.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "Count of eight distinct radial segments visible in the front view."
+    },
+    {
+      "id": "wheel_symmetry",
+      "type": "symmetry",
+      "features": [
+        "rim",
+        "hub",
+        "spokes"
+      ],
+      "description": "The wheel exhibits radial symmetry.",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "Inferred from the regular spacing and uniform appearance of spokes in the front view."
+    }
+  ],
+  "assumptions": [
+    "The front view (view_4) represents the primary face of the wheel.",
+    "The right view (view_5) represents the side profile of the wheel.",
+    "The wheel is a solid object with uniform thickness."
+  ],
+  "unresolved": [
+    "The exact material of the wheel.",
+    "The presence of any internal features or hollow sections."
+  ],
+  "conflicts": []
+}
+```

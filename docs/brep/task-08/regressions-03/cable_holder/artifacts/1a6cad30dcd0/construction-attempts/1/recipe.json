@@ -1,0 +1,331 @@
+{
+  "version": 2,
+  "units": "mm",
+  "name": "bracket_plate",
+  "parameters": {
+    "width": {
+      "value": 20,
+      "min": 10,
+      "max": 50,
+      "label": "Width (X)",
+      "unit": "mm"
+    },
+    "depth": {
+      "value": 10,
+      "min": 5,
+      "max": 30,
+      "label": "Depth (Y)",
+      "unit": "mm"
+    },
+    "height": {
+      "value": 120,
+      "min": 50,
+      "max": 200,
+      "label": "Height (Z)",
+      "unit": "mm"
+    },
+    "hole_dia": {
+      "value": 6,
+      "min": 2,
+      "max": 15,
+      "label": "Central Hole Diameter",
+      "unit": "mm"
+    },
+    "slot_w": {
+      "value": 3,
+      "min": 1,
+      "max": 10,
+      "label": "Slot Width",
+      "unit": "mm"
+    },
+    "slot_h": {
+      "value": 5,
+      "min": 2,
+      "max": 15,
+      "label": "Slot Height",
+      "unit": "mm"
+    }
+  },
+  "operations": [
+    {
+      "id": "base_plate",
+      "kind": "box",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "size": [
+        "width",
+        "depth",
+        "height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "central_hole",
+      "kind": "cylinder",
+      "origin": [
+        "width/2",
+        "depth/2",
+        -1
+      ],
+      "radius": "hole_dia/2",
+      "height": "depth + 2",
+      "axis": "y",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "plate_with_hole",
+      "kind": "difference",
+      "left": "base_plate",
+      "right": "central_hole",
+      "frame": "world",
+      "depends_on": [
+        "base_plate",
+        "central_hole"
+      ],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "slot_1",
+      "kind": "box",
+      "origin": [
+        "width/2 - slot_w/2",
+        -1,
+        "height * 0.85"
+      ],
+      "size": [
+        "slot_w",
+        "depth + 2",
+        "slot_h"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "plate_1",
+      "kind": "difference",
+      "left": "plate_with_hole",
+      "right": "slot_1",
+      "frame": "world",
+      "depends_on": [
+        "plate_with_hole",
+        "slot_1"
+      ],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "slot_2",
+      "kind": "box",
+      "origin": [
+        "width/2 - slot_w/2",
+        -1,
+        "height * 0.68"
+      ],
+      "size": [
+        "slot_w",
+        "depth + 2",
+        "slot_h"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "plate_2",
+      "kind": "difference",
+      "left": "plate_1",
+      "right": "slot_2",
+      "frame": "world",
+      "depends_on": [
+        "plate_1",
+        "slot_2"
+      ],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "slot_3",
+      "kind": "box",
+      "origin": [
+        "width/2 - slot_w/2",
+        -1,
+        "height * 0.51"
+      ],
+      "size": [
+        "slot_w",
+        "depth + 2",
+        "slot_h"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "plate_3",
+      "kind": "difference",
+      "left": "plate_2",
+      "right": "slot_3",
+      "frame": "world",
+      "depends_on": [
+        "plate_2",
+        "slot_3"
+      ],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "slot_4",
+      "kind": "box",
+      "origin": [
+        "width/2 - slot_w/2",
+        -1,
+        "height * 0.34"
+      ],
+      "size": [
+        "slot_w",
+        "depth + 2",
+        "slot_h"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "plate_4",
+      "kind": "difference",
+      "left": "plate_3",
+      "right": "slot_4",
+      "frame": "world",
+      "depends_on": [
+        "plate_3",
+        "slot_4"
+      ],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "slot_5",
+      "kind": "box",
+      "origin": [
+        "width/2 - slot_w/2",
+        -1,
+        "height * 0.17"
+      ],
+      "size": [
+        "slot_w",
+        "depth + 2",
+        "slot_h"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "final_part",
+      "kind": "difference",
+      "left": "plate_4",
+      "right": "slot_5",
+      "frame": "world",
+      "depends_on": [
+        "plate_4",
+        "slot_5"
+      ],
+      "evidence": [
+        "e3"
+      ]
+    }
+  ],
+  "output": "final_part",
+  "frames": {
+    "world": {
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    }
+  },
+  "bodies": [
+    {
+      "id": "part",
+      "output": "final_part"
+    }
+  ],
+  "evidence": {
+    "observed": [
+      {
+        "id": "e1",
+        "text": "Rectangular body observed in Front and Right views."
+      },
+      {
+        "id": "e2",
+        "text": "Central circular hole observed in Top view."
+      },
+      {
+        "id": "e3",
+        "text": "Five rectangular slots observed in Right view."
+      }
+    ],
+    "inferred": [
+      {
+        "id": "e4",
+        "text": "Slots are through-holes along the Y-axis (depth)."
+      },
+      {
+        "id": "e5",
+        "text": "Slots are centered along the X-axis (width)."
+      }
+    ],
+    "assumptions": [
+      {
+        "id": "e6",
+        "text": "Assumed dimensions: Width 20mm, Depth 10mm, Height 120mm."
+      },
+      {
+        "id": "e7",
+        "text": "Assumed slot dimensions: 3mm width, 5mm height."
+      },
+      {
+        "id": "e8",
+        "text": "Assumed central hole diameter: 6mm."
+      },
+      {
+        "id": "e9",
+        "text": "Assumed slot vertical distribution is evenly spaced."
+      }
+    ],
+    "unresolved": []
+  },
+  "constraints": []
+}

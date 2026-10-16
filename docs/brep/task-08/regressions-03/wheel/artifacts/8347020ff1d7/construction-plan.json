@@ -1,0 +1,56 @@
+{
+  "view_frame": "Front view (XZ) shows the wheel face with radial symmetry. Right view (YZ) shows the wheel thickness. The wheel axis is aligned with the Y-axis. The wheel lies in the XZ plane.",
+  "features": [
+    {
+      "id": "rim",
+      "shape": "annulus",
+      "section": "rectangular",
+      "axis_or_plane": "Y-axis",
+      "dimensions": [
+        "OD 120 mm",
+        "thickness 8 mm",
+        "ASSUMED rim width 10 mm"
+      ],
+      "placement": "Centered at (0,0,0). Outer radius 60 mm, inner radius 50 mm. Extends from Y=-4 to Y=4.",
+      "evidence": "Front view shows outer and inner concentric circles. Right view shows rectangular profile. Label 'OD 120 mm; thickness 8 mm'."
+    },
+    {
+      "id": "hub",
+      "shape": "cylinder",
+      "section": "circular",
+      "axis_or_plane": "Y-axis",
+      "dimensions": [
+        "ASSUMED hub diameter 30 mm",
+        "thickness 8 mm"
+      ],
+      "placement": "Centered at (0,0,0). Radius 15 mm. Extends from Y=-4 to Y=4.",
+      "evidence": "Front view shows central circle. Right view shows rectangular profile matching rim thickness."
+    },
+    {
+      "id": "spokes",
+      "shape": "box",
+      "section": "rectangular",
+      "axis_or_plane": "radial in XZ plane",
+      "dimensions": [
+        "ASSUMED spoke width 10 mm",
+        "thickness 8 mm"
+      ],
+      "placement": "8 spokes radiating from hub to rim. Each spoke is a box extending from radius 15 mm to 50 mm. Spokes are centered on angles 0, 45, 90, 135, 180, 225, 270, 315 degrees in the XZ plane. Extends from Y=-4 to Y=4.",
+      "evidence": "Front view shows 8 radial lines connecting hub to rim. Right view shows uniform thickness."
+    }
+  ],
+  "connections": [
+    "Spokes connect hub to rim",
+    "All features share the same Y-axis thickness (8 mm)"
+  ],
+  "edit_rules": [
+    "Changing OD 120 mm updates rim outer radius and spoke outer endpoints",
+    "Changing thickness 8 mm updates Y-extent of all features",
+    "Changing spoke count updates number of radial boxes",
+    "Changing ASSUMED rim width updates rim inner radius and spoke inner endpoints",
+    "Changing ASSUMED hub diameter updates hub radius and spoke inner endpoints",
+    "Changing ASSUMED spoke width updates spoke box width"
+  ],
+  "unresolved": [],
+  "clarification": null
+}

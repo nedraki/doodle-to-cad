@@ -18,7 +18,7 @@ with sync_playwright() as p:
    page.locator('#viewerWrap').screenshot(path=str(TRIAL/name/(view+'.png')))
   page.close()
  (TRIAL/'summary.json').write_text(json.dumps(summary,indent=2))
- cards=[('trial-01/through/input.png','Same drawing, empty notes'),('trial-01/through/isometric.png','Answer: through-hole'),('trial-01/recess/isometric.png','Answer: recess, 5 mm deep')]
+ cards=[('trial-01/through/input.png','Same drawing, empty notes'),('trial-01/through/top.png','Through-hole: open through the block'),('trial-01/recess/top.png','Recess: bottom remains, depth 5 mm')]
  document='''<!doctype html><meta charset="utf-8"><style>body{background:#f8f4e9;color:#182d36;font:20px Arial;margin:30px}h1{font-size:30px}.cards{display:flex;gap:16px}figure{margin:0;flex:1;min-width:0;background:white;border:1px solid #bbb;border-radius:12px;overflow:hidden}img{width:100%;height:440px;object-fit:contain}figcaption{padding:18px;font-weight:bold}footer{margin-top:24px}</style><h1>One drawing → one question → two different parts</h1><p>Real model generation and app screenshots. Both outputs pass independent section and dimension checks.</p><div class="cards">'''
  document+=''.join(f'<figure><img src="{src}"><figcaption>{html.escape(label)}</figcaption></figure>' for src,label in cards)
  document=document.replace('trial-01/',TRIAL.name+'/')
@@ -27,7 +27,7 @@ with sync_playwright() as p:
  page=browser.new_page(viewport={'width':1800,'height':720});page.goto((OUT/'comparison.html').as_uri());page.screenshot(path=str(OUT/'comparison.png'),full_page=True);browser.close()
 lines=['# Task 08 — ask before guessing an opening','',
 'Issue #25. Base branch: `brep-integration` at `da94850`. Task branch: `codex/brep-08-clarification`. `main` is unchanged.','',
-'## What changed','',
+'Implementation commit: `cd1f0ca`. PR [47](https://github.com/nedraki/doodle-to-cad/pull/47), targeting `brep-integration`. User review and merge remain pending.','','## What changed','',
 'A top-view circle can mean a through-hole or a recess. The experimental BRep path now pauses before building when the construction plan identifies that missing choice. It names the opening and asks whether it goes through. A recess requires a depth in millimetres. The original image and measured evidence stay in the same job. The answer is saved and the construction plan is updated before recipe generation.','',
 'The first version supports opening extent questions. It can ask about at most three different openings, one at a time. It does not provide arbitrary questions or upload of an extra view during a paused job. Other plan uncertainties continue through the existing recipe planner. That planner must disclose permitted assumptions or retain unresolved recipe evidence, which the existing validator rejects. No recipe or geometry validation is bypassed.','',
 '## Visible evidence','',

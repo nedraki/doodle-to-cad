@@ -1,0 +1,215 @@
+{
+  "job_id": "c45637eba8d5",
+  "status": "done",
+  "stage": "done",
+  "result": {
+    "id": "c45637eba8d5",
+    "backend": "usd-brep",
+    "success": false,
+    "spec": {
+      "object": "block_with_recess"
+    },
+    "model": "local-inference-lab/Qwen3.8-Flash-Next-NVFP4",
+    "duration_seconds": 73.74,
+    "evaluation": {
+      "version": 1,
+      "accepted": false,
+      "status": "failed",
+      "build_status": "passed",
+      "geometry_status": "passed",
+      "projection_status": "failed",
+      "checks": [
+        {
+          "name": "connected solid",
+          "status": "passed",
+          "detail": {
+            "watertight": true,
+            "components": 1
+          }
+        },
+        {
+          "name": "requested maximum",
+          "status": "passed",
+          "detail": {
+            "actual_mm": 40.0,
+            "limit_mm": 40.0,
+            "tolerance_mm": 0.5
+          }
+        },
+        {
+          "name": "top projection",
+          "status": "failed",
+          "detail": {
+            "similarity": 0.314,
+            "minimum": 0.45
+          }
+        },
+        {
+          "name": "dimensions and detailed features",
+          "status": "unverified",
+          "detail": "Projection checks cannot prove radii, bevel angles, hidden depth or section shape. Review measured features and view assignments."
+        }
+      ],
+      "projection_similarity": {
+        "top": 0.314
+      },
+      "profile_topology": {
+        "top": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 0,
+          "source_aspect": 7.929,
+          "rendered_aspect": 1.333,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": []
+        }
+      },
+      "failures": [
+        "top projection",
+        "Detailed drawing features and view assignments require review."
+      ],
+      "scope": "Partial automatic checks. No drawing acceptance from solid validity alone."
+    },
+    "diagnostics": {
+      "backend": "usd-brep",
+      "version": "1.0.0",
+      "recipe_version": 2,
+      "solid_volume_mm3": 14148.672581760347,
+      "mesh_volume_mm3": 14150.294236430154,
+      "extents_mm": [
+        40.0,
+        30.0,
+        12.0
+      ],
+      "bounds_mm": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          40.0,
+          30.0,
+          12.0
+        ]
+      ],
+      "watertight": true,
+      "winding_consistent": true,
+      "euler_number": 2,
+      "triangles": 140,
+      "usd_roundtrip": true,
+      "volume_relative_accuracy": 1e-08,
+      "usd_volume_mm3": 14148.672581849989,
+      "operations": [
+        {
+          "id": "block_body",
+          "kind": "box",
+          "faces": 6
+        },
+        {
+          "id": "recess_cutter",
+          "kind": "cylinder",
+          "faces": 3
+        },
+        {
+          "id": "final_part",
+          "kind": "difference",
+          "faces": 8
+        }
+      ],
+      "connections": [],
+      "build_seconds": 0.197
+    },
+    "controls": {
+      "object_type_hint": "",
+      "method": "3D print",
+      "primary_view": "top",
+      "projection_standard": "third-angle",
+      "strict_watertight": true,
+      "refine_mode": "regularize"
+    },
+    "files": {
+      "source": "/results/c45637eba8d5/brep-379366634945497e922aa77d55aa2fa8/model.recipe.json",
+      "stl": "/results/c45637eba8d5/brep-379366634945497e922aa77d55aa2fa8/model.stl",
+      "usd": "/results/c45637eba8d5/brep-379366634945497e922aa77d55aa2fa8/model.usda",
+      "views": {
+        "isometric": "/results/c45637eba8d5/brep-379366634945497e922aa77d55aa2fa8/view-isometric.png",
+        "front": "/results/c45637eba8d5/brep-379366634945497e922aa77d55aa2fa8/view-front.png",
+        "top": "/results/c45637eba8d5/brep-379366634945497e922aa77d55aa2fa8/view-top.png",
+        "right": "/results/c45637eba8d5/brep-379366634945497e922aa77d55aa2fa8/view-right.png"
+      },
+      "drawing_checks": "/results/c45637eba8d5/drawing-checks.json",
+      "clarifications": "/results/c45637eba8d5/clarifications.json",
+      "construction_plan": "/results/c45637eba8d5/construction-plan.json",
+      "evidence": "/results/c45637eba8d5/feature-evidence.json",
+      "generation": "/results/c45637eba8d5/generation.json"
+    },
+    "build": {
+      "version": 1,
+      "backend": "usd-brep",
+      "source_format": "brep-recipe-v2",
+      "ok": true,
+      "units": "mm",
+      "axes": {
+        "x": "width",
+        "y": "depth",
+        "z": "height"
+      },
+      "views": [
+        "isometric",
+        "front",
+        "top",
+        "right"
+      ],
+      "measurements": {
+        "watertight": true,
+        "components": 1,
+        "triangles": 140,
+        "extents_mm": [
+          40.0,
+          30.0,
+          12.0
+        ],
+        "volume_mm3": 14150.294
+      },
+      "diagnostics": [],
+      "drawing_evaluated": false
+    },
+    "original_run_id": null,
+    "generation": {
+      "path": "drawing-to-brep",
+      "backend": "usd-brep",
+      "prompt_version": "drawing-brep-11",
+      "correction_prompt_version": "construction-numeric-fields-3",
+      "max_construction_corrections": 2,
+      "construction_plan_version": "construction-intent-5",
+      "model": "local-inference-lab/Qwen3.8-Flash-Next-NVFP4",
+      "notes": "",
+      "maximum_dimension_mm": 40.0,
+      "controls": {
+        "object_type_hint": "",
+        "method": "3D print",
+        "primary_view": "top",
+        "projection_standard": "third-angle",
+        "strict_watertight": true,
+        "refine_mode": "regularize"
+      },
+      "generated_scad": false,
+      "drawing_fidelity_verified": false,
+      "attempts": [
+        {
+          "attempt": 1,
+          "schema_valid": true
+        }
+      ],
+      "construction_attempts": [
+        {
+          "attempt": 1,
+          "status": "built"
+        }
+      ]
+    }
+  },
+  "error": null,
+  "elapsed_seconds": 74.7
+}

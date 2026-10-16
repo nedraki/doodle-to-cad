@@ -1,0 +1,45 @@
+{
+  "view_frame": "The drawing provides a single TOP (XY) view. The world frame is defined as X = width (40 mm), Y = depth (30 mm), and Z = height/thickness (12 mm). The origin (0,0,0) is at the bottom-left corner of the top face, with Z extending downwards into the material (or upwards from the bottom face).",
+  "features": [
+    {
+      "id": "block_body",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XY plane (top face), extruded along Z",
+      "dimensions": [
+        "40",
+        "30",
+        "12"
+      ],
+      "placement": "Centred at (20, 15) in XY. Extends from X=0 to 40, Y=0 to 30, and Z=0 to 12.",
+      "evidence": "Text 'Body: 40 wide x 30 deep x 12 thick' and the rectangular outline in the TOP view."
+    },
+    {
+      "id": "central_opening",
+      "shape": "circular_cylinder",
+      "section": "circle",
+      "axis_or_plane": "XY plane (top face), extruded along Z",
+      "dimensions": [
+        "Ø8"
+      ],
+      "placement": "Centred at (20, 15) in XY. Extends along Z. The depth is currently undefined (see unresolved).",
+      "evidence": "Circular outline in the TOP view with dimension 'Ø8' and text 'Opening centred in top face'."
+    }
+  ],
+  "connections": [
+    "The central_opening is subtracted from the block_body."
+  ],
+  "edit_rules": [
+    "Changing the block width (X) or depth (Y) must maintain the opening's centred position relative to the new dimensions.",
+    "Changing the opening diameter (Ø8) must maintain its centred position."
+  ],
+  "unresolved": [
+    "The depth of the central opening is not specified. It is unclear if this is a through-hole (12mm deep) or a blind recess of a specific depth."
+  ],
+  "clarification": {
+    "feature_id": "central_opening",
+    "feature_label": "Ø8 circular opening in top face",
+    "reason": "The drawing shows the opening in the top view but does not indicate if it goes all the way through the 12mm thickness or stops at a specific depth.",
+    "kind": "opening_extent"
+  }
+}

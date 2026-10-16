@@ -1,0 +1,90 @@
+```json
+{
+  "version": 1,
+  "object_hypothesis": "Rectangular block with a central through-hole",
+  "features": [
+    {
+      "id": "body_block",
+      "type": "body",
+      "description": "Rectangular block body",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_8",
+          "region_id": "profile_contour_97"
+        },
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_95"
+        },
+        {
+          "view_id": "view_6",
+          "region_id": "profile_contour_93"
+        }
+      ],
+      "reason": "Rectangular outlines observed in multiple views (Top, Front, Side) define the external shape."
+    },
+    {
+      "id": "opening_hole",
+      "type": "opening",
+      "description": "Central circular opening",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_8",
+          "region_id": "profile_contour_102"
+        }
+      ],
+      "reason": "A circular contour is visible in the center of the top view."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "hole_in_block",
+      "type": "position",
+      "features": [
+        "opening_hole",
+        "body_block"
+      ],
+      "description": "Opening is located within the block",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_8",
+          "region_id": "profile_contour_102"
+        },
+        {
+          "view_id": "view_8",
+          "region_id": "profile_contour_97"
+        }
+      ],
+      "reason": "The circular contour is spatially contained within the rectangular boundary in the top view."
+    },
+    {
+      "id": "hole_through",
+      "type": "hollow",
+      "features": [
+        "opening_hole",
+        "body_block"
+      ],
+      "description": "Opening penetrates the block",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_8",
+          "region_id": "profile_contour_102"
+        }
+      ],
+      "reason": "While the top view shows the hole, the 'through' nature is inferred from the section view context (implied by the prompt's 'SECTION THROUGH CENTRE' label and 'THROUGH' text, though strictly speaking the measured regions only show the top view circle). The prompt text explicitly states 'THROUGH' and 'No floor below', confirming this relationship."
+    }
+  ],
+  "assumptions": [
+    "The 'SECTION THROUGH CENTRE' view implies the hole goes all the way through the block.",
+    "The block is a solid rectangular prism with a cylindrical hole removed."
+  ],
+  "unresolved": [
+    "Exact depth of the hole (though 'through' is stated in text, the measured regions don't explicitly show the bottom opening contour)."
+  ],
+  "conflicts": []
+}
+```

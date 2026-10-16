@@ -1,0 +1,41 @@
+{
+ "view_frame": "The drawing provides a TOP (XY) view. The world coordinate system is defined as: X is width (horizontal in top view), Y is depth (vertical in top view), and Z is height/thickness (perpendicular to the top view). The origin (0,0,0) is assumed at the bottom-left-front corner of the block's bounding box, with the block extending from X=0 to 40, Y=0 to 30, and Z=0 to 12.",
+ "features": [
+  {
+   "id": "block_body",
+   "shape": "box",
+   "section": "rectangular",
+   "axis_or_plane": "XY plane (top face), Z axis (height)",
+   "dimensions": [
+    "40",
+    "30",
+    "12"
+   ],
+   "placement": "Starts at (0,0,0) and extends to (40,30,12). Center is at (20,15,6).",
+   "evidence": "Text 'Body: 40 wide x 30 deep x 12 thick' and the rectangular outline in the TOP (XY) view with dimensions 40 and 30."
+  },
+  {
+   "id": "top_opening",
+   "shape": "cylinder",
+   "section": "circular",
+   "axis_or_plane": "Z axis (vertical)",
+   "dimensions": [
+    "Ø8",
+    "5"
+   ],
+   "placement": "Centered on the top face at (20,15). The recess extends downwards from Z=12 to Z=7 (depth 5mm).",
+   "evidence": "Circular feature in the TOP view labeled 'Ø8'. Text 'Opening centred in top face'. User clarification specifies it is a recess with depth 5mm."
+  }
+ ],
+ "connections": [
+  "The top_opening is subtracted from the top face of the block_body."
+ ],
+ "edit_rules": [
+  "If block_body width (X) changes, the top_opening center X coordinate must update to width/2.",
+  "If block_body depth (Y) changes, the top_opening center Y coordinate must update to depth/2.",
+  "If block_body thickness (Z) changes, the top_opening bottom Z coordinate must update to (thickness - recess_depth).",
+  "If top_opening diameter changes, the circle radius in the top view must update.",
+  "If top_opening depth changes, the bottom Z coordinate of the recess must update to (thickness - new_depth)."
+ ],
+ "unresolved": []
+}

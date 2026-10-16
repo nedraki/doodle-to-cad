@@ -1,0 +1,165 @@
+{
+  "version": 1,
+  "object_hypothesis": "A stepped mechanical component, likely a pulley or spool, featuring a central body and flanges on both ends.",
+  "features": [
+    {
+      "id": "body",
+      "type": "body",
+      "description": "Central connecting section between the two flanges.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_3"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_1"
+        }
+      ],
+      "reason": "Visible as the narrower central region in both front and right views."
+    },
+    {
+      "id": "flange_left",
+      "type": "flange",
+      "description": "Left-side flange extending outward from the central body.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_3"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_1"
+        }
+      ],
+      "reason": "Visible as the wider section on the left side of the profile in both views."
+    },
+    {
+      "id": "flange_right",
+      "type": "flange",
+      "description": "Right-side flange extending outward from the central body.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_3"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_1"
+        }
+      ],
+      "reason": "Visible as the wider section on the right side of the profile in both views."
+    },
+    {
+      "id": "step_left",
+      "type": "step",
+      "description": "Transition surface between the left flange and the central body.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_3"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_1"
+        }
+      ],
+      "reason": "Visible as the vertical segment connecting the flange to the body in both views."
+    },
+    {
+      "id": "step_right",
+      "type": "step",
+      "description": "Transition surface between the right flange and the central body.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_3"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_1"
+        }
+      ],
+      "reason": "Visible as the vertical segment connecting the flange to the body in both views."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "connect_body_flange_left",
+      "type": "connected",
+      "features": [
+        "body",
+        "flange_left"
+      ],
+      "description": "The central body is connected to the left flange.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_3"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_1"
+        }
+      ],
+      "reason": "The outline shows a continuous boundary between the body and the left flange."
+    },
+    {
+      "id": "connect_body_flange_right",
+      "type": "connected",
+      "features": [
+        "body",
+        "flange_right"
+      ],
+      "description": "The central body is connected to the right flange.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_3"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_1"
+        }
+      ],
+      "reason": "The outline shows a continuous boundary between the body and the right flange."
+    },
+    {
+      "id": "symmetry_profile",
+      "type": "symmetry",
+      "features": [
+        "flange_left",
+        "flange_right"
+      ],
+      "description": "The left and right flanges appear to be symmetrical about the central axis.",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_3"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_1"
+        }
+      ],
+      "reason": "The profiles in both views show similar dimensions for the left and right flanges, suggesting symmetry."
+    }
+  ],
+  "assumptions": [
+    "The object is a single, solid piece.",
+    "The views represent orthogonal projections of the same object."
+  ],
+  "unresolved": [
+    "The exact shape of the central body (e.g., cylindrical, rectangular).",
+    "The presence of any internal features or holes."
+  ],
+  "conflicts": []
+}

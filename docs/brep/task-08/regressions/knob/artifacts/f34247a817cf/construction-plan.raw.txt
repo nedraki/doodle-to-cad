@@ -1,0 +1,32 @@
+{
+  "view_frame": "The drawing presents two views of a single object, likely a front view (left) and a rear view (right), or two identical parts. The primary view is Front (XZ plane). The object is a flat, symmetrical profile resembling a spool or an 'I' beam with flared ends. The Y-axis represents the thickness (depth) of the part.",
+  "features": [
+    {
+      "id": "main_body",
+      "shape": "extruded_profile",
+      "section": "rectangular",
+      "axis_or_plane": "Y",
+      "dimensions": [
+        "width: 120mm",
+        "height: 120mm",
+        "thickness: 10mm (assumption)"
+      ],
+      "placement": "Centered at (0,0,0). The profile is defined in the XZ plane and extruded along the Y-axis.",
+      "evidence": "The drawing shows a symmetrical 'I' shape with flared top and bottom flanges and a narrower central web. The maximum dimension is 120mm."
+    }
+  ],
+  "connections": [
+    "The top flange connects to the central web.",
+    "The bottom flange connects to the central web.",
+    "The central web connects the top and bottom flanges."
+  ],
+  "edit_rules": [
+    "Changing the overall width scales the flange width and web width proportionally.",
+    "Changing the overall height scales the flange height and web height proportionally.",
+    "Changing the thickness extrudes the entire profile along the Y-axis."
+  ],
+  "unresolved": [
+    "The thickness (Y-axis dimension) is not specified in the drawing. An assumption of 10mm is used for the plan.",
+    "The specific proportions of the flanges vs. the web (e.g., flange height vs. web height) are estimated from the visual aspect ratio."
+  ]
+}

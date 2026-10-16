@@ -1,0 +1,67 @@
+{
+  "view_frame": "The drawing presents two views of a symmetrical mechanical part. The left view is the Front view (XZ plane), showing the part's width (X) and height (Z). The right view is the Right view (YZ plane), showing the part's depth (Y) and height (Z). The Top view (XY plane) is not explicitly drawn but is implied by the symmetry and the 'I-beam' like cross-section visible in the Right view.",
+  "features": [
+    {
+      "id": "top_flange",
+      "shape": "rectangular_prism",
+      "section": "rectangular",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "width: 100mm (ASSUMED)",
+        "height: 15mm (ASSUMED)",
+        "depth: 40mm (ASSUMED)"
+      ],
+      "placement": "Centered at X=0, Z=42.5 (top half of 85mm total height). Extends from X=-50 to X=50, Z=35 to Z=50, Y=-20 to Y=20.",
+      "evidence": "Top horizontal bar in Front view; top horizontal bar in Right view."
+    },
+    {
+      "id": "bottom_flange",
+      "shape": "rectangular_prism",
+      "section": "rectangular",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "width: 100mm (ASSUMED)",
+        "height: 15mm (ASSUMED)",
+        "depth: 40mm (ASSUMED)"
+      ],
+      "placement": "Centered at X=0, Z=-42.5 (bottom half of 85mm total height). Extends from X=-50 to X=50, Z=-50 to Z=-35, Y=-20 to Y=20.",
+      "evidence": "Bottom horizontal bar in Front view; bottom horizontal bar in Right view."
+    },
+    {
+      "id": "central_web",
+      "shape": "rectangular_prism",
+      "section": "rectangular",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "width: 30mm (ASSUMED)",
+        "height: 70mm (ASSUMED)",
+        "depth: 10mm (ASSUMED)"
+      ],
+      "placement": "Centered at X=0, Z=0. Connects top and bottom flanges. Extends from X=-15 to X=15, Z=-35 to Z=35, Y=-5 to Y=5.",
+      "evidence": "Vertical central column in Front view; central vertical section in Right view."
+    }
+  ],
+  "connections": [
+    "top_flange connects to central_web at Z=35",
+    "bottom_flange connects to central_web at Z=-35"
+  ],
+  "edit_rules": [
+    "Changing 'width' of flanges must update X extents of top_flange and bottom_flange.",
+    "Changing 'height' of flanges must update Z extents of top_flange and bottom_flange.",
+    "Changing 'depth' of flanges must update Y extents of top_flange and bottom_flange.",
+    "Changing 'width' of web must update X extents of central_web.",
+    "Changing 'depth' of web must update Y extents of central_web.",
+    "Changing 'height' of web must update Z extents of central_web and potentially flange positions if total height is fixed."
+  ],
+  "unresolved": [
+    "No dimensions are provided in the drawing. All dimensions are ASSUMED based on the 120mm maximum constraint and visual proportions.",
+    "The exact thickness of the central web relative to the flanges is not specified.",
+    "The exact height of the flanges relative to the total height is not specified."
+  ],
+  "clarification": {
+    "feature_id": "central_web",
+    "feature_label": "Central vertical web",
+    "reason": "The drawing does not specify the thickness of the central web relative to the flanges. This is a critical dimension for structural integrity and fit.",
+    "kind": "missing_dimension"
+  }
+}

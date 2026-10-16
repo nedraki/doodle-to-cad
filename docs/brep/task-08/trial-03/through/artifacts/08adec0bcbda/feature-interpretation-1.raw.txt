@@ -1,0 +1,64 @@
+{
+  "version": 1,
+  "object_hypothesis": "Rectangular block with a central circular opening",
+  "features": [
+    {
+      "id": "block_body",
+      "type": "body",
+      "description": "Rectangular block body",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_40"
+        }
+      ],
+      "reason": "View 4 shows a large rectangular outline consistent with the block's main body."
+    },
+    {
+      "id": "central_opening",
+      "type": "opening",
+      "description": "Circular opening in the center of the block",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_45"
+        }
+      ],
+      "reason": "View 4 shows an internal circular contour within the rectangular body."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "opening_in_body",
+      "type": "position",
+      "features": [
+        "central_opening",
+        "block_body"
+      ],
+      "description": "The circular opening is positioned centrally within the block body.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_45"
+        },
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_40"
+        }
+      ],
+      "reason": "The internal contour (opening) is located within the bounds of the outer contour (body) in the same view."
+    }
+  ],
+  "assumptions": [
+    "View 4 represents the top view of the object.",
+    "The object is a solid block with a through-hole or blind hole (depth not specified)."
+  ],
+  "unresolved": [
+    "Depth of the circular opening (through-hole vs. blind hole).",
+    "Exact dimensions of the block and opening (though text notes provide them, they are not measured from the image)."
+  ],
+  "conflicts": []
+}

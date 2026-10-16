@@ -1,0 +1,38 @@
+{
+  "view_frame": "The drawing provides a single TOP (XY) view. The world axes are defined as X = width (horizontal on sheet), Y = depth (vertical on sheet), and Z = height/thickness (perpendicular to the sheet). The view is a third-angle projection.",
+  "features": [
+    {
+      "id": "block_body",
+      "shape": "rectangular_prism",
+      "section": "rectangular",
+      "axis_or_plane": "XY plane",
+      "dimensions": [
+        "40 mm (width)",
+        "30 mm (depth)",
+        "12 mm (thickness)"
+      ],
+      "placement": "Centred at the origin (0,0,0). Extends from X=-20 to X=20, Y=-15 to Y=15, and Z=-6 to Z=6.",
+      "evidence": "Text label 'Body: 40 wide x 30 deep x 12 thick' and the rectangular outline in the TOP view."
+    },
+    {
+      "id": "central_opening",
+      "shape": "cylindrical_hole",
+      "section": "circular",
+      "axis_or_plane": "Z axis",
+      "dimensions": [
+        "\u00d88 mm"
+      ],
+      "placement": "Centred at (0,0) in the XY plane. Extends through the full thickness from Z=-6 to Z=6.",
+      "evidence": "Circular outline in the TOP view with dimension '\u00d88'. Text label 'Opening centred in top face'. User clarification confirms 'through'."
+    }
+  ],
+  "connections": [
+    "The central_opening is subtracted from the block_body along the Z axis."
+  ],
+  "edit_rules": [
+    "Changing the block width (X) or depth (Y) must maintain the opening's centred position relative to the new outer boundaries.",
+    "Changing the block thickness (Z) must update the start and end Z coordinates of the central_opening to maintain the through-hole condition.",
+    "Changing the opening diameter (\u00d8) must not violate the minimum wall thickness constraints (e.g., diameter < min(width, depth))."
+  ],
+  "unresolved": []
+}

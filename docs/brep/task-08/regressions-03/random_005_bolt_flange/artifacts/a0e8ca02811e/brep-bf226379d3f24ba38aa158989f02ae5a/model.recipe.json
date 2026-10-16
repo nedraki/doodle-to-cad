@@ -1,0 +1,290 @@
+{
+  "version": 2,
+  "units": "mm",
+  "name": "flange",
+  "parameters": {
+    "outer_diameter": {
+      "value": 100.0,
+      "min": 50,
+      "max": 120,
+      "label": "Outer Diameter",
+      "unit": "mm",
+      "description": "Diameter of the main flange body"
+    },
+    "thickness": {
+      "value": 10.0,
+      "min": 5,
+      "max": 20,
+      "label": "Thickness",
+      "unit": "mm",
+      "description": "Thickness of the flange"
+    },
+    "central_hole_diameter": {
+      "value": 30.0,
+      "min": 10,
+      "max": 60,
+      "label": "Central Hole Diameter",
+      "unit": "mm",
+      "description": "Diameter of the central through-hole"
+    },
+    "bolt_hole_diameter": {
+      "value": 8.0,
+      "min": 4,
+      "max": 15,
+      "label": "Bolt Hole Diameter",
+      "unit": "mm",
+      "description": "Diameter of the four peripheral bolt holes"
+    },
+    "bolt_circle_diameter": {
+      "value": 70.0,
+      "min": 40,
+      "max": 90,
+      "label": "Bolt Circle Diameter",
+      "unit": "mm",
+      "description": "Diameter of the circle on which the bolt holes are centered"
+    }
+  },
+  "operations": [
+    {
+      "id": "flange_base",
+      "kind": "cylinder",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "radius": "outer_diameter / 2",
+      "height": "thickness",
+      "axis": "z",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "central_hole",
+      "kind": "cylinder",
+      "origin": [
+        0,
+        0,
+        -1
+      ],
+      "radius": "central_hole_diameter / 2",
+      "height": "thickness + 2",
+      "axis": "z",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "diff_central",
+      "kind": "difference",
+      "left": "flange_base",
+      "right": "central_hole",
+      "frame": "world",
+      "depends_on": [
+        "flange_base",
+        "central_hole"
+      ],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "bolt_hole_1",
+      "kind": "cylinder",
+      "origin": [
+        "bolt_circle_diameter / 2",
+        "bolt_circle_diameter / 2",
+        -1
+      ],
+      "radius": "bolt_hole_diameter / 2",
+      "height": "thickness + 2",
+      "axis": "z",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "diff_bolt_1",
+      "kind": "difference",
+      "left": "diff_central",
+      "right": "bolt_hole_1",
+      "frame": "world",
+      "depends_on": [
+        "diff_central",
+        "bolt_hole_1"
+      ],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "bolt_hole_2",
+      "kind": "cylinder",
+      "origin": [
+        "-bolt_circle_diameter / 2",
+        "bolt_circle_diameter / 2",
+        -1
+      ],
+      "radius": "bolt_hole_diameter / 2",
+      "height": "thickness + 2",
+      "axis": "z",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "diff_bolt_2",
+      "kind": "difference",
+      "left": "diff_bolt_1",
+      "right": "bolt_hole_2",
+      "frame": "world",
+      "depends_on": [
+        "diff_bolt_1",
+        "bolt_hole_2"
+      ],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "bolt_hole_3",
+      "kind": "cylinder",
+      "origin": [
+        "-bolt_circle_diameter / 2",
+        "-bolt_circle_diameter / 2",
+        -1
+      ],
+      "radius": "bolt_hole_diameter / 2",
+      "height": "thickness + 2",
+      "axis": "z",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "diff_bolt_3",
+      "kind": "difference",
+      "left": "diff_bolt_2",
+      "right": "bolt_hole_3",
+      "frame": "world",
+      "depends_on": [
+        "diff_bolt_2",
+        "bolt_hole_3"
+      ],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "bolt_hole_4",
+      "kind": "cylinder",
+      "origin": [
+        "bolt_circle_diameter / 2",
+        "-bolt_circle_diameter / 2",
+        -1
+      ],
+      "radius": "bolt_hole_diameter / 2",
+      "height": "thickness + 2",
+      "axis": "z",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "final_flange",
+      "kind": "difference",
+      "left": "diff_bolt_3",
+      "right": "bolt_hole_4",
+      "frame": "world",
+      "depends_on": [
+        "diff_bolt_3",
+        "bolt_hole_4"
+      ],
+      "evidence": [
+        "e3"
+      ]
+    }
+  ],
+  "output": "final_flange",
+  "frames": {
+    "world": {
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    }
+  },
+  "bodies": [
+    {
+      "id": "part",
+      "output": "final_flange"
+    }
+  ],
+  "evidence": {
+    "observed": [
+      {
+        "id": "e1",
+        "text": "Large circular outer boundary in front view and rectangular profile in top view."
+      },
+      {
+        "id": "e2",
+        "text": "Central circular opening in front view."
+      },
+      {
+        "id": "e3",
+        "text": "Four small circular openings arranged symmetrically in the front view."
+      }
+    ],
+    "inferred": [
+      {
+        "id": "e4",
+        "text": "Symmetrical arrangement of the four peripheral holes."
+      },
+      {
+        "id": "e5",
+        "text": "Concentricity of the central hole with the outer body."
+      }
+    ],
+    "assumptions": [
+      {
+        "id": "e6",
+        "text": "Assumed outer diameter is 100mm."
+      },
+      {
+        "id": "e7",
+        "text": "Assumed thickness is 10mm."
+      },
+      {
+        "id": "e8",
+        "text": "Assumed central hole diameter is 30mm."
+      },
+      {
+        "id": "e9",
+        "text": "Assumed bolt hole diameter is 8mm."
+      },
+      {
+        "id": "e10",
+        "text": "Assumed bolt circle diameter is 70mm."
+      }
+    ],
+    "unresolved": []
+  },
+  "constraints": []
+}
