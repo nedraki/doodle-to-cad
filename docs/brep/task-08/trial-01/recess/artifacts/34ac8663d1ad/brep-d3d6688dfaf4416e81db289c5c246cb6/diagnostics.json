@@ -1,0 +1,50 @@
+{
+  "backend": "usd-brep",
+  "version": "1.0.0",
+  "recipe_version": 2,
+  "solid_volume_mm3": 14148.672584182066,
+  "mesh_volume_mm3": 14150.294236363601,
+  "extents_mm": [
+    40.0,
+    30.0,
+    12.0
+  ],
+  "bounds_mm": [
+    [
+      -20.0,
+      -15.0,
+      0.0
+    ],
+    [
+      20.0,
+      15.0,
+      12.0
+    ]
+  ],
+  "watertight": true,
+  "winding_consistent": true,
+  "euler_number": 2,
+  "triangles": 140,
+  "usd_roundtrip": true,
+  "volume_relative_accuracy": 1e-08,
+  "usd_volume_mm3": 14148.67258433322,
+  "operations": [
+    {
+      "id": "block",
+      "kind": "box",
+      "faces": 6
+    },
+    {
+      "id": "cutter",
+      "kind": "cylinder",
+      "faces": 3
+    },
+    {
+      "id": "part",
+      "kind": "difference",
+      "faces": 8
+    }
+  ],
+  "connections": [],
+  "build_seconds": 0.165
+}

@@ -1,0 +1,19 @@
+{
+  "feature_id": "top_opening",
+  "feature_label": "\u00d88 circular opening in top face",
+  "reason": "The drawing shows the opening in the top view but does not indicate if it goes all the way through the 12mm thickness or is a blind hole. A side or section view is missing.",
+  "kind": "opening_extent",
+  "id": "9ec886ed81984c34a12cb50114a463d5",
+  "text": "Should this hole go all the way through the part?",
+  "maximum_depth_mm": 40.0,
+  "choices": [
+    {
+      "id": "through",
+      "label": "Yes \u2014 make a through-hole"
+    },
+    {
+      "id": "recess",
+      "label": "No \u2014 leave a bottom"
+    }
+  ]
+}

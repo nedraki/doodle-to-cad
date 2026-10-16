@@ -1,0 +1,14 @@
+[
+  {
+    "attempt": 1,
+    "status": "failed",
+    "error": {
+      "code": "connection_failed",
+      "message": "joint1: required connection failed between flange_top and web (required overlap 0.01 mm3): overlap 0 mm3 is too small"
+    }
+  },
+  {
+    "attempt": 2,
+    "status": "built"
+  }
+]

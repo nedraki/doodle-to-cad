@@ -1,0 +1,46 @@
+{
+  "view_frame": "The drawing provides a TOP (XY) view. The X-axis represents width (40 mm), the Y-axis represents depth (30 mm), and the Z-axis represents height/thickness (12 mm). The origin (0,0,0) is assumed at the bottom-left-front corner of the block.",
+  "features": [
+    {
+      "id": "block_body",
+      "shape": "box",
+      "section": "rectangular",
+      "axis_or_plane": "XY plane",
+      "dimensions": [
+        "40",
+        "30",
+        "12"
+      ],
+      "placement": "Centred at (20, 15, 6). Extends from (0,0,0) to (40,30,12).",
+      "evidence": "Text 'Body: 40 wide x 30 deep x 12 thick' and the rectangular outline in the TOP view."
+    },
+    {
+      "id": "opening_centre",
+      "shape": "circle",
+      "section": "circular",
+      "axis_or_plane": "XY plane",
+      "dimensions": [
+        "Ø8"
+      ],
+      "placement": "Centre at (20, 15). Located on the top face (Z=12).",
+      "evidence": "Circular outline in the TOP view with dimension 'Ø8' and text 'Opening centred in top face'."
+    }
+  ],
+  "connections": [
+    "The opening is located on the top face of the block_body."
+  ],
+  "edit_rules": [
+    "If block width (X) changes, the opening centre X coordinate must update to width/2.",
+    "If block depth (Y) changes, the opening centre Y coordinate must update to depth/2.",
+    "If block thickness (Z) changes, the opening depth (if recess) or extent (if through) must be re-evaluated."
+  ],
+  "unresolved": [
+    "The depth of the opening is not specified. It is unclear if the Ø8 circle represents a through-hole or a blind recess."
+  ],
+  "clarification": {
+    "feature_id": "opening_centre",
+    "feature_label": "Ø8 Opening on top face",
+    "reason": "The drawing shows a circle on the top view but does not indicate depth via hidden lines, section views, or text labels (e.g., 'THRU' or depth value).",
+    "kind": "opening_extent"
+  }
+}

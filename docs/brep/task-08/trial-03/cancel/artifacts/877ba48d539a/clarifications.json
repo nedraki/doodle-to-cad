@@ -1,0 +1,24 @@
+[
+  {
+    "question": {
+      "feature_id": "top_opening",
+      "feature_label": "\u00d88 circular opening in top face",
+      "reason": "The drawing does not specify if the opening is a through-hole or a blind recess, nor does it provide a depth for a recess.",
+      "kind": "opening_extent",
+      "id": "891ed98ee0d94393bf77d9f805f12d34",
+      "text": "Should this hole go all the way through the part?",
+      "maximum_depth_mm": 40.0,
+      "choices": [
+        {
+          "id": "through",
+          "label": "Yes \u2014 make a through-hole"
+        },
+        {
+          "id": "recess",
+          "label": "No \u2014 leave a bottom"
+        }
+      ]
+    },
+    "status": "cancelled"
+  }
+]

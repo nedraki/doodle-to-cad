@@ -1,0 +1,39 @@
+{
+  "view_frame": "The drawing provides a TOP view in the XY plane. X represents width (horizontal), Y represents depth (vertical on sheet), and Z represents height (thickness, perpendicular to the view). The block is positioned with its bottom face at Z=0 and top face at Z=12. The block footprint is centered at X=20, Y=15.",
+  "features": [
+    {
+      "id": "block_body",
+      "shape": "Rectangular Prism",
+      "section": "Rectangle",
+      "axis_or_plane": "XY plane (footprint), extruded along Z",
+      "dimensions": [
+        "40 mm (X width)",
+        "30 mm (Y depth)",
+        "12 mm (Z thickness)"
+      ],
+      "placement": "Starts at (0, 0, 0) and extends to (40, 30, 12).",
+      "evidence": "Text 'Body: 40 wide x 30 deep x 12 thick' and the rectangular outline in the TOP view."
+    },
+    {
+      "id": "opening",
+      "shape": "Cylinder (Through Hole)",
+      "section": "Circle",
+      "axis_or_plane": "Z axis (vertical)",
+      "dimensions": [
+        "Ø8 mm (diameter)"
+      ],
+      "placement": "Centered at (20, 15) in XY. Extends from Z=0 to Z=12 (through the entire thickness).",
+      "evidence": "Circular feature in TOP view labeled 'Ø8'. Text 'Opening centred in top face'. User clarification confirms 'through'."
+    }
+  ],
+  "connections": [
+    "The opening is a subtractive feature from the block_body.",
+    "The opening axis is parallel to the Z axis (thickness direction)."
+  ],
+  "edit_rules": [
+    "If block width (X) changes, the opening X center must remain at width/2.",
+    "If block depth (Y) changes, the opening Y center must remain at depth/2.",
+    "If block thickness (Z) changes, the opening depth must update to match the new thickness (maintaining through-hole status)."
+  ],
+  "unresolved": []
+}

@@ -1,0 +1,71 @@
+{
+  "backend": "usd-brep",
+  "version": "1.0.0",
+  "recipe_version": 2,
+  "solid_volume_mm3": 72000.0,
+  "mesh_volume_mm3": 72000.0,
+  "extents_mm": [
+    120.0,
+    10.0,
+    120.0
+  ],
+  "bounds_mm": [
+    [
+      -60.0,
+      -5.0,
+      0.0
+    ],
+    [
+      60.0,
+      5.0,
+      120.0
+    ]
+  ],
+  "watertight": true,
+  "winding_consistent": true,
+  "euler_number": 2,
+  "triangles": 44,
+  "usd_roundtrip": true,
+  "volume_relative_accuracy": 1e-08,
+  "usd_volume_mm3": 72000.0,
+  "operations": [
+    {
+      "id": "flange_top",
+      "kind": "box",
+      "faces": 6
+    },
+    {
+      "id": "flange_bottom",
+      "kind": "box",
+      "faces": 6
+    },
+    {
+      "id": "web",
+      "kind": "box",
+      "faces": 6
+    },
+    {
+      "id": "pulley",
+      "kind": "union",
+      "faces": 12
+    },
+    {
+      "id": "pulley_full",
+      "kind": "union",
+      "faces": 14
+    }
+  ],
+  "connections": [
+    {
+      "id": "joint1",
+      "overlap_mm3": 400.0,
+      "passed": true
+    },
+    {
+      "id": "joint2",
+      "overlap_mm3": 400.0000000000001,
+      "passed": true
+    }
+  ],
+  "build_seconds": 0.131
+}

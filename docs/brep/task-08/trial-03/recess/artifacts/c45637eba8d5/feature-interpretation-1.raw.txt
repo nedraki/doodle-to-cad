@@ -1,0 +1,64 @@
+{
+  "version": 1,
+  "object_hypothesis": "Rectangular block with a central circular opening",
+  "features": [
+    {
+      "id": "block_body",
+      "type": "body",
+      "description": "Rectangular block body",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_40"
+        }
+      ],
+      "reason": "View 4 shows a large rectangular outline consistent with the block body."
+    },
+    {
+      "id": "central_opening",
+      "type": "opening",
+      "description": "Circular opening centered in the block",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_45"
+        }
+      ],
+      "reason": "View 4 shows a circular contour inside the rectangular body, labeled as an opening."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "opening_in_body",
+      "type": "position",
+      "features": [
+        "central_opening",
+        "block_body"
+      ],
+      "description": "The circular opening is positioned centrally within the rectangular block body.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_40"
+        },
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_45"
+        }
+      ],
+      "reason": "The circular contour is located within the bounds of the rectangular contour in View 4."
+    }
+  ],
+  "assumptions": [
+    "The block is a solid rectangular prism.",
+    "The opening is a through-hole or blind hole centered in the top face."
+  ],
+  "unresolved": [
+    "Depth of the opening (through-hole vs. blind hole).",
+    "Exact dimensions of the block and opening (provided in text but not measured from image)."
+  ],
+  "conflicts": []
+}

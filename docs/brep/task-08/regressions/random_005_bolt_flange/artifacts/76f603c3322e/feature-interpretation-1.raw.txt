@@ -1,0 +1,191 @@
+```json
+{
+  "version": 1,
+  "object_hypothesis": "A circular flange or plate with a central hub and four peripheral holes, accompanied by a separate rectangular component.",
+  "features": [
+    {
+      "id": "plate_body",
+      "type": "body",
+      "description": "The main circular body of the object, appearing as a large polygon in the front view and a rectangular strip in the top view.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_13"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_0"
+        }
+      ],
+      "reason": "Visible as the primary outer boundary in both views. The top view shows a thin profile, while the front view shows a large circular face."
+    },
+    {
+      "id": "central_hole",
+      "type": "opening",
+      "description": "A large circular opening located at the geometric center of the plate.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_6"
+        }
+      ],
+      "reason": "Clearly visible as a central internal contour in the front view. Its circularity suggests a hole or hub bore."
+    },
+    {
+      "id": "hole_tl",
+      "type": "opening",
+      "description": "A small circular hole located in the upper-left quadrant of the plate.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_11"
+        }
+      ],
+      "reason": "Visible as a distinct internal contour in the front view."
+    },
+    {
+      "id": "hole_tr",
+      "type": "opening",
+      "description": "A small circular hole located in the upper-right quadrant of the plate.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_9"
+        }
+      ],
+      "reason": "Visible as a distinct internal contour in the front view."
+    },
+    {
+      "id": "hole_bl",
+      "type": "opening",
+      "description": "A small circular hole located in the lower-left quadrant of the plate.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_4"
+        }
+      ],
+      "reason": "Visible as a distinct internal contour in the front view."
+    },
+    {
+      "id": "hole_br",
+      "type": "opening",
+      "description": "A small circular hole located in the lower-right quadrant of the plate.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_2"
+        }
+      ],
+      "reason": "Visible as a distinct internal contour in the front view."
+    },
+    {
+      "id": "rect_component",
+      "type": "other",
+      "description": "A separate rectangular strip located above the main circular object.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_13"
+        }
+      ],
+      "reason": "The top view isolates a rectangular shape that does not spatially overlap with the circular object in the drawing layout, suggesting it is a separate part or a distinct feature."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "hole_pattern",
+      "type": "repeated",
+      "features": [
+        "hole_tl",
+        "hole_tr",
+        "hole_bl",
+        "hole_br"
+      ],
+      "description": "The four small holes are arranged in a symmetrical pattern around the center.",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_11"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_9"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_4"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_2"
+        }
+      ],
+      "reason": "The holes appear equidistant from the center and from each other in the front view, suggesting a 4-bolt pattern."
+    },
+    {
+      "id": "central_alignment",
+      "type": "position",
+      "features": [
+        "central_hole",
+        "plate_body"
+      ],
+      "description": "The central hole is concentric with the outer plate body.",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_6"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_0"
+        }
+      ],
+      "reason": "The center of the internal contour aligns with the center of the outer contour in the front view."
+    },
+    {
+      "id": "view_correspondence",
+      "type": "other",
+      "features": [
+        "plate_body",
+        "rect_component"
+      ],
+      "description": "The top view likely represents the thickness profile of the plate body.",
+      "status": "unresolved",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_13"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_0"
+        }
+      ],
+      "reason": "While the top view shows a thin profile consistent with a plate, its placement above the main object and lack of vertical alignment lines makes it ambiguous whether it is a separate part or a projection of the main body."
+    }
+  ],
+  "assumptions": [
+    "The 'front' view (view_2) represents the face of the object.",
+    "The 'top' view (view_1) represents the side profile or a separate component.",
+    "The circular contours in the front view represent through-holes."
+  ],
+  "unresolved": [
+    "The exact relationship between the rectangular strip in view_1 and the circular body in view_2 (separate part vs. projection).",
+    "The depth or thickness of the plate (view_1 is too small to measure accurately).",
+    "Whether the central hole is a through-hole or a blind pocket."
+  ],
+  "conflicts": [
+    "The top view (view_1) shows a rectangular shape, while the front view (view_2) shows a circular shape. If these are projections of the same object, the object is a cylinder/plate. If they are separate, the object is a composite assembly."
+  ]
+}
+```

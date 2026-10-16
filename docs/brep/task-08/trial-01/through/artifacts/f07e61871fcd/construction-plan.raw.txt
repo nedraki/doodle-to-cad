@@ -1,0 +1,46 @@
+{
+  "view_frame": "The drawing provides a single TOP view (XY plane). The X-axis represents Width (40mm), the Y-axis represents Depth (30mm), and the Z-axis represents Thickness/Height (12mm). The origin (0,0,0) is assumed to be the bottom-left-front corner of the block.",
+  "features": [
+    {
+      "id": "block_body",
+      "shape": "Rectangular Prism",
+      "section": "Rectangle",
+      "axis_or_plane": "XY plane (Top view)",
+      "dimensions": [
+        "40",
+        "30",
+        "12"
+      ],
+      "placement": "Starts at (0,0,0) and extends to (40,30,12).",
+      "evidence": "Text 'Body: 40 wide x 30 deep x 12 thick' and the rectangular outline in the TOP view."
+    },
+    {
+      "id": "opening",
+      "shape": "Circle",
+      "section": "Circle",
+      "axis_or_plane": "XY plane (Top view)",
+      "dimensions": [
+        "Ø8"
+      ],
+      "placement": "Centered at (20, 15) in the XY plane. The feature extends along the Z-axis.",
+      "evidence": "Circular outline in the TOP view with dimension 'Ø8' and text 'Opening centred in top face'."
+    }
+  ],
+  "connections": [
+    "The opening is located within the block_body."
+  ],
+  "edit_rules": [
+    "If the block width (X) changes, the opening center X-coordinate must update to width/2.",
+    "If the block depth (Y) changes, the opening center Y-coordinate must update to depth/2.",
+    "If the opening diameter changes, the circle radius must update to diameter/2."
+  ],
+  "unresolved": [
+    "The depth of the opening is not specified. It is unclear if this is a through-hole (12mm deep) or a blind hole/recess of a specific depth."
+  ],
+  "clarification": {
+    "feature_id": "opening",
+    "feature_label": "Ø8 Opening in top face",
+    "reason": "The drawing shows the opening in the top view but does not indicate if it goes all the way through the 12mm thickness or stops at a specific depth.",
+    "kind": "opening_extent"
+  }
+}

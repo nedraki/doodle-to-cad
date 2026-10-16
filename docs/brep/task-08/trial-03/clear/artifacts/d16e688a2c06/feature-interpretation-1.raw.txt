@@ -1,0 +1,100 @@
+```json
+{
+  "version": 1,
+  "object_hypothesis": "Rectangular block with a central through-hole",
+  "features": [
+    {
+      "id": "body",
+      "type": "body",
+      "description": "Rectangular block body",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_8",
+          "region_id": "profile_contour_97"
+        },
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_95"
+        },
+        {
+          "view_id": "view_6",
+          "region_id": "profile_contour_93"
+        }
+      ],
+      "reason": "Rectangular outlines are visible in multiple views (view_5, view_6, view_8), consistent with a block shape."
+    },
+    {
+      "id": "opening",
+      "type": "opening",
+      "description": "Central circular opening",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_8",
+          "region_id": "profile_contour_102"
+        }
+      ],
+      "reason": "A circular contour is visible in the center of the top view (view_8)."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "opening_in_body",
+      "type": "position",
+      "features": [
+        "opening",
+        "body"
+      ],
+      "description": "Opening is positioned within the body",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_8",
+          "region_id": "profile_contour_102"
+        },
+        {
+          "view_id": "view_8",
+          "region_id": "profile_contour_97"
+        }
+      ],
+      "reason": "The circular contour (opening) is located inside the rectangular contour (body) in the top view."
+    },
+    {
+      "id": "opening_through_body",
+      "type": "hollow",
+      "features": [
+        "opening",
+        "body"
+      ],
+      "description": "Opening passes through the body",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_8",
+          "region_id": "profile_contour_102"
+        },
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_95"
+        },
+        {
+          "view_id": "view_6",
+          "region_id": "profile_contour_93"
+        }
+      ],
+      "reason": "The opening is visible in the top view, and the side views show a solid block. The text 'THROUGH' and 'No floor below opening' supports the inference that the opening passes completely through the body."
+    }
+  ],
+  "assumptions": [
+    "The object is a solid block with a hole, not a hollow shell.",
+    "The views are orthographic projections.",
+    "The text annotations accurately describe the geometry."
+  ],
+  "unresolved": [
+    "Exact dimensions of the block and hole are not measured from the image, only from text.",
+    "Surface finish and material are unknown."
+  ],
+  "conflicts": []
+}
+```

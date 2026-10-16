@@ -40,7 +40,7 @@ JOB_ID_RE = re.compile(r"^[0-9a-f]{12}$")
 def _prune_jobs() -> None:
     stale = sorted(JOBS, key=lambda key: JOBS[key]["created"])[:-MAX_TRACKED_JOBS]
     for key in stale:
-        if JOBS[key]["status"] not in {"running", "cancelling"}:
+        if JOBS[key]["status"] not in {"running", "cancelling", "waiting_for_answer"}:
             del JOBS[key]
 
 
@@ -296,6 +296,7 @@ def job_status(job_id: str):
                     "result": json.loads((settings.results_dir / job_id / "result.json").read_text())}
         raise HTTPException(404, "Unknown job")
     payload = {key: job[key] for key in ("job_id", "status", "stage", "result", "error")}
+    if job.get("question"): payload["question"] = job["question"]
     payload["elapsed_seconds"] = round(time.monotonic() - job["created"], 1)
     return payload
 
@@ -304,7 +305,7 @@ def job_status(job_id: str):
 async def job_cancel(job_id: str):
     job = JOBS.get(job_id)
     if not job: raise HTTPException(404, "Unknown job")
-    if job["status"] == "running" and job["task"]:
+    if job["status"] in {"running", "waiting_for_answer"} and job["task"]:
         job["task"].cancel()
         if job.get("kind") == "recipe":
             try:
@@ -316,3 +317,11 @@ async def job_cancel(job_id: str):
             await asyncio.sleep(0)  # let the cancellation settle into the job record
         return {"job_id": job_id, "status": job["status"]}
     return {"job_id": job_id, "status": job["status"]}
+
+
+@app.post("/api/generate/{job_id}/answer")
+async def answer_question(job_id: str, payload: dict):
+    from .clarification import accept_answer
+    job=JOBS.get(job_id)
+    if not job:raise HTTPException(404, "Unknown job")
+    return accept_answer(job,payload)

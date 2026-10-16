@@ -1,0 +1,81 @@
+{
+  "view_frame": "Third-angle projection. Front view (bottom-left) shows X (width) and Z (height). Top view (top-center) shows X (width) and Y (depth). Right view (bottom-right) shows Y (depth) and Z (height).",
+  "features": [
+    {
+      "id": "main_body",
+      "shape": "rectangular_prism",
+      "section": "rectangular",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "width: 20mm (assumed)",
+        "height: 100mm (assumed)",
+        "depth: 10mm (assumed)"
+      ],
+      "placement": "Centred at X=0, Y=0, Z=50. Extents: X[-10, 10], Y[-5, 5], Z[0, 100].",
+      "evidence": "Rectangular outline in Front view (XZ) and Right view (YZ). Top view (XY) shows the cross-section."
+    },
+    {
+      "id": "top_notch",
+      "shape": "cylindrical_cutout",
+      "section": "circular",
+      "axis_or_plane": "Y",
+      "dimensions": [
+        "radius: 5mm (assumed)",
+        "depth: 10mm (through)"
+      ],
+      "placement": "Centred at X=0, Z=100. Axis along Y. Cuts into the top face of main_body.",
+      "evidence": "Semi-circular indentation at the top edge of the Top view (XY)."
+    },
+    {
+      "id": "bottom_notch",
+      "shape": "cylindrical_cutout",
+      "section": "circular",
+      "axis_or_plane": "Y",
+      "dimensions": [
+        "radius: 3mm (assumed)",
+        "depth: 10mm (through)"
+      ],
+      "placement": "Centred at X=0, Z=0. Axis along Y. Cuts into the bottom face of main_body.",
+      "evidence": "Semi-circular indentation at the bottom edge of the Top view (XY)."
+    },
+    {
+      "id": "central_hole",
+      "shape": "cylindrical_hole",
+      "section": "circular",
+      "axis_or_plane": "Y",
+      "dimensions": [
+        "radius: 3mm (assumed)"
+      ],
+      "placement": "Centred at X=0, Z=50. Axis along Y. Through-hole.",
+      "evidence": "Circular outline in the centre of the Top view (XY)."
+    },
+    {
+      "id": "side_holes",
+      "shape": "rectangular_holes",
+      "section": "rectangular",
+      "axis_or_plane": "X",
+      "dimensions": [
+        "width: 4mm (assumed)",
+        "height: 6mm (assumed)",
+        "count: 5"
+      ],
+      "placement": "Centred at Y=0. Distributed along Z at Z=20, 40, 60, 80, 90 (approx). Axis along X. Through-holes.",
+      "evidence": "Five rectangular outlines in the Right view (YZ). No corresponding lines in Front view, implying through-holes along X."
+    }
+  ],
+  "connections": [
+    "top_notch and bottom_notch are boolean subtractions from main_body.",
+    "central_hole is a boolean subtraction from main_body.",
+    "side_holes are boolean subtractions from main_body."
+  ],
+  "edit_rules": [
+    "Changing main_body height requires updating Z positions of side_holes and central_hole.",
+    "Changing main_body width requires updating X positions of side_holes (if not centred) and central_hole.",
+    "Changing main_body depth requires updating Y positions of top_notch, bottom_notch, and central_hole."
+  ],
+  "unresolved": [
+    "Exact dimensions of the main body (width, height, depth) are not provided.",
+    "Exact dimensions and positions of the side holes are not provided.",
+    "Exact dimensions of the notches and central hole are not provided."
+  ]
+}

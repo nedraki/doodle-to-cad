@@ -1,0 +1,46 @@
+{
+  "view_frame": "The drawing provides a TOP (XY) view. The X-axis represents width (40 mm), the Y-axis represents depth (30 mm), and the Z-axis represents height/thickness (12 mm). The origin (0,0,0) is assumed at the bottom-left-front corner of the block.",
+  "features": [
+    {
+      "id": "block_body",
+      "shape": "box",
+      "section": "rectangular",
+      "axis_or_plane": "XY plane",
+      "dimensions": [
+        "40",
+        "30",
+        "12"
+      ],
+      "placement": "Centred at (20, 15, 6). Extends from X=0 to 40, Y=0 to 30, Z=0 to 12.",
+      "evidence": "Text 'Body: 40 wide x 30 deep x 12 thick' and rectangular outline in TOP view."
+    },
+    {
+      "id": "opening_centre",
+      "shape": "circle",
+      "section": "circular",
+      "axis_or_plane": "XY plane",
+      "dimensions": [
+        "\u00d88"
+      ],
+      "placement": "Centred at (20, 15). Located in the middle of the 40x30 rectangle.",
+      "evidence": "Circle symbol in TOP view with dimension '\u00d88' and text 'Opening centred in top face'."
+    }
+  ],
+  "connections": [
+    "The opening is located on the top face (Z=12) of the block_body."
+  ],
+  "edit_rules": [
+    "If block width (X) changes, the opening centre X coordinate must update to width/2.",
+    "If block depth (Y) changes, the opening centre Y coordinate must update to depth/2.",
+    "If block thickness (Z) changes, the opening depth (if recess) or through status must be re-evaluated."
+  ],
+  "unresolved": [
+    "The extent of the opening (through-hole vs. recess) is not defined in the drawing or notes."
+  ],
+  "clarification": {
+    "feature_id": "opening_centre",
+    "feature_label": "\u00d88 Opening in top face",
+    "reason": "The drawing shows a circle in the top view but does not indicate if it goes all the way through the block or is a blind hole (recess).",
+    "kind": "opening_extent"
+  }
+}

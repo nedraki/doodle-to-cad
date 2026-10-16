@@ -1,7 +1,7 @@
 """A drawing-grounded construction plan, saved before executable recipe generation."""
-PROMPT_VERSION='construction-intent-2'
+PROMPT_VERSION='construction-intent-5'
 PROMPT='''Read the drawing and its declared view controls. Produce a construction plan, not executable code.
-Return JSON with exactly: view_frame, features, connections, edit_rules, unresolved.
+Return JSON with: view_frame, features, connections, edit_rules, unresolved, and optional clarification.
 view_frame: string explaining the labelled views and world axes (X width, Y depth, Z height).
 features: list of objects with exactly id, shape, section, axis_or_plane, dimensions, placement, evidence.
 All feature fields are strings except dimensions, which is a list of strings containing only drawing dimensions or explicitly marked assumptions.
@@ -13,11 +13,13 @@ Resolve view labels BEFORE placing geometry. Front uses XZ; top uses XY; right u
 For a curved path, state each straight segment's axis, each bend's plane, and how their endpoints meet. An XY arc goes from +X counterclockwise. Do not place a horizontal bend on unrelated vertical legs. Raise the section centre above the bed by its radius; do not rotate the part merely to lift it.
 For edge treatments, distinguish flat bevels from circular rounds. State which edges change and which remain sharp. The entire outer envelope and protected dimensions must remain fixed when only an edge radius changes.
 Dimensions and geometric arithmetic must be consistent across views. For each editable parameter, state the dependent placements that must move with it. If the drawing does not establish a construction value, record the uncertainty rather than inventing certainty.
+For an opening whose through-hole versus recess meaning is genuinely missing from the drawing AND user notes, add clarification: {"feature_id":"an existing feature id","feature_label":"short location and description","reason":"what the drawing does not establish","kind":"opening_extent"}. Keep this decision in unresolved until answered. Ask only about one opening at a time. Do not ask when a section/side view, a THROUGH label, or the user answer establishes the meaning. Do not ask to repair a modeling failure or to handle an unsupported operation.
+User answers in clarification_answers are authoritative design intent for the named feature. Preserve feature IDs when replanning. For recess, depth_mm is supplied by the user. Do not ask the same question again. Put other missing construction decisions in unresolved for the recipe planner. It must disclose a permitted assumption or retain the unresolved value so recipe validation stops the build. Default policy: visible proportions and a missing uniform body thickness may use an explicit, editable assumption when no fit, mating interface, cavity floor or required connection depends on the missing value. Label that value ASSUMED in dimensions and expose it for editing. Do not also put an accepted assumption in unresolved. unresolved contains ONLY decisions that prevent a supported construction, such as conflicting views, unknown opening extent, or a missing fit-critical dimension. Never silently choose through-hole versus recess or recess depth. An opening answer takes priority over all earlier assumptions.
 Keep the plan concise. Do not use benchmark references or assume a part template.'''
 
 
 def validate_plan(plan):
-    if not isinstance(plan,dict) or set(plan)!={'view_frame','features','connections','edit_rules','unresolved'}:
+    if not isinstance(plan,dict) or set(plan)-{'clarification'}!={'view_frame','features','connections','edit_rules','unresolved'}:
         raise ValueError('Expected construction plan fields')
     def text(v):
         if not isinstance(v,str) or not 1<=len(v)<=2500:raise ValueError('Expected bounded construction-plan text')
@@ -36,4 +38,11 @@ def validate_plan(plan):
     for key in ['connections','edit_rules','unresolved']:
         if not isinstance(plan[key],list) or len(plan[key])>128:raise ValueError('Expected bounded construction-plan list')
         for value in plan[key]:text(value)
+    question=plan.get('clarification')
+    if question is not None:
+        if not isinstance(question,dict) or set(question)!={'feature_id','feature_label','reason','kind'}:
+            raise ValueError('Invalid clarification fields')
+        for value in question.values():text(value)
+        if question['kind']!='opening_extent' or question['feature_id'] not in ids:
+            raise ValueError('Unsupported clarification or unknown feature')
     return plan

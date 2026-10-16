@@ -1,0 +1,24 @@
+[
+  {
+    "question": {
+      "feature_id": "opening_centre",
+      "feature_label": "\u00d88 Opening in top face",
+      "reason": "The drawing shows a circle in the top view but does not indicate if it goes all the way through the block or is a blind hole (recess).",
+      "kind": "opening_extent",
+      "id": "07d40a942d07440f901852520e80efc0",
+      "text": "Should this hole go all the way through the part?",
+      "maximum_depth_mm": 40.0,
+      "choices": [
+        {
+          "id": "through",
+          "label": "Yes \u2014 make a through-hole"
+        },
+        {
+          "id": "recess",
+          "label": "No \u2014 leave a bottom"
+        }
+      ]
+    },
+    "status": "cancelled"
+  }
+]

@@ -1,0 +1,149 @@
+```json
+{
+  "version": 1,
+  "object_hypothesis": "L-shaped bracket with a perforated vertical face",
+  "features": [
+    {
+      "id": "body_main",
+      "type": "body",
+      "description": "L-shaped profile forming the main body of the object",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_10"
+        }
+      ],
+      "reason": "View 2 displays a distinct L-shaped outer contour, indicating a bent or joined structure."
+    },
+    {
+      "id": "face_vertical",
+      "type": "wall",
+      "description": "Planar face containing multiple internal cutouts",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_0"
+        }
+      ],
+      "reason": "View 1 shows a large rectangular boundary containing the internal features."
+    },
+    {
+      "id": "opening_top_left",
+      "type": "opening",
+      "description": "Rectangular opening located in the upper-left quadrant of the face",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_8"
+        }
+      ],
+      "reason": "Closed internal contour identified in the upper-left region of the front view."
+    },
+    {
+      "id": "opening_center",
+      "type": "opening",
+      "description": "Vertical rectangular opening located centrally",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_6"
+        }
+      ],
+      "reason": "Closed internal contour identified in the central region of the front view."
+    },
+    {
+      "id": "opening_bottom_left",
+      "type": "opening",
+      "description": "Vertical rectangular opening located in the lower-left quadrant",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_4"
+        }
+      ],
+      "reason": "Closed internal contour identified in the lower-left region of the front view."
+    },
+    {
+      "id": "opening_bottom_right",
+      "type": "opening",
+      "description": "Vertical rectangular opening located in the lower-right quadrant",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_2"
+        }
+      ],
+      "reason": "Closed internal contour identified in the lower-right region of the front view."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "rel_openings_in_face",
+      "type": "position",
+      "features": [
+        "opening_top_left",
+        "opening_center",
+        "opening_bottom_left",
+        "opening_bottom_right",
+        "face_vertical"
+      ],
+      "description": "Openings are positioned within the boundaries of the vertical face",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_0"
+        },
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_8"
+        },
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_6"
+        },
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_4"
+        },
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_2"
+        }
+      ],
+      "reason": "Internal contours are spatially contained within the outer boundary in the front view."
+    },
+    {
+      "id": "rel_l_shape",
+      "type": "connected",
+      "features": [
+        "body_main"
+      ],
+      "description": "The body consists of two connected planar sections forming an L-shape",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_10"
+        }
+      ],
+      "reason": "The side view profile indicates a change in direction of the material, implying a bend or joint."
+    }
+  ],
+  "assumptions": [
+    "View 1 represents the face perpendicular to the flange seen in View 2.",
+    "Internal contours in View 1 represent through-holes or pockets."
+  ],
+  "unresolved": [
+    "Depth of the openings (through vs. blind).",
+    "Thickness of the material (View 2 lines are not clearly separated)."
+  ],
+  "conflicts": []
+}
+```

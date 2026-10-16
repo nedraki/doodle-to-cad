@@ -1,0 +1,83 @@
+{
+  "view_frame": "Front view (XZ plane) shows the part's width (X) and height (Z). Top view (XY plane) shows the part's width (X) and depth (Y). The part is a flat disc lying in the XY plane.",
+  "features": [
+    {
+      "id": "main_disc",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "Z",
+      "dimensions": [
+        "diameter: 120mm (assumed from max_dimension)",
+        "thickness: 10mm (assumed from front view aspect ratio)"
+      ],
+      "placement": "centered at (0,0,0), extending from Z=0 to Z=10",
+      "evidence": "Large circular outline in top view, rectangular profile in front view"
+    },
+    {
+      "id": "central_hole",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "Z",
+      "dimensions": [
+        "diameter: 40mm (assumed relative to main disc)"
+      ],
+      "placement": "centered at (0,0,0), extending from Z=0 to Z=10",
+      "evidence": "Central circular outline in top view"
+    },
+    {
+      "id": "bolt_hole_1",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "Z",
+      "dimensions": [
+        "diameter: 10mm (assumed relative to main disc)"
+      ],
+      "placement": "centered at (30,30,0), extending from Z=0 to Z=10",
+      "evidence": "Small circular outline in top-left quadrant of top view"
+    },
+    {
+      "id": "bolt_hole_2",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "Z",
+      "dimensions": [
+        "diameter: 10mm (assumed relative to main disc)"
+      ],
+      "placement": "centered at (-30,30,0), extending from Z=0 to Z=10",
+      "evidence": "Small circular outline in top-right quadrant of top view"
+    },
+    {
+      "id": "bolt_hole_3",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "Z",
+      "dimensions": [
+        "diameter: 10mm (assumed relative to main disc)"
+      ],
+      "placement": "centered at (-30,-30,0), extending from Z=0 to Z=10",
+      "evidence": "Small circular outline in bottom-left quadrant of top view"
+    },
+    {
+      "id": "bolt_hole_4",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "Z",
+      "dimensions": [
+        "diameter: 10mm (assumed relative to main disc)"
+      ],
+      "placement": "centered at (30,-30,0), extending from Z=0 to Z=10",
+      "evidence": "Small circular outline in bottom-right quadrant of top view"
+    }
+  ],
+  "connections": [
+    "All holes are through-holes in the main disc"
+  ],
+  "edit_rules": [
+    "Changing main disc diameter requires scaling all hole positions proportionally",
+    "Changing main disc thickness requires updating Z-extents of all features"
+  ],
+  "unresolved": [
+    "Exact dimensions for all features are assumed based on visual proportions",
+    "Front view aspect ratio is assumed to represent actual thickness"
+  ]
+}
