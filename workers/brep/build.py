@@ -24,7 +24,17 @@ def build(source, output):
     bodies, history = {}, []
     for op in operations:
         kind = op["kind"]
-        if kind == "box":
+        if kind == 'extrude':
+            curves=[]
+            for loop in op['loops']:
+                for edge in loop:
+                    if edge['kind']=='line':
+                        curves.append(sm.create_line_segment((*edge['start'],0),(*edge['end'],0)))
+                    else:
+                        curves.append(sm.create_arc((*edge['center'],0),edge['radius'],edge['start_angle'],edge['end_angle']))
+            body=sm.linear_sweep(curves,(0,0,op['direction']),op['depth'],cap_ends=True)
+            sm.translate(body,tuple(op['origin']))
+        elif kind == "box":
             body = sm.create_box(tuple(op["origin"]), *op["size"])
         elif kind == "cylinder":
             body = sm.create_cylinder((0, 0, 0), op["radius"], op["height"])

@@ -8,6 +8,7 @@ import re
 
 NAME = re.compile(r"^[A-Za-z][A-Za-z0-9_]{0,63}$")
 FIELDS = {
+    "extrude": {"origin", "plane", "direction", "depth", "loops"},
     "box": {"origin", "size"},
     "cylinder": {"origin", "radius", "height", "axis"},
     "union": {"left", "right"},
@@ -126,6 +127,13 @@ def validate_recipe(recipe, updates=None):
             raise ValueError("Pipe requires radius < bend_radius and angle ≤ 270°")
         if kind == "fillet" and op["selector"] not in ("all", "parallel_x", "parallel_y", "parallel_z"):
             raise ValueError("Fillet selector must be all or parallel_x/y/z")
+        if kind == 'extrude':
+            if op['plane'] != 'xy' or type(op['direction']) is not int or op['direction'] not in (-1,1):
+                raise ValueError('Extrusion currently supports plane xy only and direction 1 or -1')
+            item['depth']=scalar(op['depth'],values)
+            if not .01<=item['depth']<=256:raise ValueError('Extrusion depth must be 0.01–256 mm')
+            from .planar_profile import resolve_profile
+            item['loops']=resolve_profile(op['loops'],values,scalar)
         resolved.append(item)
         seen.add(op["id"])
     if not isinstance(recipe.get("output"), str) or recipe["output"] not in seen:

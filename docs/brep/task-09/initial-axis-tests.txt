@@ -1,0 +1,138 @@
+..........FF                                                             [100%]
+=================================== FAILURES ===================================
+___________ test_native_extrusion_axes_and_inner_loop[xz-expected1] ____________
+
+tmp_path = PosixPath('/tmp/pytest-of-sparkie/pytest-126/test_native_extrusion_axes_and1')
+plane = 'xz', expected = [60, 6, 40]
+
+    @pytest.mark.skipif(not os.getenv('DOODLE_BREP_PYTHON'),reason='Worker not configured')
+    @pytest.mark.parametrize('plane,expected',[('xy',[60,40,6]),('xz',[60,6,40]),('yz',[6,60,40])])
+    def test_native_extrusion_axes_and_inner_loop(tmp_path,plane,expected):
+        r=recipe();r['operations'][0]['plane']=plane
+        path=tmp_path/'recipe.json';path.write_text(json.dumps(r))
+        result=build_brep(BuildInput('usd-brep',path,tmp_path,render=False))
+>       assert result.ok,result.log
+E       AssertionError: Warning: in _LoadLibModules at line 329 of /builds/omniverse/usd-ci/USD/pxr/base/tf/scriptModuleLoader.cpp -- Error loading lib ar's module 'pxr.Ar':
+E         ModuleNotFoundError: No module named 'pxr'
+E         
+E         Warning: in _LoadLibModules at line 329 of /builds/omniverse/usd-ci/USD/pxr/base/tf/scriptModuleLoader.cpp -- Error loading lib gf's module 'pxr.Gf':
+E         ModuleNotFoundError: No module named 'pxr'
+E         
+E         Warning: in _LoadLibModules at line 329 of /builds/omniverse/usd-ci/USD/pxr/base/tf/scriptModuleLoader.cpp -- Error loading lib kind's module 'pxr.Kind':
+E         ModuleNotFoundError: No module named 'pxr'
+E         
+E         Warning: in _LoadLibModules at line 329 of /builds/omniverse/usd-ci/USD/pxr/base/tf/scriptModuleLoader.cpp -- Error loading lib pcp's module 'pxr.Pcp':
+E         ModuleNotFoundError: No module named 'pxr'
+E         
+E         Warning: in _LoadLibModules at line 329 of /builds/omniverse/usd-ci/USD/pxr/base/tf/scriptModuleLoader.cpp -- Error loading lib plug's module 'pxr.Plug':
+E         ModuleNotFoundError: No module named 'pxr'
+E         
+E         Warning: in _LoadLibModules at line 329 of /builds/omniverse/usd-ci/USD/pxr/base/tf/scriptModuleLoader.cpp -- Error loading lib sdf's module 'pxr.Sdf':
+E         ModuleNotFoundError: No module named 'pxr'
+E         
+E         Warning: in _LoadLibModules at line 329 of /builds/omniverse/usd-ci/USD/pxr/base/tf/scriptModuleLoader.cpp -- Error loading lib sdr's module 'pxr.Sdr':
+E         ModuleNotFoundError: No module named 'pxr'
+E         
+E         Warning: in _LoadLibModules at line 329 of /builds/omniverse/usd-ci/USD/pxr/base/tf/scriptModuleLoader.cpp -- Error loading lib tf's module 'pxr.Tf':
+E         ModuleNotFoundError: No module named 'pxr'
+E         
+E         Warning: in _LoadLibModules at line 329 of /builds/omniverse/usd-ci/USD/pxr/base/tf/scriptModuleLoader.cpp -- Error loading lib trace's module 'pxr.Trace':
+E         ModuleNotFoundError: No module named 'pxr'
+E         
+E         Warning: in _LoadLibModules at line 329 of /builds/omniverse/usd-ci/USD/pxr/base/tf/scriptModuleLoader.cpp -- Error loading lib ts's module 'pxr.Ts':
+E         ModuleNotFoundError: No module named 'pxr'
+E         
+E         Warning: in _LoadLibModules at line 329 of /builds/omniverse/usd-ci/USD/pxr/base/tf/scriptModuleLoader.cpp -- Error loading lib usd's module 'pxr.Usd':
+E         ModuleNotFoundError: No module named 'pxr'
+E         
+E         Warning: in _LoadLibModules at line 329 of /builds/omniverse/usd-ci/USD/pxr/base/tf/scriptModuleLoader.cpp -- Error loading lib usdGeom's module 'pxr.UsdGeom':
+E         ModuleNotFoundError: No module named 'pxr'
+E         
+E         Warning: in _LoadLibModules at line 329 of /builds/omniverse/usd-ci/USD/pxr/base/tf/scriptModuleLoader.cpp -- Error loading lib usdShade's module 'pxr.UsdShade':
+E         ModuleNotFoundError: No module named 'pxr'
+E         
+E         Warning: in _LoadLibModules at line 329 of /builds/omniverse/usd-ci/USD/pxr/base/tf/scriptModuleLoader.cpp -- Error loading lib usdUtils's module 'pxr.UsdUtils':
+E         ModuleNotFoundError: No module named 'pxr'
+E         
+E         Warning: in _LoadLibModules at line 329 of /builds/omniverse/usd-ci/USD/pxr/base/tf/scriptModuleLoader.cpp -- Error loading lib vt's module 'pxr.Vt':
+E         ModuleNotFoundError: No module named 'pxr'
+E         
+E         Warning: in _LoadLibModules at line 329 of /builds/omniverse/usd-ci/USD/pxr/base/tf/scriptModuleLoader.cpp -- Error loading lib work's module 'pxr.Work':
+E         ModuleNotFoundError: No module named 'pxr'
+E         
+E         BRep build failed: USD round-trip volume check failed: original_volume_mm3=12852.0530563; reloaded_volumes_mm3=[13455.238722054515]
+E         
+E       assert False
+E        +  where False = BuildResult(backend='usd-brep', source=PosixPath('/tmp/pytest-of-sparkie/pytest-126/test_native_extrusion_axes_and1/re...d: USD round-trip volume check failed: original_volume_mm3=12852.0530563; reloaded_volumes_mm3=[13455.238722054515]\n").ok
+
+tests/test_planar_profile.py:39: AssertionError
+___________ test_native_extrusion_axes_and_inner_loop[yz-expected2] ____________
+
+tmp_path = PosixPath('/tmp/pytest-of-sparkie/pytest-126/test_native_extrusion_axes_and2')
+plane = 'yz', expected = [6, 60, 40]
+
+    @pytest.mark.skipif(not os.getenv('DOODLE_BREP_PYTHON'),reason='Worker not configured')
+    @pytest.mark.parametrize('plane,expected',[('xy',[60,40,6]),('xz',[60,6,40]),('yz',[6,60,40])])
+    def test_native_extrusion_axes_and_inner_loop(tmp_path,plane,expected):
+        r=recipe();r['operations'][0]['plane']=plane
+        path=tmp_path/'recipe.json';path.write_text(json.dumps(r))
+        result=build_brep(BuildInput('usd-brep',path,tmp_path,render=False))
+>       assert result.ok,result.log
+E       AssertionError: Warning: in _LoadLibModules at line 329 of /builds/omniverse/usd-ci/USD/pxr/base/tf/scriptModuleLoader.cpp -- Error loading lib ar's module 'pxr.Ar':
+E         ModuleNotFoundError: No module named 'pxr'
+E         
+E         Warning: in _LoadLibModules at line 329 of /builds/omniverse/usd-ci/USD/pxr/base/tf/scriptModuleLoader.cpp -- Error loading lib gf's module 'pxr.Gf':
+E         ModuleNotFoundError: No module named 'pxr'
+E         
+E         Warning: in _LoadLibModules at line 329 of /builds/omniverse/usd-ci/USD/pxr/base/tf/scriptModuleLoader.cpp -- Error loading lib kind's module 'pxr.Kind':
+E         ModuleNotFoundError: No module named 'pxr'
+E         
+E         Warning: in _LoadLibModules at line 329 of /builds/omniverse/usd-ci/USD/pxr/base/tf/scriptModuleLoader.cpp -- Error loading lib pcp's module 'pxr.Pcp':
+E         ModuleNotFoundError: No module named 'pxr'
+E         
+E         Warning: in _LoadLibModules at line 329 of /builds/omniverse/usd-ci/USD/pxr/base/tf/scriptModuleLoader.cpp -- Error loading lib plug's module 'pxr.Plug':
+E         ModuleNotFoundError: No module named 'pxr'
+E         
+E         Warning: in _LoadLibModules at line 329 of /builds/omniverse/usd-ci/USD/pxr/base/tf/scriptModuleLoader.cpp -- Error loading lib sdf's module 'pxr.Sdf':
+E         ModuleNotFoundError: No module named 'pxr'
+E         
+E         Warning: in _LoadLibModules at line 329 of /builds/omniverse/usd-ci/USD/pxr/base/tf/scriptModuleLoader.cpp -- Error loading lib sdr's module 'pxr.Sdr':
+E         ModuleNotFoundError: No module named 'pxr'
+E         
+E         Warning: in _LoadLibModules at line 329 of /builds/omniverse/usd-ci/USD/pxr/base/tf/scriptModuleLoader.cpp -- Error loading lib tf's module 'pxr.Tf':
+E         ModuleNotFoundError: No module named 'pxr'
+E         
+E         Warning: in _LoadLibModules at line 329 of /builds/omniverse/usd-ci/USD/pxr/base/tf/scriptModuleLoader.cpp -- Error loading lib trace's module 'pxr.Trace':
+E         ModuleNotFoundError: No module named 'pxr'
+E         
+E         Warning: in _LoadLibModules at line 329 of /builds/omniverse/usd-ci/USD/pxr/base/tf/scriptModuleLoader.cpp -- Error loading lib ts's module 'pxr.Ts':
+E         ModuleNotFoundError: No module named 'pxr'
+E         
+E         Warning: in _LoadLibModules at line 329 of /builds/omniverse/usd-ci/USD/pxr/base/tf/scriptModuleLoader.cpp -- Error loading lib usd's module 'pxr.Usd':
+E         ModuleNotFoundError: No module named 'pxr'
+E         
+E         Warning: in _LoadLibModules at line 329 of /builds/omniverse/usd-ci/USD/pxr/base/tf/scriptModuleLoader.cpp -- Error loading lib usdGeom's module 'pxr.UsdGeom':
+E         ModuleNotFoundError: No module named 'pxr'
+E         
+E         Warning: in _LoadLibModules at line 329 of /builds/omniverse/usd-ci/USD/pxr/base/tf/scriptModuleLoader.cpp -- Error loading lib usdShade's module 'pxr.UsdShade':
+E         ModuleNotFoundError: No module named 'pxr'
+E         
+E         Warning: in _LoadLibModules at line 329 of /builds/omniverse/usd-ci/USD/pxr/base/tf/scriptModuleLoader.cpp -- Error loading lib usdUtils's module 'pxr.UsdUtils':
+E         ModuleNotFoundError: No module named 'pxr'
+E         
+E         Warning: in _LoadLibModules at line 329 of /builds/omniverse/usd-ci/USD/pxr/base/tf/scriptModuleLoader.cpp -- Error loading lib vt's module 'pxr.Vt':
+E         ModuleNotFoundError: No module named 'pxr'
+E         
+E         Warning: in _LoadLibModules at line 329 of /builds/omniverse/usd-ci/USD/pxr/base/tf/scriptModuleLoader.cpp -- Error loading lib work's module 'pxr.Work':
+E         ModuleNotFoundError: No module named 'pxr'
+E         
+E         BRep build failed: USD round-trip volume check failed: original_volume_mm3=12852.0530635; reloaded_volumes_mm3=[13455.238744697026]
+E         
+E       assert False
+E        +  where False = BuildResult(backend='usd-brep', source=PosixPath('/tmp/pytest-of-sparkie/pytest-126/test_native_extrusion_axes_and2/re...d: USD round-trip volume check failed: original_volume_mm3=12852.0530635; reloaded_volumes_mm3=[13455.238744697026]\n").ok
+
+tests/test_planar_profile.py:39: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_planar_profile.py::test_native_extrusion_axes_and_inner_loop[xz-expected1]
+FAILED tests/test_planar_profile.py::test_native_extrusion_axes_and_inner_loop[yz-expected2]
+2 failed, 10 passed in 1.17s

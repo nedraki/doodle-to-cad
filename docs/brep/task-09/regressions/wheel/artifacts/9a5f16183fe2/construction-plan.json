@@ -1,0 +1,57 @@
+{
+  "view_frame": "Front view (XZ) displays the wheel face with X as horizontal width and Z as vertical height. Right view (YZ) displays the wheel thickness with Y as depth and Z as height. The wheel is centered at the origin (0,0,0).",
+  "features": [
+    {
+      "id": "wheel_rim",
+      "shape": "annulus",
+      "section": "rectangular",
+      "axis_or_plane": "Y",
+      "dimensions": [
+        "OD 120 mm",
+        "thickness 8 mm",
+        "ASSUMED rim_width 10 mm"
+      ],
+      "placement": "Centered at (0,0,0). Outer radius 60 mm, inner radius 50 mm. Extends from Y=-4 mm to Y=4 mm.",
+      "evidence": "Front view shows two concentric circles. Right view shows a rectangular profile of uniform thickness. Text label 'OD 120 mm; thickness 8 mm'."
+    },
+    {
+      "id": "wheel_hub",
+      "shape": "cylinder",
+      "section": "circular",
+      "axis_or_plane": "Y",
+      "dimensions": [
+        "thickness 8 mm",
+        "ASSUMED hub_diameter 30 mm"
+      ],
+      "placement": "Centered at (0,0,0). Radius 15 mm. Extends from Y=-4 mm to Y=4 mm.",
+      "evidence": "Front view shows a central circle. Right view shows uniform thickness matching the rim."
+    },
+    {
+      "id": "spokes",
+      "shape": "box",
+      "section": "rectangular",
+      "axis_or_plane": "Y",
+      "dimensions": [
+        "thickness 8 mm",
+        "ASSUMED spoke_width 10 mm",
+        "ASSUMED spoke_length 35 mm"
+      ],
+      "placement": "8 instances arranged radially in the XZ plane. Each spoke extends from the hub surface (r=15) to the rim inner surface (r=50). Extends from Y=-4 mm to Y=4 mm.",
+      "evidence": "Front view shows 8 radial lines connecting the hub to the rim. Right view shows uniform thickness."
+    }
+  ],
+  "connections": [
+    "The hub is concentric with the rim.",
+    "The spokes connect the outer surface of the hub to the inner surface of the rim.",
+    "All features share the same Y-axis thickness range (-4 mm to 4 mm)."
+  ],
+  "edit_rules": [
+    "Changing OD 120 mm updates the rim outer radius and spoke length.",
+    "Changing thickness 8 mm updates the Y-axis extent of all features.",
+    "Changing ASSUMED hub_diameter updates the hub radius and spoke length.",
+    "Changing ASSUMED rim_width updates the rim inner radius and spoke length.",
+    "Changing ASSUMED spoke_width updates the width of the spoke boxes."
+  ],
+  "unresolved": [],
+  "clarification": null
+}

@@ -1,0 +1,127 @@
+{
+  "version": 1,
+  "object_hypothesis": "A stepped mechanical component, likely a pulley or spool, characterized by a central web and opposing flanges.",
+  "features": [
+    {
+      "id": "body",
+      "type": "body",
+      "description": "The main solid volume of the component defined by the outer boundaries in both views.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_3"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_1"
+        }
+      ],
+      "reason": "The closed polygonal contours in both views define the physical extent of the object."
+    },
+    {
+      "id": "flange_top",
+      "type": "flange",
+      "description": "The upper horizontal section of the component, appearing as a wide band in both views.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_3"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_1"
+        }
+      ],
+      "reason": "The top section of the polygon in both views shows a distinct width greater than the central section."
+    },
+    {
+      "id": "flange_bottom",
+      "type": "flange",
+      "description": "The lower horizontal section of the component, appearing as a wide band in both views.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_3"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_1"
+        }
+      ],
+      "reason": "The bottom section of the polygon in both views shows a distinct width greater than the central section."
+    },
+    {
+      "id": "web",
+      "type": "body",
+      "description": "The central vertical section connecting the top and bottom flanges.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_3"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_1"
+        }
+      ],
+      "reason": "The central region of the polygon in both views is narrower than the flanges, indicating a web or neck."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "symmetry_axis",
+      "type": "symmetry",
+      "features": [
+        "body"
+      ],
+      "description": "The object exhibits rotational symmetry about a central vertical axis.",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_3"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_1"
+        }
+      ],
+      "reason": "The front and right views are nearly identical in shape and dimensions, strongly suggesting the object is a body of revolution (axisymmetric)."
+    },
+    {
+      "id": "flange_web_connection",
+      "type": "connected",
+      "features": [
+        "flange_top",
+        "web",
+        "flange_bottom"
+      ],
+      "description": "The flanges are connected to the central web.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_3"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_1"
+        }
+      ],
+      "reason": "The continuous outer boundary in both views shows the flanges and web as a single connected solid."
+    }
+  ],
+  "assumptions": [
+    "The object is a solid of revolution (axisymmetric) based on the similarity of the front and right views.",
+    "The 'front' and 'right' view assignments are correct spatial heuristics."
+  ],
+  "unresolved": [
+    "The presence of a central hole (bore) is not visible in the provided contours.",
+    "The exact internal geometry (e.g., whether the web is solid or hollow) is not defined by the outer contours."
+  ],
+  "conflicts": []
+}

@@ -1,0 +1,116 @@
+{
+  "6": {
+    "extents_mm": [
+      60.0,
+      40.0,
+      6.0
+    ],
+    "volume_mm3": 12852.904513071684,
+    "expected_volume_mm3": 12852.05310854923,
+    "watertight": true,
+    "components": 1,
+    "sections": [
+      {
+        "status": "passed",
+        "symmetric_boundary_error_mm": 0.05465,
+        "tolerance_mm": 0.25,
+        "sampling_spacing_mm": 0.1,
+        "axis": 2,
+        "position_mm": 0.1,
+        "loops": 2
+      },
+      {
+        "status": "passed",
+        "symmetric_boundary_error_mm": 0.05391,
+        "tolerance_mm": 0.25,
+        "sampling_spacing_mm": 0.1,
+        "axis": 2,
+        "position_mm": 3.0,
+        "loops": 2
+      },
+      {
+        "status": "passed",
+        "symmetric_boundary_error_mm": 0.05601,
+        "tolerance_mm": 0.25,
+        "sampling_spacing_mm": 0.1,
+        "axis": 2,
+        "position_mm": 5.9,
+        "loops": 2
+      }
+    ],
+    "passed": true
+  },
+  "10": {
+    "extents_mm": [
+      60.0,
+      40.0,
+      10.0
+    ],
+    "volume_mm3": 21421.507521786134,
+    "expected_volume_mm3": 21420.088514248713,
+    "watertight": true,
+    "components": 1,
+    "sections": [
+      {
+        "status": "passed",
+        "symmetric_boundary_error_mm": 0.05756,
+        "tolerance_mm": 0.25,
+        "sampling_spacing_mm": 0.1,
+        "axis": 2,
+        "position_mm": 0.1,
+        "loops": 2
+      },
+      {
+        "status": "passed",
+        "symmetric_boundary_error_mm": 0.05391,
+        "tolerance_mm": 0.25,
+        "sampling_spacing_mm": 0.1,
+        "axis": 2,
+        "position_mm": 5.0,
+        "loops": 2
+      },
+      {
+        "status": "passed",
+        "symmetric_boundary_error_mm": 0.05756,
+        "tolerance_mm": 0.25,
+        "sampling_spacing_mm": 0.1,
+        "axis": 2,
+        "position_mm": 9.9,
+        "loops": 2
+      }
+    ],
+    "passed": true
+  },
+  "negative_plain_box": {
+    "extents_mm": [
+      60.0,
+      40.0,
+      6.0
+    ],
+    "volume_mm3": 14400.0,
+    "expected_volume_mm3": 12852.05310854923,
+    "watertight": true,
+    "components": 1,
+    "sections": [
+      {
+        "status": "failed",
+        "reason": "Section loop count differs",
+        "actual_loops": 1,
+        "expected_loops": 2
+      },
+      {
+        "status": "failed",
+        "reason": "Section loop count differs",
+        "actual_loops": 1,
+        "expected_loops": 2
+      },
+      {
+        "status": "failed",
+        "reason": "Section loop count differs",
+        "actual_loops": 1,
+        "expected_loops": 2
+      }
+    ],
+    "passed": false
+  }
+}

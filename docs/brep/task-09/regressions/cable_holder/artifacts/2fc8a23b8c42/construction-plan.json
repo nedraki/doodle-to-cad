@@ -1,0 +1,122 @@
+{
+  "view_frame": "The drawing presents three views in third-angle projection. The primary view (bottom-left) is the Front view, showing the X (width) and Z (height) axes. The view above it (top-center) is the Top view, showing the X (width) and Y (depth) axes. The view to the right (bottom-right) is the Right view, showing the Y (depth) and Z (height) axes. The object is a flat, elongated part.",
+  "features": [
+    {
+      "id": "main_body",
+      "shape": "extruded_profile",
+      "section": "closed_xy_profile",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "ASSUMED_thickness",
+        "ASSUMED_width",
+        "ASSUMED_height"
+      ],
+      "placement": "Centered at (0,0,0). The profile is defined in the XY plane and extruded along the Z axis. The profile consists of a main rectangular body with a U-shaped notch at the top (+Y) and a V-shaped notch at the bottom (-Y).",
+      "evidence": "The Top view shows the outline of the part with a U-shaped notch at the top and a V-shaped notch at the bottom. The Front view shows the overall rectangular shape. The Right view shows the thickness."
+    },
+    {
+      "id": "hole_1",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "Y",
+      "dimensions": [
+        "ASSUMED_hole_diameter",
+        "ASSUMED_thickness"
+      ],
+      "placement": "Centered at (0, 0, ASSUMED_hole_z_pos). The cylinder axis is parallel to the Y axis. The hole is located in the upper half of the part.",
+      "evidence": "A circular hole is visible in the Top view. The Right view shows corresponding rectangular openings, indicating a through-hole."
+    },
+    {
+      "id": "slot_1",
+      "shape": "box",
+      "section": "rectangle",
+      "axis_or_plane": "Y",
+      "dimensions": [
+        "ASSUMED_slot_width",
+        "ASSUMED_slot_height",
+        "ASSUMED_thickness"
+      ],
+      "placement": "Centered at (ASSUMED_slot_x_pos, ASSUMED_slot_1_y_pos, 0). The box is centered on the Y axis. This is the topmost slot.",
+      "evidence": "A rectangular slot is visible in the Right view. The Top view shows the corresponding opening."
+    },
+    {
+      "id": "slot_2",
+      "shape": "box",
+      "section": "rectangle",
+      "axis_or_plane": "Y",
+      "dimensions": [
+        "ASSUMED_slot_width",
+        "ASSUMED_slot_height",
+        "ASSUMED_thickness"
+      ],
+      "placement": "Centered at (ASSUMED_slot_x_pos, ASSUMED_slot_2_y_pos, 0). The box is centered on the Y axis. This is the second slot from the top.",
+      "evidence": "A rectangular slot is visible in the Right view. The Top view shows the corresponding opening."
+    },
+    {
+      "id": "slot_3",
+      "shape": "box",
+      "section": "rectangle",
+      "axis_or_plane": "Y",
+      "dimensions": [
+        "ASSUMED_slot_width",
+        "ASSUMED_slot_height",
+        "ASSUMED_thickness"
+      ],
+      "placement": "Centered at (ASSUMED_slot_x_pos, ASSUMED_slot_3_y_pos, 0). The box is centered on the Y axis. This is the third slot from the top.",
+      "evidence": "A rectangular slot is visible in the Right view. The Top view shows the corresponding opening."
+    },
+    {
+      "id": "slot_4",
+      "shape": "box",
+      "section": "rectangle",
+      "axis_or_plane": "Y",
+      "dimensions": [
+        "ASSUMED_slot_width",
+        "ASSUMED_slot_height",
+        "ASSUMED_thickness"
+      ],
+      "placement": "Centered at (ASSUMED_slot_x_pos, ASSUMED_slot_4_y_pos, 0). The box is centered on the Y axis. This is the fourth slot from the top.",
+      "evidence": "A rectangular slot is visible in the Right view. The Top view shows the corresponding opening."
+    },
+    {
+      "id": "slot_5",
+      "shape": "box",
+      "section": "rectangle",
+      "axis_or_plane": "Y",
+      "dimensions": [
+        "ASSUMED_slot_width",
+        "ASSUMED_slot_height",
+        "ASSUMED_thickness"
+      ],
+      "placement": "Centered at (ASSUMED_slot_x_pos, ASSUMED_slot_5_y_pos, 0). The box is centered on the Y axis. This is the bottommost slot.",
+      "evidence": "A rectangular slot is visible in the Right view. The Top view shows the corresponding opening."
+    }
+  ],
+  "connections": [
+    "The main_body is the base feature.",
+    "hole_1 is subtracted from main_body.",
+    "slot_1 is subtracted from main_body.",
+    "slot_2 is subtracted from main_body.",
+    "slot_3 is subtracted from main_body.",
+    "slot_4 is subtracted from main_body.",
+    "slot_5 is subtracted from main_body."
+  ],
+  "edit_rules": [
+    "Changing ASSUMED_thickness will affect the extrusion depth of main_body and the height of all subtracted features (hole_1, slot_1, slot_2, slot_3, slot_4, slot_5).",
+    "Changing ASSUMED_width will affect the width of the main_body profile.",
+    "Changing ASSUMED_height will affect the height of the main_body profile.",
+    "Changing ASSUMED_hole_diameter will affect the diameter of hole_1.",
+    "Changing ASSUMED_slot_width will affect the width of all slots.",
+    "Changing ASSUMED_slot_height will affect the height of all slots.",
+    "Changing ASSUMED_slot_x_pos will move all slots horizontally.",
+    "Changing ASSUMED_slot_1_y_pos will move slot_1 vertically.",
+    "Changing ASSUMED_slot_2_y_pos will move slot_2 vertically.",
+    "Changing ASSUMED_slot_3_y_pos will move slot_3 vertically.",
+    "Changing ASSUMED_slot_4_y_pos will move slot_4 vertically.",
+    "Changing ASSUMED_slot_5_y_pos will move slot_5 vertically."
+  ],
+  "unresolved": [
+    "The exact dimensions of the part and its features are not provided in the drawing. All dimensions are marked as ASSUMED.",
+    "The exact positions of the slots and the hole are not provided. All positions are marked as ASSUMED."
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "backend": "usd-brep",
+  "source_format": "brep-recipe-v1",
+  "ok": false,
+  "units": "mm",
+  "axes": {
+    "x": "width",
+    "y": "depth",
+    "z": "height"
+  },
+  "views": [],
+  "measurements": {},
+  "diagnostics": [
+    {
+      "code": "build_failed",
+      "message": "part_with_slot1: kernel produced an invalid solid",
+      "severity": "error"
+    }
+  ],
+  "drawing_evaluated": false,
+  "baseline_commit": "4595511251b86c1a811760016110cd13dcf0522f",
+  "source_job": "2fc8a23b8c42",
+  "log": "BRep build failed: part_with_slot1: kernel produced an invalid solid\n"
+}

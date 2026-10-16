@@ -1,0 +1,131 @@
+```json
+{
+  "version": 1,
+  "object_hypothesis": "A flat rectangular plate with a top-edge notch, a rounded top-right corner, and a circular through-hole.",
+  "features": [
+    {
+      "id": "plate_body",
+      "type": "body",
+      "description": "Main rectangular body of the plate.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_215"
+        },
+        {
+          "view_id": "view_8",
+          "region_id": "profile_contour_70"
+        }
+      ],
+      "reason": "Visible as the primary outer contour in the top view and the rectangular profile in the bottom view."
+    },
+    {
+      "id": "top_notch",
+      "type": "opening",
+      "description": "Rectangular notch located on the top edge of the plate.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_215"
+        }
+      ],
+      "reason": "Visible indentation in the top edge of the main contour in the top view."
+    },
+    {
+      "id": "rounded_corner",
+      "type": "other",
+      "description": "Rounded corner at the top-right of the plate.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_215"
+        }
+      ],
+      "reason": "Curved segment visible in the top-right corner of the main contour in the top view."
+    },
+    {
+      "id": "through_hole",
+      "type": "opening",
+      "description": "Circular hole located in the lower-left quadrant of the plate.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_229"
+        }
+      ],
+      "reason": "Visible circular internal contour in the top view. The 'THROUGH' annotation confirms it is an opening."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "hole_in_plate",
+      "type": "position",
+      "features": [
+        "through_hole",
+        "plate_body"
+      ],
+      "description": "The hole is positioned within the plate body.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_229"
+        },
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_215"
+        }
+      ],
+      "reason": "The hole contour is spatially contained within the plate contour in the top view."
+    },
+    {
+      "id": "notch_on_edge",
+      "type": "position",
+      "features": [
+        "top_notch",
+        "plate_body"
+      ],
+      "description": "The notch is located on the top edge of the plate.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_215"
+        }
+      ],
+      "reason": "The notch geometry is part of the upper boundary of the plate contour."
+    },
+    {
+      "id": "corner_on_body",
+      "type": "position",
+      "features": [
+        "rounded_corner",
+        "plate_body"
+      ],
+      "description": "The rounded corner is part of the plate body.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_215"
+        }
+      ],
+      "reason": "The curve is part of the outer boundary of the plate contour."
+    }
+  ],
+  "assumptions": [
+    "The object is a single solid piece.",
+    "The 'THROUGH' annotation implies the hole penetrates the full thickness of the plate.",
+    "The '6 thick' annotation implies a uniform thickness for the entire plate."
+  ],
+  "unresolved": [
+    "The exact depth of the notch is not visually confirmed in the side views, though annotated as 10mm.",
+    "The exact radius of the rounded corner is not visually measured, though annotated as R6."
+  ],
+  "conflicts": []
+}
+```

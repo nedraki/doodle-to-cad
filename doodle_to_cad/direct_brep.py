@@ -13,7 +13,7 @@ from .build_contract import BuildError
 from .recipe_jobs import check_worker, run_recipe_job
 from .construction_intent import PROMPT as INTENT_PROMPT, PROMPT_VERSION as INTENT_VERSION, validate_plan
 
-PROMPT_VERSION = 'drawing-brep-11'
+PROMPT_VERSION = 'drawing-brep-12'
 PROMPT = """Construct ONE editable BRep part directly from the drawing and measured evidence.
 Return valid JSON only. Never return Python or OpenSCAD. If the part needs an unsupported operation, return {"unsupported":"specific reason"}.
 
@@ -29,6 +29,7 @@ SCHEMA:
 - Dimensions are finite numbers or QUOTED arithmetic strings using parameter names and + - * / parentheses only. Example: [0,"-width/2",0]. Bare arithmetic is invalid JSON. No trig functions or references to operation fields.
 - Every operation has id,kind,frame:"world",depends_on:[earlier input body IDs],evidence:[IDs from recipe.evidence]. At most 128 operations, in dependency order.
 - Add exactly the fields listed for its kind:
+extrude: origin (world XYZ translation),plane (only "xy"),direction (integer 1 or -1 along Z),depth (positive 0.01–256 mm),loops (outer loop first, followed by through-opening loops). Each loop is an ordered list of line/arc objects, joined end-to-start and closed. Line: {"kind":"line","start":[u,v],"end":[u,v]}. Arc: {"kind":"arc","center":[u,v],"radius":positive,"start_angle":degrees,"end_angle":degrees}; CCW from +X, 0 < end-start <=360. A circle is one 0-to-360 arc. Do not split a circle across multiple same-circle arcs. Local u,v are X,Y; origin translates the profile into the world. Numeric profile fields may use quoted parameter expressions. At most 128 edges and 16 loops. No crossing, touching, nested holes, open outlines or splines. Use the exact line/arc outline, not a bounding rectangle. Expose thickness via depth; changing depth must not change the profile. Other extrusion planes are unsupported because their USD round trip is not verified. Do not rotate an extruded profile to evade that restriction.
 box: origin (minimum corner),size (three positive lengths along X,Y,Z).
 cylinder: origin (base centre),radius,height,axis (x/y/z). Height is positive; the cylinder extends from origin in the POSITIVE axis direction. For a segment that runs from a joint toward negative Y, put its origin at joint_y - height so its positive-Y endpoint meets the joint. Apply the same rule on X and Z. Compute both endpoints; text claiming a negative direction does not change this geometry.
 union/difference: left,right (earlier operation IDs).
@@ -43,7 +44,7 @@ GEOMETRY:
 The whole drawing sheet depicts ONE object. X=width, Y=depth, Z=height. Front projection is XZ, top is XY, right is YZ. A circular feature seen in front has its cylinder axis along Y, not Z. Lowest Z must be zero, including rotated bodies.
 Preserve measured proportions, feature counts, unequal sizes and the declared maximum dimension. Keep one connected final solid. Expose useful dimension parameters.
 Box origin is its minimum corner and its endpoint equals origin + size. Compute joint endpoints explicitly. For a volumetric joint, extend joined material into both owners by a positive overlap. Full matching end faces can instead be fused by union into one solid; do not claim positive overlap volume for that face-to-face joint. Gaps and edge-only contact are invalid. Never subtract away required joint overlap. Cutters must cross the wall they cut.
-Use rotation for diagonal features and radial patterns. Loft, arbitrary profiles and arbitrary sweeps are unsupported. Do not replace them silently with another construction.
+Use rotation for diagonal features and radial patterns. Closed XY line/arc profile extrusion is supported. Loft, spline profiles, extrusions in other planes and arbitrary sweeps are unsupported. Do not replace them silently with another construction.
 For missing depth or dimensions, choose explicit conservative assumptions and expose parameters. Do not silently discard unresolved drawing details. Return unsupported if uncertainty prevents a supported construction.
 Check placement and dimensions with numeric arithmetic before returning the recipe:
 - A cylinder along X or Y extends one radius below its centre in Z. Put its centre at least that radius above Z=0.

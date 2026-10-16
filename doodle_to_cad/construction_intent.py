@@ -1,5 +1,5 @@
 """A drawing-grounded construction plan, saved before executable recipe generation."""
-PROMPT_VERSION='construction-intent-5'
+PROMPT_VERSION='construction-intent-6'
 PROMPT='''Read the drawing and its declared view controls. Produce a construction plan, not executable code.
 Return JSON with: view_frame, features, connections, edit_rules, unresolved, and optional clarification.
 view_frame: string explaining the labelled views and world axes (X width, Y depth, Z height).
@@ -15,6 +15,7 @@ For edge treatments, distinguish flat bevels from circular rounds. State which e
 Dimensions and geometric arithmetic must be consistent across views. For each editable parameter, state the dependent placements that must move with it. If the drawing does not establish a construction value, record the uncertainty rather than inventing certainty.
 For an opening whose through-hole versus recess meaning is genuinely missing from the drawing AND user notes, add clarification: {"feature_id":"an existing feature id","feature_label":"short location and description","reason":"what the drawing does not establish","kind":"opening_extent"}. Keep this decision in unresolved until answered. Ask only about one opening at a time. Do not ask when a section/side view, a THROUGH label, or the user answer establishes the meaning. Do not ask to repair a modeling failure or to handle an unsupported operation.
 User answers in clarification_answers are authoritative design intent for the named feature. Preserve feature IDs when replanning. For recess, depth_mm is supplied by the user. Do not ask the same question again. Put other missing construction decisions in unresolved for the recipe planner. It must disclose a permitted assumption or retain the unresolved value so recipe validation stops the build. Default policy: visible proportions and a missing uniform body thickness may use an explicit, editable assumption when no fit, mating interface, cavity floor or required connection depends on the missing value. Label that value ASSUMED in dimensions and expose it for editing. Do not also put an accepted assumption in unresolved. unresolved contains ONLY decisions that prevent a supported construction, such as conflicting views, unknown opening extent, or a missing fit-critical dimension. Never silently choose through-hole versus recess or recess depth. An opening answer takes priority over all earlier assumptions.
+For a flat part shown in TOP with a constant outline through its thickness, plan a closed XY profile and Z extrusion. Include visible notches, line/arc boundaries and through-opening loops. This first profile operation supports XY only. Preserve the outline when thickness changes. Other planes and spline profiles are unsupported.
 Keep the plan concise. Do not use benchmark references or assume a part template.'''
 
 
