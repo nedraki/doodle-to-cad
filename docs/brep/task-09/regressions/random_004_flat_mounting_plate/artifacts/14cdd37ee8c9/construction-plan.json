@@ -1,0 +1,69 @@
+{
+  "view_frame": "The drawing presents a single view of a flat, rectangular part. Based on the layout (a large face with internal features and a thin edge profile above it), this is interpreted as a TOP view. The world axes are defined as: X is the horizontal width (left to right), Y is the vertical depth (bottom to top on the sheet), and Z is the thickness (perpendicular to the sheet). The thin strip at the top represents the side profile (Front view) showing the part's thickness.",
+  "features": [
+    {
+      "id": "main_body",
+      "shape": "rectangular_plate",
+      "section": "rectangular",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "width: ASSUMED 100mm",
+        "depth: ASSUMED 60mm",
+        "thickness: ASSUMED 5mm"
+      ],
+      "placement": "Centered at (0,0,0). Extends from X=-50 to X=50, Y=-30 to Y=30, Z=-2.5 to Z=2.5.",
+      "evidence": "The large rectangular outline in the main view and the thin rectangular strip in the top view."
+    },
+    {
+      "id": "central_slot",
+      "shape": "slot",
+      "section": "circular",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "length: ASSUMED 30mm",
+        "width: ASSUMED 10mm"
+      ],
+      "placement": "Centered at (0,0). Extends from X=-15 to X=15, Y=-5 to Y=5. Through-hole in Z.",
+      "evidence": "The central elongated shape with rounded ends in the main view."
+    },
+    {
+      "id": "hole_left",
+      "shape": "cylinder",
+      "section": "circular",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "diameter: ASSUMED 6mm"
+      ],
+      "placement": "Centered at (-35, 15). Through-hole in Z.",
+      "evidence": "The small circular mark in the upper-left quadrant of the main view."
+    },
+    {
+      "id": "hole_right",
+      "shape": "cylinder",
+      "section": "circular",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "diameter: ASSUMED 6mm"
+      ],
+      "placement": "Centered at (35, -15). Through-hole in Z.",
+      "evidence": "The small circular mark in the lower-right quadrant of the main view."
+    }
+  ],
+  "connections": [
+    "The central slot and both holes are through-features penetrating the main_body thickness."
+  ],
+  "edit_rules": [
+    "Changing the main_body width or depth must maintain the relative positioning of the holes and slot (e.g., keeping them centered or maintaining edge distances).",
+    "Changing the main_body thickness does not affect the XY placement of the holes or slot."
+  ],
+  "unresolved": [
+    "The drawing lacks explicit dimensions for all features; all dimensions are assumed based on visual proportions.",
+    "The nature of the openings (through-hole vs. recess) is not explicitly labeled, though the single view suggests through-holes."
+  ],
+  "clarification": {
+    "feature_id": "central_slot",
+    "feature_label": "Central slot",
+    "reason": "The drawing does not specify if the central slot is a through-hole or a blind recess.",
+    "kind": "opening_extent"
+  }
+}

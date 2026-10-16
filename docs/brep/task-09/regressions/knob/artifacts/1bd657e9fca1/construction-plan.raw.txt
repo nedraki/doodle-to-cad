@@ -1,0 +1,44 @@
+```json
+{
+  "view_frame": "The drawing presents two views of a single part. The left view is the Front view (XZ plane), showing the part's width (X) and height (Z). The right view is the Right view (YZ plane), showing the part's depth (Y) and height (Z). The part is symmetric about the XZ plane (front/back) and the YZ plane (left/right). The origin (0,0,0) is at the center of the part's bottom face.",
+  "features": [
+    {
+      "id": "part_body",
+      "shape": "extrusion",
+      "section": "closed_xy_profile",
+      "axis_or_plane": "Z",
+      "dimensions": [
+        "ASSUMED_thickness: 10.0",
+        "ASSUMED_width: 100.0",
+        "ASSUMED_height: 60.0",
+        "ASSUMED_top_flange_thickness: 10.0",
+        "ASSUMED_bottom_flange_thickness: 10.0",
+        "ASSUMED_web_thickness: 20.0",
+        "ASSUMED_notch_depth: 15.0",
+        "ASSUMED_notch_height: 20.0"
+      ],
+      "placement": "The part is centered at the origin. The profile is defined in the XY plane and extruded along the Z axis from Z=0 to Z=ASSUMED_thickness. The profile is symmetric about the Y axis. Key points for the right half of the profile (X >= 0): (0,0) -> (ASSUMED_width/2, 0) -> (ASSUMED_width/2, ASSUMED_bottom_flange_thickness) -> (ASSUMED_web_thickness/2, ASSUMED_bottom_flange_thickness) -> (ASSUMED_web_thickness/2, ASSUMED_height - ASSUMED_top_flange_thickness) -> (ASSUMED_width/2, ASSUMED_height - ASSUMED_top_flange_thickness) -> (ASSUMED_width/2, ASSUMED_height) -> (0, ASSUMED_height). The left half is mirrored. The 'notches' are the cutouts between the flanges and the web.",
+      "evidence": "The front view shows a 'T' or 'I' beam-like profile with a top flange, a bottom flange, and a central web. The right view shows a uniform thickness, indicating an extrusion. The overall shape is symmetric."
+    }
+  ],
+  "connections": [
+    "The top flange, bottom flange, and central web are all part of a single continuous solid body."
+  ],
+  "edit_rules": [
+    "Changing ASSUMED_thickness will scale the part along the Z-axis.",
+    "Changing ASSUMED_width will scale the part along the X-axis.",
+    "Changing ASSUMED_height will scale the part along the Y-axis.",
+    "Changing ASSUMED_top_flange_thickness will move the bottom edge of the top flange and the top edge of the web.",
+    "Changing ASSUMED_bottom_flange_thickness will move the top edge of the bottom flange and the bottom edge of the web.",
+    "Changing ASSUMED_web_thickness will move the inner vertical edges of the web.",
+    "Changing ASSUMED_notch_depth will move the inner horizontal edges of the flanges.",
+    "Changing ASSUMED_notch_height will move the inner vertical edges of the flanges."
+  ],
+  "unresolved": [
+    "The drawing lacks any dimensions. All dimensions are assumed based on visual proportions and the maximum_dimension_mm constraint.",
+    "The exact shape of the 'notches' (the cutouts) is assumed to be rectangular. The drawing shows some slight irregularity, but a clean rectangular cutout is a reasonable assumption for a CAD model.",
+    "The small marks inside the part in both views are interpreted as centerlines, not features."
+  ],
+  "clarification": null
+}
+```

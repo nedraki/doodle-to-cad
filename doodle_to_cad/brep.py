@@ -134,6 +134,7 @@ cylinder: id,kind,origin (base centre),radius,height,axis (x/y/z).
 union/difference: id,kind,left,right (earlier operation IDs).
 fillet: id,kind,body,radius,selector (all/parallel_x/parallel_y/parallel_z).
 chamfer: id,kind,body,radius (all edges; radius is width across chamfer).
+extrude: id,kind,origin (world XYZ translation),plane (only "xy"),direction (integer 1 or -1 along Z),depth (positive 0.01–256 mm),loops (outer loop first, followed by through-opening loops). Each loop is an ordered list of line/arc objects, joined end-to-start and closed. Line: {"kind":"line","start":[u,v],"end":[u,v]}. Arc: {"kind":"arc","center":[u,v],"radius":positive,"start_angle":degrees,"end_angle":degrees}; CCW from +X, 0 < end-start <=360. A circle is one 0-to-360 arc. Do not split a circle across multiple same-circle arcs. Local u,v are X,Y; origin translates the profile into the world. Numeric profile fields may use quoted parameter expressions. At most 128 edges and 16 loops. No crossing, touching, nested holes, open outlines or splines. Use the exact line/arc outline, not a bounding rectangle. Expose thickness via depth; changing depth must not change the profile. Other extrusion planes are unsupported because their USD round trip is not verified. Do not rotate an extruded profile to evade that restriction.
 arc_pipe: id,kind,origin (arc centre),bend_radius,radius,angle (0<angle<=270).
 arc_pipe is a solid circular profile swept along an XY arc from +X anticlockwise.
 Use booleans for pockets/enclosures. Cutters must cross the owning wall.

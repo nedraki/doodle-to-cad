@@ -1,0 +1,120 @@
+{
+  "version": 1,
+  "object_hypothesis": "Spoked wheel or disk assembly",
+  "features": [
+    {
+      "id": "outer_rim",
+      "type": "rim",
+      "description": "Outer circular boundary of the wheel",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "High circularity (0.898) in the front view indicates a round outer profile."
+    },
+    {
+      "id": "central_hub",
+      "type": "hub",
+      "description": "Central circular region",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "Visible as a distinct circular region in the center of the front view."
+    },
+    {
+      "id": "spokes",
+      "type": "spoke",
+      "description": "Radial bars connecting hub to rim",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "Linear segments radiating from the center to the outer edge are visible in the front view."
+    },
+    {
+      "id": "wheel_thickness",
+      "type": "body",
+      "description": "Axial depth of the wheel",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_14"
+        }
+      ],
+      "reason": "The right view shows a rectangular profile, indicating the object has a uniform thickness."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "spoke_connectivity",
+      "type": "connected",
+      "features": [
+        "spokes",
+        "central_hub",
+        "outer_rim"
+      ],
+      "description": "Spokes connect the central hub to the outer rim",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "In the front view, the linear spoke segments physically touch both the central circle and the outer circle."
+    },
+    {
+      "id": "spoke_repetition",
+      "type": "repeated",
+      "features": [
+        "spokes"
+      ],
+      "description": "Multiple spokes arranged radially",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "The front view displays a pattern of multiple identical radial bars."
+    },
+    {
+      "id": "axial_uniformity",
+      "type": "other",
+      "features": [
+        "wheel_thickness",
+        "outer_rim"
+      ],
+      "description": "The wheel has a uniform thickness along its axis",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_14"
+        }
+      ],
+      "reason": "The right view shows a simple rectangle, suggesting the object is a flat disk or plate rather than a complex 3D shape."
+    }
+  ],
+  "assumptions": [
+    "The object is a single rigid body.",
+    "The front view represents the primary face of the object."
+  ],
+  "unresolved": [
+    "The specific material of the object.",
+    "Whether the central hub contains a hole (e.g., for an axle) or is solid."
+  ],
+  "conflicts": []
+}

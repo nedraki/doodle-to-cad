@@ -1,0 +1,94 @@
+{
+  "job": "9f0bec5c6642",
+  "status": "done",
+  "error": null,
+  "uses_profile_extrusion": true,
+  "original": {
+    "extents_mm": [
+      60.0,
+      40.0,
+      6.0
+    ],
+    "volume_mm3": 12852.904513071684,
+    "expected_volume_mm3": 12852.05310854923,
+    "watertight": true,
+    "components": 1,
+    "sections": [
+      {
+        "status": "passed",
+        "symmetric_boundary_error_mm": 0.05465,
+        "tolerance_mm": 0.25,
+        "sampling_spacing_mm": 0.1,
+        "axis": 2,
+        "position_mm": 0.1,
+        "loops": 2
+      },
+      {
+        "status": "passed",
+        "symmetric_boundary_error_mm": 0.05391,
+        "tolerance_mm": 0.25,
+        "sampling_spacing_mm": 0.1,
+        "axis": 2,
+        "position_mm": 3.0,
+        "loops": 2
+      },
+      {
+        "status": "passed",
+        "symmetric_boundary_error_mm": 0.05601,
+        "tolerance_mm": 0.25,
+        "sampling_spacing_mm": 0.1,
+        "axis": 2,
+        "position_mm": 5.9,
+        "loops": 2
+      }
+    ],
+    "passed": true
+  },
+  "editable_depth_found": true,
+  "edit_ok": true,
+  "edited": {
+    "extents_mm": [
+      60.0,
+      40.0,
+      10.0
+    ],
+    "volume_mm3": 21421.507521786134,
+    "expected_volume_mm3": 21420.088514248713,
+    "watertight": true,
+    "components": 1,
+    "sections": [
+      {
+        "status": "passed",
+        "symmetric_boundary_error_mm": 0.05756,
+        "tolerance_mm": 0.25,
+        "sampling_spacing_mm": 0.1,
+        "axis": 2,
+        "position_mm": 0.1,
+        "loops": 2
+      },
+      {
+        "status": "passed",
+        "symmetric_boundary_error_mm": 0.05391,
+        "tolerance_mm": 0.25,
+        "sampling_spacing_mm": 0.1,
+        "axis": 2,
+        "position_mm": 5.0,
+        "loops": 2
+      },
+      {
+        "status": "passed",
+        "symmetric_boundary_error_mm": 0.05756,
+        "tolerance_mm": 0.25,
+        "sampling_spacing_mm": 0.1,
+        "axis": 2,
+        "position_mm": 9.9,
+        "loops": 2
+      }
+    ],
+    "passed": true
+  },
+  "invalid_edit_rejected": true,
+  "prior_display_retained": true,
+  "reload_original": true,
+  "browser_errors": []
+}

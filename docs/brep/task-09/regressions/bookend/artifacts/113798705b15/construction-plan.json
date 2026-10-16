@@ -1,0 +1,104 @@
+{
+  "view_frame": "The drawing presents two views in third-angle projection. The left view is the Front view, showing the X (width) and Z (height) axes. The right view is the Right Side view, showing the Y (depth) and Z (height) axes. The part is an L-shaped bracket with a vertical backplate and a horizontal base.",
+  "features": [
+    {
+      "id": "backplate",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "ASSUMED_WIDTH",
+        "ASSUMED_HEIGHT",
+        "ASSUMED_THICKNESS"
+      ],
+      "placement": "Centered at X=0, Z=ASSUMED_HEIGHT/2, Y=ASSUMED_THICKNESS/2. Extends from X=-ASSUMED_WIDTH/2 to X=ASSUMED_WIDTH/2, Z=0 to Z=ASSUMED_HEIGHT, and Y=0 to Y=ASSUMED_THICKNESS.",
+      "evidence": "The large rectangular outline in the Front view and the vertical leg of the L-shape in the Right Side view."
+    },
+    {
+      "id": "base",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "ASSUMED_WIDTH",
+        "ASSUMED_DEPTH",
+        "ASSUMED_THICKNESS"
+      ],
+      "placement": "Centered at X=0, Y=ASSUMED_DEPTH/2, Z=ASSUMED_THICKNESS/2. Extends from X=-ASSUMED_WIDTH/2 to X=ASSUMED_WIDTH/2, Y=0 to Y=ASSUMED_DEPTH, and Z=0 to Z=ASSUMED_THICKNESS.",
+      "evidence": "The horizontal leg of the L-shape in the Right Side view. The width is inferred from the Front view."
+    },
+    {
+      "id": "opening_1",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "ASSUMED_OPENING_1_WIDTH",
+        "ASSUMED_OPENING_1_HEIGHT",
+        "ASSUMED_THICKNESS"
+      ],
+      "placement": "Centered at X=-ASSUMED_WIDTH/4, Z=3*ASSUMED_HEIGHT/4, Y=ASSUMED_THICKNESS/2. Extends from X=-ASSUMED_WIDTH/4-ASSUMED_OPENING_1_WIDTH/2 to X=-ASSUMED_WIDTH/4+ASSUMED_OPENING_1_WIDTH/2, Z=3*ASSUMED_HEIGHT/4-ASSUMED_OPENING_1_HEIGHT/2 to Z=3*ASSUMED_HEIGHT/4+ASSUMED_OPENING_1_HEIGHT/2, and Y=0 to Y=ASSUMED_THICKNESS.",
+      "evidence": "The top-left rectangular outline in the Front view."
+    },
+    {
+      "id": "opening_2",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "ASSUMED_OPENING_2_WIDTH",
+        "ASSUMED_OPENING_2_HEIGHT",
+        "ASSUMED_THICKNESS"
+      ],
+      "placement": "Centered at X=0, Z=ASSUMED_HEIGHT/2, Y=ASSUMED_THICKNESS/2. Extends from X=-ASSUMED_OPENING_2_WIDTH/2 to X=ASSUMED_OPENING_2_WIDTH/2, Z=ASSUMED_HEIGHT/2-ASSUMED_OPENING_2_HEIGHT/2 to Z=ASSUMED_HEIGHT/2+ASSUMED_OPENING_2_HEIGHT/2, and Y=0 to Y=ASSUMED_THICKNESS.",
+      "evidence": "The central vertical rectangular outline in the Front view."
+    },
+    {
+      "id": "opening_3",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "ASSUMED_OPENING_3_WIDTH",
+        "ASSUMED_OPENING_3_HEIGHT",
+        "ASSUMED_THICKNESS"
+      ],
+      "placement": "Centered at X=-ASSUMED_WIDTH/4, Z=ASSUMED_HEIGHT/4, Y=ASSUMED_THICKNESS/2. Extends from X=-ASSUMED_WIDTH/4-ASSUMED_OPENING_3_WIDTH/2 to X=-ASSUMED_WIDTH/4+ASSUMED_OPENING_3_WIDTH/2, Z=ASSUMED_HEIGHT/4-ASSUMED_OPENING_3_HEIGHT/2 to Z=ASSUMED_HEIGHT/4+ASSUMED_OPENING_3_HEIGHT/2, and Y=0 to Y=ASSUMED_THICKNESS.",
+      "evidence": "The bottom-left vertical rectangular outline in the Front view."
+    },
+    {
+      "id": "opening_4",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "ASSUMED_OPENING_4_WIDTH",
+        "ASSUMED_OPENING_4_HEIGHT",
+        "ASSUMED_THICKNESS"
+      ],
+      "placement": "Centered at X=ASSUMED_WIDTH/4, Z=ASSUMED_HEIGHT/4, Y=ASSUMED_THICKNESS/2. Extends from X=ASSUMED_WIDTH/4-ASSUMED_OPENING_4_WIDTH/2 to X=ASSUMED_WIDTH/4+ASSUMED_OPENING_4_WIDTH/2, Z=ASSUMED_HEIGHT/4-ASSUMED_OPENING_4_HEIGHT/2 to Z=ASSUMED_HEIGHT/4+ASSUMED_OPENING_4_HEIGHT/2, and Y=0 to Y=ASSUMED_THICKNESS.",
+      "evidence": "The bottom-right vertical rectangular outline in the Front view."
+    }
+  ],
+  "connections": [
+    "The backplate and base are joined at the plane Z=ASSUMED_THICKNESS, Y=0.",
+    "The openings are subtracted from the backplate."
+  ],
+  "edit_rules": [
+    "Changing ASSUMED_WIDTH must update the X placement and dimensions of the backplate, base, and all openings.",
+    "Changing ASSUMED_HEIGHT must update the Z placement and dimensions of the backplate and all openings.",
+    "Changing ASSUMED_DEPTH must update the Y placement and dimensions of the base.",
+    "Changing ASSUMED_THICKNESS must update the Y placement and dimensions of the backplate, base, and all openings.",
+    "Changing any opening's dimensions or placement must update its corresponding feature."
+  ],
+  "unresolved": [
+    "The drawing lacks all dimensions. All feature dimensions and placements are assumed and must be defined before construction.",
+    "The nature of the openings (through-hole vs. recess) is not specified. This must be clarified before construction."
+  ],
+  "clarification": {
+    "feature_id": "opening_1",
+    "feature_label": "Top-left rectangular opening in the backplate",
+    "reason": "The drawing does not specify if this is a through-hole or a recess.",
+    "kind": "opening_extent"
+  }
+}

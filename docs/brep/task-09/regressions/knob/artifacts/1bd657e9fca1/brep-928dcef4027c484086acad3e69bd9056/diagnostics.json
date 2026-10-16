@@ -1,0 +1,40 @@
+{
+  "backend": "usd-brep",
+  "version": "1.0.0",
+  "recipe_version": 2,
+  "solid_volume_mm3": 224000.0,
+  "mesh_volume_mm3": 224000.0,
+  "extents_mm": [
+    120.0,
+    80.0,
+    40.0
+  ],
+  "bounds_mm": [
+    [
+      -60.0,
+      0.0,
+      0.0
+    ],
+    [
+      60.0,
+      80.0,
+      40.0
+    ]
+  ],
+  "watertight": true,
+  "winding_consistent": true,
+  "euler_number": 2,
+  "triangles": 44,
+  "usd_roundtrip": true,
+  "volume_relative_accuracy": 1e-08,
+  "usd_volume_mm3": 224000.00000000006,
+  "operations": [
+    {
+      "id": "main_body",
+      "kind": "extrude",
+      "faces": 14
+    }
+  ],
+  "connections": [],
+  "build_seconds": 0.133
+}

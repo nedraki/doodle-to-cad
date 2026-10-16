@@ -1,0 +1,464 @@
+{
+  "clarification_answers": [],
+  "evidence": {
+    "id": "1bd657e9fca1",
+    "interpretation": {
+      "version": 1,
+      "object_hypothesis": "A stepped mechanical component, likely a pulley or spool, characterized by a central web and opposing flanges.",
+      "features": [
+        {
+          "id": "body",
+          "type": "body",
+          "description": "The main solid volume of the component defined by the outer boundaries in both views.",
+          "status": "observed",
+          "evidence": [
+            {
+              "view_id": "view_1",
+              "region_id": "profile_contour_3"
+            },
+            {
+              "view_id": "view_2",
+              "region_id": "profile_contour_1"
+            }
+          ],
+          "reason": "The closed polygonal contours in both views define the physical extent of the object."
+        },
+        {
+          "id": "flange_top",
+          "type": "flange",
+          "description": "The upper horizontal section of the component, appearing as a wide band in both views.",
+          "status": "observed",
+          "evidence": [
+            {
+              "view_id": "view_1",
+              "region_id": "profile_contour_3"
+            },
+            {
+              "view_id": "view_2",
+              "region_id": "profile_contour_1"
+            }
+          ],
+          "reason": "The top section of the polygon in both views shows a distinct width greater than the central section."
+        },
+        {
+          "id": "flange_bottom",
+          "type": "flange",
+          "description": "The lower horizontal section of the component, appearing as a wide band in both views.",
+          "status": "observed",
+          "evidence": [
+            {
+              "view_id": "view_1",
+              "region_id": "profile_contour_3"
+            },
+            {
+              "view_id": "view_2",
+              "region_id": "profile_contour_1"
+            }
+          ],
+          "reason": "The bottom section of the polygon in both views shows a distinct width greater than the central section."
+        },
+        {
+          "id": "web",
+          "type": "body",
+          "description": "The central vertical section connecting the top and bottom flanges.",
+          "status": "observed",
+          "evidence": [
+            {
+              "view_id": "view_1",
+              "region_id": "profile_contour_3"
+            },
+            {
+              "view_id": "view_2",
+              "region_id": "profile_contour_1"
+            }
+          ],
+          "reason": "The central region of the polygon in both views is narrower than the flanges, indicating a web or neck."
+        }
+      ],
+      "relationships": [
+        {
+          "id": "symmetry_axis",
+          "type": "symmetry",
+          "features": [
+            "body"
+          ],
+          "description": "The object exhibits rotational symmetry about a central vertical axis.",
+          "status": "inferred",
+          "evidence": [
+            {
+              "view_id": "view_1",
+              "region_id": "profile_contour_3"
+            },
+            {
+              "view_id": "view_2",
+              "region_id": "profile_contour_1"
+            }
+          ],
+          "reason": "The front and right views are nearly identical in shape and dimensions, strongly suggesting the object is a body of revolution (axisymmetric)."
+        },
+        {
+          "id": "flange_web_connection",
+          "type": "connected",
+          "features": [
+            "flange_top",
+            "web",
+            "flange_bottom"
+          ],
+          "description": "The flanges are connected to the central web.",
+          "status": "inferred",
+          "evidence": [
+            {
+              "view_id": "view_1",
+              "region_id": "profile_contour_3"
+            },
+            {
+              "view_id": "view_2",
+              "region_id": "profile_contour_1"
+            }
+          ],
+          "reason": "The continuous outer boundary in both views shows the flanges and web as a single connected solid.",
+          "model_status": "observed",
+          "review_note": "Visible projected continuity does not prove a connected 3D solid."
+        }
+      ],
+      "assumptions": [
+        "The object is a solid of revolution (axisymmetric) based on the similarity of the front and right views.",
+        "The 'front' and 'right' view assignments are correct spatial heuristics."
+      ],
+      "unresolved": [
+        "The presence of a central hole (bore) is not visible in the provided contours.",
+        "The exact internal geometry (e.g., whether the web is solid or hollow) is not defined by the outer contours."
+      ],
+      "conflicts": [],
+      "review": {
+        "reference_integrity_checked": true,
+        "drawing_fidelity_verified": false,
+        "policy_warnings": [
+          "flange_web_connection: Visible projected continuity does not prove a connected 3D solid."
+        ],
+        "executable": false
+      }
+    },
+    "regions": [
+      {
+        "view_id": "view_1",
+        "direction": "front",
+        "sheet_bbox_normalized": [
+          0.016,
+          0.304,
+          0.421,
+          0.392
+        ],
+        "cad_mapping": {
+          "plane": "XZ",
+          "view_axis": "Y",
+          "u_maps_to": "+X",
+          "v_maps_to": "-Z"
+        },
+        "view_assignment": "spatial heuristic",
+        "region_id": "view",
+        "kind": "view",
+        "bbox_view_normalized": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "measured_span_pixels": {
+          "horizontal_axis_u": 421,
+          "vertical_axis_v": 294
+        }
+      },
+      {
+        "view_id": "view_1",
+        "direction": "front",
+        "sheet_bbox_normalized": [
+          0.016,
+          0.304,
+          0.421,
+          0.392
+        ],
+        "cad_mapping": {
+          "plane": "XZ",
+          "view_axis": "Y",
+          "u_maps_to": "+X",
+          "v_maps_to": "-Z"
+        },
+        "view_assignment": "spatial heuristic",
+        "region_id": "profile_contour_3",
+        "kind": "outer",
+        "profile_id": "contour_3",
+        "bbox_view_normalized": [
+          0.019,
+          0.0204,
+          0.9596,
+          0.9592
+        ],
+        "center_view_normalized": [
+          0.4988,
+          0.5
+        ],
+        "polygon_view_normalized": [
+          [
+            0.0214,
+            0.0543
+          ],
+          [
+            0.0499,
+            0.289
+          ],
+          [
+            0.285,
+            0.2857
+          ],
+          [
+            0.2874,
+            0.7482
+          ],
+          [
+            0.0808,
+            0.7449
+          ],
+          [
+            0.0784,
+            0.9625
+          ],
+          [
+            0.9287,
+            0.9457
+          ],
+          [
+            0.8979,
+            0.7824
+          ],
+          [
+            0.6983,
+            0.7212
+          ],
+          [
+            0.6936,
+            0.3094
+          ],
+          [
+            0.9691,
+            0.2926
+          ],
+          [
+            0.9549,
+            0.0408
+          ]
+        ],
+        "vertices": 12,
+        "circularity": 0.312,
+        "area_ratio_of_sheet": 0.09921
+      },
+      {
+        "view_id": "view_2",
+        "direction": "right",
+        "sheet_bbox_normalized": [
+          0.558,
+          0.312,
+          0.42,
+          0.3827
+        ],
+        "cad_mapping": {
+          "plane": "YZ",
+          "view_axis": "X",
+          "u_maps_to": "+Y",
+          "v_maps_to": "-Z"
+        },
+        "view_assignment": "spatial heuristic",
+        "region_id": "view",
+        "kind": "view",
+        "bbox_view_normalized": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "measured_span_pixels": {
+          "horizontal_axis_u": 420,
+          "vertical_axis_v": 287
+        }
+      },
+      {
+        "view_id": "view_2",
+        "direction": "right",
+        "sheet_bbox_normalized": [
+          0.558,
+          0.312,
+          0.42,
+          0.3827
+        ],
+        "cad_mapping": {
+          "plane": "YZ",
+          "view_axis": "X",
+          "u_maps_to": "+Y",
+          "v_maps_to": "-Z"
+        },
+        "view_assignment": "spatial heuristic",
+        "region_id": "profile_contour_1",
+        "kind": "outer",
+        "profile_id": "contour_1",
+        "bbox_view_normalized": [
+          0.019,
+          0.0209,
+          0.9595,
+          0.9582
+        ],
+        "center_view_normalized": [
+          0.4988,
+          0.4999
+        ],
+        "polygon_view_normalized": [
+          [
+            0.9762,
+            0.0243
+          ],
+          [
+            0.0405,
+            0.0243
+          ],
+          [
+            0.0238,
+            0.2788
+          ],
+          [
+            0.2857,
+            0.2718
+          ],
+          [
+            0.2857,
+            0.7387
+          ],
+          [
+            0.0786,
+            0.7559
+          ],
+          [
+            0.0738,
+            0.9441
+          ],
+          [
+            0.9,
+            0.972
+          ],
+          [
+            0.9024,
+            0.7492
+          ],
+          [
+            0.6905,
+            0.7455
+          ],
+          [
+            0.6929,
+            0.3692
+          ],
+          [
+            0.9714,
+            0.3031
+          ]
+        ],
+        "vertices": 12,
+        "circularity": 0.298,
+        "area_ratio_of_sheet": 0.09742
+      }
+    ],
+    "shared_axis_evidence": [
+      {
+        "axis": "Z",
+        "evidence": [
+          {
+            "view_id": "view_1",
+            "region_id": "view"
+          },
+          {
+            "view_id": "view_2",
+            "region_id": "view"
+          }
+        ],
+        "measured_spans_pixels": [
+          294,
+          287
+        ],
+        "relative_difference": 0.0238,
+        "status": "consistent_spans",
+        "assumption": "Views use the same drawing scale and their assigned directions are correct.",
+        "physical_dimension_verified": false
+      }
+    ],
+    "view_assignment_review": {
+      "excluded_from_direction_assignment": [],
+      "rule": "Groups below 5% of the largest group box area remain unassigned; they may be text or detail views.",
+      "regions_retained": true
+    },
+    "controls": {
+      "object_type_hint": "",
+      "method": "3D print",
+      "primary_view": "front",
+      "projection_standard": "third-angle",
+      "strict_watertight": true,
+      "refine_mode": "regularize"
+    },
+    "notes": "",
+    "default_generation_changed": false,
+    "files": {
+      "input": "/results/1bd657e9fca1/input.png",
+      "overlay": "/results/1bd657e9fca1/geometry-overlay.png",
+      "interpretation": "/results/1bd657e9fca1/feature-evidence.json"
+    }
+  },
+  "construction_plan": {
+    "view_frame": "The drawing presents two views of a single part. The left view is the Front view (XZ plane), showing the part's width (X) and height (Z). The right view is the Right view (YZ plane), showing the part's depth (Y) and height (Z). The part is symmetric about the XZ plane (front/back) and the YZ plane (left/right). The origin (0,0,0) is at the center of the part's bottom face.",
+    "features": [
+      {
+        "id": "part_body",
+        "shape": "extrusion",
+        "section": "closed_xy_profile",
+        "axis_or_plane": "Z",
+        "dimensions": [
+          "ASSUMED_thickness: 10.0",
+          "ASSUMED_width: 100.0",
+          "ASSUMED_height: 60.0",
+          "ASSUMED_top_flange_thickness: 10.0",
+          "ASSUMED_bottom_flange_thickness: 10.0",
+          "ASSUMED_web_thickness: 20.0",
+          "ASSUMED_notch_depth: 15.0",
+          "ASSUMED_notch_height: 20.0"
+        ],
+        "placement": "The part is centered at the origin. The profile is defined in the XY plane and extruded along the Z axis from Z=0 to Z=ASSUMED_thickness. The profile is symmetric about the Y axis. Key points for the right half of the profile (X >= 0): (0,0) -> (ASSUMED_width/2, 0) -> (ASSUMED_width/2, ASSUMED_bottom_flange_thickness) -> (ASSUMED_web_thickness/2, ASSUMED_bottom_flange_thickness) -> (ASSUMED_web_thickness/2, ASSUMED_height - ASSUMED_top_flange_thickness) -> (ASSUMED_width/2, ASSUMED_height - ASSUMED_top_flange_thickness) -> (ASSUMED_width/2, ASSUMED_height) -> (0, ASSUMED_height). The left half is mirrored. The 'notches' are the cutouts between the flanges and the web.",
+        "evidence": "The front view shows a 'T' or 'I' beam-like profile with a top flange, a bottom flange, and a central web. The right view shows a uniform thickness, indicating an extrusion. The overall shape is symmetric."
+      }
+    ],
+    "connections": [
+      "The top flange, bottom flange, and central web are all part of a single continuous solid body."
+    ],
+    "edit_rules": [
+      "Changing ASSUMED_thickness will scale the part along the Z-axis.",
+      "Changing ASSUMED_width will scale the part along the X-axis.",
+      "Changing ASSUMED_height will scale the part along the Y-axis.",
+      "Changing ASSUMED_top_flange_thickness will move the bottom edge of the top flange and the top edge of the web.",
+      "Changing ASSUMED_bottom_flange_thickness will move the top edge of the bottom flange and the bottom edge of the web.",
+      "Changing ASSUMED_web_thickness will move the inner vertical edges of the web.",
+      "Changing ASSUMED_notch_depth will move the inner horizontal edges of the flanges.",
+      "Changing ASSUMED_notch_height will move the inner vertical edges of the flanges."
+    ],
+    "unresolved": [
+      "The drawing lacks any dimensions. All dimensions are assumed based on visual proportions and the maximum_dimension_mm constraint.",
+      "The exact shape of the 'notches' (the cutouts) is assumed to be rectangular. The drawing shows some slight irregularity, but a clean rectangular cutout is a reasonable assumption for a CAD model.",
+      "The small marks inside the part in both views are interpreted as centerlines, not features."
+    ],
+    "clarification": null
+  },
+  "notes": "",
+  "maximum_dimension_mm": 120.0,
+  "controls": {
+    "object_type_hint": "",
+    "method": "3D print",
+    "primary_view": "front",
+    "projection_standard": "third-angle",
+    "strict_watertight": true,
+    "refine_mode": "regularize"
+  }
+}

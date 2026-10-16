@@ -1,0 +1,40 @@
+{
+  "backend": "usd-brep",
+  "version": "1.0.0",
+  "recipe_version": 2,
+  "solid_volume_mm3": 12852.053102774289,
+  "mesh_volume_mm3": 12852.904513071684,
+  "extents_mm": [
+    60.0,
+    40.0,
+    6.0
+  ],
+  "bounds_mm": [
+    [
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      60.0,
+      40.0,
+      6.0
+    ]
+  ],
+  "watertight": true,
+  "winding_consistent": true,
+  "euler_number": 0,
+  "triangles": 192,
+  "usd_roundtrip": true,
+  "volume_relative_accuracy": 1e-08,
+  "usd_volume_mm3": 12852.053108427624,
+  "operations": [
+    {
+      "id": "plate",
+      "kind": "extrude",
+      "faces": 12
+    }
+  ],
+  "connections": [],
+  "build_seconds": 0.221
+}
