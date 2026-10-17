@@ -19,6 +19,7 @@ from .pipeline import Pipeline
 from .brep import build_recipe, worker_python, RECIPE_PROMPT
 from .brep_recipe import recipe_params, validate_recipe
 from .build_contract import CAPABILITIES
+from . import revisions
 from .recipe_jobs import check_worker, run_recipe_job
 
 RUN_ID_RE = re.compile(r"^[0-9a-f]{6,32}$")
@@ -59,7 +60,7 @@ def latest_result():
     completed = sorted(settings.results_dir.glob("*/result.json"), key=lambda path: path.stat().st_mtime, reverse=True)
     if not completed:
         raise HTTPException(404, "No completed generation exists")
-    return json.loads(completed[0].read_text())
+    return revisions.selected_result(completed[0].parent)
 
 
 def _run_dir(run_id: str):
@@ -77,13 +78,34 @@ def get_result(run_id: str):
     out, _ = _run_dir(run_id)
     if not (out / "result.json").exists():
         raise HTTPException(404, "Run has no completed result")
-    return json.loads((out / "result.json").read_text())
+    return revisions.selected_result(out)
+
+
+@app.post("/api/results/{run_id}/revisions/preview")
+def preview_revision(run_id: str, payload: dict):
+    out, _ = _run_dir(run_id)
+    try:
+        return revisions.preview(out, payload, build_recipe)
+    except ValueError as exc:
+        raise HTTPException(422, {"message": str(exc), "code": getattr(exc, "code", "invalid_input")}) from exc
+
+
+@app.post("/api/results/{run_id}/revisions/keep")
+def keep_revision(run_id: str, payload: dict):
+    out, _ = _run_dir(run_id)
+    return revisions.keep(out, payload)
 
 
 @app.get("/api/results/{run_id}/params")
-def get_params(run_id: str):
+def get_params(run_id: str, revision_id: str | None = None):
     """Numeric top-level parameters the accepted model exposes for live editing."""
     out, scad = _run_dir(run_id)
+    if scad.suffix == ".json" and (out / "result.json").exists():
+        with revisions.locked(out):
+            store = revisions.read_store(out)
+            item = revisions.record(store, revision_id or store['selected'])
+            return {"run_id": run_id, "revision_id": item['id'],
+                    "params": recipe_params(json.loads(item['source_text']))}
     cached = out / "parameters.json"
     params = recipe_params(json.loads(scad.read_text())) if scad.suffix == ".json" else [p.to_dict() for p in extract_params(scad.read_text())]
     payload = {"run_id": run_id, "params": params}

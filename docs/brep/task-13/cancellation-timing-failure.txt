@@ -1,0 +1,60 @@
+........................................................................ [ 35%]
+........................................................................ [ 70%]
+...........................................F...............              [100%]
+=================================== FAILURES ===================================
+__________ test_cancellation_stops_process_group_and_never_publishes ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-sparkie/pytest-151/test_cancellation_stops_proces0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0xf8b49af06b90>
+
+    def test_cancellation_stops_process_group_and_never_publishes(tmp_path, monkeypatch):
+        """Exercise real processes: the runner spawns a long-running child."""
+        real_spawn = asyncio.create_subprocess_exec
+        pid_file = tmp_path / 'child.pid'
+        script = ('import subprocess,sys,time; from pathlib import Path; '
+                  'p=subprocess.Popen([sys.executable,"-c","import time; time.sleep(60)"]); '
+                  f'Path({str(pid_file)!r}).write_text(str(p.pid)); time.sleep(60)')
+        async def spawn(*args, **kwargs):
+            if 'doodle_to_cad.recipe_job_worker' in args:
+                return await real_spawn(sys.executable, '-c', script, **kwargs)
+            return await real_spawn(*args, **kwargs)
+        monkeypatch.setattr(recipe_jobs.asyncio, 'create_subprocess_exec', spawn)
+        async def no_docker(_): pass
+        monkeypatch.setattr(recipe_jobs, '_docker_cleanup', no_docker)
+        output=tmp_path/'results';output.mkdir()
+        prior=output/'previous';prior.mkdir();(prior/'result.json').write_text('previous result')
+        job={'job_id':'abc123abc123','status':'running','result':None}
+        async def scenario():
+            task=asyncio.create_task(recipe_jobs.run_recipe_job(job,{},output,lambda *a: pytest.fail('Cancelled build must not publish')))
+            for _ in range(200):
+                if pid_file.exists(): break
+                await asyncio.sleep(.01)
+            assert pid_file.exists()
+            task.cancel()
+            with pytest.raises(asyncio.CancelledError): await task
+        asyncio.run(scenario())
+        assert job['status']=='cancelled' and job['result'] is None
+        assert not (output/job['job_id']).exists()
+        assert not list(tmp_path.glob('.recipe-job-*'))
+        assert (prior/'result.json').read_text()=='previous result'
+        child=int(pid_file.read_text())
+        # An orphan may briefly be a zombie until init reaps it; it cannot run.
+        stat=Path(f'/proc/{child}/stat')
+>       assert not stat.exists() or stat.read_text().split()[2]=='Z'
+E       AssertionError: assert (not True or 'R' == 'Z'
+E        +  where True = exists()
+E        +    where exists = PosixPath('/proc/6369/stat').exists
+E         
+E         - Z
+E         + R)
+
+tests/test_recipe_jobs.py:47: AssertionError
+=============================== warnings summary ===============================
+.venv/lib/python3.11/site-packages/fastapi/testclient.py:1
+  /tmp/doodle-brep-30/.venv/lib/python3.11/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_recipe_jobs.py::test_cancellation_stops_process_group_and_never_publishes
+1 failed, 202 passed, 1 warning in 49.89s

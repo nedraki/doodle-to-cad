@@ -44,6 +44,11 @@ def test_cancellation_stops_process_group_and_never_publishes(tmp_path, monkeypa
     child=int(pid_file.read_text())
     # An orphan may briefly be a zombie until init reaps it; it cannot run.
     stat=Path(f'/proc/{child}/stat')
+    # SIGKILL has been sent to the whole group. The child may need one
+    # scheduler turn after the parent is reaped before /proc shows its exit.
+    deadline=time.monotonic()+1
+    while stat.exists() and stat.read_text().split()[2]!='Z' and time.monotonic()<deadline:
+        time.sleep(.01)
     assert not stat.exists() or stat.read_text().split()[2]=='Z'
     with pytest.raises(ProcessLookupError):os.kill(job['worker_pid'],0)
 

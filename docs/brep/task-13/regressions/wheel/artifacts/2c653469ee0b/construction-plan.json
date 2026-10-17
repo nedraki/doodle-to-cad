@@ -1,0 +1,63 @@
+{
+  "view_frame": "Front view is XZ plane (X horizontal, Z vertical). Right view is YZ plane (Y depth, Z vertical). Top view is XY plane (X horizontal, Y depth). The wheel axis is along Y.",
+  "features": [
+    {
+      "id": "wheel_rim",
+      "shape": "annulus",
+      "section": "rectangular",
+      "axis_or_plane": "Y",
+      "dimensions": [
+        "OD 120 mm",
+        "thickness 8 mm",
+        "ASSUMED rim_width 10 mm"
+      ],
+      "placement": "Centered at (0,0,0). Outer radius 60 mm. Inner radius 50 mm (60 - 10). Extends from Y=-4 to Y=4.",
+      "evidence": "Front view shows outer and inner concentric circles. Label 'OD 120 mm'. Right view shows rectangular profile of width 8 mm."
+    },
+    {
+      "id": "wheel_hub",
+      "shape": "cylinder",
+      "section": "circular",
+      "axis_or_plane": "Y",
+      "dimensions": [
+        "thickness 8 mm",
+        "ASSUMED hub_diameter 30 mm"
+      ],
+      "placement": "Centered at (0,0,0). Radius 15 mm. Extends from Y=-4 to Y=4.",
+      "evidence": "Front view shows central circle. Right view shows rectangular profile of width 8 mm."
+    },
+    {
+      "id": "spokes",
+      "shape": "box",
+      "section": "rectangular",
+      "axis_or_plane": "radial in XZ",
+      "dimensions": [
+        "8 spokes",
+        "thickness 8 mm",
+        "ASSUMED spoke_width 6 mm"
+      ],
+      "placement": "8 instances rotated 45 degrees apart around Y axis. Each spoke extends radially from hub surface (r=15) to rim inner surface (r=50). Extends from Y=-4 to Y=4.",
+      "evidence": "Front view shows 8 radial lines connecting hub to rim. Right view shows rectangular profile of width 8 mm."
+    }
+  ],
+  "connections": [
+    "Spokes connect hub to rim",
+    "All features share the same Y-axis thickness (8 mm)"
+  ],
+  "edit_rules": [
+    "Changing OD changes rim outer radius and spoke length",
+    "Changing thickness changes Y extent of all features",
+    "Changing spoke count changes angular spacing of spokes"
+  ],
+  "unresolved": [
+    "Rim width (radial thickness) is not dimensioned",
+    "Hub diameter is not dimensioned",
+    "Spoke width is not dimensioned"
+  ],
+  "clarification": {
+    "feature_id": "wheel_rim",
+    "feature_label": "Rim radial width",
+    "reason": "The drawing shows the rim as an annulus but does not specify the radial thickness (width) of the rim.",
+    "kind": "opening_extent"
+  }
+}

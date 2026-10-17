@@ -1,0 +1,24 @@
+[
+  {
+    "question": {
+      "feature_id": "wheel_rim",
+      "feature_label": "Rim radial width",
+      "reason": "The drawing shows the rim as an annulus but does not specify the radial thickness (width) of the rim.",
+      "kind": "opening_extent",
+      "id": "2f6a341a7d5c422faaacf152335539c9",
+      "text": "Should this hole go all the way through the part?",
+      "maximum_depth_mm": 120.0,
+      "choices": [
+        {
+          "id": "through",
+          "label": "Yes \u2014 make a through-hole"
+        },
+        {
+          "id": "recess",
+          "label": "No \u2014 leave a bottom"
+        }
+      ]
+    },
+    "status": "cancelled"
+  }
+]

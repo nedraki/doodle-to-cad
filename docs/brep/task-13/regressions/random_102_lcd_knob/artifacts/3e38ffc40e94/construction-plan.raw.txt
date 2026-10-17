@@ -1,0 +1,71 @@
+{
+  "view_frame": "The drawing presents three orthographic views in third-angle projection. The primary view (top-left) is the Front view, showing the X (width) and Z (height) axes. The view below it (bottom-left) is the Top view, showing X (width) and Y (depth). The view to the right (bottom-right) is the Right Side view, showing Y (depth) and Z (height).",
+  "features": [
+    {
+      "id": "main_body",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "Y",
+      "dimensions": [
+        "diameter: ASSUMED",
+        "length: ASSUMED"
+      ],
+      "placement": "Centered at X=0, Z=0. Extends along Y axis from Y=0 to Y=length.",
+      "evidence": "Front view shows a circular profile. Top and Right views show rectangular profiles consistent with a cylinder viewed from the side."
+    },
+    {
+      "id": "tab_left",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "X",
+      "dimensions": [
+        "width: ASSUMED",
+        "height: ASSUMED",
+        "length: ASSUMED"
+      ],
+      "placement": "Attached to the left side of the main body (negative X). Centered vertically at Z=0.",
+      "evidence": "Front view shows a rectangular protrusion extending to the left. Top view shows a corresponding rectangular extension."
+    },
+    {
+      "id": "tab_top_right",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "diagonal",
+      "dimensions": [
+        "width: ASSUMED",
+        "height: ASSUMED",
+        "length: ASSUMED"
+      ],
+      "placement": "Attached to the upper-right quadrant of the main body. Angled upwards and to the right.",
+      "evidence": "Front view shows a rectangular protrusion extending diagonally from the top-right of the circle."
+    },
+    {
+      "id": "tab_bottom_right",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "diagonal",
+      "dimensions": [
+        "width: ASSUMED",
+        "height: ASSUMED",
+        "length: ASSUMED"
+      ],
+      "placement": "Attached to the lower-right quadrant of the main body. Angled downwards and to the right.",
+      "evidence": "Front view shows a rectangular protrusion extending diagonally from the bottom-right of the circle."
+    }
+  ],
+  "connections": [
+    "tab_left connects to main_body at the leftmost point of the circular profile.",
+    "tab_top_right connects to main_body at the upper-right arc.",
+    "tab_bottom_right connects to main_body at the lower-right arc."
+  ],
+  "edit_rules": [
+    "Changing the main_body diameter requires updating the attachment points of all three tabs.",
+    "Changing the main_body length requires updating the Y-dimension of the Top and Right views.",
+    "Changing tab dimensions requires updating the corresponding protrusions in the Front view."
+  ],
+  "unresolved": [
+    "All dimensions are missing from the drawing.",
+    "The exact angles of the diagonal tabs are not specified.",
+    "The thickness of the tabs relative to the main body is not specified."
+  ]
+}
