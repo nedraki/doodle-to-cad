@@ -1,0 +1,83 @@
+{
+  "version": 2,
+  "units": "mm",
+  "name": "rounded_tray",
+  "parameters": {
+    "thickness": {
+      "value": 3.0,
+      "min": 0.5,
+      "max": 30,
+      "label": "Wall and floor thickness"
+    }
+  },
+  "operations": [
+    {
+      "id": "blank",
+      "kind": "box",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "size": [
+        60,
+        40,
+        20
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": []
+    },
+    {
+      "id": "rounded",
+      "kind": "fillet",
+      "body": "blank",
+      "radius": 6,
+      "selector": "parallel_z",
+      "frame": "world",
+      "depends_on": [
+        "blank"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "tray",
+      "kind": "shell",
+      "body": "rounded",
+      "thickness": "thickness",
+      "opening": "top",
+      "preserve": "outer",
+      "frame": "world",
+      "depends_on": [
+        "rounded"
+      ],
+      "evidence": []
+    }
+  ],
+  "output": "tray",
+  "frames": {
+    "world": {
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    }
+  },
+  "bodies": [
+    {
+      "id": "part",
+      "output": "tray"
+    }
+  ],
+  "evidence": {
+    "observed": [],
+    "inferred": [],
+    "assumptions": [],
+    "unresolved": []
+  },
+  "constraints": []
+}

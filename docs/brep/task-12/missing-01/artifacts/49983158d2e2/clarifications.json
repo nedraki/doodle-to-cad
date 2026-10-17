@@ -1,0 +1,20 @@
+[
+  {
+    "question": {
+      "feature_id": "tray_body",
+      "feature_label": "Rounded Open Tray",
+      "reason": "The drawing explicitly states 'Thickness value is not given' and 'Same wall and floor thickness', but does not provide the numerical value required to construct the solid geometry.",
+      "kind": "uniform_thickness",
+      "id": "9545052bd3f740dfa83d5513154f731e",
+      "text": "Wall and floor thickness (mm)?",
+      "maximum_thickness_mm": 60.0
+    },
+    "status": "answered",
+    "answer": {
+      "question_id": "9545052bd3f740dfa83d5513154f731e",
+      "feature_id": "tray_body",
+      "kind": "uniform_thickness",
+      "thickness_mm": 2
+    }
+  }
+]

@@ -1,0 +1,113 @@
+shell_brep shell_brep(brep: usd_brep._omni_solid.Brep, distance: float, *, extended_offset: bool = True, self_intersection: bool = True, create_solid: bool = True, faces_to_shell: List[usd_brep._omni_solid.Face] = []) -> usd_brep._omni_solid.Brep
+
+Pure: returns new Brep; brep unchanged.
+
+Hollow out a solid by removing selected faces and offsetting the rest.
+
+Args:
+    brep: Source Brep. Not modified.
+    distance: Signed wall thickness. Positive expands outward from
+        the source; negative creates an inward wall. Must be smaller than
+        the minimum face dimension to avoid degenerate geometry.
+    extended_offset: If ``True`` (default), extend offset surfaces at
+        convex edges until they intersect, producing sharp corners.
+        ``False`` may leave gaps at sharp convex edges. Keyword-only.
+    self_intersection: If ``True`` (default), detect and resolve
+        self-intersections that occur in concave regions when
+        ``abs(distance)`` exceeds the local curvature radius.
+        Keyword-only.
+    create_solid: Join sheet-body lamina edges when ``True``. Solid
+        inputs always use Boolean wall construction. Keyword-only.
+    faces_to_shell: Faces to remove. Empty creates a closed wall.
+        Keyword-only.
+
+Returns:
+    Brep: hollowed shell with ``faces_to_shell`` open.
+
+See Also:
+    offset_brep: Offset every face without removing any.
+
+Wraps: SmApiShellBrepFull
+
+offset_brep offset_brep(brep: usd_brep._omni_solid.Brep, distance: float, *, extended_offset: bool = True, self_intersection: bool = True) -> usd_brep._omni_solid.Brep
+
+Pure: returns new Brep; brep unchanged.
+
+Create a new Brep whose surfaces are uniformly offset from an existing Brep.
+
+Args:
+    brep: Source Brep. Not modified.
+    distance: Offset distance. Positive offsets outward along surface
+        normals (larger shape); negative offsets inward (smaller).
+        Must be smaller than the minimum radius of curvature in any
+        concave region to avoid invalid geometry.
+    extended_offset: If ``True`` (default), extend offset surfaces at
+        convex edges until they intersect, producing sharp corners.
+        ``False`` may leave gaps. Keyword-only.
+    self_intersection: If ``True`` (default), detect and resolve
+        self-intersections in concave regions. Keyword-only.
+
+Returns:
+    Brep: offset Brep.
+
+See Also:
+    shell_brep: Hollow-out variant with selected faces left open.
+    create_offset_surface: Offset a single surface in 3D.
+    offset_curve: Offset a single curve in 2D.
+
+Wraps: SmApiOffsetBrepFull
+
+create_offset_profile create_offset_profile(curves: List[usd_brep._omni_solid.Curve], distance: float, *, offset_type: usd_brep._omni_solid.OffsetType = <OffsetType.BOTH: 3>, round_corners: bool = True, shell_result: bool = False) -> usd_brep._omni_solid.Brep
+
+Pure: returns new Brep; inputs unchanged.
+
+Create an offset region from a closed loop of planar curves.
+
+Args:
+    curves: Coplanar curves forming at least one closed loop.
+    distance: Offset distance. Must be positive.
+    offset_type: ``OffsetType`` selector. ``LEFT`` / ``RIGHT`` produce
+        a one-sided offset; ``BOTH`` (default) produces a two-sided
+        band region. Keyword-only.
+    round_corners: If ``True`` (default), round expanding corners.
+        ``False`` extends the corners linearly until they meet.
+        Keyword-only.
+    shell_result: If ``True``, return a shell topology instead of a
+        face region. Only valid when ``offset_type`` is ``LEFT`` or
+        ``RIGHT`` - not ``BOTH``. Defaults to ``False``. Keyword-only.
+
+Returns:
+    Brep: sheet-body Brep representing the offset region.
+
+Notes:
+    This is a curve-input operation that creates a new Brep, distinct
+    from ``offset_brep`` which offsets an existing Brep's surfaces.
+
+See Also:
+    offset_brep: Offset the surfaces of an existing Brep.
+    offset_curve: Offset a single B-spline curve in 2D.
+    create_planar_faces: Build a planar Brep from curve loops without
+        offsetting.
+
+Wraps: SmApiCreateOffsetProfile
+
+face_bounding_box face_bounding_box(face: usd_brep._omni_solid.Face, tight: bool = False) -> tuple
+
+Axis-aligned bounding box of a single face.
+
+Args:
+    face: Face to query. Not modified.
+    tight: If ``True``, sample the face's surface within its trim
+        boundary for a minimal box (expensive). Default ``False``
+        returns the loose face-level box.
+
+Returns:
+    tuple[tuple[float, float, float], tuple[float, float, float]]:
+    ``((min_x, min_y, min_z), (max_x, max_y, max_z))``.
+
+See Also:
+    Face.bounding_box: Method form on the Face class.
+    brep_bounding_box: Whole-Brep variant.
+
+Wraps: SmApiFaceBoundingBox
+

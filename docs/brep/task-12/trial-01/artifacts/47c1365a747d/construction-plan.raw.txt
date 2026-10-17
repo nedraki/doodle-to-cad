@@ -1,0 +1,44 @@
+{
+  "view_frame": "The drawing provides a TOP view (XY plane) and a SECTION view (XZ plane). The world coordinate system is defined with X as width (60mm), Y as depth (40mm), and Z as height (20mm). The origin (0,0,0) is located at the bottom-left-front corner of the tray's bounding box.",
+  "features": [
+    {
+      "id": "tray_outer",
+      "shape": "Extrusion",
+      "section": "Closed XY profile: Rectangle 60x40 with R6 fillets on all four corners.",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "60",
+        "40",
+        "20",
+        "R6"
+      ],
+      "placement": "Starts at Z=0 and extrudes to Z=20. The profile is centered at X=30, Y=20.",
+      "evidence": "Top view shows outer rectangle 60x40 with rounded corners. Section view shows height 20. Text notes 'Outside: 60 x 40 x 20' and 'Outer vertical corners: R6'."
+    },
+    {
+      "id": "tray_cavity",
+      "shape": "Extrusion",
+      "section": "Closed XY profile: Rectangle 56x36 with R4 fillets on all four corners.",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "56",
+        "36",
+        "18",
+        "R4"
+      ],
+      "placement": "Starts at Z=2 (floor thickness) and extrudes to Z=20 (open top). The profile is centered at X=30, Y=20.",
+      "evidence": "Top view shows inner rectangle. Section view shows 'EMPTY' cavity with floor thickness 2 and wall thickness 2. Text notes 'Uniform wall thickness: 2' and 'Floor thickness: 2'. Inner radius is derived as Outer Radius (6) - Wall Thickness (2) = 4."
+    }
+  ],
+  "connections": [
+    "tray_cavity is subtracted from tray_outer to form the final solid."
+  ],
+  "edit_rules": [
+    "Changing 'Uniform wall thickness' updates the inner profile width (60 - 2*wall), depth (40 - 2*wall), and inner corner radius (6 - wall).",
+    "Changing 'Floor thickness' updates the Z-start of the tray_cavity feature.",
+    "Changing 'Outside' dimensions updates the tray_outer profile and the tray_cavity profile dimensions (maintaining wall/floor thickness).",
+    "Changing 'Height' updates the Z-end of tray_outer and the Z-end of tray_cavity."
+  ],
+  "unresolved": [],
+  "clarification": null
+}

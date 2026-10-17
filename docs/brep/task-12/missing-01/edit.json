@@ -1,0 +1,159 @@
+{
+  "ok": true,
+  "backend": "usd-brep",
+  "applied": {
+    "thickness": 3
+  },
+  "stl": "/results/49983158d2e2/brep-4596c1d4ed8b4e52b63c1376e03c2f12/model.stl",
+  "source": "/results/49983158d2e2/brep-4596c1d4ed8b4e52b63c1376e03c2f12/model.recipe.json",
+  "usd": "/results/49983158d2e2/brep-4596c1d4ed8b4e52b63c1376e03c2f12/model.usda",
+  "diagnostics": {
+    "backend": "usd-brep",
+    "version": "1.0.0",
+    "recipe_version": 2,
+    "solid_volume_mm3": 16301.283216835931,
+    "mesh_volume_mm3": 16289.771481865644,
+    "extents_mm": [
+      60.0,
+      40.0,
+      20.0
+    ],
+    "bounds_mm": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        60.0,
+        40.0,
+        20.0
+      ]
+    ],
+    "watertight": true,
+    "winding_consistent": true,
+    "euler_number": 2,
+    "triangles": 284,
+    "usd_roundtrip": true,
+    "volume_relative_accuracy": 1e-08,
+    "usd_volume_mm3": 16301.283216835935,
+    "operations": [
+      {
+        "id": "outer_block",
+        "kind": "box",
+        "faces": 6
+      },
+      {
+        "id": "rounded_block",
+        "kind": "fillet",
+        "faces": 10
+      },
+      {
+        "id": "tray",
+        "kind": "shell",
+        "faces": 19
+      }
+    ],
+    "connections": [],
+    "build_seconds": 0.29
+  },
+  "views": {
+    "isometric": "/results/49983158d2e2/brep-4596c1d4ed8b4e52b63c1376e03c2f12/view-isometric.png",
+    "front": "/results/49983158d2e2/brep-4596c1d4ed8b4e52b63c1376e03c2f12/view-front.png",
+    "top": "/results/49983158d2e2/brep-4596c1d4ed8b4e52b63c1376e03c2f12/view-top.png",
+    "right": "/results/49983158d2e2/brep-4596c1d4ed8b4e52b63c1376e03c2f12/view-right.png"
+  },
+  "build": {
+    "version": 1,
+    "backend": "usd-brep",
+    "source_format": "brep-recipe-v2",
+    "ok": true,
+    "units": "mm",
+    "axes": {
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    },
+    "views": [
+      "isometric",
+      "front",
+      "top",
+      "right"
+    ],
+    "measurements": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 284,
+      "extents_mm": [
+        60.0,
+        40.0,
+        20.0
+      ],
+      "volume_mm3": 16289.771
+    },
+    "diagnostics": [],
+    "drawing_evaluated": false
+  },
+  "params": [
+    {
+      "name": "width",
+      "value": 60.0,
+      "low": 30,
+      "high": 100,
+      "step": 0.01,
+      "label": "Outer Width",
+      "unit": "mm",
+      "description": "Rebuilds the saved construction recipe",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "depth",
+      "value": 40.0,
+      "low": 20,
+      "high": 80,
+      "step": 0.01,
+      "label": "Outer Depth",
+      "unit": "mm",
+      "description": "Rebuilds the saved construction recipe",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "height",
+      "value": 20.0,
+      "low": 10,
+      "high": 50,
+      "step": 0.01,
+      "label": "Height",
+      "unit": "mm",
+      "description": "Rebuilds the saved construction recipe",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "corner_radius",
+      "value": 6.0,
+      "low": 1,
+      "high": 20,
+      "step": 0.01,
+      "label": "Outer Corner Radius",
+      "unit": "mm",
+      "description": "Rebuilds the saved construction recipe",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "thickness",
+      "value": 3.0,
+      "low": 0.5,
+      "high": 5,
+      "step": 0.01,
+      "label": "Wall and floor thickness",
+      "unit": "mm",
+      "description": "Rebuilds the saved construction recipe",
+      "group": "Details",
+      "feature": null
+    }
+  ]
+}

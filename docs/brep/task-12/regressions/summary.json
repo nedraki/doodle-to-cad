@@ -1,0 +1,49 @@
+{
+  "wheel": {
+    "job": "abad33161ff9",
+    "status": "error",
+    "question_requested": false,
+    "error": {
+      "message": "union_2: kernel produced an invalid solid",
+      "code": "build_failed"
+    },
+    "drawing_status": null
+  },
+  "bookend": {
+    "job": "d7989f4a67ed",
+    "status": "cancelled",
+    "question_requested": true,
+    "error": {
+      "message": "Recipe job cancelled",
+      "code": "cancelled"
+    },
+    "drawing_status": null
+  },
+  "knob": {
+    "job": "f4a7466f8e10",
+    "status": "cancelled",
+    "question_requested": true,
+    "error": {
+      "message": "Recipe job cancelled",
+      "code": "cancelled"
+    },
+    "drawing_status": null
+  },
+  "cable_holder": {
+    "job": "605f8248f3d4",
+    "status": "done",
+    "question_requested": false,
+    "error": null,
+    "drawing_status": "failed"
+  },
+  "random_012_vent_grille_grid": {
+    "job": "a4de30ccfb76",
+    "status": "cancelled",
+    "question_requested": true,
+    "error": {
+      "message": "Recipe job cancelled",
+      "code": "cancelled"
+    },
+    "drawing_status": null
+  }
+}

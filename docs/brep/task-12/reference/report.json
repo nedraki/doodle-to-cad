@@ -1,0 +1,242 @@
+{
+  "2": {
+    "extents_mm": [
+      60.0,
+      40.0,
+      20.0
+    ],
+    "wall_and_floor_mm": 2,
+    "expected_inner_extents_mm": [
+      56,
+      36,
+      18
+    ],
+    "volume_mm3": 11332.376664723919,
+    "expected_volume_mm3": 11341.168026350795,
+    "sections": [
+      {
+        "status": "passed",
+        "symmetric_boundary_error_mm": 0.0567,
+        "tolerance_mm": 0.25,
+        "sampling_spacing_mm": 0.1,
+        "axis": 2,
+        "position_mm": 1.0,
+        "loops": 1
+      },
+      {
+        "status": "passed",
+        "symmetric_boundary_error_mm": 0.0559,
+        "tolerance_mm": 0.25,
+        "sampling_spacing_mm": 0.1,
+        "axis": 2,
+        "position_mm": 1.9,
+        "loops": 1
+      },
+      {
+        "status": "passed",
+        "symmetric_boundary_error_mm": 0.0542,
+        "tolerance_mm": 0.25,
+        "sampling_spacing_mm": 0.1,
+        "axis": 2,
+        "position_mm": 2.1,
+        "loops": 2
+      },
+      {
+        "status": "passed",
+        "symmetric_boundary_error_mm": 0.05391,
+        "tolerance_mm": 0.25,
+        "sampling_spacing_mm": 0.1,
+        "axis": 2,
+        "position_mm": 10,
+        "loops": 2
+      },
+      {
+        "status": "passed",
+        "symmetric_boundary_error_mm": 0.05499,
+        "tolerance_mm": 0.25,
+        "sampling_spacing_mm": 0.1,
+        "axis": 2,
+        "position_mm": 19.9,
+        "loops": 2
+      },
+      {
+        "status": "passed",
+        "symmetric_boundary_error_mm": 0.05,
+        "tolerance_mm": 0.25,
+        "sampling_spacing_mm": 0.1,
+        "axis": 1,
+        "position_mm": 20,
+        "loops": 1
+      },
+      {
+        "status": "passed",
+        "symmetric_boundary_error_mm": 0.04971,
+        "tolerance_mm": 0.25,
+        "sampling_spacing_mm": 0.1,
+        "axis": 0,
+        "position_mm": 30,
+        "loops": 1
+      }
+    ],
+    "watertight": true,
+    "components": 1,
+    "passed": true
+  },
+  "3": {
+    "extents_mm": [
+      60.0,
+      40.0,
+      20.0
+    ],
+    "wall_and_floor_mm": 3,
+    "expected_inner_extents_mm": [
+      54,
+      34,
+      17
+    ],
+    "volume_mm3": 16289.771462555742,
+    "expected_volume_mm3": 16301.283034585416,
+    "sections": [
+      {
+        "status": "passed",
+        "symmetric_boundary_error_mm": 0.05482,
+        "tolerance_mm": 0.25,
+        "sampling_spacing_mm": 0.1,
+        "axis": 2,
+        "position_mm": 1.5,
+        "loops": 1
+      },
+      {
+        "status": "passed",
+        "symmetric_boundary_error_mm": 0.05621,
+        "tolerance_mm": 0.25,
+        "sampling_spacing_mm": 0.1,
+        "axis": 2,
+        "position_mm": 2.9,
+        "loops": 1
+      },
+      {
+        "status": "passed",
+        "symmetric_boundary_error_mm": 0.05552,
+        "tolerance_mm": 0.25,
+        "sampling_spacing_mm": 0.1,
+        "axis": 2,
+        "position_mm": 3.1,
+        "loops": 2
+      },
+      {
+        "status": "passed",
+        "symmetric_boundary_error_mm": 0.05391,
+        "tolerance_mm": 0.25,
+        "sampling_spacing_mm": 0.1,
+        "axis": 2,
+        "position_mm": 10,
+        "loops": 2
+      },
+      {
+        "status": "passed",
+        "symmetric_boundary_error_mm": 0.05499,
+        "tolerance_mm": 0.25,
+        "sampling_spacing_mm": 0.1,
+        "axis": 2,
+        "position_mm": 19.9,
+        "loops": 2
+      },
+      {
+        "status": "passed",
+        "symmetric_boundary_error_mm": 0.04995,
+        "tolerance_mm": 0.25,
+        "sampling_spacing_mm": 0.1,
+        "axis": 1,
+        "position_mm": 20,
+        "loops": 1
+      },
+      {
+        "status": "passed",
+        "symmetric_boundary_error_mm": 0.05,
+        "tolerance_mm": 0.25,
+        "sampling_spacing_mm": 0.1,
+        "axis": 0,
+        "position_mm": 30,
+        "loops": 1
+      }
+    ],
+    "watertight": true,
+    "components": 1,
+    "passed": true
+  },
+  "negative_solid": {
+    "extents_mm": [
+      60.0,
+      40.0,
+      20.0
+    ],
+    "wall_and_floor_mm": 2,
+    "expected_inner_extents_mm": [
+      56,
+      36,
+      18
+    ],
+    "volume_mm3": 48000.0,
+    "expected_volume_mm3": 11341.168026350795,
+    "sections": [
+      {
+        "status": "failed",
+        "symmetric_boundary_error_mm": 2.48528,
+        "tolerance_mm": 0.25,
+        "sampling_spacing_mm": 0.1,
+        "axis": 2,
+        "position_mm": 1.0,
+        "loops": 1
+      },
+      {
+        "status": "failed",
+        "symmetric_boundary_error_mm": 2.48528,
+        "tolerance_mm": 0.25,
+        "sampling_spacing_mm": 0.1,
+        "axis": 2,
+        "position_mm": 1.9,
+        "loops": 1
+      },
+      {
+        "status": "failed",
+        "reason": "Section loop count differs",
+        "actual_loops": 1,
+        "expected_loops": 2
+      },
+      {
+        "status": "failed",
+        "reason": "Section loop count differs",
+        "actual_loops": 1,
+        "expected_loops": 2
+      },
+      {
+        "status": "failed",
+        "reason": "Section loop count differs",
+        "actual_loops": 1,
+        "expected_loops": 2
+      },
+      {
+        "status": "failed",
+        "symmetric_boundary_error_mm": 18.0,
+        "tolerance_mm": 0.25,
+        "sampling_spacing_mm": 0.1,
+        "axis": 1,
+        "position_mm": 20,
+        "loops": 1
+      },
+      {
+        "status": "failed",
+        "symmetric_boundary_error_mm": 18.0,
+        "tolerance_mm": 0.25,
+        "sampling_spacing_mm": 0.1,
+        "axis": 0,
+        "position_mm": 30,
+        "loops": 1
+      }
+    ],
+    "watertight": true,
+    "components": 1,
+    "passed": false
+  }
+}

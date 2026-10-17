@@ -31,7 +31,24 @@ def build(source, output):
     bodies, history = {}, []
     for op in operations:
         kind = op["kind"]
-        if kind == 'loft':
+        if kind == 'shell':
+            source_body=bodies[op['body']].copy()
+            lo,hi=sm.brep_bounding_box(source_body);thickness=op['thickness']
+            if thickness>=min((hi[0]-lo[0])/2,(hi[1]-lo[1])/2,hi[2]-lo[2])-.001:
+                raise ValueError(f"{op['id']}: thickness removes the required interior or floor")
+            top=[]
+            for face in source_body.faces():
+                lower,upper=sm.face_bounding_box(face,tight=True)
+                if abs(upper[2]-lower[2])<.001 and abs(upper[2]-hi[2])<.001:top.append(face)
+            if len(top)!=1:raise ValueError(f"{op['id']}: shell requires one planar highest face for its opening")
+            try:
+                body=sm.shell_brep(source_body,-thickness,faces_to_shell=top)
+            except Exception as exc:
+                raise ValueError(f"{op['id']}: inward shell failed at thickness {thickness:g} mm: {exc}") from exc
+            shell_lo,shell_hi=sm.brep_bounding_box(body)
+            if max(abs(a-b) for a,b in zip((*lo,*hi),(*shell_lo,*shell_hi)))>.001:
+                raise ValueError(f"{op['id']}: shell changed protected outer bounds")
+        elif kind == 'loft':
             rectangle,circle=op['profiles'];x,y,z=rectangle['center'];w,h=rectangle['width']/2,rectangle['height']/2
             points=[(x+w,y+h,z),(x-w,y+h,z),(x-w,y-h,z),(x+w,y-h,z),(x+w,y+h,z)]
             curves=[sm.create_line_segment(a,b) for a,b in zip(points,points[1:])]

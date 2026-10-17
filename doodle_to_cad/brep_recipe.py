@@ -8,6 +8,7 @@ import re
 
 NAME = re.compile(r"^[A-Za-z][A-Za-z0-9_]{0,63}$")
 FIELDS = {
+    "shell": {"body", "thickness", "opening", "preserve"},
     "loft": {"profiles", "plane", "correspondence"},
     "sweep": {"origin", "plane", "frame_rule", "section_width", "section_height", "path"},
     "extrude": {"origin", "plane", "direction", "depth", "loops"},
@@ -129,6 +130,12 @@ def validate_recipe(recipe, updates=None):
             raise ValueError("Pipe requires radius < bend_radius and angle ≤ 270°")
         if kind == "fillet" and op["selector"] not in ("all", "parallel_x", "parallel_y", "parallel_z"):
             raise ValueError("Fillet selector must be all or parallel_x/y/z")
+        if kind == 'shell':
+            if op['opening']!='top' or op['preserve']!='outer':
+                raise ValueError(f"{op['id']}: Shell supports an open top and protected outer faces")
+            item['thickness']=scalar(op['thickness'],values)
+            if not .01<=item['thickness']<=128:
+                raise ValueError(f"{op['id']}: Shell thickness must be 0.01–128 mm")
         if kind == 'loft':
             from .loft_profiles import resolve_loft
             try:

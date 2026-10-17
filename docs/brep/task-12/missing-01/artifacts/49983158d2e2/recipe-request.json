@@ -1,0 +1,671 @@
+{
+  "clarification_answers": [
+    {
+      "question_id": "9545052bd3f740dfa83d5513154f731e",
+      "feature_id": "tray_body",
+      "kind": "uniform_thickness",
+      "thickness_mm": 2
+    }
+  ],
+  "evidence": {
+    "id": "49983158d2e2",
+    "interpretation": {
+      "version": 1,
+      "object_hypothesis": "Rectangular tray with rounded corners, open top, and uniform wall/floor thickness",
+      "features": [
+        {
+          "id": "f_outer_wall",
+          "type": "wall",
+          "description": "Outer vertical boundary of the tray",
+          "status": "unresolved",
+          "evidence": [
+            {
+              "view_id": "view_7",
+              "region_id": "profile_contour_269"
+            },
+            {
+              "view_id": "view_1",
+              "region_id": "profile_contour_310"
+            }
+          ],
+          "reason": "Visible as the primary outer contour in the top view (view_7) and the vertical extent in the section view (view_1).",
+          "model_status": "observed",
+          "review_note": "Outer outlines alone do not establish hidden wall or cavity geometry."
+        },
+        {
+          "id": "f_inner_cavity",
+          "type": "cavity",
+          "description": "Internal volume of the tray",
+          "status": "unresolved",
+          "evidence": [
+            {
+              "view_id": "view_7",
+              "region_id": "view"
+            },
+            {
+              "view_id": "view_1",
+              "region_id": "view"
+            }
+          ],
+          "reason": "Inferred from the concentric inner contour in view_7 and the 'EMPTY' label in view_1. The specific depth is not measured by a region but implied by the section.",
+          "model_status": "inferred",
+          "review_note": "Outer outlines alone do not establish hidden wall or cavity geometry."
+        },
+        {
+          "id": "f_floor",
+          "type": "body",
+          "description": "Bottom horizontal plate of the tray",
+          "status": "inferred",
+          "evidence": [
+            {
+              "view_id": "view_1",
+              "region_id": "view"
+            }
+          ],
+          "reason": "Inferred from the bottom horizontal line in the section view (view_1) which connects the two vertical walls."
+        },
+        {
+          "id": "f_rim",
+          "type": "flange",
+          "description": "Top edge of the tray walls",
+          "status": "inferred",
+          "evidence": [
+            {
+              "view_id": "view_1",
+              "region_id": "view"
+            }
+          ],
+          "reason": "Inferred from the top horizontal segments in the section view (view_1) indicating a flat top surface."
+        }
+      ],
+      "relationships": [
+        {
+          "id": "r_wall_cavity",
+          "type": "hollow",
+          "features": [
+            "f_outer_wall",
+            "f_inner_cavity"
+          ],
+          "description": "The outer wall encloses the inner cavity",
+          "status": "unresolved",
+          "evidence": [
+            {
+              "view_id": "view_7",
+              "region_id": "view"
+            }
+          ],
+          "reason": "The top view shows the inner contour nested within the outer contour.",
+          "model_status": "observed",
+          "review_note": "Outer outlines alone do not establish hidden wall or cavity geometry."
+        },
+        {
+          "id": "r_wall_floor",
+          "type": "connected",
+          "features": [
+            "f_outer_wall",
+            "f_floor"
+          ],
+          "description": "Vertical walls connect to the floor",
+          "status": "inferred",
+          "evidence": [
+            {
+              "view_id": "view_1",
+              "region_id": "view"
+            }
+          ],
+          "reason": "The section view shows the vertical lines terminating at the bottom horizontal line, forming a U-shape."
+        },
+        {
+          "id": "r_uniform_thickness",
+          "type": "shared_dimension",
+          "features": [
+            "f_outer_wall",
+            "f_floor"
+          ],
+          "description": "Wall and floor thickness appear uniform",
+          "status": "unresolved",
+          "evidence": [
+            {
+              "view_id": "view_1",
+              "region_id": "view"
+            }
+          ],
+          "reason": "Inferred from the visual consistency of the gap between inner and outer lines in the section view (view_1).",
+          "model_status": "inferred",
+          "review_note": "Shared dimensions require evidence from at least two views."
+        }
+      ],
+      "assumptions": [
+        "The object is a single continuous piece (not assembled).",
+        "The 'EMPTY' label in the section view confirms the interior is hollow."
+      ],
+      "unresolved": [
+        "Exact numerical value of the wall/floor thickness.",
+        "Exact radius of the corner fillets (visual estimate only).",
+        "f_outer_wall: Outer outlines alone do not establish hidden wall or cavity geometry.",
+        "f_inner_cavity: Outer outlines alone do not establish hidden wall or cavity geometry.",
+        "r_wall_cavity: Outer outlines alone do not establish hidden wall or cavity geometry.",
+        "r_uniform_thickness: Shared dimensions require evidence from at least two views."
+      ],
+      "conflicts": [],
+      "review": {
+        "reference_integrity_checked": true,
+        "drawing_fidelity_verified": false,
+        "policy_warnings": [
+          "f_outer_wall: Outer outlines alone do not establish hidden wall or cavity geometry.",
+          "f_inner_cavity: Outer outlines alone do not establish hidden wall or cavity geometry.",
+          "r_wall_cavity: Outer outlines alone do not establish hidden wall or cavity geometry.",
+          "r_uniform_thickness: Shared dimensions require evidence from at least two views."
+        ],
+        "executable": false
+      }
+    },
+    "regions": [
+      {
+        "view_id": "view_1",
+        "direction": "unassigned",
+        "sheet_bbox_normalized": [
+          0.0832,
+          0.1369,
+          0.3518,
+          0.0314
+        ],
+        "cad_mapping": {},
+        "view_assignment": "spatial heuristic",
+        "region_id": "view",
+        "kind": "view",
+        "bbox_view_normalized": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "measured_span_pixels": {
+          "horizontal_axis_u": 406,
+          "vertical_axis_v": 33
+        }
+      },
+      {
+        "view_id": "view_1",
+        "direction": "unassigned",
+        "sheet_bbox_normalized": [
+          0.0832,
+          0.1369,
+          0.3518,
+          0.0314
+        ],
+        "cad_mapping": {},
+        "view_assignment": "spatial heuristic",
+        "region_id": "profile_contour_310",
+        "kind": "outer",
+        "profile_id": "contour_310",
+        "bbox_view_normalized": [
+          0.0517,
+          0.3025,
+          0.0617,
+          0.4236
+        ],
+        "center_view_normalized": [
+          0.0824,
+          0.5127
+        ],
+        "polygon_view_normalized": [
+          [
+            0.0517,
+            0.4522
+          ],
+          [
+            0.0543,
+            0.6338
+          ],
+          [
+            0.0617,
+            0.6943
+          ],
+          [
+            0.0739,
+            0.6943
+          ],
+          [
+            0.0839,
+            0.5446
+          ],
+          [
+            0.0935,
+            0.6943
+          ],
+          [
+            0.1109,
+            0.6338
+          ],
+          [
+            0.1109,
+            0.3025
+          ],
+          [
+            0.106,
+            0.3312
+          ],
+          [
+            0.106,
+            0.5732
+          ],
+          [
+            0.1009,
+            0.6338
+          ],
+          [
+            0.0912,
+            0.5446
+          ],
+          [
+            0.0912,
+            0.3025
+          ],
+          [
+            0.0839,
+            0.4522
+          ],
+          [
+            0.0739,
+            0.3025
+          ],
+          [
+            0.0566,
+            0.3312
+          ]
+        ],
+        "vertices": 16,
+        "circularity": 0.254,
+        "area_ratio_of_sheet": 0.00017
+      },
+      {
+        "view_id": "view_2",
+        "direction": "unassigned",
+        "sheet_bbox_normalized": [
+          0.1256,
+          0.174,
+          0.0841,
+          0.0333
+        ],
+        "cad_mapping": {},
+        "view_assignment": "spatial heuristic",
+        "region_id": "view",
+        "kind": "view",
+        "bbox_view_normalized": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "measured_span_pixels": {
+          "horizontal_axis_u": 97,
+          "vertical_axis_v": 35
+        }
+      },
+      {
+        "view_id": "view_3",
+        "direction": "unassigned",
+        "sheet_bbox_normalized": [
+          0.6031,
+          0.2414,
+          0.2149,
+          0.0314
+        ],
+        "cad_mapping": {},
+        "view_assignment": "spatial heuristic",
+        "region_id": "view",
+        "kind": "view",
+        "bbox_view_normalized": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "measured_span_pixels": {
+          "horizontal_axis_u": 248,
+          "vertical_axis_v": 33
+        }
+      },
+      {
+        "view_id": "view_4",
+        "direction": "unassigned",
+        "sheet_bbox_normalized": [
+          0.6031,
+          0.2776,
+          0.1906,
+          0.0323
+        ],
+        "cad_mapping": {},
+        "view_assignment": "spatial heuristic",
+        "region_id": "view",
+        "kind": "view",
+        "bbox_view_normalized": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "measured_span_pixels": {
+          "horizontal_axis_u": 220,
+          "vertical_axis_v": 34
+        }
+      },
+      {
+        "view_id": "view_5",
+        "direction": "unassigned",
+        "sheet_bbox_normalized": [
+          0.6031,
+          0.3137,
+          0.1464,
+          0.0342
+        ],
+        "cad_mapping": {},
+        "view_assignment": "spatial heuristic",
+        "region_id": "view",
+        "kind": "view",
+        "bbox_view_normalized": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "measured_span_pixels": {
+          "horizontal_axis_u": 169,
+          "vertical_axis_v": 36
+        }
+      },
+      {
+        "view_id": "view_6",
+        "direction": "unassigned",
+        "sheet_bbox_normalized": [
+          0.604,
+          0.3498,
+          0.2426,
+          0.0342
+        ],
+        "cad_mapping": {},
+        "view_assignment": "spatial heuristic",
+        "region_id": "view",
+        "kind": "view",
+        "bbox_view_normalized": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "measured_span_pixels": {
+          "horizontal_axis_u": 280,
+          "vertical_axis_v": 36
+        }
+      },
+      {
+        "view_id": "view_7",
+        "direction": "unassigned",
+        "sheet_bbox_normalized": [
+          0.0901,
+          0.2139,
+          0.4939,
+          0.3413
+        ],
+        "cad_mapping": {},
+        "view_assignment": "spatial heuristic",
+        "region_id": "view",
+        "kind": "view",
+        "bbox_view_normalized": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "measured_span_pixels": {
+          "horizontal_axis_u": 570,
+          "vertical_axis_v": 359
+        }
+      },
+      {
+        "view_id": "view_7",
+        "direction": "unassigned",
+        "sheet_bbox_normalized": [
+          0.0901,
+          0.2139,
+          0.4939,
+          0.3413
+        ],
+        "cad_mapping": {},
+        "view_assignment": "spatial heuristic",
+        "region_id": "profile_contour_269",
+        "kind": "outer",
+        "profile_id": "contour_269",
+        "bbox_view_normalized": [
+          0.0877,
+          0.0249,
+          0.8947,
+          0.9496
+        ],
+        "center_view_normalized": [
+          0.5351,
+          0.4999
+        ],
+        "polygon_view_normalized": [
+          [
+            0.1,
+            0.0946
+          ],
+          [
+            0.1334,
+            0.9552
+          ],
+          [
+            0.9686,
+            0.9051
+          ],
+          [
+            0.937,
+            0.0445
+          ]
+        ],
+        "vertices": 4,
+        "circularity": 0.81,
+        "area_ratio_of_sheet": 0.14072
+      },
+      {
+        "view_id": "view_8",
+        "direction": "unassigned",
+        "sheet_bbox_normalized": [
+          0.6031,
+          0.3983,
+          0.2513,
+          0.0314
+        ],
+        "cad_mapping": {},
+        "view_assignment": "spatial heuristic",
+        "region_id": "view",
+        "kind": "view",
+        "bbox_view_normalized": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "measured_span_pixels": {
+          "horizontal_axis_u": 290,
+          "vertical_axis_v": 33
+        }
+      },
+      {
+        "view_id": "view_9",
+        "direction": "unassigned",
+        "sheet_bbox_normalized": [
+          0.6023,
+          0.4344,
+          0.2392,
+          0.0352
+        ],
+        "cad_mapping": {},
+        "view_assignment": "spatial heuristic",
+        "region_id": "view",
+        "kind": "view",
+        "bbox_view_normalized": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "measured_span_pixels": {
+          "horizontal_axis_u": 276,
+          "vertical_axis_v": 37
+        }
+      },
+      {
+        "view_id": "view_10",
+        "direction": "top",
+        "sheet_bbox_normalized": [
+          0.1265,
+          0.5951,
+          0.2834,
+          0.0352
+        ],
+        "cad_mapping": {
+          "plane": "XY",
+          "view_axis": "Z",
+          "u_maps_to": "+X",
+          "v_maps_to": "-Y"
+        },
+        "view_assignment": "spatial heuristic",
+        "region_id": "view",
+        "kind": "view",
+        "bbox_view_normalized": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "measured_span_pixels": {
+          "horizontal_axis_u": 327,
+          "vertical_axis_v": 37
+        }
+      },
+      {
+        "view_id": "view_11",
+        "direction": "unassigned",
+        "sheet_bbox_normalized": [
+          0.604,
+          0.6435,
+          0.0962,
+          0.0352
+        ],
+        "cad_mapping": {},
+        "view_assignment": "spatial heuristic",
+        "region_id": "view",
+        "kind": "view",
+        "bbox_view_normalized": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "measured_span_pixels": {
+          "horizontal_axis_u": 111,
+          "vertical_axis_v": 37
+        }
+      },
+      {
+        "view_id": "view_12",
+        "direction": "unassigned",
+        "sheet_bbox_normalized": [
+          0.604,
+          0.6835,
+          0.2357,
+          0.0342
+        ],
+        "cad_mapping": {},
+        "view_assignment": "spatial heuristic",
+        "region_id": "view",
+        "kind": "view",
+        "bbox_view_normalized": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "measured_span_pixels": {
+          "horizontal_axis_u": 272,
+          "vertical_axis_v": 36
+        }
+      }
+    ],
+    "shared_axis_evidence": [],
+    "view_assignment_review": {
+      "excluded_from_direction_assignment": [
+        "view_2",
+        "view_3",
+        "view_4",
+        "view_5",
+        "view_6",
+        "view_8",
+        "view_9",
+        "view_11",
+        "view_12"
+      ],
+      "rule": "Groups below 5% of the largest group box area remain unassigned; they may be text or detail views.",
+      "regions_retained": true
+    },
+    "controls": {
+      "object_type_hint": "",
+      "method": "3D print",
+      "primary_view": "top",
+      "projection_standard": "third-angle",
+      "strict_watertight": true,
+      "refine_mode": "regularize"
+    },
+    "notes": "",
+    "default_generation_changed": false,
+    "files": {
+      "input": "/results/49983158d2e2/input.png",
+      "overlay": "/results/49983158d2e2/geometry-overlay.png",
+      "interpretation": "/results/49983158d2e2/feature-evidence.json"
+    }
+  },
+  "construction_plan": {
+    "view_frame": "The drawing provides a TOP view in the XY plane and a SECTION view in the XZ plane. The world axes are defined as X (width, 60mm), Y (depth, 40mm), and Z (height, 20mm). The origin (0,0,0) is at the bottom-left-front corner of the tray's outer envelope.",
+    "features": [
+      {
+        "id": "tray_body",
+        "shape": "Open rectangular tray with rounded vertical corners",
+        "section": "Uniform wall and floor thickness",
+        "axis_or_plane": "XY plane (profile), extruded along Z",
+        "dimensions": [
+          "60",
+          "40",
+          "20",
+          "R6",
+          "2 (ASSUMED thickness from user answer)"
+        ],
+        "placement": "Outer envelope: X=0 to 60, Y=0 to 40, Z=0 to 20. Inner cavity: X=2 to 58, Y=2 to 38, Z=2 to 20. Corner radii: Outer R6, Inner R4 (6-2).",
+        "evidence": "Top view shows outer and inner rounded rectangles. Section view shows U-shaped profile with uniform wall thickness. Text notes 'Same wall and floor thickness' and 'Thickness value is not given' (resolved by user answer)."
+      }
+    ],
+    "connections": [
+      "Inner cavity is subtracted from the outer solid block.",
+      "Inner corner radii are concentric with outer corner radii."
+    ],
+    "edit_rules": [
+      "Changing the uniform thickness parameter updates both wall and floor thickness simultaneously.",
+      "Changing outer dimensions (X, Y, Z) preserves the uniform thickness.",
+      "Changing corner radius updates both outer and inner radii maintaining the thickness offset."
+    ],
+    "unresolved": [],
+    "clarification": null
+  },
+  "notes": "",
+  "maximum_dimension_mm": 60.0,
+  "controls": {
+    "object_type_hint": "",
+    "method": "3D print",
+    "primary_view": "top",
+    "projection_standard": "third-angle",
+    "strict_watertight": true,
+    "refine_mode": "regularize"
+  }
+}

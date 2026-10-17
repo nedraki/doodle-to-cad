@@ -9,7 +9,7 @@ import pytest
 from fastapi import HTTPException
 from fastapi.testclient import TestClient
 from doodle_to_cad import app, direct_brep
-from doodle_to_cad.clarification import accept_answer, ask_opening
+from doodle_to_cad.clarification import accept_answer, ask_clarification
 from doodle_to_cad.construction_intent import validate_plan
 
 PLAN={'view_frame':'Top XY','features':[{'id':'hole','shape':'opening','section':'circle','axis_or_plane':'Z','dimensions':['diameter 8'],'placement':'centre','evidence':'circle in top view'}], 'connections':[], 'edit_rules':[], 'unresolved':['opening depth unknown'], 'clarification':{'feature_id':'hole','feature_label':'Circle at the centre of the top face','reason':'No bottom or through label is shown','kind':'opening_extent'}}
@@ -20,7 +20,7 @@ def test_wait_answer_bounds_stale_and_saved_evidence(tmp_path):
         job={'job_id':'abc','status':'running'};history=[]
         async with asyncio.timeout(.05) as timer:
             job['_prepare_timeout']=timer
-            waiting=asyncio.create_task(ask_opening(job,tmp_path,PLAN['clarification'],40,history))
+            waiting=asyncio.create_task(ask_clarification(job,tmp_path,PLAN['clarification'],40,history))
             await asyncio.sleep(.1) # Human thinking does not consume preparation timeout.
             q=job['question'];assert not timer.expired()
             for payload,status in [({'question_id':q['id'],'choice':[]},422),({'question_id':'stale','choice':'through'},409),({'question_id':q['id'],'choice':'recess','depth_mm':0},422),({'question_id':q['id'],'choice':'recess','depth_mm':float('nan')},422),({'question_id':q['id'],'choice':'recess','depth_mm':True},422),({'question_id':q['id'],'choice':'recess'},422)]:
@@ -109,3 +109,54 @@ def test_waiting_job_is_not_pruned(monkeypatch):
     monkeypatch.setattr(app,'JOBS',jobs)
     app._prune_jobs()
     assert set(jobs)=={'waiting','new'}
+
+@pytest.mark.parametrize('kind',['wall_thickness','floor_thickness','uniform_thickness'])
+def test_thickness_answer_is_bounded_saved_and_not_an_opening_choice(tmp_path,kind):
+    async def scenario():
+        job={'job_id':'abc','status':'running'};history=[]
+        request={**PLAN['clarification'],'kind':kind}
+        waiting=asyncio.create_task(ask_clarification(job,tmp_path,request,60,history));await asyncio.sleep(0)
+        q=job['question'];assert 'maximum_thickness_mm' in q and 'choices' not in q
+        for value in [None,0,-1,True,float('nan'),float('inf'),61,[], '2']:
+            with pytest.raises(HTTPException):accept_answer(job,{'question_id':q['id'],'thickness_mm':value})
+            assert not waiting.done()
+        with pytest.raises(HTTPException):accept_answer(job,{'question_id':q['id'],'choice':'through'})
+        accept_answer(job,{'question_id':q['id'],'thickness_mm':2})
+        answer=await waiting
+        assert answer['thickness_mm']==2 and answer['kind']==kind and 'choice' not in answer
+        assert history[0]['answer']==answer
+    asyncio.run(scenario())
+
+
+def test_same_feature_can_answer_wall_and_floor_separately(tmp_path,monkeypatch):
+    monkeypatch.setattr(app,'settings',replace(app.settings,results_dir=tmp_path))
+    async def worker():pass
+    async def discover():return type('Model',(),{'selected':'fixture-model'})()
+    async def interpret(*args,**kwargs):return {}
+    async def model(messages,out,label,**kw):
+        if label.startswith('construction-plan'):
+            payload=json.loads(messages[1]['content'][0]['text']);answers=payload.get('clarification_answers',[])
+            p=copy.deepcopy(PLAN)
+            if len(answers)<2:p['clarification']['kind']=['wall_thickness','floor_thickness'][len(answers)]
+            else:
+                assert [(a['kind'],a['thickness_mm']) for a in answers]==[('wall_thickness',2),('floor_thickness',3)]
+                p.pop('clarification');p['unresolved']=[]
+            return p
+        return {'unsupported':'controlled stop after both answers'}
+    monkeypatch.setattr(direct_brep,'check_worker',worker);monkeypatch.setattr(app.pipeline,'interpret_features',interpret);monkeypatch.setattr(app.pipeline,'_json_call',model);monkeypatch.setattr(app.pipeline.client,'discover',discover)
+    image=Path('benchmarks/feature-evidence/ambiguous-outline.png').read_bytes()
+    with TestClient(app.app) as client:
+        job=client.post('/api/generate',files={'image':('drawing.png',image,'image/png')},data={'backend':'usd-brep'}).json()['job_id']
+        for kind,value in [('wall_thickness',2),('floor_thickness',3)]:
+            for _ in range(200):
+                state=client.get('/api/generate/'+job).json()
+                if state['status']!='running':break
+                time.sleep(.01)
+            assert state['status']=='waiting_for_answer' and state['question']['kind']==kind
+            assert client.post('/api/generate/'+job+'/answer',json={'question_id':state['question']['id'],'thickness_mm':value}).status_code==200
+        for _ in range(200):
+            state=client.get('/api/generate/'+job).json()
+            if state['status']!='running':break
+            time.sleep(.01)
+        assert state['status']=='error' and state['error']['code']=='unsupported_construction'
+        assert [x['answer']['thickness_mm'] for x in json.loads((tmp_path/job/'clarifications.json').read_text())]==[2,3]

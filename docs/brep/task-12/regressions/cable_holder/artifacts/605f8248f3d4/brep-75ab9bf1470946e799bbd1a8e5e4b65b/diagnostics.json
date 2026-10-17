@@ -1,0 +1,120 @@
+{
+  "backend": "usd-brep",
+  "version": "1.0.0",
+  "recipe_version": 2,
+  "solid_volume_mm3": 9495.796504532225,
+  "mesh_volume_mm3": 9497.644540994459,
+  "extents_mm": [
+    20.0,
+    5.0,
+    100.0
+  ],
+  "bounds_mm": [
+    [
+      0.0,
+      -1.8369701465288538e-16,
+      0.0
+    ],
+    [
+      20.0,
+      5.0,
+      100.0
+    ]
+  ],
+  "watertight": true,
+  "winding_consistent": true,
+  "euler_number": -10,
+  "triangles": 348,
+  "usd_roundtrip": true,
+  "volume_relative_accuracy": 1e-08,
+  "usd_volume_mm3": 9495.796499968927,
+  "operations": [
+    {
+      "id": "base_plate",
+      "kind": "box",
+      "faces": 6
+    },
+    {
+      "id": "notch_top",
+      "kind": "cylinder",
+      "faces": 3
+    },
+    {
+      "id": "notch_bottom",
+      "kind": "cylinder",
+      "faces": 3
+    },
+    {
+      "id": "central_hole",
+      "kind": "cylinder",
+      "faces": 3
+    },
+    {
+      "id": "slot_1",
+      "kind": "box",
+      "faces": 6
+    },
+    {
+      "id": "slot_2",
+      "kind": "box",
+      "faces": 6
+    },
+    {
+      "id": "slot_3",
+      "kind": "box",
+      "faces": 6
+    },
+    {
+      "id": "slot_4",
+      "kind": "box",
+      "faces": 6
+    },
+    {
+      "id": "slot_5",
+      "kind": "box",
+      "faces": 6
+    },
+    {
+      "id": "cut_notch_top",
+      "kind": "difference",
+      "faces": 8
+    },
+    {
+      "id": "cut_notch_bottom",
+      "kind": "difference",
+      "faces": 10
+    },
+    {
+      "id": "cut_hole",
+      "kind": "difference",
+      "faces": 11
+    },
+    {
+      "id": "cut_slot_1",
+      "kind": "difference",
+      "faces": 15
+    },
+    {
+      "id": "cut_slot_2",
+      "kind": "difference",
+      "faces": 19
+    },
+    {
+      "id": "cut_slot_3",
+      "kind": "difference",
+      "faces": 23
+    },
+    {
+      "id": "cut_slot_4",
+      "kind": "difference",
+      "faces": 27
+    },
+    {
+      "id": "final_part",
+      "kind": "difference",
+      "faces": 31
+    }
+  ],
+  "connections": [],
+  "build_seconds": 0.27
+}

@@ -105,19 +105,19 @@ Never remove an unsupported feature silently or hide a backend switch.
 Task 01 evidence is preserved in `brep-integration` and awaits user review.
 [PR #36](https://github.com/nedraki/doodle-to-cad/pull/36) is closed and retained as review history.
 See [issue #18](https://github.com/nedraki/doodle-to-cad/issues/18) for the recorded generation failure.
-All later tasks remain planned.
+Tasks 02–11 are merged into `brep-integration`. Task 12 has implementation and evidence under review. The live status is tracked in issue #17. Baseline and general drawing-comparison failures remain recorded; the feature demonstrations do not erase them.
 
 - [ ] 01. [#18](https://github.com/nedraki/doodle-to-cad/issues/18) — Record the baseline and review the existing BRep prototype
-- [ ] 02. [#19](https://github.com/nedraki/doodle-to-cad/issues/19) — Use one build result contract for both backends
-- [ ] 03. [#20](https://github.com/nedraki/doodle-to-cad/issues/20) — Define a versioned executable construction recipe
-- [ ] 04. [#21](https://github.com/nedraki/doodle-to-cad/issues/21) — Run a saved recipe through the existing generation job flow
-- [ ] 05. [#22](https://github.com/nedraki/doodle-to-cad/issues/22) — Extract feature relationships from drawing evidence
-- [ ] 06. [#23](https://github.com/nedraki/doodle-to-cad/issues/23) — Generate a BRep part directly from the interpreted doodle
-- [ ] 07. [#24](https://github.com/nedraki/doodle-to-cad/issues/24) — Check BRep generation against the drawing and repair bounded failures
-- [ ] 08. [#25](https://github.com/nedraki/doodle-to-cad/issues/25) — Ask for missing drawing information when it changes the part
-- [ ] 09. [#26](https://github.com/nedraki/doodle-to-cad/issues/26) — Generate extrusions from bounded drawing profiles
-- [ ] 10. [#27](https://github.com/nedraki/doodle-to-cad/issues/27) — Generate a curved sweep from drawing evidence
-- [ ] 11. [#28](https://github.com/nedraki/doodle-to-cad/issues/28) — Generate a loft between two drawing profiles
+- [x] 02. [#19](https://github.com/nedraki/doodle-to-cad/issues/19) — Use one build result contract for both backends
+- [x] 03. [#20](https://github.com/nedraki/doodle-to-cad/issues/20) — Define a versioned executable construction recipe
+- [x] 04. [#21](https://github.com/nedraki/doodle-to-cad/issues/21) — Run a saved recipe through the existing generation job flow
+- [x] 05. [#22](https://github.com/nedraki/doodle-to-cad/issues/22) — Extract feature relationships from drawing evidence
+- [x] 06. [#23](https://github.com/nedraki/doodle-to-cad/issues/23) — Generate a BRep part directly from the interpreted doodle
+- [x] 07. [#24](https://github.com/nedraki/doodle-to-cad/issues/24) — Check BRep generation against the drawing and repair bounded failures
+- [x] 08. [#25](https://github.com/nedraki/doodle-to-cad/issues/25) — Ask for missing drawing information when it changes the part
+- [x] 09. [#26](https://github.com/nedraki/doodle-to-cad/issues/26) — Generate extrusions from bounded drawing profiles
+- [x] 10. [#27](https://github.com/nedraki/doodle-to-cad/issues/27) — Generate a curved sweep from drawing evidence
+- [x] 11. [#28](https://github.com/nedraki/doodle-to-cad/issues/28) — Generate a loft between two drawing profiles
 - [ ] 12. [#29](https://github.com/nedraki/doodle-to-cad/issues/29) — Generate a hollow body with a checked wall thickness
 - [ ] 13. [#30](https://github.com/nedraki/doodle-to-cad/issues/30) — Save BRep edits as recoverable product revisions
 - [ ] 14. [#31](https://github.com/nedraki/doodle-to-cad/issues/31) — Select generated features and map them to solid geometry

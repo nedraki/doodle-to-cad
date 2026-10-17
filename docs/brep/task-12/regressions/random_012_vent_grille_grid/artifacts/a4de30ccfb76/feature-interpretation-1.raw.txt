@@ -1,0 +1,77 @@
+{
+  "version": 1,
+  "object_hypothesis": "A flat rectangular sheet containing a 3x3 array of circular holes.",
+  "features": [
+    {
+      "id": "sheet_body",
+      "type": "body",
+      "description": "A rectangular planar surface enclosing the array of holes.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_17"
+        }
+      ],
+      "reason": "The outer boundary defines the extent of the object in the front view."
+    },
+    {
+      "id": "hole_array",
+      "type": "opening",
+      "description": "A group of nine circular openings arranged in a grid.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_17"
+        }
+      ],
+      "reason": "The region contains multiple distinct closed loops representing holes. OpenCV did not isolate individual hole boundaries, so they are grouped."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "array_layout",
+      "type": "repeated",
+      "features": [
+        "hole_array"
+      ],
+      "description": "The holes are arranged in a regular 3x3 grid pattern.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_17"
+        }
+      ],
+      "reason": "Visual inspection of the region shows three rows and three columns of similar-sized circular features."
+    },
+    {
+      "id": "holes_in_sheet",
+      "type": "other",
+      "features": [
+        "hole_array",
+        "sheet_body"
+      ],
+      "description": "The holes are located within the boundaries of the sheet.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_17"
+        }
+      ],
+      "reason": "The circular contours are spatially contained within the outer rectangular contour."
+    }
+  ],
+  "assumptions": [
+    "The object is a single planar sheet.",
+    "The circular shapes are through-holes."
+  ],
+  "unresolved": [
+    "The thickness of the sheet.",
+    "The exact diameter of the holes.",
+    "The precise spacing between holes."
+  ],
+  "conflicts": []
+}
