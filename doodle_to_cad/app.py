@@ -81,6 +81,13 @@ def get_result(run_id: str):
     return revisions.selected_result(out)
 
 
+@app.post("/api/results/{run_id}/selection")
+def select_geometry(run_id: str, payload: dict):
+    from .feature_selection import choose
+    out, _ = _run_dir(run_id)
+    return choose(out, payload)
+
+
 @app.post("/api/results/{run_id}/revisions/preview")
 def preview_revision(run_id: str, payload: dict):
     out, _ = _run_dir(run_id)

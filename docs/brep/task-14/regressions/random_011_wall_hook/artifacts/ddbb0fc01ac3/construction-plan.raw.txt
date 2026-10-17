@@ -1,0 +1,32 @@
+{
+  "view_frame": "The drawing presents two views. The primary view (bottom) is the Front view, showing the X (width) and Z (height) axes. The secondary view (top) is the Top view, showing the X (width) and Y (depth) axes. The object is a flat plate with an L-shaped profile.",
+  "features": [
+    {
+      "id": "L_plate",
+      "shape": "extrusion",
+      "section": "L-shape",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "ASSUMED_thickness",
+        "ASSUMED_width",
+        "ASSUMED_height",
+        "ASSUMED_arm_width"
+      ],
+      "placement": "Extrude the L-shaped profile from the Front view (XZ plane) along the Y-axis (depth) by the thickness value. The profile is defined by the outer boundary of the 'L' shape in the Front view.",
+      "evidence": "The bottom view shows a closed L-shaped outline. The top view shows a rectangular outline corresponding to the bounding box of the L-shape, indicating a uniform thickness."
+    }
+  ],
+  "connections": [
+    "The L-shape is a single continuous solid."
+  ],
+  "edit_rules": [
+    "Changing ASSUMED_thickness modifies the depth of the part (Y-axis) without altering the L-shape profile in the Front view.",
+    "Changing ASSUMED_width modifies the total width of the L-shape (X-axis).",
+    "Changing ASSUMED_height modifies the total height of the L-shape (Z-axis).",
+    "Changing ASSUMED_arm_width modifies the thickness of the vertical and horizontal legs of the L-shape."
+  ],
+  "unresolved": [
+    "No dimensions are provided in the drawing. All linear dimensions (width, height, arm thickness, plate thickness) are assumed values and must be defined by the user or recipe planner."
+  ],
+  "clarification": null
+}

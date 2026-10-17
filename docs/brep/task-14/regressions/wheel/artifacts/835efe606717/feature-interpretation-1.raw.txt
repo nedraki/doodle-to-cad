@@ -1,0 +1,128 @@
+```json
+{
+  "version": 1,
+  "object_hypothesis": "A spoked wheel assembly featuring a central hub, an outer rim, and eight radial spokes.",
+  "features": [
+    {
+      "id": "outer_rim",
+      "type": "rim",
+      "description": "The outermost circular boundary of the wheel structure.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "Identified as the primary outer profile in the front view (view_4), exhibiting high circularity."
+    },
+    {
+      "id": "central_hub",
+      "type": "hub",
+      "description": "The central circular element from which spokes radiate.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "Visible as the inner circular boundary in the front view (view_4), distinct from the outer rim."
+    },
+    {
+      "id": "spoke_group",
+      "type": "spoke",
+      "description": "A set of eight radial bars connecting the hub to the rim.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "Visible as linear segments within the annular space of the front view (view_4). OpenCV did not isolate individual spokes as separate regions; they are grouped based on the visual pattern."
+    },
+    {
+      "id": "wheel_thickness",
+      "type": "body",
+      "description": "The depth or thickness of the wheel structure.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_14"
+        }
+      ],
+      "reason": "Represented by the narrow rectangular profile in the right view (view_5)."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "spoke_connectivity",
+      "type": "connected",
+      "features": [
+        "spoke_group",
+        "central_hub",
+        "outer_rim"
+      ],
+      "description": "The spokes connect the central hub to the outer rim.",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "Inferred from the visual continuity of lines in the front view (view_4) bridging the hub and rim boundaries."
+    },
+    {
+      "id": "radial_symmetry",
+      "type": "symmetry",
+      "features": [
+        "spoke_group"
+      ],
+      "description": "The spokes are arranged with radial symmetry around the hub.",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "Inferred from the regular angular spacing of the spokes visible in the front view (view_4)."
+    },
+    {
+      "id": "planar_geometry",
+      "type": "other",
+      "features": [
+        "outer_rim",
+        "central_hub",
+        "spoke_group",
+        "wheel_thickness"
+      ],
+      "description": "The wheel components share a common thickness defined by the side view.",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        },
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_14"
+        }
+      ],
+      "reason": "The right view (view_5) shows a uniform rectangular profile, implying the front view features (view_4) are extruded to a constant depth."
+    }
+  ],
+  "assumptions": [
+    "The object is a single rigid body.",
+    "The 'unassigned' views (1, 2, 3, 6) are likely detail crops or noise and are excluded from the primary 3D reconstruction."
+  ],
+  "unresolved": [
+    "The specific internal geometry of the hub (e.g., whether it has a central bore or keyway) is not visible in the provided views.",
+    "The exact cross-sectional shape of the spokes (e.g., rectangular vs. circular) is inferred from the side view but not explicitly detailed."
+  ],
+  "conflicts": []
+}
+```

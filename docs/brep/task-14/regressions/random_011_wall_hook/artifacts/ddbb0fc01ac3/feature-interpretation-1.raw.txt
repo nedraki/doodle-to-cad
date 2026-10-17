@@ -1,0 +1,134 @@
+```json
+{
+  "version": 1,
+  "object_hypothesis": "L-shaped structural profile",
+  "features": [
+    {
+      "id": "f_top_view",
+      "type": "body",
+      "description": "Top view showing a long, narrow rectangular profile with a small central mark.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_3"
+        }
+      ],
+      "reason": "Direct observation of the upper drawing region."
+    },
+    {
+      "id": "f_front_view",
+      "type": "body",
+      "description": "Front view showing an L-shaped profile with a vertical leg and a horizontal base.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_0"
+        }
+      ],
+      "reason": "Direct observation of the lower drawing region."
+    },
+    {
+      "id": "f_vertical_leg",
+      "type": "wall",
+      "description": "Vertical section of the L-shape in the front view.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_0"
+        }
+      ],
+      "reason": "Visible vertical extent of the profile in view_2."
+    },
+    {
+      "id": "f_horizontal_base",
+      "type": "wall",
+      "description": "Horizontal section of the L-shape in the front view.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_0"
+        }
+      ],
+      "reason": "Visible horizontal extent of the profile in view_2."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "r_views_alignment",
+      "type": "position",
+      "features": [
+        "f_top_view",
+        "f_front_view"
+      ],
+      "description": "The top view is positioned above the front view, consistent with standard orthographic projection.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "view"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "view"
+        }
+      ],
+      "reason": "Spatial arrangement of the two distinct drawing regions."
+    },
+    {
+      "id": "r_width_consistency",
+      "type": "shared_dimension",
+      "features": [
+        "f_top_view",
+        "f_horizontal_base"
+      ],
+      "description": "The width of the top view corresponds to the width of the horizontal base in the front view.",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_3"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_0"
+        }
+      ],
+      "reason": "Inferred from the alignment of the views and the shared X-axis mapping in the CAD data."
+    },
+    {
+      "id": "r_depth_consistency",
+      "type": "shared_dimension",
+      "features": [
+        "f_top_view",
+        "f_vertical_leg"
+      ],
+      "description": "The height of the top view corresponds to the thickness of the vertical leg in the front view.",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_3"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_0"
+        }
+      ],
+      "reason": "Inferred from the alignment of the views and the shared Y-axis mapping in the CAD data."
+    }
+  ],
+  "assumptions": [
+    "The drawing represents a single 3D object.",
+    "The views are orthographic projections (Top and Front)."
+  ],
+  "unresolved": [
+    "The specific function of the small mark in the top view.",
+    "The exact thickness of the object (depth in front view)."
+  ],
+  "conflicts": []
+}
+```

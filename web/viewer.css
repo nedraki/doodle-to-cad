@@ -131,3 +131,11 @@ body:has(#paramPanel[open]){overflow:hidden}
 #result .original-artifacts {grid-column:1 / -1;font-size:12px;color:#c9d4dc}
 #result .original-artifacts summary {cursor:pointer}
 #result .original-artifacts a {color:#8ee4e8}
+
+/* Geometry selection spans the result grid, beside neither thumbnail nor notes. */
+#geometrySelection { grid-column:1 / -1; display:flex; flex-wrap:wrap; align-items:center; gap:12px; padding:16px; border:1px solid #465364; border-radius:12px; }
+#geometrySelection[hidden] { display:none; }
+#geometrySelection label { display:flex; align-items:center; gap:10px; margin:0; }
+#geometrySelection select { width:auto; min-width:180px; max-width:100%; margin:0; }
+#geometrySelection button { padding:10px 16px; border-radius:8px; cursor:pointer; }
+#selectionStatus { flex-basis:100%; margin:0; line-height:1.5; }

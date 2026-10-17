@@ -1,0 +1,49 @@
+{
+  "wheel": {
+    "job": "835efe606717",
+    "status": "error",
+    "question_requested": false,
+    "error": {
+      "message": "wheel_1: kernel produced an invalid solid",
+      "code": "build_failed"
+    },
+    "drawing_status": null
+  },
+  "bookend": {
+    "job": "09af1e0cc332",
+    "status": "cancelled",
+    "question_requested": true,
+    "error": {
+      "message": "Recipe job cancelled",
+      "code": "cancelled"
+    },
+    "drawing_status": null
+  },
+  "knob": {
+    "job": "029a153c2ab8",
+    "status": "error",
+    "question_requested": false,
+    "error": {
+      "message": "Construction plan rejected: Unsupported clarification or unknown feature",
+      "code": "invalid_recipe"
+    },
+    "drawing_status": null
+  },
+  "cable_holder": {
+    "job": "fa8418b9a731",
+    "status": "error",
+    "question_requested": false,
+    "error": {
+      "message": "central_hole: dependencies must match body references",
+      "code": "invalid_recipe"
+    },
+    "drawing_status": null
+  },
+  "random_011_wall_hook": {
+    "job": "ddbb0fc01ac3",
+    "status": "done",
+    "question_requested": false,
+    "error": null,
+    "drawing_status": "failed"
+  }
+}
