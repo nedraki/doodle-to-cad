@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/tmp/doodle-brep-30/scripts/check_revision_product.py", line 30, in <module>
+    one=edit('thickness',3);save('first-preview.json',one);capture('first-preview')
+        ^^^^^^^^^^^^^^^^^^^
+  File "/tmp/doodle-brep-30/scripts/check_revision_product.py", line 28, in edit
+    page.wait_for_function('(id)=>currentRun?.revision?.id===id',data['revision']['id']);page.click('#paramClose');return data
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Page.wait_for_function() takes 2 positional arguments but 3 were given

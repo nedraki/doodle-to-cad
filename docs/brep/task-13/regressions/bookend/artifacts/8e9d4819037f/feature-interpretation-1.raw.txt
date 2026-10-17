@@ -1,0 +1,141 @@
+```json
+{
+  "version": 1,
+  "object_hypothesis": "L-shaped bracket with rectangular cutouts",
+  "features": [
+    {
+      "id": "body",
+      "type": "body",
+      "description": "Main structural body of the object",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_0"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_10"
+        }
+      ],
+      "reason": "Outer contours in both views define the primary silhouette of the object."
+    },
+    {
+      "id": "opening_1",
+      "type": "opening",
+      "description": "Rectangular cutout located in the upper-left quadrant",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_8"
+        }
+      ],
+      "reason": "Internal contour isolated by OpenCV in the front view."
+    },
+    {
+      "id": "opening_2",
+      "type": "opening",
+      "description": "Vertical rectangular cutout located in the upper-right quadrant",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_6"
+        }
+      ],
+      "reason": "Internal contour isolated by OpenCV in the front view."
+    },
+    {
+      "id": "opening_3",
+      "type": "opening",
+      "description": "Vertical rectangular cutout located in the lower-left quadrant",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_4"
+        }
+      ],
+      "reason": "Internal contour isolated by OpenCV in the front view."
+    },
+    {
+      "id": "opening_4",
+      "type": "opening",
+      "description": "Vertical rectangular cutout located in the lower-right quadrant",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_2"
+        }
+      ],
+      "reason": "Internal contour isolated by OpenCV in the front view."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "rel_openings_in_body",
+      "type": "connected",
+      "features": [
+        "body",
+        "opening_1",
+        "opening_2",
+        "opening_3",
+        "opening_4"
+      ],
+      "description": "The openings are contained within the boundaries of the main body.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_0"
+        },
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_8"
+        },
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_6"
+        },
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_4"
+        },
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_2"
+        }
+      ],
+      "reason": "The bounding boxes of the internal contours are spatially contained within the outer contour in the front view."
+    },
+    {
+      "id": "rel_l_shape",
+      "type": "other",
+      "features": [
+        "body"
+      ],
+      "description": "The object exhibits an L-shaped profile in the side view.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_10"
+        }
+      ],
+      "reason": "The polygon vertices of the outer contour in view_2 form a distinct L-shape."
+    }
+  ],
+  "assumptions": [
+    "The object is a single rigid body.",
+    "The internal contours in view_1 represent through-holes or pockets.",
+    "The views are orthographic projections aligned with the object's principal axes."
+  ],
+  "unresolved": [
+    "The depth of the openings (through-holes vs. blind pockets).",
+    "The exact thickness of the L-shaped flanges."
+  ],
+  "conflicts": []
+}
+```

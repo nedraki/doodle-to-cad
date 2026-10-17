@@ -1,0 +1,96 @@
+{
+  "backend": "usd-brep",
+  "version": "1.0.0",
+  "recipe_version": 2,
+  "solid_volume_mm3": 35816.176035518074,
+  "mesh_volume_mm3": 35794.740675078065,
+  "extents_mm": [
+    86.83012771606445,
+    100.2627944946289,
+    10.0
+  ],
+  "bounds_mm": [
+    [
+      -31.830127716064453,
+      -50.13139724731445,
+      0.0
+    ],
+    [
+      55.0,
+      50.13139724731445,
+      10.0
+    ]
+  ],
+  "watertight": true,
+  "winding_consistent": true,
+  "euler_number": 2,
+  "triangles": 360,
+  "usd_roundtrip": true,
+  "volume_relative_accuracy": 1e-08,
+  "usd_volume_mm3": 35816.17603550917,
+  "operations": [
+    {
+      "id": "body",
+      "kind": "cylinder",
+      "faces": 3
+    },
+    {
+      "id": "arm_1",
+      "kind": "box",
+      "faces": 6
+    },
+    {
+      "id": "arm_2",
+      "kind": "box",
+      "faces": 6
+    },
+    {
+      "id": "arm_2_rot",
+      "kind": "rotate",
+      "faces": 6
+    },
+    {
+      "id": "arm_3",
+      "kind": "box",
+      "faces": 6
+    },
+    {
+      "id": "arm_3_rot",
+      "kind": "rotate",
+      "faces": 6
+    },
+    {
+      "id": "union_1",
+      "kind": "union",
+      "faces": 6
+    },
+    {
+      "id": "union_2",
+      "kind": "union",
+      "faces": 10
+    },
+    {
+      "id": "final_part",
+      "kind": "union",
+      "faces": 14
+    }
+  ],
+  "connections": [
+    {
+      "id": "joint1",
+      "overlap_mm3": 486.0526587230467,
+      "passed": true
+    },
+    {
+      "id": "joint2",
+      "overlap_mm3": 486.05255486099065,
+      "passed": true
+    },
+    {
+      "id": "joint3",
+      "overlap_mm3": 486.05271509933556,
+      "passed": true
+    }
+  ],
+  "build_seconds": 0.255
+}

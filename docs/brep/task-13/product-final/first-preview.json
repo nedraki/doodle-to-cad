@@ -1,0 +1,157 @@
+{
+  "id": "d25b1ad87303",
+  "backend": "usd-brep",
+  "success": false,
+  "spec": {
+    "object": "rounded_tray"
+  },
+  "model": "experimental BRep recipe",
+  "duration_seconds": 0.333,
+  "evaluation": {
+    "status": "unverified",
+    "accepted": false,
+    "failures": [
+      "Drawing checks have not been rerun for this edit."
+    ]
+  },
+  "diagnostics": {
+    "backend": "usd-brep",
+    "version": "1.0.0",
+    "recipe_version": 2,
+    "solid_volume_mm3": 16301.283310849867,
+    "mesh_volume_mm3": 16289.771462555742,
+    "extents_mm": [
+      60.0,
+      40.0,
+      20.0
+    ],
+    "bounds_mm": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        60.0,
+        40.0,
+        20.0
+      ]
+    ],
+    "watertight": true,
+    "winding_consistent": true,
+    "euler_number": 2,
+    "triangles": 284,
+    "usd_roundtrip": true,
+    "volume_relative_accuracy": 1e-08,
+    "usd_volume_mm3": 16301.283310849869,
+    "operations": [
+      {
+        "id": "blank",
+        "kind": "box",
+        "faces": 6
+      },
+      {
+        "id": "rounded",
+        "kind": "fillet",
+        "faces": 10
+      },
+      {
+        "id": "tray",
+        "kind": "shell",
+        "faces": 19
+      }
+    ],
+    "connections": [],
+    "build_seconds": 0.359
+  },
+  "controls": {
+    "primary_view": "front"
+  },
+  "files": {
+    "source": "/results/d25b1ad87303/brep-7d66ab3240534e309ac99c9b7f44b3da/model.recipe.json",
+    "stl": "/results/d25b1ad87303/brep-7d66ab3240534e309ac99c9b7f44b3da/model.stl",
+    "usd": "/results/d25b1ad87303/brep-7d66ab3240534e309ac99c9b7f44b3da/model.usda",
+    "views": {
+      "isometric": "/results/d25b1ad87303/brep-7d66ab3240534e309ac99c9b7f44b3da/view-isometric.png",
+      "front": "/results/d25b1ad87303/brep-7d66ab3240534e309ac99c9b7f44b3da/view-front.png",
+      "top": "/results/d25b1ad87303/brep-7d66ab3240534e309ac99c9b7f44b3da/view-top.png",
+      "right": "/results/d25b1ad87303/brep-7d66ab3240534e309ac99c9b7f44b3da/view-right.png"
+    }
+  },
+  "build": {
+    "version": 1,
+    "backend": "usd-brep",
+    "source_format": "brep-recipe-v2",
+    "ok": true,
+    "units": "mm",
+    "axes": {
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    },
+    "views": [
+      "isometric",
+      "front",
+      "top",
+      "right"
+    ],
+    "measurements": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 284,
+      "extents_mm": [
+        60.0,
+        40.0,
+        20.0
+      ],
+      "volume_mm3": 16289.771
+    },
+    "diagnostics": [],
+    "drawing_evaluated": false
+  },
+  "original_run_id": null,
+  "revision": {
+    "id": "79a41b3c0b3d419f981499c1c74e3ea1",
+    "parent_id": "original",
+    "selected_id": "original",
+    "selection_version": 0,
+    "candidate": true
+  },
+  "params": [
+    {
+      "name": "thickness",
+      "value": 3.0,
+      "low": 0.5,
+      "high": 30,
+      "step": 0.01,
+      "label": "Wall and floor thickness",
+      "unit": "mm",
+      "description": "Rebuilds the saved construction recipe",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "width",
+      "value": 60.0,
+      "low": 40,
+      "high": 80,
+      "step": 0.01,
+      "label": "Outside width",
+      "unit": "mm",
+      "description": "Rebuilds the saved construction recipe",
+      "group": "Details",
+      "feature": null
+    }
+  ],
+  "original_files": {
+    "source": "/results/d25b1ad87303/brep-85ecaa2e5a0d4bec8c1e48d07f69a0bd/model.recipe.json",
+    "stl": "/results/d25b1ad87303/brep-85ecaa2e5a0d4bec8c1e48d07f69a0bd/model.stl",
+    "usd": "/results/d25b1ad87303/brep-85ecaa2e5a0d4bec8c1e48d07f69a0bd/model.usda",
+    "views": {
+      "isometric": "/results/d25b1ad87303/brep-85ecaa2e5a0d4bec8c1e48d07f69a0bd/view-isometric.png",
+      "front": "/results/d25b1ad87303/brep-85ecaa2e5a0d4bec8c1e48d07f69a0bd/view-front.png",
+      "top": "/results/d25b1ad87303/brep-85ecaa2e5a0d4bec8c1e48d07f69a0bd/view-top.png",
+      "right": "/results/d25b1ad87303/brep-85ecaa2e5a0d4bec8c1e48d07f69a0bd/view-right.png"
+    }
+  }
+}
