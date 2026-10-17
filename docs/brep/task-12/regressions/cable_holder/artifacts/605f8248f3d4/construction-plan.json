@@ -1,0 +1,90 @@
+{
+  "view_frame": "The drawing presents three orthographic views in third-angle projection. The Front view (bottom-left) shows the XZ plane (width and height). The Top view (top-center) shows the XY plane (width and depth). The Right view (bottom-right) shows the YZ plane (depth and height). The object is a flat, rectangular plate oriented vertically in the Front view.",
+  "features": [
+    {
+      "id": "main_body",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "ASSUMED: width 20mm",
+        "ASSUMED: height 100mm",
+        "ASSUMED: thickness 5mm"
+      ],
+      "placement": "Centered at X=0, Y=0. Extends from Z=0 to Z=100. Extends from Y=-2.5 to Y=2.5.",
+      "evidence": "Visible as a tall rectangle in the Front view and a thin rectangle in the Top view. The Right view shows the face with holes."
+    },
+    {
+      "id": "hole_1",
+      "shape": "circular_cylinder",
+      "section": "circle",
+      "axis_or_plane": "Y",
+      "dimensions": [
+        "ASSUMED: diameter 4mm"
+      ],
+      "placement": "Centered at X=0, Z=80. Axis runs along Y from -2.5 to 2.5.",
+      "evidence": "Visible as a circle in the Top view. Corresponds to the topmost hole in the Right view."
+    },
+    {
+      "id": "hole_2",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "Y",
+      "dimensions": [
+        "ASSUMED: width 3mm",
+        "ASSUMED: height 4mm"
+      ],
+      "placement": "Centered at X=0, Z=65. Axis runs along Y from -2.5 to 2.5.",
+      "evidence": "Visible as a rectangle in the Right view. Corresponds to the second hole from the top."
+    },
+    {
+      "id": "hole_3",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "Y",
+      "dimensions": [
+        "ASSUMED: width 3mm",
+        "ASSUMED: height 4mm"
+      ],
+      "placement": "Centered at X=0, Z=50. Axis runs along Y from -2.5 to 2.5.",
+      "evidence": "Visible as a rectangle in the Right view. Corresponds to the middle hole."
+    },
+    {
+      "id": "hole_4",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "Y",
+      "dimensions": [
+        "ASSUMED: width 3mm",
+        "ASSUMED: height 4mm"
+      ],
+      "placement": "Centered at X=0, Z=35. Axis runs along Y from -2.5 to 2.5.",
+      "evidence": "Visible as a rectangle in the Right view. Corresponds to the fourth hole from the top."
+    },
+    {
+      "id": "hole_5",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "Y",
+      "dimensions": [
+        "ASSUMED: width 3mm",
+        "ASSUMED: height 4mm"
+      ],
+      "placement": "Centered at X=0, Z=20. Axis runs along Y from -2.5 to 2.5.",
+      "evidence": "Visible as a rectangle in the Right view. Corresponds to the bottommost hole."
+    }
+  ],
+  "connections": [
+    "All holes are through-holes penetrating the main_body thickness.",
+    "Holes are arranged in a vertical column along the Z-axis."
+  ],
+  "edit_rules": [
+    "Changing main_body thickness requires updating the Y-axis extent of all hole features.",
+    "Changing main_body height requires updating the Z-axis placement of all holes to maintain relative spacing.",
+    "Hole positions are defined by their centers; ensure they remain within the main_body boundaries."
+  ],
+  "unresolved": [
+    "Exact dimensions for width, height, thickness, and hole sizes are not provided in the drawing and are assumed based on visual proportions.",
+    "The exact vertical spacing between holes is assumed to be uniform."
+  ]
+}

@@ -1,0 +1,388 @@
+{
+  "version": 2,
+  "units": "mm",
+  "name": "bracket_plate",
+  "parameters": {
+    "width": {
+      "value": 20,
+      "min": 10,
+      "max": 50,
+      "label": "Width (X)"
+    },
+    "height": {
+      "value": 100,
+      "min": 50,
+      "max": 200,
+      "label": "Height (Z)"
+    },
+    "thickness": {
+      "value": 5,
+      "min": 1,
+      "max": 20,
+      "label": "Thickness (Y)"
+    },
+    "hole_diameter": {
+      "value": 4,
+      "min": 1,
+      "max": 10,
+      "label": "Central Hole Diameter"
+    },
+    "slot_width": {
+      "value": 3,
+      "min": 1,
+      "max": 10,
+      "label": "Slot Width"
+    },
+    "slot_height": {
+      "value": 4,
+      "min": 1,
+      "max": 10,
+      "label": "Slot Height"
+    },
+    "notch_radius": {
+      "value": 3,
+      "min": 1,
+      "max": 10,
+      "label": "Notch Radius"
+    }
+  },
+  "operations": [
+    {
+      "id": "base_plate",
+      "kind": "box",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "size": [
+        "width",
+        "thickness",
+        "height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "notch_top",
+      "kind": "cylinder",
+      "origin": [
+        "width/2",
+        "-1",
+        "height"
+      ],
+      "radius": "notch_radius",
+      "height": "thickness + 2",
+      "axis": "y",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "notch_bottom",
+      "kind": "cylinder",
+      "origin": [
+        "width/2",
+        "-1",
+        0
+      ],
+      "radius": "notch_radius",
+      "height": "thickness + 2",
+      "axis": "y",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "central_hole",
+      "kind": "cylinder",
+      "origin": [
+        "width/2",
+        "-1",
+        "height * 0.8"
+      ],
+      "radius": "hole_diameter / 2",
+      "height": "thickness + 2",
+      "axis": "y",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e4"
+      ]
+    },
+    {
+      "id": "slot_1",
+      "kind": "box",
+      "origin": [
+        "width * 0.25 - slot_width/2",
+        "-1",
+        "height * 0.65 - slot_height/2"
+      ],
+      "size": [
+        "slot_width",
+        "thickness + 2",
+        "slot_height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e5"
+      ]
+    },
+    {
+      "id": "slot_2",
+      "kind": "box",
+      "origin": [
+        "width * 0.75 - slot_width/2",
+        "-1",
+        "height * 0.5 - slot_height/2"
+      ],
+      "size": [
+        "slot_width",
+        "thickness + 2",
+        "slot_height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e5"
+      ]
+    },
+    {
+      "id": "slot_3",
+      "kind": "box",
+      "origin": [
+        "width * 0.25 - slot_width/2",
+        "-1",
+        "height * 0.35 - slot_height/2"
+      ],
+      "size": [
+        "slot_width",
+        "thickness + 2",
+        "slot_height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e5"
+      ]
+    },
+    {
+      "id": "slot_4",
+      "kind": "box",
+      "origin": [
+        "width * 0.75 - slot_width/2",
+        "-1",
+        "height * 0.2 - slot_height/2"
+      ],
+      "size": [
+        "slot_width",
+        "thickness + 2",
+        "slot_height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e5"
+      ]
+    },
+    {
+      "id": "slot_5",
+      "kind": "box",
+      "origin": [
+        "width * 0.25 - slot_width/2",
+        "-1",
+        "height * 0.05 - slot_height/2"
+      ],
+      "size": [
+        "slot_width",
+        "thickness + 2",
+        "slot_height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e5"
+      ]
+    },
+    {
+      "id": "cut_notch_top",
+      "kind": "difference",
+      "left": "base_plate",
+      "right": "notch_top",
+      "frame": "world",
+      "depends_on": [
+        "base_plate",
+        "notch_top"
+      ],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "cut_notch_bottom",
+      "kind": "difference",
+      "left": "cut_notch_top",
+      "right": "notch_bottom",
+      "frame": "world",
+      "depends_on": [
+        "cut_notch_top",
+        "notch_bottom"
+      ],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "cut_hole",
+      "kind": "difference",
+      "left": "cut_notch_bottom",
+      "right": "central_hole",
+      "frame": "world",
+      "depends_on": [
+        "cut_notch_bottom",
+        "central_hole"
+      ],
+      "evidence": [
+        "e4"
+      ]
+    },
+    {
+      "id": "cut_slot_1",
+      "kind": "difference",
+      "left": "cut_hole",
+      "right": "slot_1",
+      "frame": "world",
+      "depends_on": [
+        "cut_hole",
+        "slot_1"
+      ],
+      "evidence": [
+        "e5"
+      ]
+    },
+    {
+      "id": "cut_slot_2",
+      "kind": "difference",
+      "left": "cut_slot_1",
+      "right": "slot_2",
+      "frame": "world",
+      "depends_on": [
+        "cut_slot_1",
+        "slot_2"
+      ],
+      "evidence": [
+        "e5"
+      ]
+    },
+    {
+      "id": "cut_slot_3",
+      "kind": "difference",
+      "left": "cut_slot_2",
+      "right": "slot_3",
+      "frame": "world",
+      "depends_on": [
+        "cut_slot_2",
+        "slot_3"
+      ],
+      "evidence": [
+        "e5"
+      ]
+    },
+    {
+      "id": "cut_slot_4",
+      "kind": "difference",
+      "left": "cut_slot_3",
+      "right": "slot_4",
+      "frame": "world",
+      "depends_on": [
+        "cut_slot_3",
+        "slot_4"
+      ],
+      "evidence": [
+        "e5"
+      ]
+    },
+    {
+      "id": "final_part",
+      "kind": "difference",
+      "left": "cut_slot_4",
+      "right": "slot_5",
+      "frame": "world",
+      "depends_on": [
+        "cut_slot_4",
+        "slot_5"
+      ],
+      "evidence": [
+        "e5"
+      ]
+    }
+  ],
+  "output": "final_part",
+  "frames": {
+    "world": {
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    }
+  },
+  "bodies": [
+    {
+      "id": "part",
+      "output": "final_part"
+    }
+  ],
+  "evidence": {
+    "observed": [
+      {
+        "id": "e1",
+        "text": "Main rectangular body observed in all views."
+      },
+      {
+        "id": "e2",
+        "text": "Top notch observed in Top view (concave curve)."
+      },
+      {
+        "id": "e3",
+        "text": "Bottom notch observed in Top view (concave curve)."
+      },
+      {
+        "id": "e4",
+        "text": "Central circular hole observed in Top view."
+      },
+      {
+        "id": "e5",
+        "text": "Five staggered rectangular slots observed in Right view."
+      }
+    ],
+    "inferred": [],
+    "assumptions": [
+      {
+        "id": "a1",
+        "text": "Assumed plate thickness is 5mm."
+      },
+      {
+        "id": "a2",
+        "text": "Assumed hole and slot dimensions based on visual proportions relative to the 100mm height."
+      },
+      {
+        "id": "a3",
+        "text": "Assumed notches are semi-circular cuts centered on the top and bottom edges."
+      }
+    ],
+    "unresolved": []
+  },
+  "constraints": []
+}

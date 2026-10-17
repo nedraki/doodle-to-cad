@@ -1,0 +1,42 @@
+{
+  "wall_thickness": {
+    "payload": {
+      "question_id": "wall_thickness",
+      "thickness_mm": 2
+    },
+    "passed": true
+  },
+  "floor_thickness": {
+    "payload": {
+      "question_id": "floor_thickness",
+      "thickness_mm": 2
+    },
+    "passed": true
+  },
+  "uniform_thickness": {
+    "payload": {
+      "question_id": "uniform_thickness",
+      "thickness_mm": 2
+    },
+    "passed": true
+  },
+  "recess": {
+    "payload": {
+      "question_id": "recess",
+      "choice": "recess",
+      "depth_mm": 5
+    },
+    "passed": true
+  },
+  "through": {
+    "payload": {
+      "question_id": "through",
+      "choice": "through"
+    },
+    "passed": true
+  },
+  "late_answer_keeps_new_question": {
+    "passed": true
+  },
+  "browser_errors": []
+}

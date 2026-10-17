@@ -1,5 +1,5 @@
 """A drawing-grounded construction plan, saved before executable recipe generation."""
-PROMPT_VERSION='construction-intent-10'
+PROMPT_VERSION='construction-intent-11'
 PROMPT='''Read the drawing and its declared view controls. Produce a construction plan, not executable code.
 Return JSON with: view_frame, features, connections, edit_rules, unresolved, and optional clarification.
 view_frame: string explaining the labelled views and world axes (X width, Y depth, Z height).
@@ -18,6 +18,7 @@ User answers in clarification_answers are authoritative design intent for the na
 For a flat part shown in TOP with a constant outline through its thickness, plan a closed XY profile and Z extrusion. Include visible notches, line/arc boundaries and through-opening loops. This first profile operation supports XY only. Preserve the outline when thickness changes. Other planes and spline profiles are unsupported.
 For an XY bend with a rectangular end section, preserve that section along the path. The supported rectangular sweep is one circular bend of 1–180 degrees with optional tangent straight ends. Its section stays upright along Z. State centreline radius separately from inner/outer radii, both straight lengths, section width and Z height. Straight centreline endpoints meet the centreline radius, not the outer radius. A counterclockwise arc has tangent directions +Y/-X/-Y/+X at angles 0/90/180/270 degrees. Clockwise traversal has opposite tangent directions and a negative angular sweep. Both traversal orders are supported. Verify both joins against the chosen direction. Do not replace a rectangular section with a round pipe. Preserve the XY path when section height changes. Other path planes, sharp joins, multiple bends and splines are unsupported.
 A solid transition from a rectangular end at Z=0 to a circular end at higher Z can use a loft. Read both end profiles and the side-view separation. Supported profiles are parallel XY planes with the same XY centre, rectangle below circle. Preserve the circular end and separation when rectangular width changes. The correspondence is fixed, without twist. Hollow, offset, rotated and multi-profile lofts are unsupported. Do not replace the transition by a straight extrusion.
+For an open enclosure, identify the opening, outside dimensions, wall thickness and floor thickness explicitly. A uniform inward shell preserves the outside shape and changes wall and floor together. Separate wall and floor values require explicit subtractive geometry with independent parameters. If thickness is missing, ask rather than infer it from line spacing or assume it: use the same clarification object with kind wall_thickness, floor_thickness or uniform_thickness. Use uniform_thickness only when the drawing establishes the same value for walls and floor. Use the named feature id and explain what value is missing. Multiple kinds may refer to the same feature. Do not re-ask an answered kind for that feature. A thickness_mm answer is authoritative for its kind. Missing wall/floor thickness is NOT the permitted assumption for missing solid-body thickness. Do not ask when dimensions or an earlier answer establish the value. Keep unanswered thickness in unresolved.
 Keep the plan concise. Do not use benchmark references or assume a part template.'''
 
 
@@ -46,6 +47,6 @@ def validate_plan(plan):
         if not isinstance(question,dict) or set(question)!={'feature_id','feature_label','reason','kind'}:
             raise ValueError('Invalid clarification fields')
         for value in question.values():text(value)
-        if question['kind']!='opening_extent' or question['feature_id'] not in ids:
+        if question['kind'] not in {'opening_extent','wall_thickness','floor_thickness','uniform_thickness'} or question['feature_id'] not in ids:
             raise ValueError('Unsupported clarification or unknown feature')
     return plan

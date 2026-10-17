@@ -1,4 +1,4 @@
-"""Bounded opening clarification. Waiting is cancellable; answers never execute code."""
+"""Bounded opening and thickness clarification. Waiting is cancellable; answers never execute code."""
 import asyncio
 import json
 import math
@@ -11,29 +11,43 @@ def accept_answer(job, payload):
     question=job.get('question')
     if job['status']!='waiting_for_answer' or not question or not future or future.done():
         raise HTTPException(409, 'This question is no longer waiting for an answer.')
-    if not isinstance(payload,dict) or set(payload)-{'question_id','choice','depth_mm'}:
+    kind=question.get('kind','opening_extent')
+    thickness_question=kind in {'wall_thickness','floor_thickness','uniform_thickness'}
+    allowed={'question_id','thickness_mm'} if thickness_question else {'question_id','choice','depth_mm'}
+    if not isinstance(payload,dict) or set(payload)-allowed:
         raise HTTPException(422, 'Invalid answer fields.')
     if payload.get('question_id')!=question['id']:
         raise HTTPException(409, 'This answer belongs to a different question.')
-    choice=payload.get('choice')
-    if not isinstance(choice,str) or choice not in {'through','recess'}:raise HTTPException(422, 'Choose through-hole or recess.')
-    answer={'question_id':question['id'],'feature_id':question['feature_id'],'choice':choice}
-    if choice=='recess':
-        depth=payload.get('depth_mm')
-        if isinstance(depth,bool) or not isinstance(depth,(int,float)) or not math.isfinite(depth) or not 0<depth<=question['maximum_depth_mm']:
-            raise HTTPException(422, 'Enter a positive recess depth within the part size. Geometry checks still apply.')
-        answer['depth_mm']=depth
-    elif payload.get('depth_mm') is not None:
-        raise HTTPException(422, 'A through-hole does not use a recess depth.')
+    answer={'question_id':question['id'],'feature_id':question['feature_id'],'kind':kind}
+    if thickness_question:
+        thickness=payload.get('thickness_mm')
+        if isinstance(thickness,bool) or not isinstance(thickness,(int,float)) or not math.isfinite(thickness) or not 0<thickness<=question['maximum_thickness_mm']:
+            raise HTTPException(422, 'Enter a positive thickness within the part size. Geometry checks still apply.')
+        answer['thickness_mm']=thickness
+    else:
+        choice=payload.get('choice')
+        if not isinstance(choice,str) or choice not in {'through','recess'}:raise HTTPException(422, 'Choose through-hole or recess.')
+        answer['choice']=choice
+        if choice=='recess':
+            depth=payload.get('depth_mm')
+            if isinstance(depth,bool) or not isinstance(depth,(int,float)) or not math.isfinite(depth) or not 0<depth<=question['maximum_depth_mm']:
+                raise HTTPException(422, 'Enter a positive recess depth within the part size. Geometry checks still apply.')
+            answer['depth_mm']=depth
+        elif payload.get('depth_mm') is not None:
+            raise HTTPException(422, 'A through-hole does not use a recess depth.')
     future.set_result(answer)
     job.update(status='running',stage='planning BRep geometry',question=None)
     return {'job_id':job['job_id'],'status':'running'}
 
 
-async def ask_opening(job, out, request, maximum, history):
-    question={**request,'id':uuid.uuid4().hex,'text':'Should this hole go all the way through the part?',
-              'maximum_depth_mm':maximum,'choices':[{'id':'through','label':'Yes — make a through-hole'},
-              {'id':'recess','label':'No — leave a bottom'}]}
+async def ask_clarification(job, out, request, maximum, history):
+    thickness_labels={'wall_thickness':'Wall thickness','floor_thickness':'Floor thickness','uniform_thickness':'Wall and floor thickness'}
+    if request['kind'] in thickness_labels:
+        question={**request,'id':uuid.uuid4().hex,'text':thickness_labels[request['kind']]+' (mm)?','maximum_thickness_mm':maximum}
+    else:
+        question={**request,'id':uuid.uuid4().hex,'text':'Should this hole go all the way through the part?',
+                  'maximum_depth_mm':maximum,'choices':[{'id':'through','label':'Yes — make a through-hole'},
+                  {'id':'recess','label':'No — leave a bottom'}]}
     record={'question':question,'status':'waiting'};history.append(record)
     def save(): (out/'clarifications.json').write_text(json.dumps(history,indent=2))
     save()

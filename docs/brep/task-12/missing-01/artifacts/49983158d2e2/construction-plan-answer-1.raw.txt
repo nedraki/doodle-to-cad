@@ -1,0 +1,31 @@
+{
+ "view_frame": "The drawing provides a TOP view in the XY plane and a SECTION view in the XZ plane. The world axes are defined as X (width, 60mm), Y (depth, 40mm), and Z (height, 20mm). The origin (0,0,0) is at the bottom-left-front corner of the tray's outer envelope.",
+ "features": [
+  {
+   "id": "tray_body",
+   "shape": "Open rectangular tray with rounded vertical corners",
+   "section": "Uniform wall and floor thickness",
+   "axis_or_plane": "XY plane (profile), extruded along Z",
+   "dimensions": [
+    "60",
+    "40",
+    "20",
+    "R6",
+    "2 (ASSUMED thickness from user answer)"
+   ],
+   "placement": "Outer envelope: X=0 to 60, Y=0 to 40, Z=0 to 20. Inner cavity: X=2 to 58, Y=2 to 38, Z=2 to 20. Corner radii: Outer R6, Inner R4 (6-2).",
+   "evidence": "Top view shows outer and inner rounded rectangles. Section view shows U-shaped profile with uniform wall thickness. Text notes 'Same wall and floor thickness' and 'Thickness value is not given' (resolved by user answer)."
+  }
+ ],
+ "connections": [
+  "Inner cavity is subtracted from the outer solid block.",
+  "Inner corner radii are concentric with outer corner radii."
+ ],
+ "edit_rules": [
+  "Changing the uniform thickness parameter updates both wall and floor thickness simultaneously.",
+  "Changing outer dimensions (X, Y, Z) preserves the uniform thickness.",
+  "Changing corner radius updates both outer and inner radii maintaining the thickness offset."
+ ],
+ "unresolved": [],
+ "clarification": null
+}

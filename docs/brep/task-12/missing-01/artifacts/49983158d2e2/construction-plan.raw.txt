@@ -1,0 +1,39 @@
+```json
+{
+  "view_frame": "The drawing uses a third-angle projection layout. The TOP view represents the XY plane (X width, Y depth). The SECTION view represents the XZ plane (X width, Z height). The origin (0,0,0) is defined at the bottom-left corner of the tray's exterior footprint.",
+  "features": [
+    {
+      "id": "tray_body",
+      "shape": "Open rectangular tray with rounded corners",
+      "section": "Rectangular U-channel (constant thickness)",
+      "axis_or_plane": "XY (Top view), XZ (Section view)",
+      "dimensions": [
+        "60",
+        "40",
+        "20",
+        "R6",
+        "thickness (missing)"
+      ],
+      "placement": "Exterior footprint spans X: 0 to 60, Y: 0 to 40. Height spans Z: 0 to 20. The shell is formed by an inward offset of the exterior profile by 'thickness' on all sides (X, Y, and Z).",
+      "evidence": "Top view shows concentric rounded rectangles. Section view shows a U-shaped profile with uniform wall and floor thickness. Text notes specify 'Same wall and floor thickness' and 'Thickness value is not given'."
+    }
+  ],
+  "connections": [
+    "The floor connects the bottoms of the four walls.",
+    "The walls connect to the floor and terminate at the top rim (Z=20)."
+  ],
+  "edit_rules": [
+    "Changing the 'thickness' parameter must update the inner cavity dimensions (X_inner, Y_inner, Z_inner) while preserving the exterior dimensions (60, 40, 20) and corner radius (R6).",
+    "The inner corner radius is derived as R_inner = R_outer - thickness (R6 - thickness)."
+  ],
+  "unresolved": [
+    "The specific value for the uniform wall and floor thickness is missing from the drawing and notes."
+  ],
+  "clarification": {
+    "feature_id": "tray_body",
+    "feature_label": "Rounded Open Tray",
+    "reason": "The drawing explicitly states 'Thickness value is not given' and 'Same wall and floor thickness', but does not provide the numerical value required to construct the solid geometry.",
+    "kind": "uniform_thickness"
+  }
+}
+```
