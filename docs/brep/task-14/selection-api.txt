@@ -1,0 +1,231 @@
+tessellate tessellate(brep: usd_brep._omni_solid.Brep, *, chord_height_tolerance: float = 0.0, curve_angle_tolerance_deg: float = 25.0, surface_angle_tolerance_deg: float = 25.0, max_edge_length: float = 0.0, max_aspect_ratio: float = 0.0, allow_partial: bool = False, return_failures: bool = False, return_report: bool = False) -> object
+
+Pure: returns new PolyBrep; inputs unchanged.
+
+Tessellate exact Brep NURBS geometry to a triangular ``PolyBrep`` mesh.
+
+Args:
+    brep: Source Brep. Not modified.
+    chord_height_tolerance: Maximum allowed distance between the
+        triangle mesh and the true surface, in modeling units.
+        Smaller positive values produce a finer mesh.
+        Defaults to ``0`` (disabled).
+        Typical ranges: ``0.001`` for high-quality rendering,
+        ``0.01`` for general visualization, ``0.1`` for preview.
+        Keyword-only.
+    curve_angle_tolerance_deg: Curve tangent angular tolerance.
+        Defaults to ``25``. ``0`` disables the curve angular criterion.
+        Keyword-only.
+    surface_angle_tolerance_deg: Surface angular tolerance.
+        Defaults to ``25``. Smaller positive values refine curved
+        faces; ``0`` disables this angular criterion. Keyword-only.
+    max_edge_length: Edge-length subdivision target, in modeling
+        units. It drives edge sampling and face subdivision and is
+        not a hard cap: final triangle edges can be somewhat
+        longer. ``0`` (default) disables it. A negative value
+        selects an automatic target derived from model size.
+        Keyword-only.
+    max_aspect_ratio: Aspect-ratio target for the cells a surface is
+        subdivided into before triangulation. It does not limit the
+        aspect ratio of the final triangles, which can still be long
+        and thin. ``0`` (default) disables it. Keyword-only.
+    allow_partial: Retain available faces when some faces fail.
+        Defaults to ``False`` (raise instead). Kernel and output errors
+        raise in either mode. Requires return_failures or return_report.
+        when enabled; otherwise raises ValueError. Keyword-only.
+    return_failures: Return ``(mesh, failures)`` with a list of dictionaries.
+        Each contains ``face_index`` (input faces() order), ``stage``
+        (boundary_preparation, face_tessellation or polygon_output),
+        and kernel ``status`` / ``status_name``. Defaults to ``False``.
+
+    return_report: Return (mesh, report) with face failures and nonfatal
+        edge-incidence diagnostics; defaults to False and takes precedence
+        over return_failures. These are not full solid-validity checks.
+
+Returns:
+    PolyBrep: triangulated mesh approximating the Brep within
+    the supplied tolerances, or ``(mesh, failures)`` when
+    ``return_failures=True`` with the first failure per source face.
+    Returns ``(mesh, report)`` instead when ``return_report=True``.
+
+Raises:
+    TessellationError: Carries report, failures, status and status_name, including
+        when strict mode rejects partial output.
+
+Notes:
+    Triangle count grows roughly quadratically as
+    ``chord_height_tolerance`` is tightened. Pair this with
+    ``poly_brep_volume_via_api`` for mass-property checks on the
+    mesh, or with the ``poly_boolean_*`` family for
+    polygon-mesh CSG.
+
+See Also:
+    poly_brep_is_manifold_via_api: Manifold check on the mesh.
+    poly_brep_volume_via_api: Volume of the tessellated mesh.
+    compute_volume: Exact volume of the source Brep.
+    poly_boolean: Boolean ops on tessellated meshes.
+    usd.export_mesh: Round-trip the mesh through USD.
+
+Wraps: SmApiTessellate
+
+face_bounding_box face_bounding_box(face: usd_brep._omni_solid.Face, tight: bool = False) -> tuple
+
+Axis-aligned bounding box of a single face.
+
+Args:
+    face: Face to query. Not modified.
+    tight: If ``True``, sample the face's surface within its trim
+        boundary for a minimal box (expensive). Default ``False``
+        returns the loose face-level box.
+
+Returns:
+    tuple[tuple[float, float, float], tuple[float, float, float]]:
+    ``((min_x, min_y, min_z), (max_x, max_y, max_z))``.
+
+See Also:
+    Face.bounding_box: Method form on the Face class.
+    brep_bounding_box: Whole-Brep variant.
+
+Wraps: SmApiFaceBoundingBox
+
+edge_bounding_box edge_bounding_box(edge: usd_brep._omni_solid.Edge, tight: bool = False) -> tuple
+
+Axis-aligned bounding box of a single edge.
+
+Args:
+    edge: Edge to query. Not modified.
+    tight: If ``True``, evaluate the edge's curve at sample
+        points for a minimal box (expensive). Default ``False``
+        returns the loose curve-control-polygon box.
+
+Returns:
+    tuple[tuple[float, float, float], tuple[float, float, float]]:
+    ``((min_x, min_y, min_z), (max_x, max_y, max_z))``.
+
+See Also:
+    Edge.bounding_box: Method form on the Edge class.
+    brep_bounding_box: Whole-Brep variant.
+
+Wraps: SmApiEdgeBoundingBox
+
+FACE <class 'usd_brep._omni_solid.Face'> ['area', 'boundary_loops', 'boundary_outer_loop', 'bounding_box', 'brep', 'centroid', 'classify_uv', 'closest_point', 'edges', 'interior_point', 'normal_at_uv', 'outer_loop_edges', 'outward_normal_at_uv', 'point_at_uv', 'surface', 'uv_domain', 'vertices']
+EDGE <class 'usd_brep._omni_solid.Edge'> ['bounding_box', 'brep', 'classify_parameter', 'closest_point', 'curve', 'end_vertex', 'faces', 'length', 'other_vertex', 'parameter_range', 'point_at', 'start_vertex', 'tangent_at', 'vertices']
+MODULE ['Surface', 'boolean_with_curves', 'create_canonical_curve', 'create_curve', 'create_curve_approx_points', 'create_curve_interp_points', 'create_extrude_surface', 'create_offset_surface', 'create_planar_faces', 'create_ruled_surface', 'create_silhouette_curves', 'create_skin_from_faces', 'create_skin_surface', 'create_surface_from_corner_points', 'create_surface_from_ordered_points', 'create_surface_from_points', 'create_surface_from_random_points', 'create_surface_revolution', 'create_sweep_surface', 'curve_closest_point', 'curve_closest_point_all', 'curve_sweep', 'curve_sweep_from_edges', 'curve_sweep_from_faces', 'curves', 'drop_curve_to_surface', 'edge_bounding_box', 'edge_length', 'evaluate_curve', 'evaluate_surface_derivatives', 'evaluate_surface_normal', 'evaluate_surface_point', 'face_area', 'face_bounding_box', 'fillet_edges', 'fillet_edges_per_edge', 'find_edge', 'find_face', 'get_edges_via_api', 'get_faces_via_api', 'intersect_curve_brep', 'intersect_curve_face', 'intersect_curve_surface', 'intersect_curves', 'intersect_faces', 'intersect_surfaces', 'lift_uv_curve', 'make_curves_compatible', 'offset_curve', 'order_curves', 'project_curve', 'project_curve_to_surface', 'remove_curve_knots', 'simple_face_stitch', 'stitch_brep_with_face', 'surface_closest_point', 'surface_surface_fillet', 'surfaces', 'tessellate', 'tessellate_boundaries', 'tessellation_defaults', 'trim_surface_with_3d_curves']
+closest_point closest_point(self: usd_brep._omni_solid.Face, point: tuple) -> tuple
+
+Pure: returns tuple; inputs unchanged.
+
+Closest point on this trimmed face to a query point.
+
+Args:
+    point: Query point as ``(x, y, z)``.
+
+Returns:
+    tuple[tuple, float]: ``(closest_point, distance)`` where
+    ``closest_point`` is ``(x, y, z)`` and always lies within
+    this face's trim boundary (never on a hole or off the
+    outer loop), unlike a plain closest point on the
+    underlying (untrimmed) ``surface()``.
+
+Wraps: SmApiFaceClosestPoint
+
+centroid centroid(self: usd_brep._omni_solid.Face, relative_accuracy: float = 0.001) -> tuple
+
+Pure: returns tuple; inputs unchanged.
+
+Area centroid of this face within its trim boundary, as
+``(x, y, z)``. ``relative_accuracy`` clamped to ``[1e-4, 1e-1]``,
+same as ``area()``.
+
+Wraps: SmApiFaceComputeCentroid
+
+VALUE (9.999999999999998, 14.999999999999995, 0.0)
+boundary_loops boundary_loops(self: usd_brep._omni_solid.Face) -> list
+
+Pure: returns list; inputs unchanged.
+
+Return the oriented boundary loops of this face.
+
+Returns:
+    list[list[tuple[Edge, bool]]]: Boundary loops in SMLib order,
+        with the outer loop first. Each item is ``(edge, forward)``;
+        ``forward=True`` traverses from ``edge.start_vertex()`` to
+        ``edge.end_vertex()``, and ``False`` traverses in reverse.
+
+Notes:
+    A closed loop's starting occurrence is unspecified. Relative
+    to the parent surface's parameterization, the outer loop is
+    counterclockwise and inner loops are clockwise. An edge can
+    occur more than once, for example at a periodic seam. A
+    vertex-only inner loop is represented by an empty list.
+
+    The lists and direction flags are snapshots; each ``Edge`` is
+    borrowed from the owning Brep. Do not use returned edges after
+    that Brep is consumed, deleted, or changed by a topology-
+    modifying operation. Query the face again after such changes.
+
+Wraps: SmApiFaceGetBoundaryLoops
+
+interior_point interior_point(self: usd_brep._omni_solid.Face) -> tuple
+
+Pure: returns tuple; inputs unchanged.
+
+A 3D point ``(x, y, z)`` evaluated on the owning surface at a UV
+strictly inside the face's trim boundary (interior to the outer
+loop and outside any holes). If no such point can be evaluated,
+the call raises ``RuntimeError`` instead of returning an
+approximation. Useful as a seed for ray tests, region
+classification, or picking.
+
+Wraps: SmApiFaceInternalPoint
+
+VALUE (0.9523809523809523, 13.5, 0.0)
+surface surface(self: usd_brep._omni_solid.Face) -> SmSurface
+
+Underlying NURBS / analytic surface this face is trimmed from. The surface is owned by the Brep; do not delete. Release this borrowed handle before a representation-changing ``turn_to_nurbs`` or scale, then reacquire it from the mutated face. Use the result with ``sm.evaluate_surface_point`` etc.
+
+uv_domain uv_domain(self: usd_brep._omni_solid.Face) -> tuple
+
+Trim domain on the parent surface as ``((u_min, v_min), (u_max, v_max))``. This is the rectangular UV box that bounds the face's outer loop, not the natural surface domain.
+
+VALUE ((0.0, 0.0), (30.0, 20.0))
+outward_normal_at_uv outward_normal_at_uv(self: usd_brep._omni_solid.Face, u: float, v: float) -> tuple
+
+Evaluate the outward face normal at parameter ``(u, v)``.
+
+Args:
+    u: Surface U parameter.
+    v: Surface V parameter.
+
+Returns:
+    tuple: Unit normal vector as ``(nx, ny, nz)``.
+
+Notes:
+    This starts from the underlying surface normal and flips it when the face's upward faceuse is not in the Brep's infinite region, matching the orientation used by SMLib display faceting.
+
+See Also:
+    normal_at_uv: Raw surface normal before face orientation.
+
+Wraps: SmApiEvaluateSurfaceNormal
+
+point_at point_at(self: usd_brep._omni_solid.Edge, t: float) -> tuple
+
+3D point on this edge's curve at parameter ``t`` as ``(x, y, z)``. ``t`` should lie within the curve's natural parameter range; the edge itself uses a sub-interval of that range.
+
+parameter_range parameter_range(self: usd_brep._omni_solid.Edge) -> tuple
+
+Pure: returns tuple; inputs unchanged.
+
+This edge's parametric interval on its curve as
+``(t_min, t_max)``. Distinct from ``curve().parameter_range()``,
+which is the underlying curve's full natural range -- an edge
+typically uses only a sub-interval of it.
+
+Wraps: SmApiEdgeParameterRange
+
+VALUE (0.0, 30.0)
+curve curve(self: usd_brep._omni_solid.Edge) -> SmCurve
+
+Underlying 3D curve. The edge uses a sub-interval of this curve's full parameter range (see ``point_at`` for the valid range). The curve is owned by the Brep; do not delete. Release this borrowed handle before a representation-changing ``turn_to_nurbs`` or scale, then reacquire it from the mutated edge.
+
+CLOSEST ((1.0, 1.0, 0.0), 1.0)

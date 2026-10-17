@@ -1,0 +1,1487 @@
+{
+  "id": "b619123298d7",
+  "backend": "usd-brep",
+  "success": false,
+  "spec": {
+    "object": "Bookend with four openings"
+  },
+  "model": "experimental BRep recipe",
+  "duration_seconds": 0.182,
+  "evaluation": {
+    "status": "unverified",
+    "accepted": false,
+    "failures": [
+      "Drawing checks have not been rerun for this edit."
+    ]
+  },
+  "diagnostics": {
+    "selection_catalog": {
+      "version": 1,
+      "status": "available",
+      "unresolved": [
+        {
+          "rule": {
+            "kind": "box_cutout",
+            "owner": "cut1",
+            "cutter": "cutter1",
+            "expected_faces": 4
+          },
+          "status": "lost",
+          "reason": "Cutout no longer contributes to the displayed part"
+        },
+        {
+          "rule": {
+            "kind": "box_cutout",
+            "owner": "cut2",
+            "cutter": "cutter2",
+            "expected_faces": 4
+          },
+          "status": "lost",
+          "reason": "Cutout no longer contributes to the displayed part"
+        },
+        {
+          "rule": {
+            "kind": "box_cutout",
+            "owner": "cut3",
+            "cutter": "cutter3",
+            "expected_faces": 4
+          },
+          "status": "lost",
+          "reason": "Cutout no longer contributes to the displayed part"
+        }
+      ],
+      "output_owner": "cut4",
+      "targets": [
+        {
+          "id": "9def03a2b247f073",
+          "label": "Outside X min face",
+          "rule": {
+            "kind": "extreme_face",
+            "owner": "cut4",
+            "axis": 0,
+            "side": "min"
+          },
+          "match_count": 1,
+          "geometry": {
+            "triangles": [
+              [
+                0.0,
+                5.0,
+                5.0
+              ],
+              [
+                0.0,
+                0.0,
+                80.0
+              ],
+              [
+                0.0,
+                5.0,
+                80.0
+              ],
+              [
+                0.0,
+                40.0,
+                0.0
+              ],
+              [
+                0.0,
+                5.0,
+                5.0
+              ],
+              [
+                0.0,
+                40.0,
+                5.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                5.0,
+                5.0
+              ],
+              [
+                0.0,
+                40.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                80.0
+              ],
+              [
+                0.0,
+                5.0,
+                5.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ]
+            ]
+          }
+        },
+        {
+          "id": "ae7799663635c467",
+          "label": "Outside X max face",
+          "rule": {
+            "kind": "extreme_face",
+            "owner": "cut4",
+            "axis": 0,
+            "side": "max"
+          },
+          "match_count": 1,
+          "geometry": {
+            "triangles": [
+              [
+                70.0,
+                0.0,
+                80.0
+              ],
+              [
+                70.0,
+                5.0,
+                5.0
+              ],
+              [
+                70.0,
+                5.0,
+                80.0
+              ],
+              [
+                70.0,
+                5.0,
+                5.0
+              ],
+              [
+                70.0,
+                40.0,
+                0.0
+              ],
+              [
+                70.0,
+                40.0,
+                5.0
+              ],
+              [
+                70.0,
+                5.0,
+                5.0
+              ],
+              [
+                70.0,
+                0.0,
+                0.0
+              ],
+              [
+                70.0,
+                40.0,
+                0.0
+              ],
+              [
+                70.0,
+                5.0,
+                5.0
+              ],
+              [
+                70.0,
+                0.0,
+                80.0
+              ],
+              [
+                70.0,
+                0.0,
+                0.0
+              ]
+            ]
+          }
+        },
+        {
+          "id": "7857f8cac2d1012b",
+          "label": "Outside Y min face",
+          "rule": {
+            "kind": "extreme_face",
+            "owner": "cut4",
+            "axis": 1,
+            "side": "min"
+          },
+          "match_count": 1,
+          "geometry": {
+            "triangles": [
+              [
+                10.0,
+                0.0,
+                35.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                10.0,
+                0.0,
+                20.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                10.0,
+                0.0,
+                65.0
+              ],
+              [
+                0.0,
+                0.0,
+                80.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                10.0,
+                0.0,
+                50.0
+              ],
+              [
+                10.0,
+                0.0,
+                65.0
+              ],
+              [
+                10.0,
+                0.0,
+                65.0
+              ],
+              [
+                70.0,
+                0.0,
+                80.0
+              ],
+              [
+                0.0,
+                0.0,
+                80.0
+              ],
+              [
+                20.0,
+                0.0,
+                65.0
+              ],
+              [
+                70.0,
+                0.0,
+                80.0
+              ],
+              [
+                10.0,
+                0.0,
+                65.0
+              ],
+              [
+                35.0,
+                0.0,
+                65.0
+              ],
+              [
+                70.0,
+                0.0,
+                80.0
+              ],
+              [
+                20.0,
+                0.0,
+                65.0
+              ],
+              [
+                45.0,
+                0.0,
+                65.0
+              ],
+              [
+                70.0,
+                0.0,
+                80.0
+              ],
+              [
+                35.0,
+                0.0,
+                65.0
+              ],
+              [
+                45.0,
+                0.0,
+                65.0
+              ],
+              [
+                70.0,
+                0.0,
+                0.0
+              ],
+              [
+                70.0,
+                0.0,
+                80.0
+              ],
+              [
+                45.0,
+                0.0,
+                50.0
+              ],
+              [
+                70.0,
+                0.0,
+                0.0
+              ],
+              [
+                45.0,
+                0.0,
+                65.0
+              ],
+              [
+                45.0,
+                0.0,
+                35.0
+              ],
+              [
+                35.0,
+                0.0,
+                50.0
+              ],
+              [
+                35.0,
+                0.0,
+                35.0
+              ],
+              [
+                45.0,
+                0.0,
+                35.0
+              ],
+              [
+                45.0,
+                0.0,
+                50.0
+              ],
+              [
+                35.0,
+                0.0,
+                50.0
+              ],
+              [
+                45.0,
+                0.0,
+                35.0
+              ],
+              [
+                70.0,
+                0.0,
+                0.0
+              ],
+              [
+                45.0,
+                0.0,
+                50.0
+              ],
+              [
+                45.0,
+                0.0,
+                20.0
+              ],
+              [
+                70.0,
+                0.0,
+                0.0
+              ],
+              [
+                45.0,
+                0.0,
+                35.0
+              ],
+              [
+                45.0,
+                0.0,
+                20.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                70.0,
+                0.0,
+                0.0
+              ],
+              [
+                35.0,
+                0.0,
+                20.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                45.0,
+                0.0,
+                20.0
+              ],
+              [
+                20.0,
+                0.0,
+                20.0
+              ],
+              [
+                35.0,
+                0.0,
+                35.0
+              ],
+              [
+                20.0,
+                0.0,
+                35.0
+              ],
+              [
+                20.0,
+                0.0,
+                20.0
+              ],
+              [
+                35.0,
+                0.0,
+                20.0
+              ],
+              [
+                35.0,
+                0.0,
+                35.0
+              ],
+              [
+                20.0,
+                0.0,
+                20.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                35.0,
+                0.0,
+                20.0
+              ],
+              [
+                10.0,
+                0.0,
+                20.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                20.0,
+                0.0,
+                20.0
+              ],
+              [
+                20.0,
+                0.0,
+                50.0
+              ],
+              [
+                35.0,
+                0.0,
+                65.0
+              ],
+              [
+                20.0,
+                0.0,
+                65.0
+              ],
+              [
+                20.0,
+                0.0,
+                50.0
+              ],
+              [
+                35.0,
+                0.0,
+                50.0
+              ],
+              [
+                35.0,
+                0.0,
+                65.0
+              ],
+              [
+                20.0,
+                0.0,
+                50.0
+              ],
+              [
+                35.0,
+                0.0,
+                35.0
+              ],
+              [
+                35.0,
+                0.0,
+                50.0
+              ],
+              [
+                20.0,
+                0.0,
+                50.0
+              ],
+              [
+                20.0,
+                0.0,
+                35.0
+              ],
+              [
+                35.0,
+                0.0,
+                35.0
+              ],
+              [
+                20.0,
+                0.0,
+                50.0
+              ],
+              [
+                10.0,
+                0.0,
+                35.0
+              ],
+              [
+                20.0,
+                0.0,
+                35.0
+              ],
+              [
+                10.0,
+                0.0,
+                50.0
+              ],
+              [
+                10.0,
+                0.0,
+                35.0
+              ],
+              [
+                20.0,
+                0.0,
+                50.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                10.0,
+                0.0,
+                35.0
+              ],
+              [
+                10.0,
+                0.0,
+                50.0
+              ]
+            ]
+          }
+        },
+        {
+          "id": "fc5bd2cad51c83f5",
+          "label": "Outside Y max face",
+          "rule": {
+            "kind": "extreme_face",
+            "owner": "cut4",
+            "axis": 1,
+            "side": "max"
+          },
+          "match_count": 1,
+          "geometry": {
+            "triangles": [
+              [
+                0.0,
+                40.0,
+                5.0
+              ],
+              [
+                70.0,
+                40.0,
+                0.0
+              ],
+              [
+                0.0,
+                40.0,
+                0.0
+              ],
+              [
+                70.0,
+                40.0,
+                0.0
+              ],
+              [
+                0.0,
+                40.0,
+                5.0
+              ],
+              [
+                70.0,
+                40.0,
+                5.0
+              ]
+            ]
+          }
+        },
+        {
+          "id": "3ff1d057f8f446e9",
+          "label": "Outside Z min face",
+          "rule": {
+            "kind": "extreme_face",
+            "owner": "cut4",
+            "axis": 2,
+            "side": "min"
+          },
+          "match_count": 1,
+          "geometry": {
+            "triangles": [
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                70.0,
+                40.0,
+                0.0
+              ],
+              [
+                70.0,
+                0.0,
+                0.0
+              ],
+              [
+                70.0,
+                40.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                40.0,
+                0.0
+              ]
+            ]
+          }
+        },
+        {
+          "id": "6aadceea094f1026",
+          "label": "Outside Z max face",
+          "rule": {
+            "kind": "extreme_face",
+            "owner": "cut4",
+            "axis": 2,
+            "side": "max"
+          },
+          "match_count": 1,
+          "geometry": {
+            "triangles": [
+              [
+                0.0,
+                0.0,
+                80.0
+              ],
+              [
+                70.0,
+                5.0,
+                80.0
+              ],
+              [
+                0.0,
+                5.0,
+                80.0
+              ],
+              [
+                70.0,
+                5.0,
+                80.0
+              ],
+              [
+                0.0,
+                0.0,
+                80.0
+              ],
+              [
+                70.0,
+                0.0,
+                80.0
+              ]
+            ]
+          }
+        },
+        {
+          "id": "d678934429006bbf",
+          "label": "Cutout cut4",
+          "rule": {
+            "kind": "box_cutout",
+            "owner": "cut4",
+            "cutter": "cutter4",
+            "expected_faces": 4
+          },
+          "match_count": 4,
+          "geometry": {
+            "triangles": [
+              [
+                45.0,
+                5.0,
+                50.0
+              ],
+              [
+                35.0,
+                5.0,
+                50.0
+              ],
+              [
+                35.0,
+                0.0,
+                50.0
+              ],
+              [
+                35.0,
+                0.0,
+                50.0
+              ],
+              [
+                45.0,
+                0.0,
+                50.0
+              ],
+              [
+                45.0,
+                5.0,
+                50.0
+              ],
+              [
+                35.0,
+                5.0,
+                50.0
+              ],
+              [
+                35.0,
+                5.0,
+                65.0
+              ],
+              [
+                35.0,
+                0.0,
+                65.0
+              ],
+              [
+                35.0,
+                0.0,
+                65.0
+              ],
+              [
+                35.0,
+                0.0,
+                50.0
+              ],
+              [
+                35.0,
+                5.0,
+                50.0
+              ],
+              [
+                35.0,
+                5.0,
+                65.0
+              ],
+              [
+                45.0,
+                5.0,
+                65.0
+              ],
+              [
+                45.0,
+                0.0,
+                65.0
+              ],
+              [
+                45.0,
+                0.0,
+                65.0
+              ],
+              [
+                35.0,
+                0.0,
+                65.0
+              ],
+              [
+                35.0,
+                5.0,
+                65.0
+              ],
+              [
+                45.0,
+                5.0,
+                65.0
+              ],
+              [
+                45.0,
+                5.0,
+                50.0
+              ],
+              [
+                45.0,
+                0.0,
+                50.0
+              ],
+              [
+                45.0,
+                0.0,
+                50.0
+              ],
+              [
+                45.0,
+                0.0,
+                65.0
+              ],
+              [
+                45.0,
+                5.0,
+                65.0
+              ]
+            ]
+          }
+        },
+        {
+          "id": "3fce97a2a5841dd5",
+          "label": "Outer vertical edges",
+          "rule": {
+            "kind": "outer_vertical_edges",
+            "owner": "cut4",
+            "expected_edges": 4
+          },
+          "match_count": 4,
+          "geometry": {
+            "lines": [
+              [
+                [
+                  70.0,
+                  40.0,
+                  0.0
+                ],
+                [
+                  70.0,
+                  40.0,
+                  5.0
+                ]
+              ],
+              [
+                [
+                  0.0,
+                  40.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  40.0,
+                  5.0
+                ]
+              ],
+              [
+                [
+                  70.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  70.0,
+                  0.0,
+                  80.0
+                ]
+              ],
+              [
+                [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  80.0
+                ]
+              ]
+            ]
+          }
+        }
+      ],
+      "supported": "Axis-aligned extreme planar faces, four-wall box cutouts and straight outer vertical edges. Recheck after every rebuild."
+    },
+    "backend": "usd-brep",
+    "version": "1.0.0",
+    "recipe_version": 2,
+    "solid_volume_mm3": 37250.0,
+    "mesh_volume_mm3": 37250.0,
+    "extents_mm": [
+      70.0,
+      40.0,
+      80.0
+    ],
+    "bounds_mm": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        70.0,
+        40.0,
+        80.0
+      ]
+    ],
+    "watertight": true,
+    "winding_consistent": true,
+    "euler_number": -6,
+    "triangles": 100,
+    "usd_roundtrip": true,
+    "volume_relative_accuracy": 1e-08,
+    "usd_volume_mm3": 37249.999999999985,
+    "operations": [
+      {
+        "id": "base",
+        "kind": "box",
+        "faces": 6
+      },
+      {
+        "id": "wall",
+        "kind": "box",
+        "faces": 6
+      },
+      {
+        "id": "body",
+        "kind": "union",
+        "faces": 8
+      },
+      {
+        "id": "cutter1",
+        "kind": "box",
+        "faces": 6
+      },
+      {
+        "id": "cut1",
+        "kind": "difference",
+        "faces": 12
+      },
+      {
+        "id": "cutter2",
+        "kind": "box",
+        "faces": 6
+      },
+      {
+        "id": "cut2",
+        "kind": "difference",
+        "faces": 16
+      },
+      {
+        "id": "cutter3",
+        "kind": "box",
+        "faces": 6
+      },
+      {
+        "id": "cut3",
+        "kind": "difference",
+        "faces": 20
+      },
+      {
+        "id": "cutter4",
+        "kind": "box",
+        "faces": 6
+      },
+      {
+        "id": "cut4",
+        "kind": "difference",
+        "faces": 24
+      }
+    ],
+    "connections": [],
+    "build_seconds": 0.227
+  },
+  "controls": {
+    "primary_view": "front"
+  },
+  "files": {
+    "source": "/results/b619123298d7/brep-0aab8beaf6134269a0411607d4ce6bdb/model.recipe.json",
+    "stl": "/results/b619123298d7/brep-0aab8beaf6134269a0411607d4ce6bdb/model.stl",
+    "usd": "/results/b619123298d7/brep-0aab8beaf6134269a0411607d4ce6bdb/model.usda",
+    "views": {
+      "isometric": "/results/b619123298d7/brep-0aab8beaf6134269a0411607d4ce6bdb/view-isometric.png",
+      "front": "/results/b619123298d7/brep-0aab8beaf6134269a0411607d4ce6bdb/view-front.png",
+      "top": "/results/b619123298d7/brep-0aab8beaf6134269a0411607d4ce6bdb/view-top.png",
+      "right": "/results/b619123298d7/brep-0aab8beaf6134269a0411607d4ce6bdb/view-right.png"
+    }
+  },
+  "build": {
+    "version": 1,
+    "backend": "usd-brep",
+    "source_format": "brep-recipe-v2",
+    "ok": true,
+    "units": "mm",
+    "axes": {
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    },
+    "views": [
+      "isometric",
+      "front",
+      "top",
+      "right"
+    ],
+    "measurements": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 100,
+      "extents_mm": [
+        70.0,
+        40.0,
+        80.0
+      ],
+      "volume_mm3": 37250.0
+    },
+    "diagnostics": [],
+    "drawing_evaluated": false
+  },
+  "original_run_id": null,
+  "revision": {
+    "id": "5812f029e69b416bb43205b2d0e383a2",
+    "parent_id": "original",
+    "selected_id": "original",
+    "selection_version": 0,
+    "candidate": true
+  },
+  "params": [
+    {
+      "name": "width",
+      "value": 70.0,
+      "low": 50,
+      "high": 100,
+      "step": 0.01,
+      "label": "width",
+      "unit": "mm",
+      "description": "Rebuilds the saved construction recipe",
+      "group": "Body",
+      "feature": null
+    },
+    {
+      "name": "depth",
+      "value": 40.0,
+      "low": 20,
+      "high": 80,
+      "step": 0.01,
+      "label": "depth",
+      "unit": "mm",
+      "description": "Rebuilds the saved construction recipe",
+      "group": "Body",
+      "feature": null
+    },
+    {
+      "name": "height",
+      "value": 80.0,
+      "low": 70,
+      "high": 120,
+      "step": 0.01,
+      "label": "height",
+      "unit": "mm",
+      "description": "Rebuilds the saved construction recipe",
+      "group": "Body",
+      "feature": null
+    },
+    {
+      "name": "thickness",
+      "value": 5.0,
+      "low": 3,
+      "high": 8,
+      "step": 0.01,
+      "label": "thickness",
+      "unit": "mm",
+      "description": "Rebuilds the saved construction recipe",
+      "group": "Body",
+      "feature": null
+    },
+    {
+      "name": "hole1_x",
+      "value": 10.0,
+      "low": 7,
+      "high": 13,
+      "step": 0.01,
+      "label": "hole1 x",
+      "unit": "mm",
+      "description": "Rebuilds the saved construction recipe",
+      "group": "Hole 1",
+      "feature": null
+    },
+    {
+      "name": "hole1_z",
+      "value": 20.0,
+      "low": 17,
+      "high": 23,
+      "step": 0.01,
+      "label": "hole1 z",
+      "unit": "mm",
+      "description": "Rebuilds the saved construction recipe",
+      "group": "Hole 1",
+      "feature": null
+    },
+    {
+      "name": "hole1_width",
+      "value": 10.0,
+      "low": 5,
+      "high": 14,
+      "step": 0.01,
+      "label": "hole1 width",
+      "unit": "mm",
+      "description": "Rebuilds the saved construction recipe",
+      "group": "Hole 1",
+      "feature": null
+    },
+    {
+      "name": "hole1_height",
+      "value": 15.0,
+      "low": 8,
+      "high": 19,
+      "step": 0.01,
+      "label": "hole1 height",
+      "unit": "mm",
+      "description": "Rebuilds the saved construction recipe",
+      "group": "Hole 1",
+      "feature": null
+    },
+    {
+      "name": "hole2_x",
+      "value": 35.0,
+      "low": 32,
+      "high": 38,
+      "step": 0.01,
+      "label": "hole2 x",
+      "unit": "mm",
+      "description": "Rebuilds the saved construction recipe",
+      "group": "Hole 2",
+      "feature": null
+    },
+    {
+      "name": "hole2_z",
+      "value": 20.0,
+      "low": 17,
+      "high": 23,
+      "step": 0.01,
+      "label": "hole2 z",
+      "unit": "mm",
+      "description": "Rebuilds the saved construction recipe",
+      "group": "Hole 2",
+      "feature": null
+    },
+    {
+      "name": "hole2_width",
+      "value": 10.0,
+      "low": 5,
+      "high": 14,
+      "step": 0.01,
+      "label": "hole2 width",
+      "unit": "mm",
+      "description": "Rebuilds the saved construction recipe",
+      "group": "Hole 2",
+      "feature": null
+    },
+    {
+      "name": "hole2_height",
+      "value": 15.0,
+      "low": 8,
+      "high": 19,
+      "step": 0.01,
+      "label": "hole2 height",
+      "unit": "mm",
+      "description": "Rebuilds the saved construction recipe",
+      "group": "Hole 2",
+      "feature": null
+    },
+    {
+      "name": "hole3_x",
+      "value": 10.0,
+      "low": 7,
+      "high": 13,
+      "step": 0.01,
+      "label": "hole3 x",
+      "unit": "mm",
+      "description": "Rebuilds the saved construction recipe",
+      "group": "Hole 3",
+      "feature": null
+    },
+    {
+      "name": "hole3_z",
+      "value": 50.0,
+      "low": 47,
+      "high": 53,
+      "step": 0.01,
+      "label": "hole3 z",
+      "unit": "mm",
+      "description": "Rebuilds the saved construction recipe",
+      "group": "Hole 3",
+      "feature": null
+    },
+    {
+      "name": "hole3_width",
+      "value": 10.0,
+      "low": 5,
+      "high": 14,
+      "step": 0.01,
+      "label": "hole3 width",
+      "unit": "mm",
+      "description": "Rebuilds the saved construction recipe",
+      "group": "Hole 3",
+      "feature": null
+    },
+    {
+      "name": "hole3_height",
+      "value": 15.0,
+      "low": 8,
+      "high": 19,
+      "step": 0.01,
+      "label": "hole3 height",
+      "unit": "mm",
+      "description": "Rebuilds the saved construction recipe",
+      "group": "Hole 3",
+      "feature": null
+    },
+    {
+      "name": "hole4_x",
+      "value": 35.0,
+      "low": 32,
+      "high": 100,
+      "step": 0.01,
+      "label": "hole4 x",
+      "unit": "mm",
+      "description": "Rebuilds the saved construction recipe",
+      "group": "Hole 4",
+      "feature": null
+    },
+    {
+      "name": "hole4_z",
+      "value": 50.0,
+      "low": 47,
+      "high": 53,
+      "step": 0.01,
+      "label": "hole4 z",
+      "unit": "mm",
+      "description": "Rebuilds the saved construction recipe",
+      "group": "Hole 4",
+      "feature": null
+    },
+    {
+      "name": "hole4_width",
+      "value": 10.0,
+      "low": 5,
+      "high": 14,
+      "step": 0.01,
+      "label": "hole4 width",
+      "unit": "mm",
+      "description": "Rebuilds the saved construction recipe",
+      "group": "Hole 4",
+      "feature": null
+    },
+    {
+      "name": "hole4_height",
+      "value": 15.0,
+      "low": 8,
+      "high": 19,
+      "step": 0.01,
+      "label": "hole4 height",
+      "unit": "mm",
+      "description": "Rebuilds the saved construction recipe",
+      "group": "Hole 4",
+      "feature": null
+    }
+  ],
+  "target_selection": {
+    "rule": {
+      "kind": "box_cutout",
+      "owner": "cut4",
+      "cutter": "cutter4",
+      "expected_faces": 4
+    },
+    "label": "Cutout cut4",
+    "selected_in_revision": "original",
+    "status": "matched",
+    "target": {
+      "id": "d678934429006bbf",
+      "label": "Cutout cut4",
+      "rule": {
+        "kind": "box_cutout",
+        "owner": "cut4",
+        "cutter": "cutter4",
+        "expected_faces": 4
+      },
+      "match_count": 4,
+      "geometry": {
+        "triangles": [
+          [
+            45.0,
+            5.0,
+            50.0
+          ],
+          [
+            35.0,
+            5.0,
+            50.0
+          ],
+          [
+            35.0,
+            0.0,
+            50.0
+          ],
+          [
+            35.0,
+            0.0,
+            50.0
+          ],
+          [
+            45.0,
+            0.0,
+            50.0
+          ],
+          [
+            45.0,
+            5.0,
+            50.0
+          ],
+          [
+            35.0,
+            5.0,
+            50.0
+          ],
+          [
+            35.0,
+            5.0,
+            65.0
+          ],
+          [
+            35.0,
+            0.0,
+            65.0
+          ],
+          [
+            35.0,
+            0.0,
+            65.0
+          ],
+          [
+            35.0,
+            0.0,
+            50.0
+          ],
+          [
+            35.0,
+            5.0,
+            50.0
+          ],
+          [
+            35.0,
+            5.0,
+            65.0
+          ],
+          [
+            45.0,
+            5.0,
+            65.0
+          ],
+          [
+            45.0,
+            0.0,
+            65.0
+          ],
+          [
+            45.0,
+            0.0,
+            65.0
+          ],
+          [
+            35.0,
+            0.0,
+            65.0
+          ],
+          [
+            35.0,
+            5.0,
+            65.0
+          ],
+          [
+            45.0,
+            5.0,
+            65.0
+          ],
+          [
+            45.0,
+            5.0,
+            50.0
+          ],
+          [
+            45.0,
+            0.0,
+            50.0
+          ],
+          [
+            45.0,
+            0.0,
+            50.0
+          ],
+          [
+            45.0,
+            0.0,
+            65.0
+          ],
+          [
+            45.0,
+            5.0,
+            65.0
+          ]
+        ]
+      }
+    }
+  },
+  "target_version": 2,
+  "original_files": {
+    "source": "/results/b619123298d7/brep-08ec477e34d84a94b87dc12a334317e1/model.recipe.json",
+    "stl": "/results/b619123298d7/brep-08ec477e34d84a94b87dc12a334317e1/model.stl",
+    "usd": "/results/b619123298d7/brep-08ec477e34d84a94b87dc12a334317e1/model.usda",
+    "views": {
+      "isometric": "/results/b619123298d7/brep-08ec477e34d84a94b87dc12a334317e1/view-isometric.png",
+      "front": "/results/b619123298d7/brep-08ec477e34d84a94b87dc12a334317e1/view-front.png",
+      "top": "/results/b619123298d7/brep-08ec477e34d84a94b87dc12a334317e1/view-top.png",
+      "right": "/results/b619123298d7/brep-08ec477e34d84a94b87dc12a334317e1/view-right.png"
+    }
+  }
+}

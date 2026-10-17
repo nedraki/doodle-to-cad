@@ -191,7 +191,13 @@ def build(source, output):
     reloaded = trimesh.load(output / "model.stl", force="mesh")
     if not reloaded.is_watertight or not reloaded.is_winding_consistent:
         raise ValueError("Exported STL validation failed")
-    diagnostics = {"backend": "usd-brep", "version": "1.0.0", "recipe_version": recipe["version"], "solid_volume_mm3": volume,
+    from selection_catalog import catalog
+    try:
+        selection_catalog = catalog(sm, body, bodies, operations, recipe['output'], mesh)
+    except Exception as exc:
+        # Selection is optional; retain a checked part and expose the failure.
+        selection_catalog = {'version': 1, 'status': 'unavailable', 'targets': [], 'reason': str(exc)}
+    diagnostics = {"selection_catalog": selection_catalog, "backend": "usd-brep", "version": "1.0.0", "recipe_version": recipe["version"], "solid_volume_mm3": volume,
                    "mesh_volume_mm3": mesh.volume, "extents_mm": mesh.extents.tolist(),
                    "bounds_mm": mesh.bounds.tolist(), "watertight": True, "winding_consistent": True,
                    "euler_number": int(mesh.euler_number), "triangles": len(mesh.faces),

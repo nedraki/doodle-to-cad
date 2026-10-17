@@ -1,0 +1,19 @@
+{
+  "feature_id": "opening_top",
+  "feature_label": "Top rectangular opening",
+  "reason": "The drawing shows a closed loop in the front view but does not explicitly label it as a through-hole or a recess. The side view does not show hidden lines to confirm the depth.",
+  "kind": "opening_extent",
+  "id": "dee1c9b6e6214e378cb093d068513496",
+  "text": "Should this hole go all the way through the part?",
+  "maximum_depth_mm": 120.0,
+  "choices": [
+    {
+      "id": "through",
+      "label": "Yes \u2014 make a through-hole"
+    },
+    {
+      "id": "recess",
+      "label": "No \u2014 leave a bottom"
+    }
+  ]
+}

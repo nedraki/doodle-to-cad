@@ -1,0 +1,10 @@
+cutout {'job': 'b619123298d7', 'checks': [{'parameter': 'width', 'value': 70, 'selection': 'matched', 'camera_preserved': True}, {'parameter': 'hole4_x', 'value': 90, 'selection': 'lost', 'camera_preserved': True}, {'discard_restores_selection': True}], 'reload_selection': True}
+enclosure_face {'job': '841778ce3f1c', 'checks': [{'parameter': 'thickness', 'value': 3, 'selection': 'matched', 'camera_preserved': True}], 'reload_selection': True}
+outer_edges {'job': '3b89e0795202', 'checks': [{'parameter': 'width', 'value': 70, 'selection': 'matched', 'camera_preserved': True}], 'reload_selection': True}
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/tmp/doodle-brep-31/scripts/check_selection_product.py", line 24, in <module>
+    target=candidates[0];page.select_option('#selectionMode',mode);page.select_option('#selectionTarget',target['id']);page.wait_for_function('currentRun?.target_selection?.status==="matched"')
+           ~~~~~~~~~~^^^
+IndexError: list index out of range

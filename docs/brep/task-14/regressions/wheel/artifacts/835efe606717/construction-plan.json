@@ -1,0 +1,59 @@
+{
+  "view_frame": "Front view is XZ plane (X horizontal, Z vertical). Right view is YZ plane (Y depth, Z vertical). Top view (not shown) would be XY plane. The wheel axis is along Y.",
+  "features": [
+    {
+      "id": "rim",
+      "shape": "annulus",
+      "section": "rectangular",
+      "axis_or_plane": "Y",
+      "dimensions": [
+        "OD 120 mm",
+        "thickness 8 mm",
+        "ASSUMED rim_width 10 mm"
+      ],
+      "placement": "Centered at (0,0,0). Outer radius 60 mm, inner radius 50 mm. Extends from Y=-4 to Y=4.",
+      "evidence": "Front view shows two concentric circles. Text 'OD 120 mm; thickness 8 mm'."
+    },
+    {
+      "id": "hub",
+      "shape": "cylinder",
+      "section": "circular",
+      "axis_or_plane": "Y",
+      "dimensions": [
+        "ASSUMED hub_diameter 30 mm",
+        "thickness 8 mm"
+      ],
+      "placement": "Centered at (0,0,0). Radius 15 mm. Extends from Y=-4 to Y=4.",
+      "evidence": "Front view shows central circle. Text 'thickness 8 mm'."
+    },
+    {
+      "id": "spokes",
+      "shape": "box_array",
+      "section": "rectangular",
+      "axis_or_plane": "radial in XZ",
+      "dimensions": [
+        "8 spokes",
+        "ASSUMED spoke_width 6 mm",
+        "thickness 8 mm"
+      ],
+      "placement": "8 radial boxes connecting hub (r=15) to rim (r=50). Centered at (0,0,0). Extends from Y=-4 to Y=4.",
+      "evidence": "Front view shows 8 radial lines. Text '8 spokes'."
+    }
+  ],
+  "connections": [
+    "Spokes connect hub outer surface to rim inner surface.",
+    "All features share the same Y-axis extent (thickness 8 mm)."
+  ],
+  "edit_rules": [
+    "Changing OD changes rim outer radius and spoke length.",
+    "Changing thickness changes Y extent of all features.",
+    "Changing hub_diameter changes hub radius and spoke inner connection point.",
+    "Changing spoke_width changes spoke cross-section."
+  ],
+  "unresolved": [
+    "Rim width (radial thickness) is not dimensioned. ASSUMED 10 mm.",
+    "Hub diameter is not dimensioned. ASSUMED 30 mm.",
+    "Spoke width is not dimensioned. ASSUMED 6 mm."
+  ],
+  "clarification": null
+}

@@ -70,6 +70,9 @@ def result_for(store, revision_id):
                           'candidate': revision_id != store['selected']}
     if 'parameters' in item:
         result['params'] = deepcopy(item['parameters'])
+    from .feature_selection import resolve
+    result['target_selection'] = resolve(result, store.get('target_selection'))
+    result['target_version'] = store.get('target_version',0)
     result['original_files'] = deepcopy(store['revisions']['original']['result']['files'])
     return result
 

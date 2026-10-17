@@ -98,6 +98,7 @@ function initializeResultVersion(run){
   }
   $('#originalStl').href=(run.original_files||run.files).stl||'#';$('#originalStl').hidden=!(run.original_files||run.files).stl;
   syncRevisionControls();
+  syncGeometrySelection();
   setResultEditState('original');
 }
 function setResultEditState(phase){
@@ -304,6 +305,8 @@ $('#paramReset')?.addEventListener('click',()=>{
 // A preview is immutable; keeping it is the only operation that changes reload state.
 let revisionBusy=false;
 function syncRevisionControls(){
+  for(const id of ['selectionMode','selectionTarget','clearSelection'])$('#'+id).disabled=revisionBusy||geometrySelectionBusy;
+  $('#modify').disabled=geometrySelectionBusy;
   const candidate=currentRun?.backend==='usd-brep'&&currentRun.revision?.candidate;
   for(const id of ['keepRevision','discardRevision']){const b=$('#'+id);b.hidden=!candidate;b.disabled=revisionBusy}
   $('#revisionStatus').textContent=currentRun?.backend==='usd-brep'?(revisionBusy?'Updating preview…':candidate?'Preview — not kept':currentRun.revision?.id&&currentRun.revision.id!=='original'?'Saved edit':''):'';
@@ -322,7 +325,7 @@ async function runRevisionPreview(){
     if(!viewer)throw Error('3D viewer unavailable');
     if(!await viewer.replaceStl(candidate.files.stl,candidate.params||[],valid)||!valid())return;
     $('#stl').href=candidate.files.stl;$('#scad').href=candidate.files.source;$('#usd').href=candidate.files.usd;
-    currentRun=candidate;state.revisionId=candidate.revision.id;
+    currentRun=candidate;state.revisionId=candidate.revision.id;syncGeometrySelection();
     state.base={...state.current};state.originalParams=candidate.params||state.originalParams;
     resultVersion.edited=true;setResultEditState('edited');status.textContent='Preview ready — keep or discard it.';status.className='';
   }catch(error){if(valid()){setResultEditState('failed');status.textContent=`Update failed — last valid part retained. ${error.message}`;status.className='fail'}}
@@ -351,6 +354,35 @@ $('#keepRevision').onclick=async()=>{
   }catch(error){if(epoch===paramRevision)$('#resultText').textContent=error.message}
   finally{if(epoch===paramRevision){revisionBusy=false;syncRevisionControls()}}
 };
+
+let geometrySelectionRequest=0,geometrySelectionBusy=false;
+const geometryTargetLabel=t=>(t?.label||'Geometry').replace(/^Cutout cut(\d+)$/, 'Rectangular opening $1');
+function syncGeometrySelection(){
+  const run=currentRun,catalog=run?.diagnostics?.selection_catalog;
+  $('#geometrySelection').hidden=run?.backend!=='usd-brep';
+  const mode=$('#selectionMode').value,selection=run?.target_selection||{status:'none'};
+  const category=t=>t.rule.kind==='box_cutout'?'feature':t.rule.kind==='outer_vertical_edges'?'edges':'face';
+  const targets=(catalog?.targets||[]).filter(t=>category(t)===mode);
+  const select=$('#selectionTarget');select.replaceChildren(new Option('Choose a target or click its geometry',''));
+  for(const target of targets)select.add(new Option(geometryTargetLabel(target),target.id));
+  select.value=selection.status==='matched'?selection.target.id:'';
+  $('#selectionStatus').textContent=!catalog?'Selection requires a new build with geometry details.':catalog.status==='unavailable'?'Geometry selection is unavailable for this build.':selection.status==='matched'?`Selected: ${geometryTargetLabel(selection.target)} · checked for the displayed version`:selection.status==='none'?'Choose a supported target. Drag to orbit; click to select.':`${selection.status}: ${selection.reason||'Select again.'}`;
+  viewer?.setGeometrySelection(catalog,selection,mode,chooseGeometryTarget);
+}
+async function chooseGeometryTarget(targetId){
+  const run=currentRun;if(!run||revisionBusy||geometrySelectionBusy)return;
+  const request=++geometrySelectionRequest;geometrySelectionBusy=true;syncRevisionControls();
+  try{
+    const response=await fetch(`/api/results/${run.id}/selection`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({revision_id:run.revision?.id||'original',target_id:targetId||null,target_version:run.target_version||0,selection_version:run.revision?.selection_version||0})});
+    const selected=await response.json();if(request!==geometrySelectionRequest||currentRun!==run)return;
+    if(!response.ok)throw Error(selected.detail||'Could not select this target');
+    run.target_selection=selected.target_selection;run.target_version=selected.target_version;syncGeometrySelection();
+  }catch(error){if(request===geometrySelectionRequest&&currentRun===run)$('#selectionStatus').textContent=error.message}
+  finally{if(request===geometrySelectionRequest){geometrySelectionBusy=false;syncRevisionControls()}}
+}
+$('#selectionMode').onchange=syncGeometrySelection;
+$('#selectionTarget').onchange=e=>chooseGeometryTarget(e.target.value);
+$('#clearSelection').onclick=()=>chooseGeometryTarget(null);
 
 // BRep translations are separate candidates; keep the original result available.
 let brepConfigured=false,scadBeforeBrep=null;

@@ -1,0 +1,352 @@
+{
+  "version": 2,
+  "units": "mm",
+  "name": "Bookend with four openings",
+  "parameters": {
+    "width": {
+      "value": 60.0,
+      "min": 50,
+      "max": 100,
+      "group": "Body"
+    },
+    "depth": {
+      "value": 40.0,
+      "min": 20,
+      "max": 80,
+      "group": "Body"
+    },
+    "height": {
+      "value": 80.0,
+      "min": 70,
+      "max": 120,
+      "group": "Body"
+    },
+    "thickness": {
+      "value": 5.0,
+      "min": 3,
+      "max": 8,
+      "group": "Body"
+    },
+    "hole1_x": {
+      "value": 10.0,
+      "min": 7,
+      "max": 13,
+      "group": "Hole 1"
+    },
+    "hole1_z": {
+      "value": 20.0,
+      "min": 17,
+      "max": 23,
+      "group": "Hole 1"
+    },
+    "hole1_width": {
+      "value": 10.0,
+      "min": 5,
+      "max": 14,
+      "group": "Hole 1"
+    },
+    "hole1_height": {
+      "value": 15.0,
+      "min": 8,
+      "max": 19,
+      "group": "Hole 1"
+    },
+    "hole2_x": {
+      "value": 35.0,
+      "min": 32,
+      "max": 38,
+      "group": "Hole 2"
+    },
+    "hole2_z": {
+      "value": 20.0,
+      "min": 17,
+      "max": 23,
+      "group": "Hole 2"
+    },
+    "hole2_width": {
+      "value": 10.0,
+      "min": 5,
+      "max": 14,
+      "group": "Hole 2"
+    },
+    "hole2_height": {
+      "value": 15.0,
+      "min": 8,
+      "max": 19,
+      "group": "Hole 2"
+    },
+    "hole3_x": {
+      "value": 10.0,
+      "min": 7,
+      "max": 13,
+      "group": "Hole 3"
+    },
+    "hole3_z": {
+      "value": 50.0,
+      "min": 47,
+      "max": 53,
+      "group": "Hole 3"
+    },
+    "hole3_width": {
+      "value": 10.0,
+      "min": 5,
+      "max": 14,
+      "group": "Hole 3"
+    },
+    "hole3_height": {
+      "value": 15.0,
+      "min": 8,
+      "max": 19,
+      "group": "Hole 3"
+    },
+    "hole4_x": {
+      "value": 35.0,
+      "min": 32,
+      "max": 100,
+      "group": "Hole 4"
+    },
+    "hole4_z": {
+      "value": 50.0,
+      "min": 47,
+      "max": 53,
+      "group": "Hole 4"
+    },
+    "hole4_width": {
+      "value": 10.0,
+      "min": 5,
+      "max": 14,
+      "group": "Hole 4"
+    },
+    "hole4_height": {
+      "value": 15.0,
+      "min": 8,
+      "max": 19,
+      "group": "Hole 4"
+    },
+    "bridge_z": {
+      "value": 40.0,
+      "min": 40,
+      "max": 60,
+      "label": "Test bridge height"
+    }
+  },
+  "operations": [
+    {
+      "id": "base",
+      "kind": "box",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "size": [
+        "width",
+        "depth",
+        "thickness"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": []
+    },
+    {
+      "id": "wall",
+      "kind": "box",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "size": [
+        "width",
+        "thickness",
+        "height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": []
+    },
+    {
+      "id": "body",
+      "kind": "union",
+      "left": "base",
+      "right": "wall",
+      "frame": "world",
+      "depends_on": [
+        "base",
+        "wall"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "cutter1",
+      "kind": "box",
+      "origin": [
+        "hole1_x",
+        -1,
+        "hole1_z"
+      ],
+      "size": [
+        "hole1_width",
+        "thickness+2",
+        "hole1_height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": []
+    },
+    {
+      "id": "cut1",
+      "kind": "difference",
+      "left": "body",
+      "right": "cutter1",
+      "frame": "world",
+      "depends_on": [
+        "body",
+        "cutter1"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "cutter2",
+      "kind": "box",
+      "origin": [
+        "hole2_x",
+        -1,
+        "hole2_z"
+      ],
+      "size": [
+        "hole2_width",
+        "thickness+2",
+        "hole2_height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": []
+    },
+    {
+      "id": "cut2",
+      "kind": "difference",
+      "left": "cut1",
+      "right": "cutter2",
+      "frame": "world",
+      "depends_on": [
+        "cut1",
+        "cutter2"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "cutter3",
+      "kind": "box",
+      "origin": [
+        "hole3_x",
+        -1,
+        "hole3_z"
+      ],
+      "size": [
+        "hole3_width",
+        "thickness+2",
+        "hole3_height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": []
+    },
+    {
+      "id": "cut3",
+      "kind": "difference",
+      "left": "cut2",
+      "right": "cutter3",
+      "frame": "world",
+      "depends_on": [
+        "cut2",
+        "cutter3"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "cutter4",
+      "kind": "box",
+      "origin": [
+        "hole4_x",
+        -1,
+        "hole4_z"
+      ],
+      "size": [
+        "hole4_width",
+        "thickness+2",
+        "hole4_height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": []
+    },
+    {
+      "id": "cut4",
+      "kind": "difference",
+      "left": "cut3",
+      "right": "cutter4",
+      "frame": "world",
+      "depends_on": [
+        "cut3",
+        "cutter4"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "bridge",
+      "kind": "box",
+      "origin": [
+        "hole4_x-0.5",
+        0,
+        "bridge_z"
+      ],
+      "size": [
+        "hole4_width+1",
+        "thickness",
+        2
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": []
+    },
+    {
+      "id": "bridged",
+      "kind": "union",
+      "left": "cut4",
+      "right": "bridge",
+      "frame": "world",
+      "depends_on": [
+        "cut4",
+        "bridge"
+      ],
+      "evidence": []
+    }
+  ],
+  "output": "bridged",
+  "frames": {
+    "world": {
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    }
+  },
+  "bodies": [
+    {
+      "id": "part",
+      "output": "bridged"
+    }
+  ],
+  "evidence": {
+    "observed": [],
+    "inferred": [],
+    "assumptions": [],
+    "unresolved": []
+  },
+  "constraints": []
+}
