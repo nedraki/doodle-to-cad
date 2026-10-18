@@ -10,3 +10,9 @@
 #clarificationForm button[type=submit]{background:#ffd34e;font-weight:bold}
 #clarificationForm button:disabled{opacity:.6;cursor:wait}
 #answerError{color:#9c241a}
+
+/* Targeted edits on the selected target */
+#targetedEdit{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap;margin-top:.4rem}
+#targetedEdit input{width:6.5rem}
+#targetedStatus{margin:0;font-size:.8rem;flex-basis:100%}
+#targetedStatus.fail{color:#c0392b}

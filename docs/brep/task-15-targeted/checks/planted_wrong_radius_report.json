@@ -1,0 +1,54 @@
+{
+ "planted_claim": {
+  "operation": "edge_fillet",
+  "rule": {
+   "kind": "outer_vertical_edges",
+   "owner": "cut4"
+  },
+  "radius": 3.0,
+  "fillet_op": "targeted_fillet_1"
+ },
+ "built_radius": 0.5,
+ "report": {
+  "ok": false,
+  "checks": {
+   "preserved outer dimensions": {
+    "status": "passed",
+    "max_corner_shift_mm": 0.0,
+    "tolerance_mm": 0.005
+   },
+   "corner 1 rounded to 3 mm": {
+    "status": "failed",
+    "corner_material_removed": true,
+    "arc_surface_error_mm": 0.8787,
+    "tolerance_mm": 0.1
+   },
+   "corner 2 rounded to 3 mm": {
+    "status": "failed",
+    "corner_material_removed": true,
+    "arc_surface_error_mm": 0.8787,
+    "tolerance_mm": 0.1
+   },
+   "corner 3 rounded to 3 mm": {
+    "status": "failed",
+    "corner_material_removed": true,
+    "arc_surface_error_mm": 0.8787,
+    "tolerance_mm": 0.1
+   },
+   "corner 4 rounded to 3 mm": {
+    "status": "failed",
+    "corner_material_removed": true,
+    "arc_surface_error_mm": 0.8787,
+    "tolerance_mm": 0.1
+   },
+   "preserved contact surfaces": {
+    "status": "passed",
+    "slice_area_mm2": [
+     2400.0,
+     2400.0
+    ],
+    "detail": "Bottom cross-section area stays constant with height: the flat contact faces were not consumed by the round."
+   }
+  }
+ }
+}

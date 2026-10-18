@@ -106,7 +106,12 @@ def build(source, output):
                 sm.chamfer_fillet(body, op["radius"])
             else:
                 edges = body.edges()
-                if op["selector"] != "all":
+                if op["selector"] == "outer_vertical":
+                    from doodle_to_cad.selection_rules import outer_vertical_edges
+                    bounds = sm.brep_bounding_box(body)
+                    edge_bounds = [sm.edge_bounding_box(edge, tight=True) for edge in edges]
+                    edges = [edges[i] for i in outer_vertical_edges(bounds, edge_bounds)]
+                elif op["selector"] != "all":
                     axis = "xyz".index(op["selector"][-1])
                     selected = []
                     for edge in edges:

@@ -1,0 +1,47 @@
+[
+ {
+  "check": "sha256sums",
+  "status": "passed",
+  "detail": "22 files, bad: []"
+ },
+ {
+  "check": "capture_session_failures_recorded",
+  "status": "passed",
+  "detail": "0 recorded"
+ },
+ {
+  "check": "pocket_preview_reported_checks",
+  "status": "passed",
+  "detail": "Measured 5/5 checks passed on the preview: \u2713 preserved outer dimensions \u00b7 \u2713 sele"
+ },
+ {
+  "check": "fillet_preview_reported_checks",
+  "status": "passed",
+  "detail": "Measured 6/6 checks passed on the preview: \u2713 preserved outer dimensions \u00b7 \u2713 corn"
+ },
+ {
+  "check": "noop_saved_result_unchanged",
+  "status": "passed",
+  "detail": ""
+ },
+ {
+  "check": "guard_stale_selection_409",
+  "status": "passed",
+  "detail": ""
+ },
+ {
+  "check": "guard_unsupported_operation_422",
+  "status": "passed",
+  "detail": ""
+ },
+ {
+  "check": "guard_wrong_target_422",
+  "status": "passed",
+  "detail": ""
+ },
+ {
+  "check": "pytest_targeted_edits",
+  "status": "passed",
+  "detail": "9 passed, 2 warnings in 5.34s"
+ }
+]
