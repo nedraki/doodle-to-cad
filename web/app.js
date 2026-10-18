@@ -379,7 +379,7 @@ async function chooseGeometryTarget(targetId){
     if(!response.ok)throw Error(selected.detail||'Could not select this target');
     run.target_selection=selected.target_selection;run.target_version=selected.target_version;syncGeometrySelection();
   }catch(error){if(request===geometrySelectionRequest&&currentRun===run)$('#selectionStatus').textContent=error.message}
-  finally{if(request===geometrySelectionRequest){geometrySelectionBusy=false;syncRevisionControls()}}
+  finally{if(request===geometrySelectionRequest){geometrySelectionBusy=false;syncRevisionControls();syncTargetedEdit()}}
 }
 $('#selectionMode').onchange=syncGeometrySelection;
 $('#selectionTarget').onchange=e=>chooseGeometryTarget(e.target.value);
@@ -426,7 +426,7 @@ $('#targetedPreview').onclick=async()=>{
     const passed=checks.filter(([,c])=>c.status==='passed').length;
     $('#targetedStatus').className='';
     $('#targetedStatus').textContent=`Measured ${passed}/${checks.length} checks passed on the preview: ${checks.map(([n,c])=>`${c.status==='passed'?'✓':'✗'} ${n}`).join(' · ')}. Keep it or discard it.`;
-    syncGeometrySelection();
+    syncGeometrySelection();syncRevisionControls();
   }catch(error){if(epoch===targetedEpoch&&currentRun===run){$('#targetedStatus').className='fail';$('#targetedStatus').textContent=`The change failed. The saved version is unchanged. ${error.message}`}}
   finally{if(epoch===targetedEpoch){targetedBusy=false;syncTargetedEdit()}}
 };
