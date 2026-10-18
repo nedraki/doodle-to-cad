@@ -1,0 +1,108 @@
+{
+  "bookend": {
+    "kind": "openscad_reference",
+    "source": "/tmp/doodle-brep-34/benchmarks/brep-baseline/bookend/reference.scad",
+    "watertight": true,
+    "components": 1,
+    "extents_mm": [
+      80.0,
+      50.0,
+      100.0
+    ],
+    "volume_mm3": 30854.4,
+    "genus": 4
+  },
+  "wheel": {
+    "kind": "openscad_reference",
+    "source": "/tmp/doodle-brep-34/benchmarks/brep-baseline/wheel/reference.scad",
+    "watertight": true,
+    "components": 1,
+    "extents_mm": [
+      120.0,
+      8.0,
+      120.0
+    ],
+    "volume_mm3": 43128.5,
+    "genus": 8
+  },
+  "enclosure": {
+    "kind": "openscad_reference",
+    "source": "/tmp/doodle-brep-34/benchmarks/brep-baseline/enclosure/reference.scad",
+    "watertight": true,
+    "components": 1,
+    "extents_mm": [
+      120.0,
+      80.0,
+      40.0
+    ],
+    "volume_mm3": 67548.0,
+    "genus": 1
+  },
+  "curved_handle": {
+    "kind": "openscad_reference",
+    "source": "/tmp/doodle-brep-34/benchmarks/brep-baseline/curved_handle/reference.scad",
+    "watertight": true,
+    "components": 1,
+    "extents_mm": [
+      48.0,
+      54.0,
+      8.0
+    ],
+    "volume_mm3": 6170.5,
+    "genus": 0
+  },
+  "transition": {
+    "kind": "openscad_reference",
+    "source": "/tmp/doodle-brep-34/benchmarks/brep-baseline/transition/reference.scad",
+    "watertight": true,
+    "components": 1,
+    "extents_mm": [
+      60.0,
+      40.0,
+      60.0
+    ],
+    "volume_mm3": 92140.1,
+    "genus": 0
+  },
+  "profiles": {
+    "kind": "brep_reference_recipe",
+    "source": "/tmp/doodle-brep-34/benchmarks/brep-profiles/reference.recipe.json",
+    "watertight": true,
+    "components": 1,
+    "extents_mm": [
+      60.0,
+      40.0,
+      6.0
+    ],
+    "volume_mm3": 12852.9,
+    "genus": 1
+  },
+  "shells": {
+    "kind": "brep_reference_recipe",
+    "source": "/tmp/doodle-brep-34/benchmarks/brep-shells/reference.recipe.json",
+    "watertight": true,
+    "components": 1,
+    "extents_mm": [
+      60.0,
+      40.0,
+      20.0
+    ],
+    "volume_mm3": 11332.4,
+    "genus": 0
+  },
+  "ambiguous": {
+    "kind": "analytic",
+    "watertight": true,
+    "components": 1,
+    "extents_mm": [
+      40.0,
+      30.0,
+      12.0
+    ],
+    "volume_mm3": 13796.8,
+    "genus": 1
+  },
+  "missing_thickness": {
+    "kind": "no_ground_truth"
+  }
+}
