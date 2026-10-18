@@ -65,7 +65,12 @@ def test_brep_missing_worker_output_is_not_published(tmp_path, monkeypatch):
     from pathlib import Path
     source = Path('benchmarks/brep/bracket.json')
     monkeypatch.setattr(brep, 'worker_python', lambda: '/python')
-    monkeypatch.setattr(brep.subprocess, 'run', lambda *a, **k: subprocess.CompletedProcess(a[0], 0, '', ''))
+    class OkEmptyPopen:
+        returncode = 0
+        def __init__(self, *args, **kwargs): pass
+        def communicate(self, timeout=None): return ('', '')
+        def kill(self): pass
+    monkeypatch.setattr(brep.subprocess, 'Popen', OkEmptyPopen)
     result = build(BuildInput('usd-brep', source, tmp_path))
     assert not result.ok
     assert result.diagnostics[0].code == 'invalid_output'
