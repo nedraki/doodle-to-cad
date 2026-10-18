@@ -1,0 +1,37 @@
+[
+ {
+  "check": "sha256sums",
+  "status": "passed",
+  "detail": "bad: []"
+ },
+ {
+  "check": "install_check_recorded",
+  "status": "passed",
+  "detail": "8 steps"
+ },
+ {
+  "check": "pxr_warning_sample_captured",
+  "status": "passed",
+  "detail": ""
+ },
+ {
+  "check": "health_reason_missing",
+  "status": "passed",
+  "detail": "Set DOODLE_BREP_PYTHON to an isolated Python 3.12 worker; see docs/brep/README.m"
+ },
+ {
+  "check": "health_reason_wrong_python",
+  "status": "passed",
+  "detail": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\nAssert"
+ },
+ {
+  "check": "health_available_with_worker",
+  "status": "passed",
+  "detail": ""
+ },
+ {
+  "check": "pytest_worker_release",
+  "status": "passed",
+  "detail": "8 passed, 2 warnings in 1.05s"
+ }
+]

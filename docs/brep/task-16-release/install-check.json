@@ -1,0 +1,45 @@
+{
+ "passed": true,
+ "steps": [
+  {
+   "step": "uv_available",
+   "status": "passed",
+   "detail": "/home/sparkie/.local/bin/uv"
+  },
+  {
+   "step": "create_venv_3.12",
+   "status": "passed",
+   "detail": "Using CPython 3.12.3 interpreter at: /usr/bin/python3.12\nCreating virtual environment at: /home/sparkie/.hermes/profiles/doodle-to-cad/cache/scratch/brep-clean-install-8b8l_ri8/venv\nActivate with: source /home/sparkie/.hermes/profiles/doodle-to-cad/cache/scratch/brep-clean-install-8b8l_ri8/venv/bin/activate\n"
+  },
+  {
+   "step": "install_pinned_requirements",
+   "status": "passed",
+   "detail": "Using Python 3.12.3 environment at: /home/sparkie/.hermes/profiles/doodle-to-cad/cache/scratch/brep-clean-install-8b8l_ri8/venv\nResolved 4 packages in 2ms\nInstalled 4 packages in 14ms\n + networkx==3.6.1\n + numpy==2.5.4\n + trimesh==5.1.1\n + usd-brep==1.0.0\n"
+  },
+  {
+   "step": "import_pinned_packages",
+   "status": "passed",
+   "detail": "1.0.0 3.12.3\n"
+  },
+  {
+   "step": "import_pinned_packages_versions",
+   "status": "passed",
+   "detail": "1.0.0 3.12.3"
+  },
+  {
+   "step": "clean_worker_build",
+   "status": "passed",
+   "detail": " 'pxr'\n\nWarning: in _LoadLibModules at line 329 of /builds/omniverse/usd-ci/USD/pxr/base/tf/scriptModuleLoader.cpp -- Error loading lib vt's module 'pxr.Vt':\nModuleNotFoundError: No module named 'pxr'\n\nWarning: in _LoadLibModules at line 329 of /builds/omniverse/usd-ci/USD/pxr/base/tf/scriptModuleLoader.cpp -- Error loading lib work's module 'pxr.Work':\nModuleNotFoundError: No module named 'pxr'\n\n"
+  },
+  {
+   "step": "clean_build_artifacts",
+   "status": "passed",
+   "detail": "{\"stl_bytes\": 684, \"watertight\": true}"
+  },
+  {
+   "step": "missing_worker_gives_actionable_error",
+   "status": "passed",
+   "detail": "Set DOODLE_BREP_PYTHON to an isolated Python 3.12 worker; see docs/brep/README.md"
+  }
+ ]
+}

@@ -16,7 +16,7 @@ from .model_client import CompatibleModelClient
 from .openscad import available
 from .params import extract_params, rewrite_params, validate_updates
 from .pipeline import Pipeline
-from .brep import build_recipe, worker_python, RECIPE_PROMPT
+from .brep import build_recipe, worker_python, worker_health, register_cancellation, unregister_cancellation, cancel_registered_jobs, RECIPE_PROMPT
 from .brep_recipe import recipe_params, validate_recipe
 from .build_contract import CAPABILITIES
 from . import revisions
@@ -52,7 +52,8 @@ def index(): return FileResponse(ROOT / "web" / "index.html")
 @app.get("/api/health")
 async def health(refresh: bool = False):
     model = await client.discover(refresh)
-    return {"status":"ok" if model.selected and available(settings.openscad_bin) else "degraded","agentic":{"backend":"bounded-cad-supervisor","max_attempts":settings.agent_max_attempts,"accept_score":settings.agent_accept_score,"base_url":settings.base_url,"requested_model":settings.requested_model or None,"selected_model":model.selected,"model_source":model.source,"thinking_enabled":settings.enable_thinking,"thinking_budget":settings.thinking_budget,"structured_thinking_enabled":settings.structured_enable_thinking,"code_thinking_enabled":settings.code_enable_thinking,"available_models":model.available,"model_error":model.error},"openscad":{"binary":settings.openscad_bin,"available":available(settings.openscad_bin)}}
+    worker = await asyncio.to_thread(worker_health)
+    return {"status":"ok" if model.selected and available(settings.openscad_bin) else "degraded","agentic":{"backend":"bounded-cad-supervisor","max_attempts":settings.agent_max_attempts,"accept_score":settings.agent_accept_score,"base_url":settings.base_url,"requested_model":settings.requested_model or None,"selected_model":model.selected,"model_source":model.source,"thinking_enabled":settings.enable_thinking,"thinking_budget":settings.thinking_budget,"structured_thinking_enabled":settings.structured_enable_thinking,"code_thinking_enabled":settings.code_enable_thinking,"available_models":model.available,"model_error":model.error},"openscad":{"binary":settings.openscad_bin,"available":available(settings.openscad_bin)},"brep_worker":worker}
 
 
 @app.get("/api/results/latest")
@@ -301,6 +302,7 @@ async def generate(
            "result": None, "error": None, "task": None}
     JOBS[run_id] = job
     _prune_jobs()
+    register_cancellation(run_id)
 
     async def run_job():
         try:
@@ -320,6 +322,8 @@ async def generate(
             job["status"] = "error"
             job["stage"] = "failed"
             job["error"] = {"message": str(exc), "error_type": type(exc).__name__, "stage": "generation"}
+        finally:
+            unregister_cancellation(run_id)
 
     job["task"] = asyncio.create_task(run_job())
     return {"job_id": run_id, "status": "running"}
@@ -345,6 +349,7 @@ async def job_cancel(job_id: str):
     job = JOBS.get(job_id)
     if not job: raise HTTPException(404, "Unknown job")
     if job["status"] in {"running", "waiting_for_answer"} and job["task"]:
+        cancel_registered_jobs([job_id])  # kills any in-flight BRep worker process
         job["task"].cancel()
         if job.get("kind") == "recipe":
             try:

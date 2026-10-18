@@ -6,6 +6,8 @@ import os
 from pathlib import Path
 import subprocess
 import tempfile
+import threading
+import time
 import uuid
 
 from .brep_recipe import recipe_params, validate_recipe
@@ -13,6 +15,65 @@ from .build_contract import BuildInput, BuildResult, BuildError, Diagnostic
 from .openscad import render_views, mesh_health
 
 WORKER = Path(__file__).resolve().parents[1] / "workers" / "brep" / "build.py"
+WORKER_TIMEOUT_SECONDS = 120
+WORKER_MEMORY_LIMIT_MB = int(os.getenv("DOODLE_BREP_MEMORY_LIMIT_MB", "16384"))
+WORKER_CPU_LIMIT_S = int(os.getenv("DOODLE_BREP_CPU_LIMIT_S", "150"))
+WORKER_FILE_SIZE_LIMIT_MB = 512
+
+# One cancellation event per running job, keyed by run id. build_brep polls the
+# event while the worker runs and kills the process when it is set.
+_CANCEL_EVENTS: dict[str, threading.Event] = {}
+
+
+def register_cancellation(run_id: str) -> threading.Event:
+    event = threading.Event()
+    _CANCEL_EVENTS[run_id] = event
+    return event
+
+
+def unregister_cancellation(run_id: str) -> None:
+    _CANCEL_EVENTS.pop(run_id, None)
+
+
+def cancel_registered_jobs(runs) -> None:
+    for run_id in runs:
+        event = _CANCEL_EVENTS.get(run_id)
+        if event is not None:
+            event.set()
+
+
+_HEALTH_CACHE: dict[str, dict] = {}
+
+
+def worker_health() -> dict:
+    """Fast capability probe with an actionable reason. Cached per interpreter path.
+
+    The worker enforces these same requirements at build time; running the probe
+    early turns a mid-generation failure into a startup message."""
+    try:
+        python = worker_python()
+    except (BuildError, ValueError) as exc:
+        return {"available": False, "reason": str(exc)}
+    if python in _HEALTH_CACHE:
+        return _HEALTH_CACHE[python]
+    probe = (
+        "import sys, importlib.metadata as m;"
+        "assert sys.version_info[:2] == (3, 12),"
+        " f'worker needs Python 3.12, found {sys.version.split()[0]};"
+        " create it with: uv venv --python 3.12 workers/brep/.venv';"
+        "import usd_brep;"
+        'v = m.version("usd-brep");'
+        'assert v == "1.0.0", f"worker needs usd-brep==1.0.0, found {v};'
+        ' install with: uv pip install --python workers/brep/.venv/bin/python -r workers/brep/requirements.txt"')
+    try:
+        proc = subprocess.run([python, "-c", probe], capture_output=True, text=True, timeout=20)
+        reason = None if proc.returncode == 0 else ((proc.stderr or proc.stdout).strip()[-300:]
+                                                     or "worker capability probe failed")
+        health = {"available": proc.returncode == 0, "reason": reason}
+    except (OSError, subprocess.TimeoutExpired) as exc:
+        health = {"available": False, "reason": f"worker capability probe could not run: {exc}"}
+    _HEALTH_CACHE[python] = health
+    return health
 
 
 def worker_python():
@@ -52,19 +113,58 @@ def build_brep(request: BuildInput, binary: str = "openscad", on_stage=lambda _:
         source = staging / "model.recipe.json"
         source.write_text(json.dumps(edited, indent=2))
         on_stage("building solid")
+        cancel = _CANCEL_EVENTS.get(out.name)
+        memory_mb = int(os.getenv("DOODLE_BREP_MEMORY_LIMIT_MB", str(WORKER_MEMORY_LIMIT_MB)))
+        cpu_s = int(os.getenv("DOODLE_BREP_CPU_LIMIT_S", str(WORKER_CPU_LIMIT_S)))
+
+        def _apply_limits():  # runs between fork and exec in the child only
+            import resource
+            for res, value in ((resource.RLIMIT_AS, memory_mb * 1024 * 1024),
+                               (resource.RLIMIT_CPU, cpu_s),
+                               (resource.RLIMIT_FSIZE, WORKER_FILE_SIZE_LIMIT_MB * 1024 * 1024)):
+                soft, hard = resource.getrlimit(res)
+                capped = value if hard == resource.RLIM_INFINITY else min(value, hard)
+                resource.setrlimit(res, (capped, hard))
+
         try:
-            process = subprocess.run([python, str(WORKER), str(source), str(staging)],
-                                     capture_output=True, text=True, timeout=120,
-                                     env={k: v for k, v in os.environ.items() if k not in {"PYTHONPATH", "PYTHONHOME"}})
+            process = subprocess.Popen([python, str(WORKER), str(source), str(staging)],
+                                       stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True,
+                                       env={k: v for k, v in os.environ.items() if k not in {"PYTHONPATH", "PYTHONHOME"}},
+                                       preexec_fn=_apply_limits)
         except OSError:
             result.diagnostics.append(Diagnostic("backend_unavailable", "Could not launch the configured BRep worker"))
             return result
-        except subprocess.TimeoutExpired:
-            result.diagnostics.append(Diagnostic("timeout", "BRep build timed out; last successful geometry retained"))
+        deadline = time.monotonic() + WORKER_TIMEOUT_SECONDS
+
+        def _reap(process):
+            # Never block the web process reaping a killed worker.
+            try:
+                process.communicate(timeout=5)
+            except subprocess.TimeoutExpired:
+                pass
+
+        while True:
+            try:
+                stdout, stderr = process.communicate(timeout=0.2)
+                break
+            except subprocess.TimeoutExpired:
+                if cancel is not None and cancel.is_set():
+                    process.kill()
+                    _reap(process)
+                    result.diagnostics.append(Diagnostic(
+                        "cancelled", "BRep worker stopped because the job was cancelled; the last successful result is retained"))
+                    return result
+                if time.monotonic() > deadline:
+                    process.kill()
+                    _reap(process)
+                    result.diagnostics.append(Diagnostic("timeout", "BRep build timed out; last successful geometry retained"))
+                    return result
+        result.log = stdout + stderr
+        if process.returncode == -9:
+            result.diagnostics.append(Diagnostic(
+                "worker_killed", f"BRep worker was killed (signal 9). It likely hit the memory limit "
+                                 f"({memory_mb} MB); raise DOODLE_BREP_MEMORY_LIMIT_MB if this part legitimately needs more."))
             return result
-        result.log = process.stdout + process.stderr
-        if process.returncode and not result.log.strip():
-            result.log = f"BRep worker exited with status {process.returncode}; no diagnostic output"
         if process.returncode:
             failure_path = staging / "construction-error.json"
             failure = json.loads(failure_path.read_text()) if failure_path.exists() else {}

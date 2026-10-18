@@ -12,6 +12,16 @@ from doodle_to_cad.brep_recipe import validate_recipe
 from doodle_to_cad.build_contract import BuildError
 
 
+def _limits_report():
+    """Soft limits the launcher imposed on this worker process (release evidence)."""
+    import resource
+    def soft(res):
+        value = resource.getrlimit(res)[0]
+        return None if value == resource.RLIM_INFINITY else value
+    return {"memory_bytes": soft(resource.RLIMIT_AS), "cpu_seconds": soft(resource.RLIMIT_CPU),
+            "file_size_bytes": soft(resource.RLIMIT_FSIZE)}
+
+
 def arc_curve(sm, center, radius, start, end):
     """Keep periodic angles in the kernel range without changing the arc."""
     sweep=end-start
@@ -207,6 +217,7 @@ def build(source, output):
                    "bounds_mm": mesh.bounds.tolist(), "watertight": True, "winding_consistent": True,
                    "euler_number": int(mesh.euler_number), "triangles": len(mesh.faces),
                    "usd_roundtrip": True, "volume_relative_accuracy": 1e-8, "usd_volume_mm3": imported[0].volume(relative_accuracy=1e-8), "operations": history, "connections": connections,
+                   "resource_limits": _limits_report(),
                    "build_seconds": round(time.monotonic()-started, 3)}
     (output / "diagnostics.json").write_text(json.dumps(diagnostics, indent=2))
 
