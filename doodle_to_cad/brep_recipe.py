@@ -128,8 +128,8 @@ def validate_recipe(recipe, updates=None):
             raise ValueError("Rotation angle must be positive and at most 360 degrees")
         if kind == "arc_pipe" and (item["radius"] >= item["bend_radius"] or item["angle"] > 270):
             raise ValueError("Pipe requires radius < bend_radius and angle ≤ 270°")
-        if kind == "fillet" and op["selector"] not in ("all", "parallel_x", "parallel_y", "parallel_z"):
-            raise ValueError("Fillet selector must be all or parallel_x/y/z")
+        if kind == "fillet" and op["selector"] not in ("all", "parallel_x", "parallel_y", "parallel_z", "outer_vertical"):
+            raise ValueError("Fillet selector must be all, parallel_x/y/z or outer_vertical")
         if kind == 'shell':
             if op['opening']!='top' or op['preserve']!='outer':
                 raise ValueError(f"{op['id']}: Shell supports an open top and protected outer faces")

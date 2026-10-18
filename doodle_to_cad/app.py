@@ -97,6 +97,16 @@ def preview_revision(run_id: str, payload: dict):
         raise HTTPException(422, {"message": str(exc), "code": getattr(exc, "code", "invalid_input")}) from exc
 
 
+@app.post("/api/results/{run_id}/revisions/targeted")
+def targeted_revision(run_id: str, payload: dict):
+    from .targeted_edits import verify_edit
+    out, _ = _run_dir(run_id)
+    try:
+        return revisions.targeted_preview(out, payload, build_recipe, verify_edit)
+    except ValueError as exc:
+        raise HTTPException(422, {"message": str(exc), "code": getattr(exc, "code", "invalid_input")}) from exc
+
+
 @app.post("/api/results/{run_id}/revisions/keep")
 def keep_revision(run_id: str, payload: dict):
     out, _ = _run_dir(run_id)

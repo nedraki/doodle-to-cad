@@ -368,6 +368,7 @@ function syncGeometrySelection(){
   select.value=selection.status==='matched'?selection.target.id:'';
   $('#selectionStatus').textContent=!catalog?'Selection requires a new build with geometry details.':catalog.status==='unavailable'?'Geometry selection is unavailable for this build.':selection.status==='matched'?`Selected: ${geometryTargetLabel(selection.target)} · checked for the displayed version`:selection.status==='none'?'Choose a supported target. Drag to orbit; click to select.':`${selection.status}: ${selection.reason||'Select again.'}`;
   viewer?.setGeometrySelection(catalog,selection,mode,chooseGeometryTarget);
+  syncTargetedEdit();
 }
 async function chooseGeometryTarget(targetId){
   const run=currentRun;if(!run||revisionBusy||geometrySelectionBusy)return;
@@ -383,6 +384,52 @@ async function chooseGeometryTarget(targetId){
 $('#selectionMode').onchange=syncGeometrySelection;
 $('#selectionTarget').onchange=e=>chooseGeometryTarget(e.target.value);
 $('#clearSelection').onclick=()=>chooseGeometryTarget(null);
+
+// Targeted edits on the selected target (#32). Data-only recipe changes with
+// measured before/after checks; one editing surface is active at a time.
+const TARGETED_BY_RULE={box_cutout:{operation:'pocket_depth',label:'New pocket depth'},outer_vertical_edges:{operation:'edge_fillet',label:'Fillet radius'}};
+let targetedBusy=false,targetedEpoch=0;
+function syncTargetedEdit(){
+  const panel=$('#targetedEdit');if(!panel)return;
+  const run=currentRun,selection=run?.target_selection;
+  const supported=run?.backend==='usd-brep'&&selection?.status==='matched'&&TARGETED_BY_RULE[selection.target.rule.kind];
+  panel.hidden=!supported;
+  if(!supported){$('#targetedPreview').disabled=true;return}
+  $('#targetedLabel').textContent=supported.label;
+  $('#targetedPreview').disabled=targetedBusy||revisionBusy||geometrySelectionBusy;
+}
+$('#targetedPreview').onclick=async()=>{
+  const run=currentRun;if(!run||revisionBusy||targetedBusy)return;
+  const selection=run.target_selection;if(selection?.status!=='matched')return;
+  const supported=TARGETED_BY_RULE[selection.target.rule.kind];if(!supported)return;
+  const value=Number($('#targetedValue').value);
+  if(!Number.isFinite(value)||value<=0){$('#targetedStatus').className='fail';$('#targetedStatus').textContent='Enter a positive number in millimetres.';return}
+  const epoch=++targetedEpoch;targetedBusy=true;syncTargetedEdit();
+  $('#targetedStatus').className='';$('#targetedStatus').textContent='Building and measuring the change…';
+  try{
+    const response=await fetch(`/api/results/${run.id}/revisions/targeted`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({parent_id:run.revision?.id||'original',selection_version:run.revision?.selection_version??0,operation:supported.operation,value})});
+    const candidate=await response.json();if(epoch!==targetedEpoch||currentRun!==run)return;
+    if(!response.ok){
+      const detail=candidate.detail||{};
+      const failed=detail.checks?Object.entries(detail.checks).filter(([,c])=>c.status!=='passed').map(([name])=>name).join('; '):'';
+      $('#targetedStatus').className='fail';
+      $('#targetedStatus').textContent=`${typeof detail==='string'?detail:(detail.message||'The change failed.')}${failed?` Failed checks: ${failed}.`:''} The saved version is unchanged.`;
+      return;
+    }
+    if(!viewer)throw Error('3D viewer unavailable');
+    if(!(await viewer.replaceStl(candidate.files.stl,candidate.params||[],()=>epoch===targetedEpoch&&currentRun===run)))return;
+    if(epoch!==targetedEpoch||currentRun!==run)return;
+    closeParamPanel();
+    $('#stl').href=candidate.files.stl;$('#scad').href=candidate.files.source;$('#usd').href=candidate.files.usd;
+    currentRun=candidate;resultVersion.edited=true;setResultEditState('edited');
+    const checks=Object.entries(candidate.targeted.checks);
+    const passed=checks.filter(([,c])=>c.status==='passed').length;
+    $('#targetedStatus').className='';
+    $('#targetedStatus').textContent=`Measured ${passed}/${checks.length} checks passed on the preview: ${checks.map(([n,c])=>`${c.status==='passed'?'✓':'✗'} ${n}`).join(' · ')}. Keep it or discard it.`;
+    syncGeometrySelection();
+  }catch(error){if(epoch===targetedEpoch&&currentRun===run){$('#targetedStatus').className='fail';$('#targetedStatus').textContent=`The change failed. The saved version is unchanged. ${error.message}`}}
+  finally{if(epoch===targetedEpoch){targetedBusy=false;syncTargetedEdit()}}
+};
 
 // BRep translations are separate candidates; keep the original result available.
 let brepConfigured=false,scadBeforeBrep=null;

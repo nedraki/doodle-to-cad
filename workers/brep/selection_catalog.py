@@ -16,7 +16,12 @@ def catalog(sm, body, bodies, operations, output_id, mesh):
             rules.append((f'Outside {"XYZ"[axis]} {side} face',{'kind':'extreme_face','owner':output_id,'axis':axis,'side':side}))
     for op in operations:
         if op['kind']=='difference' and next((x['kind'] for x in operations if x['id']==op['right']),None)=='box':
-            rules.append((f'Cutout {op["id"]}',{'kind':'box_cutout','owner':op['id'],'cutter':op['right'],'expected_faces':4}))
+            cb=body_bounds[op['right']]; lb=body_bounds.get(op['left'],bounds)
+            def spans(axis): return cb[0][axis]<=lb[0][axis]+TOLERANCE and cb[1][axis]>=lb[1][axis]-TOLERANCE
+            expected=0 if spans(0) else 2
+            expected+=0 if spans(1) else 2
+            if cb[0][2]>lb[0][2]+TOLERANCE and cb[1][2]>=lb[1][2]-TOLERANCE:expected+=1  # pocket floor
+            if expected:rules.append((f'Cutout {op["id"]}',{'kind':'box_cutout','owner':op['id'],'cutter':op['right'],'expected_faces':expected}))
     triangles=np.asarray(mesh.triangles);centers=triangles.mean(axis=1)
     targets=[];unresolved=[]
     def append(label,rule,geometry,count):

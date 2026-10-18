@@ -118,6 +118,75 @@ def preview(out, payload, builder):
         return result_for(store, revision_id)
 
 
+def targeted_preview(out, payload, builder, verify):
+    """Preview one supported targeted change on the selected target.
+
+    Selection must be matched; the recipe is planned from the parent's saved
+    source, built through the same isolated worker, then measured on the
+    exported meshes. Only a candidate whose checks all pass is recorded.
+    """
+    if set(payload) != {'parent_id', 'selection_version', 'operation', 'value'} \
+            or isinstance(payload['value'], bool) or not isinstance(payload['value'], (int, float)) \
+            or not isinstance(payload['operation'], str):
+        raise HTTPException(422, 'Targeted edit requires parent_id, selection_version, operation and a numeric value.')
+    with locked(out):
+        store = read_store(out)
+        selection_matches(store, payload['selection_version'])
+        parent = deepcopy(record(store, payload['parent_id']))
+        saved = deepcopy(store.get('target_selection'))
+    if parent['result'].get('backend') != 'usd-brep':
+        raise HTTPException(422, 'Targeted edits currently require a BRep result.')
+    from .feature_selection import resolve
+    resolved = resolve(parent['result'], saved)
+    if not saved or resolved.get('status') != 'matched':
+        raise HTTPException(422, 'Select a supported target first. The saved selection is no longer matched to this version.')
+    from . import targeted_edits
+    rule = resolved['target']['rule']
+    extents = parent['result'].get('diagnostics', {}).get('extents_mm')
+    try:
+        recipe = json.loads(parent['source_text'])
+        edited, edit = targeted_edits.plan(recipe, rule, payload['value'], bounds=extents)
+    except ValueError as exc:
+        raise HTTPException(422, str(exc)) from exc
+    if payload['operation'] != edit['operation']:
+        raise HTTPException(422, f'The selected target does not support the requested change. Requested '
+                                 f'"{payload["operation"]}"; this target supports "{edit["operation"]}".')
+    # Native builds can be slow. Never hold the selection lock during a build.
+    built = builder(out, edited)
+    if not built.get('ok'):
+        raise HTTPException(422, 'The edit failed to build. The saved version is unchanged.')
+    def local(url):
+        return out / Path(url).relative_to('/results/' + out.name)
+    edges = next((t['geometry'].get('lines') for t in parent['result'].get('diagnostics', {})
+                  .get('selection_catalog', {}).get('targets', []) if t['rule'] == rule), None)
+    try:
+        report = verify(local(parent['result']['files']['stl']), local(built['stl']), edit, edges=edges)
+    except Exception as exc:  # measurement failures must never publish a candidate
+        raise HTTPException(422, f'The change could not be verified: {exc}. The saved version is unchanged.') from exc
+    if not report['ok']:
+        raise HTTPException(422, {'message': 'The change did not meet its checks. Nothing was published.',
+                                  'checks': report['checks']})
+    source_path = local(built['source'])
+    result = deepcopy(parent['result'])
+    result.update(success=False, files={key: built[key] for key in ('source', 'stl', 'usd', 'views')},
+                  diagnostics=built['diagnostics'], build=built['build'],
+                  evaluation={'status': 'unverified', 'accepted': False,
+                              'failures': ['Drawing checks have not been rerun for this edit.']})
+    revision_id = uuid.uuid4().hex
+    item = {'id': revision_id, 'parent_id': parent['id'], 'kind': 'targeted_edit',
+            'result': result, 'source_text': source_path.read_text(), 'parameters': built['params'],
+            'targeted': {'operation': edit['operation'], 'value': payload['value'],
+                         'ok': report['ok'], 'rule': rule, 'checks': report['checks']}}
+    with locked(out):
+        store = read_store(out)
+        selection_matches(store, payload['selection_version'])
+        store['revisions'][revision_id] = item
+        write_store(out, store)
+        result = result_for(store, revision_id)
+    result['targeted'] = item['targeted']
+    return result
+
+
 def keep(out, payload):
     if set(payload) != {'revision_id', 'selection_version'}:
         raise HTTPException(422, 'Keep requires revision_id and selection_version.')
