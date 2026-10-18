@@ -1,0 +1,12 @@
+# Failure: seeded run id "repairdemo5dd7" was rejected — RUN_ID_RE only allows hex ([0-9a-f]{6,32}).
+# Real API response observed 2026-10-18:
+{"detail":"Unknown run"}
+# Fix: check_repair_product.py uses uuid4().hex[:12] only.
+
+# Related environment finding: the measurement path needs the `rtree` package
+# installed — without it trimesh raises ModuleNotFoundError from
+# util.bounds_tree on mesh.contains() (reproduced; see rtree-missing-failure.txt).
+# Both retained measurement runs were executed with rtree==1.4.1 in the
+# worktree venv (dev-only install; pyproject unchanged). Sanity probes on the
+# correct mid-plane (y=0; the wheel is centred at y=0, not y=4) confirm
+# inside/outside classification is correct.

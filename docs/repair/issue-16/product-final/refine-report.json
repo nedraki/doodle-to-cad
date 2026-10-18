@@ -1,0 +1,22 @@
+{
+  "run_id": "fd791b6a3705",
+  "flow": "candidate -> Refine instruction -> candidate(parent=candidate)",
+  "first": {
+    "status": 200,
+    "revision_id": "926ddf41f86346c4a6ab3617f29b7f04",
+    "parent_id": "original",
+    "detail": null
+  },
+  "refined": {
+    "status": 200,
+    "revision_id": "75cf95a5580c4fffbd48cb8dc4b76faf",
+    "parent_id": "926ddf41f86346c4a6ab3617f29b7f04",
+    "detail": null
+  },
+  "recoverable": {
+    "selected": "original",
+    "candidate_1_still_in_history": true,
+    "candidate_2_still_in_history": true
+  },
+  "browser_errors": []
+}

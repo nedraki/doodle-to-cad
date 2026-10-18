@@ -1,0 +1,193 @@
+{
+  "object": "L-shaped bracket with cutouts",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "front",
+      "sheet_region": "left",
+      "constrains": "width (X), height (Z), and the pattern of 4 rectangular cutouts"
+    },
+    {
+      "direction": "right",
+      "sheet_region": "right",
+      "constrains": "depth (Y), height (Z), and the L-shaped cross-section profile"
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "part_1",
+      "name": "L-bracket",
+      "description": "A single L-shaped structural bracket with a vertical face containing four rectangular through-holes."
+    }
+  ],
+  "features": [
+    {
+      "id": "feat_base",
+      "type": "base",
+      "description": "The L-shaped profile extruded to form the main body."
+    },
+    {
+      "id": "feat_cutout_1",
+      "type": "cutout",
+      "description": "Rectangular hole located in the upper-left quadrant of the vertical face."
+    },
+    {
+      "id": "feat_cutout_2",
+      "type": "cutout",
+      "description": "Vertical rectangular slot located in the lower-left quadrant."
+    },
+    {
+      "id": "feat_cutout_3",
+      "type": "cutout",
+      "description": "Vertical rectangular slot located in the center."
+    },
+    {
+      "id": "feat_cutout_4",
+      "type": "cutout",
+      "description": "Vertical rectangular slot located in the lower-right quadrant."
+    }
+  ],
+  "relations": [
+    {
+      "type": "contains",
+      "parent": "part_1",
+      "child": "feat_cutout_1"
+    },
+    {
+      "type": "contains",
+      "parent": "part_1",
+      "child": "feat_cutout_2"
+    },
+    {
+      "type": "contains",
+      "parent": "part_1",
+      "child": "feat_cutout_3"
+    },
+    {
+      "type": "contains",
+      "parent": "part_1",
+      "child": "feat_cutout_4"
+    }
+  ],
+  "symmetry": "none",
+  "repetitions": [
+    {
+      "feature_ids": [
+        "feat_cutout_2",
+        "feat_cutout_3",
+        "feat_cutout_4"
+      ],
+      "type": "similar",
+      "description": "Three vertical slots of similar aspect ratio, though not perfectly aligned or identical in size."
+    }
+  ],
+  "dimensions": {
+    "max_dimension": 120.0,
+    "max_width": 96.22,
+    "max_depth": 86.0,
+    "max_height": 120.0,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "Exact thickness of the vertical and horizontal legs of the L-profile is inferred from the right view stroke width.",
+    "Exact alignment of the cutouts is approximate due to hand-drawn nature."
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "The object is interpreted as a flat L-bracket. The front view shows the face with holes, and the right view shows the L-profile. The holes are treated as through-cuts in the vertical leg.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "extrude",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_2",
+        "operation": "extrude",
+        "profile_plane": "YZ",
+        "direction_axis": "X",
+        "owner": "part_1",
+        "parameters": {
+          "depth": "width_from_view_1",
+          "source_view": "view_1"
+        },
+        "source_views": [
+          "view_1",
+          "view_2"
+        ]
+      },
+      {
+        "id": "feat_cutout_1",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Rectangular hole located in the upper-left quadrant of the vertical face."
+        },
+        "source_views": []
+      },
+      {
+        "id": "feat_cutout_2",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Vertical rectangular slot located in the lower-left quadrant."
+        },
+        "source_views": []
+      },
+      {
+        "id": "feat_cutout_3",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Vertical rectangular slot located in the center."
+        },
+        "source_views": []
+      },
+      {
+        "id": "feat_cutout_4",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Vertical rectangular slot located in the lower-right quadrant."
+        },
+        "source_views": []
+      }
+    ],
+    "unresolved_constraints": [
+      "Exact wall thickness of the L-profile legs relative to the total depth."
+    ]
+  },
+  "user_intent": {
+    "description": "",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "120"
+  },
+  "source_view_group_count": 2,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

@@ -1,0 +1,30 @@
+{
+  "id": "fd791b6a3705",
+  "backend": "openscad",
+  "success": true,
+  "spec": {
+    "object": "eight-spoke wheel"
+  },
+  "model": "fixture",
+  "model_source": "seeded",
+  "fixture": {
+    "kind": "synthetic_broken_wheel",
+    "generator": "scripts/make_repair_fixture.py"
+  },
+  "evaluation": {
+    "accepted": true,
+    "score": 88,
+    "failures": []
+  },
+  "files": {
+    "scad": "/results/fd791b6a3705/model.scad",
+    "source": "/results/fd791b6a3705/model.scad",
+    "stl": "/results/fd791b6a3705/model.stl",
+    "views": {
+      "isometric": "/results/fd791b6a3705/view-isometric.png",
+      "front": "/results/fd791b6a3705/view-front.png",
+      "top": "/results/fd791b6a3705/view-top.png",
+      "right": "/results/fd791b6a3705/view-right.png"
+    }
+  }
+}

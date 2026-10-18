@@ -1,0 +1,32 @@
+Traceback (most recent call last):
+  File "<stdin>", line 3, in <module>
+  File "/tmp/doodle-brep-16/.venv/lib/python3.11/site-packages/trimesh/base.py", line 3175, in contains
+    return self.ray.contains_points(points)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/doodle-brep-16/.venv/lib/python3.11/site-packages/trimesh/ray/ray_triangle.py", line 174, in contains_points
+    return contains_points(self, points)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/doodle-brep-16/.venv/lib/python3.11/site-packages/trimesh/constants.py", line 151, in timed
+    result = method(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/doodle-brep-16/.venv/lib/python3.11/site-packages/trimesh/ray/ray_util.py", line 56, in contains_points
+    _location, index_ray, _c = intersector.intersects_location(
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/doodle-brep-16/.venv/lib/python3.11/site-packages/trimesh/ray/ray_triangle.py", line 93, in intersects_location
+    (index_tri, index_ray, locations) = self.intersects_id(
+                                        ^^^^^^^^^^^^^^^^^^^
+  File "/tmp/doodle-brep-16/.venv/lib/python3.11/site-packages/trimesh/ray/ray_triangle.py", line 59, in intersects_id
+    tree=self.mesh.triangles_tree,
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/doodle-brep-16/.venv/lib/python3.11/site-packages/trimesh/caching.py", line 133, in get_cached
+    value = function(*args, **kwargs)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/doodle-brep-16/.venv/lib/python3.11/site-packages/trimesh/base.py", line 907, in triangles_tree
+    return triangles.bounds_tree(self.triangles)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/doodle-brep-16/.venv/lib/python3.11/site-packages/trimesh/triangles.py", line 392, in bounds_tree
+    tree = util.bounds_tree(triangle_bounds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/doodle-brep-16/.venv/lib/python3.11/site-packages/trimesh/util.py", line 1896, in bounds_tree
+    import rtree
+ModuleNotFoundError: No module named 'rtree'

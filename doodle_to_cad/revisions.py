@@ -67,7 +67,8 @@ def result_for(store, revision_id):
     result['revision'] = {'id': item['id'], 'parent_id': item['parent_id'],
                           'selected_id': store['selected'],
                           'selection_version': store['selection_version'],
-                          'candidate': revision_id != store['selected']}
+                          'candidate': revision_id != store['selected'],
+                          'kind': item.get('kind', 'generation')}
     if 'parameters' in item:
         result['params'] = deepcopy(item['parameters'])
     from .feature_selection import resolve

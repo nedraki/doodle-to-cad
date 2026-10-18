@@ -1,0 +1,15 @@
+{
+  "action": "repair_scad",
+  "problems": [
+    "Mesh has 2 disconnected components (top flange is floating)",
+    "Undefined variables (v_waist_bottom, etc.) caused waist geometry to fail",
+    "Rendered projections are flat rectangles, missing the I-beam profile",
+    "Height is collapsed (~34mm) instead of ~83mm due to undefined math"
+  ],
+  "preserve": [
+    "Overall bounding box dimensions (120x120x83)",
+    "Symmetrical I-beam / bracket topology",
+    "Relative proportions of flanges vs waist"
+  ],
+  "instructions": "Rewrite the model to explicitly define all Z-levels and section heights using numeric literals to avoid undefined variable errors. Construct the object as a union of three centered boxes: bottom flange (Z=0 to ~23), waist (Z=~23 to ~60), and top flange (Z=~60 to 83). Ensure the waist connects the flanges to form a single connected component. Set waist width/depth to ~40% of the flange dimensions to match the drawing's 'I' shape."
+}

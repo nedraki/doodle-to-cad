@@ -1,0 +1,87 @@
+```openscad
+/* doodle-meta {"version":1,"parameters":{"width":{"label":"Overall width","description":"Changes the overall width of the bracket along the X-axis","unit":"mm","feature":"body_width"},"depth":{"label":"Overall depth","description":"Changes the overall depth of the bracket along the Y-axis","unit":"mm","feature":"body_depth"},"height":{"label":"Overall height","description":"Changes the overall height of the bracket along the Z-axis","unit":"mm","feature":"body_height"},"base_thickness":{"label":"Base thickness","description":"Changes the thickness of the horizontal base plate","unit":"mm","feature":"base_thickness"},"wall_thickness":{"label":"Wall thickness","description":"Changes the thickness of the vertical back wall","unit":"mm","feature":"wall_thickness"},"rib_thickness":{"label":"Rib thickness","description":"Changes the thickness of the angled support rib","unit":"mm","feature":"rib_thickness"},"hole_diameter":{"label":"Hole diameter","description":"Changes the diameter of the mounting holes","unit":"mm","feature":"holes"}},"features":{"body_width":{"kind":"dimension","axis":"x","label":"Overall width"},"body_depth":{"kind":"dimension","axis":"y","label":"Overall depth"},"body_height":{"kind":"dimension","axis":"z","label":"Overall height"},"base_thickness":{"kind":"region","label":"Base plate","min":[0,0,0],"max":[{"parameter":"width"},{"parameter":"depth"},{"parameter":"base_thickness"}]},"wall_thickness":{"kind":"region","label":"Vertical wall","min":[{"parameter":"width","scale":0.8,"offset":0},0,0],"max":[{"parameter":"width"},{"parameter":"depth"},{"parameter":"height"}]},"rib_thickness":{"kind":"region","label":"Support rib","min":[{"parameter":"width","scale":0.5},{"parameter":"depth","scale":0.4},{"parameter":"base_thickness"}],"max":[{"parameter":"width","scale":0.8},{"parameter":"depth","scale":0.6},{"parameter":"height","scale":0.8}]},"holes":{"kind":"region","label":"Mounting holes","min":[{"parameter":"width","scale":0.1},{"parameter":"depth","scale":0.1},0],"max":[{"parameter":"width","scale":0.9},{"parameter":"depth","scale":0.9},{"parameter":"height"}]}}} */
+
+// Overall dimensions
+width = 111.08963432995365;
+depth = 119.99960500130018;
+height = 54.989818991845816;
+
+// Component thicknesses
+base_thickness = 9.999967083441684;
+wall_thickness = 9.999967083441684;
+rib_thickness = 9.999967083441684;
+
+// Hole parameters
+hole_diameter = 9.999967083441684;
+
+// Derived positions
+wall_x_start = width - wall_thickness;
+rib_x_start = wall_x_start - rib_thickness;
+rib_top_z = height - base_thickness;
+
+// Hole positions (derived from view measurements)
+// Top view mapping: X = u * width, Y = (1-v) * depth
+// Hole 1 (Base): u=0.137, v=0.75 -> X=9.5, Y=18.7
+// Hole 2 (Wall): u=0.849, v=0.122 -> X=58.9, Y=65.8
+hole1_x = 0.137 * width;
+hole1_y = (1 - 0.75) * depth;
+hole2_x = 0.849 * width;
+hole2_y = (1 - 0.122) * depth;
+hole2_z = height / 2; // Centered vertically in the wall
+
+// Epsilon for clean cuts
+eps = 0.01;
+
+module base_plate() {
+    cube([width, depth, base_thickness]);
+}
+
+module vertical_wall() {
+    translate([wall_x_start, 0, 0])
+        cube([wall_thickness, depth, height]);
+}
+
+module support_rib() {
+    // Triangular rib connecting wall to base
+    // Vertices in XZ plane (extruded along Y)
+    // (rib_x_start, base_thickness) -> (wall_x_start, base_thickness) -> (wall_x_start, rib_top_z)
+    polygon([
+        [rib_x_start, base_thickness],
+        [wall_x_start, base_thickness],
+        [wall_x_start, rib_top_z]
+    ]);
+}
+
+module rib_extrusion() {
+    linear_extrude(height = rib_thickness)
+        support_rib();
+}
+
+module hole_base() {
+    // Hole through base plate (axis along Z)
+    translate([hole1_x, hole1_y, -eps])
+        cylinder(h = base_thickness + 2*eps, d = hole_diameter, center = false);
+}
+
+module hole_wall() {
+    // Hole through vertical wall (axis along X)
+    // Wall is at x = wall_x_start .. width
+    // Cylinder axis along X, centered at hole2_y, hole2_z
+    translate([wall_x_start - eps, hole2_y, hole2_z])
+        rotate([0, 90, 0])
+            cylinder(h = wall_thickness + 2*eps, d = hole_diameter, center = false);
+}
+
+// Main assembly
+difference() {
+    union() {
+        base_plate();
+        vertical_wall();
+        // Rib is centered in Y
+        translate([0, (depth - rib_thickness)/2, 0])
+            rib_extrusion();
+    }
+    hole_base();
+    hole_wall();
+}
+```

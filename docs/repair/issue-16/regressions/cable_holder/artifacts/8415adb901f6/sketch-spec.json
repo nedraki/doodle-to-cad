@@ -1,0 +1,181 @@
+{
+  "object": "Flat bracket or mounting plate with a central hole and a row of mounting slots",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "front",
+      "sheet_region": "bottom-left",
+      "constrains": "Overall height (Z) and width (X). Shows the object as a thin vertical rectangle."
+    },
+    {
+      "direction": "top",
+      "sheet_region": "top-center",
+      "constrains": "Overall width (X) and depth (Y). Shows the complex profile including the central circular hole and the wavy/scalloped edges at the top and bottom."
+    },
+    {
+      "direction": "right",
+      "sheet_region": "bottom-right",
+      "constrains": "Overall depth (Y) and height (Z). Shows the row of 5 rectangular slots running vertically."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "main_body",
+      "name": "Main Plate",
+      "material": "plastic",
+      "description": "A flat, rectangular plate with a specific width, height, and thickness."
+    }
+  ],
+  "features": [
+    {
+      "id": "central_hole",
+      "type": "hole",
+      "owner": "main_body",
+      "description": "A circular through-hole located centrally in the width and depth, positioned near the top (visible in top view).",
+      "source_views": [
+        "top"
+      ]
+    },
+    {
+      "id": "slot_row",
+      "type": "slot_array",
+      "owner": "main_body",
+      "description": "A vertical row of 5 rectangular slots (or holes) running down the center of the object's height.",
+      "source_views": [
+        "right"
+      ]
+    },
+    {
+      "id": "top_edge_profile",
+      "type": "edge_feature",
+      "owner": "main_body",
+      "description": "The top edge has a concave (inward) curve or notch.",
+      "source_views": [
+        "top"
+      ]
+    },
+    {
+      "id": "bottom_edge_profile",
+      "type": "edge_feature",
+      "owner": "main_body",
+      "description": "The bottom edge has a wavy or scalloped profile.",
+      "source_views": [
+        "top"
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "type": "through",
+      "subject": "central_hole",
+      "object": "main_body"
+    },
+    {
+      "type": "through",
+      "subject": "slot_row",
+      "object": "main_body"
+    }
+  ],
+  "symmetry": {
+    "type": "none",
+    "axis": null
+  },
+  "repetitions": [
+    {
+      "feature_id": "slot_row",
+      "count": 5,
+      "pattern": "linear_vertical",
+      "spacing": "evenly distributed along the height"
+    }
+  ],
+  "dimensions": {
+    "max_width": 36.25,
+    "max_depth": 58.28,
+    "max_height": 120.0,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "The exact thickness of the plate is not explicitly dimensioned but is inferred from the narrow width of the front view.",
+    "The exact shape of the 'wavy' bottom edge in the top view is interpreted as a decorative or functional scallop.",
+    "The slots in the right view are interpreted as through-cuts based on the 'flat plate' nature of the object."
+  ],
+  "interpretation_conflicts": [
+    "The right view shows slots, while the top view shows a central hole. These are distinct features at different locations along the height (Z-axis). The top view corresponds to the top section of the object (containing the hole), while the right view shows the full height including the slots below."
+  ],
+  "generation_notes": "The object is a flat plate. The construction starts with the profile defined in the Top View (XY plane) and extrudes it along the Z-axis (Height) to match the Front and Right views. The slots seen in the Right view are cut through the thickness (Y-axis) of the plate.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "extrude",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op2",
+        "operation": "extrude",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "owner": "main_body",
+        "parameters": {
+          "depth": "max_dimension",
+          "description": "Extrude the profile to the full height of the object."
+        },
+        "source_views": [
+          "front",
+          "right"
+        ]
+      },
+      {
+        "id": "central_hole",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "A circular through-hole located centrally in the width and depth, positioned near the top (visible in top view)."
+        },
+        "source_views": []
+      },
+      {
+        "id": "slot_row",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "A vertical row of 5 rectangular slots (or holes) running down the center of the object's height."
+        },
+        "source_views": []
+      }
+    ],
+    "unresolved_constraints": [
+      "Exact thickness value.",
+      "Exact dimensions of the slots relative to the plate width."
+    ]
+  },
+  "user_intent": {
+    "description": "",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "120"
+  },
+  "source_view_group_count": 3,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

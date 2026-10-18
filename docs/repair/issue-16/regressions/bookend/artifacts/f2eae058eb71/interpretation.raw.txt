@@ -1,0 +1,209 @@
+```json
+{
+  "object": "L-shaped bracket with cutouts",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "front",
+      "sheet_region": "left",
+      "constrains": "width (X), height (Z), and the pattern of 4 rectangular cutouts"
+    },
+    {
+      "direction": "right",
+      "sheet_region": "right",
+      "constrains": "depth (Y), height (Z), and the L-shaped cross-section profile"
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "part_1",
+      "name": "L-bracket",
+      "description": "A single L-shaped structural bracket with a vertical face containing four rectangular through-holes."
+    }
+  ],
+  "features": [
+    {
+      "id": "feat_base",
+      "type": "base",
+      "description": "The L-shaped profile extruded to form the main body."
+    },
+    {
+      "id": "feat_cutout_1",
+      "type": "cutout",
+      "description": "Rectangular hole located in the upper-left quadrant of the vertical face."
+    },
+    {
+      "id": "feat_cutout_2",
+      "type": "cutout",
+      "description": "Vertical rectangular slot located in the lower-left quadrant."
+    },
+    {
+      "id": "feat_cutout_3",
+      "type": "cutout",
+      "description": "Vertical rectangular slot located in the center."
+    },
+    {
+      "id": "feat_cutout_4",
+      "type": "cutout",
+      "description": "Vertical rectangular slot located in the lower-right quadrant."
+    }
+  ],
+  "relations": [
+    {
+      "type": "contains",
+      "parent": "part_1",
+      "child": "feat_cutout_1"
+    },
+    {
+      "type": "contains",
+      "parent": "part_1",
+      "child": "feat_cutout_2"
+    },
+    {
+      "type": "contains",
+      "parent": "part_1",
+      "child": "feat_cutout_3"
+    },
+    {
+      "type": "contains",
+      "parent": "part_1",
+      "child": "feat_cutout_4"
+    }
+  ],
+  "symmetry": "none",
+  "repetitions": [
+    {
+      "feature_ids": [
+        "feat_cutout_2",
+        "feat_cutout_3",
+        "feat_cutout_4"
+      ],
+      "type": "similar",
+      "description": "Three vertical slots of similar aspect ratio, though not perfectly aligned or identical in size."
+    }
+  ],
+  "dimensions": [
+    {
+      "feature_id": "part_1",
+      "dimension_type": "max_dimension",
+      "value": 120,
+      "unit": "mm",
+      "source": "user_input"
+    }
+  ],
+  "uncertainties": [
+    "Exact thickness of the vertical and horizontal legs of the L-profile is inferred from the right view stroke width.",
+    "Exact alignment of the cutouts is approximate due to hand-drawn nature."
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "The object is interpreted as a flat L-bracket. The front view shows the face with holes, and the right view shows the L-profile. The holes are treated as through-cuts in the vertical leg.",
+  "construction_plan": {
+    "family": "extrude",
+    "operations": [
+      {
+        "id": "op_1",
+        "operation": "create_profile",
+        "owner": "part_1",
+        "profile_plane": "YZ",
+        "direction_axis": "X",
+        "parameters": {
+          "source_view": "view_2",
+          "profile_type": "L_shape",
+          "points": [
+            [0.0375, 0.0153],
+            [0.0718, 0.9715],
+            [0.9686, 0.9891],
+            [0.9406, 0.9276],
+            [0.1687, 0.9013],
+            [0.1532, 0.0439]
+          ]
+        },
+        "source_views": [
+          "view_2"
+        ]
+      },
+      {
+        "id": "op_2",
+        "operation": "extrude",
+        "owner": "part_1",
+        "profile_plane": "YZ",
+        "direction_axis": "X",
+        "parameters": {
+          "depth": "width_from_view_1",
+          "source_view": "view_1"
+        },
+        "source_views": [
+          "view_1",
+          "view_2"
+        ]
+      },
+      {
+        "id": "op_3",
+        "operation": "subtract",
+        "owner": "part_1",
+        "profile_plane": "XZ",
+        "direction_axis": "Y",
+        "parameters": {
+          "tool_type": "prism",
+          "tool_profile": "contour_8",
+          "source_view": "view_1"
+        },
+        "source_views": [
+          "view_1"
+        ]
+      },
+      {
+        "id": "op_4",
+        "operation": "subtract",
+        "owner": "part_1",
+        "profile_plane": "XZ",
+        "direction_axis": "Y",
+        "parameters": {
+          "tool_type": "prism",
+          "tool_profile": "contour_6",
+          "source_view": "view_1"
+        },
+        "source_views": [
+          "view_1"
+        ]
+      },
+      {
+        "id": "op_5",
+        "operation": "subtract",
+        "owner": "part_1",
+        "profile_plane": "XZ",
+        "direction_axis": "Y",
+        "parameters": {
+          "tool_type": "prism",
+          "tool_profile": "contour_4",
+          "source_view": "view_1"
+        },
+        "source_views": [
+          "view_1"
+        ]
+      },
+      {
+        "id": "op_6",
+        "operation": "subtract",
+        "owner": "part_1",
+        "profile_plane": "XZ",
+        "direction_axis": "Y",
+        "parameters": {
+          "tool_type": "prism",
+          "tool_profile": "contour_2",
+          "source_view": "view_1"
+        },
+        "source_views": [
+          "view_1"
+        ]
+      }
+    ],
+    "unresolved_constraints": [
+      "Exact wall thickness of the L-profile legs relative to the total depth."
+    ]
+  }
+}
+```

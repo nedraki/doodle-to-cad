@@ -1,0 +1,206 @@
+{
+  "attempt": 3,
+  "action": "repair_scad",
+  "preflight": {
+    "passed": true,
+    "errors": [],
+    "warnings": [],
+    "expected_subtractive_feature_groups": 2
+  },
+  "compiler_repairs": [
+    {
+      "repair": 1,
+      "preflight": {
+        "passed": true,
+        "errors": [],
+        "warnings": [],
+        "expected_subtractive_feature_groups": 2
+      },
+      "compile_log": "ERROR: Parser error: syntax error in file model.scad, line 1\nCan't parse file '/work/model.scad'!",
+      "failed_scad": "compiler-repair-01.failed.scad"
+    }
+  ],
+  "uniform_scale": null,
+  "evaluation": {
+    "score": 63.2,
+    "valid_mesh": false,
+    "accepted": false,
+    "mandatory_gates": {
+      "compiled": true,
+      "topology": false,
+      "dimensions": true,
+      "shape_sanity": true,
+      "features": false,
+      "projections": false,
+      "build_envelope": true
+    },
+    "scores": {
+      "topology": 23,
+      "dimensions": 20.0,
+      "features": 12.0,
+      "projections": 8.2
+    },
+    "projection_similarity": {
+      "front": 0.946,
+      "top": 0.35,
+      "right": 0.35
+    },
+    "profile_topology": {
+      "front": {
+        "source_internal_profiles": 0,
+        "rendered_internal_profiles": 3,
+        "crop_internal_profiles": 0,
+        "source_aspect": 0.302,
+        "rendered_aspect": 0.3,
+        "source_opening_centroids": [],
+        "rendered_opening_centroids": [
+          [
+            0.488,
+            0.526
+          ],
+          [
+            0.301,
+            0.839
+          ],
+          [
+            0.301,
+            0.167
+          ]
+        ]
+      },
+      "top": {
+        "source_internal_profiles": 1,
+        "rendered_internal_profiles": 0,
+        "crop_internal_profiles": 1,
+        "source_aspect": 0.627,
+        "rendered_aspect": 0.616,
+        "source_opening_centroids": [
+          [
+            0.492,
+            0.557
+          ]
+        ],
+        "rendered_opening_centroids": [],
+        "missing_opening_centroids": [
+          [
+            0.492,
+            0.557
+          ]
+        ],
+        "feature_position_fidelity": 0.0
+      },
+      "right": {
+        "source_internal_profiles": 5,
+        "rendered_internal_profiles": 0,
+        "crop_internal_profiles": 5,
+        "source_aspect": 0.489,
+        "rendered_aspect": 0.487,
+        "source_opening_centroids": [
+          [
+            0.307,
+            0.831
+          ],
+          [
+            0.576,
+            0.68
+          ],
+          [
+            0.31,
+            0.507
+          ],
+          [
+            0.579,
+            0.335
+          ],
+          [
+            0.307,
+            0.159
+          ]
+        ],
+        "rendered_opening_centroids": [],
+        "missing_opening_centroids": [
+          [
+            0.307,
+            0.831
+          ],
+          [
+            0.576,
+            0.68
+          ],
+          [
+            0.31,
+            0.507
+          ],
+          [
+            0.579,
+            0.335
+          ],
+          [
+            0.307,
+            0.159
+          ]
+        ],
+        "feature_position_fidelity": 0.0
+      }
+    },
+    "failures": [
+      "mesh is not watertight",
+      "required internal profiles are missing: right view demands 5, best rendered view has 3. Missing at these view-local centres \u2014 add cutters there: (u=0.307,v=0.831); (u=0.576,v=0.68); (u=0.31,v=0.507); (u=0.579,v=0.335); (u=0.307,v=0.159).",
+      "CAD projections poorly match the drawing: right similarity 0.35, top similarity 0.35 (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly.",
+      "features exist but sit at the wrong positions in top, right view(s): match each opening's location (u,v within the outer profile) to the drawing; check the cad_mapping signs (front: u->+X v->-Z; top: u->+X v->-Y i.e. sheet-down is the FRONT of the part)"
+    ]
+  },
+  "mesh_health": {
+    "watertight": false,
+    "components": 1,
+    "triangles": 404,
+    "extents_mm": [
+      36.25,
+      58.28,
+      120.0
+    ],
+    "volume_mm3": 226031.018
+  },
+  "build": {
+    "version": 1,
+    "backend": "openscad",
+    "source_format": "openscad",
+    "ok": true,
+    "units": "mm",
+    "axes": {
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    },
+    "views": [
+      "isometric",
+      "front",
+      "top",
+      "right"
+    ],
+    "measurements": {
+      "watertight": false,
+      "components": 1,
+      "triangles": 404,
+      "extents_mm": [
+        36.25,
+        58.28,
+        120.0
+      ],
+      "volume_mm3": 226031.018
+    },
+    "diagnostics": [],
+    "drawing_evaluated": false
+  },
+  "compile_log": "Geometries in cache: 20\nGeometry cache size in bytes: 27952\nCGAL Polyhedrons in cache: 3\nCGAL cache size in bytes: 497968\nTotal rendering time: 0:00:00.286\n   Top level object is a 3D object:\n   Simple:         no\n   Vertices:      198\n   Halfedges:     614\n   Edges:         307\n   Halffacets:    230\n   Facets:        115\n   Volumes:         2\nWARNING: Object may not be a valid 2-manifold and may need repair!\nEXPORT-WARNING: Exported object may not be a valid 2-manifold and may need repair",
+  "files": {
+    "scad": "attempt-03/model.scad",
+    "stl": "attempt-03/model.stl",
+    "views": {
+      "isometric": "attempt-03/view-isometric.png",
+      "front": "attempt-03/view-front.png",
+      "top": "attempt-03/view-top.png",
+      "right": "attempt-03/view-right.png"
+    }
+  }
+}

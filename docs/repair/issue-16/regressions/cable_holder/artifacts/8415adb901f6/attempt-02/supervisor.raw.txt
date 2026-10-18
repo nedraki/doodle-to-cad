@@ -1,0 +1,15 @@
+{
+  "action": "repair_scad",
+  "problems": [
+    "Mesh has 7 disconnected components (scallops cut through the entire height, separating the bottom edge).",
+    "Right view shows only 1 slot instead of 5; slots are likely misaligned or hidden by the solid body.",
+    "Top view shows a horizontal slot (from the right-view feature) instead of the central circular hole.",
+    "Scalloped bottom edge cuts through the full height (Z), creating vertical fins instead of a 2D profile feature."
+  ],
+  "preserve": [
+    "Overall dimensions (36.25 x 58.28 x 120.0).",
+    "General concept of a flat plate with edge features.",
+    "Slot count (5) and alternating X-offsets."
+  ],
+  "instructions": "Fix the scallop cutters to only affect the bottom edge (limit Z height) to prevent mesh fragmentation. Correct the slot cutters to be through-holes along the Y-axis (depth) and ensure they are positioned correctly to appear in the Right view. Ensure the central hole is a cylinder along the Z-axis (height) to appear in the Top view. Verify the notch is a 2D profile cut on the top edge."
+}

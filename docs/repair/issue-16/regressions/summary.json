@@ -1,0 +1,459 @@
+{
+  "wheel": {
+    "job": "7c7c133de6b2",
+    "status": "done",
+    "question_requested": false,
+    "error": null,
+    "evaluation": {
+      "score": 82.0,
+      "valid_mesh": false,
+      "accepted": false,
+      "mandatory_gates": {
+        "compiled": true,
+        "topology": false,
+        "dimensions": true,
+        "shape_sanity": false,
+        "features": true,
+        "projections": true,
+        "build_envelope": true
+      },
+      "scores": {
+        "topology": 27,
+        "dimensions": 20.0,
+        "features": 20,
+        "projections": 15.0
+      },
+      "projection_similarity": {
+        "front": 0.997
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 12,
+          "crop_internal_profiles": 0,
+          "source_aspect": 3.45,
+          "rendered_aspect": 12.467,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": [
+            [
+              0.85,
+              0.468
+            ],
+            [
+              0.796,
+              0.468
+            ],
+            [
+              0.754,
+              0.468
+            ],
+            [
+              0.711,
+              0.468
+            ],
+            [
+              0.666,
+              0.468
+            ],
+            [
+              0.618,
+              0.468
+            ],
+            [
+              0.57,
+              0.468
+            ],
+            [
+              0.521,
+              0.468
+            ],
+            [
+              0.473,
+              0.468
+            ],
+            [
+              0.425,
+              0.468
+            ],
+            [
+              0.377,
+              0.468
+            ],
+            [
+              0.186,
+              0.469
+            ]
+          ]
+        }
+      },
+      "failures": [
+        "mesh has 2 disconnected components",
+        "degenerate or implausible axis dimensions: X=120 mm vs expected 27.8 mm"
+      ]
+    }
+  },
+  "bookend": {
+    "job": "f2eae058eb71",
+    "status": "done",
+    "question_requested": false,
+    "error": null,
+    "evaluation": {
+      "score": 94.9,
+      "valid_mesh": true,
+      "accepted": false,
+      "mandatory_gates": {
+        "compiled": true,
+        "topology": true,
+        "dimensions": true,
+        "shape_sanity": true,
+        "features": true,
+        "projections": false,
+        "build_envelope": true
+      },
+      "scores": {
+        "topology": 45,
+        "dimensions": 20.0,
+        "features": 20.0,
+        "projections": 9.9
+      },
+      "projection_similarity": {
+        "front": 0.899,
+        "right": 0.422
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 4,
+          "rendered_internal_profiles": 4,
+          "crop_internal_profiles": 4,
+          "source_aspect": 0.822,
+          "rendered_aspect": 0.806,
+          "source_opening_centroids": [
+            [
+              0.755,
+              0.614
+            ],
+            [
+              0.316,
+              0.612
+            ],
+            [
+              0.535,
+              0.421
+            ],
+            [
+              0.257,
+              0.191
+            ]
+          ],
+          "rendered_opening_centroids": [
+            [
+              0.271,
+              0.194
+            ],
+            [
+              0.533,
+              0.425
+            ],
+            [
+              0.326,
+              0.607
+            ],
+            [
+              0.745,
+              0.607
+            ]
+          ],
+          "feature_position_fidelity": 1.0
+        },
+        "right": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 0,
+          "source_aspect": 0.702,
+          "rendered_aspect": 0.717,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": []
+        }
+      },
+      "failures": [
+        "CAD projections poorly match the drawing: right similarity 0.42 (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly."
+      ]
+    }
+  },
+  "knob": {
+    "job": "10b6d7f76ca1",
+    "status": "done",
+    "question_requested": false,
+    "error": null,
+    "evaluation": {
+      "score": 99.0,
+      "valid_mesh": true,
+      "accepted": true,
+      "mandatory_gates": {
+        "compiled": true,
+        "topology": true,
+        "dimensions": true,
+        "shape_sanity": true,
+        "features": true,
+        "projections": true,
+        "build_envelope": true
+      },
+      "scores": {
+        "topology": 45,
+        "dimensions": 20.0,
+        "features": 20,
+        "projections": 14.0
+      },
+      "projection_similarity": {
+        "front": 0.908,
+        "right": 0.959
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 0,
+          "source_aspect": 1.432,
+          "rendered_aspect": 1.361,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": []
+        },
+        "right": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 0,
+          "source_aspect": 1.463,
+          "rendered_aspect": 1.361,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": []
+        }
+      },
+      "failures": []
+    }
+  },
+  "cable_holder": {
+    "job": "8415adb901f6",
+    "status": "done",
+    "question_requested": false,
+    "error": null,
+    "evaluation": {
+      "score": 87.8,
+      "valid_mesh": true,
+      "accepted": false,
+      "mandatory_gates": {
+        "compiled": true,
+        "topology": true,
+        "dimensions": true,
+        "shape_sanity": true,
+        "features": false,
+        "projections": true,
+        "build_envelope": true
+      },
+      "scores": {
+        "topology": 45,
+        "dimensions": 20.0,
+        "features": 12.0,
+        "projections": 10.8
+      },
+      "projection_similarity": {
+        "front": 1.0,
+        "top": 0.681,
+        "right": 0.48
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 0,
+          "source_aspect": 0.302,
+          "rendered_aspect": 0.3,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": []
+        },
+        "top": {
+          "source_internal_profiles": 1,
+          "rendered_internal_profiles": 3,
+          "crop_internal_profiles": 1,
+          "source_aspect": 0.627,
+          "rendered_aspect": 0.616,
+          "source_opening_centroids": [
+            [
+              0.492,
+              0.557
+            ]
+          ],
+          "rendered_opening_centroids": [
+            [
+              0.493,
+              0.782
+            ],
+            [
+              0.493,
+              0.496
+            ],
+            [
+              0.493,
+              0.209
+            ]
+          ],
+          "feature_position_fidelity": 1.0
+        },
+        "right": {
+          "source_internal_profiles": 5,
+          "rendered_internal_profiles": 3,
+          "crop_internal_profiles": 5,
+          "source_aspect": 0.489,
+          "rendered_aspect": 0.487,
+          "source_opening_centroids": [
+            [
+              0.307,
+              0.831
+            ],
+            [
+              0.576,
+              0.68
+            ],
+            [
+              0.31,
+              0.507
+            ],
+            [
+              0.579,
+              0.335
+            ],
+            [
+              0.307,
+              0.159
+            ]
+          ],
+          "rendered_opening_centroids": [
+            [
+              0.498,
+              0.099
+            ],
+            [
+              0.498,
+              0.224
+            ],
+            [
+              0.498,
+              0.349
+            ]
+          ],
+          "missing_opening_centroids": [
+            [
+              0.307,
+              0.159
+            ],
+            [
+              0.31,
+              0.507
+            ],
+            [
+              0.576,
+              0.68
+            ],
+            [
+              0.307,
+              0.831
+            ]
+          ],
+          "feature_position_fidelity": 0.2
+        }
+      },
+      "failures": [
+        "required internal profiles are missing: right view demands 5, best rendered view has 3. Missing at these view-local centres \u2014 add cutters there: (u=0.307,v=0.159); (u=0.31,v=0.507); (u=0.576,v=0.68); (u=0.307,v=0.831).",
+        "features exist but sit at the wrong positions in right view(s): match each opening's location (u,v within the outer profile) to the drawing; check the cad_mapping signs (front: u->+X v->-Z; top: u->+X v->-Y i.e. sheet-down is the FRONT of the part)"
+      ]
+    }
+  },
+  "random_103_y_motor_holder": {
+    "job": "709abcf90618",
+    "status": "done",
+    "question_requested": false,
+    "error": null,
+    "evaluation": {
+      "score": 85.8,
+      "valid_mesh": true,
+      "accepted": false,
+      "mandatory_gates": {
+        "compiled": true,
+        "topology": true,
+        "dimensions": true,
+        "shape_sanity": true,
+        "features": false,
+        "projections": true,
+        "build_envelope": true
+      },
+      "scores": {
+        "topology": 45,
+        "dimensions": 20.0,
+        "features": 10.0,
+        "projections": 10.8
+      },
+      "projection_similarity": {
+        "front": 0.749,
+        "top": 0.618,
+        "right": 0.798
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 0,
+          "source_aspect": 2.008,
+          "rendered_aspect": 2.036,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": []
+        },
+        "top": {
+          "source_internal_profiles": 2,
+          "rendered_internal_profiles": 1,
+          "crop_internal_profiles": 2,
+          "source_aspect": 0.896,
+          "rendered_aspect": 0.929,
+          "source_opening_centroids": [
+            [
+              0.137,
+              0.75
+            ],
+            [
+              0.849,
+              0.122
+            ]
+          ],
+          "rendered_opening_centroids": [
+            [
+              0.136,
+              0.749
+            ]
+          ],
+          "missing_opening_centroids": [
+            [
+              0.849,
+              0.122
+            ]
+          ],
+          "feature_position_fidelity": 0.5
+        },
+        "right": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 1,
+          "crop_internal_profiles": 0,
+          "source_aspect": 2.096,
+          "rendered_aspect": 2.19,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": [
+            [
+              0.877,
+              0.497
+            ]
+          ]
+        }
+      },
+      "failures": [
+        "required internal profiles are missing: top view demands 2, best rendered view has 1. Missing at these view-local centres \u2014 add cutters there: (u=0.849,v=0.122)."
+      ]
+    }
+  }
+}

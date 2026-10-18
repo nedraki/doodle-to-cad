@@ -97,9 +97,16 @@ function initializeResultVersion(run){
     resultVersion.original={badge:$('#statusBadge').textContent,title:$('#resultTitle').textContent,text:$('#resultText').textContent};
   }
   $('#originalStl').href=(run.original_files||run.files).stl||'#';$('#originalStl').hidden=!(run.original_files||run.files).stl;
-  syncRevisionControls();
+  renderRepairSummary(run);
   syncGeometrySelection();
   setResultEditState('original');
+  if(run.backend==='openscad'&&run.repair){
+    if(run.revision?.candidate){resultVersion.edited=true;
+      $('#statusBadge').textContent='Repair preview · not kept';$('#resultTitle').textContent='TARGETED REPAIR PREVIEW — NOT KEPT';
+      $('#resultText').textContent='Targeted candidate built from the displayed version. Keep makes it current; Discard returns to the pre-repair version; Refine runs again from this candidate.';}
+    else{$('#statusBadge').textContent='Repair kept · measured checks below';$('#resultTitle').textContent='TARGETED REPAIR KEPT';}
+  }
+  syncRevisionControls();
 }
 function setResultEditState(phase){
   if(!resultVersion)return;
@@ -274,7 +281,8 @@ async function runParamCompile(){
     let url=run.files.stl,scad=run.files.source||run.files.scad,usd=run.files.usd,params=state.originalParams;
     if(changed.length){
       const controller=new AbortController();paramAbort=controller;
-      const response=await fetch(`/api/results/${state.runId}/parametrize`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.fromEntries(changed)),signal:controller.signal});
+      const revisionQuery=state.revisionId&&state.revisionId!=='original'?`?revision_id=${encodeURIComponent(state.revisionId)}`:'';
+      const response=await fetch(`/api/results/${state.runId}/parametrize${revisionQuery}`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.fromEntries(changed)),signal:controller.signal});
       const res=await response.json().catch(()=>({}));
       if(!isCurrent())return;
       if(!response.ok||!res.ok||!res.stl||!(res.source||res.scad))throw Error(res?.detail?.message||res.message||`Compile failed (HTTP ${response.status})`);
@@ -306,10 +314,14 @@ $('#paramReset')?.addEventListener('click',()=>{
 let revisionBusy=false;
 function syncRevisionControls(){
   for(const id of ['selectionMode','selectionTarget','clearSelection'])$('#'+id).disabled=revisionBusy||geometrySelectionBusy;
-  $('#modify').disabled=geometrySelectionBusy;
-  const candidate=currentRun?.backend==='usd-brep'&&currentRun.revision?.candidate;
+  const candidate=!!currentRun?.revision?.candidate,isRepair=candidate&&currentRun?.backend==='openscad'&&!!currentRun.repair;
+  $('#modify').disabled=geometrySelectionBusy||(currentRun?.backend==='openscad'&&candidate);
+  $('#keepRevision').textContent=isRepair?'Keep repair':'Keep this edit';
+  $('#discardRevision').textContent=isRepair?'Discard repair':'Discard preview';
   for(const id of ['keepRevision','discardRevision']){const b=$('#'+id);b.hidden=!candidate;b.disabled=revisionBusy}
-  $('#revisionStatus').textContent=currentRun?.backend==='usd-brep'?(revisionBusy?'Updating preview…':candidate?'Preview — not kept':currentRun.revision?.id&&currentRun.revision.id!=='original'?'Saved edit':''):'';
+  $('#refineRepair').hidden=!isRepair;$('#refineRepair').disabled=revisionBusy;
+  $('#fixPart').hidden=candidate||geometrySelectionBusy;$('#fixPart').disabled=revisionBusy;
+  $('#revisionStatus').textContent=isRepair?(revisionBusy?'Building repair candidate…':'Repair preview — keep or discard it.'):currentRun?.backend==='usd-brep'?(revisionBusy?'Updating preview…':candidate?'Preview — not kept':currentRun.revision?.id&&currentRun.revision.id!=='original'?'Saved edit':''):'';
 }
 async function runRevisionPreview(){
   const epoch=paramRevision,state=paramState,run=currentRun;
@@ -343,6 +355,57 @@ async function restoreSavedRevision(){
   finally{if(epoch===paramRevision){revisionBusy=false;syncRevisionControls()}}
 }
 $('#discardRevision').onclick=restoreSavedRevision;
+
+/* ---- targeted repair: "this part is close — change only what I describe" ---- */
+let repairEpoch=0;
+const repairIcons={passed:'✓',failed:'✗',improved:'▲',regressed:'▼',unchanged:'＝',reported:'✎',measured:'▪',unverified:'?'};
+function repairSummaryHtml(run){
+  const rep=run.repair||{};
+  const checks=(rep.checks||[]).map(c=>{
+    let delta='';
+    if('before' in c&&'after' in c&&c.before!==undefined&&c.after!==undefined)delta=` ${JSON.stringify(c.before)}→${JSON.stringify(c.after)}`;
+    const drift=(c.drift||[]).map(d=>`${d.axis}${JSON.stringify(d.before)}→${JSON.stringify(d.after)}`).join(' ');
+    return `<li><b>${repairIcons[c.status]||'·'} ${escapeHtml(c.name)}</b>${escapeHtml(delta)}${drift?` <small>drift ${escapeHtml(drift)}</small>`:''}${c.changed&&c.changed.length?` <small>changed: ${escapeHtml(c.changed.join(', '))}</small>`:''}</li>`}).join('');
+  const interp=rep.interpretation
+    ?`<p><b>Model interpretation:</b> ${escapeHtml(rep.interpretation.requested_change||'')}${(rep.interpretation.preserve||[]).length?` — <b>intended unchanged:</b> ${escapeHtml(rep.interpretation.preserve.join(', '))}`:''}</p>`
+    :(rep.interpretation_failure?'<p><b>Model interpretation unavailable</b> — deterministic checks below are still measured.</p>':'');
+  return `<b class="repair-title">TARGETED REPAIR ${run.revision?.candidate?'PREVIEW — NOT KEPT':'KEPT'}</b><p><b>Your correction:</b> ${escapeHtml(rep.instruction||'')}</p>${interp}<p><b>Started from:</b> ${escapeHtml(rep.started_from||'?')} · generation score not carried over (drawing checks not rerun)</p><ul class="repair-checks">${checks}</ul><p class="repair-note">Measured: compile, watertightness, connected components, extents, editable parameters (documented tolerances). The requested correction itself needs visual inspection above.</p>`;
+}
+function renderRepairSummary(run){
+  const el=$('#repairSummary');
+  if(run&&run.backend==='openscad'&&run.repair){el.innerHTML=repairSummaryHtml(run);el.hidden=false}
+  else{el.hidden=true;el.innerHTML=''}
+}
+function openRepairDialog(){
+  if(!currentRun)return;
+  const shown=currentRun.revision?.candidate?'the displayed repair candidate':currentRun.revision?.id&&currentRun.revision.id!=='original'?'a kept revision':'the accepted generation';
+  $('#repairBaseline').textContent=`The repair candidate starts from the version you see now (${shown}${currentRun.files&&(currentRun.files.source||currentRun.files.scad)&&!/(\/|\b)model\.scad(\?|$)/.test(currentRun.files.source||currentRun.files.scad)?', including applied parameter edits':''}).`;
+  $('#repairError').hidden=true;$('#repairDialog').showModal();$('#repairInstruction').focus();
+}
+$('#fixPart').onclick=openRepairDialog;
+$('#refineRepair').onclick=openRepairDialog;
+document.querySelectorAll('.close-repair').forEach(b=>b.onclick=()=>$('#repairDialog').close());
+$('#repairGenerate').onclick=async()=>{
+  const run=currentRun,button=$('#repairGenerate');if(!run||button.disabled)return;
+  const instruction=$('#repairInstruction').value.trim();
+  if(!instruction){$('#repairError').hidden=false;$('#repairError').textContent='Describe the correction first.';return}
+  invalidateParamCompile();const epoch=++repairEpoch;button.disabled=true;$('#repairError').hidden=true;
+  try{
+    const response=await fetch(`/api/results/${run.id}/revisions/repair`,{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({parent_id:run.revision?.id||'original',selection_version:run.revision?.selection_version??0,instruction,
+        displayed:{source:run.files.source||run.files.scad,stl:run.files.stl}})});
+    const candidate=await response.json();
+    if(epoch!==repairEpoch||currentRun!==run)return;
+    if(!response.ok){const d=candidate.detail;throw Error(typeof d==='string'?d:d?.message||d?.compile_log||'Repair candidate failed')}
+    if(!window.CadViewer)throw Error('3D viewer unavailable');
+    const loaded=await viewer.replaceStl(candidate.files.stl,candidate.params||[],()=>epoch===repairEpoch&&currentRun===run);
+    if(!loaded||epoch!==repairEpoch||currentRun!==run)return;
+    $('#repairDialog').close();
+    render(candidate,null,true);
+  }catch(error){
+    if(epoch===repairEpoch&&currentRun===run){$('#repairError').hidden=false;$('#repairError').textContent=`Repair failed — the displayed part was kept. ${error.message}`;}
+  }finally{if(epoch===repairEpoch)button.disabled=false}
+};
 $('#keepRevision').onclick=async()=>{
   const run=currentRun;if(revisionBusy||!run?.revision?.candidate)return;
   invalidateParamCompile();const epoch=paramRevision;revisionBusy=true;syncRevisionControls();

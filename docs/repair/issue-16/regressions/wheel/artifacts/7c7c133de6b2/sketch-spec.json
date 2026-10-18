@@ -1,0 +1,158 @@
+{
+  "object": "Wheel",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "front",
+      "sheet_region": "view_4",
+      "what_it_constrains": "Defines the radial geometry: outer diameter (OD), hub diameter, spoke count (8), spoke width, and rim thickness."
+    },
+    {
+      "direction": "side",
+      "sheet_region": "view_5",
+      "what_it_constrains": "Defines the axial thickness (width) of the wheel."
+    },
+    {
+      "direction": "top",
+      "sheet_region": "view_2",
+      "what_it_constrains": "Confirms the thickness profile and flatness of the wheel faces."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "wheel_body",
+      "name": "Wheel",
+      "material": "plastic",
+      "quantity": 1
+    }
+  ],
+  "features": [
+    {
+      "id": "outer_rim",
+      "type": "ring",
+      "owner": "wheel_body",
+      "description": "Outer circular band of the wheel."
+    },
+    {
+      "id": "central_hub",
+      "type": "cylinder",
+      "owner": "wheel_body",
+      "description": "Central solid disk/hub."
+    },
+    {
+      "id": "spokes",
+      "type": "array",
+      "owner": "wheel_body",
+      "description": "8 radial spokes connecting hub to rim."
+    },
+    {
+      "id": "interstitial_voids",
+      "type": "cutout",
+      "owner": "wheel_body",
+      "description": "8 wedge-shaped voids between spokes."
+    }
+  ],
+  "relations": [
+    {
+      "type": "concentric",
+      "targets": [
+        "outer_rim",
+        "central_hub"
+      ]
+    },
+    {
+      "type": "connects",
+      "targets": [
+        "spokes",
+        "central_hub",
+        "outer_rim"
+      ]
+    }
+  ],
+  "symmetry": {
+    "type": "radial",
+    "axis": "Z",
+    "count": 8
+  },
+  "repetitions": [
+    {
+      "feature_id": "spokes",
+      "count": 8,
+      "pattern": "radial"
+    }
+  ],
+  "dimensions": {
+    "max_width": 27.8,
+    "max_depth": 120.0,
+    "max_height": 9.5,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "Exact hub diameter is estimated from visual proportion relative to OD.",
+    "Exact spoke width is estimated from visual proportion."
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "The object is a standard spoked wheel. The front view (view_4) provides the primary 2D profile. The side view (view_5) confirms the uniform thickness of 8mm. The geometry is regularized to ensure watertightness for 3D printing.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "extrude",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_2",
+        "operation": "extrude",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "owner": "wheel_body",
+        "parameters": {
+          "depth": 8
+        },
+        "source_views": [
+          "view_5"
+        ]
+      },
+      {
+        "id": "interstitial_voids",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "8 wedge-shaped voids between spokes."
+        },
+        "source_views": []
+      }
+    ],
+    "unresolved_constraints": [
+      "Exact hub diameter is estimated from visual proportion relative to OD.",
+      "Exact spoke width is estimated from visual proportion."
+    ]
+  },
+  "user_intent": {
+    "description": "",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "120"
+  },
+  "source_view_group_count": 6,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}
