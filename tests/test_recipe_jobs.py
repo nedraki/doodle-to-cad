@@ -4,6 +4,7 @@ import os
 from pathlib import Path
 import sys
 import time
+from doodle_to_cad.brep import worker_available
 
 import pytest
 
@@ -66,7 +67,7 @@ def test_missing_worker_is_rejected_before_job_creation(monkeypatch):
     assert set(app.JOBS)==before
 
 
-@pytest.mark.skipif(not os.getenv('DOODLE_BREP_PYTHON'),reason='Isolated worker not configured')
+@pytest.mark.skipif(not worker_available(),reason='Isolated worker not configured')
 def test_real_recipe_job_reload_and_download_contract(tmp_path,monkeypatch):
     from dataclasses import replace
     from fastapi.testclient import TestClient

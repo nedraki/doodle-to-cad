@@ -2,7 +2,7 @@ import json,os,math
 from pathlib import Path
 import pytest
 from doodle_to_cad.brep_recipe import validate_recipe
-from doodle_to_cad.brep import build_brep
+from doodle_to_cad.brep import build_brep, worker_available
 from doodle_to_cad.build_contract import BuildInput
 
 def recipe():return json.loads(Path('benchmarks/brep-sweeps/reference.recipe.json').read_text())
@@ -22,7 +22,7 @@ def test_invalid_sweep_rejected(failure):
  if failure=='zero_height':o['section_height']=0
  with pytest.raises(ValueError,match="handle:"):validate_recipe(r)
 
-@pytest.mark.skipif(not os.getenv('DOODLE_BREP_PYTHON'),reason='Worker not configured')
+@pytest.mark.skipif(not worker_available(),reason='Worker not configured')
 @pytest.mark.parametrize('height',[8,10])
 def test_native_rectangular_sweep_and_height_edit(tmp_path,height):
  r=recipe();r['parameters']['section_height']['value']=height
@@ -32,7 +32,7 @@ def test_native_rectangular_sweep_and_height_edit(tmp_path,height):
  assert b.measurements['extents_mm']==pytest.approx([46,38,height],abs=.05)
  assert b.backend_details['solid_volume_mm3']==pytest.approx(6*height*(30+20*math.pi),rel=1e-5)
 
-@pytest.mark.skipif(not os.getenv('DOODLE_BREP_PYTHON'),reason='Worker not configured')
+@pytest.mark.skipif(not worker_available(),reason='Worker not configured')
 @pytest.mark.parametrize('start_angle',[0,45,90,315])
 def test_quarter_bend_keeps_rectangular_frame(tmp_path,start_angle):
  r=recipe();o=r['operations'][0];o['path']=[{'kind':'arc','center':[23,23],'radius':20,'start_angle':start_angle,'end_angle':start_angle+90}]
@@ -41,7 +41,7 @@ def test_quarter_bend_keeps_rectangular_frame(tmp_path,start_angle):
  assert b.measurements['extents_mm'][2]==pytest.approx(8,abs=.05)
  assert b.backend_details['solid_volume_mm3']==pytest.approx(6*8*20*math.pi/2,rel=1e-5)
 
-@pytest.mark.skipif(not os.getenv('DOODLE_BREP_PYTHON'),reason='Worker not configured')
+@pytest.mark.skipif(not worker_available(),reason='Worker not configured')
 @pytest.mark.parametrize("reverse_lines",[False,True])
 def test_clockwise_authored_path_preserves_geometry(tmp_path,reverse_lines):
  r=recipe();path=r['operations'][0]['path']

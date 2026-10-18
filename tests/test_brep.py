@@ -5,6 +5,7 @@ from pathlib import Path
 import subprocess
 
 import pytest
+from doodle_to_cad.brep import worker_available
 
 from doodle_to_cad.brep import build_recipe
 from doodle_to_cad.brep_recipe import scalar, validate_recipe
@@ -62,7 +63,7 @@ def test_timeout_publishes_nothing(tmp_path, monkeypatch):
     assert existing.read_bytes() == b"last valid"
 
 
-@pytest.mark.skipif(not os.getenv("DOODLE_BREP_PYTHON"), reason="Isolated BRep worker not configured")
+@pytest.mark.skipif(not worker_available(), reason="Isolated BRep worker not configured")
 def test_kernel_build_edit_and_failure_recovery(tmp_path):
     import trimesh
     source = recipe()

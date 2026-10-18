@@ -2,7 +2,7 @@ import json,os
 from pathlib import Path
 import pytest
 from doodle_to_cad.brep_recipe import validate_recipe
-from doodle_to_cad.brep import build_brep
+from doodle_to_cad.brep import build_brep, worker_available
 from doodle_to_cad.build_contract import BuildInput
 
 def recipe():return json.loads(Path('benchmarks/brep-lofts/reference.recipe.json').read_text())
@@ -20,7 +20,7 @@ def test_unsupported_loft_fails_before_worker(failure):
  if failure=='extra_rotation':o['profiles'][0]['rotation']=45
  with pytest.raises(ValueError,match='transition:'):validate_recipe(r)
 
-@pytest.mark.skipif(not os.getenv('DOODLE_BREP_PYTHON'),reason='Worker not configured')
+@pytest.mark.skipif(not worker_available(),reason='Worker not configured')
 @pytest.mark.parametrize('width',[40,48])
 def test_native_loft_and_end_edit(tmp_path,width):
  r=recipe();r['parameters']['rectangle_width']['value']=width

@@ -5,6 +5,7 @@ from pathlib import Path
 import time
 
 from fastapi.testclient import TestClient
+from doodle_to_cad.brep import worker_available
 import pytest
 
 from doodle_to_cad import app, direct_brep
@@ -100,7 +101,7 @@ def test_rotation_is_bounded_and_does_not_mutate_source():
     with pytest.raises(ValueError,match='Axis'):validate_recipe(recipe)
 
 
-@pytest.mark.skipif(not __import__('os').getenv('DOODLE_BREP_PYTHON'),reason='Isolated worker not configured')
+@pytest.mark.skipif(not worker_available(),reason='Isolated worker not configured')
 def test_real_rotated_wheel(tmp_path):
     from doodle_to_cad.brep import build_brep
     from doodle_to_cad.build_contract import BuildInput
@@ -131,7 +132,7 @@ def test_real_rotated_wheel(tmp_path):
     assert result.backend_details['usd_roundtrip']
 
 
-@pytest.mark.skipif(not __import__('os').getenv('DOODLE_BREP_PYTHON'),reason='Isolated worker not configured')
+@pytest.mark.skipif(not worker_available(),reason='Isolated worker not configured')
 def test_direct_job_publishes_native_recipe_and_provenance(tmp_path,monkeypatch):
     monkeypatch.setattr(app,'settings',replace(app.settings,results_dir=tmp_path))
     recipe=json.loads(Path('benchmarks/brep-v2/bookend.json').read_text())
@@ -189,7 +190,7 @@ def test_correction_cannot_weaken_joints_or_drop_features():
         direct_brep.validate_correction(recipe,recipe)
 
 
-@pytest.mark.skipif(not __import__('os').getenv('DOODLE_BREP_PYTHON'),reason='Isolated worker not configured')
+@pytest.mark.skipif(not worker_available(),reason='Isolated worker not configured')
 @pytest.mark.parametrize('mode',['placement','size','exhausted','cancel'])
 def test_bounded_construction_correction_with_real_worker(tmp_path,monkeypatch,mode):
     from doodle_to_cad.construction_recipe import migrate_v1
@@ -240,7 +241,7 @@ def test_bounded_construction_correction_with_real_worker(tmp_path,monkeypatch,m
             assert len(history)==(1 if mode=='cancel' else 3)
 
 
-@pytest.mark.skipif(not __import__('os').getenv('DOODLE_BREP_PYTHON'),reason='Isolated worker not configured')
+@pytest.mark.skipif(not worker_available(),reason='Isolated worker not configured')
 def test_usd_comparison_requests_sufficient_volume_accuracy(tmp_path):
     from doodle_to_cad.brep import build_brep
     from doodle_to_cad.build_contract import BuildInput
