@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from doodle_to_cad.brep import build_recipe
+from doodle_to_cad.brep import build_recipe, worker_available
 from doodle_to_cad.brep_recipe import validate_recipe
 from doodle_to_cad.construction_recipe import migrate_v1
 
@@ -41,7 +41,7 @@ def test_invalid_fixtures(case, message):
         validate_recipe(recipe)
 
 
-@pytest.mark.skipif(not os.getenv('DOODLE_BREP_PYTHON'), reason='Isolated worker not configured')
+@pytest.mark.skipif(not worker_available(), reason='Isolated worker not configured')
 def test_wheel_connections_survive_radius_edit_and_reject_gap(tmp_path):
     wheel=fixture()
     base=build_recipe(tmp_path, wheel)
@@ -61,7 +61,7 @@ def test_wheel_connections_survive_radius_edit_and_reject_gap(tmp_path):
     assert len(list(tmp_path.glob('brep-*')))==2
 
 
-@pytest.mark.skipif(not os.getenv('DOODLE_BREP_PYTHON'), reason='Isolated worker not configured')
+@pytest.mark.skipif(not worker_available(), reason='Isolated worker not configured')
 def test_existing_v1_result_and_migrated_bookend_edit(tmp_path):
     old=json.loads((ROOT/'benchmarks/brep/bracket.json').read_text())
     base=build_recipe(tmp_path,old)
@@ -76,7 +76,7 @@ def test_existing_v1_result_and_migrated_bookend_edit(tmp_path):
     assert migrated['build']['source_format']=='brep-recipe-v2'
 
 
-@pytest.mark.skipif(not os.getenv('DOODLE_BREP_PYTHON'), reason='Isolated worker not configured')
+@pytest.mark.skipif(not worker_available(), reason='Isolated worker not configured')
 def test_later_cut_cannot_remove_a_required_connection(tmp_path):
     wheel=fixture()
     wheel['operations'] += [

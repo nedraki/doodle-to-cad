@@ -22,6 +22,15 @@ def worker_python():
     return configured
 
 
+def worker_available():
+    """True when the isolated worker is configured or auto-detected, as the app does."""
+    try:
+        worker_python()
+        return True
+    except BuildError:
+        return False
+
+
 def build_brep(request: BuildInput, binary: str = "openscad", on_stage=lambda _: None) -> BuildResult:
     """Publish one immutable revision after the isolated worker passes its checks."""
     result = BuildResult("usd-brep", request.source)

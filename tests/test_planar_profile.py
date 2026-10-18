@@ -2,7 +2,7 @@ import copy,json,os
 from pathlib import Path
 import pytest
 from doodle_to_cad.brep_recipe import validate_recipe
-from doodle_to_cad.brep import build_brep
+from doodle_to_cad.brep import build_brep, worker_available
 from doodle_to_cad.build_contract import BuildInput
 
 FIXTURE=Path('benchmarks/brep-profiles/reference.recipe.json')
@@ -31,7 +31,7 @@ def test_invalid_profiles_fail_before_worker(failure):
     if failure=='unknown_edge':o['loops'][1][0]['kind']='spline'
     with pytest.raises(ValueError):validate_recipe(r)
 
-@pytest.mark.skipif(not os.getenv('DOODLE_BREP_PYTHON'),reason='Worker not configured')
+@pytest.mark.skipif(not worker_available(),reason='Worker not configured')
 @pytest.mark.parametrize('direction',[1,-1])
 def test_native_extrusion_direction_and_inner_loop(tmp_path,direction):
     r=recipe();r['operations'][0]['direction']=direction
@@ -67,7 +67,7 @@ def test_arc_intersections_and_complexity_are_rejected(failure):
     with pytest.raises(ValueError):validate_recipe(r)
 
 
-@pytest.mark.skipif(not os.getenv('DOODLE_BREP_PYTHON'),reason='Worker not configured')
+@pytest.mark.skipif(not worker_available(),reason='Worker not configured')
 def test_periodic_arc_angles_keep_the_same_profile(tmp_path):
     r=recipe();arc=r['operations'][0]['loops'][0][2]
     arc['start_angle']+=360;arc['end_angle']+=360

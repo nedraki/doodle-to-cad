@@ -4,6 +4,7 @@ import pytest
 from fastapi import HTTPException
 from doodle_to_cad.feature_selection import resolve,choose
 from doodle_to_cad import revisions
+from doodle_to_cad.brep import worker_available
 
 
 def target():
@@ -42,7 +43,7 @@ def test_selection_saved_with_revision_and_conflict_guard(tmp_path):
 @pytest.mark.parametrize('fixture,bridge_z,expected',[('bookend',None,'matched'),('split-bookend',40,'matched'),('split-bookend',56,'ambiguous')])
 def test_native_catalog_tracks_all_cutouts_and_split(tmp_path,fixture,bridge_z,expected):
  import os
- if not os.getenv('DOODLE_BREP_PYTHON'):pytest.skip('Native worker not configured')
+ if not worker_available():pytest.skip('Native worker not configured')
  from pathlib import Path
  from doodle_to_cad.brep import build_brep
  from doodle_to_cad.build_contract import BuildInput
