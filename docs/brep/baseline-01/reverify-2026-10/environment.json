@@ -1,0 +1,46 @@
+{
+  "requested_model": "",
+  "max_tokens": 8192,
+  "timeout": 300.0,
+  "agent_max_attempts": 3,
+  "agent_accept_score": 70.0,
+  "enable_thinking": true,
+  "structured_enable_thinking": false,
+  "code_enable_thinking": false,
+  "code_max_tokens": 8192,
+  "openscad_bin": "openscad",
+  "python": "3.11.16 (main, Sep  1 2026, 14:18:39) [Clang 22.1.3 ]",
+  "platform": "Linux-6.17.0-1022-nvidia-aarch64-with-glibc2.39",
+  "worker": "/tmp/doodle-brep-18/workers/brep/.venv/bin/python",
+  "tested_commit": "01de9ddc2afc7a577bec2902940c4884932169ca",
+  "model_host": "127.0.0.1",
+  "worker_packages": [
+    {
+      "name": "networkx",
+      "version": "3.6.1"
+    },
+    {
+      "name": "numpy",
+      "version": "2.5.4"
+    },
+    {
+      "name": "trimesh",
+      "version": "5.1.1"
+    },
+    {
+      "name": "usd-brep",
+      "version": "1.0.0"
+    }
+  ],
+  "application_packages": {
+    "fastapi": "0.141.1",
+    "httpx": "0.28.1",
+    "numpy": "2.4.6",
+    "trimesh": "5.1.0",
+    "networkx": "3.6.1",
+    "pillow": "12.3.0",
+    "playwright": "1.63.0"
+  },
+  "openscad_docker_image": "openscad/openscad:latest",
+  "openscad_docker_image_id": "sha256:147e48525bec392bcf628d7a6d5ea4ccac71b16251952328f86e1061cbf47c37"
+}

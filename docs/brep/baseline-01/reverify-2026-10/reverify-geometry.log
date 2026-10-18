@@ -1,0 +1,21 @@
+# Re-verification geometry run — 2026-10-18 20:37 UTC (owner-review pack, issue #18)
+# Tested commit: 01de9ddc2afc7a577bec2902940c4884932169ca (brep-integration tip)
+# Runner: scripts/reverify_baseline_2026_10.py — identical checks to
+#   scripts/check_baseline_geometry.py, with all outputs redirected to this
+#   directory so the frozen baseline-01 evidence keeps its original bytes.
+# Command (run from /tmp/doodle-brep-18):
+#   DOODLE_PORT=8118 DOODLE_BREP_PYTHON="$PWD/workers/brep/.venv/bin/python" \
+#     .venv/bin/python scripts/reverify_baseline_2026_10.py
+# Exit code: 0. Elapsed: 31.4s.
+
+Using Python 3.12.3 environment at: workers/brep/.venv
+PASS: three BRep builds and edits; three SCAD equivalents; five reference solids.
+overall: PASS (31.4s)
+recipe  bracket      watertight=True usd_roundtrip=True edited_ok=True openscad_watertight=True extents=[60.0, 40.0, 80.0]
+recipe  enclosure    watertight=True usd_roundtrip=True edited_ok=True openscad_watertight=True extents=[60.0, 40.0, 25.0]
+recipe  curved_pipe  watertight=True usd_roundtrip=True edited_ok=True openscad_watertight=True extents=[23.0, 23.0, 6.0]
+ref     bookend      dim_check=pass watertight=True components=1 extents=[80.0, 50.0, 100.0]
+ref     curved_handle dim_check=pass watertight=True components=1 extents=[48.0, 54.0, 8.0]
+ref     enclosure    dim_check=pass watertight=True components=1 extents=[120.0, 80.0, 40.0]
+ref     transition   dim_check=pass watertight=True components=1 extents=[60.0, 40.0, 60.0]
+ref     wheel        dim_check=pass watertight=True components=1 extents=[120.0, 8.0, 120.0]

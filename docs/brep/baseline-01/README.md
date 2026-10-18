@@ -1,4 +1,4 @@
-# Task 01 baseline report
+# Task 01 baseline report — see [REVIEW-PACK.md](REVIEW-PACK.md) for the 10-minute owner review
 
 Issue: [#18](https://github.com/nedraki/doodle-to-cad/issues/18).
 Date: 13 October 2026. User review: **pending**.

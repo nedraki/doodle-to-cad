@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "units": "mm",
+  "name": "enclosure",
+  "parameters": {
+    "width": {
+      "value": 60.0,
+      "min": 40,
+      "max": 90,
+      "group": "Details"
+    },
+    "depth": {
+      "value": 40.0,
+      "min": 30,
+      "max": 60,
+      "group": "Details"
+    },
+    "height": {
+      "value": 25.0,
+      "min": 15,
+      "max": 40,
+      "group": "Details"
+    },
+    "wall": {
+      "value": 3.0,
+      "min": 2,
+      "max": 5,
+      "group": "Details"
+    },
+    "fillet": {
+      "value": 2.0,
+      "min": 0.5,
+      "max": 6,
+      "group": "Details"
+    }
+  },
+  "operations": [
+    {
+      "id": "outer",
+      "kind": "box",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "size": [
+        "width",
+        "depth",
+        "height"
+      ]
+    },
+    {
+      "id": "rounded",
+      "kind": "fillet",
+      "body": "outer",
+      "radius": "fillet",
+      "selector": "parallel_z"
+    },
+    {
+      "id": "pocket",
+      "kind": "box",
+      "origin": [
+        "wall",
+        "wall",
+        "wall"
+      ],
+      "size": [
+        "width-2*wall",
+        "depth-2*wall",
+        "height"
+      ]
+    },
+    {
+      "id": "enclosure",
+      "kind": "difference",
+      "left": "rounded",
+      "right": "pocket"
+    }
+  ],
+  "output": "enclosure"
+}
