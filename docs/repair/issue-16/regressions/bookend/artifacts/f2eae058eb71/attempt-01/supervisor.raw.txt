@@ -1,0 +1,14 @@
+{
+  "action": "repair_scad",
+  "problems": [
+    "Right view similarity is 0.42 (fail), indicating incorrect L-profile proportions.",
+    "Rendered right view shows a thin vertical leg and a very long horizontal leg.",
+    "Drawing right view shows a thick vertical leg and a shorter horizontal leg (closer to square aspect)."
+  ],
+  "preserve": [
+    "Front view cutout positions and dimensions (similarity 0.90).",
+    "Overall bounding box dimensions (96.22 x 86.0 x 120.0).",
+    "General L-bracket topology and cutout logic."
+  ],
+  "instructions": "Adjust the L-profile geometry to match the right view drawing. Increase `leg_thickness` to approximately 20-25mm to match the stroke width in the drawing. Reduce the horizontal leg depth (Y-axis extent) to approximately 40-50mm to match the aspect ratio of the L-shape in the right view (currently 86mm is too deep). Ensure the vertical leg remains at the back (high Y) and the horizontal leg extends forward (low Y)."
+}

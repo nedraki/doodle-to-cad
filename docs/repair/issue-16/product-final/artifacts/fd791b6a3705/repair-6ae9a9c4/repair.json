@@ -1,0 +1,119 @@
+{
+  "instruction": "Connect every spoke to the rim. Keep the outer diameter, hub, spoke count, and thickness unchanged.",
+  "parent_id": "original",
+  "started_from": "parent-revision",
+  "interpretation": {
+    "requested_change": "Connect every spoke to the rim.",
+    "preserve": [
+      "outer diameter",
+      "hub",
+      "spoke count",
+      "thickness"
+    ],
+    "expected_evidence": [
+      "components count is 1",
+      "watertight is true"
+    ]
+  },
+  "interpretation_failure": null,
+  "checks": [
+    {
+      "name": "compiles",
+      "status": "passed",
+      "compile_seconds": 20.47
+    },
+    {
+      "name": "watertight",
+      "status": "passed",
+      "before": true,
+      "after": true
+    },
+    {
+      "name": "connected_components",
+      "status": "passed",
+      "before": 2,
+      "after": 1,
+      "note": "passed means one connected component; separate from watertightness"
+    },
+    {
+      "name": "extents_preserved",
+      "status": "passed",
+      "before": [
+        120.0,
+        8.0,
+        120.0
+      ],
+      "after": [
+        120.0,
+        8.0,
+        120.0
+      ],
+      "drift": [],
+      "tolerances": {
+        "extent_relative": 0.02,
+        "extent_abs_mm": 0.5
+      }
+    },
+    {
+      "name": "editable_parameters_preserved",
+      "status": "passed",
+      "changed": [],
+      "before": {
+        "outer_diameter": 120.0,
+        "hub_diameter": 32.0,
+        "spoke_width": 8.0
+      },
+      "after": {
+        "outer_diameter": 120.0,
+        "hub_diameter": 32.0,
+        "spoke_width": 8.0
+      },
+      "note": "changed parameters are allowed only when the correction requires them"
+    },
+    {
+      "name": "volume_change",
+      "status": "measured",
+      "before": 40599.249,
+      "after": 43128.458,
+      "ratio": 1.0623
+    },
+    {
+      "name": "requested_correction",
+      "status": "unverified",
+      "note": "Needs visual inspection of the preview plus the model interpretation below."
+    }
+  ],
+  "diagnostics": {
+    "before": {
+      "watertight": true,
+      "components": 2,
+      "triangles": 1308,
+      "extents_mm": [
+        120.0,
+        8.0,
+        120.0
+      ],
+      "volume_mm3": 40599.249
+    },
+    "after": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 1244,
+      "extents_mm": [
+        120.0,
+        8.0,
+        120.0
+      ],
+      "volume_mm3": 43128.458
+    }
+  },
+  "tolerances": {
+    "extent_relative": 0.02,
+    "extent_abs_mm": 0.5,
+    "editable_parameter_values": "exact; any change is listed for review",
+    "volume_relative_informational": 0.25
+  },
+  "prompt_version": 1,
+  "model": null,
+  "score_carried_from_generation": false
+}

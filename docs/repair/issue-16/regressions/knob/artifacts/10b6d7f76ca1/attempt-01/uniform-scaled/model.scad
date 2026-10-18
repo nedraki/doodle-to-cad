@@ -1,0 +1,220 @@
+/* doodle-meta {"version":1,"parameters":{"width":{"label":"Overall width","description":"Changes the body width","unit":"mm","feature":"body_width"},"depth":{"label":"Overall depth","description":"Changes the body depth","unit":"mm","feature":"body_depth"},"height":{"label":"Overall height","description":"Changes the body height","unit":"mm","feature":"body_height"}},"features":{"body_width":{"kind":"dimension","axis":"x","label":"Overall width"},"body_depth":{"kind":"dimension","axis":"y","label":"Overall depth"},"body_height":{"kind":"dimension","axis":"z","label":"Overall height"}}} */
+
+width = 127.65957446808511;
+depth = 127.35106382978722;
+height = 88.08510638297872;
+
+// Derived proportions from measured view geometry
+// Front view (XZ): u maps to +X, v maps to -Z
+// Right view (YZ): u maps to +Y, v maps to -Z
+
+// Front view polygon (normalized u, v) -> CAD (X, Z)
+// X = u * width, Z = (1 - v) * height
+// Right view polygon (normalized u, v) -> CAD (Y, Z)
+// Y = u * depth, Z = (1 - v) * height
+
+// The object is an I-beam / H-bracket shape.
+// We construct it by extruding the front profile along Y, but we must ensure
+// the right view profile is also respected. Since both views show similar
+// "I" shapes, we can model this as a union of three boxes:
+// 1. Top flange
+// 2. Bottom flange
+// 3. Central waist
+
+// From front view (view_1):
+// Top flange: roughly v=0.02 to v=0.29 (height fraction)
+//   Z_top_flange_top = (1 - 0.02) * height = 0.98 * height
+//   Z_top_flange_bottom = (1 - 0.29) * height = 0.71 * height
+//   Width of top flange: u from ~0.02 to ~0.96 -> X from 0.02*width to 0.96*width
+//   But looking at the polygon, the top flange spans almost the full width.
+//   Let's use the bounding box of the top section.
+//   The top flange in front view spans u ~ 0.02 to 0.96.
+//   The bottom flange in front view spans u ~ 0.08 to 0.93.
+//   The waist in front view spans u ~ 0.29 to 0.69.
+
+// From right view (view_2):
+// Top flange: roughly v=0.02 to v=0.28
+//   Y_top_flange_front = 0.02 * depth
+//   Y_top_flange_back = 0.98 * depth (approx, from u=0.04 to 0.98)
+//   Actually, looking at the right view polygon:
+//   Top flange u range: ~0.04 to ~0.98. So depth is nearly full.
+//   Bottom flange u range: ~0.07 to ~0.90.
+//   Waist u range: ~0.29 to ~0.69.
+
+// Let's define the dimensions based on the measured proportions.
+
+// Front view proportions (normalized):
+// Top flange height: v 0.02 to 0.29 -> height fraction 0.27
+// Waist height: v 0.29 to 0.74 -> height fraction 0.45
+// Bottom flange height: v 0.74 to 0.96 -> height fraction 0.22
+// Total height fraction: 0.27 + 0.45 + 0.22 = 0.94 (close to 1.0)
+
+// Let's refine the Z levels from the front view polygon vertices:
+// Top flange top: v ~ 0.02 -> Z = 0.98 * height
+// Top flange bottom / Waist top: v ~ 0.29 -> Z = 0.71 * height
+// Waist bottom / Bottom flange top: v ~ 0.74 -> Z = 0.26 * height
+// Bottom flange bottom: v ~ 0.96 -> Z = 0.04 * height
+
+// Let's use these Z levels:
+z_top = height;
+z_top_flange_bottom = height * (1 - 0.29); // 0.71 * height
+z_waist_bottom = height * (1 - 0.74);      // 0.26 * height
+z_bottom = 0;
+
+// Widths from front view (X):
+// Top flange width: u 0.02 to 0.96 -> width fraction 0.94
+// Waist width: u 0.29 to 0.69 -> width fraction 0.40
+// Bottom flange width: u 0.08 to 0.93 -> width fraction 0.85
+
+// Depths from right view (Y):
+// Top flange depth: u 0.04 to 0.98 -> depth fraction 0.94
+// Waist depth: u 0.29 to 0.69 -> depth fraction 0.40
+// Bottom flange depth: u 0.07 to 0.90 -> depth fraction 0.83
+
+// To ensure symmetry and clean geometry, we will center everything.
+// The views suggest the object is centered in X and Y.
+
+// Define parameters for the three sections
+top_flange_width = width * 0.94;
+top_flange_depth = depth * 0.94;
+top_flange_height = z_top - z_top_flange_bottom;
+
+waist_width = width * 0.40;
+waist_depth = depth * 0.40;
+waist_height = z_top_flange_bottom - z_waist_bottom;
+
+bottom_flange_width = width * 0.85;
+bottom_flange_depth = depth * 0.83;
+bottom_flange_height = z_waist_bottom - z_bottom;
+
+// Adjust to ensure they touch/overlap slightly for manifoldness
+overlap = 0.1;
+
+module top_flange() {
+    translate([0, 0, z_top_flange_bottom])
+    cube([top_flange_width, top_flange_depth, top_flange_height + overlap], center=true);
+}
+
+module waist() {
+    translate([0, 0, z_waist_bottom])
+    cube([waist_width, waist_depth, waist_height + 2*overlap], center=true);
+}
+
+module bottom_flange() {
+    translate([0, 0, z_bottom])
+    cube([bottom_flange_width, bottom_flange_depth, bottom_flange_height + overlap], center=true);
+}
+
+// The object sits on the build plate, so the bottom of the bottom flange should be at Z=0.
+// Our bottom_flange is centered at z_bottom=0, so it extends from -h/2 to h/2.
+// We need to shift the whole assembly up so the lowest point is Z=0.
+// The lowest point is the bottom of the bottom flange.
+// Bottom flange center is at z_bottom = 0. Its height is bottom_flange_height.
+// So it goes from -bottom_flange_height/2 to +bottom_flange_height/2.
+// We need to translate the whole thing up by bottom_flange_height/2.
+
+// Let's recalculate Z positions relative to Z=0 base.
+// Let's define the heights of the sections directly.
+h_top = height * 0.27;
+h_waist = height * 0.45;
+h_bottom = height * 0.28; // Adjusted to sum to 1.0
+
+// Re-evaluating Z levels from polygon:
+// Top flange: v 0.02 to 0.29. Height = 0.27 * height.
+// Waist: v 0.29 to 0.74. Height = 0.45 * height.
+// Bottom flange: v 0.74 to 0.96. Height = 0.22 * height.
+// Sum = 0.94. The remaining 0.06 is likely padding or measurement error.
+// Let's scale the heights to fill the total height.
+// Or just use the measured Z coordinates directly.
+
+// Let's use the explicit Z coordinates derived from v values.
+// v=0.02 -> Z = 0.98 * height
+// v=0.29 -> Z = 0.71 * height
+// v=0.74 -> Z = 0.26 * height
+// v=0.96 -> Z = 0.04 * height
+
+// To make it sit on Z=0, we shift everything down by 0.04 * height?
+// No, the bottom of the object is at v=0.96.
+// If we want the bottom at Z=0, we map v=0.96 to Z=0.
+// So Z = (0.96 - v) * height / 0.96? No, the height is 82.8.
+// The measured height is 82.8. The polygon spans v=0.02 to v=0.96.
+// So the physical height corresponds to the span 0.94 in v.
+// Scale factor = height / 0.94.
+// Z_physical = (0.96 - v) * (height / 0.94).
+
+// Let's define the section heights based on the v-spans.
+v_top_top = 0.02;
+v_top_bottom = 0.29;
+v_waist_bottom = 0.74;
+v_bottom_bottom = 0.96;
+
+// Heights in mm
+h_top_flange = (v_top_bottom - v_top_top) * (height / (v_bottom_bottom - v_top_top));
+h_waist = (v_waist_bottom - v_top_bottom) * (height / (v_bottom_bottom - v_top_top));
+h_bottom_flange = (v_bottom_bottom - v_waist_bottom) * (height / (v_bottom_bottom - v_top_top));
+
+// Z positions (bottom of each section)
+z_bottom_flange_start = 0;
+z_waist_start = h_bottom_flange;
+z_top_flange_start = h_bottom_flange + h_waist;
+
+// Widths and Depths
+// Front view (X):
+// Top flange u: 0.02 to 0.96. Width = 0.94 * width.
+// Waist u: 0.29 to 0.69. Width = 0.40 * width.
+// Bottom flange u: 0.08 to 0.93. Width = 0.85 * width.
+
+// Right view (Y):
+// Top flange u: 0.04 to 0.98. Depth = 0.94 * depth.
+// Waist u: 0.29 to 0.69. Depth = 0.40 * depth.
+// Bottom flange u: 0.07 to 0.90. Depth = 0.83 * depth.
+
+// We will center the X and Y coordinates.
+
+module bracket() {
+    // Bottom Flange
+    translate([0, 0, z_bottom_flange_start])
+    cube([bottom_flange_width, bottom_flange_depth, h_bottom_flange], center=true);
+
+    // Waist
+    translate([0, 0, z_waist_start])
+    cube([waist_width, waist_depth, h_waist], center=true);
+
+    // Top Flange
+    translate([0, 0, z_top_flange_start])
+    cube([top_flange_width, top_flange_depth, h_top_flange], center=true);
+}
+
+// Ensure overlap for manifoldness
+// The cubes are centered at their respective Z starts.
+// Bottom flange: Z from 0 to h_bottom_flange. Center at h_bottom_flange/2.
+// Waist: Z from h_bottom_flange to h_bottom_flange + h_waist. Center at h_bottom_flange + h_waist/2.
+// Top flange: Z from h_bottom_flange + h_waist to height. Center at h_bottom_flange + h_waist + h_top_flange/2.
+
+// To ensure they connect, we can extend them slightly.
+// Or just rely on the fact that they share boundaries.
+// In OpenSCAD, sharing boundaries is usually fine for manifoldness if they are exact.
+// However, floating point issues can occur. Let's add a small overlap.
+
+module bracket_with_overlap() {
+    // Bottom Flange
+    translate([0, 0, z_bottom_flange_start])
+    cube([bottom_flange_width, bottom_flange_depth, h_bottom_flange + 0.1], center=true);
+
+    // Waist
+    translate([0, 0, z_waist_start])
+    cube([waist_width, waist_depth, h_waist + 0.2], center=true);
+
+    // Top Flange
+    translate([0, 0, z_top_flange_start])
+    cube([top_flange_width, top_flange_depth, h_top_flange + 0.1], center=true);
+}
+
+// The bottom of the bottom flange is at z_bottom_flange_start - (h_bottom_flange+0.1)/2.
+// We want the lowest point to be Z=0.
+// So we need to translate the whole assembly up.
+// Lowest Z = z_bottom_flange_start - (h_bottom_flange+0.1)/2 = 0 - (h_bottom_flange+0.1)/2.
+// Shift up by (h_bottom_flange+0.1)/2.
+
+translate([0, 0, (h_bottom_flange + 0.1) / 2])
+bracket_with_overlap();

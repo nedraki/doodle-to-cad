@@ -16,3 +16,12 @@
 #targetedEdit input{width:6.5rem}
 #targetedStatus{margin:0;font-size:.8rem;flex-basis:100%}
 #targetedStatus.fail{color:#c0392b}
+
+/* targeted repair (issue #16) */
+#repairSummary{background:#fff9ed;border:3px solid #ff593c;border-radius:16px;padding:14px 18px;margin:14px 0;text-align:left;max-width:680px}
+#repairSummary .repair-title{letter-spacing:.04em}
+#repairSummary .repair-checks{list-style:none;padding:0;margin:8px 0}
+#repairSummary .repair-checks li{padding:2px 0}
+#repairSummary .repair-note{font-size:.85em;color:#5c5647}
+#repairDialog textarea{width:100%;font:inherit;padding:8px;border:2px solid #182d36;border-radius:10px}
+#repairError{color:#9c241a}

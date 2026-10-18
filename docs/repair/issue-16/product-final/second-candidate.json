@@ -1,0 +1,252 @@
+{
+  "id": "70521fc0d6a2",
+  "backend": "openscad",
+  "success": false,
+  "spec": {
+    "object": "eight-spoke wheel"
+  },
+  "model": "fixture",
+  "model_source": "seeded",
+  "fixture": {
+    "kind": "synthetic_broken_wheel",
+    "generator": "scripts/make_repair_fixture.py",
+    "authority": "Controlled test fixture, not a user doodle or generation claim."
+  },
+  "evaluation": {
+    "status": "unverified",
+    "accepted": false,
+    "score": null,
+    "failures": [
+      "The original generation acceptance score was not rerun for this repair candidate."
+    ]
+  },
+  "files": {
+    "scad": "/results/70521fc0d6a2/repair-0f98b2f8/model.scad",
+    "source": "/results/70521fc0d6a2/repair-0f98b2f8/model.scad",
+    "stl": "/results/70521fc0d6a2/repair-0f98b2f8/model.stl",
+    "views": {
+      "isometric": "/results/70521fc0d6a2/repair-0f98b2f8/view-isometric.png",
+      "front": "/results/70521fc0d6a2/repair-0f98b2f8/view-front.png",
+      "top": "/results/70521fc0d6a2/repair-0f98b2f8/view-top.png",
+      "right": "/results/70521fc0d6a2/repair-0f98b2f8/view-right.png"
+    },
+    "repair": "/results/70521fc0d6a2/repair-0f98b2f8/repair.json"
+  },
+  "build": {
+    "version": 1,
+    "backend": "openscad",
+    "source_format": "openscad",
+    "ok": true,
+    "units": "mm",
+    "axes": {
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    },
+    "views": [
+      "isometric",
+      "front",
+      "top",
+      "right"
+    ],
+    "measurements": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 1308,
+      "extents_mm": [
+        120.0,
+        8.0,
+        120.0
+      ],
+      "volume_mm3": 43803.227
+    },
+    "diagnostics": [],
+    "drawing_evaluated": false
+  },
+  "repair": {
+    "instruction": "Make the hub slightly larger.",
+    "parent_id": "7364199b8c5544dab671a1bb6db52845",
+    "started_from": "parent-revision",
+    "interpretation": {
+      "requested_change": "Increase the hub diameter of the eight-spoke wheel.",
+      "preserve": [
+        "outer_diameter",
+        "spoke_width",
+        "spoke_count",
+        "watertight",
+        "components"
+      ],
+      "expected_evidence": [
+        "hub_diameter > 32.0",
+        "outer_diameter == 120.0",
+        "spoke_width == 8.0",
+        "watertight == true",
+        "components == 1"
+      ]
+    },
+    "interpretation_failure": null,
+    "checks": [
+      {
+        "name": "compiles",
+        "status": "passed",
+        "compile_seconds": 20.31
+      },
+      {
+        "name": "watertight",
+        "status": "passed",
+        "before": true,
+        "after": true
+      },
+      {
+        "name": "connected_components",
+        "status": "passed",
+        "before": 1,
+        "after": 1,
+        "note": "passed means one connected component; separate from watertightness"
+      },
+      {
+        "name": "extents_preserved",
+        "status": "passed",
+        "before": [
+          120.0,
+          8.0,
+          120.0
+        ],
+        "after": [
+          120.0,
+          8.0,
+          120.0
+        ],
+        "drift": [],
+        "tolerances": {
+          "extent_relative": 0.02,
+          "extent_abs_mm": 0.5
+        }
+      },
+      {
+        "name": "editable_parameters_preserved",
+        "status": "reported",
+        "changed": [
+          "hub_diameter"
+        ],
+        "before": {
+          "outer_diameter": 120.0,
+          "hub_diameter": 32.0,
+          "spoke_width": 8.0
+        },
+        "after": {
+          "outer_diameter": 120.0,
+          "hub_diameter": 36.0,
+          "spoke_width": 8.0
+        },
+        "note": "changed parameters are allowed only when the correction requires them"
+      },
+      {
+        "name": "volume_change",
+        "status": "measured",
+        "before": 43128.458,
+        "after": 43803.227,
+        "ratio": 1.0156
+      },
+      {
+        "name": "requested_correction",
+        "status": "unverified",
+        "note": "Needs visual inspection of the preview plus the model interpretation below."
+      }
+    ],
+    "diagnostics": {
+      "before": {
+        "watertight": true,
+        "components": 1,
+        "triangles": 1244,
+        "extents_mm": [
+          120.0,
+          8.0,
+          120.0
+        ],
+        "volume_mm3": 43128.458
+      },
+      "after": {
+        "watertight": true,
+        "components": 1,
+        "triangles": 1308,
+        "extents_mm": [
+          120.0,
+          8.0,
+          120.0
+        ],
+        "volume_mm3": 43803.227
+      }
+    },
+    "tolerances": {
+      "extent_relative": 0.02,
+      "extent_abs_mm": 0.5,
+      "editable_parameter_values": "exact; any change is listed for review",
+      "volume_relative_informational": 0.25
+    },
+    "prompt_version": 1,
+    "model": null,
+    "score_carried_from_generation": false
+  },
+  "revision": {
+    "id": "cc6d10cd8ac44518a6f8f2a9a612226e",
+    "parent_id": "7364199b8c5544dab671a1bb6db52845",
+    "selected_id": "7364199b8c5544dab671a1bb6db52845",
+    "selection_version": 1,
+    "candidate": true,
+    "kind": "repair"
+  },
+  "params": [
+    {
+      "label": "Outer diameter",
+      "feature": null,
+      "name": "outer_diameter",
+      "value": 120.0,
+      "unit": "mm",
+      "group": null,
+      "description": "Outer rim diameter",
+      "low": 0.0,
+      "high": 240.0,
+      "step": 0.01
+    },
+    {
+      "label": "Hub",
+      "feature": null,
+      "name": "hub_diameter",
+      "value": 36.0,
+      "unit": "mm",
+      "group": null,
+      "description": "Hub diameter",
+      "low": 0.0,
+      "high": 72.0,
+      "step": 0.01
+    },
+    {
+      "label": "Spoke width",
+      "feature": null,
+      "name": "spoke_width",
+      "value": 8.0,
+      "unit": "mm",
+      "group": null,
+      "description": "Spoke bar thickness",
+      "low": 0.0,
+      "high": 16.0,
+      "step": 0.01
+    }
+  ],
+  "target_selection": {
+    "status": "none"
+  },
+  "target_version": 0,
+  "original_files": {
+    "scad": "/results/70521fc0d6a2/model.scad",
+    "source": "/results/70521fc0d6a2/model.scad",
+    "stl": "/results/70521fc0d6a2/model.stl",
+    "views": {
+      "isometric": "/results/70521fc0d6a2/view-isometric.png",
+      "front": "/results/70521fc0d6a2/view-front.png",
+      "top": "/results/70521fc0d6a2/view-top.png",
+      "right": "/results/70521fc0d6a2/view-right.png"
+    }
+  }
+}

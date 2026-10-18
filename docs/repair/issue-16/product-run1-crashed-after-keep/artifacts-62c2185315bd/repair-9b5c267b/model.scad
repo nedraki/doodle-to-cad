@@ -1,0 +1,15 @@
+$fn=128;
+/* doodle-meta {"version":1,"parameters":{"outer_diameter":{"label":"Outer diameter","description":"Outer rim diameter","unit":"mm"},"hub_diameter":{"label":"Hub","description":"Hub diameter","unit":"mm"},"spoke_width":{"label":"Spoke width","description":"Spoke bar thickness","unit":"mm"}}} */
+// Wheel lies in XZ. FIXED: spokes extend to overlap the rim inner wall.
+outer_diameter = 120; // mm
+rim_inner_diameter = 108; // mm
+hub_diameter = 32; // mm
+thickness = 8; // mm
+spoke_count = 8; // count
+spoke_width = 8; // mm
+spoke_reach = 42; // mm from hub overlap start; extends into the rim
+translate([outer_diameter/2,thickness/2,outer_diameter/2]) rotate([90,0,0]) union(){
+  difference(){cylinder(d=outer_diameter,h=thickness);translate([0,0,-1])cylinder(d=rim_inner_diameter,h=thickness+2);}
+  cylinder(d=hub_diameter,h=thickness);
+  for(a=[0:360/spoke_count:360-360/spoke_count])rotate([0,0,a])translate([hub_diameter/2-1,-thickness/2,0])cube([spoke_reach,thickness,thickness]);
+}

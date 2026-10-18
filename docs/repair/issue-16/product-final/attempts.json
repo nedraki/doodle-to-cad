@@ -1,0 +1,118 @@
+[
+  {
+    "instruction": "Connect every spoke to the rim. Keep the outer diameter, hub, spoke count, and thickness unchanged. Make the wheel one connected printable part.",
+    "status": 200,
+    "revision_id": "7364199b8c5544dab671a1bb6db52845",
+    "checks": {
+      "compiles": "passed",
+      "watertight": "passed",
+      "connected_components": "passed",
+      "extents_preserved": "passed",
+      "editable_parameters_preserved": "passed",
+      "volume_change": "measured",
+      "requested_correction": "unverified"
+    },
+    "started_from": "parent-revision",
+    "files": {
+      "scad": "/results/70521fc0d6a2/repair-87ea4a47/model.scad",
+      "source": "/results/70521fc0d6a2/repair-87ea4a47/model.scad",
+      "stl": "/results/70521fc0d6a2/repair-87ea4a47/model.stl",
+      "views": {
+        "isometric": "/results/70521fc0d6a2/repair-87ea4a47/view-isometric.png",
+        "front": "/results/70521fc0d6a2/repair-87ea4a47/view-front.png",
+        "top": "/results/70521fc0d6a2/repair-87ea4a47/view-top.png",
+        "right": "/results/70521fc0d6a2/repair-87ea4a47/view-right.png"
+      },
+      "repair": "/results/70521fc0d6a2/repair-87ea4a47/repair.json"
+    },
+    "measurement": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 1244,
+      "extents_mm": [
+        120.0,
+        8.0,
+        120.0
+      ],
+      "volume_mm3": 43128.458,
+      "hub_full_cover_radius_mm": 15,
+      "spoke_count_at_r40": 8,
+      "spoke_widths_at_r40_mm": [
+        8.03,
+        8.03,
+        8.03,
+        8.03,
+        8.03,
+        8.03,
+        8.03,
+        8.03
+      ],
+      "spoke_widths_at_r50_mm": [
+        8.29,
+        8.29,
+        8.29,
+        8.29,
+        8.29,
+        8.29,
+        8.29,
+        8.29
+      ],
+      "radial_material_at_0deg_mm": [
+        [
+          8.0,
+          60.0
+        ]
+      ]
+    },
+    "preservation": {
+      "extent_x": {
+        "before": 120.0,
+        "after": 120.0,
+        "preserved": true
+      },
+      "extent_y": {
+        "before": 8.0,
+        "after": 8.0,
+        "preserved": true
+      },
+      "extent_z": {
+        "before": 120.0,
+        "after": 120.0,
+        "preserved": true
+      },
+      "hub_full_cover_radius_mm": {
+        "before": 15,
+        "after": 15,
+        "preserved": true
+      },
+      "spoke_count_at_r40": {
+        "before": 8,
+        "after": 8,
+        "preserved": true
+      },
+      "spoke_widths_at_r40_mm": {
+        "before": [
+          8.03,
+          8.03,
+          8.03,
+          8.03,
+          8.03,
+          8.03,
+          8.03,
+          8.03
+        ],
+        "after": [
+          8.03,
+          8.03,
+          8.03,
+          8.03,
+          8.03,
+          8.03,
+          8.03,
+          8.03
+        ],
+        "preserved": true
+      }
+    }
+  }
+]

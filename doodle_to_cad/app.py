@@ -20,6 +20,7 @@ from .brep import build_recipe, worker_python, worker_health, register_cancellat
 from .brep_recipe import recipe_params, validate_recipe
 from .build_contract import CAPABILITIES
 from . import revisions
+from . import repair as targeted_repair
 from .recipe_jobs import check_worker, run_recipe_job
 
 RUN_ID_RE = re.compile(r"^[0-9a-f]{6,32}$")
@@ -114,6 +115,13 @@ def keep_revision(run_id: str, payload: dict):
     return revisions.keep(out, payload)
 
 
+@app.post("/api/results/{run_id}/revisions/repair")
+async def repair_revision(run_id: str, payload: dict):
+    """Targeted 'change only what I describe' candidate from the displayed version."""
+    out, _ = _run_dir(run_id)
+    return await targeted_repair.repair_preview(pipeline, settings, out, payload)
+
+
 @app.get("/api/results/{run_id}/params")
 def get_params(run_id: str, revision_id: str | None = None):
     """Numeric top-level parameters the accepted model exposes for live editing."""
@@ -124,6 +132,15 @@ def get_params(run_id: str, revision_id: str | None = None):
             item = revisions.record(store, revision_id or store['selected'])
             return {"run_id": run_id, "revision_id": item['id'],
                     "params": recipe_params(json.loads(item['source_text']))}
+    if revision_id and (out / "result.json").exists():
+        # OpenSCAD parameter controls must follow the displayed revision
+        # (kept repairs and parameter-edit revisions carry their own source).
+        with revisions.locked(out):
+            store = revisions.read_store(out)
+            item = revisions.record(store, revision_id)
+        if item.get('source_text'):
+            return {"run_id": run_id, "revision_id": item['id'],
+                    "params": [p.to_dict() for p in extract_params(item['source_text'])]}
     cached = out / "parameters.json"
     params = recipe_params(json.loads(scad.read_text())) if scad.suffix == ".json" else [p.to_dict() for p in extract_params(scad.read_text())]
     payload = {"run_id": run_id, "params": params}
@@ -132,11 +149,12 @@ def get_params(run_id: str, revision_id: str | None = None):
 
 
 @app.post("/api/results/{run_id}/parametrize")
-def parametrize(run_id: str, updates: dict):
+def parametrize(run_id: str, updates: dict, revision_id: str | None = None):
     """Rewrite top-level parameters, recompile, return a cache-busted STL URL.
 
     The accepted model.scad stays untouched; edits receive unique SCAD/STL filenames
-    so a reset is always one click away.
+    so a reset is always one click away. With revision_id the edit starts from the
+    source of that saved revision (e.g. a kept repair), not the original generation.
     """
     out, scad = _run_dir(run_id)
     if scad.suffix == ".json":
@@ -145,6 +163,13 @@ def parametrize(run_id: str, updates: dict):
         except ValueError as exc:
             raise HTTPException(422, {"message": str(exc), "code": getattr(exc, "code", "invalid_input")}) from exc
     base = scad.read_text()
+    if revision_id and (out / "result.json").exists():
+        with revisions.locked(out):
+            store = revisions.read_store(out)
+            item = revisions.record(store, revision_id)
+        if not item.get('source_text'):
+            raise HTTPException(422, {"message": "That revision has no source to edit", "code": "invalid_input"})
+        base = item['source_text']
     try:
         validate_updates(base, updates)
     except ValueError as exc:
@@ -159,6 +184,9 @@ def parametrize(run_id: str, updates: dict):
     if not stl_url:
         return {"ok": False, "applied": applied,
                 "message": error or "Recompile produced no mesh — last successful geometry retained."}
+    with (out / "parametrize-history.jsonl").open("a") as history:
+        history.write(json.dumps({"time": time.time(), "revision_id": revision_id, "applied": applied,
+                                  "stl": stl_url, "scad": f"/results/{run_id}/{tag}.scad"}) + "\n")
     return {"ok": True, "applied": applied, "stl": stl_url, "scad": f"/results/{run_id}/{tag}.scad", "params": [p.to_dict() for p in extract_params(edited)]}
 
 

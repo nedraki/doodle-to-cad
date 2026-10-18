@@ -1,0 +1,15 @@
+{
+  "action": "repair_scad",
+  "problems": [
+    "Disconnected rib component (floating triangle)",
+    "Missing holes in Top view projection",
+    "Hole positions incorrect relative to drawing",
+    "Rib geometry disconnected from base/wall"
+  ],
+  "preserve": [
+    "Overall L-shape footprint",
+    "Base and wall thickness parameters",
+    "Hole diameter parameter"
+  ],
+  "instructions": "Fix the rib to be a solid wedge connecting the wall to the base (ensure union). Add the two required holes: one in the base (left side) and one in the wall (upper right). Adjust hole positions to match the Top view centroids (approx u=0.14, v=0.75 for base hole; u=0.85, v=0.12 for wall hole). Ensure the mesh is a single connected component."
+}

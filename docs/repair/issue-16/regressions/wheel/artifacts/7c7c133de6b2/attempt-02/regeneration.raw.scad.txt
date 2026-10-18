@@ -1,0 +1,41 @@
+/* doodle-meta {"version":1,"parameters":{"outer_diameter":{"label":"Outer Diameter","description":"Diameter of the wheel rim","unit":"mm","feature":"outer_diameter"},"wheel_thickness":{"label":"Wheel Thickness","description":"Axial thickness (width) of the wheel","unit":"mm","feature":"wheel_thickness"},"hub_diameter":{"label":"Hub Diameter","description":"Diameter of the central hub","unit":"mm","feature":"hub_diameter"},"spoke_count":{"label":"Spoke Count","description":"Number of radial spokes","unit":"count","feature":"spoke_count"},"spoke_width":{"label":"Spoke Width","description":"Width of each spoke","unit":"mm","feature":"spoke_width"}},"features":{"outer_diameter":{"kind":"dimension","axis":"x","label":"Outer Diameter"},"wheel_thickness":{"kind":"dimension","axis":"z","label":"Wheel Thickness"},"hub_diameter":{"kind":"dimension","axis":"x","label":"Hub Diameter"},"spoke_count":{"kind":"region","label":"Spoke Count","min":[0,0,0],"max":[{"parameter":"outer_diameter","scale":0.5},{"parameter":"outer_diameter","scale":0.5},{"parameter":"wheel_thickness"}]},"spoke_width":{"kind":"region","label":"Spoke Width","min":[{"parameter":"hub_diameter","scale":0.5},0,0],"max":[{"parameter":"outer_diameter","scale":0.5},{"parameter":"outer_diameter","scale":0.5},{"parameter":"wheel_thickness"}]}}} */
+
+// Parameters
+outer_diameter = 120.0;
+wheel_thickness = 9.5;
+hub_diameter = 30.0;
+spoke_count = 8;
+spoke_width = 10.0;
+
+// Derived constants (not editable)
+$fn = 64;
+eps = 0.01;
+
+// Modules
+module wheel_body() {
+    // 1. Outer Rim (Ring)
+    difference() {
+        cylinder(d=outer_diameter, h=wheel_thickness, center=true);
+        cylinder(d=outer_diameter - 2*10, h=wheel_thickness + 2*eps, center=true); // Rim thickness ~10mm
+    }
+    
+    // 2. Central Hub
+    cylinder(d=hub_diameter, h=wheel_thickness, center=true);
+    
+    // 3. Spokes
+    for (i = [0 : spoke_count - 1]) {
+        rotate([0, 0, i * 360 / spoke_count]) {
+            // Spoke connects hub to rim
+            // Length from center to outer edge
+            translate([hub_diameter/2, 0, 0]) {
+                cube([outer_diameter/2 - hub_diameter/2 + 1, spoke_width, wheel_thickness], center=true);
+            }
+        }
+    }
+}
+
+// Main Design
+// Center the wheel on Z=0 to Z=wheel_thickness
+translate([0, 0, wheel_thickness/2]) {
+    wheel_body();
+}

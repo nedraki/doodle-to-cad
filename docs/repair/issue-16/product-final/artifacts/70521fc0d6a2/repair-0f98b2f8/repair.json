@@ -1,0 +1,125 @@
+{
+  "instruction": "Make the hub slightly larger.",
+  "parent_id": "7364199b8c5544dab671a1bb6db52845",
+  "started_from": "parent-revision",
+  "interpretation": {
+    "requested_change": "Increase the hub diameter of the eight-spoke wheel.",
+    "preserve": [
+      "outer_diameter",
+      "spoke_width",
+      "spoke_count",
+      "watertight",
+      "components"
+    ],
+    "expected_evidence": [
+      "hub_diameter > 32.0",
+      "outer_diameter == 120.0",
+      "spoke_width == 8.0",
+      "watertight == true",
+      "components == 1"
+    ]
+  },
+  "interpretation_failure": null,
+  "checks": [
+    {
+      "name": "compiles",
+      "status": "passed",
+      "compile_seconds": 20.31
+    },
+    {
+      "name": "watertight",
+      "status": "passed",
+      "before": true,
+      "after": true
+    },
+    {
+      "name": "connected_components",
+      "status": "passed",
+      "before": 1,
+      "after": 1,
+      "note": "passed means one connected component; separate from watertightness"
+    },
+    {
+      "name": "extents_preserved",
+      "status": "passed",
+      "before": [
+        120.0,
+        8.0,
+        120.0
+      ],
+      "after": [
+        120.0,
+        8.0,
+        120.0
+      ],
+      "drift": [],
+      "tolerances": {
+        "extent_relative": 0.02,
+        "extent_abs_mm": 0.5
+      }
+    },
+    {
+      "name": "editable_parameters_preserved",
+      "status": "reported",
+      "changed": [
+        "hub_diameter"
+      ],
+      "before": {
+        "outer_diameter": 120.0,
+        "hub_diameter": 32.0,
+        "spoke_width": 8.0
+      },
+      "after": {
+        "outer_diameter": 120.0,
+        "hub_diameter": 36.0,
+        "spoke_width": 8.0
+      },
+      "note": "changed parameters are allowed only when the correction requires them"
+    },
+    {
+      "name": "volume_change",
+      "status": "measured",
+      "before": 43128.458,
+      "after": 43803.227,
+      "ratio": 1.0156
+    },
+    {
+      "name": "requested_correction",
+      "status": "unverified",
+      "note": "Needs visual inspection of the preview plus the model interpretation below."
+    }
+  ],
+  "diagnostics": {
+    "before": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 1244,
+      "extents_mm": [
+        120.0,
+        8.0,
+        120.0
+      ],
+      "volume_mm3": 43128.458
+    },
+    "after": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 1308,
+      "extents_mm": [
+        120.0,
+        8.0,
+        120.0
+      ],
+      "volume_mm3": 43803.227
+    }
+  },
+  "tolerances": {
+    "extent_relative": 0.02,
+    "extent_abs_mm": 0.5,
+    "editable_parameter_values": "exact; any change is listed for review",
+    "volume_relative_informational": 0.25
+  },
+  "prompt_version": 1,
+  "model": null,
+  "score_carried_from_generation": false
+}

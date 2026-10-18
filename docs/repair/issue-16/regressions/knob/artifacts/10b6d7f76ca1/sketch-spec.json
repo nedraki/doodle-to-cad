@@ -1,0 +1,133 @@
+{
+  "object": "Symmetrical bracket or bookend with flared top and bottom feet",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "front",
+      "sheet_region": "left",
+      "constrains": "XZ profile (width and height), defining the flared feet and central waist"
+    },
+    {
+      "direction": "right",
+      "sheet_region": "right",
+      "constrains": "YZ profile (depth and height), defining the flared feet and central waist"
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "main_body",
+      "description": "Single solid body with flared top and bottom sections and a narrower central waist",
+      "material": "plastic"
+    }
+  ],
+  "features": [
+    {
+      "id": "top_flange",
+      "type": "flange",
+      "location": "top",
+      "description": "Horizontal flared section at the top of the object"
+    },
+    {
+      "id": "bottom_flange",
+      "type": "flange",
+      "location": "bottom",
+      "description": "Horizontal flared section at the bottom of the object"
+    },
+    {
+      "id": "central_waist",
+      "type": "neck",
+      "location": "middle",
+      "description": "Narrower vertical section connecting top and bottom flanges"
+    }
+  ],
+  "relations": [
+    {
+      "type": "symmetry",
+      "elements": [
+        "top_flange",
+        "bottom_flange"
+      ],
+      "description": "Top and bottom flanges are symmetrical about the horizontal centerline"
+    },
+    {
+      "type": "symmetry",
+      "elements": [
+        "left_side",
+        "right_side"
+      ],
+      "description": "Left and right sides are symmetrical about the vertical centerline"
+    }
+  ],
+  "symmetry": {
+    "vertical_axis": true,
+    "horizontal_axis": true
+  },
+  "repetitions": [],
+  "dimensions": {
+    "max_dimension": 120,
+    "aspect_ratio": "approx 1.4:1 (width:height)",
+    "max_width": 120.0,
+    "max_depth": 119.71,
+    "max_height": 82.8,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "Exact thickness of the central waist relative to the flanges",
+    "Whether the flanges are perfectly flat or have slight curvature"
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "The object is interpreted as a single solid part based on the two orthographic views. The front view shows the width and height profile, while the right view shows the depth and height profile. Both views share the same height and show a similar 'I' or 'H' shape with flared ends. The geometry is regularized to be symmetrical.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "extrude",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_2",
+        "operation": "extrude",
+        "profile_plane": "XZ",
+        "direction_axis": "Y",
+        "owner": "main_body",
+        "parameters": {
+          "depth": "derived_from_view_2_width",
+          "start": "center",
+          "end": "center"
+        },
+        "source_views": [
+          "view_1",
+          "view_2"
+        ]
+      }
+    ],
+    "unresolved_constraints": [
+      "Exact depth value needs to be scaled from view_2 relative to max_dimension"
+    ]
+  },
+  "user_intent": {
+    "description": "",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "120"
+  },
+  "source_view_group_count": 2,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

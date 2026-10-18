@@ -1,0 +1,216 @@
+```json
+{
+  "object": "L-shaped bracket with angled support rib",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "top",
+      "sheet_region": "view_1",
+      "constrains": "XY footprint, L-shape profile, hole positions, rib width"
+    },
+    {
+      "direction": "front",
+      "sheet_region": "view_3",
+      "constrains": "XZ profile, height variation (angled rib), base thickness"
+    },
+    {
+      "direction": "right",
+      "sheet_region": "view_2",
+      "constrains": "YZ profile, depth, hole visibility, rib thickness"
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "part_1",
+      "name": "Main Bracket Body",
+      "description": "L-shaped base plate with a vertical back wall and an angled triangular support rib connecting the base to the wall."
+    }
+  ],
+  "features": [
+    {
+      "id": "feat_base",
+      "type": "extrusion",
+      "owner": "part_1",
+      "description": "The flat L-shaped base plate."
+    },
+    {
+      "id": "feat_wall",
+      "type": "extrusion",
+      "owner": "part_1",
+      "description": "The vertical back wall rising from the right side of the base."
+    },
+    {
+      "id": "feat_rib",
+      "type": "extrusion",
+      "owner": "part_1",
+      "description": "The triangular support rib extending from the wall to the base, with an angled top surface."
+    },
+    {
+      "id": "feat_hole_1",
+      "type": "hole",
+      "owner": "part_1",
+      "description": "Circular hole in the base plate (left side in Top view)."
+    },
+    {
+      "id": "feat_hole_2",
+      "type": "hole",
+      "owner": "part_1",
+      "description": "Circular hole in the vertical wall (upper right in Top view)."
+    }
+  ],
+  "relations": [
+    {
+      "type": "coincident",
+      "elements": [
+        "feat_base",
+        "feat_wall"
+      ],
+      "description": "The wall rises vertically from the right edge of the base."
+    },
+    {
+      "type": "coincident",
+      "elements": [
+        "feat_rib",
+        "feat_wall",
+        "feat_base"
+      ],
+      "description": "The rib connects the inner face of the wall to the top surface of the base."
+    },
+    {
+      "type": "through",
+      "elements": [
+        "feat_hole_1",
+        "feat_base"
+      ],
+      "description": "Hole 1 passes through the base plate."
+    },
+    {
+      "type": "through",
+      "elements": [
+        "feat_hole_2",
+        "feat_wall"
+      ],
+      "description": "Hole 2 passes through the vertical wall."
+    }
+  ],
+  "symmetry": "none",
+  "repetitions": [],
+  "dimensions": [
+    {
+      "feature_id": "part_1",
+      "type": "max_dimension",
+      "value": 120,
+      "unit": "mm",
+      "source": "user_constraint"
+    }
+  ],
+  "uncertainties": [
+    "Exact thickness of the base plate and wall is inferred from the Right view proportions relative to the max dimension.",
+    "The 'hook' shape in the Top view (contour_7) is interpreted as the L-shaped footprint of the base and wall combined."
+  ],
+  "interpretation_conflicts": [
+    "The Top view (view_1) shows a complex outline that combines the footprint of the base and the wall. The Front view (view_3) confirms the L-shape profile (base + wall). The Right view (view_2) confirms the depth and the angled rib."
+  ],
+  "generation_notes": "The object is a standard L-bracket. The Top view defines the XY layout: a long base extending left, a wall on the right, and a rib connecting them. The Front view defines the Z height: the wall is tall, the base is thin, and the rib has a sloped top. The Right view confirms the uniform depth (Y-axis) and shows the holes.",
+  "construction_plan": {
+    "family": "multi_face_union",
+    "operations": [
+      {
+        "id": "op_base",
+        "operation": "extrude",
+        "owner": "feat_base",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "parameters": {
+          "profile_source": "view_1 (lower section)",
+          "height": "inferred from view_3 base thickness"
+        },
+        "source_views": [
+          "view_1",
+          "view_3"
+        ]
+      },
+      {
+        "id": "op_wall",
+        "operation": "extrude",
+        "owner": "feat_wall",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "parameters": {
+          "profile_source": "view_1 (right section)",
+          "height": "inferred from view_3 wall height"
+        },
+        "source_views": [
+          "view_1",
+          "view_3"
+        ]
+      },
+      {
+        "id": "op_rib",
+        "operation": "extrude",
+        "owner": "feat_rib",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "parameters": {
+          "profile_source": "view_1 (middle section)",
+          "height": "variable (angled top defined by view_3)"
+        },
+        "source_views": [
+          "view_1",
+          "view_3"
+        ]
+      },
+      {
+        "id": "op_union",
+        "operation": "boolean_union",
+        "owner": "part_1",
+        "profile_plane": null,
+        "direction_axis": null,
+        "parameters": {
+          "operands": [
+            "op_base",
+            "op_wall",
+            "op_rib"
+          ]
+        },
+        "source_views": []
+      },
+      {
+        "id": "op_cut_hole_1",
+        "operation": "boolean_subtract",
+        "owner": "part_1",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "parameters": {
+          "tool": "feat_hole_1",
+          "profile_source": "view_1 (contour_9)"
+        },
+        "source_views": [
+          "view_1"
+        ]
+      },
+      {
+        "id": "op_cut_hole_2",
+        "operation": "boolean_subtract",
+        "owner": "part_1",
+        "profile_plane": "YZ",
+        "direction_axis": "X",
+        "parameters": {
+          "tool": "feat_hole_2",
+          "profile_source": "view_1 (contour_11)"
+        },
+        "source_views": [
+          "view_1"
+        ]
+      }
+    ],
+    "unresolved_constraints": [
+      "Exact wall thickness",
+      "Exact base thickness"
+    ]
+  }
+}
+```
