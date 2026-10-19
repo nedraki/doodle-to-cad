@@ -83,6 +83,46 @@ def label_view_geometry(evidence: dict[str, Any], assigned: dict[str, dict[str, 
     return evidence
 
 
+# Issue #67: a hand-drawn opening is a small round STROKE RING — an outer
+# boundary whose child (the stroke's inner edge) encloses 15..92% of its own
+# area. Circles drawn inside a view group but NOT geometrically enclosed by the
+# view outline (hook elevations, stepped brackets) sit at hierarchy depth 0/1,
+# so the depth>=2 rule silently drops them and no per-view gate can demand
+# them. Circularity separates hand-inked circles (measured 0.84-0.92 on the
+# corpus) from view silhouettes (measured <=0.57); the dominance cap keeps a
+# view's own circular outline from being counted as an opening.
+RING_CIRCULARITY_MIN = 0.75
+RING_CHILD_RATIO_RANGE = (0.15, 0.92)
+RING_AREA_SHARE_OF_GROUP_DOMINANT_MAX = 0.15
+
+
+def _stroke_ring_stats(contours: list, tree) -> list[dict[str, Any]]:
+    """Per-contour {area, circularity, max_child_area, center} from the RAW
+    contour set — before analyze_image's top-80 truncation, so a ring's
+    stroke child is never missing from the ratio check."""
+    stats: list[dict[str, Any]] = []
+    for index, contour in enumerate(contours):
+        area = float(cv2.contourArea(contour))
+        perimeter = float(cv2.arcLength(contour, True))
+        circularity = 4 * np.pi * area / (perimeter * perimeter) if perimeter else 0.0
+        x, y, cw, ch = cv2.boundingRect(contour)
+        child_area = 0.0
+        if len(tree):
+            for other_index, row in enumerate(tree):
+                if int(row[3]) == index:
+                    child_area = max(child_area, float(cv2.contourArea(contours[other_index])))
+        stats.append({"area": area, "circularity": circularity,
+                      "max_child_area": child_area, "center": (x + cw / 2, y + ch / 2)})
+    return stats
+
+
+def _is_stroke_ring(stat: dict[str, Any]) -> bool:
+    if stat["circularity"] < RING_CIRCULARITY_MIN or stat["max_child_area"] <= 0:
+        return False
+    ratio = stat["max_child_area"] / max(stat["area"], 1e-9)
+    return RING_CHILD_RATIO_RANGE[0] <= ratio <= RING_CHILD_RATIO_RANGE[1]
+
+
 def analyze_image(data: bytes) -> tuple[dict[str, Any], bytes]:
     image = cv2.imdecode(np.frombuffer(data, np.uint8), cv2.IMREAD_COLOR)
     if image is None:
@@ -95,6 +135,36 @@ def analyze_image(data: bytes) -> tuple[dict[str, Any], bytes]:
     contours, hierarchy = cv2.findContours(binary, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     tree = hierarchy[0] if hierarchy is not None else []
     min_area = max(20.0, w * h * 0.00015)
+    contour_stats = _stroke_ring_stats(contours, tree)
+    # View groups come FIRST: an orphan opening ring counts as a closed
+    # internal profile only when it lies inside a registered view group.
+    view_groups = _view_groups(binary, w, h)
+    group_rects_px = [(g["bbox_normalized"][0] * w, g["bbox_normalized"][1] * h,
+                       (g["bbox_normalized"][0] + g["bbox_normalized"][2]) * w,
+                       (g["bbox_normalized"][1] + g["bbox_normalized"][3]) * h)
+                      for g in view_groups]
+    group_dominant_area = []
+    for rect in group_rects_px:
+        dominant = 0.0
+        for stat in contour_stats:
+            cx, cy = stat["center"]
+            if rect[0] <= cx <= rect[2] and rect[1] <= cy <= rect[3]:
+                dominant = max(dominant, stat["area"])
+        group_dominant_area.append(dominant)
+
+    def _orphan_ring_in_view(index: int) -> bool:
+        """A small round stroke ring that lies inside a view group but is not
+        the group's dominant outline: an opening drawn beside an open hook
+        elevation rather than enclosed by it (issue #67)."""
+        stat = contour_stats[index]
+        if not _is_stroke_ring(stat) or stat["area"] >= w * h * 0.08:
+            return False
+        cx, cy = stat["center"]
+        for group_index, rect in enumerate(group_rects_px):
+            if rect[0] <= cx <= rect[2] and rect[1] <= cy <= rect[3]:
+                if stat["area"] <= RING_AREA_SHARE_OF_GROUP_DOMINANT_MAX * group_dominant_area[group_index]:
+                    return True
+        return False
     shapes: list[dict[str, Any]] = []
     indexed = sorted(enumerate(contours), key=lambda pair: cv2.contourArea(pair[1]), reverse=True)[:80]
     for contour_index, contour in indexed:
@@ -111,6 +181,8 @@ def analyze_image(data: bytes) -> tuple[dict[str, Any], bytes]:
             depth += 1
             cursor = int(tree[cursor][3])
         polygon=[[round(float(point[0][0])/w,4),round(float(point[0][1])/h,4)] for point in approx]
+        enclosed_profile = bool(depth >= 2 and area < w*h*0.08)
+        orphan_ring = (not enclosed_profile) and depth % 2 == 0 and _orphan_ring_in_view(contour_index)
         shapes.append({
             "contour_id":f"contour_{contour_index}",
             "parent_contour_id":f"contour_{parent}" if parent>=0 else None,
@@ -119,12 +191,12 @@ def analyze_image(data: bytes) -> tuple[dict[str, Any], bytes]:
             "center_normalized": [round((x+cw/2)/w,4), round((y+ch/2)/h,4)],
             "vertices": len(approx), "circularity": round(float(circularity), 3),
             "hierarchy_depth": depth,
-            "closed_internal_profile": bool(depth >= 2 and area < w*h*0.08),
+            "closed_internal_profile": bool(enclosed_profile or orphan_ring),
+            "orphan_opening_ring": bool(orphan_ring),
             "polygon_sheet_normalized":polygon,
         })
     lines = cv2.HoughLinesP(binary, 1, np.pi/180, threshold=max(25, min(w,h)//12), minLineLength=min(w,h)//12, maxLineGap=12)
     line_count = 0 if lines is None else min(len(lines), 200)
-    view_groups = _view_groups(binary, w, h)
     for index,group in enumerate(view_groups,1):group["view_id"]=f"view_{index}"
     internal_profiles = [shape for shape in shapes if shape["closed_internal_profile"]]
     # A thick pen stroke produces two nested contours for one opening. Even
