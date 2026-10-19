@@ -137,6 +137,10 @@ PYTHONPATH=. .venv/bin/python docs/brep/bench-final/aggregate.py
 # 3) claim gate (exits non-zero if any README/RESULTS number drifts,
 #    or any montage image/row/mesh hash binding breaks)
 PYTHONPATH=. .venv/bin/python docs/brep/bench-final/audit.py
+# 3b) adversarial self-test: plants 6 defects (incl. the exact 907eed7
+#     errors: image swap, fake GT reference, acceptance flip) and requires
+#     the audit to CATCH every one — a check that cannot fail is decoration
+PYTHONPATH=. .venv/bin/python docs/brep/bench-final/audit_selftest.py
 # 4) montages (needs wall app on :8114; refuses on hash mismatch)
 PYTHONPATH=. .venv/bin/python docs/brep/bench-final/make_fail_montages.py
 ```

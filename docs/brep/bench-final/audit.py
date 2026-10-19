@@ -35,6 +35,13 @@ usdd = [r for r in usd if r.get("job_status") == "done"]
 plan = json.loads((HERE / "TRIAL-PLAN.json").read_text())
 check("matrix complete: 23 corpus x 2 backends x 2 trials = 92 rows",
       len(rows) == 92 and len(plan["corpus"]) == 23, f"rows={len(rows)}")
+# acceptance drift guard: the aggregator/audit definition must still equal
+# the FROZEN PLAN's text (the 0/31 error came from the aggregator inventing
+# a stricter rule the evaluator can never emit)
+_acc = plan.get("pass_criteria", {}).get("product_acceptance", "")
+check("acceptance definition matches the frozen plan text",
+      "score >= 70" in _acc and "status != 'failed'" in _acc
+      and "usd-brep never auto-accepts" not in _acc, _acc[:80])
 check("plan revision logged (dimension fix, 12 cells)",
       len(plan.get("plan_revisions", [])) == 1 and "12 cells" in plan["plan_revisions"][0]["cells"])
 refs = json.loads((HERE / "references/reference-measurements.json").read_text())
