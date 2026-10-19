@@ -128,7 +128,7 @@ async def correct_construction(pipeline, out, recipe, failure, attempt, maximum)
 
 
 async def submit_direct_job(image, mime, notes, dimension, extra, controls,
-                            pipeline, results_dir, jobs, prune, save_result):
+                            pipeline, results_dir, jobs, prune, save_result, routing=None):
     if extra:
         raise HTTPException(422, {'code':'unsupported_input', 'message':'Direct BRep currently accepts one drawing sheet. Put all projections on that sheet.'})
     if controls['primary_view'] not in {'front','top','right','left','rear'} or controls['projection_standard'] not in {'first-angle','third-angle'}:
@@ -145,6 +145,8 @@ async def submit_direct_job(image, mime, notes, dimension, extra, controls,
     run_id = uuid.uuid4().hex[:12]
     job = {'job_id':run_id,'kind':'recipe','status':'running','stage':'queued',
            'created':time.monotonic(),'result':None,'error':None,'task':None}
+    if routing is not None:
+        job['routing'] = routing
     jobs[run_id] = job
     prune()
     provenance = {'path':'drawing-to-brep','backend':'usd-brep','prompt_version':PROMPT_VERSION,

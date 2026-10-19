@@ -1,0 +1,26 @@
+{
+  "name": "multi_view_grid",
+  "job_id": "e01992400e52",
+  "status": "done",
+  "routing": {
+    "backend": "openscad",
+    "rule": "V",
+    "signals": {
+      "view_group_count": 2,
+      "closed_internal_profile_count": 4,
+      "circular_profile_count": 4,
+      "notes_keywords": "no",
+      "dimension_given": true,
+      "kernel_history_hit": false
+    },
+    "rationale": [
+      {
+        "rule": "V",
+        "text": "two or more view groups: OpenSCAD won fidelity on dense multi-view ink (24/40 vs 11/40 accepted, task-17-comparison)"
+      }
+    ]
+  },
+  "backend_in_result": "openscad",
+  "success": true,
+  "error": null
+}

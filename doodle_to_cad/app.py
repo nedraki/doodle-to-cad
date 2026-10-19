@@ -238,7 +238,7 @@ def brep_build(recipe: dict):
         raise HTTPException(422, {"message": str(exc), "code": getattr(exc, "code", "invalid_input")}) from exc
 
 
-def _save_brep_result(out, recipe, built, original=None, controls=None):
+def _save_brep_result(out, recipe, built, original=None, controls=None, routing=None):
     (out / "model.recipe.json").write_text(json.dumps(recipe, indent=2))
     result = {"id": out.name, "backend": "usd-brep", "success": False,
               "spec": {"object": recipe.get("name", "BRep part")},
@@ -248,6 +248,9 @@ def _save_brep_result(out, recipe, built, original=None, controls=None):
               "files": {"source": built["source"], "stl": built["stl"], "usd": built["usd"], "views": built.get("views", {})},
               "build": built.get("build"),
               "original_run_id": original}
+    if routing is not None:
+        result["routing"] = routing
+        (out / "routing.json").write_text(json.dumps(routing, indent=2))
     temporary = out / "result.pending.json"
     temporary.write_text(json.dumps(result, indent=2))
     temporary.replace(out / "result.json")
@@ -318,16 +321,32 @@ async def generate(
     except json.JSONDecodeError as exc:
         raise HTTPException(422, {"message": f"view_directions is not valid JSON: {exc}", "error_type": type(exc).__name__, "stage": "request"}) from exc
 
-    if backend not in {"openscad", "usd-brep"}:
+    if backend not in {"openscad", "usd-brep", "auto"}:
         raise HTTPException(422, "Unknown generation backend")
-    if backend == "usd-brep":
+    routing = None
+    if backend == "auto":
+        from .backend_router import image_sha256, route, scan_kernel_history
+        from .geometry import analyze_image
+        try:
+            evidence, _overlay = analyze_image(data)
+        except ValueError as exc:
+            raise HTTPException(422, str(exc)) from exc
+        routing = route(evidence, notes, dimension,
+                        scan_kernel_history(settings.results_dir, image_sha256(data)))
+    chosen = routing["backend"] if routing else backend
+    if chosen == "usd-brep":
         from .direct_brep import submit_direct_job
+        import functools
         return await submit_direct_job(data, image.content_type, notes, dimension, extra, controls,
-                                       pipeline, settings.results_dir, JOBS, _prune_jobs, _save_brep_result)
+                                       pipeline, settings.results_dir, JOBS, _prune_jobs,
+                                       functools.partial(_save_brep_result, routing=routing),
+                                       routing=routing)
 
     run_id = uuid.uuid4().hex[:12]
     job = {"job_id": run_id, "status": "running", "stage": "queued", "created": time.monotonic(),
            "result": None, "error": None, "task": None}
+    if routing is not None:
+        job["routing"] = routing
     JOBS[run_id] = job
     _prune_jobs()
     register_cancellation(run_id)
@@ -338,6 +357,11 @@ async def generate(
                 data, image.content_type, notes, dimension, extra, controls,
                 run_id=run_id, on_stage=lambda name: job.update(stage=name),
             )
+            if routing is not None:
+                result["routing"] = routing
+                out_dir = settings.results_dir / run_id
+                if out_dir.is_dir():
+                    (out_dir / "routing.json").write_text(json.dumps(routing, indent=2))
             job["result"] = result
             job["status"] = "done"
             job["stage"] = "done"
@@ -367,6 +391,8 @@ def job_status(job_id: str):
                     "result": json.loads((settings.results_dir / job_id / "result.json").read_text())}
         raise HTTPException(404, "Unknown job")
     payload = {key: job[key] for key in ("job_id", "status", "stage", "result", "error")}
+    if "routing" in job:
+        payload["routing"] = job["routing"]
     if job.get("question"): payload["question"] = job["question"]
     payload["elapsed_seconds"] = round(time.monotonic() - job["created"], 1)
     return payload

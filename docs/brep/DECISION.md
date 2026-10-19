@@ -75,3 +75,15 @@ n=5 per cell gives coarse rates. One model, one host, one day. The top-view
 similarity artifact needs a viewer-side check. Targeted edits were
 not-applicable on every run (no box-cutter pockets in this corpus); that path
 is covered by task-15 evidence, not by this matrix.
+
+## Update (issue #60) — opt-in Auto routing
+
+The default stays manual: OpenSCAD remains the form default and an explicit
+manual pick is never overridden. Issue #60 added an opt-in "Auto" choice whose
+rules (kernel-history exclusion, operation keywords, view density, circular-
+pattern kernel risk, single-view+dimension) and its frozen-set validation
+(0 disagreements over 8 drawings) are documented in
+`docs/brep/issue-60-routing/README.md`. This does not reverse the decision
+above; it ships the escape-hatch-preserving half of issue #60. Auto-routing
+may become the default only after `routing.json` telemetry accumulates enough
+real jobs to re-calibrate the thresholds (see the Telemetry section there).
