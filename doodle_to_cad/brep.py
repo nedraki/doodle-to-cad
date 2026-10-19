@@ -11,7 +11,7 @@ import time
 import uuid
 
 from .brep_recipe import recipe_params, validate_recipe
-from .build_contract import BuildInput, BuildResult, BuildError, Diagnostic
+from .build_contract import BuildInput, BuildResult, BuildError, Diagnostic, classify_kernel_crash
 from .openscad import render_views, mesh_health
 
 WORKER = Path(__file__).resolve().parents[1] / "workers" / "brep" / "build.py"
@@ -168,8 +168,17 @@ def build_brep(request: BuildInput, binary: str = "openscad", on_stage=lambda _:
         if process.returncode:
             failure_path = staging / "construction-error.json"
             failure = json.loads(failure_path.read_text()) if failure_path.exists() else {}
-            result.diagnostics.append(Diagnostic(failure.get("code", "build_failed"),
-                                                 failure.get("message", (result.log or "BRep worker crashed")[-2500:])))
+            code = failure.get("code", "build_failed")
+            message = failure.get("message", (result.log or "BRep worker crashed")[-2500:])
+            if code == "build_failed":
+                # Contain the known usd_brep 1.0.0 tessellation crash (issue #61)
+                # even when the worker predated the classifier or died before
+                # writing construction-error.json: the signature in the message
+                # or in the captured log earns the structured kernel_unavailable code.
+                kernel = classify_kernel_crash(message) or classify_kernel_crash(result.log)
+                if kernel:
+                    code, message = kernel
+            result.diagnostics.append(Diagnostic(code, message))
             return result
         try:
             result.backend_details = json.loads((staging / "diagnostics.json").read_text())

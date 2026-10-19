@@ -9,7 +9,7 @@ from importlib.metadata import version
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 from doodle_to_cad.brep_recipe import validate_recipe
-from doodle_to_cad.build_contract import BuildError
+from doodle_to_cad.build_contract import BuildError, classify_kernel_crash
 
 
 def _limits_report():
@@ -226,7 +226,17 @@ if __name__ == "__main__":
     try:
         build(Path(sys.argv[1]), Path(sys.argv[2]))
     except Exception as exc:
+        code = getattr(exc, "code", "build_failed")
+        message = str(exc)
+        if code == "build_failed":
+            # Contain the known usd_brep 1.0.0 tessellation crash (issue #61):
+            # the missing '_omni_solid' kernel module must surface as a
+            # structured kernel_unavailable failure with backend-switch advice,
+            # never as a generic build_failed the user would retry forever.
+            kernel = classify_kernel_crash(message)
+            if kernel:
+                code, message = kernel
         (Path(sys.argv[2]) / "construction-error.json").write_text(json.dumps({
-            "code": getattr(exc, "code", "build_failed"), "message": str(exc)}))
-        print(f"BRep build failed: {exc}", file=sys.stderr)
+            "code": code, "message": message}))
+        print(f"BRep build failed: {message}", file=sys.stderr)
         sys.exit(1)

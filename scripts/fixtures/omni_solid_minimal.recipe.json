@@ -1,0 +1,39 @@
+{
+  "name": "arch_leg",
+  "operations": [
+    {
+      "bend_radius": 20,
+      "id": "arch",
+      "kind": "arc_pipe",
+      "origin": [
+        0,
+        0,
+        4
+      ],
+      "radius": 4,
+      "angle": 180
+    },
+    {
+      "axis": "z",
+      "height": 30,
+      "id": "leg",
+      "kind": "cylinder",
+      "origin": [
+        -20,
+        0,
+        0
+      ],
+      "radius": 4
+    },
+    {
+      "id": "part",
+      "kind": "union",
+      "left": "arch",
+      "right": "leg"
+    }
+  ],
+  "output": "part",
+  "parameters": {},
+  "units": "mm",
+  "version": 1
+}
