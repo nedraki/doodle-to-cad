@@ -87,3 +87,24 @@ pattern kernel risk, single-view+dimension) and its frozen-set validation
 above; it ships the escape-hatch-preserving half of issue #60. Auto-routing
 may become the default only after `routing.json` telemetry accumulates enough
 real jobs to re-calibrate the thresholds (see the Telemetry section there).
+
+## Final ruling (issue #15, user decision 2026-10-19)
+
+User ruling: the kernel stays user-selectable at the start of the flow and
+**Direct BRep is the default**. Implemented on this branch:
+
+- Form default: "Direct BRep (default)" is the first/selected option; OpenSCAD
+  and Auto remain explicit choices. A manual pick is never overridden.
+- Graceful degradation: on page load the UI reads /api/health; if the BRep
+  worker is not installed and the selector is untouched, the default falls
+  back to OpenSCAD (the health chip shows "BRep kernel missing").
+- Legacy HTTP contract unchanged: POST /api/generate without a `backend`
+  field still routes to the OpenSCAD pipeline (94 existing test/script call
+  sites depend on it; the app always sends the field explicitly).
+  Pinned by tests/test_backend_default.py.
+- Known trade-offs of the BRep default, accepted with the data on record:
+  multi-view sheets with uploaded projected views return a clear 422 (Direct
+  BRep accepts one drawing sheet); the two usd_brep 1.0.0 kernel defects
+  (issue #61) surface as kernel_unavailable with "Retry with the OpenSCAD
+  backend" advice; frozen fidelity on dense multi-view ink favors OpenSCAD.
+  Auto (issue #60) is the data-driven answer for those cases.
