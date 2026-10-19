@@ -1,0 +1,28 @@
+PASS  case-103 sheet registers 4 internal profiles  [got 4]
+PASS  case-103 has exactly 2 orphan rings (the hook-elevation pair)  [2 orphans]
+PASS  pre-fix sheet rule would have counted only 2  [old rule -> 2]
+PASS  crop counts front=0 top=2 right=2  [{'front': 0, 'top': 2, 'right': 2}]
+PASS  sum of registered crop counts == sheet total (4 == 4)  [{'front': 0, 'top': 2, 'right': 2}]
+PASS  pre-fix crop rule summed to 2 (hook pair lost)  [{'front': 0, 'top': 2, 'right': 0}]
+PASS  planted fixture: old sheet rule counts 2 of 4
+PASS  planted fixture: fixed sheet rule counts 4
+PASS  planted fixture: hook view old crop rule = 0 (planted error present)
+PASS  planted fixture: hook view fixed crop rule = 2
+PASS  motor-103 demanded_openings.total == 4 (field path: row['demanded_openings']['total'])  [{'total': 4, 'per_view': {'front': 0, 'top': 2, 'right': 2}, 'sheet_total': 4, 'registration_gap': 0}]
+PASS  motor-103 demanded per_view == {front:0, top:2, right:2}  [{'front': 0, 'top': 2, 'right': 2}]
+PASS  motor-103 registration gap closed (gap == 0, sheet_total == 4)
+PASS  motor-103 now REJECTED with 2 of 4 bores (was accepted at 95.8)  [accepted=False score=75.8]
+PASS  motor-103 openings_through and features gates both fire
+PASS  baseline (pre-fix) motor crop counts summed to 2 (right=0)  [{'front': {'crop': 0, 'rendered': 0}, 'top': {'crop': 2, 'rendered': 2}, 'right': {'crop': 0, 'rendered': 0}}]
+PASS  baseline motor was accepted
+PASS  frozen corpus has 80 rows in both runs
+PASS  frozen: zero verdict flips on all 80 rows  [[]]
+PASS  frozen: zero crop-count changes on all 80 rows  [[]]
+PASS  frozen: zero demanded-count changes (new total == old best-view max)  [[]]
+PASS  frozen: 26 trusted rows, identical verdicts
+PASS  tests/test_view_registration.py: 12 passed  [12 passed in 0.13s]
+PASS  full suite: 304 passed, 2 warnings  [304 passed, 2 warnings in 71.40s (0:01:11)]
+PASS  environment.json records worker usd-brep version (no __version__ attr)
+PASS  environment.json records base commit
+
+audit: 26/26 checks passed

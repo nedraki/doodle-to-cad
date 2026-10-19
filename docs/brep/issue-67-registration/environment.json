@@ -1,0 +1,16 @@
+{
+  "git_head": "15e37d496926ae48af7b5dcf36a46eec79b38872",
+  "git_branch": "hermes/issue-67-registration",
+  "base_commit": "24946c7",
+  "python": "3.11.16",
+  "pytest": "9.1.1",
+  "opencv": "5.0.0.93",
+  "numpy": "2.4.6",
+  "trimesh": "5.1.0",
+  "worker": {
+    "path": "workers/brep/.venv/bin/python",
+    "python": "3.12.3",
+    "usd-brep": "1.0.0",
+    "usd_brep_has_dunder_version": false
+  }
+}

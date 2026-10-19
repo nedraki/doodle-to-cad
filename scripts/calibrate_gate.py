@@ -47,6 +47,7 @@ def score_trial(drawing, backend, trial, image: bytes, stl: Path, views: dict, s
     topo = ev.get("profile_topology") or {}
     pt = {d: {"crop": t.get("crop_internal_profiles", 0), "rendered": t.get("rendered_internal_profiles", 0)}
           for d, t in topo.items()}
+    demanded_openings = ev.get("demanded_openings")
     ax = {"width": 0, "depth": 1, "height": 2}
     r1 = {}
     if derived and ok:
@@ -61,6 +62,7 @@ def score_trial(drawing, backend, trial, image: bytes, stl: Path, views: dict, s
             "old_accepted": old_accepted, "old_score": ev.get("score"),
             "gates": ev.get("mandatory_gates"), "failures": ev.get("failures"),
             "health": health, "through_holes": holes, "profile_topology": pt,
+            "demanded_openings": demanded_openings,
             "derived_sizes": {k: derived.get(k) for k in ("width_mm", "depth_mm", "height_mm")} if derived else None,
             "r1_ratios": r1, "gt_checks": gt_checks, "trusted": trusted}
 
