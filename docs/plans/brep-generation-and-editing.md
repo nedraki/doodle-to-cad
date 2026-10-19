@@ -102,12 +102,12 @@ Never remove an unsupported feature silently or hide a backend switch.
 
 ## Ordered tasks
 
-Task 01 evidence is preserved in `brep-integration` and awaits user review.
+Task 01 evidence is preserved in `brep-integration`; the user-review gate was withdrawn by the user on 2026-10-19 (issue #18 closed). Quality assurance is done by running the product against the benchmark case-by-case and recording perceived quality in user notes.
 [PR #36](https://github.com/nedraki/doodle-to-cad/pull/36) is closed and retained as review history.
 See [issue #18](https://github.com/nedraki/doodle-to-cad/issues/18) for the recorded generation failure.
-Tasks 02–17 are merged into `brep-integration`; their issues (#19–#34) are closed with evidence dossiers under `docs/brep/`. The product-default decision is `docs/brep/DECISION.md` (keep manual selection; automatic routing deferred to issue #60). Still awaiting user review: task 01 (#18, PR #55) and the decision record (#15). The live status is tracked in issue #17. Baseline and general drawing-comparison failures remain recorded; the feature demonstrations do not erase them.
+Tasks 02–17 are merged into `brep-integration`; their issues (#19–#34) are closed with evidence dossiers under `docs/brep/`. The product-default decision is `docs/brep/DECISION.md` (keep manual selection; automatic routing deferred to issue #60). Task 01's review gate was withdrawn by the user (issue #18 closed; the #15 decision was ruled and shipped: Direct BRep is the default, manual choice kept). The live status is tracked in issue #17. Baseline and general drawing-comparison failures remain recorded; the feature demonstrations do not erase them.
 
-- [ ] 01. [#18](https://github.com/nedraki/doodle-to-cad/issues/18) — Record the baseline and review the existing BRep prototype
+- [x] 01. [#18](https://github.com/nedraki/doodle-to-cad/issues/18) — Record the baseline and review the existing BRep prototype (recorded; review gate withdrawn by user 2026-10-19, evidence retained under docs/brep/baseline-01/)
 - [x] 02. [#19](https://github.com/nedraki/doodle-to-cad/issues/19) — Use one build result contract for both backends
 - [x] 03. [#20](https://github.com/nedraki/doodle-to-cad/issues/20) — Define a versioned executable construction recipe
 - [x] 04. [#21](https://github.com/nedraki/doodle-to-cad/issues/21) — Run a saved recipe through the existing generation job flow
