@@ -1,0 +1,58 @@
+========================================================================
+benchmarks/cases/103_y_motor_holder/source/drawing.png
+image 1024x768  contours=10  view_groups=3  sheet_closed_internal_profile_count=2
+sheet-level logical internal profiles:
+  contour_9 depth=2 area_ratio=0.00051 center=[0.4185, 0.2943] bbox=[0.4072, 0.2786, 0.0225, 0.0312] circularity=0.893
+  contour_11 depth=2 area_ratio=0.00043 center=[0.5815, 0.0755] bbox=[0.5703, 0.0612, 0.0225, 0.0286] circularity=0.858
+registered views -> group bbox:
+  front: [0.3809, 0.5247, 0.2432, 0.1602]
+  top: [0.3799, 0.026, 0.2441, 0.362]
+  right: [0.7451, 0.5221, 0.2549, 0.1615]
+view_geometry internal profile assignments:
+  view_1: outer=yes internal=2 ids=['contour_11', 'contour_9']
+  view_2: outer=yes internal=0 ids=[]
+  view_3: outer=yes internal=0 ids=[]
+crop gate front: crop_internal_profiles=0 box=(390,402,639,526) centroids=[]
+crop gate top: crop_internal_profiles=2 box=(389,19,638,297) centroids=[[0.137, 0.75], [0.849, 0.122]]
+crop gate right: crop_internal_profiles=0 box=(762,400,1024,525) centroids=[]
+SUM registered crop counts = 2  (sheet says 2)
+raw contours inside front crop (ink.size=30876, min_area_gate=15.4):
+  i=1 depth=1 area=15764 bbox=(12,11,222,101)
+raw contours inside top crop (ink.size=69222, min_area_gate=34.6):
+  i=1 depth=1 area=28428 bbox=(12,11,223,256)
+  i=2 depth=2 area=392 bbox=(28,194,22,24)
+  i=3 depth=3 area=114 bbox=(33,199,12,14)
+  i=4 depth=2 area=334 bbox=(194,27,23,22)
+  i=5 depth=3 area=78 bbox=(200,33,11,11)
+raw contours inside right crop (ink.size=32750, min_area_gate=16.4):
+  i=1 depth=1 area=114 bbox=(168,36,12,14)
+  i=3 depth=1 area=85 bbox=(49,37,12,12)
+========================================================================
+live job 7c274ef76d20 input.png
+image 1024x768  contours=10  view_groups=3  sheet_closed_internal_profile_count=2
+sheet-level logical internal profiles:
+  contour_9 depth=2 area_ratio=0.00051 center=[0.4185, 0.2943] bbox=[0.4072, 0.2786, 0.0225, 0.0312] circularity=0.893
+  contour_11 depth=2 area_ratio=0.00043 center=[0.5815, 0.0755] bbox=[0.5703, 0.0612, 0.0225, 0.0286] circularity=0.858
+registered views -> group bbox:
+  front: [0.3809, 0.5247, 0.2432, 0.1602]
+  top: [0.3799, 0.026, 0.2441, 0.362]
+  right: [0.7451, 0.5221, 0.2549, 0.1615]
+view_geometry internal profile assignments:
+  view_1: outer=yes internal=2 ids=['contour_11', 'contour_9']
+  view_2: outer=yes internal=0 ids=[]
+  view_3: outer=yes internal=0 ids=[]
+crop gate front: crop_internal_profiles=0 box=(390,402,639,526) centroids=[]
+crop gate top: crop_internal_profiles=2 box=(389,19,638,297) centroids=[[0.137, 0.75], [0.849, 0.122]]
+crop gate right: crop_internal_profiles=0 box=(762,400,1024,525) centroids=[]
+SUM registered crop counts = 2  (sheet says 2)
+raw contours inside front crop (ink.size=30876, min_area_gate=15.4):
+  i=1 depth=1 area=15764 bbox=(12,11,222,101)
+raw contours inside top crop (ink.size=69222, min_area_gate=34.6):
+  i=1 depth=1 area=28428 bbox=(12,11,223,256)
+  i=2 depth=2 area=392 bbox=(28,194,22,24)
+  i=3 depth=3 area=114 bbox=(33,199,12,14)
+  i=4 depth=2 area=334 bbox=(194,27,23,22)
+  i=5 depth=3 area=78 bbox=(200,33,11,11)
+raw contours inside right crop (ink.size=32750, min_area_gate=16.4):
+  i=1 depth=1 area=114 bbox=(168,36,12,14)
+  i=3 depth=1 area=85 bbox=(49,37,12,12)
