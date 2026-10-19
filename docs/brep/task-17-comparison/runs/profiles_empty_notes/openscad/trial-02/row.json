@@ -1,0 +1,87 @@
+{
+  "drawing": "profiles_empty_notes",
+  "backend": "openscad",
+  "trial": 2,
+  "submitted_at": "2026-10-19T00:01:45.842830+00:00",
+  "finished_at": "2026-10-19T00:05:30.363900+00:00",
+  "run_id": "4d51a7e7a524",
+  "wall_seconds": 224.5,
+  "job_status": "done",
+  "error": null,
+  "questions_asked": 0,
+  "question_kinds": [],
+  "build": {
+    "watertight": true,
+    "components": 1,
+    "genus": 1,
+    "extents_mm": [
+      60.0,
+      40.0,
+      6.0
+    ],
+    "volume_mm3": 12860.5,
+    "sha256": "6cc01fad0050afad24744ff7978a273bb496caa22bd339c55af7ac92bcdb66a3",
+    "bytes": 15839
+  },
+  "checks": {
+    "build_success": true,
+    "extents_pass": true,
+    "genus_pass": true,
+    "volume_pass": true,
+    "fidelity_pass": true,
+    "overall_pass": true,
+    "not_applicable": []
+  },
+  "fidelity": {
+    "scores": {
+      "top": 0.53
+    },
+    "pass": true,
+    "reason": null,
+    "topology": {
+      "top": {
+        "expected": 0,
+        "actual": 1,
+        "position_fidelity": null
+      }
+    }
+  },
+  "product": {
+    "success": false,
+    "accepted": false,
+    "status": null,
+    "score": 93.0,
+    "projection_status": null,
+    "geometry_status": null,
+    "failures": [
+      "degenerate or implausible axis dimensions: X=60 mm vs expected 15.62 mm"
+    ]
+  },
+  "attempts": {
+    "count": 3,
+    "recovered": false,
+    "corrections": null,
+    "selected": 1
+  },
+  "unsupported": {
+    "flag": false,
+    "code": null
+  },
+  "edit": {
+    "available": true,
+    "ok": true,
+    "seconds": 0.56,
+    "param": "plate_width",
+    "old": 60.0,
+    "new": 72.0,
+    "message": null
+  },
+  "targeted": {
+    "available": false,
+    "ok": false,
+    "seconds": null,
+    "operation": null,
+    "value": null,
+    "message": "not_applicable: the product requires a BRep result for targeted edits"
+  }
+}

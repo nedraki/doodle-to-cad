@@ -1,0 +1,36 @@
+{
+  "view_frame": "The drawing presents a wheel disc in two views. The FRONT view (XZ plane) displays the circular face of the wheel, with X representing the horizontal width and Z representing the vertical height. The RIGHT view (YZ plane) displays the side profile, with Y representing the depth (thickness) and Z representing the vertical height. The wheel is centered at the origin (0,0,0).",
+  "features": [
+    {
+      "id": "wheel_body",
+      "shape": "Extruded Profile",
+      "section": "Complex 2D Profile",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "OD 120 mm",
+        "thickness 8 mm",
+        "ASSUMED rim_width 10 mm",
+        "ASSUMED hub_diameter 30 mm",
+        "ASSUMED spoke_width 10 mm"
+      ],
+      "placement": "Centered at (0,0,0). The profile is defined in the XY plane (rotated to XZ for display) and extruded along the Y-axis from Y=-4 to Y=4. The profile consists of an outer circle (R=60) and an inner circle (R=50) forming the rim, a central hub circle (R=15), and 8 rectangular spokes connecting the hub to the rim.",
+      "evidence": "Front view shows concentric circles and 8 radial spokes. Text annotation specifies 'OD 120 mm; thickness 8 mm; 8 spokes'. Right view confirms uniform thickness."
+    }
+  ],
+  "connections": [
+    "The 8 spokes connect the central hub to the inner face of the outer rim.",
+    "The rim and hub are concentric circles centered at the origin."
+  ],
+  "edit_rules": [
+    "Changing 'OD 120 mm' scales the outer rim radius and the length of the spokes.",
+    "Changing 'thickness 8 mm' adjusts the extrusion depth along the Y-axis.",
+    "Changing 'ASSUMED hub_diameter' adjusts the hub radius and the inner start point of the spokes.",
+    "Changing 'ASSUMED rim_width' adjusts the inner radius of the rim and the outer end point of the spokes."
+  ],
+  "unresolved": [
+    "Hub diameter is not dimensioned; an assumption of 30 mm is used.",
+    "Rim width (radial thickness) is not dimensioned; an assumption of 10 mm is used.",
+    "Spoke width is not dimensioned; an assumption of 10 mm is used."
+  ],
+  "clarification": null
+}

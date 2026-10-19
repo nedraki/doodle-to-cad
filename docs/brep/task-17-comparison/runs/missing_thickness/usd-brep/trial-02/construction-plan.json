@@ -1,0 +1,39 @@
+{
+  "view_frame": "The drawing uses a third-angle projection standard. The primary view is TOP (XY plane), showing the planar outline of the tray. The SECTION view is XZ (Front), showing the vertical profile and wall thickness. The world axes are defined as: X is the width (60mm), Y is the depth (40mm), and Z is the height (20mm).",
+  "features": [
+    {
+      "id": "tray_outer",
+      "shape": "Extruded Profile",
+      "section": "Rounded Rectangle",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "60",
+        "40",
+        "20",
+        "R6"
+      ],
+      "placement": "Centered at (0,0) in XY. Extends from Z=0 to Z=20. The profile is a rectangle of 60x40 with corner radii of 6mm.",
+      "evidence": "Top view shows outer boundary with dimensions 60 and 40. Text notes 'Outside: 60 x 40 x 20' and 'Outer vertical corners: R6'. Section view shows height 20."
+    },
+    {
+      "id": "tray_inner",
+      "shape": "Extruded Profile (Void)",
+      "section": "Rounded Rectangle",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "3"
+      ],
+      "placement": "Centered at (0,0) in XY. Extends from Z=3 to Z=20. The profile is offset inward from the outer boundary by 3mm. The inner corner radius is 3mm (Outer R6 - Thickness 3).",
+      "evidence": "Section view shows 'EMPTY' interior with walls and floor. Text notes 'Same wall and floor thickness'. User clarification specifies uniform thickness of 3mm."
+    }
+  ],
+  "connections": [
+    "tray_inner is subtracted from tray_outer to form the final solid."
+  ],
+  "edit_rules": [
+    "Changing the 'tray_inner' thickness parameter (currently 3mm) must update both the wall thickness (XY offset) and the floor thickness (Z start height) simultaneously.",
+    "The outer dimensions (60x40x20) and outer corner radius (R6) are fixed constraints; the inner geometry must adjust to maintain the specified thickness."
+  ],
+  "unresolved": [],
+  "clarification": null
+}

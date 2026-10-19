@@ -1,0 +1,152 @@
+{
+  "object": "Rectangular Block with Central Hole",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "top",
+      "sheet_region": "view_4",
+      "what_it_constrains": "Defines the XY footprint (40mm x 30mm) and the position of the central \u00d88mm hole."
+    },
+    {
+      "direction": "front",
+      "sheet_region": "view_5",
+      "what_it_constrains": "Defines the XZ profile (40mm width) and confirms the object is a solid block of uniform thickness."
+    },
+    {
+      "direction": "side",
+      "sheet_region": "view_2",
+      "what_it_constrains": "Defines the YZ profile (30mm depth) and confirms the object is a solid block of uniform thickness."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "part_1",
+      "name": "Main Block",
+      "material": "generic_plastic",
+      "bounding_box": [
+        40,
+        30,
+        12
+      ]
+    }
+  ],
+  "features": [
+    {
+      "id": "feat_1",
+      "type": "block",
+      "owner": "part_1",
+      "parameters": {
+        "width": 40,
+        "depth": 30,
+        "height": 12
+      }
+    },
+    {
+      "id": "feat_2",
+      "type": "hole",
+      "owner": "part_1",
+      "parameters": {
+        "diameter": 8,
+        "depth": 12,
+        "position": [
+          20,
+          15
+        ],
+        "axis": "Z"
+      }
+    }
+  ],
+  "relations": [
+    {
+      "type": "concentric",
+      "target": "feat_2",
+      "reference": "part_1",
+      "description": "Hole is centered in the block footprint."
+    }
+  ],
+  "symmetry": [
+    {
+      "type": "planar",
+      "axis": "X",
+      "description": "Symmetric about the Y-centerline."
+    },
+    {
+      "type": "planar",
+      "axis": "Y",
+      "description": "Symmetric about the X-centerline."
+    }
+  ],
+  "repetitions": [],
+  "dimensions": {
+    "max_width": 40.0,
+    "max_depth": 4.34,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "The hole is assumed to be a through-hole based on the 'Opening' label and standard block conventions, though depth is not explicitly dimensioned in the side views."
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "The drawing is a standard orthographic projection of a rectangular block. The top view (view_4) clearly shows the 40x30 rectangle and the central circle. The text annotations explicitly provide the dimensions (40 wide, 30 deep, 12 thick) and the hole size (\u00d88). The hole is centered. The construction is straightforward: extrude the rectangle and boolean subtract the cylinder.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "extrude",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_2",
+        "operation": "extrude",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "owner": "part_1",
+        "parameters": {
+          "depth": 12
+        },
+        "source_views": [
+          "view_4",
+          "view_5"
+        ]
+      },
+      {
+        "id": "feat_2",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": null
+        },
+        "source_views": []
+      }
+    ],
+    "unresolved_constraints": [
+      "The hole is assumed to be a through-hole based on the 'Opening' label and standard block conventions, though depth is not explicitly dimensioned in the side views."
+    ]
+  },
+  "user_intent": {
+    "description": "",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "40"
+  },
+  "source_view_group_count": 5,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

@@ -1,0 +1,69 @@
+{
+  "drawing": "curved_handle",
+  "backend": "openscad",
+  "trial": 4,
+  "submitted_at": "2026-10-18T23:37:06.169741+00:00",
+  "finished_at": "2026-10-18T23:53:20.796432+00:00",
+  "run_id": "90d4f2fdc4b5",
+  "wall_seconds": 974.6,
+  "job_status": "done",
+  "error": null,
+  "questions_asked": 0,
+  "question_kinds": [],
+  "build": null,
+  "checks": {
+    "build_success": false,
+    "extents_pass": false,
+    "genus_pass": false,
+    "volume_pass": false,
+    "fidelity_pass": null,
+    "overall_pass": false,
+    "not_applicable": [
+      "fidelity"
+    ]
+  },
+  "fidelity": {
+    "scores": null,
+    "pass": null,
+    "reason": "no rendered views on disk"
+  },
+  "product": {
+    "success": false,
+    "accepted": false,
+    "status": null,
+    "score": 20.0,
+    "projection_status": null,
+    "geometry_status": null,
+    "failures": [
+      "OpenSCAD did not produce a valid STL",
+      "maximum dimension is 0 mm; target is 54 mm (tolerance 5%)"
+    ]
+  },
+  "attempts": {
+    "count": 3,
+    "recovered": false,
+    "corrections": null,
+    "selected": 1
+  },
+  "unsupported": {
+    "flag": false,
+    "code": null
+  },
+  "edit": {
+    "available": true,
+    "ok": false,
+    "seconds": 0.4,
+    "param": "rod_diameter",
+    "old": 8.0,
+    "new": 9.6,
+    "message": "ERROR: Parser error: syntax error in file edited-2fb9039a19d84f5b8c74879d4e714ce7.scad, line 571\nCan't parse file '/work/edited-2fb9039a19d84f5b8c74879d4e714ce7.scad'!"
+  },
+  "targeted": {
+    "available": false,
+    "ok": false,
+    "seconds": null,
+    "operation": null,
+    "value": null,
+    "message": "not_applicable: the product requires a BRep result for targeted edits"
+  }
+}

@@ -1,0 +1,30 @@
+[
+  {
+    "question": {
+      "feature_id": "central_opening",
+      "feature_label": "\u00d88 circular opening in top face",
+      "reason": "The drawing shows the opening in the top view but does not indicate its depth or whether it penetrates the entire 12 mm thickness.",
+      "kind": "opening_extent",
+      "id": "84536a4330bb41f68118e939532d4729",
+      "text": "Should this hole go all the way through the part?",
+      "maximum_depth_mm": 40.0,
+      "choices": [
+        {
+          "id": "through",
+          "label": "Yes \u2014 make a through-hole"
+        },
+        {
+          "id": "recess",
+          "label": "No \u2014 leave a bottom"
+        }
+      ]
+    },
+    "status": "answered",
+    "answer": {
+      "question_id": "84536a4330bb41f68118e939532d4729",
+      "feature_id": "central_opening",
+      "kind": "opening_extent",
+      "choice": "through"
+    }
+  }
+]

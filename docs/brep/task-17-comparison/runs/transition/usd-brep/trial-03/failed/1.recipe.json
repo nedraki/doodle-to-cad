@@ -1,0 +1,133 @@
+{
+  "version": 2,
+  "units": "mm",
+  "name": "transition_piece",
+  "parameters": {
+    "rect_width": {
+      "value": 60,
+      "min": 10,
+      "max": 128,
+      "label": "Rectangle Width (X)",
+      "description": "Width of the rectangular base along X"
+    },
+    "rect_depth": {
+      "value": 40,
+      "min": 10,
+      "max": 128,
+      "label": "Rectangle Depth (Y)",
+      "description": "Depth of the rectangular base along Y"
+    },
+    "circle_diameter": {
+      "value": 30,
+      "min": 1,
+      "max": 128,
+      "label": "Circle Diameter",
+      "description": "Diameter of the circular top"
+    },
+    "height": {
+      "value": 60,
+      "min": 1,
+      "max": 256,
+      "label": "Height",
+      "description": "Vertical separation between base and top"
+    }
+  },
+  "operations": [
+    {
+      "id": "transition",
+      "kind": "loft",
+      "plane": "xy",
+      "correspondence": "rectangle_corners_to_circle_diagonals",
+      "profiles": [
+        {
+          "shape": "rectangle",
+          "center": [
+            0,
+            0,
+            0
+          ],
+          "width": "rect_width",
+          "height": "rect_depth"
+        },
+        {
+          "shape": "circle",
+          "center": [
+            0,
+            0,
+            "height"
+          ],
+          "radius": "circle_diameter/2"
+        }
+      ],
+      "depends_on": [],
+      "evidence": [
+        "e1",
+        "e2",
+        "e3",
+        "e4"
+      ],
+      "frame": "world"
+    }
+  ],
+  "output": "transition",
+  "frames": {
+    "world": {
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    }
+  },
+  "bodies": [
+    {
+      "id": "part",
+      "output": "transition"
+    }
+  ],
+  "evidence": {
+    "observed": [
+      {
+        "id": "e1",
+        "text": "BOTTOM view shows a 60x40 mm rectangle."
+      },
+      {
+        "id": "e2",
+        "text": "TOP view shows a circle with diameter 30 mm."
+      },
+      {
+        "id": "e3",
+        "text": "FRONT view shows a trapezoidal profile with height 60 mm."
+      },
+      {
+        "id": "e4",
+        "text": "Drawing label indicates 'solid'."
+      }
+    ],
+    "inferred": [
+      {
+        "id": "e5",
+        "text": "The object is a solid loft connecting the rectangular base to the circular top."
+      }
+    ],
+    "assumptions": [
+      {
+        "id": "e6",
+        "text": "The rectangle is centered on the XY origin."
+      },
+      {
+        "id": "e7",
+        "text": "The circle is centered on the XY origin."
+      },
+      {
+        "id": "e8",
+        "text": "The loft is a linear transition between the profiles."
+      }
+    ],
+    "unresolved": []
+  },
+  "constraints": []
+}

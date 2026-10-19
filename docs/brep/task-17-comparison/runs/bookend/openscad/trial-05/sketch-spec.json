@@ -1,0 +1,229 @@
+{
+  "object": "L-shaped bookend",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "front",
+      "sheet_region": "left",
+      "what_it_constrains": "Defines the width (X) and height (Z) of the upright panel and the precise layout of the four through-openings."
+    },
+    {
+      "direction": "right",
+      "sheet_region": "right",
+      "what_it_constrains": "Defines the L-shaped cross-section profile in the Y-Z plane, establishing the depth (Y) of the base and the thickness of the upright panel."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "part_1",
+      "name": "L-shaped bookend",
+      "material": "generic_plastic",
+      "bounding_box": {
+        "x": 100,
+        "y": 100,
+        "z": 100
+      }
+    }
+  ],
+  "features": [
+    {
+      "id": "feat_base",
+      "type": "extrusion",
+      "description": "Flat horizontal base extending from the bottom of the upright panel.",
+      "source_views": [
+        "view_2"
+      ]
+    },
+    {
+      "id": "feat_panel",
+      "type": "extrusion",
+      "description": "Vertical upright panel containing the cutouts.",
+      "source_views": [
+        "view_1",
+        "view_2"
+      ]
+    },
+    {
+      "id": "feat_cutout_1",
+      "type": "through_cutout",
+      "description": "Rectangular opening in the upper-left quadrant of the panel.",
+      "source_views": [
+        "view_1"
+      ]
+    },
+    {
+      "id": "feat_cutout_2",
+      "type": "through_cutout",
+      "description": "Vertical rectangular opening in the lower-left quadrant of the panel.",
+      "source_views": [
+        "view_1"
+      ]
+    },
+    {
+      "id": "feat_cutout_3",
+      "type": "through_cutout",
+      "description": "Vertical rectangular opening in the center of the panel.",
+      "source_views": [
+        "view_1"
+      ]
+    },
+    {
+      "id": "feat_cutout_4",
+      "type": "through_cutout",
+      "description": "Vertical rectangular opening in the lower-right quadrant of the panel.",
+      "source_views": [
+        "view_1"
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "type": "perpendicular",
+      "target_1": "feat_base",
+      "target_2": "feat_panel",
+      "description": "The base and panel form a 90-degree angle."
+    },
+    {
+      "type": "contained_in",
+      "target_1": "feat_cutout_1",
+      "target_2": "feat_panel"
+    },
+    {
+      "type": "contained_in",
+      "target_1": "feat_cutout_2",
+      "target_2": "feat_panel"
+    },
+    {
+      "type": "contained_in",
+      "target_1": "feat_cutout_3",
+      "target_2": "feat_panel"
+    },
+    {
+      "type": "contained_in",
+      "target_1": "feat_cutout_4",
+      "target_2": "feat_panel"
+    }
+  ],
+  "symmetry": "none",
+  "repetitions": [
+    {
+      "feature_ids": [
+        "feat_cutout_2",
+        "feat_cutout_3",
+        "feat_cutout_4"
+      ],
+      "type": "similar_shape",
+      "description": "Three vertical rectangular slots of similar proportions."
+    }
+  ],
+  "dimensions": {
+    "max_dimension": 100.0,
+    "max_width": 80.18,
+    "max_depth": 71.67,
+    "max_height": 100.0,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "Exact thickness of the base and panel is inferred from the stroke width in the right view relative to the overall scale.",
+    "Exact alignment of the cutouts is based on the visual centering in the front view."
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "The object is modeled as a single solid. The L-profile is defined by the right view (YZ plane). The front view (XZ plane) defines the width and the positions of the four rectangular cutouts. The cutouts are treated as subtractive features through the panel wall.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "extrude",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_2",
+        "operation": "extrude",
+        "profile_plane": "YZ",
+        "direction_axis": "X",
+        "owner": "part_1",
+        "parameters": {
+          "depth": 100,
+          "start_point": "origin"
+        },
+        "source_views": [
+          "view_1",
+          "view_2"
+        ]
+      },
+      {
+        "id": "feat_cutout_1",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Rectangular opening in the upper-left quadrant of the panel."
+        },
+        "source_views": []
+      },
+      {
+        "id": "feat_cutout_2",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Vertical rectangular opening in the lower-left quadrant of the panel."
+        },
+        "source_views": []
+      },
+      {
+        "id": "feat_cutout_3",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Vertical rectangular opening in the center of the panel."
+        },
+        "source_views": []
+      },
+      {
+        "id": "feat_cutout_4",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Vertical rectangular opening in the lower-right quadrant of the panel."
+        },
+        "source_views": []
+      }
+    ],
+    "unresolved_constraints": [
+      "Exact thickness of the base and panel is inferred from the stroke width in the right view relative to the overall scale.",
+      "Exact alignment of the cutouts is based on the visual centering in the front view."
+    ]
+  },
+  "user_intent": {
+    "description": "L-shaped bookend: a flat base and an upright panel. The panel has four through openings cut all the way through its wall.",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "100"
+  },
+  "source_view_group_count": 2,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

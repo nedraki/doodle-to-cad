@@ -1,0 +1,29 @@
+{
+  "view_frame": "The drawing uses third-angle projection with three views: BOTTOM (XY plane), TOP (XY plane), and FRONT (XZ plane). The world coordinate system is defined with X as width (left-right), Y as depth (front-back), and Z as height (vertical). The FRONT view displays the object's profile in the XZ plane, showing the transition from the rectangular base to the circular top.",
+  "features": [
+    {
+      "id": "transition_solid",
+      "shape": "loft",
+      "section": "rectangular_bottom_to_circular_top",
+      "axis_or_plane": "Z",
+      "dimensions": [
+        "60",
+        "40",
+        "30",
+        "60"
+      ],
+      "placement": "The solid is centered on the XY origin. The bottom profile is a rectangle (60mm width in X, 40mm depth in Y) located at Z=0. The top profile is a circle (30mm diameter) located at Z=60. The loft connects these two profiles linearly.",
+      "evidence": "BOTTOM view shows a '60 x 40 mm rectangle'. TOP view shows a 'diameter 30 mm' circle. FRONT view shows a trapezoidal profile labeled 'height 60 mm; solid'."
+    }
+  ],
+  "connections": [
+    "The rectangular base (60x40) and circular top (diameter 30) are connected by a linear loft along the Z-axis."
+  ],
+  "edit_rules": [
+    "Changing the rectangle width (X) or depth (Y) updates the bottom profile of the loft.",
+    "Changing the circle diameter updates the top profile of the loft.",
+    "Changing the height updates the Z-separation between the two profiles.",
+    "The loft maintains a straight transition between the rectangular and circular sections."
+  ],
+  "unresolved": []
+}

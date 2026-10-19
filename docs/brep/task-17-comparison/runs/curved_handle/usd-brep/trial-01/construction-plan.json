@@ -1,0 +1,28 @@
+{
+  "view_frame": "The primary view is TOP (XY plane), showing the handle's footprint. The X-axis represents width (left-right), and the Y-axis represents depth (up-down in the view). The Z-axis represents height (vertical, perpendicular to the view). The 'END SECTION' view shows the circular cross-section in the YZ plane (or XZ depending on orientation, but defined by diameter).",
+  "features": [
+    {
+      "id": "handle_path",
+      "shape": "sweep",
+      "section": "circle",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "R20",
+        "30",
+        "8"
+      ],
+      "placement": "The path consists of two straight legs and one semi-circular bend. The bend is centered at (0, 30) with a radius of 20mm, spanning from angle 0 to 180 degrees (counter-clockwise from +X). The right leg extends from (20, 30) to (20, 0). The left leg extends from (-20, 30) to (-20, 0). The section is a circle with diameter 8mm, centered on the path.",
+      "evidence": "Top view shows a U-shape. Text annotation 'Bend centreline R20; straight legs 30 mm'. End section view shows a circle labeled 'diameter 8 mm'."
+    }
+  ],
+  "connections": [
+    "The straight legs are tangent to the semi-circular bend at the transition points (\u00b120, 30)."
+  ],
+  "edit_rules": [
+    "Changing the bend radius (R20) moves the legs outward/inward and changes the overall width.",
+    "Changing the leg length (30) moves the start/end points of the legs along the Y-axis.",
+    "Changing the diameter (8) changes the thickness of the entire handle uniformly."
+  ],
+  "unresolved": [],
+  "clarification": null
+}

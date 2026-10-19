@@ -1,0 +1,152 @@
+{
+  "object": "Rectangular Block with Central Through-Hole",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "top",
+      "sheet_region": "view_4",
+      "what_it_constrains": "Defines the XY footprint (40mm x 30mm) and the position of the central \u00d88mm circular hole."
+    },
+    {
+      "direction": "front",
+      "sheet_region": "view_5",
+      "what_it_constrains": "Defines the XZ profile (40mm width x 12mm height). The visible geometry in this view is primarily the text label 'Opening centred in top face'."
+    },
+    {
+      "direction": "side",
+      "sheet_region": "view_2",
+      "what_it_constrains": "Defines the YZ profile (30mm depth x 12mm height). The visible geometry in this view is primarily the text label 'TOP (XY)'."
+    },
+    {
+      "direction": "annotation",
+      "sheet_region": "view_1",
+      "what_it_constrains": "Text label 'BLOCK \u2014 dimensions in mm'."
+    },
+    {
+      "direction": "annotation",
+      "sheet_region": "view_3",
+      "what_it_constrains": "Text label 'Body: 40 wide x 30 deep x 12 thick'."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "part_1",
+      "name": "Main Block",
+      "material": "generic_plastic",
+      "bounding_box": {
+        "x": 40,
+        "y": 30,
+        "z": 12
+      }
+    }
+  ],
+  "features": [
+    {
+      "id": "feat_1",
+      "type": "through_hole",
+      "owner": "part_1",
+      "diameter": 8,
+      "position": {
+        "x": 20,
+        "y": 15
+      },
+      "axis": "Z",
+      "source_views": [
+        "view_4"
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "type": "concentric",
+      "target": "feat_1",
+      "reference": "part_1",
+      "description": "The hole is centered on the block's XY plane."
+    }
+  ],
+  "symmetry": {
+    "planes": [
+      "XZ",
+      "YZ"
+    ],
+    "rotational": "C2"
+  },
+  "repetitions": [],
+  "dimensions": {
+    "width": 40.0,
+    "depth": 30.0,
+    "height": 12.0,
+    "diameter": 8.0,
+    "max_width": 40.0,
+    "max_depth": 4.34,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "The OpenCV view_geometry for views 1, 2, 3, and 5 captures text labels rather than geometric outlines. The CAD model is constructed based on the explicit text dimensions and the geometric content of view_4."
+  ],
+  "interpretation_conflicts": [
+    "OpenCV detected text contours as 'outer_profiles' in views 1, 2, 3, and 5. These are ignored in favor of the explicit text dimensions provided in the drawing."
+  ],
+  "generation_notes": "The object is a simple rectangular block (40x30x12mm) with a central through-hole (\u00d88mm). The construction uses the explicit dimensions provided in the text annotations, as the OpenCV geometry extraction focused on text labels in the side/front views.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "extrude",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_2",
+        "operation": "extrude",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "owner": "part_1",
+        "parameters": {
+          "depth": 12
+        },
+        "source_views": [
+          "view_4"
+        ]
+      },
+      {
+        "id": "feat_1",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": null
+        },
+        "source_views": []
+      }
+    ],
+    "unresolved_constraints": [
+      "The OpenCV view_geometry for views 1, 2, 3, and 5 captures text labels rather than geometric outlines. The CAD model is constructed based on the explicit text dimensions and the geometric content of view_4."
+    ]
+  },
+  "user_intent": {
+    "description": "",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "40"
+  },
+  "source_view_group_count": 5,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

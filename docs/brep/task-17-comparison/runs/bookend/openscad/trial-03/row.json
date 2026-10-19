@@ -1,0 +1,95 @@
+{
+  "drawing": "bookend",
+  "backend": "openscad",
+  "trial": 3,
+  "submitted_at": "2026-10-18T23:11:19.571569+00:00",
+  "finished_at": "2026-10-18T23:15:58.664925+00:00",
+  "run_id": "6d332fae65fb",
+  "wall_seconds": 279.1,
+  "job_status": "done",
+  "error": null,
+  "questions_asked": 0,
+  "question_kinds": [],
+  "build": {
+    "watertight": true,
+    "components": 1,
+    "genus": 0,
+    "extents_mm": [
+      80.18,
+      71.67,
+      100.0
+    ],
+    "volume_mm3": 66465.0,
+    "sha256": "ae0696697ae44bd514161b8f3749306134cdefa5ad759017c126f016e606653f",
+    "bytes": 3227
+  },
+  "checks": {
+    "build_success": true,
+    "extents_pass": false,
+    "genus_pass": false,
+    "volume_pass": false,
+    "fidelity_pass": false,
+    "overall_pass": false,
+    "not_applicable": []
+  },
+  "fidelity": {
+    "scores": {
+      "front": 0.35,
+      "right": 0.818
+    },
+    "pass": false,
+    "reason": null,
+    "topology": {
+      "front": {
+        "expected": 4,
+        "actual": 0,
+        "position_fidelity": 0.0
+      },
+      "right": {
+        "expected": 0,
+        "actual": 0,
+        "position_fidelity": null
+      }
+    }
+  },
+  "product": {
+    "success": false,
+    "accepted": false,
+    "status": null,
+    "score": 73.8,
+    "projection_status": null,
+    "geometry_status": null,
+    "failures": [
+      "required internal profiles are missing: front view demands 4, best rendered view has 0. Missing at these view-local centres \u2014 add cutters there: (u=0.755,v=0.614); (u=0.316,v=0.612); (u=0.535,v=0.421); (u=0.257,v=0.191).",
+      "CAD projections poorly match the drawing: front similarity 0.35 (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly.",
+      "features exist but sit at the wrong positions in front view(s): match each opening's location (u,v within the outer profile) to the drawing; check the cad_mapping signs (front: u->+X v->-Z; top: u->+X v->-Y i.e. sheet-down is the FRONT of the part)"
+    ]
+  },
+  "attempts": {
+    "count": 3,
+    "recovered": false,
+    "corrections": null,
+    "selected": 1
+  },
+  "unsupported": {
+    "flag": false,
+    "code": null
+  },
+  "edit": {
+    "available": true,
+    "ok": true,
+    "seconds": 0.5,
+    "param": "width",
+    "old": 80.18,
+    "new": 96.22,
+    "message": null
+  },
+  "targeted": {
+    "available": false,
+    "ok": false,
+    "seconds": null,
+    "operation": null,
+    "value": null,
+    "message": "not_applicable: the product requires a BRep result for targeted edits"
+  }
+}

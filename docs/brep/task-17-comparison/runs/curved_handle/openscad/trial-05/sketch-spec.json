@@ -1,0 +1,158 @@
+{
+  "object": "Handle",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "top",
+      "sheet_region": "view_4",
+      "what_it_constrains": "Defines the XY footprint (width and depth) of the handle legs and the bend."
+    },
+    {
+      "direction": "left",
+      "sheet_region": "view_5",
+      "what_it_constrains": "Defines the primary profile shape (inverted U) in the YZ plane, including the bend radius and leg lengths."
+    },
+    {
+      "direction": "front",
+      "sheet_region": "view_3",
+      "what_it_constrains": "Defines the cross-section shape (circular) and diameter."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "handle_body",
+      "name": "Main Handle Body",
+      "material": "plastic",
+      "description": "Single continuous solid with circular cross-section, two straight legs, and a semi-circular bend."
+    }
+  ],
+  "features": [
+    {
+      "id": "bend",
+      "type": "curved",
+      "description": "Semi-circular arch connecting the two legs.",
+      "parameters": {
+        "centerline_radius": 20,
+        "angle": 180
+      }
+    },
+    {
+      "id": "leg_left",
+      "type": "straight",
+      "description": "Left vertical leg.",
+      "parameters": {
+        "length": 30
+      }
+    },
+    {
+      "id": "leg_right",
+      "type": "straight",
+      "description": "Right vertical leg.",
+      "parameters": {
+        "length": 30
+      }
+    },
+    {
+      "id": "cross_section",
+      "type": "profile",
+      "description": "Circular profile applied along the path.",
+      "parameters": {
+        "diameter": 8
+      }
+    }
+  ],
+  "relations": [
+    {
+      "type": "connects",
+      "from": "leg_left",
+      "to": "bend",
+      "description": "Leg connects tangentially to the bend."
+    },
+    {
+      "type": "connects",
+      "from": "leg_right",
+      "to": "bend",
+      "description": "Leg connects tangentially to the bend."
+    }
+  ],
+  "symmetry": {
+    "type": "bilateral",
+    "axis": "Z",
+    "description": "Symmetric about the vertical centerline of the handle."
+  },
+  "repetitions": [
+    {
+      "feature": "leg",
+      "count": 2,
+      "description": "Two identical straight legs."
+    }
+  ],
+  "dimensions": {
+    "diameter": 8.0,
+    "radius": 20.0,
+    "length": 30.0,
+    "max_dimension": 54.0,
+    "max_width": 16.73,
+    "max_depth": 26.81,
+    "max_height": 54.0,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "The exact start/end points of the legs relative to the bend centerline are inferred from the 'straight legs 30 mm' note, assuming the straight section length is 30mm."
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "The object is a standard handle. The geometry is best constructed by defining a 2D path (inverted U) and sweeping a circular profile along it. The path consists of two vertical lines and a semi-circle. The provided 'view_5' (Left) clearly shows the profile shape. 'view_3' (Front) confirms the circular cross-section. 'view_4' (Top) confirms the width and depth.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "sweep",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_sweep",
+        "operation": "sweep",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "owner": "handle_body",
+        "parameters": {
+          "path_id": "op_path",
+          "profile_shape": "circle",
+          "profile_diameter": 8
+        },
+        "source_views": [
+          "view_3",
+          "view_4"
+        ]
+      }
+    ],
+    "unresolved_constraints": [
+      "The exact start/end points of the legs relative to the bend centerline are inferred from the 'straight legs 30 mm' note, assuming the straight section length is 30mm."
+    ]
+  },
+  "user_intent": {
+    "description": "Handle with two straight legs and one curved bend. The cross-section is circular throughout.",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "54"
+  },
+  "source_view_group_count": 6,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

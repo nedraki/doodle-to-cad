@@ -1,0 +1,39 @@
+{
+  "view_frame": "The drawing provides a TOP view in the XY plane. The X-axis represents width (40 mm), the Y-axis represents depth (30 mm), and the Z-axis represents height/thickness (12 mm). The origin (0,0) is at the bottom-left corner of the block.",
+  "features": [
+    {
+      "id": "block_body",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "40",
+        "30",
+        "12"
+      ],
+      "placement": "Starts at (0,0,0) and extends to (40,30,12).",
+      "evidence": "Text 'Body: 40 wide x 30 deep x 12 thick' and the rectangular outline in the TOP view."
+    },
+    {
+      "id": "central_opening",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "Z",
+      "dimensions": [
+        "\u00d88"
+      ],
+      "placement": "Centred at (20, 15) in the XY plane. Extends through the full Z height (0 to 12).",
+      "evidence": "Circular outline in the TOP view labelled '\u00d88' and text 'Opening centred in top face'. User clarification confirms it is a through-hole."
+    }
+  ],
+  "connections": [
+    "The central_opening is subtracted from the block_body."
+  ],
+  "edit_rules": [
+    "Changing the block width (X) or depth (Y) must maintain the opening's centred position relative to the new dimensions.",
+    "Changing the block thickness (Z) must maintain the through-hole nature of the opening.",
+    "Changing the opening diameter (\u00d8) must maintain its circular shape and centred position."
+  ],
+  "unresolved": [],
+  "clarification": null
+}

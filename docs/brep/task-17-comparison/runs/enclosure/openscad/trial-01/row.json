@@ -1,0 +1,91 @@
+{
+  "drawing": "enclosure",
+  "backend": "openscad",
+  "trial": 1,
+  "submitted_at": "2026-10-18T23:29:03.539214+00:00",
+  "finished_at": "2026-10-18T23:30:19.823537+00:00",
+  "run_id": "34826e2b8877",
+  "wall_seconds": 76.3,
+  "job_status": "done",
+  "error": null,
+  "questions_asked": 0,
+  "question_kinds": [],
+  "build": {
+    "watertight": true,
+    "components": 1,
+    "genus": 2,
+    "extents_mm": [
+      120.0,
+      81.68,
+      43.96
+    ],
+    "volume_mm3": 47032.8,
+    "sha256": "e215db11e4d7a65372eb75880c6626bfc6b3fa491294d380fe3ad13ea16a26de",
+    "bytes": 6955
+  },
+  "checks": {
+    "build_success": true,
+    "extents_pass": false,
+    "genus_pass": false,
+    "volume_pass": false,
+    "fidelity_pass": true,
+    "overall_pass": false,
+    "not_applicable": []
+  },
+  "fidelity": {
+    "scores": {
+      "front": 0.787,
+      "top": 1.0
+    },
+    "pass": true,
+    "reason": null,
+    "topology": {
+      "front": {
+        "expected": 1,
+        "actual": 1,
+        "position_fidelity": 1.0
+      },
+      "top": {
+        "expected": 0,
+        "actual": 0,
+        "position_fidelity": null
+      }
+    }
+  },
+  "product": {
+    "success": true,
+    "accepted": true,
+    "status": null,
+    "score": 98.4,
+    "projection_status": null,
+    "geometry_status": null,
+    "failures": []
+  },
+  "attempts": {
+    "count": 1,
+    "recovered": false,
+    "corrections": null,
+    "selected": 1
+  },
+  "unsupported": {
+    "flag": false,
+    "code": null
+  },
+  "edit": {
+    "available": true,
+    "ok": true,
+    "seconds": 0.44,
+    "param": "width",
+    "old": 120.0,
+    "new": 144.0,
+    "message": null
+  },
+  "targeted": {
+    "available": false,
+    "ok": false,
+    "seconds": null,
+    "operation": null,
+    "value": null,
+    "message": "not_applicable: the product requires a BRep result for targeted edits"
+  }
+}

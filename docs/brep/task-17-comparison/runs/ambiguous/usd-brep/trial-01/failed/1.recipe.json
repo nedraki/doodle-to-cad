@@ -1,0 +1,132 @@
+{
+  "version": 2,
+  "units": "mm",
+  "name": "block_with_hole",
+  "parameters": {
+    "width": {
+      "value": 40,
+      "min": 10,
+      "max": 100,
+      "label": "Width",
+      "description": "Block width along X axis"
+    },
+    "depth": {
+      "value": 30,
+      "min": 10,
+      "max": 100,
+      "label": "Depth",
+      "description": "Block depth along Y axis"
+    },
+    "thickness": {
+      "value": 12,
+      "min": 1,
+      "max": 50,
+      "label": "Thickness",
+      "description": "Block height along Z axis"
+    },
+    "hole_diameter": {
+      "value": 8,
+      "min": 1,
+      "max": 20,
+      "label": "Hole Diameter",
+      "description": "Diameter of the central through-hole"
+    }
+  },
+  "operations": [
+    {
+      "id": "block",
+      "kind": "box",
+      "origin": [
+        "-width/2",
+        "-depth/2",
+        0
+      ],
+      "size": [
+        "width",
+        "depth",
+        "thickness"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "hole",
+      "kind": "cylinder",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "radius": "hole_diameter/2",
+      "height": "thickness",
+      "axis": "z",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "part",
+      "kind": "difference",
+      "left": "block",
+      "right": "hole",
+      "frame": "world",
+      "depends_on": [
+        "block",
+        "hole"
+      ],
+      "evidence": [
+        "e3"
+      ]
+    }
+  ],
+  "output": "part",
+  "frames": {
+    "world": {
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    }
+  },
+  "bodies": [
+    {
+      "id": "part",
+      "output": "part"
+    }
+  ],
+  "evidence": {
+    "observed": [
+      {
+        "id": "e1",
+        "text": "Rectangular block body with dimensions 40 wide x 30 deep x 12 thick."
+      },
+      {
+        "id": "e2",
+        "text": "Circular opening \u00d88 centred in the top face."
+      }
+    ],
+    "inferred": [
+      {
+        "id": "e3",
+        "text": "The opening is a through-hole based on clarification answer 'through'."
+      }
+    ],
+    "assumptions": [
+      {
+        "id": "e4",
+        "text": "The block is positioned with its bottom face at Z=0 and centred at (0,0) in XY."
+      }
+    ],
+    "unresolved": []
+  },
+  "constraints": []
+}

@@ -1,0 +1,92 @@
+{
+  "drawing": "missing_thickness",
+  "backend": "openscad",
+  "trial": 1,
+  "submitted_at": "2026-10-19T00:18:49.863484+00:00",
+  "finished_at": "2026-10-19T00:21:34.282959+00:00",
+  "run_id": "f9893bb4bae3",
+  "wall_seconds": 164.4,
+  "job_status": "done",
+  "error": null,
+  "questions_asked": 0,
+  "question_kinds": [],
+  "build": {
+    "watertight": true,
+    "components": 1,
+    "genus": 0,
+    "extents_mm": [
+      59.918,
+      39.959,
+      1.0
+    ],
+    "volume_mm3": 2362.8,
+    "sha256": "a1024c5282e0803257787720a3a1fdc4612ee2c715bb28b2439ed6d4959cef62",
+    "bytes": 19084
+  },
+  "checks": {
+    "build_success": true,
+    "extents_pass": null,
+    "genus_pass": null,
+    "volume_pass": null,
+    "fidelity_pass": false,
+    "overall_pass": false,
+    "not_applicable": [
+      "extents",
+      "genus",
+      "volume"
+    ]
+  },
+  "fidelity": {
+    "scores": {
+      "top": 0.247
+    },
+    "pass": false,
+    "reason": null,
+    "topology": {
+      "top": {
+        "expected": 0,
+        "actual": 1,
+        "position_fidelity": null
+      }
+    }
+  },
+  "product": {
+    "success": false,
+    "accepted": false,
+    "status": null,
+    "score": 88.7,
+    "projection_status": null,
+    "geometry_status": null,
+    "failures": [
+      "degenerate or implausible axis dimensions: Y=39.959 mm vs expected 5.31 mm, Z=1 mm vs expected 60 mm",
+      "CAD projections poorly match the drawing: top similarity 0.25 (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly."
+    ]
+  },
+  "attempts": {
+    "count": 3,
+    "recovered": false,
+    "corrections": null,
+    "selected": 1
+  },
+  "unsupported": {
+    "flag": false,
+    "code": null
+  },
+  "edit": {
+    "available": true,
+    "ok": true,
+    "seconds": 0.54,
+    "param": "width",
+    "old": 60.0,
+    "new": 72.0,
+    "message": null
+  },
+  "targeted": {
+    "available": false,
+    "ok": false,
+    "seconds": null,
+    "operation": null,
+    "value": null,
+    "message": "not_applicable: the product requires a BRep result for targeted edits"
+  }
+}

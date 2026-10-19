@@ -1,0 +1,143 @@
+{
+  "object": "Box with an open top and a rectangular window through the front wall",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "top",
+      "sheet_region": "upper",
+      "constrains": "Outer footprint (X, Y) and wall thickness (uniformity of inner/outer rectangles)"
+    },
+    {
+      "direction": "front",
+      "sheet_region": "lower",
+      "constrains": "Front elevation (X, Z), window position and size, and wall height"
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "main_body",
+      "description": "Hollow rectangular box with open top and front cutout",
+      "material": "plastic"
+    }
+  ],
+  "features": [
+    {
+      "id": "outer_shell",
+      "type": "volume",
+      "description": "Rectangular prism forming the base of the box"
+    },
+    {
+      "id": "top_cavity",
+      "type": "void",
+      "description": "Rectangular volume removed from the top to create the open box structure"
+    },
+    {
+      "id": "front_window",
+      "type": "through_cutout",
+      "description": "Rectangular hole passing through the front wall"
+    }
+  ],
+  "relations": [
+    {
+      "type": "concentric",
+      "elements": [
+        "outer_shell",
+        "top_cavity"
+      ],
+      "axis": "Z"
+    },
+    {
+      "type": "centered",
+      "elements": [
+        "front_window",
+        "front_wall"
+      ]
+    }
+  ],
+  "symmetry": {
+    "planes": [
+      "XZ",
+      "YZ"
+    ],
+    "axis": "Z"
+  },
+  "repetitions": [],
+  "dimensions": {
+    "max_dimension": 120,
+    "wall_thickness": "uniform",
+    "window_aspect_ratio": "approx 2:1",
+    "max_width": 120.0,
+    "max_depth": 81.68,
+    "max_height": 43.96,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "Exact wall thickness value is inferred from stroke separation in the top view",
+    "Exact window height relative to box height is inferred from front view proportions"
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "The object is modeled as a boolean subtraction. A solid rectangular block is created. A second rectangular block is subtracted from the top to create the open box. A third rectangular block is subtracted from the front face to create the window. The top view shows the outer and inner walls, confirming uniform thickness. The front view shows the window centered horizontally and vertically on the front face.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "multi_face_union",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op1",
+        "operation": "extrude",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "owner": "main_body",
+        "parameters": {
+          "profile": "outer_rectangle",
+          "height": "box_height"
+        },
+        "source_views": [
+          "view_1"
+        ]
+      },
+      {
+        "id": "front_window",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Rectangular hole passing through the front wall"
+        },
+        "source_views": []
+      }
+    ],
+    "unresolved_constraints": [
+      "Exact wall thickness value is inferred from stroke separation in the top view",
+      "Exact window height relative to box height is inferred from front view proportions"
+    ]
+  },
+  "user_intent": {
+    "description": "Box with an open top and a rectangular window through the front wall. Uniform walls.",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "120"
+  },
+  "source_view_group_count": 2,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

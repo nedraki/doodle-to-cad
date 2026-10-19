@@ -1,0 +1,344 @@
+{
+  "version": 2,
+  "units": "mm",
+  "name": "l_bracket",
+  "parameters": {
+    "width": {
+      "value": 80,
+      "min": 30,
+      "max": 150,
+      "label": "Width"
+    },
+    "height": {
+      "value": 100,
+      "min": 30,
+      "max": 200,
+      "label": "Height"
+    },
+    "depth": {
+      "value": 60,
+      "min": 20,
+      "max": 150,
+      "label": "Depth"
+    },
+    "thickness": {
+      "value": 10,
+      "min": 2,
+      "max": 30,
+      "label": "Thickness"
+    },
+    "o1_w": {
+      "value": 30,
+      "min": 5,
+      "max": 70,
+      "label": "Opening 1 Width"
+    },
+    "o1_h": {
+      "value": 20,
+      "min": 5,
+      "max": 90,
+      "label": "Opening 1 Height"
+    },
+    "o1_x": {
+      "value": 10,
+      "min": 0,
+      "max": 70,
+      "label": "Opening 1 X"
+    },
+    "o1_z": {
+      "value": 70,
+      "min": 0,
+      "max": 90,
+      "label": "Opening 1 Z"
+    },
+    "o2_w": {
+      "value": 10,
+      "min": 2,
+      "max": 70,
+      "label": "Opening 2 Width"
+    },
+    "o2_h": {
+      "value": 40,
+      "min": 5,
+      "max": 90,
+      "label": "Opening 2 Height"
+    },
+    "o2_x": {
+      "value": 35,
+      "min": 0,
+      "max": 70,
+      "label": "Opening 2 X"
+    },
+    "o2_z": {
+      "value": 40,
+      "min": 0,
+      "max": 90,
+      "label": "Opening 2 Z"
+    },
+    "o3_w": {
+      "value": 15,
+      "min": 2,
+      "max": 70,
+      "label": "Opening 3 Width"
+    },
+    "o3_h": {
+      "value": 50,
+      "min": 5,
+      "max": 90,
+      "label": "Opening 3 Height"
+    },
+    "o3_x": {
+      "value": 15,
+      "min": 0,
+      "max": 70,
+      "label": "Opening 3 X"
+    },
+    "o3_z": {
+      "value": 10,
+      "min": 0,
+      "max": 90,
+      "label": "Opening 3 Z"
+    },
+    "o4_w": {
+      "value": 15,
+      "min": 2,
+      "max": 70,
+      "label": "Opening 4 Width"
+    },
+    "o4_h": {
+      "value": 40,
+      "min": 5,
+      "max": 90,
+      "label": "Opening 4 Height"
+    },
+    "o4_x": {
+      "value": 55,
+      "min": 0,
+      "max": 70,
+      "label": "Opening 4 X"
+    },
+    "o4_z": {
+      "value": 10,
+      "min": 0,
+      "max": 90,
+      "label": "Opening 4 Z"
+    }
+  },
+  "operations": [
+    {
+      "id": "base",
+      "kind": "box",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "size": [
+        "width",
+        "depth",
+        "thickness"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "panel",
+      "kind": "box",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "size": [
+        "width",
+        "thickness",
+        "height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "l_shape",
+      "kind": "union",
+      "left": "base",
+      "right": "panel",
+      "frame": "world",
+      "depends_on": [
+        "base",
+        "panel"
+      ],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "cut1",
+      "kind": "box",
+      "origin": [
+        "o1_x",
+        -1,
+        "o1_z"
+      ],
+      "size": [
+        "o1_w",
+        "thickness+2",
+        "o1_h"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "cut2",
+      "kind": "box",
+      "origin": [
+        "o2_x",
+        -1,
+        "o2_z"
+      ],
+      "size": [
+        "o2_w",
+        "thickness+2",
+        "o2_h"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "cut3",
+      "kind": "box",
+      "origin": [
+        "o3_x",
+        -1,
+        "o3_z"
+      ],
+      "size": [
+        "o3_w",
+        "thickness+2",
+        "o3_h"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "cut4",
+      "kind": "box",
+      "origin": [
+        "o4_x",
+        -1,
+        "o4_z"
+      ],
+      "size": [
+        "o4_w",
+        "thickness+2",
+        "o4_h"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "part",
+      "kind": "difference",
+      "left": "l_shape",
+      "right": "cut1",
+      "frame": "world",
+      "depends_on": [
+        "l_shape",
+        "cut1"
+      ],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "part2",
+      "kind": "difference",
+      "left": "part",
+      "right": "cut2",
+      "frame": "world",
+      "depends_on": [
+        "part",
+        "cut2"
+      ],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "part3",
+      "kind": "difference",
+      "left": "part2",
+      "right": "cut3",
+      "frame": "world",
+      "depends_on": [
+        "part2",
+        "cut3"
+      ],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "final_part",
+      "kind": "difference",
+      "left": "part3",
+      "right": "cut4",
+      "frame": "world",
+      "depends_on": [
+        "part3",
+        "cut4"
+      ],
+      "evidence": [
+        "e1"
+      ]
+    }
+  ],
+  "output": "final_part",
+  "frames": {
+    "world": {
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    }
+  },
+  "bodies": [
+    {
+      "id": "part",
+      "output": "final_part"
+    }
+  ],
+  "evidence": {
+    "observed": [],
+    "inferred": [],
+    "assumptions": [
+      {
+        "id": "e1",
+        "text": "Dimensions and positions are estimated from the drawing proportions as no numerical values are provided. The object is modeled as an L-shaped bracket with a base and an upright panel containing four through-openings."
+      }
+    ],
+    "unresolved": []
+  },
+  "constraints": []
+}

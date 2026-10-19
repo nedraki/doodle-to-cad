@@ -1,0 +1,362 @@
+[
+  {
+    "attempt": 1,
+    "action": "generate",
+    "preflight": {
+      "passed": true,
+      "errors": [],
+      "warnings": [
+        "circle() does not use a center position; position it with translate()"
+      ],
+      "expected_subtractive_feature_groups": 2
+    },
+    "compiler_repairs": [],
+    "uniform_scale": null,
+    "evaluation": {
+      "score": 93.0,
+      "valid_mesh": true,
+      "accepted": false,
+      "mandatory_gates": {
+        "compiled": true,
+        "topology": true,
+        "dimensions": true,
+        "shape_sanity": false,
+        "features": true,
+        "projections": true,
+        "build_envelope": true
+      },
+      "scores": {
+        "topology": 45,
+        "dimensions": 20.0,
+        "features": 20,
+        "projections": 8.0
+      },
+      "projection_similarity": {
+        "top": 0.534
+      },
+      "profile_topology": {
+        "top": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 1,
+          "crop_internal_profiles": 0,
+          "source_aspect": 2.742,
+          "rendered_aspect": 1.507,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": [
+            [
+              0.199,
+              0.624
+            ]
+          ]
+        }
+      },
+      "failures": [
+        "degenerate or implausible axis dimensions: X=60 mm vs expected 15.62 mm"
+      ]
+    },
+    "mesh_health": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 104,
+      "extents_mm": [
+        60.0,
+        40.0,
+        6.0
+      ],
+      "volume_mm3": 12743.503
+    },
+    "build": {
+      "version": 1,
+      "backend": "openscad",
+      "source_format": "openscad",
+      "ok": true,
+      "units": "mm",
+      "axes": {
+        "x": "width",
+        "y": "depth",
+        "z": "height"
+      },
+      "views": [
+        "isometric",
+        "front",
+        "top",
+        "right"
+      ],
+      "measurements": {
+        "watertight": true,
+        "components": 1,
+        "triangles": 104,
+        "extents_mm": [
+          60.0,
+          40.0,
+          6.0
+        ],
+        "volume_mm3": 12743.503
+      },
+      "diagnostics": [],
+      "drawing_evaluated": false
+    },
+    "compile_log": "WARNING: variable center not specified as parameter in file model.scad, line 28\nGeometries in cache: 11\nGeometry cache size in bytes: 11456\nCGAL Polyhedrons in cache: 1\nCGAL cache size in bytes: 70608\nTotal rendering time: 0:00:00.034\n   Top level object is a 3D object:\n   Simple:        yes\n   Vertices:       52\n   Halfedges:     156\n   Edges:          78\n   Halffacets:     56\n   Facets:         28\n   Volumes:         2",
+    "files": {
+      "scad": "attempt-01/model.scad",
+      "stl": "attempt-01/model.stl",
+      "views": {
+        "isometric": "attempt-01/view-isometric.png",
+        "front": "attempt-01/view-front.png",
+        "top": "attempt-01/view-top.png",
+        "right": "attempt-01/view-right.png"
+      }
+    },
+    "supervisor": {
+      "action": "repair_scad",
+      "problems": [
+        "Fillet is applied to the bottom-left corner instead of the top-right corner.",
+        "Evaluation reports X=60mm vs expected 15.62mm, indicating a scale mismatch or incorrect dimension interpretation.",
+        "Top view aspect ratio is incorrect (1.507 vs 2.742), likely due to the fillet error and potential scaling."
+      ],
+      "preserve": [
+        "Overall plate dimensions (60x40x6).",
+        "Notch dimensions and position (20x10, centered on top edge).",
+        "Hole dimensions and position (\u00d88, at 12,15)."
+      ],
+      "instructions": "Fix the fillet implementation to correctly round the top-right corner (X=60, Y=40) instead of the bottom-left. Ensure the geometry matches the 60x40 aspect ratio. Verify the scale matches the 60mm width specification to resolve the dimension evaluation failure."
+    }
+  },
+  {
+    "attempt": 2,
+    "action": "repair_scad",
+    "preflight": {
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "expected_subtractive_feature_groups": 2
+    },
+    "compiler_repairs": [],
+    "uniform_scale": null,
+    "evaluation": {
+      "score": 93.1,
+      "valid_mesh": true,
+      "accepted": false,
+      "mandatory_gates": {
+        "compiled": true,
+        "topology": true,
+        "dimensions": true,
+        "shape_sanity": false,
+        "features": true,
+        "projections": true,
+        "build_envelope": true
+      },
+      "scores": {
+        "topology": 45,
+        "dimensions": 20.0,
+        "features": 20,
+        "projections": 8.1
+      },
+      "projection_similarity": {
+        "top": 0.541
+      },
+      "profile_topology": {
+        "top": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 0,
+          "source_aspect": 2.742,
+          "rendered_aspect": 1.507,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": [
+            [
+              0.199,
+              0.624
+            ]
+          ]
+        }
+      },
+      "failures": [
+        "degenerate or implausible axis dimensions: X=60 mm vs expected 15.62 mm"
+      ]
+    },
+    "mesh_health": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 148,
+      "extents_mm": [
+        60.0,
+        40.0,
+        6.0
+      ],
+      "volume_mm3": 12194.239
+    },
+    "build": {
+      "version": 1,
+      "backend": "openscad",
+      "source_format": "openscad",
+      "ok": true,
+      "units": "mm",
+      "axes": {
+        "x": "width",
+        "y": "depth",
+        "z": "height"
+      },
+      "views": [
+        "isometric",
+        "front",
+        "top",
+        "right"
+      ],
+      "measurements": {
+        "watertight": true,
+        "components": 1,
+        "triangles": 148,
+        "extents_mm": [
+          60.0,
+          40.0,
+          6.0
+        ],
+        "volume_mm3": 12194.239
+      },
+      "diagnostics": [],
+      "drawing_evaluated": false
+    },
+    "compile_log": "Geometries in cache: 12\nGeometry cache size in bytes: 18352\nCGAL Polyhedrons in cache: 1\nCGAL cache size in bytes: 100176\nTotal rendering time: 0:00:00.037\n   Top level object is a 3D object:\n   Simple:        yes\n   Vertices:       74\n   Halfedges:     222\n   Edges:         111\n   Halffacets:     78\n   Facets:         39\n   Volumes:         2",
+    "files": {
+      "scad": "attempt-02/model.scad",
+      "stl": "attempt-02/model.stl",
+      "views": {
+        "isometric": "attempt-02/view-isometric.png",
+        "front": "attempt-02/view-front.png",
+        "top": "attempt-02/view-top.png",
+        "right": "attempt-02/view-right.png"
+      }
+    },
+    "supervisor_failure": {
+      "stage": "supervisor",
+      "error_type": "TimeoutError",
+      "error": "",
+      "recovery": "deterministic_repair_directive"
+    },
+    "supervisor": {
+      "action": "regenerate_scad",
+      "problems": [
+        "degenerate or implausible axis dimensions: X=60 mm vs expected 15.62 mm"
+      ],
+      "preserve": [
+        "compiled",
+        "topology",
+        "dimensions",
+        "features",
+        "projections",
+        "build_envelope"
+      ],
+      "instructions": "Previous repair made no measurable progress. Regenerate cleanly from the specification and mandatory gate failures using a different construction strategy.",
+      "confidence": 0.0,
+      "fallback": true
+    }
+  },
+  {
+    "attempt": 3,
+    "action": "regenerate_scad",
+    "preflight": {
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "expected_subtractive_feature_groups": 2
+    },
+    "compiler_repairs": [],
+    "uniform_scale": null,
+    "evaluation": {
+      "score": 92.9,
+      "valid_mesh": true,
+      "accepted": false,
+      "mandatory_gates": {
+        "compiled": true,
+        "topology": true,
+        "dimensions": true,
+        "shape_sanity": false,
+        "features": true,
+        "projections": true,
+        "build_envelope": true
+      },
+      "scores": {
+        "topology": 45,
+        "dimensions": 20.0,
+        "features": 20,
+        "projections": 7.9
+      },
+      "projection_similarity": {
+        "top": 0.529
+      },
+      "profile_topology": {
+        "top": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 1,
+          "crop_internal_profiles": 0,
+          "source_aspect": 2.742,
+          "rendered_aspect": 1.507,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": [
+            [
+              0.199,
+              0.624
+            ]
+          ]
+        }
+      },
+      "failures": [
+        "degenerate or implausible axis dimensions: X=60 mm vs expected 15.62 mm"
+      ]
+    },
+    "mesh_health": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 352,
+      "extents_mm": [
+        60.0,
+        40.0,
+        6.0
+      ],
+      "volume_mm3": 12852.265
+    },
+    "build": {
+      "version": 1,
+      "backend": "openscad",
+      "source_format": "openscad",
+      "ok": true,
+      "units": "mm",
+      "axes": {
+        "x": "width",
+        "y": "depth",
+        "z": "height"
+      },
+      "views": [
+        "isometric",
+        "front",
+        "top",
+        "right"
+      ],
+      "measurements": {
+        "watertight": true,
+        "components": 1,
+        "triangles": 352,
+        "extents_mm": [
+          60.0,
+          40.0,
+          6.0
+        ],
+        "volume_mm3": 12852.265
+      },
+      "diagnostics": [],
+      "drawing_evaluated": false
+    },
+    "compile_log": "Geometries in cache: 9\nGeometry cache size in bytes: 41112\nCGAL Polyhedrons in cache: 3\nCGAL cache size in bytes: 308336\nTotal rendering time: 0:00:00.294\n   Top level object is a 3D object:\n   Simple:        yes\n   Vertices:      176\n   Halfedges:     528\n   Edges:         264\n   Halffacets:    180\n   Facets:         90\n   Volumes:         2",
+    "files": {
+      "scad": "attempt-03/model.scad",
+      "stl": "attempt-03/model.stl",
+      "views": {
+        "isometric": "attempt-03/view-isometric.png",
+        "front": "attempt-03/view-front.png",
+        "top": "attempt-03/view-top.png",
+        "right": "attempt-03/view-right.png"
+      }
+    }
+  }
+]

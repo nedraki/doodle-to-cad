@@ -87,15 +87,24 @@ def main():
         check("sha256sums", False, "SHA256SUMS missing")
 
     # 2. Plan frozen before every trial.
-    frozen = plan["frozen_at"]
-    late = [r.get("submitted_at") for r in rows if r.get("submitted_at") and r["submitted_at"] < frozen]
-    check("plan_frozen_before_trials", bool(frozen) and not late, f"frozen_at={frozen}, late={late}")
+    from datetime import datetime, timezone
+    frozen = datetime.fromisoformat(plan["frozen_at"]).astimezone(timezone.utc)
+    late = []
+    for r in rows:
+        if r.get("submitted_at"):
+            when = datetime.fromisoformat(r["submitted_at"]).astimezone(timezone.utc)
+            if when < frozen:
+                late.append(r["submitted_at"])
+    check("plan_frozen_before_trials", bool(plan["frozen_at"]) and not late,
+          f"frozen_at={plan['frozen_at']}, late={late[:3]}")
 
     # 3. The index matches the raw per-trial rows exactly (no vanished or extra trials).
-    indexed = json.loads("[]")
     index_rows = [json.loads(line) for line in (HERE / "runs" / "index.jsonl").read_text().splitlines() if line.strip()]
     keyed = {(r["drawing"], r["backend"], r["trial"]) for r in index_rows}
-    disk = {(p[0], p[1], int(p[2].split("-")[1])) for p in per_trial}
+    disk = set()
+    for path in (HERE / "runs").glob("*/*/trial-*/row.json"):
+        drawing, backend, trial = path.parts[-4], path.parts[-3], path.parts[-2]
+        disk.add((drawing, backend, int(trial.split("-")[1])))
     check("index_matches_rows", keyed == disk, f"index={len(keyed)} rows={len(disk)}")
 
     # 4. Every planned cell has the planned trial count.

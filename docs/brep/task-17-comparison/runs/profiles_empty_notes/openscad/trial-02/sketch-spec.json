@@ -1,0 +1,185 @@
+{
+  "object": "Notched Plate",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "top",
+      "sheet_region": "view_5",
+      "constrains": "XY profile (60x40 rectangle), notch geometry (20x10), corner fillet (R6), and hole position (12, 15)"
+    },
+    {
+      "direction": "front",
+      "sheet_region": "view_10",
+      "constrains": "Thickness (6mm) and vertical extent"
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "part_1",
+      "name": "Plate Body",
+      "material": "generic_plastic",
+      "bounding_box": {
+        "x": 60,
+        "y": 40,
+        "z": 6
+      }
+    }
+  ],
+  "features": [
+    {
+      "id": "feat_1",
+      "type": "cutout",
+      "name": "Top Edge Notch",
+      "owner": "part_1",
+      "geometry": {
+        "width": 20,
+        "depth": 10,
+        "position": "centered on top edge"
+      }
+    },
+    {
+      "id": "feat_2",
+      "type": "fillet",
+      "name": "Top-Right Corner Fillet",
+      "owner": "part_1",
+      "geometry": {
+        "radius": 6,
+        "location": "top-right corner"
+      }
+    },
+    {
+      "id": "feat_3",
+      "type": "hole",
+      "name": "Through Hole",
+      "owner": "part_1",
+      "geometry": {
+        "diameter": 8,
+        "depth": "through",
+        "position": {
+          "x": 12,
+          "y": 15
+        }
+      }
+    }
+  ],
+  "relations": [
+    {
+      "type": "coincident",
+      "target_1": "feat_1",
+      "target_2": "part_1",
+      "description": "Notch is cut from the top edge of the plate"
+    },
+    {
+      "type": "coincident",
+      "target_1": "feat_2",
+      "target_2": "part_1",
+      "description": "Fillet applied to the top-right corner"
+    },
+    {
+      "type": "coincident",
+      "target_1": "feat_3",
+      "target_2": "part_1",
+      "description": "Hole passes through the plate thickness"
+    }
+  ],
+  "symmetry": "none",
+  "repetitions": [],
+  "dimensions": {
+    "length": 60.0,
+    "width": 20.0,
+    "thickness": 6.0,
+    "depth": 10.0,
+    "radius": 6.0,
+    "diameter": 8.0,
+    "position_x": 12.0,
+    "position_y": 15.0,
+    "max_width": 15.62,
+    "max_depth": 60.0,
+    "max_height": 14.15,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [],
+  "interpretation_conflicts": [],
+  "generation_notes": "The object is a simple 2D profile extruded to a thickness of 6mm. The profile is a 60x40 rectangle with a 20x10 notch centered on the top edge and an R6 fillet on the top-right corner. A \u00d88 through-hole is located at (12, 15) relative to the bottom-left corner.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "extrude",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_2",
+        "operation": "extrude",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "owner": "part_1",
+        "parameters": {
+          "depth": 6
+        },
+        "source_views": [
+          "view_10"
+        ]
+      },
+      {
+        "id": "feat_1",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": {
+            "width": 20,
+            "depth": 10,
+            "position": "centered on top edge"
+          }
+        },
+        "source_views": []
+      },
+      {
+        "id": "feat_3",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": {
+            "diameter": 8,
+            "depth": "through",
+            "position": {
+              "x": 12,
+              "y": 15
+            }
+          }
+        },
+        "source_views": []
+      }
+    ],
+    "unresolved_constraints": []
+  },
+  "user_intent": {
+    "description": "",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "60"
+  },
+  "source_view_group_count": 11,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

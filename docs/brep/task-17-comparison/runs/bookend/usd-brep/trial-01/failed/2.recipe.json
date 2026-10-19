@@ -1,0 +1,371 @@
+{
+  "version": 2,
+  "units": "mm",
+  "name": "l_bracket",
+  "parameters": {
+    "panel_width": {
+      "value": 80,
+      "min": 40,
+      "max": 100,
+      "label": "Panel Width",
+      "description": "Width of the upright panel along X"
+    },
+    "panel_height": {
+      "value": 95,
+      "min": 50,
+      "max": 100,
+      "label": "Panel Height",
+      "description": "Height of the upright panel along Z"
+    },
+    "panel_thickness": {
+      "value": 5,
+      "min": 2,
+      "max": 20,
+      "label": "Panel Thickness",
+      "description": "Thickness of the upright panel along Y"
+    },
+    "base_depth": {
+      "value": 60,
+      "min": 30,
+      "max": 100,
+      "label": "Base Depth",
+      "description": "Depth of the base extending from the panel along Y"
+    },
+    "base_thickness": {
+      "value": 5,
+      "min": 2,
+      "max": 20,
+      "label": "Base Thickness",
+      "description": "Thickness of the base along Z"
+    },
+    "op1_w": {
+      "value": 20,
+      "min": 5,
+      "max": 40,
+      "label": "Opening 1 Width",
+      "description": "Width of top-left opening"
+    },
+    "op1_h": {
+      "value": 15,
+      "min": 5,
+      "max": 40,
+      "label": "Opening 1 Height",
+      "description": "Height of top-left opening"
+    },
+    "op1_x": {
+      "value": -20,
+      "min": -35,
+      "max": 0,
+      "label": "Opening 1 X",
+      "description": "X center of top-left opening"
+    },
+    "op1_z": {
+      "value": 75,
+      "min": 60,
+      "max": 95,
+      "label": "Opening 1 Z",
+      "description": "Z center of top-left opening"
+    },
+    "op2_w": {
+      "value": 10,
+      "min": 5,
+      "max": 30,
+      "label": "Opening 2 Width",
+      "description": "Width of center opening"
+    },
+    "op2_h": {
+      "value": 30,
+      "min": 10,
+      "max": 60,
+      "label": "Opening 2 Height",
+      "description": "Height of center opening"
+    },
+    "op2_x": {
+      "value": 0,
+      "min": -10,
+      "max": 10,
+      "label": "Opening 2 X",
+      "description": "X center of center opening"
+    },
+    "op2_z": {
+      "value": 50,
+      "min": 40,
+      "max": 70,
+      "label": "Opening 2 Z",
+      "description": "Z center of center opening"
+    },
+    "op3_w": {
+      "value": 15,
+      "min": 5,
+      "max": 30,
+      "label": "Opening 3 Width",
+      "description": "Width of bottom-left opening"
+    },
+    "op3_h": {
+      "value": 40,
+      "min": 10,
+      "max": 60,
+      "label": "Opening 3 Height",
+      "description": "Height of bottom-left opening"
+    },
+    "op3_x": {
+      "value": -20,
+      "min": -35,
+      "max": 0,
+      "label": "Opening 3 X",
+      "description": "X center of bottom-left opening"
+    },
+    "op3_z": {
+      "value": 25,
+      "min": 10,
+      "max": 50,
+      "label": "Opening 3 Z",
+      "description": "Z center of bottom-left opening"
+    },
+    "op4_w": {
+      "value": 15,
+      "min": 5,
+      "max": 30,
+      "label": "Opening 4 Width",
+      "description": "Width of bottom-right opening"
+    },
+    "op4_h": {
+      "value": 40,
+      "min": 10,
+      "max": 60,
+      "label": "Opening 4 Height",
+      "description": "Height of bottom-right opening"
+    },
+    "op4_x": {
+      "value": 20,
+      "min": 0,
+      "max": 35,
+      "label": "Opening 4 X",
+      "description": "X center of bottom-right opening"
+    },
+    "op4_z": {
+      "value": 25,
+      "min": 10,
+      "max": 50,
+      "label": "Opening 4 Z",
+      "description": "Z center of bottom-right opening"
+    }
+  },
+  "operations": [
+    {
+      "id": "base",
+      "kind": "box",
+      "origin": [
+        "-panel_width/2",
+        0,
+        0
+      ],
+      "size": [
+        "panel_width",
+        "base_depth",
+        "base_thickness"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "panel",
+      "kind": "box",
+      "origin": [
+        "-panel_width/2",
+        0,
+        "base_thickness"
+      ],
+      "size": [
+        "panel_width",
+        "panel_thickness",
+        "panel_height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "bracket",
+      "kind": "union",
+      "left": "base",
+      "right": "panel",
+      "frame": "world",
+      "depends_on": [
+        "base",
+        "panel"
+      ],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "cut1",
+      "kind": "box",
+      "origin": [
+        "op1_x - op1_w/2",
+        -1,
+        "op1_z - op1_h/2"
+      ],
+      "size": [
+        "op1_w",
+        "panel_thickness + 2",
+        "op1_h"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "bracket_1",
+      "kind": "difference",
+      "left": "bracket",
+      "right": "cut1",
+      "frame": "world",
+      "depends_on": [
+        "bracket",
+        "cut1"
+      ],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "cut2",
+      "kind": "box",
+      "origin": [
+        "op2_x - op2_w/2",
+        -1,
+        "op2_z - op2_h/2"
+      ],
+      "size": [
+        "op2_w",
+        "panel_thickness + 2",
+        "op2_h"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "bracket_2",
+      "kind": "difference",
+      "left": "bracket_1",
+      "right": "cut2",
+      "frame": "world",
+      "depends_on": [
+        "bracket_1",
+        "cut2"
+      ],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "cut3",
+      "kind": "box",
+      "origin": [
+        "op3_x - op3_w/2",
+        -1,
+        "op3_z - op3_h/2"
+      ],
+      "size": [
+        "op3_w",
+        "panel_thickness + 2",
+        "op3_h"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "bracket_3",
+      "kind": "difference",
+      "left": "bracket_2",
+      "right": "cut3",
+      "frame": "world",
+      "depends_on": [
+        "bracket_2",
+        "cut3"
+      ],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "cut4",
+      "kind": "box",
+      "origin": [
+        "op4_x - op4_w/2",
+        -1,
+        "op4_z - op4_h/2"
+      ],
+      "size": [
+        "op4_w",
+        "panel_thickness + 2",
+        "op4_h"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "final_part",
+      "kind": "difference",
+      "left": "bracket_3",
+      "right": "cut4",
+      "frame": "world",
+      "depends_on": [
+        "bracket_3",
+        "cut4"
+      ],
+      "evidence": [
+        "e1"
+      ]
+    }
+  ],
+  "output": "final_part",
+  "frames": {
+    "world": {
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    }
+  },
+  "bodies": [
+    {
+      "id": "part",
+      "output": "final_part"
+    }
+  ],
+  "evidence": {
+    "observed": [],
+    "inferred": [],
+    "assumptions": [
+      {
+        "id": "e1",
+        "text": "Dimensions and positions of the L-bracket and its four openings were estimated from the drawing proportions as no explicit dimensions were provided. The openings are assumed to be through-holes."
+      }
+    ],
+    "unresolved": []
+  },
+  "constraints": []
+}

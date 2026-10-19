@@ -1,0 +1,34 @@
+{
+  "view_frame": "The drawing presents a wheel disc in two views. The FRONT view (XZ plane) displays the circular face of the wheel with the hub, spokes, and rim. The RIGHT view (YZ plane) displays the side profile, showing the wheel's thickness along the Y-axis. The world origin is at the center of the wheel.",
+  "features": [
+    {
+      "id": "wheel_body",
+      "shape": "Extruded Profile",
+      "section": "Complex 2D Profile (Annulus + Spokes + Hub)",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "OD 120 mm",
+        "thickness 8 mm",
+        "8 spokes",
+        "ASSUMED rim_width 10 mm",
+        "ASSUMED hub_diameter 30 mm",
+        "ASSUMED spoke_width 10 mm"
+      ],
+      "placement": "Centered at (0,0). The profile is defined in the XY plane and extruded along the Z-axis from Z=0 to Z=8. The outer boundary is a circle of radius 60. The inner boundary is a circle of radius 50 (derived from OD 120 and ASSUMED rim_width 10). The hub is a circle of radius 15 (derived from ASSUMED hub_diameter 30). Eight spokes connect the hub to the rim.",
+      "evidence": "Front view shows the wheel face. Text 'OD 120 mm; thickness 8 mm; 8 spokes' provides primary dimensions. Right view confirms uniform thickness."
+    }
+  ],
+  "connections": [
+    "The eight spokes are tangent to the hub circle and the inner rim circle.",
+    "The spokes are evenly spaced at 45-degree intervals (360/8)."
+  ],
+  "edit_rules": [
+    "Changing OD 120 mm updates the outer radius and the outer end of the spokes.",
+    "Changing thickness 8 mm updates the extrusion depth.",
+    "Changing ASSUMED rim_width 10 mm updates the inner radius of the rim and the inner end of the spokes.",
+    "Changing ASSUMED hub_diameter 30 mm updates the hub radius and the inner end of the spokes.",
+    "Changing ASSUMED spoke_width 10 mm updates the width of the spoke rectangles."
+  ],
+  "unresolved": [],
+  "clarification": null
+}

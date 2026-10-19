@@ -1,0 +1,111 @@
+{
+  "drawing": "missing_thickness",
+  "backend": "usd-brep",
+  "trial": 4,
+  "submitted_at": "2026-10-19T00:27:06.313332+00:00",
+  "finished_at": "2026-10-19T00:29:27.818277+00:00",
+  "run_id": "3b6f41c52bdf",
+  "wall_seconds": 141.5,
+  "job_status": "done",
+  "error": null,
+  "questions_asked": 1,
+  "question_kinds": [
+    "uniform_thickness"
+  ],
+  "build": {
+    "watertight": true,
+    "components": 1,
+    "genus": 0,
+    "extents_mm": [
+      60.0,
+      40.0,
+      20.0
+    ],
+    "volume_mm3": 16289.8,
+    "sha256": "c7b77118fe8e26164a4da2e266c928642962c7b098d0b1bc93d02a255a5a0ffb",
+    "bytes": 14284
+  },
+  "checks": {
+    "build_success": true,
+    "extents_pass": null,
+    "genus_pass": null,
+    "volume_pass": null,
+    "fidelity_pass": true,
+    "overall_pass": true,
+    "not_applicable": [
+      "extents",
+      "genus",
+      "volume"
+    ]
+  },
+  "fidelity": {
+    "scores": {
+      "top": 0.686
+    },
+    "pass": true,
+    "reason": null,
+    "topology": {
+      "top": {
+        "expected": 0,
+        "actual": 0,
+        "position_fidelity": null
+      }
+    }
+  },
+  "product": {
+    "success": false,
+    "accepted": false,
+    "status": "unverified",
+    "score": null,
+    "projection_status": "passed",
+    "geometry_status": "passed",
+    "failures": [
+      "Detailed drawing features and view assignments require review."
+    ]
+  },
+  "attempts": {
+    "count": 1,
+    "recovered": false,
+    "corrections": 1
+  },
+  "unsupported": {
+    "flag": false,
+    "code": null
+  },
+  "brep_only": {
+    "operations": [
+      "box",
+      "fillet",
+      "shell"
+    ],
+    "loft": false,
+    "shell": true,
+    "arc_pipe": false,
+    "sweep": false,
+    "extrude": false,
+    "parameter_names": [
+      "depth",
+      "height",
+      "outer_radius",
+      "thickness",
+      "width"
+    ]
+  },
+  "edit": {
+    "available": true,
+    "ok": true,
+    "seconds": 3.01,
+    "param": "width",
+    "old": 60,
+    "new": 72.0,
+    "message": null
+  },
+  "targeted": {
+    "available": false,
+    "ok": false,
+    "seconds": null,
+    "operation": null,
+    "value": null,
+    "message": "no probe value produced a valid targeted plan"
+  }
+}

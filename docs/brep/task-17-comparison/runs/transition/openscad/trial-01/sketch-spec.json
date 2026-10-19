@@ -1,0 +1,164 @@
+{
+  "object": "Solid Rectangular-to-Circular Transition Piece",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "front",
+      "sheet_region": "view_6",
+      "what_it_constrains": "Height (60mm), Bottom Width (60mm), Top Width (30mm), Side Profile (trapezoidal)"
+    },
+    {
+      "direction": "top",
+      "sheet_region": "view_5",
+      "what_it_constrains": "Top Face Geometry (Circle, Diameter 30mm)"
+    },
+    {
+      "direction": "bottom",
+      "sheet_region": "view_4",
+      "what_it_constrains": "Bottom Face Geometry (Rectangle, 60mm x 40mm)"
+    },
+    {
+      "direction": "left",
+      "sheet_region": "view_5",
+      "what_it_constrains": "Side Profile (Trapezoidal, consistent with Front view)"
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "part_1",
+      "name": "Transition Piece",
+      "material": "generic",
+      "bounding_box": {
+        "x": 60,
+        "y": 40,
+        "z": 60
+      }
+    }
+  ],
+  "features": [
+    {
+      "id": "feat_bottom",
+      "type": "face",
+      "shape": "rectangle",
+      "parameters": {
+        "width": 60,
+        "height": 40
+      },
+      "location": "z=0"
+    },
+    {
+      "id": "feat_top",
+      "type": "face",
+      "shape": "circle",
+      "parameters": {
+        "diameter": 30
+      },
+      "location": "z=60"
+    },
+    {
+      "id": "feat_sides",
+      "type": "surface",
+      "shape": "loft",
+      "parameters": {
+        "start_profile": "feat_bottom",
+        "end_profile": "feat_top",
+        "interpolation": "linear"
+      }
+    }
+  ],
+  "relations": [
+    {
+      "type": "concentric",
+      "features": [
+        "feat_bottom",
+        "feat_top"
+      ],
+      "axis": "Z"
+    }
+  ],
+  "symmetry": {
+    "planes": [
+      "XZ",
+      "YZ"
+    ],
+    "axes": [
+      "Z"
+    ]
+  },
+  "repetitions": [],
+  "dimensions": {
+    "width": 60.0,
+    "depth": 40.0,
+    "diameter": 30.0,
+    "height": 60.0,
+    "max_width": 33.4,
+    "max_depth": 6.8,
+    "max_height": 60.0,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "The transition between the rectangular base and circular top is assumed to be a linear loft (straight sides) based on the trapezoidal front view and the 'solid' description."
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": [
+    "Constructed as a solid loft between a 60x40mm rectangle at Z=0 and a 30mm diameter circle at Z=60.",
+    "The object is centered on the Z-axis.",
+    "The front view shows a trapezoid with bottom width 60 and top width 30, consistent with the rectangle width and circle diameter.",
+    "The left view (implied by symmetry and top view) would show a trapezoid with bottom width 40 and top width 30."
+  ],
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "loft",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_3",
+        "operation": "loft",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "owner": "part_1",
+        "parameters": {
+          "profiles": [
+            "op_1",
+            "op_2"
+          ],
+          "ruled": true,
+          "solid": true
+        },
+        "source_views": [
+          "view_6"
+        ]
+      }
+    ],
+    "unresolved_constraints": [
+      "The transition between the rectangular base and circular top is assumed to be a linear loft (straight sides) based on the trapezoidal front view and the 'solid' description."
+    ]
+  },
+  "user_intent": {
+    "description": "Solid transition piece: rectangular bottom, circular top, flat caps, straight sides. Not a duct, not hollow.",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "60"
+  },
+  "source_view_group_count": 9,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

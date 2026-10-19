@@ -1,0 +1,45 @@
+{
+  "view_frame": "The drawing provides a TOP view (XY plane) and a FRONT view (XZ plane). The world coordinate system is defined with X as width (left to right), Y as depth (bottom to top in the TOP view), and Z as height/thickness (bottom to top in the FRONT view). The origin (0,0,0) is at the bottom-left corner of the plate's front face.",
+  "features": [
+    {
+      "id": "plate_body",
+      "shape": "Extruded Profile",
+      "section": "Closed XY profile with straight edges, one arc, and one rectangular notch",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "60",
+        "40",
+        "6",
+        "R6",
+        "20",
+        "10"
+      ],
+      "placement": "Base profile in XY plane at Z=0. Vertices: (0,0) -> (60,0) -> (60,34) -> Arc to (54,40) -> (40,40) -> (40,30) -> (20,30) -> (20,40) -> (0,40) -> (0,0). Extrusion vector is (0,0,6).",
+      "evidence": "TOP view shows the outline with dimensions 60 (width) and 40 (height). Notch is 20 wide x 10 deep, centered on top edge. Top-right corner is R6. FRONT view shows thickness 6 and states 'Same outline through full thickness'."
+    },
+    {
+      "id": "through_hole",
+      "shape": "Cylinder",
+      "section": "Circle",
+      "axis_or_plane": "Z",
+      "dimensions": [
+        "\u00d88"
+      ],
+      "placement": "Center at (12, 15) in XY plane. Axis is parallel to Z. Extends from Z=0 to Z=6.",
+      "evidence": "TOP view shows a circle labeled '\u00d88 THROUGH'. Text notes specify 'Hole centre: 12 from left edge, 15 from bottom edge'."
+    }
+  ],
+  "connections": [
+    "The through_hole is subtracted from the plate_body.",
+    "The notch is part of the plate_body profile definition."
+  ],
+  "edit_rules": [
+    "Changing the plate width (60) or height (40) requires updating the profile vertices and the arc center/radius if the corner is affected.",
+    "Changing the notch width (20) or depth (10) requires updating the notch vertices in the profile.",
+    "Changing the hole diameter (\u00d88) updates the cylinder radius.",
+    "Changing the hole position updates the cylinder center coordinates.",
+    "Changing the thickness (6) updates the extrusion length of the plate_body and the height of the through_hole."
+  ],
+  "unresolved": [],
+  "clarification": null
+}

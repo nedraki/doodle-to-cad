@@ -1,0 +1,47 @@
+{
+  "view_frame": "Front view (bottom) uses XZ plane (X width, Z height). Top view (top) uses XY plane (X width, Y depth). The object is a box with an open top.",
+  "features": [
+    {
+      "id": "box_body",
+      "shape": "box",
+      "section": "rectangular",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "ASSUMED_WIDTH",
+        "ASSUMED_DEPTH",
+        "ASSUMED_HEIGHT",
+        "3"
+      ],
+      "placement": "Centre at (0, 0, ASSUMED_HEIGHT/2). Outer bounds: X [-ASSUMED_WIDTH/2, ASSUMED_WIDTH/2], Y [-ASSUMED_DEPTH/2, ASSUMED_DEPTH/2], Z [0, ASSUMED_HEIGHT].",
+      "evidence": "Outer rectangular outlines in both views. User notes specify 'Box with an open top' and 'Uniform walls'."
+    },
+    {
+      "id": "front_window",
+      "shape": "rectangular_prism",
+      "section": "rectangular",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "ASSUMED_WINDOW_WIDTH",
+        "ASSUMED_WINDOW_HEIGHT"
+      ],
+      "placement": "Centre at (0, -ASSUMED_DEPTH/2, ASSUMED_WINDOW_Z). Extends through the front wall along Y.",
+      "evidence": "Inner rectangle visible in the front view (bottom). User notes specify 'rectangular window through the front wall'."
+    }
+  ],
+  "connections": [
+    "front_window is a through-cut in the front wall of box_body"
+  ],
+  "edit_rules": [
+    "Changing ASSUMED_WIDTH or ASSUMED_HEIGHT must update the front_window placement to maintain relative positioning.",
+    "Changing ASSUMED_DEPTH must update the front_window Y placement to remain on the front face.",
+    "Changing the uniform thickness (3mm) affects the wall thickness of the box_body."
+  ],
+  "unresolved": [
+    "ASSUMED_WIDTH: The overall width of the box is not dimensioned.",
+    "ASSUMED_DEPTH: The overall depth of the box is not dimensioned.",
+    "ASSUMED_HEIGHT: The overall height of the box is not dimensioned.",
+    "ASSUMED_WINDOW_WIDTH: The width of the front window is not dimensioned.",
+    "ASSUMED_WINDOW_HEIGHT: The height of the front window is not dimensioned.",
+    "ASSUMED_WINDOW_Z: The vertical position of the front window is not dimensioned."
+  ]
+}

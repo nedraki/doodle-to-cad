@@ -1,0 +1,349 @@
+[
+  {
+    "attempt": 1,
+    "action": "generate",
+    "preflight": {
+      "passed": true,
+      "errors": [],
+      "warnings": [
+        "multiple top-level geometry expressions detected (2); ensure they intentionally form one connected design"
+      ],
+      "expected_subtractive_feature_groups": 1
+    },
+    "compiler_repairs": [],
+    "uniform_scale": null,
+    "evaluation": {
+      "score": 75.6,
+      "valid_mesh": true,
+      "accepted": false,
+      "mandatory_gates": {
+        "compiled": true,
+        "topology": true,
+        "dimensions": false,
+        "shape_sanity": false,
+        "features": true,
+        "projections": false,
+        "build_envelope": true
+      },
+      "scores": {
+        "topology": 45,
+        "dimensions": 8.0,
+        "features": 20,
+        "projections": 2.6
+      },
+      "projection_similarity": {
+        "top": 0.172
+      },
+      "profile_topology": {
+        "top": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 1,
+          "crop_internal_profiles": 0,
+          "source_aspect": 8.757,
+          "rendered_aspect": 1.0,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": [
+            [
+              0.497,
+              0.498
+            ]
+          ]
+        }
+      },
+      "failures": [
+        "maximum dimension is 23.959 mm; target is 60 mm (tolerance 5%)",
+        "degenerate or implausible axis dimensions: Y=23.959 mm vs expected 5.31 mm, Z=1 mm vs expected 60 mm",
+        "CAD projections poorly match the drawing: top similarity 0.17 (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly."
+      ]
+    },
+    "mesh_health": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 116,
+      "extents_mm": [
+        23.918,
+        23.959,
+        1.0
+      ],
+      "volume_mm3": 541.573
+    },
+    "build": {
+      "version": 1,
+      "backend": "openscad",
+      "source_format": "openscad",
+      "ok": true,
+      "units": "mm",
+      "axes": {
+        "x": "width",
+        "y": "depth",
+        "z": "height"
+      },
+      "views": [
+        "isometric",
+        "front",
+        "top",
+        "right"
+      ],
+      "measurements": {
+        "watertight": true,
+        "components": 1,
+        "triangles": 116,
+        "extents_mm": [
+          23.918,
+          23.959,
+          1.0
+        ],
+        "volume_mm3": 541.573
+      },
+      "diagnostics": [],
+      "drawing_evaluated": false
+    },
+    "compile_log": "Geometries in cache: 14\nGeometry cache size in bytes: 45904\nCGAL Polyhedrons in cache: 2\nCGAL cache size in bytes: 149920\nTotal rendering time: 0:00:00.063\n   Top level object is a 3D object:\n   Simple:        yes\n   Vertices:       60\n   Halfedges:     164\n   Edges:          82\n   Halffacets:     50\n   Facets:         25\n   Volumes:         2",
+    "files": {
+      "scad": "attempt-01/model.scad",
+      "stl": "attempt-01/model.stl",
+      "views": {
+        "isometric": "attempt-01/view-isometric.png",
+        "front": "attempt-01/view-front.png",
+        "top": "attempt-01/view-top.png",
+        "right": "attempt-01/view-right.png"
+      }
+    },
+    "supervisor": {
+      "action": "repair_scad",
+      "problems": [
+        "Geometry is a flat 1mm plate instead of a 20mm high tray.",
+        "The `rounded_rect` module creates a 1mm high cylinder, ignoring the `height` parameter.",
+        "Dimensions are incorrect (24x24x1) compared to spec (60x40x20).",
+        "Front and Right views show a thin line instead of the tray walls."
+      ],
+      "preserve": [
+        "Overall design intent (open tray with rounded corners).",
+        "Parameter definitions for width, depth, height, and thicknesses.",
+        "Boolean subtraction logic for the cavity."
+      ],
+      "instructions": "Fix the `rounded_rect` module to accept a height parameter and extrude the hull to that height. Update the `tray` module to pass the `height` variable to the outer shell and `height - floor_thickness` to the inner cavity. Ensure the final object is positioned correctly on the Z=0 plane with the correct overall dimensions (60x40x20)."
+    }
+  },
+  {
+    "attempt": 2,
+    "action": "repair_scad",
+    "preflight": {
+      "passed": true,
+      "errors": [],
+      "warnings": [
+        "multiple top-level geometry expressions detected (2); ensure they intentionally form one connected design"
+      ],
+      "expected_subtractive_feature_groups": 1
+    },
+    "compiler_repairs": [],
+    "uniform_scale": {
+      "factor": 2.5043,
+      "before_max_mm": 23.959,
+      "after_max_mm": 50.085,
+      "params": [
+        "width",
+        "depth",
+        "height",
+        "wall_thickness",
+        "floor_thickness"
+      ]
+    },
+    "evaluation": {
+      "score": 84.3,
+      "valid_mesh": true,
+      "accepted": false,
+      "mandatory_gates": {
+        "compiled": true,
+        "topology": true,
+        "dimensions": false,
+        "shape_sanity": false,
+        "features": true,
+        "projections": false,
+        "build_envelope": true
+      },
+      "scores": {
+        "topology": 45,
+        "dimensions": 16.7,
+        "features": 20,
+        "projections": 2.6
+      },
+      "projection_similarity": {
+        "top": 0.173
+      },
+      "profile_topology": {
+        "top": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 1,
+          "crop_internal_profiles": 0,
+          "source_aspect": 8.757,
+          "rendered_aspect": 1.0,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": [
+            [
+              0.497,
+              0.496
+            ]
+          ]
+        }
+      },
+      "failures": [
+        "maximum dimension is 50.085 mm; target is 60 mm (tolerance 5%)",
+        "degenerate or implausible axis dimensions: Y=23.959 mm vs expected 5.31 mm",
+        "CAD projections poorly match the drawing: top similarity 0.17 (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly."
+      ]
+    },
+    "mesh_health": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 116,
+      "extents_mm": [
+        23.918,
+        23.959,
+        50.085
+      ],
+      "volume_mm3": 26479.536
+    },
+    "build": {
+      "version": 1,
+      "backend": "openscad",
+      "source_format": "openscad",
+      "ok": true,
+      "units": "mm",
+      "axes": {
+        "x": "width",
+        "y": "depth",
+        "z": "height"
+      },
+      "views": [
+        "isometric",
+        "front",
+        "top",
+        "right"
+      ],
+      "measurements": {
+        "watertight": true,
+        "components": 1,
+        "triangles": 116,
+        "extents_mm": [
+          23.918,
+          23.959,
+          50.085
+        ],
+        "volume_mm3": 26479.536
+      },
+      "diagnostics": [],
+      "drawing_evaluated": false
+    },
+    "compile_log": "Geometries in cache: 14\nGeometry cache size in bytes: 35536\nCGAL Polyhedrons in cache: 2\nCGAL cache size in bytes: 162976\nTotal rendering time: 0:00:00.029\n   Top level object is a 3D object:\n   Simple:        yes\n   Vertices:       60\n   Halfedges:     180\n   Edges:          90\n   Halffacets:     66\n   Facets:         33\n   Volumes:         2",
+    "files": {
+      "scad": "attempt-02/model.scad",
+      "stl": "attempt-02/uniform-scaled/model.stl",
+      "views": {
+        "isometric": "attempt-02/uniform-scaled/view-isometric.png",
+        "front": "attempt-02/uniform-scaled/view-front.png",
+        "top": "attempt-02/uniform-scaled/view-top.png",
+        "right": "attempt-02/uniform-scaled/view-right.png"
+      }
+    },
+    "supervisor": {
+      "action": "repair_scad",
+      "problems": [
+        "Dimensions are incorrect (50x24x24) instead of target (60x40x20).",
+        "Geometry is a solid block with a tiny hole, not an open tray.",
+        "Wall and floor thickness are too large (5mm) relative to the small size.",
+        "Inner cavity is not open at the top (missing Z-axis extension)."
+      ],
+      "preserve": [
+        "The `rounded_rect` module logic using hulls.",
+        "The overall `difference()` approach (outer minus inner)."
+      ],
+      "instructions": "Correct the parameter values to match the specification: set `width=60`, `depth=40`, `height=20`, `corner_radius=6`, `wall_thickness=2`, and `floor_thickness=2`. Modify the `tray` module to ensure the inner cavity is open at the top by extending the subtraction volume upwards (e.g., increase the height of the inner `rounded_rect` and adjust its Z-position to cut through the top face). Ensure the outer shell is centered on the XY plane and sits on Z=0.",
+      "confidence": 1.0
+    }
+  },
+  {
+    "attempt": 3,
+    "action": "repair_scad",
+    "preflight": {
+      "passed": false,
+      "errors": [
+        "unbalanced braces",
+        "subtractive features are specified but no difference() operation exists"
+      ],
+      "warnings": [
+        "multiple subtractive features have no visible placement transforms"
+      ],
+      "expected_subtractive_feature_groups": 1
+    },
+    "compiler_repairs": [
+      {
+        "repair": 1,
+        "preflight": {
+          "passed": false,
+          "errors": [
+            "unbalanced braces",
+            "subtractive features are specified but no difference() operation exists"
+          ],
+          "warnings": [
+            "multiple subtractive features have no visible placement transforms"
+          ],
+          "expected_subtractive_feature_groups": 1
+        },
+        "compile_log": "PREFLIGHT: unbalanced braces; subtractive features are specified but no difference() operation exists",
+        "failed_scad": "compiler-repair-01.failed.scad"
+      },
+      {
+        "repair": 2,
+        "preflight": {
+          "passed": false,
+          "errors": [
+            "unbalanced braces",
+            "subtractive features are specified but no difference() operation exists"
+          ],
+          "warnings": [
+            "multiple subtractive features have no visible placement transforms"
+          ],
+          "expected_subtractive_feature_groups": 1
+        },
+        "compile_log": "PREFLIGHT: unbalanced braces; subtractive features are specified but no difference() operation exists",
+        "failed_scad": "compiler-repair-02.failed.scad"
+      }
+    ],
+    "uniform_scale": null,
+    "evaluation": {
+      "score": 20.0,
+      "valid_mesh": false,
+      "accepted": false,
+      "mandatory_gates": {
+        "compiled": false,
+        "topology": false,
+        "dimensions": false,
+        "shape_sanity": true,
+        "features": true,
+        "projections": true,
+        "build_envelope": true
+      },
+      "scores": {
+        "topology": 0.0,
+        "dimensions": 0,
+        "features": 20,
+        "projections": 0
+      },
+      "projection_similarity": {},
+      "profile_topology": {},
+      "failures": [
+        "OpenSCAD did not produce a valid STL",
+        "maximum dimension is 0 mm; target is 60 mm (tolerance 5%)"
+      ]
+    },
+    "mesh_health": null,
+    "build": null,
+    "compile_log": "PREFLIGHT: unbalanced braces; subtractive features are specified but no difference() operation exists",
+    "files": {
+      "scad": "attempt-03/model.scad",
+      "stl": null,
+      "views": {}
+    }
+  }
+]

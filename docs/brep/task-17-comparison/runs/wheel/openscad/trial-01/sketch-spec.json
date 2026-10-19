@@ -1,0 +1,146 @@
+{
+  "object": "Wheel Disc",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "front",
+      "sheet_region": "view_4",
+      "constrains": "Outer diameter (OD), hub diameter, spoke count (8), spoke angular distribution, spoke width, rim thickness."
+    },
+    {
+      "direction": "right",
+      "sheet_region": "view_5",
+      "constrains": "Uniform thickness of the wheel disc."
+    },
+    {
+      "direction": "top",
+      "sheet_region": "view_2",
+      "constrains": "Confirms uniform thickness profile."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "wheel_disc",
+      "name": "Main Wheel Body",
+      "material": "plastic",
+      "description": "A single connected solid consisting of an outer rim, a central hub, and eight straight radial spokes."
+    }
+  ],
+  "features": [
+    {
+      "id": "outer_rim",
+      "type": "ring",
+      "owner": "wheel_disc",
+      "description": "The outermost circular band of the wheel."
+    },
+    {
+      "id": "central_hub",
+      "type": "cylinder",
+      "owner": "wheel_disc",
+      "description": "The solid central disk."
+    },
+    {
+      "id": "spokes",
+      "type": "radial_bars",
+      "owner": "wheel_disc",
+      "description": "Eight straight bars connecting the hub to the rim."
+    }
+  ],
+  "relations": [
+    {
+      "type": "concentric",
+      "targets": [
+        "outer_rim",
+        "central_hub"
+      ]
+    },
+    {
+      "type": "connects",
+      "source": "spokes",
+      "target": "central_hub"
+    },
+    {
+      "type": "connects",
+      "source": "spokes",
+      "target": "outer_rim"
+    }
+  ],
+  "symmetry": {
+    "type": "radial",
+    "order": 8,
+    "axis": "Z"
+  },
+  "repetitions": [
+    {
+      "feature_id": "spokes",
+      "count": 8,
+      "pattern": "radial",
+      "spacing": "45 degrees"
+    }
+  ],
+  "dimensions": {
+    "diameter": 120.0,
+    "thickness": 8.0,
+    "max_width": 27.8,
+    "max_depth": 120.0,
+    "max_height": 9.5,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "Exact width of the spokes relative to the rim thickness (visually estimated).",
+    "Exact diameter of the central hub (visually estimated)."
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "The object is a flat wheel disc. The front view (view_4) provides the 2D profile. The side view (view_5) confirms a uniform thickness of 8mm. The construction will be a 2D extrusion of the wheel profile.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "extrude",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_2",
+        "operation": "extrude",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "owner": "wheel_disc",
+        "parameters": {
+          "depth": 8
+        },
+        "source_views": [
+          "view_5"
+        ]
+      }
+    ],
+    "unresolved_constraints": [
+      "Exact width of the spokes relative to the rim thickness (visually estimated).",
+      "Exact diameter of the central hub (visually estimated)."
+    ]
+  },
+  "user_intent": {
+    "description": "Wheel disc: outer rim, eight evenly spaced straight spokes, central hub. One connected solid of uniform thickness.",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "120"
+  },
+  "source_view_group_count": 6,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

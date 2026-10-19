@@ -1,0 +1,350 @@
+[
+  {
+    "attempt": 1,
+    "action": "generate",
+    "preflight": {
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "expected_subtractive_feature_groups": 0
+    },
+    "compiler_repairs": [],
+    "uniform_scale": null,
+    "evaluation": {
+      "score": 94.4,
+      "valid_mesh": true,
+      "accepted": false,
+      "mandatory_gates": {
+        "compiled": true,
+        "topology": true,
+        "dimensions": true,
+        "shape_sanity": false,
+        "features": true,
+        "projections": false,
+        "build_envelope": true
+      },
+      "scores": {
+        "topology": 45,
+        "dimensions": 20.0,
+        "features": 20,
+        "projections": 9.4
+      },
+      "projection_similarity": {
+        "front": 1.0,
+        "top": 0.248
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 0,
+          "source_aspect": 1.031,
+          "rendered_aspect": 1.0,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": []
+        },
+        "top": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 0,
+          "source_aspect": 3.55,
+          "rendered_aspect": 1.496,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": []
+        }
+      },
+      "failures": [
+        "degenerate or implausible axis dimensions: Y=40 mm vs expected 6.8 mm",
+        "CAD projections poorly match the drawing: top similarity 0.25 (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly."
+      ]
+    },
+    "mesh_health": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 140,
+      "extents_mm": [
+        60.0,
+        40.0,
+        60.001
+      ],
+      "volume_mm3": 92116.874
+    },
+    "build": {
+      "version": 1,
+      "backend": "openscad",
+      "source_format": "openscad",
+      "ok": true,
+      "units": "mm",
+      "axes": {
+        "x": "width",
+        "y": "depth",
+        "z": "height"
+      },
+      "views": [
+        "isometric",
+        "front",
+        "top",
+        "right"
+      ],
+      "measurements": {
+        "watertight": true,
+        "components": 1,
+        "triangles": 140,
+        "extents_mm": [
+          60.0,
+          40.0,
+          60.001
+        ],
+        "volume_mm3": 92116.874
+      },
+      "diagnostics": [],
+      "drawing_evaluated": false
+    },
+    "compile_log": "Geometries in cache: 5\nGeometry cache size in bytes: 30424\nCGAL Polyhedrons in cache: 0\nCGAL cache size in bytes: 0\nTotal rendering time: 0:00:00.002\n   Top level object is a 3D object:\n   Facets:        140",
+    "files": {
+      "scad": "attempt-01/model.scad",
+      "stl": "attempt-01/model.stl",
+      "views": {
+        "isometric": "attempt-01/view-isometric.png",
+        "front": "attempt-01/view-front.png",
+        "top": "attempt-01/view-top.png",
+        "right": "attempt-01/view-right.png"
+      }
+    },
+    "supervisor": {
+      "action": "repair_scad",
+      "problems": [
+        "Top view shows rectangular base outline (60x40) instead of circular top (30mm)",
+        "Evaluation flags Y dimension 40mm vs expected 6.8mm (likely due to projection mismatch)",
+        "Current hull() implementation creates a convex hull that projects the base rectangle in the top view"
+      ],
+      "preserve": [
+        "Base dimensions (60x40mm)",
+        "Top diameter (30mm)",
+        "Height (60mm)",
+        "Solid geometry (no hollowing)"
+      ],
+      "instructions": "Replace the hull() operation with a true loft (e.g., using polyhedron or a lofting library) that interpolates the perimeter from the rectangle to the circle. Ensure the top face is a flat circle of diameter 30mm and the bottom face is a flat rectangle of 60x40mm. The side surfaces should be ruled (straight lines connecting corresponding points on the perimeters) to match the 'linear taper' description and ensure the top view projects as a circle.",
+      "confidence": 0.95
+    }
+  },
+  {
+    "attempt": 2,
+    "action": "repair_scad",
+    "preflight": {
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "expected_subtractive_feature_groups": 0
+    },
+    "compiler_repairs": [],
+    "uniform_scale": null,
+    "evaluation": {
+      "score": 94.4,
+      "valid_mesh": true,
+      "accepted": false,
+      "mandatory_gates": {
+        "compiled": true,
+        "topology": true,
+        "dimensions": true,
+        "shape_sanity": false,
+        "features": true,
+        "projections": false,
+        "build_envelope": true
+      },
+      "scores": {
+        "topology": 45,
+        "dimensions": 20.0,
+        "features": 20,
+        "projections": 9.4
+      },
+      "projection_similarity": {
+        "front": 1.0,
+        "top": 0.248
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 0,
+          "source_aspect": 1.031,
+          "rendered_aspect": 1.0,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": []
+        },
+        "top": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 0,
+          "source_aspect": 3.55,
+          "rendered_aspect": 1.496,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": []
+        }
+      },
+      "failures": [
+        "degenerate or implausible axis dimensions: Y=40 mm vs expected 6.8 mm",
+        "CAD projections poorly match the drawing: top similarity 0.25 (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly."
+      ]
+    },
+    "mesh_health": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 828,
+      "extents_mm": [
+        60.0,
+        40.0,
+        60.001
+      ],
+      "volume_mm3": 96002.336
+    },
+    "build": {
+      "version": 1,
+      "backend": "openscad",
+      "source_format": "openscad",
+      "ok": true,
+      "units": "mm",
+      "axes": {
+        "x": "width",
+        "y": "depth",
+        "z": "height"
+      },
+      "views": [
+        "isometric",
+        "front",
+        "top",
+        "right"
+      ],
+      "measurements": {
+        "watertight": true,
+        "components": 1,
+        "triangles": 828,
+        "extents_mm": [
+          60.0,
+          40.0,
+          60.001
+        ],
+        "volume_mm3": 96002.336
+      },
+      "diagnostics": [],
+      "drawing_evaluated": false
+    },
+    "compile_log": "Geometries in cache: 300\nGeometry cache size in bytes: 270240\nCGAL Polyhedrons in cache: 61\nCGAL cache size in bytes: 2579888\nTotal rendering time: 0:00:01.957\n   Top level object is a 3D object:\n   Simple:        yes\n   Vertices:     1028\n   Halfedges:    3320\n   Edges:        1660\n   Halffacets:   1270\n   Facets:        635\n   Volumes:         2",
+    "files": {
+      "scad": "attempt-02/model.scad",
+      "stl": "attempt-02/model.stl",
+      "views": {
+        "isometric": "attempt-02/view-isometric.png",
+        "front": "attempt-02/view-front.png",
+        "top": "attempt-02/view-top.png",
+        "right": "attempt-02/view-right.png"
+      }
+    },
+    "supervisor": {
+      "action": "regenerate_scad",
+      "problems": [
+        "Top view shows a rectangle instead of a circle (top face is not circular).",
+        "Shape sanity check failed due to incorrect top geometry.",
+        "Projection similarity for top view is very low (0.25)."
+      ],
+      "preserve": [
+        "Overall dimensions (60x40x60).",
+        "Front view profile (trapezoid).",
+        "Bottom view profile (rectangle).",
+        "Linear tapering of sides."
+      ],
+      "instructions": "Previous repair made no measurable progress. Regenerate cleanly from the specification and mandatory gate failures using a different construction strategy.",
+      "confidence": 0.95
+    }
+  },
+  {
+    "attempt": 3,
+    "action": "regenerate_scad",
+    "preflight": {
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "expected_subtractive_feature_groups": 0
+    },
+    "compiler_repairs": [
+      {
+        "repair": 1,
+        "preflight": {
+          "passed": true,
+          "errors": [],
+          "warnings": [],
+          "expected_subtractive_feature_groups": 0
+        },
+        "compile_log": "Geometries in cache: 2\nGeometry cache size in bytes: 48\nCGAL Polyhedrons in cache: 0\nCGAL cache size in bytes: 0\nTotal rendering time: 0:00:00.002\nCurrent top level object is empty.",
+        "failed_scad": "compiler-repair-01.failed.scad"
+      },
+      {
+        "repair": 2,
+        "preflight": {
+          "passed": true,
+          "errors": [],
+          "warnings": [],
+          "expected_subtractive_feature_groups": 0
+        },
+        "compile_log": "Geometries in cache: 2\nGeometry cache size in bytes: 48\nCGAL Polyhedrons in cache: 0\nCGAL cache size in bytes: 0\nTotal rendering time: 0:00:00.001\nCurrent top level object is empty.",
+        "failed_scad": "compiler-repair-02.failed.scad"
+      }
+    ],
+    "uniform_scale": null,
+    "evaluation": {
+      "score": 20.0,
+      "valid_mesh": false,
+      "accepted": false,
+      "mandatory_gates": {
+        "compiled": false,
+        "topology": false,
+        "dimensions": false,
+        "shape_sanity": true,
+        "features": true,
+        "projections": true,
+        "build_envelope": true
+      },
+      "scores": {
+        "topology": 0.0,
+        "dimensions": 0,
+        "features": 20,
+        "projections": 0
+      },
+      "projection_similarity": {},
+      "profile_topology": {},
+      "failures": [
+        "OpenSCAD did not produce a valid STL",
+        "maximum dimension is 0 mm; target is 60 mm (tolerance 5%)"
+      ]
+    },
+    "mesh_health": null,
+    "build": {
+      "version": 1,
+      "backend": "openscad",
+      "source_format": "openscad",
+      "ok": false,
+      "units": "mm",
+      "axes": {
+        "x": "width",
+        "y": "depth",
+        "z": "height"
+      },
+      "views": [],
+      "measurements": {},
+      "diagnostics": [
+        {
+          "code": "build_failed",
+          "message": "Geometries in cache: 2\nGeometry cache size in bytes: 48\nCGAL Polyhedrons in cache: 0\nCGAL cache size in bytes: 0\nTotal rendering time: 0:00:00.001\nCurrent top level object is empty.",
+          "severity": "error"
+        }
+      ],
+      "drawing_evaluated": false
+    },
+    "compile_log": "Geometries in cache: 2\nGeometry cache size in bytes: 48\nCGAL Polyhedrons in cache: 0\nCGAL cache size in bytes: 0\nTotal rendering time: 0:00:00.001\nCurrent top level object is empty.",
+    "files": {
+      "scad": "attempt-03/model.scad",
+      "stl": null,
+      "views": {}
+    }
+  }
+]

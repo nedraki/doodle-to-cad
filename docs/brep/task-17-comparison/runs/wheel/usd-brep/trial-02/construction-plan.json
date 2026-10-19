@@ -1,0 +1,41 @@
+{
+  "view_frame": "The drawing presents a wheel disc in two views. The FRONT view (XZ plane) shows the circular face of the wheel with the hub, spokes, and rim. The RIGHT view (YZ plane) shows the side profile, indicating the wheel's thickness along the Y-axis. The world axes are defined as: X is the horizontal width in the front view, Z is the vertical height in the front view, and Y is the depth (thickness) of the wheel.",
+  "features": [
+    {
+      "id": "wheel_disc",
+      "shape": "Extruded Profile",
+      "section": "Uniform thickness",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "OD 120 mm",
+        "thickness 8 mm",
+        "8 spokes",
+        "ASSUMED: Hub OD 30 mm",
+        "ASSUMED: Rim width 10 mm",
+        "ASSUMED: Spoke width 10 mm"
+      ],
+      "placement": "Centered at (0,0) in the XZ plane. The profile is extruded along the Y-axis from Y=0 to Y=8 mm. The outer boundary is a circle of radius 60 mm. The inner boundary is a circle of radius 15 mm (hub). The rim is the annulus between R=50 mm and R=60 mm. Eight spokes connect the hub (R=15 mm) to the rim (R=50 mm).",
+      "evidence": "Front view shows a circular wheel with a central hub, 8 radial spokes, and an outer rim. Text annotation states 'OD 120 mm; thickness 8 mm; 8 spokes'. Right view shows a rectangular profile consistent with a uniform thickness."
+    }
+  ],
+  "connections": [
+    "The 8 spokes are connected to the central hub and the outer rim.",
+    "The rim is a continuous circular band connected to the spokes.",
+    "The hub is a solid central disk connected to the spokes.",
+    "All components form a single connected solid."
+  ],
+  "edit_rules": [
+    "Changing the OD (120 mm) scales the entire wheel profile.",
+    "Changing the thickness (8 mm) adjusts the extrusion depth along the Y-axis.",
+    "Changing the number of spokes (8) requires regenerating the spoke pattern.",
+    "Changing the hub diameter (ASSUMED 30 mm) adjusts the inner circle radius.",
+    "Changing the rim width (ASSUMED 10 mm) adjusts the inner radius of the rim.",
+    "Changing the spoke width (ASSUMED 10 mm) adjusts the width of the radial spokes."
+  ],
+  "unresolved": [
+    "Hub diameter is not explicitly dimensioned; assumed 30 mm.",
+    "Rim width is not explicitly dimensioned; assumed 10 mm.",
+    "Spoke width is not explicitly dimensioned; assumed 10 mm."
+  ],
+  "clarification": null
+}

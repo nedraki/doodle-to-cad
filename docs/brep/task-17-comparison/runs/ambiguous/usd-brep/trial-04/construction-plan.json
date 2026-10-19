@@ -1,0 +1,38 @@
+{
+  "view_frame": "The drawing provides a TOP view in the XY plane. X represents width (horizontal), Y represents depth (vertical on sheet), and Z represents height/thickness (perpendicular to the view). The part is a rectangular block with a central circular through-hole.",
+  "features": [
+    {
+      "id": "block_body",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "40",
+        "30",
+        "12"
+      ],
+      "placement": "Centered at (0,0) in XY. Extents: X from -20 to 20, Y from -15 to 15. Z from 0 to 12.",
+      "evidence": "Text 'Body: 40 wide x 30 deep x 12 thick' and dimension lines '40' and '30' on the TOP view."
+    },
+    {
+      "id": "central_opening",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "Z",
+      "dimensions": [
+        "\u00d88"
+      ],
+      "placement": "Centered at (0,0) in XY. Extents: X from -4 to 4, Y from -4 to 4. Z from 0 to 12 (through).",
+      "evidence": "Circle in center of TOP view labeled '\u00d88'. Text 'Opening centred in top face'. Clarification answer confirms 'through'."
+    }
+  ],
+  "connections": [
+    "central_opening is subtracted from block_body"
+  ],
+  "edit_rules": [
+    "Changing block_body width (X) or depth (Y) maintains the central position of the opening.",
+    "Changing block_body thickness (Z) updates the height of the central_opening cut to maintain the through condition.",
+    "Changing central_opening diameter updates the circle radius in the XY profile."
+  ],
+  "unresolved": []
+}

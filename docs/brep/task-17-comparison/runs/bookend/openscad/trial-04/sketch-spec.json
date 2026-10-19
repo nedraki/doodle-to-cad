@@ -1,0 +1,223 @@
+{
+  "object": "L-shaped bookend",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "front",
+      "sheet_region": "left",
+      "constrains": "The upright panel's face geometry (width and height) and the layout of the four through-openings."
+    },
+    {
+      "direction": "right",
+      "sheet_region": "right",
+      "constrains": "The L-shaped cross-section profile (depth of base, height of panel, and uniform wall thickness)."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "bookend_body",
+      "name": "L-shaped Body",
+      "material": "plastic",
+      "description": "A single L-shaped solid consisting of a flat horizontal base and a vertical upright panel containing four rectangular cutouts."
+    }
+  ],
+  "features": [
+    {
+      "id": "base",
+      "type": "extrusion",
+      "owner": "bookend_body",
+      "description": "The horizontal bottom section of the L-shape."
+    },
+    {
+      "id": "panel",
+      "type": "extrusion",
+      "owner": "bookend_body",
+      "description": "The vertical back section of the L-shape."
+    },
+    {
+      "id": "cutout_top_left",
+      "type": "hole",
+      "owner": "panel",
+      "description": "Rectangular through-hole located at the top-left of the panel."
+    },
+    {
+      "id": "cutout_bottom_left",
+      "type": "hole",
+      "owner": "panel",
+      "description": "Vertical rectangular through-hole located at the bottom-left of the panel."
+    },
+    {
+      "id": "cutout_center",
+      "type": "hole",
+      "owner": "panel",
+      "description": "Vertical rectangular through-hole located in the center of the panel."
+    },
+    {
+      "id": "cutout_bottom_right",
+      "type": "hole",
+      "owner": "panel",
+      "description": "Vertical rectangular through-hole located at the bottom-right of the panel."
+    }
+  ],
+  "relations": [
+    {
+      "type": "perpendicular",
+      "target": "base",
+      "source": "panel",
+      "description": "The upright panel is perpendicular to the flat base."
+    },
+    {
+      "type": "through",
+      "target": "panel",
+      "source": "cutout_top_left",
+      "description": "The cutout penetrates the full thickness of the panel."
+    },
+    {
+      "type": "through",
+      "target": "panel",
+      "source": "cutout_bottom_left",
+      "description": "The cutout penetrates the full thickness of the panel."
+    },
+    {
+      "type": "through",
+      "target": "panel",
+      "source": "cutout_center",
+      "description": "The cutout penetrates the full thickness of the panel."
+    },
+    {
+      "type": "through",
+      "target": "panel",
+      "source": "cutout_bottom_right",
+      "description": "The cutout penetrates the full thickness of the panel."
+    }
+  ],
+  "symmetry": "none",
+  "repetitions": [
+    {
+      "feature_id": "cutout_bottom_left",
+      "count": 1,
+      "pattern": "none",
+      "description": "Vertical rectangular cutout."
+    },
+    {
+      "feature_id": "cutout_center",
+      "count": 1,
+      "pattern": "none",
+      "description": "Vertical rectangular cutout."
+    },
+    {
+      "feature_id": "cutout_bottom_right",
+      "count": 1,
+      "pattern": "none",
+      "description": "Vertical rectangular cutout."
+    }
+  ],
+  "dimensions": {
+    "max_width": 80.18,
+    "max_depth": 71.67,
+    "max_height": 100.0,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "Exact wall thickness of the L-profile is not dimensioned, inferred from stroke width in the right view.",
+    "Exact spacing between the four cutouts is inferred from the front view layout."
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "The object is modeled as a single L-shaped solid. The right view defines the L-profile (base and panel thickness). The front view defines the panel face and the four rectangular cutouts. The cutouts are treated as subtractive features through the panel wall.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "extrude",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_1",
+        "operation": "extrude",
+        "profile_plane": "YZ",
+        "direction_axis": "X",
+        "owner": "bookend_body",
+        "parameters": {
+          "profile_source": "view_2",
+          "profile_id": "contour_10",
+          "depth": "max_width"
+        },
+        "source_views": [
+          "view_2"
+        ]
+      },
+      {
+        "id": "cutout_top_left",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Rectangular through-hole located at the top-left of the panel."
+        },
+        "source_views": []
+      },
+      {
+        "id": "cutout_bottom_left",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Vertical rectangular through-hole located at the bottom-left of the panel."
+        },
+        "source_views": []
+      },
+      {
+        "id": "cutout_center",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Vertical rectangular through-hole located in the center of the panel."
+        },
+        "source_views": []
+      },
+      {
+        "id": "cutout_bottom_right",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Vertical rectangular through-hole located at the bottom-right of the panel."
+        },
+        "source_views": []
+      }
+    ],
+    "unresolved_constraints": [
+      "Wall thickness of the L-profile needs to be set based on visual estimation from the right view."
+    ]
+  },
+  "user_intent": {
+    "description": "L-shaped bookend: a flat base and an upright panel. The panel has four through openings cut all the way through its wall.",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "100"
+  },
+  "source_view_group_count": 2,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

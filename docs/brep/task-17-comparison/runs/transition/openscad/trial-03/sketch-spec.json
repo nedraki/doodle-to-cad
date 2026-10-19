@@ -1,0 +1,158 @@
+{
+  "object": "Solid transition piece (rectangular-to-circular pyramid frustum)",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "bottom",
+      "sheet_region": "view_4",
+      "what_it_constrains": "Base profile: Rectangle 60mm (width) x 40mm (depth)."
+    },
+    {
+      "direction": "top",
+      "sheet_region": "view_5",
+      "what_it_constrains": "Top profile: Circle diameter 30mm."
+    },
+    {
+      "direction": "front",
+      "sheet_region": "view_6",
+      "what_it_constrains": "Front elevation: Trapezoid showing height 60mm and linear transition from base width (60) to top width (30)."
+    },
+    {
+      "direction": "left",
+      "sheet_region": "view_5",
+      "what_it_constrains": "Side elevation: Trapezoid showing height 60mm and linear transition from base depth (40) to top depth (30)."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "part_1",
+      "name": "Transition Piece",
+      "material": "generic",
+      "bounding_box": [
+        60,
+        40,
+        60
+      ]
+    }
+  ],
+  "features": [
+    {
+      "id": "feat_base",
+      "type": "face",
+      "description": "Rectangular bottom face",
+      "dimensions": {
+        "width": 60,
+        "depth": 40
+      }
+    },
+    {
+      "id": "feat_top",
+      "type": "face",
+      "description": "Circular top face",
+      "dimensions": {
+        "diameter": 30
+      }
+    },
+    {
+      "id": "feat_sides",
+      "type": "surface",
+      "description": "Four planar side faces connecting the rectangular base to the circular top"
+    }
+  ],
+  "relations": [
+    {
+      "type": "concentric",
+      "targets": [
+        "feat_base",
+        "feat_top"
+      ],
+      "description": "The circular top is centered above the rectangular base."
+    },
+    {
+      "type": "parallel",
+      "targets": [
+        "feat_base",
+        "feat_top"
+      ],
+      "description": "Top and bottom faces are parallel."
+    }
+  ],
+  "symmetry": {
+    "planes": [
+      "XZ",
+      "YZ"
+    ],
+    "description": "Symmetric about the vertical axis passing through the center of the base and top."
+  },
+  "repetitions": [],
+  "dimensions": {
+    "width": 60.0,
+    "depth": 40.0,
+    "diameter": 30.0,
+    "height": 60.0,
+    "max_width": 33.4,
+    "max_depth": 6.8,
+    "max_height": 60.0,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "The transition from the rectangular corners to the circular top is assumed to be linear (planar faces) based on the 'straight sides' description and the trapezoidal front view."
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "The object is a solid geometric primitive defined by a rectangular base and a circular top. The front view confirms the linear taper. The left view (implied by the circular top and rectangular base) confirms the taper in the depth direction. The object is watertight.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "loft",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_3",
+        "operation": "loft",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "owner": "part_1",
+        "parameters": {
+          "profiles": [
+            "op_1",
+            "op_2"
+          ],
+          "ruled": true,
+          "solid": true
+        },
+        "source_views": [
+          "view_6"
+        ]
+      }
+    ],
+    "unresolved_constraints": [
+      "The transition from the rectangular corners to the circular top is assumed to be linear (planar faces) based on the 'straight sides' description and the trapezoidal front view."
+    ]
+  },
+  "user_intent": {
+    "description": "Solid transition piece: rectangular bottom, circular top, flat caps, straight sides. Not a duct, not hollow.",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "60"
+  },
+  "source_view_group_count": 9,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

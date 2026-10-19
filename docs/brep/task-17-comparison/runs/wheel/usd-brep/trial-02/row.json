@@ -1,0 +1,114 @@
+{
+  "drawing": "wheel",
+  "backend": "usd-brep",
+  "trial": 2,
+  "submitted_at": "2026-10-18T23:24:12.406769+00:00",
+  "finished_at": "2026-10-18T23:26:56.997884+00:00",
+  "run_id": "e302a8f2c4b6",
+  "wall_seconds": 164.6,
+  "job_status": "done",
+  "error": null,
+  "questions_asked": 0,
+  "question_kinds": [],
+  "build": {
+    "watertight": true,
+    "components": 1,
+    "genus": 8,
+    "extents_mm": [
+      120.0,
+      120.0,
+      8.0
+    ],
+    "volume_mm3": 55810.3,
+    "sha256": "42b290df770239fb9b7998a5e7b11fe0894ddd2512f8e6b22251e70bb38d41fc",
+    "bytes": 52684
+  },
+  "checks": {
+    "build_success": true,
+    "extents_pass": true,
+    "genus_pass": true,
+    "volume_pass": false,
+    "fidelity_pass": false,
+    "overall_pass": false,
+    "not_applicable": []
+  },
+  "fidelity": {
+    "scores": {
+      "front": 0.4,
+      "right": 0.145
+    },
+    "pass": false,
+    "reason": null,
+    "topology": {
+      "front": {
+        "expected": 1,
+        "actual": 1,
+        "position_fidelity": 1.0
+      },
+      "right": {
+        "expected": 0,
+        "actual": 1,
+        "position_fidelity": null
+      }
+    }
+  },
+  "product": {
+    "success": false,
+    "accepted": false,
+    "status": "failed",
+    "score": null,
+    "projection_status": "failed",
+    "geometry_status": "passed",
+    "failures": [
+      "front projection",
+      "right projection",
+      "Detailed drawing features and view assignments require review."
+    ]
+  },
+  "attempts": {
+    "count": 2,
+    "recovered": true,
+    "corrections": 1
+  },
+  "unsupported": {
+    "flag": false,
+    "code": null
+  },
+  "brep_only": {
+    "operations": [
+      "box",
+      "extrude",
+      "rotate",
+      "union"
+    ],
+    "loft": false,
+    "shell": false,
+    "arc_pipe": false,
+    "sweep": false,
+    "extrude": true,
+    "parameter_names": [
+      "hub_diameter",
+      "outer_diameter",
+      "rim_width",
+      "spoke_width",
+      "thickness"
+    ]
+  },
+  "edit": {
+    "available": true,
+    "ok": true,
+    "seconds": 2.95,
+    "param": "outer_diameter",
+    "old": 120,
+    "new": 144.0,
+    "message": null
+  },
+  "targeted": {
+    "available": false,
+    "ok": false,
+    "seconds": null,
+    "operation": null,
+    "value": null,
+    "message": "no probe value produced a valid targeted plan"
+  }
+}
