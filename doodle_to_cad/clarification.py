@@ -12,6 +12,18 @@ def accept_answer(job, payload):
     if job['status']!='waiting_for_answer' or not question or not future or future.done():
         raise HTTPException(409, 'This question is no longer waiting for an answer.')
     kind=question.get('kind','opening_extent')
+    if kind=='body_dimension':
+        value=payload.get('value_mm') if isinstance(payload,dict) else None
+        if isinstance(payload,dict) and set(payload)-{'question_id','value_mm'}:
+            raise HTTPException(422,'Invalid answer fields.')
+        if not isinstance(payload,dict) or payload.get('question_id')!=question['id']:
+            raise HTTPException(409,'This answer belongs to a different question.')
+        if isinstance(value,bool) or not isinstance(value,(int,float)) or not math.isfinite(value) or not 0<value<=question['maximum_mm']:
+            raise HTTPException(422,'Enter a positive size in millimetres within the allowed range. Geometry checks still apply.')
+        answer={'question_id':question['id'],'feature_id':question.get('feature_id','size'),'kind':kind,'value_mm':value}
+        future.set_result(answer)
+        job.update(status='running',stage='generating CAD geometry',question=None)
+        return {'job_id':job['job_id'],'status':'running'}
     thickness_question=kind in {'wall_thickness','floor_thickness','uniform_thickness'}
     allowed={'question_id','thickness_mm'} if thickness_question else {'question_id','choice','depth_mm'}
     if not isinstance(payload,dict) or set(payload)-allowed:
@@ -40,9 +52,11 @@ def accept_answer(job, payload):
     return {'job_id':job['job_id'],'status':'running'}
 
 
-async def ask_clarification(job, out, request, maximum, history):
+async def ask_clarification(job, out, request, maximum, history, timeout_s=None):
     thickness_labels={'wall_thickness':'Wall thickness','floor_thickness':'Floor thickness','uniform_thickness':'Wall and floor thickness'}
-    if request['kind'] in thickness_labels:
+    if request['kind']=='body_dimension':
+        question={**request,'id':uuid.uuid4().hex,'text':request.get('text') or 'Size (mm)?','maximum_mm':maximum}
+    elif request['kind'] in thickness_labels:
         question={**request,'id':uuid.uuid4().hex,'text':thickness_labels[request['kind']]+' (mm)?','maximum_thickness_mm':maximum}
     else:
         question={**request,'id':uuid.uuid4().hex,'text':'Should this hole go all the way through the part?',
@@ -56,9 +70,17 @@ async def ask_clarification(job, out, request, maximum, history):
     timer=job.get('_prepare_timeout')
     if timer:timer.reschedule(None)
     try:
-        answer=await future
+        if timeout_s:
+            answer=await asyncio.wait_for(future, timeout_s)
+        else:
+            answer=await future
         record.update(status='answered',answer=answer);save()
         return answer
+    except asyncio.TimeoutError:
+        record.update(status='timeout');save()
+        job.update(status='queued',stage='',question=None)
+        job.pop('_answer_future',None)
+        return None
     except asyncio.CancelledError:
         record['status']='cancelled';save();raise
     finally:

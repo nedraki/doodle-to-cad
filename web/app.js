@@ -557,16 +557,18 @@ function showClarification(id,job){
   hideClarification();clarificationId=q.id;
   const panel=document.createElement('section');panel.id='clarificationPanel';
   panel.style.cssText='background:#fff9ed;color:#182d36;padding:24px;border:3px solid #ff593c;border-radius:18px;max-width:600px;margin:20px auto;text-align:left';
+  const dimension=q.kind==='body_dimension';
   const thickness=['wall_thickness','floor_thickness','uniform_thickness'].includes(q.kind);
-  const controls=thickness?`<label>Thickness (mm)<input name="thickness" type="number" min="0.01" max="${Number(q.maximum_thickness_mm)}" step="any" required></label>`:`<label><input type="radio" name="openingChoice" value="through" required> Yes — make a through-hole</label><label><input type="radio" name="openingChoice" value="recess" required> No — leave a bottom</label><label id="recessDepthLabel" hidden>Recess depth (mm)<input name="depth" type="number" min="0.01" max="${Number(q.maximum_depth_mm)}" step="any"></label>`;
+  const controls=dimension?`<label>${escapeHtml(q.axis||'Size')} (mm)<input name="value_mm" type="number" min="0.01" max="${Number(q.maximum_mm)}" step="any" required></label>`:thickness?`<label>Thickness (mm)<input name="thickness" type="number" min="0.01" max="${Number(q.maximum_thickness_mm)}" step="any" required></label>`:`<label><input type="radio" name="openingChoice" value="through" required> Yes — make a through-hole</label><label><input type="radio" name="openingChoice" value="recess" required> No — leave a bottom</label><label id="recessDepthLabel" hidden>Recess depth (mm)<input name="depth" type="number" min="0.01" max="${Number(q.maximum_depth_mm)}" step="any"></label>`;
   panel.innerHTML=`<h2>One detail before we build</h2><p><b>${escapeHtml(q.feature_label)}</b></p><p>${escapeHtml(q.reason)}</p><h3>${escapeHtml(q.text)}</h3><form id="clarificationForm">${controls}<p id="answerError" role="alert"></p><button type="submit">Continue with this answer</button><button type="button" id="cancelQuestion">Cancel generation</button></form><p>Your drawing is kept. We will save your answer with the design.</p>`;
   $('#working').append(panel);$('#working').classList.add('awaiting-answer');
   const answerForm=panel.querySelector('form');
-  if(!thickness)answerForm.onchange=()=>{const recess=answerForm.elements.openingChoice.value==='recess';panel.querySelector('#recessDepthLabel').hidden=!recess;answerForm.elements.depth.required=recess};
+  if(!thickness&&!dimension)answerForm.onchange=()=>{const recess=answerForm.elements.openingChoice.value==='recess';panel.querySelector('#recessDepthLabel').hidden=!recess;answerForm.elements.depth.required=recess};
   answerForm.onsubmit=async event=>{
     event.preventDefault();const button=answerForm.querySelector('[type=submit]');button.disabled=true;
     const payload={question_id:q.id};
-    if(thickness)payload.thickness_mm=Number(answerForm.elements.thickness.value);
+    if(dimension)payload.value_mm=Number(answerForm.elements.value_mm.value);
+    else if(thickness)payload.thickness_mm=Number(answerForm.elements.thickness.value);
     else{payload.choice=answerForm.elements.openingChoice.value;if(payload.choice==='recess')payload.depth_mm=Number(answerForm.elements.depth.value)}
     try{const res=await fetch(`/api/generate/${id}/answer`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});const data=await res.json();if(!res.ok)throw Error(typeof data.detail==='string'?data.detail:'Could not save this answer.');if(clarificationId===q.id){hideClarification();$('#workText').textContent='Continuing with your answer…'}}
     catch(error){panel.querySelector('#answerError').textContent=error.message;button.disabled=false}

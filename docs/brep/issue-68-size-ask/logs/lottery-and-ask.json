@@ -1,0 +1,69 @@
+{
+  "base": "http://127.0.0.1:8142",
+  "case": "/home/sparkie/playground/doodle-to-cad/benchmarks/cases/012_vent_grille_grid",
+  "lottery_runs": [
+    {
+      "job_id": "7efd276d9987",
+      "status": "done",
+      "extents_xyz": [
+        100.0,
+        5.0,
+        61.39
+      ],
+      "evaluation_score": 97.8
+    },
+    {
+      "job_id": "d35998d2c9dc",
+      "status": "done",
+      "extents_xyz": [
+        100.0,
+        5.0,
+        61.39
+      ],
+      "evaluation_score": 98.5
+    },
+    {
+      "job_id": "7c7def2c1b40",
+      "status": "done",
+      "extents_xyz": [
+        100.0,
+        5.0,
+        61.39
+      ],
+      "evaluation_score": 94.6
+    }
+  ],
+  "ask_run": {
+    "job_id": "0d651c60c8f4",
+    "question_status": "waiting_for_answer",
+    "question_kind": "body_dimension",
+    "question_axis": "depth",
+    "question_text": "How large should the depth be (mm)?",
+    "maximum_mm": 400.0,
+    "final_status": "done",
+    "extents_xyz": [
+      100.0,
+      4.0,
+      61.39
+    ],
+    "evaluation_score": 99.3,
+    "size_clarification": {
+      "axis": "depth",
+      "asked": true,
+      "answer": {
+        "question_id": "507b1cf2e0994de68aaedb80a60e79b3",
+        "feature_id": "size_depth",
+        "kind": "body_dimension",
+        "value_mm": 4.0
+      }
+    }
+  },
+  "verdict": {
+    "lottery_depth_range_mm": [
+      61.39,
+      61.39
+    ],
+    "asked_depth_mm": 61.39,
+    "reference_thickness_mm": 4.0
+  }
+}
