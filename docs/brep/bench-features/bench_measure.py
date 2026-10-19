@@ -142,18 +142,26 @@ def verify_fillet(stl, width, depth, height, radius, *, slice_z=None, tol=0.1):
         sx = 1.0 if centre[0] > cx else -1.0
         sy = 1.0 if centre[1] > cy else -1.0
         expected_center = np.array([cx + sx * radius, cy + sy * radius])
+        origin3 = np.array([expected_center[0], expected_center[1], slice_z])
         points = []
-        for deg in np.linspace(180.0, 270.0, 25):
+        # The filleted quarter arc spans +-45 degrees around the direction
+        # from the arc centre to the original corner; probes stay strictly
+        # inside that window so a ray never grazes the tangent point between
+        # arc and wall (grazing flips the crossing parity spuriously).
+        for deg in np.linspace(-44.0, 44.0, 25):
             base = math.atan2(-sy, -sx)  # direction from arc centre to the corner
-            angle = base + math.radians(deg + 90)
+            angle = base + math.radians(deg)
             direction = np.array([math.cos(angle), math.sin(angle), 0.0])
             ts = np.arange(radius - 1.0, radius + 1.0, 0.01)
-            states = inside(mesh, expected_center[None, :] + direction[None, :] * ts[:, None]
-                            + np.array([0.0, 0.0, slice_z])[None, :])
-            flips = [j for j in range(1, len(ts)) if states[j] != states[j - 1]]
+            states = np.asarray(inside(mesh, origin3[None, :] + direction[None, :] * ts[:, None]))
+            # A real boundary flip persists for the rest of the probe; a
+            # one- or two-sample flip is a tessellation graze and is ignored.
+            flips = [j for j in range(1, len(ts))
+                     if states[j] != states[j - 1]
+                     and bool(np.all(states[j:] == states[j]))]
             if flips:
                 t = float(ts[flips[0]])
-                points.append(expected_center + direction * t)
+                points.append(expected_center + direction[:2] * t)
         if len(points) < 12:
             checks[f"corner {i}"] = {"status": "failed", "reason": f"only {len(points)} arc points found"}
             continue
