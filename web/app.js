@@ -20,7 +20,8 @@ const primary=setupCanvas($('#canvas')),extraCanvas=setupCanvas($('#viewCanvas')
 function loadImage(file,canvas){if(!file)return;const im=new Image;im.onload=()=>{const c=canvas.getContext('2d');c.fillStyle='#fffdfa';c.fillRect(0,0,canvas.clientWidth,canvas.clientHeight);const s=Math.min(canvas.clientWidth/im.width,canvas.clientHeight/im.height)*.88;c.drawImage(im,(canvas.clientWidth-im.width*s)/2,(canvas.clientHeight-im.height*s)/2,im.width*s,im.height*s);dirty=true};im.src=URL.createObjectURL(file)}
 $('#drawView').onclick=()=>{extraCanvas.clear();$('#viewDialog').showModal()};document.querySelectorAll('.close').forEach(b=>b.onclick=()=>$('#viewDialog').close());$('#saveView').onclick=async()=>{extras.push({direction:$('#viewDirection').value,blob:await extraCanvas.blob()});$('#viewDialog').close();renderExtras()};$('#uploadView').onchange=e=>{if(e.target.files[0]){extras.push({direction:'additional',blob:e.target.files[0]});renderExtras()}e.target.value=''};
 function renderExtras(){$('#viewList').innerHTML=extras.map((e,i)=>`<div class="view-item"><img src="${URL.createObjectURL(e.blob)}"><span>${e.direction}</span><button type="button" data-remove="${i}">×</button></div>`).join('');document.querySelectorAll('[data-remove]').forEach(b=>b.onclick=()=>{extras.splice(+b.dataset.remove,1);renderExtras()})}
-async function health(){try{const h=await fetch('/api/health?refresh=true').then(r=>r.json());$('#health').textContent=`model: ${h.agentic.selected_model||'unavailable'} · ${h.openscad.available?'OpenSCAD ready':'OpenSCAD missing'}`}catch{$('#health').textContent='pipeline offline'}}health();
+let userPickedBackend=false;
+async function health(){try{const h=await fetch('/api/health?refresh=true').then(r=>r.json());$('#health').textContent=`model: ${h.agentic.selected_model||'unavailable'} · ${h.openscad.available?'OpenSCAD ready':'OpenSCAD missing'}${h.brep_worker?.available?' · BRep kernel ready':' · BRep kernel missing'}`;if(!userPickedBackend&&form.backend.value==='usd-brep'&&!h.brep_worker?.available){form.backend.value='openscad';if(form.backend.onchange)form.backend.onchange()}}catch{$('#health').textContent='pipeline offline'}}health();
 const STAGE_LABELS={'waiting for your answer':'Waiting for your answer…','planning BRep geometry':'Planning drawing planes, sections and connections…','correcting BRep construction':'Correcting measured BRep construction errors…','interpreting drawing':'Reading drawing features…','planning BRep recipe':'Creating the BRep construction recipe…','building recipe':'Starting BRep worker…','building solid':'Building and checking the solid…','checking mesh':'Checking the exported mesh…','rendering views':'Rendering the part…','publishing recipe':'Saving the BRep candidate…',queued:'Queued…',analyzing:'Reading ink and geometry…',interpreting:'Building the object and part graph…',generating:'Authoring parametric OpenSCAD…',finalizing:'Preparing the 3D model…'};
 function stageLabel(stage){if(!stage)return'Working…';const m=/^(\w+) \(attempt (\d)\)$/.exec(stage);if(m){if(m[1]==='compiling')return`Compiling STL — attempt ${m[2]} of 3…`;if(m[1]==='supervising')return`CAD supervisor reviewing attempt ${m[2]}…`}return STAGE_LABELS[stage]||'Working…'}
 function showError(message,aborted){show('error');$('#error').innerHTML=`<h2>GENERATION STOPPED</h2><p>${escapeHtml(message)}</p><button type="button" id="returnToDrawing">← Return to drawing</button>`;$('#returnToDrawing').onclick=()=>{$('#inputTools').hidden=false;$('#deckTitle').textContent='BLUEPRINT DECK — FRONT & PROJECTED VIEWS';show('blueprint')};void aborted}
@@ -536,6 +537,7 @@ $('#restoreScad').onclick=async()=>{
 };
 
 const defaultGenerationHelp=document.querySelector('#generationHelp').textContent;
+form.backend.addEventListener('change',()=>{userPickedBackend=true});
 form.backend.onchange=()=>{
   const direct=form.backend.value==='usd-brep';
   document.querySelector('#backendHelp').hidden=!direct;
@@ -543,6 +545,7 @@ form.backend.onchange=()=>{
     ? 'The agent reads the drawing and creates an editable BRep recipe. The worker checks the solid, mesh and drawing projections. Detailed features still require review.'
     : defaultGenerationHelp;
 };
+form.backend.onchange();
 
 
 // Ask about one identified opening while retaining the original generation job.
