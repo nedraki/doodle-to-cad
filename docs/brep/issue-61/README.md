@@ -28,17 +28,30 @@ Arc alone builds; cylinder alone builds; box∪arc builds; arc90∪cyl builds;
 v1 (3 ops), each step logged.
 
 ## Containment (shipped)
-`build_contract.classify_kernel_crash` matches ONLY the exact signature and maps it
-to FailureCode `kernel_unavailable` with advice "Retry with the OpenSCAD backend"
-plus the fixture sha256 (`build_contract.py`, `workers/brep/build.py` main guard).
+`build_contract.classify_kernel_crash` matches two exact signatures and nothing else:
+
+1. `No module named '_omni_solid'` -> `kernel_unavailable`, advice "Retry with the
+   OpenSCAD backend" plus the reproducer fixture sha256.
+2. `kernel produced an invalid solid` -> `kernel_unavailable` with the same advice
+   but explicitly no reproducer claim. Evidence tier: 2 frozen rows
+   (`wheel/usd-brep/trial-04|05`, independent recipes, identical message); the
+   harness kept the error rows but not the failing recipes. A hand-built probe of
+   8 mutations of the proven wheel fixture did NOT reproduce it
+   (`logs/invalid-solid-probe.log`); one mutation reproduced the `disconnected_output`
+   family of wheel trial-03 instead. Honest status: unconfirmed trigger class,
+   containment is message-based only.
+
 A generic `ModuleNotFoundError` keeps `build_failed` (no retry-hint laundering).
-`tests/test_brep_kernel_containment.py` — 10 tests incl. planted errors: fake
+`tests/test_brep_kernel_containment.py` — 12 tests incl. planted errors: fake
 crashing worker fires the classifier; unrelated crash maps to generic; successful
-fake never misclassified.
+fake never misclassified; near-miss wordings ("invalid geometry", reordered
+"invalid solid") do not fire.
 
 ## Files
 - `UPSTREAM-REPORT.md` — filing text for usd-brep maintainers (measured behavior only)
-- `logs/determinism.log`, `logs/shrink-ladder.json|.log`, `logs/fixture.sha256`
+- `logs/determinism.log`, `logs/shrink-ladder.json|.log`, `logs/fixture.sha256`,
+  `logs/invalid-solid-probe.log`
+- `scripts/probe_invalid_solid.py` — the 8-mutation negative probe, rerunnable
 - `environment.json` — host/wheel/git fingerprint
-- `logs/full-suite.txt` — 261 passed
+- `logs/full-suite.txt` — full pytest output
 - `audit.py` — rerunnable verification of every claim above
