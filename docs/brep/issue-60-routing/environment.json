@@ -1,0 +1,10 @@
+{
+  "captured_utc": "2026-10-19T11:37:18Z",
+  "python": "3.11.16",
+  "platform": "Linux-6.17.0-1022-nvidia-aarch64-with-glibc2.39",
+  "git_branch": "hermes/issue-60-routing",
+  "git_head": "1ffae081f66973235db4d60be1b482834d0ce0fa",
+  "base": "1ffae081f66973235db4d60be1b482834d0ce0fa",
+  "host": "spark-8322",
+  "note": "routing is pure stdlib+cv2(analyze_image); no LLM and no kernel needed to rerun validation"
+}

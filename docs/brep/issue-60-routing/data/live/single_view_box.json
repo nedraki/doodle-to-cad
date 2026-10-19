@@ -1,0 +1,26 @@
+{
+  "name": "single_view_box",
+  "job_id": "f2cbf58a9528",
+  "status": "done",
+  "routing": {
+    "backend": "usd-brep",
+    "rule": "D",
+    "signals": {
+      "view_group_count": 1,
+      "closed_internal_profile_count": 0,
+      "circular_profile_count": 0,
+      "notes_keywords": "no",
+      "dimension_given": true,
+      "kernel_history_hit": false
+    },
+    "rationale": [
+      {
+        "rule": "D",
+        "text": "single view with an explicit dimension: usd-brep passed 5/5 vs 0/5 on the missing-thickness rows and fails loudly instead of inventing geometry (task-17-comparison)"
+      }
+    ]
+  },
+  "backend_in_result": "usd-brep",
+  "success": false,
+  "error": null
+}

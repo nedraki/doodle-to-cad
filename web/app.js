@@ -97,6 +97,9 @@ function initializeResultVersion(run){
     resultVersion.original={badge:$('#statusBadge').textContent,title:$('#resultTitle').textContent,text:$('#resultText').textContent};
   }
   $('#originalStl').href=(run.original_files||run.files).stl||'#';$('#originalStl').hidden=!(run.original_files||run.files).stl;
+  const help=document.querySelector('#generationHelp');
+  if(run.routing){help.textContent=`Auto backend: ${run.routing.backend} · rule ${run.routing.rule} — ${run.routing.rationale.map(r=>r.text).join(' ')}`;}
+  else if(!run.routing){help.textContent=defaultGenerationHelp;}
   renderRepairSummary(run);
   syncGeometrySelection();
   setResultEditState('original');
