@@ -174,6 +174,28 @@ for name, meta in sorted(prov.items()):
     check(f"montage {name}: image/row/mesh/panel hash chain + verdict={meta['verdict']}",
           ok_img and ok_row and ok_verdict and ok_mesh and ok_panels,
           f"img={ok_img} row={ok_row} verdict={ok_verdict}/{got} mesh={ok_mesh} panels={ok_panels}")
+# Structural coverage: EVERY {path, sha256} pair recorded anywhere in the
+# provenance schema must verify — a hand-enumerated checklist is how the
+# round-2 'recorded but unverified panel hash' gap happened. New fields are
+# covered automatically; the floor count proves the walker is wired in.
+def walk_hash_pairs(node):
+    found = []
+    if isinstance(node, dict):
+        if "path" in node and "sha256" in node and node["sha256"]:
+            found.append((node["path"], node["sha256"]))
+        for v in node.values():
+            found += walk_hash_pairs(v)
+    elif isinstance(node, list):
+        for v in node:
+            found += walk_hash_pairs(v)
+    return found
+
+all_pairs = [(nm, p, s) for nm, meta in prov.items()
+             for p, s in walk_hash_pairs(meta.get("panels", {}))]
+bad_pairs = [(nm, p) for nm, p, s in all_pairs
+             if not (resolve_src(p).exists() and sha256(resolve_src(p)) == s)]
+check(f"all recorded path/sha256 pairs verify ({len(all_pairs)} recorded, floor 16)",
+      not bad_pairs and len(all_pairs) >= 16, str(bad_pairs[:3]))
 check("montage set is the 6 published cases", len(prov) == 6, str(len(prov)))
 # non-vacuity: two different montages must NOT bind to each other's row hash
 _a = prov["wheel_t2.png"]["row_sha256"]

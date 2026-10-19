@@ -153,6 +153,9 @@ def row(drawing, trial=1, gt=None):
         or ((r.get('error') or {}).get('message') or '')
 
     W, H, LBL = 420 * 3 + 32, 300 + 34 + 96, 40
+    # layout invariant (round-2 footer overlap): footer band must sit fully
+    # below the caption line — constants checked, not eyeballed
+    assert H - 66 > (LBL + 300 + 6 + 18), "footer would overlap panel captions"
     sheet = Image.new('RGB', (W, H), (250, 250, 250))
     d = ImageDraw.Draw(sheet)
     d.text((12, 8), f'{drawing}   ·   usd-brep trial {trial}', font=FONT, fill=(20, 30, 40))

@@ -56,6 +56,18 @@ def scenario_fake_reference(copy):
     return "bevelled_block: 2/2 automatic overall_pass AND no GT reference"
 
 
+def scenario_planted_hash_pair(copy):
+    """Structural coverage proof: add a path/sha256 pair to the provenance
+    schema that no hand-written check knows about. The generic walker must
+    verify it — 'recorded but unverified' becomes schema-position-proof."""
+    pf = copy / "images" / "provenance.json"
+    prov = json.loads(pf.read_text())
+    prov["wheel_t2.png"]["panels"]["evil_extra"] = {
+        "path": "runs/wheel/usd-brep/trial-02/input.png", "sha256": "1" * 64}
+    pf.write_text(json.dumps(prov))
+    return "all recorded path/sha256 pairs verify"
+
+
 def scenario_provenance_rebind(copy):
     """provenance.json re-pointed at another row (image kept, binding moved)."""
     pf = copy / "images" / "provenance.json"
@@ -102,6 +114,7 @@ def scenario_local_input_corrupt(copy):
 
 SCENARIOS = [
     ("local row edit (Codex round-2 repro)", scenario_local_row_edit),
+    ("planted unregistered hash pair (walker coverage)", scenario_planted_hash_pair),
     ("local input-bytes corruption (panel hash)", scenario_local_input_corrupt),
     ("image swap (Codex reproduction)", scenario_swap_images),
     ("row hash tamper", scenario_tamper_row_hash),
@@ -132,6 +145,29 @@ def main():
         finally:
             shutil.rmtree(tmp, ignore_errors=True)
     print(f"{len(SCENARIOS) - failures}/{len(SCENARIOS)} planted defects caught")
+
+    # GREEN gate: an audit from a FRESH CLONE must pass on its own — the
+    # round-2 absolute-path bug meant 'green' was a property of my working
+    # tree, not of the shipped artifacts. Same rule as the defect scenarios:
+    # the test runs against a copy the checker must not be able to escape.
+    clone = Path(tempfile.mkdtemp(prefix="bench-clone-")) / "repo"
+    try:
+        # clone the REMOTE branch exactly as an external reviewer sees it:
+        # the local repo may hold stale same-named refs (this gate once
+        # cloned a months-old local brep-integration and reported NOT-GREEN)
+        subprocess.run(["git", "clone", "-q", "--depth", "1", "-b", "brep-integration",
+                        "https://github.com/nedraki/doodle-to-cad", str(clone)], check=True)
+        proc = subprocess.run([PY, str(clone / "docs/brep/bench-final/audit.py")],
+                              capture_output=True, text=True, cwd=str(clone))
+        green = proc.returncode == 0
+        print(("GREEN   " if green else "NOT-GREEN") + " fresh-clone audit passes standalone")
+        if not green:
+            print(proc.stdout[-1200:])
+        failures += 0 if green else 1
+    finally:
+        shutil.rmtree(clone.parent, ignore_errors=True)
+    total = len(SCENARIOS) + 1
+    print(f"{total - failures}/{total} gates green")
     sys.exit(1 if failures else 0)
 
 
