@@ -19,7 +19,7 @@ ground-truth STLs + 3 certified #34 references + 3 honest `no_ground_truth`
 > Round 2 (@ 820800f) fixed: absolute paths in `provenance.json` (the audit
 > could read another checkout — now checkout-relative and enforced), panel
 > input/GT source hashes recorded but unverified (now verified), the
-> "complete GT match" label (renamed ref dims/topo/vol pass, kept separate
+> "complete-GT-match" label (renamed ref dims/topo/vol pass, kept separate
 > from `automatic overall_pass`), and footer overlap in montages.
 > Round 1 (@ 907eed7) fixed: Three
 > reporting defects in the first version were confirmed against the rows and
@@ -38,29 +38,88 @@ ground-truth STLs + 3 certified #34 references + 3 honest `no_ground_truth`
 > that were based on impression, not measurement, are replaced by measured
 > row data. Codex independently confirmed: full 92-cell matrix, no selective
 > omission, 15 usd / 2 os errors, all row↔STL hashes, the corrected 12 cells.
+>
+> **Round 3 hardening (issue #79).** The audit could still read rows from the
+> author's `/tmp/doodle-brep-32` tree and treated a total row count as proof
+> of coverage. Now: every artifact (rows, meshes, inputs, views, references
+> and their source models, montages, the plan) is sha256-sealed in
+> `MANIFEST.json` and the audit refuses to run against a checkout whose bytes
+> differ (abort names trial + path; a corrupt row aborts too — nothing is
+> skipped and no passing report is written). Cell coverage is the frozen
+> plan's exact drawing/backend/trial set (missing, duplicate and unexpected
+> cells are each detected). Every metric is defined once in `metrics.py`,
+> which generates both README and RESULTS tables; audit recomputes and
+> compares verbatim. Completion, valid solid, drawing check, reference
+> dims/topo/vol and user acceptance stay separate measurements; absent
+> references are not-applicable (never failures) with the n/a count shown;
+> end-to-end rates run over ALL submitted trials and conditional rates are
+> labeled. The generators no longer hardcode the author's directory. Genus is
+> never described as a spoke count and matching extents+volume is never
+> described as complete shape agreement (guarded by wording checks).
 
-## Headline numbers (recomputed by audit.py)
+## Headline numbers (recomputed by audit.py from metrics.py)
 
 Acceptance = the frozen plan's definition (`TRIAL-PLAN.json`
 `product_acceptance`): openscad `accepted` (score ≥ 70); usd-brep
 `status != 'failed'` — for BRep that means **automatic checks passed, still
 unverified**, never full acceptance (the path never auto-accepts fidelity).
+Both tables recompute from ONE definition (see "Metric definitions" below):
+the first is end-to-end over ALL submitted trials, the second is conditional
+over completed trials only. Absent references are *not applicable*, never
+counted as failures; every cell shows numerator/denominator and the n/a count.
 
-| backend | done | plan-accepted | build OK | ref dims/topo/vol pass¹ | median wall |
-|---|---|---|---|---|---|
-| openscad | 44/46 | 22/44 (50%) | 42/44 (95%) | 2/44 (5%) — `solid_transition` ×2 | 193 s |
-| usd-brep | 31/46 | 1/31 (3%)² | 31/31 (100%) | 0/31 (0%) | 113 s |
+`ref dims/topo/vol` = extents AND genus AND volume all true against a real
+reference (39 openscad rows have references; 3 drawings are
+`no_ground_truth` and only get automatic gates). **This is NOT a full model
+match**: both `solid_transition` rows still FAIL projection/fidelity and
+`overall_pass` — they are dimension/connection-count/volume passes only.
+Matching outside dimensions and volume can still miss feature placement.
+The separate `automatic overall_pass` metric (bevelled_block ×2) includes
+`no_ground_truth` rows and is not a reference match; the two totals coincide
+at 2 by accident and must never be conflated (Codex review round 2).
+The `006_stepped_knob` BRep row is `unverified`: reported separately from
+failed and from full acceptance. Under the stricter (unsatisfiable)
+`status=='passed'` the historical count stays 0 and is published labeled.
+User acceptance is NOT collected in this dataset — a score is never user
+acceptance (the review workflow lands in #80).
 
-¹ extents AND genus AND volume all true against a real reference (39 openscad
-rows have references; 3 are `no_ground_truth` and only get automatic gates).
-**This is NOT a full model match**: both `solid_transition` rows still FAIL
-projection/fidelity and `overall_pass` — they are dimension/topology/volume
-passes only. The separate `automatic overall_pass` metric (bevelled_block ×2)
-includes `no_ground_truth` rows and is not a reference match; the two totals
-coincide at 2 by accident and must never be conflated (Codex review round 2).
-² `006_stepped_knob` trial-1: `status=unverified` = "automatic checks
-passed; still unverified". Under the stricter (unsatisfiable)
-`status=='passed'` the count is 0; both were published to avoid spin.
+<!-- AUDIT:TABLE:BEGIN (generated by aggregate.py from metrics.py - audit.py compares verbatim) -->
+End-to-end rates over ALL submitted trials (every trial the harness was asked to run, including errors and refusals):
+
+| backend | submitted | completed | valid solid | drawing/fidelity | ref dims/topo/vol (X=no-ref) | plan-accepted | unverified (BRep) | user acceptance |
+|---|---|---|---|---|---|---|---|---|
+| openscad | 46 | 44/46 (96%) | 42/46 (91%) | 28/46 (61%) | 2/46 (4%) (5 no-ref) | 22/46 (48%) | 0/46 (0%) | not collected |
+| usd-brep | 46 | 31/46 (67%) | 31/46 (67%) | 6/46 (13%) | 0/46 (0%) (4 no-ref) | 1/46 (2%) | 1/46 (2%) | not collected |
+
+Conditional rates over COMPLETED trials only (clearly labeled: these exclude errored trials from the denominator):
+
+| backend | done | valid solid | drawing/fidelity | ref dims/topo/vol (X=no-ref) | plan-accepted | strict full accept (hist.) | median wall (s) |
+|---|---|---|---|---|---|---|---|---|
+| openscad | 44 | 42/44 (95%) | 28/44 (64%) | 2/44 (5%) (5 no-ref) | 22/44 (50%) | 0/44 (0%) | 185 |
+| usd-brep | 31 | 31/31 (100%) | 6/31 (19%) | 0/31 (0%) (4 no-ref) | 1/31 (3%) | 0/31 (0%) | 122 |
+<!-- AUDIT:TABLE:END -->
+
+## Metric definitions (single source: `metrics.py`)
+
+<!-- AUDIT:METRICS:BEGIN (generated from metrics.py - audit.py compares verbatim) -->
+Every metric is defined once, in `metrics.py`; the tables above recompute
+from these definitions. A metric records numerator/applicable-denominator
+and keeps these separations: completion != valid solid != drawing check
+!= reference match != user acceptance.
+
+- **completed** (`completion`, basis: submitted): Trial reached the terminal state job_status == 'done' with a published result record. Error and cancelled trials are outcomes, not completions, and stay published.
+- **valid solid** (`valid_solid`, basis: done): Harness re-measured the run STL independently: watertight AND exactly 1 component (checks.build_success). This measures the solid only; it says nothing about drawing agreement.
+- **drawing/fidelity** (`drawing_fidelity`, basis: done): Harness re-ran projection scores on (source drawing, run geometry evidence, run view renders); every assigned direction scored >= 0.45. Drawing agreement only; not dimensions, not volume, not a reference match.
+- **ref extents** (`ref_extents`, basis: done_with_reference): Sorted run extents vs sorted reference extents, every axis within 2%. Applies only where a real reference exists.
+- **ref genus** (`ref_topology`, basis: done_with_reference): genus == frozen reference genus where a ground truth exists. Genus counts topological connections (tunnels/holes); it does NOT prove feature placement and never establishes a spoke or opening count.
+- **ref volume** (`ref_volume`, basis: done_with_reference): abs(volume - reference volume) / reference volume <= 0.02 where a ground truth exists.
+- **ref dims/topo/vol** (`reference_dims_topo_vol`, basis: done_with_reference): extents AND genus AND volume all pass against a real reference. This is NOT complete shape agreement: matching outside dimensions, connection count and volume can still miss feature placement, and such rows may fail the projection gates.
+- **automatic overall_pass** (`automatic_overall_pass`, basis: done): checks.overall_pass == true: every automatic gate the harness could evaluate is green. Includes no-ground-truth rows, so it is NOT a reference match and never called one.
+- **plan-accepted** (`plan_acceptance`, basis: submitted): Frozen-plan product acceptance (TRIAL-PLAN.json product_acceptance): openscad result.success (agent accepted, score >= 70); usd-brep evaluation.status != 'failed'. For usd-brep 'not failed' means automatic checks passed, still unverified - NOT full acceptance. Counted over ALL submitted trials (end-to-end) and over completed trials (conditional).
+- **strict full acceptance** (`strict_full_acceptance`, basis: submitted): usd-brep evaluation.status == 'passed'. The current evaluator never emits 'passed' (brep_checks.py emits failed|unverified), so this count is 0 by design; it is published under its historical frozen-plan label, not silently changed.
+- **automatic-checks unverified** (`automatic_checks_unverified`, basis: submitted): usd-brep rows with evaluation.status == 'unverified': automatic checks passed, no human verification yet. Reported separately from failed and from full acceptance.
+- **user acceptance** (`user_acceptance`, basis: submitted): User decision 'accepted' recorded on the review page (#80) bound to the displayed artifact hash. Never derived from a score. Not collected in this dataset until decisions exist.
+<!-- AUDIT:METRICS:END -->
 
 Questions asked during trials: openscad 0 (ask off by design), usd-brep 9
 (recipe clarifications, answered by policy).
@@ -103,7 +162,9 @@ Questions asked during trials: openscad 0 (ask off by design), usd-brep 9
   is the measured motivation for the #68 question flow (exercised
   separately in `docs/brep/issue-68-size-ask/` with the 4 mm jeep result).
 - **Wheel volume excess on BOTH backends:** wheel passes extents+genus
-  (genus 8 = all 8 spokes present) but fails volume: +18% (openscad
+  (genus 8 counts tunnels; it does NOT prove 8 spokes — the opening detector
+  measured 8 openings vs 9 required and the position checks failed) but
+  fails volume: +18% (openscad
   50977 mm³) and +19% (usd-brep 51266 mm³) against the 43128.5 mm³
   certified reference. The earlier "wheel is healthy" reading was an
   overclaim; the wheel needs the volume investigation (opening detector
@@ -130,8 +191,8 @@ hashes — swapping any image, or editing a row, fails the audit.
 
 | image | verdict | measured defect (from the row) |
 |---|---|---|
-| `003_front_grille_multiview_t1.png` | failed | genus 8: holes/slots ARE built; outline+projections wrong, openings 8≠required 9, positions failed |
-| `wheel_t2.png` | failed | genus 8 (all spokes present); front projection + opening positions failed; volume +19% vs reference |
+| `003_front_grille_multiview_t1.png` | failed | genus 8 recorded (connection count only — it does not prove hole placement); outline+projections wrong, openings 8≠required 9, positions failed |
+| `wheel_t2.png` | failed | genus 8 (connection count only — feature placement NOT proven by genus); front projection + opening positions failed; volume +19% vs reference |
 | `constant_radius_handle_t1.png` | failed | genus 0, 48×24×8 mm; drawn straight legs absent; top + right projections failed |
 | `007_angle_bracket_holes_t1.png` | failed | genus 3, volume 15250 mm³ ≈ solid 80×40×5 plate minus 3 holes: the L-shape was never built |
 | `101_bltouch_bracket_t1.png` | failed | volume 8000 mm³ = exactly 40×50×4 plain plate: the bracket features were never built |
@@ -145,15 +206,20 @@ DOODLE_BREP_PYTHON=$PWD/workers/brep/.venv/bin/python PYTHONPATH=. \
   DOODLE_RESULTS_DIR=results/bench-final .venv/bin/python \
   scripts/evaluate_brep.py trials --plan docs/brep/bench-final/TRIAL-PLAN.json \
   --out docs/brep/bench-final/runs --port 8132
-# 2) tables
-PYTHONPATH=. .venv/bin/python docs/brep/bench-final/aggregate.py
-# 3) claim gate (exits non-zero if any README/RESULTS number drifts,
-#    or any montage image/row/mesh hash binding breaks)
-PYTHONPATH=. .venv/bin/python docs/brep/bench-final/audit.py
-# 3b) adversarial self-test: plants 6 defects (incl. the exact 907eed7
-#     errors: image swap, fake GT reference, acceptance flip) and requires
-#     the audit to CATCH every one — a check that cannot fail is decoration
-PYTHONPATH=. .venv/bin/python docs/brep/bench-final/audit_selftest.py
+# 2) tables (atomic writes; re-syncs the generated blocks in README.md)
+PYTHONPATH=. python3 docs/brep/bench-final/aggregate.py
+# 2b) re-seal the evidence manifest after ANY evidence change (see trust_note)
+python3 docs/brep/bench-final/make_manifest.py
+# 3) claim gate (exits 1 if any README/RESULTS number drifts or any hash
+#    binding breaks; exits 2 with trial+path on a missing/corrupt artifact,
+#    writing no report; pass runs record audit-result.json atomically with
+#    an environment fingerprint)
+python3 docs/brep/bench-final/audit.py
+# 3b) adversarial self-test: plants defects in disposable copies (raw
+#     tamper, re-sealed tamper, removed/duplicated cells, image swap, fake
+#     GT reference, acceptance flip, README drift) and requires the audit to
+#     CATCH every one — a check that cannot fail is decoration
+python3 docs/brep/bench-final/audit_selftest.py
 # 4) montages (needs wall app on :8114; refuses on hash mismatch)
 PYTHONPATH=. .venv/bin/python docs/brep/bench-final/make_fail_montages.py
 ```
@@ -164,6 +230,11 @@ this head — 10/10 jobs (`logs/run-merged-head.log`), frozen-evidence audit
 
 ## Limits
 
+- `environment.json` was declared in the plan's `evidence_layout` but the
+  harness never wrote it at trial end. The execution environment survives in
+  the frozen plan's `model_settings` and the sealed `logs-trials.log`
+  server-model lines; the audit cross-checks they agree. This gap is
+  disclosed in `MANIFEST.json` — not papered over with reconstructed data.
 - 2 trials/cell — variance signals (012 grille identical scores) are
   indicative, not statistical.
 - openscad trials answered no questions (ask off); a re-run with

@@ -1,0 +1,182 @@
+{
+ "ran_at": "2026-10-20T00:28:51",
+ "environment": {
+  "checkout": "/tmp/doodle-brep-79/docs/brep/bench-final",
+  "git_rev": "a59a47633a4e90a23c5927b07566536ffddcfdc1",
+  "python": "3.14.7",
+  "platform": "Linux-6.17.0-1022-nvidia-aarch64-with-glibc2.39",
+  "host": "spark-8322"
+ },
+ "summary": {
+  "checks": 33,
+  "passed": 33,
+  "failed": 0
+ },
+ "results": [
+  {
+   "check": "cell coverage = exact plan set: 23 corpus x 2 backends x 2 trials = 92 (total count is not used as coverage proof)",
+   "ok": true,
+   "detail": "cells=92"
+  },
+  {
+   "check": "manifest seals every artifact (rows, meshes, inputs, references, plan, montages)",
+   "ok": true,
+   "detail": "1451 sealed files"
+  },
+  {
+   "check": "acceptance definition matches the frozen plan text",
+   "ok": true,
+   "detail": "openscad: result.success (agent accepted, score >= 70). usd-brep: evaluation.sta"
+  },
+  {
+   "check": "plan revision logged (dimension fix, 12 cells)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "references: 17 GT STL + 3 openscad refs + 3 no_ground_truth",
+   "ok": true,
+   "detail": "{'ground_truth_stl': 17, 'openscad_reference': 3, 'no_ground_truth': 3}"
+  },
+  {
+   "check": "reference sources sealed and byte-verified (repo-relative pointers only)",
+   "ok": true,
+   "detail": "[]"
+  },
+  {
+   "check": "archived STLs match row build.sha256 (75/75)",
+   "ok": true,
+   "detail": "75/75 bad=[]"
+  },
+  {
+   "check": "README headline tables equal the metrics-recomputed tables (one definition)",
+   "ok": true,
+   "detail": "AUDIT:TABLE block mismatch"
+  },
+  {
+   "check": "RESULTS.md headline tables equal the metrics-recomputed tables",
+   "ok": true,
+   "detail": "AUDIT:TABLE block mismatch"
+  },
+  {
+   "check": "README publishes the metric definitions verbatim",
+   "ok": true,
+   "detail": "AUDIT:METRICS block mismatch"
+  },
+  {
+   "check": "HISTORICAL frozen-plan counts: openscad 44/46 done, 22 accepted, 42 build_ok; ref dims/topo/vol = 2x solid_transition (still FAIL projection \u2014 not full matches)",
+   "ok": true,
+   "detail": "44,22,42,['solid_transition']"
+  },
+  {
+   "check": "HISTORICAL frozen-plan counts: usd-brep 31/46 done, plan-acceptance 1 (006_stepped_knob UNVERIFIED \u2014 reported separately from failed and from full acceptance), strict-passed 0 (historical label), 31 build_ok",
+   "ok": true,
+   "detail": "31,1,0,31"
+  },
+  {
+   "check": "errors published (kept as outcomes, not skipped): openscad 2, usd-brep 15",
+   "ok": true,
+   "detail": "2/15"
+  },
+  {
+   "check": "questions: openscad 0 (ask off), usd-brep 9",
+   "ok": true,
+   "detail": "0/9"
+  },
+  {
+   "check": "wheel: all 3 completed wheel builds pass extents+genus (genus==8 is a topology-connection count only) and FAIL volume (+17..20% vs 43128.5 mm3)",
+   "ok": true,
+   "detail": "[('openscad', 1.182), ('openscad', 1.182), ('usd-brep', 1.189)]"
+  },
+  {
+   "check": "bevelled_block: 2/2 automatic overall_pass AND no GT reference (never called a GT pass)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "greek vase usd-brep: model-stage refusal errors, no built mesh",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "every error row publishes a message",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "trial-log server model matches the frozen plan model",
+   "ok": true,
+   "detail": "['local-inference-lab/Qwen3.8-Flash-Next-NVFP4']"
+  },
+  {
+   "check": "no overclaim wording (dims!=shape agreement, genus!=spoke count) and no absolute machine paths",
+   "ok": true,
+   "detail": "[]"
+  },
+  {
+   "check": "README carries the Codex-review errata section + the 12-deleted-cells disclosure",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "plan frozen_at precedes every trial",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "excluded/superseded rows are published, carry reason+replaced_by, and are counted in NO metric",
+   "ok": true,
+   "detail": "0 excluded; bad=[]"
+  },
+  {
+   "check": "montage 002_greek_vase_silhouette_t1.png: image/row/mesh/panel hash chain + verdict=error",
+   "ok": true,
+   "detail": "img=True row=True verdict=True/error mesh=True panels=True"
+  },
+  {
+   "check": "montage 003_front_grille_multiview_t1.png: image/row/mesh/panel hash chain + verdict=failed",
+   "ok": true,
+   "detail": "img=True row=True verdict=True/failed mesh=True panels=True"
+  },
+  {
+   "check": "montage 007_angle_bracket_holes_t1.png: image/row/mesh/panel hash chain + verdict=failed",
+   "ok": true,
+   "detail": "img=True row=True verdict=True/failed mesh=True panels=True"
+  },
+  {
+   "check": "montage 101_bltouch_bracket_t1.png: image/row/mesh/panel hash chain + verdict=failed",
+   "ok": true,
+   "detail": "img=True row=True verdict=True/failed mesh=True panels=True"
+  },
+  {
+   "check": "montage constant_radius_handle_t1.png: image/row/mesh/panel hash chain + verdict=failed",
+   "ok": true,
+   "detail": "img=True row=True verdict=True/failed mesh=True panels=True"
+  },
+  {
+   "check": "montage wheel_t2.png: image/row/mesh/panel hash chain + verdict=failed",
+   "ok": true,
+   "detail": "img=True row=True verdict=True/failed mesh=True panels=True"
+  },
+  {
+   "check": "all recorded path/sha256 pairs verify (17 recorded, floor 16)",
+   "ok": true,
+   "detail": "[]"
+  },
+  {
+   "check": "montage set is the 6 published cases",
+   "ok": true,
+   "detail": "6"
+  },
+  {
+   "check": "binding probe: cross-montage row hashes differ (swap would fail)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "planted-error probe actually failed",
+   "ok": true,
+   "detail": ""
+  }
+ ]
+}

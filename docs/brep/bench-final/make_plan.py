@@ -1,6 +1,6 @@
 import json, datetime, math
 from pathlib import Path
-ROOT = Path('/tmp/doodle-brep-32')
+ROOT = Path(__file__).resolve().parents[3]  # repo root: never a hard-coded author dir
 base = json.loads((ROOT/'docs/brep/task-17-comparison/TRIAL-PLAN.json').read_text())
 import trimesh
 corpus = []

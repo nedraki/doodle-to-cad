@@ -12,7 +12,7 @@ from pathlib import Path
 
 import trimesh
 
-ROOT = Path('/tmp/doodle-brep-32')
+ROOT = Path(__file__).resolve().parents[3]  # repo root: never a hard-coded author dir
 HERE = Path(__file__).resolve().parent
 plan = json.loads((HERE / 'TRIAL-PLAN.json').read_text())
 base34 = json.loads((ROOT / 'docs/brep/task-17-comparison/references/reference-measurements.json').read_text())

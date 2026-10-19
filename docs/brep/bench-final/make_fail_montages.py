@@ -21,12 +21,12 @@ from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFont
 
-ROOT = Path('/tmp/doodle-brep-32')
+ROOT = Path(__file__).resolve().parents[3]  # repo root: never a hard-coded author dir
 BENCH = ROOT / 'docs/brep/bench-final'
 OUT = BENCH / 'images'
 OUT.mkdir(exist_ok=True)
 RENDER_SERVE = ROOT / 'results' / '_render'
-RENDER_SERVE.mkdir(exist_ok=True)
+RENDER_SERVE.mkdir(exist_ok=True, parents=True)
 
 BASE = 'http://127.0.0.1:8114'
 FONT = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', 17)
@@ -42,9 +42,9 @@ def render_stl(stl_path, out_png):
     shutil.copy2(stl_path, dst)
     from playwright.sync_api import sync_playwright
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True, executable_path=os.environ.get(
-            'CHROMIUM_EXECUTABLE',
-            '/home/sparkie/.cache/ms-playwright/chromium-1234/chrome-linux/chrome'), args=[
+        # CHROMIUM_EXECUTABLE must be supplied per-machine; no author path baked in
+        exe = os.environ.get('CHROMIUM_EXECUTABLE')
+        browser = p.chromium.launch(headless=True, **({'executable_path': exe} if exe else {}), args=[
             '--no-sandbox', '--use-gl=angle', '--use-angle=swiftshader',
             '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'])
         page = browser.new_page(viewport={'width': 520, 'height': 420})

@@ -1,122 +1,303 @@
 {
+  "metric_definitions": "metrics.py (single source; embedded verbatim in README.md)",
   "summary": {
-    "rows": 92,
-    "backends": {
-      "openscad": {
-        "trials": 46,
-        "done": 44,
-        "accepted": 22,
-        "accept_rate": "50%",
-        "build_ok_rate": "95%",
-        "automatic_overall_pass_rate": "5%",
-        "ref_dims_pass_rate": "5%",
-        "ref_dims_drawings": [
-          "solid_transition"
-        ],
-        "check_pass": {
-          "build_success": "95%",
-          "extents_pass": "11%",
-          "genus_pass": "55%",
-          "volume_pass": "5%",
-          "fidelity_pass": "64%",
-          "overall_pass": "5%"
+    "openscad": {
+      "submitted": 46,
+      "done": 44,
+      "excluded": [],
+      "metrics": {
+        "completion": {
+          "numerator": 44,
+          "applicable": 46,
+          "excluded": 0,
+          "conditional_rate": "44/44 (100%)",
+          "e2e_rate": "44/46 (96%)"
         },
-        "mean_score": 91.3,
-        "median_wall_s": 192.5,
-        "questions_asked": 0,
-        "top_failures": [
-          [
-            "openings do not go through the solid: the drawing demands 9 openings across the registered views (strongest: front) but the mesh has 0 true through-holes \u2014 the rendered openings are blind pockets or edge notches; cut all the way through the wall",
-            2
-          ],
-          [
-            "features exist but sit at the wrong positions in front view(s): match each opening's location (u,v within the outer profile) to the drawing; check the cad_mapping signs (front: u->+X v->-Z; top: u->+X v->-Y i.e. sheet-down is the FRONT of the part)",
-            2
-          ],
-          [
-            "features exist but sit at the wrong positions in top, right view(s): match each opening's location (u,v within the outer profile) to the drawing; check the cad_mapping signs (front: u->+X v->-Z; top: u->+X v->-Y i.e. sheet-down is the FRONT of the part)",
-            2
-          ],
-          [
-            "mesh has 2 disconnected components",
-            2
-          ],
-          [
-            "features exist but sit at the wrong positions in top view(s): match each opening's location (u,v within the outer profile) to the drawing; check the cad_mapping signs (front: u->+X v->-Z; top: u->+X v->-Y i.e. sheet-down is the FRONT of the part)",
-            2
-          ],
-          [
-            "maximum dimension is 49 mm; target is 54 mm (tolerance 5%)",
-            2
-          ]
-        ],
-        "unsupported": [
-          [
-            "False",
-            44
-          ]
-        ]
+        "valid_solid": {
+          "numerator": 42,
+          "applicable": 44,
+          "excluded": 0,
+          "conditional_rate": "42/44 (95%)",
+          "e2e_rate": "42/46 (91%)"
+        },
+        "drawing_fidelity": {
+          "numerator": 28,
+          "applicable": 44,
+          "excluded": 0,
+          "conditional_rate": "28/44 (64%)",
+          "e2e_rate": "28/46 (61%)"
+        },
+        "ref_extents": {
+          "numerator": 5,
+          "applicable": 39,
+          "excluded": 5,
+          "conditional_rate": "5/44 (11%)",
+          "e2e_rate": "5/46 (11%)"
+        },
+        "ref_topology": {
+          "numerator": 24,
+          "applicable": 39,
+          "excluded": 5,
+          "conditional_rate": "24/44 (55%)",
+          "e2e_rate": "24/46 (52%)"
+        },
+        "ref_volume": {
+          "numerator": 2,
+          "applicable": 39,
+          "excluded": 5,
+          "conditional_rate": "2/44 (5%)",
+          "e2e_rate": "2/46 (4%)"
+        },
+        "reference_dims_topo_vol": {
+          "numerator": 2,
+          "applicable": 39,
+          "excluded": 5,
+          "conditional_rate": "2/44 (5%)",
+          "e2e_rate": "2/46 (4%)"
+        },
+        "automatic_overall_pass": {
+          "numerator": 2,
+          "applicable": 44,
+          "excluded": 0,
+          "conditional_rate": "2/44 (5%)",
+          "e2e_rate": "2/46 (4%)"
+        },
+        "plan_acceptance": {
+          "numerator": 22,
+          "applicable": 46,
+          "excluded": 0,
+          "conditional_rate": "22/44 (50%)",
+          "e2e_rate": "22/46 (48%)"
+        },
+        "strict_full_acceptance": {
+          "numerator": 0,
+          "applicable": 46,
+          "excluded": 0,
+          "conditional_rate": "0/44 (0%)",
+          "e2e_rate": "0/46 (0%)"
+        },
+        "automatic_checks_unverified": {
+          "numerator": 0,
+          "applicable": 46,
+          "excluded": 0,
+          "conditional_rate": "0/44 (0%)",
+          "e2e_rate": "0/46 (0%)"
+        },
+        "user_acceptance": {
+          "numerator": 0,
+          "applicable": 46,
+          "excluded": 0,
+          "conditional_rate": "0/46 (0%)",
+          "e2e_rate": "0/46 (0%)",
+          "note": "not collected"
+        }
       },
-      "usd-brep": {
-        "trials": 46,
-        "done": 31,
-        "accepted": 1,
-        "accept_rate": "3%",
-        "build_ok_rate": "100%",
-        "automatic_overall_pass_rate": "0%",
-        "ref_dims_pass_rate": "0%",
-        "ref_dims_drawings": [],
-        "check_pass": {
-          "build_success": "100%",
-          "extents_pass": "10%",
-          "genus_pass": "58%",
-          "volume_pass": "0%",
-          "fidelity_pass": "19%",
-          "overall_pass": "0%"
+      "median_wall_s": 185
+    },
+    "usd-brep": {
+      "submitted": 46,
+      "done": 31,
+      "excluded": [],
+      "metrics": {
+        "completion": {
+          "numerator": 31,
+          "applicable": 46,
+          "excluded": 0,
+          "conditional_rate": "31/31 (100%)",
+          "e2e_rate": "31/46 (67%)"
         },
-        "mean_score": null,
-        "median_wall_s": 113.4,
-        "questions_asked": 9,
-        "top_failures": [
-          [
-            "Detailed drawing features and view assignments require review.",
-            31
-          ],
-          [
-            "top projection",
-            17
-          ],
-          [
-            "front projection",
-            15
-          ],
-          [
-            "front openings",
-            14
-          ],
-          [
-            "front opening positions",
-            10
-          ],
-          [
-            "right projection",
-            9
-          ]
+        "valid_solid": {
+          "numerator": 31,
+          "applicable": 31,
+          "excluded": 0,
+          "conditional_rate": "31/31 (100%)",
+          "e2e_rate": "31/46 (67%)"
+        },
+        "drawing_fidelity": {
+          "numerator": 6,
+          "applicable": 31,
+          "excluded": 0,
+          "conditional_rate": "6/31 (19%)",
+          "e2e_rate": "6/46 (13%)"
+        },
+        "ref_extents": {
+          "numerator": 3,
+          "applicable": 27,
+          "excluded": 4,
+          "conditional_rate": "3/31 (10%)",
+          "e2e_rate": "3/46 (7%)"
+        },
+        "ref_topology": {
+          "numerator": 18,
+          "applicable": 27,
+          "excluded": 4,
+          "conditional_rate": "18/31 (58%)",
+          "e2e_rate": "18/46 (39%)"
+        },
+        "ref_volume": {
+          "numerator": 0,
+          "applicable": 27,
+          "excluded": 4,
+          "conditional_rate": "0/31 (0%)",
+          "e2e_rate": "0/46 (0%)"
+        },
+        "reference_dims_topo_vol": {
+          "numerator": 0,
+          "applicable": 27,
+          "excluded": 4,
+          "conditional_rate": "0/31 (0%)",
+          "e2e_rate": "0/46 (0%)"
+        },
+        "automatic_overall_pass": {
+          "numerator": 0,
+          "applicable": 31,
+          "excluded": 0,
+          "conditional_rate": "0/31 (0%)",
+          "e2e_rate": "0/46 (0%)"
+        },
+        "plan_acceptance": {
+          "numerator": 1,
+          "applicable": 46,
+          "excluded": 0,
+          "conditional_rate": "1/31 (3%)",
+          "e2e_rate": "1/46 (2%)"
+        },
+        "strict_full_acceptance": {
+          "numerator": 0,
+          "applicable": 46,
+          "excluded": 0,
+          "conditional_rate": "0/31 (0%)",
+          "e2e_rate": "0/46 (0%)"
+        },
+        "automatic_checks_unverified": {
+          "numerator": 1,
+          "applicable": 46,
+          "excluded": 0,
+          "conditional_rate": "1/31 (3%)",
+          "e2e_rate": "1/46 (2%)"
+        },
+        "user_acceptance": {
+          "numerator": 0,
+          "applicable": 46,
+          "excluded": 0,
+          "conditional_rate": "0/46 (0%)",
+          "e2e_rate": "0/46 (0%)",
+          "note": "not collected"
+        }
+      },
+      "median_wall_s": 122
+    }
+  },
+  "supplementary": {
+    "openscad": {
+      "check_pass_true": {
+        "build_success": 42,
+        "extents_pass": 5,
+        "genus_pass": 24,
+        "volume_pass": 2,
+        "fidelity_pass": 28,
+        "overall_pass": 2
+      },
+      "check_pass_null": {
+        "build_success": 0,
+        "extents_pass": 5,
+        "genus_pass": 5,
+        "volume_pass": 5,
+        "fidelity_pass": 0,
+        "overall_pass": 0
+      },
+      "mean_score": 91.3,
+      "top_failures": [
+        [
+          "openings do not go through the solid: the drawing demands 9 openings across the registered views (strongest: front) but the mesh has 0 true through-holes \u2014 the rendered openings are blind pockets or edge notches; cut all the way through the wall",
+          2
         ],
-        "unsupported": [
-          [
-            "False",
-            31
-          ]
+        [
+          "features exist but sit at the wrong positions in front view(s): match each opening's location (u,v within the outer profile) to the drawing; check the cad_mapping signs (front: u->+X v->-Z; top: u->+X v->-Y i.e. sheet-down is the FRONT of the part)",
+          2
+        ],
+        [
+          "features exist but sit at the wrong positions in top, right view(s): match each opening's location (u,v within the outer profile) to the drawing; check the cad_mapping signs (front: u->+X v->-Z; top: u->+X v->-Y i.e. sheet-down is the FRONT of the part)",
+          2
+        ],
+        [
+          "mesh has 2 disconnected components",
+          2
+        ],
+        [
+          "features exist but sit at the wrong positions in top view(s): match each opening's location (u,v within the outer profile) to the drawing; check the cad_mapping signs (front: u->+X v->-Z; top: u->+X v->-Y i.e. sheet-down is the FRONT of the part)",
+          2
+        ],
+        [
+          "maximum dimension is 49 mm; target is 54 mm (tolerance 5%)",
+          2
         ]
-      }
+      ],
+      "unsupported": [
+        [
+          "False",
+          44
+        ]
+      ]
+    },
+    "usd-brep": {
+      "check_pass_true": {
+        "build_success": 31,
+        "extents_pass": 3,
+        "genus_pass": 18,
+        "volume_pass": 0,
+        "fidelity_pass": 6,
+        "overall_pass": 0
+      },
+      "check_pass_null": {
+        "build_success": 0,
+        "extents_pass": 4,
+        "genus_pass": 4,
+        "volume_pass": 4,
+        "fidelity_pass": 0,
+        "overall_pass": 0
+      },
+      "mean_score": null,
+      "top_failures": [
+        [
+          "Detailed drawing features and view assignments require review.",
+          31
+        ],
+        [
+          "top projection",
+          17
+        ],
+        [
+          "front projection",
+          15
+        ],
+        [
+          "front openings",
+          14
+        ],
+        [
+          "front opening positions",
+          10
+        ],
+        [
+          "right projection",
+          9
+        ]
+      ],
+      "unsupported": [
+        [
+          "False",
+          31
+        ]
+      ]
     }
   },
   "per_drawing": {
     "001_l_bookend_multiview": {
       "openscad": {
         "trials": 2,
-        "accepted": 2,
+        "completed": 2,
+        "accepted_frozen_plan": 2,
         "overall_pass": 0,
         "scores": [
           97.5,
@@ -126,7 +307,8 @@
       },
       "usd-brep": {
         "trials": 2,
-        "accepted": 0,
+        "completed": 2,
+        "accepted_frozen_plan": 0,
         "overall_pass": 0,
         "scores": [
           null,
@@ -141,7 +323,8 @@
     "002_greek_vase_silhouette": {
       "openscad": {
         "trials": 2,
-        "accepted": 2,
+        "completed": 2,
+        "accepted_frozen_plan": 2,
         "overall_pass": 0,
         "scores": [
           94.2,
@@ -151,7 +334,8 @@
       },
       "usd-brep": {
         "trials": 2,
-        "accepted": 0,
+        "completed": 0,
+        "accepted_frozen_plan": 0,
         "overall_pass": 0,
         "scores": [],
         "best_failure": []
@@ -160,7 +344,8 @@
     "003_front_grille_multiview": {
       "openscad": {
         "trials": 2,
-        "accepted": 0,
+        "completed": 2,
+        "accepted_frozen_plan": 0,
         "overall_pass": 0,
         "scores": [
           74.4,
@@ -173,7 +358,8 @@
       },
       "usd-brep": {
         "trials": 2,
-        "accepted": 0,
+        "completed": 2,
+        "accepted_frozen_plan": 0,
         "overall_pass": 0,
         "scores": [
           null,
@@ -188,7 +374,8 @@
     "004_flat_mounting_plate": {
       "openscad": {
         "trials": 2,
-        "accepted": 2,
+        "completed": 2,
+        "accepted_frozen_plan": 2,
         "overall_pass": 0,
         "scores": [
           99.9,
@@ -198,7 +385,8 @@
       },
       "usd-brep": {
         "trials": 2,
-        "accepted": 0,
+        "completed": 1,
+        "accepted_frozen_plan": 0,
         "overall_pass": 0,
         "scores": [
           null
@@ -212,7 +400,8 @@
     "005_bolt_flange": {
       "openscad": {
         "trials": 2,
-        "accepted": 0,
+        "completed": 2,
+        "accepted_frozen_plan": 0,
         "overall_pass": 0,
         "scores": [
           98.7,
@@ -225,7 +414,8 @@
       },
       "usd-brep": {
         "trials": 2,
-        "accepted": 0,
+        "completed": 2,
+        "accepted_frozen_plan": 0,
         "overall_pass": 0,
         "scores": [
           null,
@@ -240,7 +430,8 @@
     "006_stepped_knob": {
       "openscad": {
         "trials": 2,
-        "accepted": 2,
+        "completed": 2,
+        "accepted_frozen_plan": 2,
         "overall_pass": 0,
         "scores": [
           97.2,
@@ -250,7 +441,8 @@
       },
       "usd-brep": {
         "trials": 2,
-        "accepted": 1,
+        "completed": 1,
+        "accepted_frozen_plan": 1,
         "overall_pass": 0,
         "scores": [
           null
@@ -263,7 +455,8 @@
     "007_angle_bracket_holes": {
       "openscad": {
         "trials": 2,
-        "accepted": 2,
+        "completed": 2,
+        "accepted_frozen_plan": 2,
         "overall_pass": 0,
         "scores": [
           100.0,
@@ -273,7 +466,8 @@
       },
       "usd-brep": {
         "trials": 2,
-        "accepted": 0,
+        "completed": 1,
+        "accepted_frozen_plan": 0,
         "overall_pass": 0,
         "scores": [
           null
@@ -287,7 +481,8 @@
     "008_open_enclosure_window": {
       "openscad": {
         "trials": 2,
-        "accepted": 1,
+        "completed": 2,
+        "accepted_frozen_plan": 1,
         "overall_pass": 0,
         "scores": [
           98.4,
@@ -299,7 +494,8 @@
       },
       "usd-brep": {
         "trials": 2,
-        "accepted": 0,
+        "completed": 2,
+        "accepted_frozen_plan": 0,
         "overall_pass": 0,
         "scores": [
           null,
@@ -314,7 +510,8 @@
     "009_hex_prism_knob": {
       "openscad": {
         "trials": 2,
-        "accepted": 2,
+        "completed": 2,
+        "accepted_frozen_plan": 2,
         "overall_pass": 0,
         "scores": [
           97.9,
@@ -324,7 +521,8 @@
       },
       "usd-brep": {
         "trials": 2,
-        "accepted": 0,
+        "completed": 0,
+        "accepted_frozen_plan": 0,
         "overall_pass": 0,
         "scores": [],
         "best_failure": []
@@ -333,7 +531,8 @@
     "010_nameplate_slots_vents": {
       "openscad": {
         "trials": 2,
-        "accepted": 2,
+        "completed": 2,
+        "accepted_frozen_plan": 2,
         "overall_pass": 0,
         "scores": [
           98.6,
@@ -343,7 +542,8 @@
       },
       "usd-brep": {
         "trials": 2,
-        "accepted": 0,
+        "completed": 2,
+        "accepted_frozen_plan": 0,
         "overall_pass": 0,
         "scores": [
           null,
@@ -358,7 +558,8 @@
     "011_wall_hook": {
       "openscad": {
         "trials": 2,
-        "accepted": 2,
+        "completed": 2,
+        "accepted_frozen_plan": 2,
         "overall_pass": 0,
         "scores": [
           96.7,
@@ -368,7 +569,8 @@
       },
       "usd-brep": {
         "trials": 2,
-        "accepted": 0,
+        "completed": 1,
+        "accepted_frozen_plan": 0,
         "overall_pass": 0,
         "scores": [
           null
@@ -382,7 +584,8 @@
     "012_vent_grille_grid": {
       "openscad": {
         "trials": 2,
-        "accepted": 2,
+        "completed": 2,
+        "accepted_frozen_plan": 2,
         "overall_pass": 0,
         "scores": [
           94.6,
@@ -392,7 +595,8 @@
       },
       "usd-brep": {
         "trials": 2,
-        "accepted": 0,
+        "completed": 1,
+        "accepted_frozen_plan": 0,
         "overall_pass": 0,
         "scores": [
           null
@@ -406,7 +610,8 @@
     "013_wedge_ramp": {
       "openscad": {
         "trials": 2,
-        "accepted": 0,
+        "completed": 2,
+        "accepted_frozen_plan": 0,
         "overall_pass": 0,
         "scores": [
           84.0,
@@ -419,7 +624,8 @@
       },
       "usd-brep": {
         "trials": 2,
-        "accepted": 0,
+        "completed": 2,
+        "accepted_frozen_plan": 0,
         "overall_pass": 0,
         "scores": [
           null,
@@ -434,7 +640,8 @@
     "101_bltouch_bracket": {
       "openscad": {
         "trials": 2,
-        "accepted": 0,
+        "completed": 2,
+        "accepted_frozen_plan": 0,
         "overall_pass": 0,
         "scores": [
           72.6,
@@ -447,7 +654,8 @@
       },
       "usd-brep": {
         "trials": 2,
-        "accepted": 0,
+        "completed": 2,
+        "accepted_frozen_plan": 0,
         "overall_pass": 0,
         "scores": [
           null,
@@ -462,7 +670,8 @@
     "102_lcd_knob": {
       "openscad": {
         "trials": 2,
-        "accepted": 1,
+        "completed": 2,
+        "accepted_frozen_plan": 1,
         "overall_pass": 0,
         "scores": [
           96.7,
@@ -474,7 +683,8 @@
       },
       "usd-brep": {
         "trials": 2,
-        "accepted": 0,
+        "completed": 0,
+        "accepted_frozen_plan": 0,
         "overall_pass": 0,
         "scores": [],
         "best_failure": []
@@ -483,7 +693,8 @@
     "103_y_motor_holder": {
       "openscad": {
         "trials": 2,
-        "accepted": 0,
+        "completed": 1,
+        "accepted_frozen_plan": 0,
         "overall_pass": 0,
         "scores": [
           69.7
@@ -495,7 +706,8 @@
       },
       "usd-brep": {
         "trials": 2,
-        "accepted": 0,
+        "completed": 1,
+        "accepted_frozen_plan": 0,
         "overall_pass": 0,
         "scores": [
           null
@@ -509,7 +721,8 @@
     "104_cable_holder": {
       "openscad": {
         "trials": 2,
-        "accepted": 0,
+        "completed": 2,
+        "accepted_frozen_plan": 0,
         "overall_pass": 0,
         "scores": [
           84.6,
@@ -522,7 +735,8 @@
       },
       "usd-brep": {
         "trials": 2,
-        "accepted": 0,
+        "completed": 2,
+        "accepted_frozen_plan": 0,
         "overall_pass": 0,
         "scores": [
           null,
@@ -537,7 +751,8 @@
     "bevelled_block": {
       "openscad": {
         "trials": 2,
-        "accepted": 2,
+        "completed": 2,
+        "accepted_frozen_plan": 2,
         "overall_pass": 2,
         "scores": [
           99.7,
@@ -547,7 +762,8 @@
       },
       "usd-brep": {
         "trials": 2,
-        "accepted": 0,
+        "completed": 2,
+        "accepted_frozen_plan": 0,
         "overall_pass": 0,
         "scores": [
           null,
@@ -562,7 +778,8 @@
     "constant_radius_handle": {
       "openscad": {
         "trials": 2,
-        "accepted": 0,
+        "completed": 2,
+        "accepted_frozen_plan": 0,
         "overall_pass": 0,
         "scores": [
           86.5,
@@ -575,7 +792,8 @@
       },
       "usd-brep": {
         "trials": 2,
-        "accepted": 0,
+        "completed": 2,
+        "accepted_frozen_plan": 0,
         "overall_pass": 0,
         "scores": [
           null,
@@ -590,7 +808,8 @@
     "rectangular_sweep": {
       "openscad": {
         "trials": 2,
-        "accepted": 0,
+        "completed": 1,
+        "accepted_frozen_plan": 0,
         "overall_pass": 0,
         "scores": [
           92.7
@@ -602,7 +821,8 @@
       },
       "usd-brep": {
         "trials": 2,
-        "accepted": 0,
+        "completed": 0,
+        "accepted_frozen_plan": 0,
         "overall_pass": 0,
         "scores": [],
         "best_failure": []
@@ -611,7 +831,8 @@
     "rounded_housing": {
       "openscad": {
         "trials": 2,
-        "accepted": 0,
+        "completed": 2,
+        "accepted_frozen_plan": 0,
         "overall_pass": 0,
         "scores": [
           72.1,
@@ -624,7 +845,8 @@
       },
       "usd-brep": {
         "trials": 2,
-        "accepted": 0,
+        "completed": 2,
+        "accepted_frozen_plan": 0,
         "overall_pass": 0,
         "scores": [
           null,
@@ -639,7 +861,8 @@
     "solid_transition": {
       "openscad": {
         "trials": 2,
-        "accepted": 0,
+        "completed": 2,
+        "accepted_frozen_plan": 0,
         "overall_pass": 0,
         "scores": [
           94.4,
@@ -652,7 +875,8 @@
       },
       "usd-brep": {
         "trials": 2,
-        "accepted": 0,
+        "completed": 2,
+        "accepted_frozen_plan": 0,
         "overall_pass": 0,
         "scores": [
           null,
@@ -667,7 +891,8 @@
     "wheel": {
       "openscad": {
         "trials": 2,
-        "accepted": 0,
+        "completed": 2,
+        "accepted_frozen_plan": 0,
         "overall_pass": 0,
         "scores": [
           100.0,
@@ -679,7 +904,8 @@
       },
       "usd-brep": {
         "trials": 2,
-        "accepted": 0,
+        "completed": 1,
+        "accepted_frozen_plan": 0,
         "overall_pass": 0,
         "scores": [
           null
@@ -690,5 +916,6 @@
         ]
       }
     }
-  }
+  },
+  "decisions_file_present": false
 }
