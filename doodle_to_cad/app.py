@@ -305,7 +305,7 @@ async def generate(
     image: UploadFile = File(...), notes: str = Form(""), dimension: str = Form(""),
     object_type: str = Form(""), method: str = Form("3D print"), primary_view: str = Form("front"),
     projection_standard: str = Form("third-angle"),
-    strict_watertight: bool = Form(True), view_directions: str = Form("[]"),
+    strict_watertight: bool = Form(True), ask_missing_dimensions: bool = Form(True), view_directions: str = Form("[]"),
     refine_mode: str = Form("regularize"), backend: str = Form("openscad"),
     additional_views: list[UploadFile] = File(default=[]),
 ):
@@ -353,9 +353,19 @@ async def generate(
 
     async def run_job():
         try:
+            from .clarification import ask_clarification
+
+            async def ask_user(request):
+                try:
+                    maximum = max(1.0, float(dimension)) * 4
+                except (TypeError, ValueError):
+                    maximum = 1024.0
+                return await ask_clarification(job, settings.results_dir / run_id, request, maximum, [], timeout_s=120)
+
             result = await pipeline.generate(
                 data, image.content_type, notes, dimension, extra, controls,
                 run_id=run_id, on_stage=lambda name: job.update(stage=name),
+                ask_user=ask_user if ask_missing_dimensions else None,
             )
             if routing is not None:
                 result["routing"] = routing

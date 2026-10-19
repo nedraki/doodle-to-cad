@@ -19,7 +19,7 @@ from .preflight import preflight_scad
 from .model_client import CompatibleModelClient, extract_json
 from .build_contract import build, BuildInput
 from .refine import refine_evidence
-from .sizes import derive_physical_sizes, normalize_dimensions, uniform_scale_scad
+from .sizes import derive_physical_sizes, normalize_dimensions, plan_unconstrained_axes, uniform_scale_scad
 
 
 SPEC_PROMPT = """You are the perception planner in a multi-view doodle-to-CAD system.
@@ -61,7 +61,7 @@ Hard requirements:
 - For a through-cutter, the primitive's own axis must cross the material: use `cylinder(..., center=true)` at the hole centre, or a cube spanning from one epsilon outside the far face to the other (e.g. y from -eps to thickness+eps). A cylinder started at the near face with center=false cuts nothing.
 - Connected parts must overlap enough to form the requested manifold. Do not leave floating decorations or components.
 - Preserve the authoritative maximum dimension and stated manufacturing method.
-- derived_sizes (when non-null) lists measured physical sizes in millimetres per axis from measured ink spans: set the top-level size parameters to exactly those values for non-null axes — they override your own pixel estimates; choose sensible proportions only for null axes.
+- derived_sizes (when non-null) lists measured physical sizes in millimetres per axis from measured ink spans: set the top-level size parameters to exactly those values for non-null axes — they override your own pixel estimates; choose sensible proportions only for null axes. Axes listed in derived_sizes.user_supplied_axes are user-stated absolute sizes: reproduce that extent exactly (within 5%); never substitute your own proportions for a user-stated axis.
 - The part must fit a 256 x 256 x 256 mm FDM build cube (BambuLab-class). Keep all extents within it.
 - The part must sit on the build plate: lowest geometry at Z=0 (do not float the solid around Z origin).
 - Do not flatten a perspective object into a traced slab.
@@ -137,7 +137,7 @@ class Pipeline:
                        additional_views: list[tuple[str, bytes, str]] | None = None,
                        controls: dict[str, Any] | None = None,
                        run_id: str | None = None,
-                       on_stage=None) -> dict[str, Any]:
+                       on_stage=None, ask_user=None) -> dict[str, Any]:
         def stage(name: str) -> None:
             if on_stage:
                 try: on_stage(name)
@@ -152,7 +152,25 @@ class Pipeline:
         assigned_views=assign_view_groups(evidence,controls.get("primary_view","front"),controls.get("projection_standard","third-angle"))
         evidence=label_view_geometry(evidence,assigned_views)
         derived_sizes = derive_physical_sizes(evidence, dimension)
-        if derived_sizes: (out / "derived-sizes.json").write_text(json.dumps(derived_sizes, indent=2))
+        size_clarification = None
+        if derived_sizes is not None:
+            unconstrained = plan_unconstrained_axes(derived_sizes)
+            derived_sizes["unconstrained_axes"] = unconstrained
+            if ask_user and unconstrained:
+                from .clarification import ask_clarification
+                axis = unconstrained[0]  # one question per generation, house rule
+                request = {"kind": "body_dimension", "axis": axis, "feature_id": f"size_{axis}",
+                           "text": f"How large should the {axis} be (mm)?",
+                           "reason": "No registered view constrains this size; without an answer it is invented from ink proportions on every run."}
+                stage("waiting for your answer")
+                answer = await ask_user(request)
+                size_clarification = {"axis": axis, "asked": True, "answer": answer}
+                if answer and isinstance(answer.get("value_mm"), (int, float)):
+                    derived_sizes[f"{axis}_mm"] = round(float(answer["value_mm"]), 2)
+                    derived_sizes.setdefault("user_supplied_axes", []).append(axis)
+            elif unconstrained:
+                size_clarification = {"unconstrained_axes": unconstrained, "asked": False}
+            (out / "derived-sizes.json").write_text(json.dumps(derived_sizes, indent=2))
         user_text = f"User description: {notes or '(none)'}\nAuthoritative maximum dimension: {dimension or '(none supplied)'}\nControls: {json.dumps(controls)}\nOpenCV evidence: {json.dumps(evidence)}"
         visual_content: list[dict[str, Any]] = [
             {"type":"text","text":user_text},
@@ -192,6 +210,8 @@ class Pipeline:
                 if value is not None:
                     dims[key] = value
             dims["size_provenance"] = "measured ink spans x authoritative max dimension"
+            if derived_sizes.get("user_supplied_axes"):
+                dims["user_supplied_axes"] = derived_sizes["user_supplied_axes"]
             spec["dimensions"] = dims
         (out / "sketch-spec.json").write_text(json.dumps(spec,indent=2))
         generation_input = {"design_contract": {"object_count": 1, "views_are_constraints_not_parts": True, "projection_standard": controls.get("projection_standard"), "strict_watertight": controls.get("strict_watertight"), "method": controls.get("method")}, "specification": spec,
@@ -344,7 +364,7 @@ class Pipeline:
         repaired = len(attempts) > 1
         model = await self.client.discover()
         passed_mesh_gate = bool(selected["evaluation"]["accepted"])
-        result = {"backend": "openscad", "build": selected.get("build"), "id":run_id,"success":passed_mesh_gate,"model":model.selected,"model_source":model.source,"base_url":self.settings.base_url,"spec":spec,"geometry":evidence,"mesh_health":health,"evaluation":selected["evaluation"],"selected_attempt":selected["attempt"],"attempts":attempts,"controls":controls,"additional_view_count":len(additional_views),"repaired":repaired,"compile_log":log,"duration_seconds":round(time.monotonic()-started,2),"files":{"scad":f"/results/{run_id}/model.scad","stl":f"/results/{run_id}/model.stl" if stl else None,"attempts":f"/results/{run_id}/attempts.json","overlay":f"/results/{run_id}/geometry-overlay.png","views":{k:f"/results/{run_id}/{v.name}" for k,v in views.items()}}}
+        result = {"backend": "openscad", "build": selected.get("build"), "id":run_id,"success":passed_mesh_gate,"model":model.selected,"model_source":model.source,"base_url":self.settings.base_url,"spec":spec,"geometry":evidence,"mesh_health":health,"evaluation":selected["evaluation"],"selected_attempt":selected["attempt"],"attempts":attempts,"controls":controls,"size_clarification":size_clarification,"additional_view_count":len(additional_views),"repaired":repaired,"compile_log":log,"duration_seconds":round(time.monotonic()-started,2),"files":{"scad":f"/results/{run_id}/model.scad","stl":f"/results/{run_id}/model.stl" if stl else None,"attempts":f"/results/{run_id}/attempts.json","overlay":f"/results/{run_id}/geometry-overlay.png","views":{k:f"/results/{run_id}/{v.name}" for k,v in views.items()}}}
         (out/"result.json").write_text(json.dumps(result,indent=2)); return result
 
     @staticmethod
