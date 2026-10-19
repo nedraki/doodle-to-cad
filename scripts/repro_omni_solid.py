@@ -103,7 +103,7 @@ CASES = {
     "arc_plus_box_union": (lambda: v1("arch_box", [
         _pipe("arch", (0, 0, 4)),
         {"id": "block", "kind": "box", "origin": [-24, -4, 0], "size": [8, 8, 8]},
-        _union("part", "arch", "block")], "part"), "crash"),
+        _union("part", "arch", "block")], "part"), "ok"),
     "arc90_union": (lambda: v1("quarter", [
         _pipe("arch", (0, 0, 4), angle=90), _cyl("leg", (20, 0, 0)),
         _union("part", "arch", "leg")], "part"), "ok"),
