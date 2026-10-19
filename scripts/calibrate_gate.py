@@ -83,6 +83,58 @@ def iter_frozen():
                       form.get("dimension", ""), str(form.get("strict_watertight", "true")) == "true", \
                       form.get("primary_view", "front"), form.get("projection_standard", "third-angle"), row.get("checks")
 
+LIVE_TRIALS = [
+    # (name, results dir, case GT checks measured against ground truth this session)
+    ("jeep-012-accepted", "/tmp/doodle-brep-32/results/c4182aeca6b7",
+     {"build_success": True, "extents_pass": False, "genus_pass": True}),   # 100x5x61 vs 100x4x60
+    ("grille-003-regression", "/tmp/doodle-brep-32/results/7c0175c7ff7d",
+     {"build_success": True, "extents_pass": False, "genus_pass": False}),   # genus 0, thickness 5 vs 3
+    ("motor-103-accepted", "/tmp/doodle-brep-32/results/7c274ef76d20",
+     {"build_success": True, "extents_pass": False, "genus_pass": False}),   # 2/4 bores, +16% height
+]
+for side, jobs in (("main", ["34962e61b41f", "e17a9ccd5e68", "e8107d64c913"]),
+                   ("branch", ["06de487133d8", "dfa8a3608afc", "4cf6e48320db"])):
+    for i, job in enumerate(jobs, 1):
+        LIVE_TRIALS.append((f"grille-ab-{side}-{i}", f"/tmp/doodle-brep-{'main' if side=='main' else '32'}/results/{job}",
+                            {"build_success": True, "extents_pass": False, "genus_pass": None}))
+
+def iter_live():
+    for name, d, checks in LIVE_TRIALS:
+        tdir = Path(d)
+        form = {"dimension": "100" if "jeep" in name else ("130" if "grille" in name else "60")}
+        for key, truth in (("jeep-012", "100"), ("grille", "130"), ("motor", "60")):
+            if name.startswith(key): form["dimension"] = truth
+        sf = tdir / "sketch-spec.json"
+        spec = json.loads(sf.read_text()) if sf.is_file() else {}
+        views = {k: tdir / f"view-{k}.png" for k in ("isometric", "front", "top", "right")
+                 if (tdir / f"view-{k}.png").is_file()}
+        stl = tdir / "model.stl"; stl = stl if stl.is_file() else None
+        yield (name, "live", "trial-01", (tdir / "input.png").read_bytes(), stl, views, spec,
+               form["dimension"], True, "front", "third-angle", checks)
+
+if "--no-gate" in sys.argv:
+    # Baseline pass: neutralize the shipped R3 gate so old/new come from ONE
+    # deterministic code path, never from a race between two processes.
+    import doodle_to_cad.evaluation as _ev
+    _ev.openings_through_check = lambda health, expected, best_direction, strict: (True, "")
+
+if "--live" in sys.argv:
+    OUT = OUT.parent / ("runs-live-newgate.jsonl" if "--no-gate" not in sys.argv else "runs-live.jsonl")
+    with OUT.open("w") as f:
+        for name, backend, trial, img, stl, views, spec, dim, strict, prim, std, checks in iter_live():
+            try:
+                rec = score_trial(name, backend, trial, img, stl, views, spec, dim, strict, prim, std, checks)
+            except Exception as exc:
+                rec = {"drawing": name, "backend": backend, "trial": trial, "error": repr(exc)[:200]}
+            f.write(json.dumps(rec) + "\n")
+            print(name, "accepted" if rec.get("old_accepted") else "rejected",
+                  "| holes", rec.get("through_holes"), "| r1", rec.get("r1_ratios"),
+                  "| pt", rec.get("profile_topology"), flush=True)
+    print("wrote", OUT)
+    sys.exit(0)
+
+if "--no-gate" not in sys.argv and "--live" not in sys.argv:
+    OUT = OUT.parent / "runs-newgate.jsonl"
 with OUT.open("w") as f:
     for drawing, backend, trial, img, stl, views, spec, dim, strict, prim, std, checks in iter_frozen():
         try:
