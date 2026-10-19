@@ -69,6 +69,27 @@ Questions asked during trials: openscad 0 (ask off by design), usd-brep 9
 - **Greek vase (lathe class):** genuinely unsupported on the BRep path —
   no revolve/lathe operation (recorded as refusal, not silent skip).
 
+## Failure montages (`images/`)
+
+`make_fail_montages.py` composes each row as **input drawing | usd-brep built |
+ground truth**, captioned with the verdict and failure text taken from the
+published `row.json` (no hand-written claims). The BRep/GT meshes are rendered
+through the product's own CadViewer against the wall app; pipeline
+`view-isometric.png` renders are reused where saved.
+
+| image | row.json verdict | what to check visually |
+|---|---|---|
+| `003_front_grille_multiview_t1.png` | failed | built mesh is a bare plate: no headlight holes, no grille slots (GT has both) |
+| `wheel_t2.png` | failed | several of the 8 spokes missing on one side vs reference STL |
+| `constant_radius_handle_t1.png` | failed | sweep profile does not match drawn arc; top+front projection failed |
+| `007_angle_bracket_holes_t1.png` | failed | hole positions differ from drawing |
+| `101_bltouch_bracket_t1.png` | failed | slot/mount geometry does not reproduce the sheet |
+| `002_greek_vase_silhouette_t1.png` | error | no mesh: kernel refusal text, not a silent skip |
+
+Source rows: `runs/<drawing>/usd-brep/trial-NN/row.json` (montage trial number
+in the filename). `audit.py` verifies every montage file is committed and its
+underlying row.json still carries the claimed verdict.
+
 ## Reproduce
 
 ```

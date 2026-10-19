@@ -78,6 +78,22 @@ from datetime import datetime
 first = min(datetime.fromisoformat(r["submitted_at"]) for r in rows if r.get("submitted_at"))
 check("plan frozen_at precedes every trial",
       datetime.fromisoformat(plan["frozen_at"]) < first)
+# montages: every published image exists and its underlying row still says what the caption claims
+MONTAGES = {
+    "003_front_grille_multiview_t1.png": ("003_front_grille_multiview", "usd-brep", 1, "failed"),
+    "wheel_t2.png": ("wheel", "usd-brep", 2, "failed"),
+    "constant_radius_handle_t1.png": ("constant_radius_handle", "usd-brep", 1, "failed"),
+    "007_angle_bracket_holes_t1.png": ("007_angle_bracket_holes", "usd-brep", 1, "failed"),
+    "101_bltouch_bracket_t1.png": ("101_bltouch_bracket", "usd-brep", 1, "failed"),
+    "002_greek_vase_silhouette_t1.png": ("002_greek_vase_silhouette", "usd-brep", 1, "error"),
+}
+for name, (drw, be, tr, want) in MONTAGES.items():
+    img = HERE / "images" / name
+    r = json.load(open(HERE / "runs" / drw / be / f"trial-{tr:02d}" / "row.json"))
+    got = (r.get("product") or {}).get("status") or r.get("job_status")
+    check(f"montage {name} committed + row verdict={want}",
+          img.exists() and img.stat().st_size > 10000 and got == want, f"verdict={got}")
+
 # planted-error self-test
 saved = results[:]
 results.clear()
