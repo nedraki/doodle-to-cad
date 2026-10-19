@@ -1,0 +1,29 @@
+{
+  "view_frame": "The drawing presents two views. The primary view (bottom) is the Front view, showing the XZ plane (X width, Z height). The secondary view (top) is the Top view, showing the XY plane (X width, Y depth). The object is a wall hook with an L-shaped profile in the XZ plane, extruded along the Y axis.",
+  "features": [
+    {
+      "id": "hook_body",
+      "shape": "Extruded Profile",
+      "section": "L-shaped polygon",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "ASSUMED: 60.0 mm (max dimension)",
+        "ASSUMED: 10.0 mm (thickness/depth)"
+      ],
+      "placement": "The profile is defined in the XZ plane. The extrusion extends along the Y axis from Y=0 to Y=10.0. The profile consists of a vertical leg (left) and a horizontal leg (bottom).",
+      "evidence": "The bottom view shows the L-shaped outline. The top view shows the rectangular footprint of the extrusion."
+    }
+  ],
+  "connections": [
+    "The vertical leg and horizontal leg of the L-shape are connected at the bottom-left corner."
+  ],
+  "edit_rules": [
+    "Changing the extrusion depth (Y) updates the Top view width.",
+    "Changing the profile dimensions updates both the Front view shape and the Top view length."
+  ],
+  "unresolved": [
+    "Exact dimensions of the L-profile (leg lengths, thicknesses) are not provided.",
+    "Extrusion depth (Y) is not provided."
+  ],
+  "clarification": null
+}

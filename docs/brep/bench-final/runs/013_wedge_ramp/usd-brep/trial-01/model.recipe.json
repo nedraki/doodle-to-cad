@@ -1,0 +1,138 @@
+{
+  "version": 2,
+  "units": "mm",
+  "name": "wedge_block",
+  "parameters": {
+    "width": {
+      "value": 100,
+      "min": 10,
+      "max": 200,
+      "label": "Width",
+      "description": "Length of the wedge along the X axis."
+    },
+    "depth": {
+      "value": 100,
+      "min": 10,
+      "max": 200,
+      "label": "Depth",
+      "description": "Length of the wedge along the Y axis."
+    },
+    "height": {
+      "value": 50,
+      "min": 1,
+      "max": 200,
+      "label": "Height",
+      "description": "Maximum height of the wedge at the vertical face."
+    }
+  },
+  "operations": [
+    {
+      "id": "wedge",
+      "kind": "extrude",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1",
+        "e2"
+      ],
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "plane": "xy",
+      "direction": 1,
+      "depth": "depth",
+      "loops": [
+        [
+          {
+            "kind": "line",
+            "start": [
+              0,
+              0
+            ],
+            "end": [
+              "width",
+              0
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              "width",
+              0
+            ],
+            "end": [
+              0,
+              "height"
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              0,
+              "height"
+            ],
+            "end": [
+              0,
+              0
+            ]
+          }
+        ]
+      ]
+    }
+  ],
+  "output": "wedge",
+  "frames": {
+    "world": {
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    }
+  },
+  "bodies": [
+    {
+      "id": "part",
+      "output": "wedge"
+    }
+  ],
+  "evidence": {
+    "observed": [
+      {
+        "id": "e1",
+        "text": "Front view shows a right-angled triangle profile with a vertical left edge, horizontal bottom edge, and sloped hypotenuse."
+      },
+      {
+        "id": "e2",
+        "text": "Top view shows a rectangular outline, indicating constant cross-section along the depth."
+      }
+    ],
+    "inferred": [
+      {
+        "id": "e3",
+        "text": "The object is a wedge (ramp) with a rectangular base and a triangular cross-section."
+      }
+    ],
+    "assumptions": [
+      {
+        "id": "e4",
+        "text": "Assumed width is 100 mm based on maximum dimension constraint."
+      },
+      {
+        "id": "e5",
+        "text": "Assumed depth is 100 mm to match the width for a square footprint."
+      },
+      {
+        "id": "e6",
+        "text": "Assumed height is 50 mm based on the aspect ratio of the front view triangle."
+      }
+    ],
+    "unresolved": []
+  },
+  "constraints": []
+}

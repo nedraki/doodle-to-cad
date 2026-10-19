@@ -1,0 +1,141 @@
+{
+  "object": "LCD Knob",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "top",
+      "sheet_region": "view_1",
+      "what_it_constrains": "Defines the XY footprint: a circular base with three radial protrusions (tabs) spaced approximately 120 degrees apart. The tabs are rectangular with rounded outer corners."
+    },
+    {
+      "direction": "front",
+      "sheet_region": "view_2",
+      "what_it_constrains": "Defines the XZ profile: a trapezoidal shape indicating the object is a truncated cone (frustum) or tapered cylinder. The base is wider than the top."
+    },
+    {
+      "direction": "right",
+      "sheet_region": "view_3",
+      "what_it_constrains": "Defines the YZ profile: confirms the trapezoidal taper seen in the front view. The slight irregularity in the stroke suggests the tabs are part of the main body's silhouette."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "part_1",
+      "name": "Knob Body",
+      "material": "PLA",
+      "description": "A tapered circular knob with three radial grip tabs."
+    }
+  ],
+  "features": [
+    {
+      "id": "feat_1",
+      "type": "base_circle",
+      "owner": "part_1",
+      "description": "The main circular body of the knob."
+    },
+    {
+      "id": "feat_2",
+      "type": "radial_tabs",
+      "owner": "part_1",
+      "description": "Three protrusions extending radially from the main circle, likely for grip or indexing."
+    },
+    {
+      "id": "feat_3",
+      "type": "taper",
+      "owner": "part_1",
+      "description": "The body tapers from a wider base to a narrower top."
+    }
+  ],
+  "relations": [
+    {
+      "type": "attached",
+      "source": "feat_2",
+      "target": "feat_1",
+      "description": "Tabs are integral to the main body."
+    }
+  ],
+  "symmetry": {
+    "type": "rotational",
+    "order": 3,
+    "axis": "Z",
+    "description": "The three tabs suggest a 3-fold rotational symmetry around the vertical axis."
+  },
+  "repetitions": [
+    {
+      "feature_id": "feat_2",
+      "count": 3,
+      "pattern": "radial"
+    }
+  ],
+  "dimensions": {
+    "diameter": 50.0,
+    "max_width": 46.26,
+    "max_depth": 50.0,
+    "max_height": 14.67,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "The exact height of the knob is not explicitly dimensioned, estimated from aspect ratio.",
+    "The internal shaft (for the LCD encoder) is not visible in the provided views; assumed to be a standard D-shaft or cylindrical hole on the underside (not modeled in this surface reconstruction).",
+    "The tabs in the top view appear to have a specific thickness/width; interpreted as extruded features of the same height as the base."
+  ],
+  "interpretation_conflicts": [
+    "View 3 (Right) shows a slight break or artifact in the bottom line, likely a drawing artifact rather than a physical gap, interpreted as continuous."
+  ],
+  "generation_notes": "The object is a knob with a circular base and three radial tabs. The front and right views show a trapezoidal profile, indicating a taper. The construction will involve creating the top-down profile (circle + tabs) and extruding it with a taper (loft or scaled extrude).",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "loft",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_2",
+        "operation": "loft",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "owner": "part_1",
+        "parameters": {
+          "start_profile": "op_1",
+          "end_profile": "op_1_scaled",
+          "scale_factor": 0.7,
+          "height": "estimated_from_aspect_ratio"
+        },
+        "source_views": [
+          "view_2",
+          "view_3"
+        ]
+      }
+    ],
+    "unresolved_constraints": [
+      "Exact height value",
+      "Shaft interface geometry"
+    ]
+  },
+  "user_intent": {
+    "description": "lcd knob",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "50.0"
+  },
+  "source_view_group_count": 3,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

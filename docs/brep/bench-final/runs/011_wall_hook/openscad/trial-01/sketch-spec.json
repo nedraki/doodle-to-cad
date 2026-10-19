@@ -1,0 +1,104 @@
+{
+  "object": "L wall hook",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "front",
+      "sheet_region": "view_2",
+      "constrains": "Defines the primary L-shaped profile (vertical backplate and horizontal hook arm) in the XZ plane."
+    },
+    {
+      "direction": "top",
+      "sheet_region": "view_1",
+      "constrains": "Defines the uniform thickness (depth) of the object in the Y direction."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "part_1",
+      "name": "L_hook_body",
+      "description": "Single extruded L-shaped profile."
+    }
+  ],
+  "features": [
+    {
+      "id": "feat_1",
+      "type": "extrusion",
+      "owner": "part_1",
+      "description": "The L-shaped profile from the front view extruded along the Y-axis."
+    }
+  ],
+  "relations": [
+    {
+      "type": "extrusion_alignment",
+      "source": "view_2",
+      "target": "view_1",
+      "description": "The width of the top view corresponds to the thickness of the front view profile."
+    }
+  ],
+  "symmetry": "none",
+  "repetitions": [],
+  "dimensions": {
+    "max_width": 60.0,
+    "max_depth": 13.6,
+    "max_height": 54.42,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "Exact thickness (Y-axis) is not explicitly dimensioned; inferred from aspect ratio of top view relative to front view.",
+    "Exact width of the hook arm is not dimensioned; inferred from visual proportions."
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "The object is a simple L-bracket/hook. The front view (view_2) provides the profile. The top view (view_1) confirms a constant thickness. The user specified 'extruded from front profile', confirming the construction method.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "extrude",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_2",
+        "operation": "extrude",
+        "profile_plane": "XZ",
+        "direction_axis": "Y",
+        "owner": "part_1",
+        "parameters": {
+          "depth": "derived from view_1 aspect ratio",
+          "watertight": true
+        },
+        "source_views": [
+          "view_1"
+        ]
+      }
+    ],
+    "unresolved_constraints": [
+      "Specific thickness value in mm"
+    ]
+  },
+  "user_intent": {
+    "description": "L wall hook extruded from front profile",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "60"
+  },
+  "source_view_group_count": 2,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

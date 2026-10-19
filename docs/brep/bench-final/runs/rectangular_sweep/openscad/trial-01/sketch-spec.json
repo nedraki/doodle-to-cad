@@ -1,0 +1,135 @@
+{
+  "object": "Curved Handle",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "front",
+      "sheet_region": "view_6",
+      "what_it_constrains": "Primary geometry: The S-curve path profile in the XY plane (width and depth) and the constant width of the handle."
+    },
+    {
+      "direction": "top",
+      "sheet_region": "view_2",
+      "what_it_constrains": "Text annotation confirming dimensions (6 wide, 4 thick) and path parameters (R20, straight ends)."
+    },
+    {
+      "direction": "right",
+      "sheet_region": "view_5",
+      "what_it_constrains": "Cross-section profile: A rectangle 6mm wide by 4mm thick."
+    },
+    {
+      "direction": "bottom",
+      "sheet_region": "view_9",
+      "what_it_constrains": "Text annotation confirming path geometry (Two opposite quarter bends, R20, straight ends)."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "handle_body",
+      "name": "Main Handle Body",
+      "material": "plastic",
+      "description": "A continuous solid formed by sweeping a rectangular profile along a curved path."
+    }
+  ],
+  "features": [
+    {
+      "id": "rectangular_section",
+      "type": "profile",
+      "owner": "handle_body",
+      "description": "Rectangular cross-section, 6mm wide (in path plane) and 4mm thick (normal to path plane)."
+    },
+    {
+      "id": "s_curve_path",
+      "type": "path",
+      "owner": "handle_body",
+      "description": "S-shaped path consisting of a 10mm straight segment, a 90-degree arc (R20), a second 90-degree arc (R20) in the opposite direction, and a final 10mm straight segment."
+    }
+  ],
+  "relations": [
+    {
+      "type": "sweep",
+      "profile": "rectangular_section",
+      "path": "s_curve_path",
+      "orientation": "constant"
+    }
+  ],
+  "symmetry": {
+    "type": "point_symmetry",
+    "center": [
+      20,
+      30,
+      0
+    ],
+    "axis": "Z"
+  },
+  "repetitions": [],
+  "dimensions": {
+    "width": 6.0,
+    "thickness": 4.0,
+    "radius": 20.0,
+    "length": 10.0,
+    "max_width": 100.0,
+    "max_depth": 7.72,
+    "max_height": 49.58,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "The 'End centre offset: X=40, Y=60' note is geometrically inconsistent with the explicit path definition (R20 arcs + 10mm straights). The path definition is treated as authoritative for construction."
+  ],
+  "interpretation_conflicts": [
+    "Text note 'End centre offset: X=40, Y=60' conflicts with the calculated offset of X=40, Y=40 derived from the R20 radii and 10mm straight segments. The explicit path description is prioritized."
+  ],
+  "generation_notes": "The object is a classic swept solid. The path is defined in the XY plane (view_6). The cross-section is defined in the YZ plane (view_5) as 6mm (Y) x 4mm (Z). The sweep follows the path while maintaining the section orientation relative to the path tangent.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "sweep",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_3",
+        "operation": "sweep",
+        "profile_plane": "YZ",
+        "direction_axis": "X",
+        "owner": "handle_body",
+        "parameters": {
+          "path_id": "op_1",
+          "profile_id": "op_2",
+          "orientation_mode": "frenet"
+        },
+        "source_views": [
+          "view_6"
+        ]
+      }
+    ],
+    "unresolved_constraints": [
+      "The 'End centre offset: X=40, Y=60' note is geometrically inconsistent with the explicit path definition (R20 arcs + 10mm straights). The path definition is treated as authoritative for construction."
+    ]
+  },
+  "user_intent": {
+    "description": "rectangular section swept along a curved path",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "100"
+  },
+  "source_view_group_count": 10,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

@@ -1,0 +1,21 @@
+{
+  "drawing": "102_lcd_knob",
+  "backend": "usd-brep",
+  "trial": 1,
+  "submitted_at": "2026-10-19T16:15:00.304624+00:00",
+  "finished_at": "2026-10-19T16:17:36.766435+00:00",
+  "run_id": "cdee8692cd24",
+  "wall_seconds": 156.5,
+  "job_status": "error",
+  "error": {
+    "message": "Expected one connected part; components=3",
+    "code": "disconnected_output"
+  },
+  "questions_asked": 0,
+  "question_kinds": [],
+  "build": null,
+  "checks": {
+    "build_success": false,
+    "overall_pass": false
+  }
+}

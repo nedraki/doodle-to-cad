@@ -1,0 +1,104 @@
+{
+  "drawing": "rectangular_sweep",
+  "backend": "openscad",
+  "trial": 1,
+  "submitted_at": "2026-10-19T16:45:40.637875+00:00",
+  "finished_at": "2026-10-19T17:13:07.334541+00:00",
+  "run_id": "c917c105ca79",
+  "wall_seconds": 1646.7,
+  "job_status": "done",
+  "error": null,
+  "questions_asked": 0,
+  "question_kinds": [],
+  "build": {
+    "watertight": true,
+    "components": 1,
+    "genus": 3,
+    "extents_mm": [
+      103.681,
+      96.05,
+      5.832
+    ],
+    "volume_mm3": 18124.4,
+    "sha256": "6c74b54c9f7850c68ad1878434543d2a0454df972f2922c1607db743784ce9c2",
+    "bytes": 88639
+  },
+  "checks": {
+    "build_success": true,
+    "extents_pass": null,
+    "genus_pass": null,
+    "volume_pass": null,
+    "fidelity_pass": false,
+    "overall_pass": false,
+    "not_applicable": [
+      "extents",
+      "genus",
+      "volume"
+    ]
+  },
+  "fidelity": {
+    "scores": {
+      "front": 0.379,
+      "top": 0.315,
+      "right": 1.0
+    },
+    "pass": false,
+    "reason": null,
+    "topology": {
+      "front": {
+        "expected": 0,
+        "actual": 10,
+        "position_fidelity": null
+      },
+      "top": {
+        "expected": 0,
+        "actual": 2,
+        "position_fidelity": null
+      },
+      "right": {
+        "expected": 0,
+        "actual": 10,
+        "position_fidelity": null
+      }
+    }
+  },
+  "product": {
+    "success": false,
+    "accepted": false,
+    "status": null,
+    "score": 92.7,
+    "projection_status": null,
+    "geometry_status": null,
+    "failures": [
+      "degenerate or implausible axis dimensions: Y=96.05 mm vs expected 7.72 mm, Z=5.832 mm vs expected 49.58 mm",
+      "CAD projections poorly match the drawing: front similarity 0.38, top similarity 0.32 (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly."
+    ]
+  },
+  "attempts": {
+    "count": 3,
+    "recovered": false,
+    "corrections": null,
+    "selected": 3
+  },
+  "unsupported": {
+    "flag": false,
+    "code": null
+  },
+  "edit": {
+    "available": true,
+    "ok": true,
+    "seconds": 0.72,
+    "param": "width",
+    "old": 82.3336654124505,
+    "new": 98.8,
+    "message": null
+  },
+  "targeted": {
+    "available": false,
+    "ok": false,
+    "seconds": null,
+    "operation": null,
+    "value": null,
+    "message": "not_applicable: the product requires a BRep result for targeted edits"
+  }
+}

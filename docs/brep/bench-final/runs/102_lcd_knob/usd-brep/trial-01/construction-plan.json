@@ -1,0 +1,71 @@
+{
+  "view_frame": "Front view (XZ plane) shows the knob face with three protrusions. Top view (XY plane) shows the trapezoidal side profile. Right view (YZ plane) shows the side profile. X is width, Y is depth, Z is height.",
+  "features": [
+    {
+      "id": "knob_body",
+      "shape": "extrusion",
+      "section": "trapezoid",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "ASSUMED: base_width",
+        "ASSUMED: top_width",
+        "ASSUMED: height"
+      ],
+      "placement": "Extruded along Z from Z=0 to Z=height. Centered at X=0, Y=0.",
+      "evidence": "Top and right views show a trapezoidal profile."
+    },
+    {
+      "id": "protrusion_1",
+      "shape": "extrusion",
+      "section": "rectangle",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "ASSUMED: protrusion_width",
+        "ASSUMED: protrusion_height",
+        "ASSUMED: protrusion_depth"
+      ],
+      "placement": "Extruded along Y from Y=0 to Y=protrusion_depth. Located at X=-base_width/2, Z=height/2.",
+      "evidence": "Front view shows a rectangular protrusion on the left."
+    },
+    {
+      "id": "protrusion_2",
+      "shape": "extrusion",
+      "section": "rectangle",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "ASSUMED: protrusion_width",
+        "ASSUMED: protrusion_height",
+        "ASSUMED: protrusion_depth"
+      ],
+      "placement": "Extruded along Y from Y=0 to Y=protrusion_depth. Located at X=base_width/2*cos(60), Z=height/2+base_width/2*sin(60).",
+      "evidence": "Front view shows a rectangular protrusion on the top right."
+    },
+    {
+      "id": "protrusion_3",
+      "shape": "extrusion",
+      "section": "rectangle",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "ASSUMED: protrusion_width",
+        "ASSUMED: protrusion_height",
+        "ASSUMED: protrusion_depth"
+      ],
+      "placement": "Extruded along Y from Y=0 to Y=protrusion_depth. Located at X=base_width/2*cos(-60), Z=height/2+base_width/2*sin(-60).",
+      "evidence": "Front view shows a rectangular protrusion on the bottom right."
+    }
+  ],
+  "connections": [
+    "protrusion_1 connects to knob_body at X=-base_width/2",
+    "protrusion_2 connects to knob_body at X=base_width/2*cos(60), Z=height/2+base_width/2*sin(60)",
+    "protrusion_3 connects to knob_body at X=base_width/2*cos(-60), Z=height/2+base_width/2*sin(-60)"
+  ],
+  "edit_rules": [
+    "Changing base_width affects the position of all protrusions.",
+    "Changing height affects the position of all protrusions.",
+    "Changing protrusion_depth affects the Y extent of all protrusions."
+  ],
+  "unresolved": [
+    "Missing dimensions for knob body (base_width, top_width, height).",
+    "Missing dimensions for protrusions (protrusion_width, protrusion_height, protrusion_depth)."
+  ]
+}

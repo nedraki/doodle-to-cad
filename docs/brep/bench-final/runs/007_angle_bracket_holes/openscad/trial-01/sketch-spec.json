@@ -1,0 +1,205 @@
+{
+  "object": "L angle bracket",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "front",
+      "sheet_region": "bottom",
+      "constrains": "Vertical face (wall) geometry, hole positions, and height/width dimensions."
+    },
+    {
+      "direction": "top",
+      "sheet_region": "top",
+      "constrains": "Horizontal face (base) geometry and depth dimension."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "bracket_body",
+      "type": "L-angle",
+      "material": "generic_plastic"
+    }
+  ],
+  "features": [
+    {
+      "id": "base_plate",
+      "type": "plate",
+      "owner": "bracket_body",
+      "description": "Horizontal bottom flange."
+    },
+    {
+      "id": "vertical_wall",
+      "type": "plate",
+      "owner": "bracket_body",
+      "description": "Vertical back flange containing the holes."
+    },
+    {
+      "id": "hole_1",
+      "type": "through_hole",
+      "owner": "vertical_wall",
+      "description": "Leftmost circular hole."
+    },
+    {
+      "id": "hole_2",
+      "type": "through_hole",
+      "owner": "vertical_wall",
+      "description": "Center circular hole."
+    },
+    {
+      "id": "hole_3",
+      "type": "through_hole",
+      "owner": "vertical_wall",
+      "description": "Rightmost circular hole."
+    }
+  ],
+  "relations": [
+    {
+      "type": "perpendicular",
+      "target_a": "base_plate",
+      "target_b": "vertical_wall"
+    },
+    {
+      "type": "contained_in",
+      "target_a": "hole_1",
+      "target_b": "vertical_wall"
+    },
+    {
+      "type": "contained_in",
+      "target_a": "hole_2",
+      "target_b": "vertical_wall"
+    },
+    {
+      "type": "contained_in",
+      "target_a": "hole_3",
+      "target_b": "vertical_wall"
+    }
+  ],
+  "symmetry": {
+    "type": "none",
+    "axis": null
+  },
+  "repetitions": [
+    {
+      "feature_id": "hole_2",
+      "pattern": "linear",
+      "count": 3,
+      "spacing": "uniform",
+      "direction": "X"
+    }
+  ],
+  "dimensions": {
+    "max_dimension": 80.0,
+    "max_width": 80.0,
+    "max_depth": 43.13,
+    "max_height": 51.01,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "Exact thickness of the base and wall is not explicitly dimensioned; inferred from standard bracket proportions relative to the 80mm max dimension.",
+    "Hole diameter is estimated based on visual proportion relative to the wall height."
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "The object is interpreted as a standard L-bracket. The front view shows the vertical wall with three holes. The top view shows the base plate. The holes are aligned horizontally in the center of the vertical wall.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "multi_face_union",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_base",
+        "operation": "extrude",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "owner": "base_plate",
+        "parameters": {
+          "width": 80,
+          "depth": 40,
+          "height": 5
+        },
+        "source_views": [
+          "view_1"
+        ]
+      },
+      {
+        "id": "op_wall",
+        "operation": "extrude",
+        "profile_plane": "XZ",
+        "direction_axis": "Y",
+        "owner": "vertical_wall",
+        "parameters": {
+          "width": 80,
+          "height": 40,
+          "thickness": 5
+        },
+        "source_views": [
+          "view_2"
+        ]
+      },
+      {
+        "id": "hole_1",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Leftmost circular hole."
+        },
+        "source_views": []
+      },
+      {
+        "id": "hole_2",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Center circular hole."
+        },
+        "source_views": []
+      },
+      {
+        "id": "hole_3",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Rightmost circular hole."
+        },
+        "source_views": []
+      }
+    ],
+    "unresolved_constraints": [
+      "Wall thickness",
+      "Base thickness",
+      "Hole diameter"
+    ]
+  },
+  "user_intent": {
+    "description": "L angle bracket with three wall holes",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "80"
+  },
+  "source_view_group_count": 2,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

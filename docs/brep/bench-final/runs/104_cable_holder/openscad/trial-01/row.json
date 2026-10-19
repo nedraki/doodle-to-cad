@@ -1,0 +1,100 @@
+{
+  "drawing": "104_cable_holder",
+  "backend": "openscad",
+  "trial": 1,
+  "submitted_at": "2026-10-19T16:26:59.549390+00:00",
+  "finished_at": "2026-10-19T16:30:16.152745+00:00",
+  "run_id": "33214338e4a7",
+  "wall_seconds": 196.6,
+  "job_status": "done",
+  "error": null,
+  "questions_asked": 0,
+  "question_kinds": [],
+  "build": {
+    "watertight": true,
+    "components": 1,
+    "genus": 6,
+    "extents_mm": [
+      12.08,
+      19.43,
+      40.0
+    ],
+    "volume_mm3": 8802.9,
+    "sha256": "6d6531d70e5b399a075ee75af756b889df09694e7b3a0555054a23183121a842",
+    "bytes": 56397
+  },
+  "checks": {
+    "build_success": true,
+    "extents_pass": false,
+    "genus_pass": false,
+    "volume_pass": false,
+    "fidelity_pass": true,
+    "overall_pass": false,
+    "not_applicable": []
+  },
+  "fidelity": {
+    "scores": {
+      "front": 1.0,
+      "top": 0.715,
+      "right": 0.61
+    },
+    "pass": true,
+    "reason": null,
+    "topology": {
+      "front": {
+        "expected": 0,
+        "actual": 0,
+        "position_fidelity": null
+      },
+      "top": {
+        "expected": 1,
+        "actual": 1,
+        "position_fidelity": 1.0
+      },
+      "right": {
+        "expected": 5,
+        "actual": 2,
+        "position_fidelity": 0.4
+      }
+    }
+  },
+  "product": {
+    "success": false,
+    "accepted": false,
+    "status": null,
+    "score": 84.6,
+    "projection_status": null,
+    "geometry_status": null,
+    "failures": [
+      "required internal profiles are missing: right demands 5, renders 2, top demands 1, renders 1; best rendered view has 2. Missing at these view-local centres \u2014 add cutters there: (u=0.307,v=0.159); (u=0.31,v=0.507); (u=0.307,v=0.831).",
+      "features exist but sit at the wrong positions in right view(s): match each opening's location (u,v within the outer profile) to the drawing; check the cad_mapping signs (front: u->+X v->-Z; top: u->+X v->-Y i.e. sheet-down is the FRONT of the part)"
+    ]
+  },
+  "attempts": {
+    "count": 3,
+    "recovered": false,
+    "corrections": null,
+    "selected": 1
+  },
+  "unsupported": {
+    "flag": false,
+    "code": null
+  },
+  "edit": {
+    "available": true,
+    "ok": true,
+    "seconds": 0.51,
+    "param": "width",
+    "old": 12.08,
+    "new": 14.5,
+    "message": null
+  },
+  "targeted": {
+    "available": false,
+    "ok": false,
+    "seconds": null,
+    "operation": null,
+    "value": null,
+    "message": "not_applicable: the product requires a BRep result for targeted edits"
+  }
+}

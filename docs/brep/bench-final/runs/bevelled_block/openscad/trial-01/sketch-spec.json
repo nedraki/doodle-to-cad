@@ -1,0 +1,123 @@
+{
+  "object": "bevelled_block",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "top",
+      "sheet_region": "view_6",
+      "constrains": "XY footprint (60x40) and chamfered corners"
+    },
+    {
+      "direction": "front",
+      "sheet_region": "view_5",
+      "constrains": "XZ profile (60x20) and top/bottom chamfers"
+    },
+    {
+      "direction": "right",
+      "sheet_region": "view_4",
+      "constrains": "YZ profile (40x20) and side chamfers"
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "part_1",
+      "name": "bevelled_block",
+      "material": "generic_plastic",
+      "bounding_box": {
+        "x": 60,
+        "y": 40,
+        "z": 20
+      }
+    }
+  ],
+  "features": [
+    {
+      "id": "feat_1",
+      "type": "chamfer",
+      "owner": "part_1",
+      "description": "2mm chamfer on all 12 edges",
+      "parameters": {
+        "size": 2,
+        "angle": 45
+      }
+    }
+  ],
+  "relations": [],
+  "symmetry": {
+    "planes": [
+      "XZ",
+      "YZ",
+      "XY"
+    ],
+    "rotational": "180_degrees_about_Z"
+  },
+  "repetitions": [],
+  "dimensions": {
+    "length": 20.0,
+    "chamfer_size": 2.0,
+    "max_width": 80.0,
+    "max_depth": 43.09,
+    "max_height": 5.69,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "The 'closed_internal_profile' in view_5 (contour_104) is interpreted as the inner boundary of the double-line drawing style representing the chamfered top face, not a through-hole, based on the 'Solid block' note."
+  ],
+  "interpretation_conflicts": [
+    "OpenCV detected an internal profile in the Front view (view_5) which could suggest a hole, but the text annotation 'Solid block' and the double-line convention for chamfers in the Top view (view_6) confirm it is a solid object with chamfered edges."
+  ],
+  "generation_notes": "The object is a rectangular block with dimensions 60x40x20mm. All edges are chamfered by 2mm at 45 degrees. The drawing uses double lines to represent the chamfered faces in orthographic projection.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "extrude",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_2",
+        "operation": "extrude",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "owner": "part_1",
+        "parameters": {
+          "depth": 20,
+          "top_chamfer": 2,
+          "bottom_chamfer": 2
+        },
+        "source_views": [
+          "view_5",
+          "view_4"
+        ]
+      }
+    ],
+    "unresolved_constraints": [
+      "The 'closed_internal_profile' in view_5 (contour_104) is interpreted as the inner boundary of the double-line drawing style representing the chamfered top face, not a through-hole, based on the 'Solid block' note."
+    ]
+  },
+  "user_intent": {
+    "description": "block with chamfered top edges",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "80"
+  },
+  "source_view_group_count": 8,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

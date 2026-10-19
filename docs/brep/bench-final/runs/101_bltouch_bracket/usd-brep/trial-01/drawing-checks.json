@@ -1,0 +1,217 @@
+{
+  "version": 1,
+  "accepted": false,
+  "status": "failed",
+  "build_status": "passed",
+  "geometry_status": "passed",
+  "projection_status": "failed",
+  "checks": [
+    {
+      "name": "connected solid",
+      "status": "passed",
+      "detail": {
+        "watertight": true,
+        "components": 1
+      }
+    },
+    {
+      "name": "requested maximum",
+      "status": "passed",
+      "detail": {
+        "actual_mm": 50.0,
+        "limit_mm": 60.0,
+        "tolerance_mm": 0.5
+      }
+    },
+    {
+      "name": "front projection",
+      "status": "failed",
+      "detail": {
+        "similarity": 0.19,
+        "minimum": 0.45
+      }
+    },
+    {
+      "name": "top projection",
+      "status": "failed",
+      "detail": {
+        "similarity": 0.35,
+        "minimum": 0.45
+      }
+    },
+    {
+      "name": "top openings",
+      "status": "failed",
+      "detail": {
+        "expected_at_least": 3,
+        "actual": 0
+      }
+    },
+    {
+      "name": "top opening positions",
+      "status": "failed",
+      "detail": {
+        "fidelity": 0.0,
+        "minimum": 0.5,
+        "missing": [
+          [
+            0.651,
+            0.846
+          ],
+          [
+            0.251,
+            0.493
+          ],
+          [
+            0.637,
+            0.155
+          ]
+        ]
+      }
+    },
+    {
+      "name": "right projection",
+      "status": "failed",
+      "detail": {
+        "similarity": 0.317,
+        "minimum": 0.45
+      }
+    },
+    {
+      "name": "right openings",
+      "status": "failed",
+      "detail": {
+        "expected_at_least": 3,
+        "actual": 0
+      }
+    },
+    {
+      "name": "right opening positions",
+      "status": "failed",
+      "detail": {
+        "fidelity": 0.0,
+        "minimum": 0.5,
+        "missing": [
+          [
+            0.507,
+            0.616
+          ],
+          [
+            0.159,
+            0.183
+          ],
+          [
+            0.852,
+            0.182
+          ]
+        ]
+      }
+    },
+    {
+      "name": "dimensions and detailed features",
+      "status": "unverified",
+      "detail": "Projection checks cannot prove radii, bevel angles, hidden depth or section shape. Review measured features and view assignments."
+    }
+  ],
+  "projection_similarity": {
+    "front": 0.19,
+    "top": 0.35,
+    "right": 0.317
+  },
+  "profile_topology": {
+    "front": {
+      "source_internal_profiles": 0,
+      "rendered_internal_profiles": 0,
+      "crop_internal_profiles": 0,
+      "source_aspect": 0.945,
+      "rendered_aspect": 9.706,
+      "source_opening_centroids": [],
+      "rendered_opening_centroids": []
+    },
+    "top": {
+      "source_internal_profiles": 3,
+      "rendered_internal_profiles": 0,
+      "crop_internal_profiles": 3,
+      "source_aspect": 0.713,
+      "rendered_aspect": 0.801,
+      "source_opening_centroids": [
+        [
+          0.651,
+          0.846
+        ],
+        [
+          0.251,
+          0.493
+        ],
+        [
+          0.637,
+          0.155
+        ]
+      ],
+      "rendered_opening_centroids": [],
+      "missing_opening_centroids": [
+        [
+          0.651,
+          0.846
+        ],
+        [
+          0.251,
+          0.493
+        ],
+        [
+          0.637,
+          0.155
+        ]
+      ],
+      "feature_position_fidelity": 0.0
+    },
+    "right": {
+      "source_internal_profiles": 3,
+      "rendered_internal_profiles": 0,
+      "crop_internal_profiles": 3,
+      "source_aspect": 1.309,
+      "rendered_aspect": 12.118,
+      "source_opening_centroids": [
+        [
+          0.507,
+          0.616
+        ],
+        [
+          0.159,
+          0.183
+        ],
+        [
+          0.852,
+          0.182
+        ]
+      ],
+      "rendered_opening_centroids": [],
+      "missing_opening_centroids": [
+        [
+          0.507,
+          0.616
+        ],
+        [
+          0.159,
+          0.183
+        ],
+        [
+          0.852,
+          0.182
+        ]
+      ],
+      "feature_position_fidelity": 0.0
+    }
+  },
+  "failures": [
+    "front projection",
+    "top projection",
+    "top openings",
+    "top opening positions",
+    "right projection",
+    "right openings",
+    "right opening positions",
+    "Detailed drawing features and view assignments require review."
+  ],
+  "scope": "Partial automatic checks. No drawing acceptance from solid validity alone."
+}

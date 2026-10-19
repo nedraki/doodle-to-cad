@@ -1,0 +1,202 @@
+{
+  "object": "L-shaped bookend",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "front",
+      "sheet_region": "left",
+      "constrains": "Front face geometry (XZ plane), including the rectangular cutouts and overall width/height."
+    },
+    {
+      "direction": "right",
+      "sheet_region": "right",
+      "constrains": "Side profile geometry (YZ plane), defining the L-shape depth and height."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "part_1",
+      "name": "Bookend Body",
+      "description": "L-shaped solid with rectangular cutouts on the vertical face."
+    }
+  ],
+  "features": [
+    {
+      "id": "feat_base",
+      "type": "base",
+      "description": "Horizontal foot of the L-shape."
+    },
+    {
+      "id": "feat_back",
+      "type": "back",
+      "description": "Vertical back of the L-shape."
+    },
+    {
+      "id": "feat_cutout_1",
+      "type": "hole",
+      "description": "Rectangular cutout in the upper-left of the front face."
+    },
+    {
+      "id": "feat_cutout_2",
+      "type": "hole",
+      "description": "Rectangular cutout in the lower-left of the front face."
+    },
+    {
+      "id": "feat_cutout_3",
+      "type": "hole",
+      "description": "Rectangular cutout in the lower-right of the front face."
+    },
+    {
+      "id": "feat_cutout_4",
+      "type": "hole",
+      "description": "Rectangular cutout in the center of the front face."
+    }
+  ],
+  "relations": [
+    {
+      "type": "perpendicular",
+      "target": "feat_base",
+      "reference": "feat_back"
+    },
+    {
+      "type": "through",
+      "target": "feat_cutout_1",
+      "reference": "feat_back"
+    },
+    {
+      "type": "through",
+      "target": "feat_cutout_2",
+      "reference": "feat_back"
+    },
+    {
+      "type": "through",
+      "target": "feat_cutout_3",
+      "reference": "feat_back"
+    },
+    {
+      "type": "through",
+      "target": "feat_cutout_4",
+      "reference": "feat_back"
+    }
+  ],
+  "symmetry": "none",
+  "repetitions": [
+    {
+      "feature_id": "feat_cutout_2",
+      "pattern": "linear",
+      "count": 2,
+      "axis": "X",
+      "description": "Two vertical rectangular cutouts at the bottom."
+    }
+  ],
+  "dimensions": {
+    "max": 100.0,
+    "max_width": 80.18,
+    "max_depth": 71.67,
+    "max_height": 100.0,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "Exact thickness of the base and back relative to the maximum dimension.",
+    "Exact dimensions of the cutouts relative to the overall size."
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "The object is modeled as an L-profile extruded along the X-axis. The front view shows four rectangular cutouts on the vertical face. The right view confirms the L-profile. The cutouts are interpreted as through-holes in the vertical section.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "extrude",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_2",
+        "operation": "extrude",
+        "profile_plane": "YZ",
+        "direction_axis": "X",
+        "owner": "part_1",
+        "parameters": {
+          "depth": "max_dim",
+          "solid": true
+        },
+        "source_views": [
+          "view_1",
+          "view_2"
+        ]
+      },
+      {
+        "id": "feat_cutout_1",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Rectangular cutout in the upper-left of the front face."
+        },
+        "source_views": []
+      },
+      {
+        "id": "feat_cutout_2",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Rectangular cutout in the lower-left of the front face."
+        },
+        "source_views": []
+      },
+      {
+        "id": "feat_cutout_3",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Rectangular cutout in the lower-right of the front face."
+        },
+        "source_views": []
+      },
+      {
+        "id": "feat_cutout_4",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Rectangular cutout in the center of the front face."
+        },
+        "source_views": []
+      }
+    ],
+    "unresolved_constraints": [
+      "Exact thickness of the L-profile legs.",
+      "Exact dimensions of the cutouts."
+    ]
+  },
+  "user_intent": {
+    "description": "L-shaped bookend from front and right views",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "100"
+  },
+  "source_view_group_count": 2,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

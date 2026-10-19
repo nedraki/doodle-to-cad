@@ -1,0 +1,95 @@
+{
+  "view_frame": "Front view (primary) uses XY plane (X width, Y depth). Top view uses XZ plane (X width, Z height). Right view uses YZ plane (Y depth, Z height).",
+  "features": [
+    {
+      "id": "flange_body",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "Z",
+      "dimensions": [
+        "Diameter: 100mm (ASSUMED)",
+        "Thickness: 10mm (ASSUMED)"
+      ],
+      "placement": "Centered at (0,0,0). Extends from Z=0 to Z=10.",
+      "evidence": "Large outer circle in Front view; rectangular profile in Top view."
+    },
+    {
+      "id": "center_bore",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "Z",
+      "dimensions": [
+        "Diameter: 30mm (ASSUMED)"
+      ],
+      "placement": "Centered at (0,0,0). Extends from Z=0 to Z=10.",
+      "evidence": "Central circle in Front view."
+    },
+    {
+      "id": "bolt_hole_1",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "Z",
+      "dimensions": [
+        "Diameter: 8mm (ASSUMED)",
+        "Bolt Circle Diameter: 70mm (ASSUMED)"
+      ],
+      "placement": "Centered at (35, 35, 0). Extends from Z=0 to Z=10.",
+      "evidence": "Top-left circle in Front view."
+    },
+    {
+      "id": "bolt_hole_2",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "Z",
+      "dimensions": [
+        "Diameter: 8mm (ASSUMED)",
+        "Bolt Circle Diameter: 70mm (ASSUMED)"
+      ],
+      "placement": "Centered at (-35, 35, 0). Extends from Z=0 to Z=10.",
+      "evidence": "Top-right circle in Front view."
+    },
+    {
+      "id": "bolt_hole_3",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "Z",
+      "dimensions": [
+        "Diameter: 8mm (ASSUMED)",
+        "Bolt Circle Diameter: 70mm (ASSUMED)"
+      ],
+      "placement": "Centered at (-35, -35, 0). Extends from Z=0 to Z=10.",
+      "evidence": "Bottom-left circle in Front view."
+    },
+    {
+      "id": "bolt_hole_4",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "Z",
+      "dimensions": [
+        "Diameter: 8mm (ASSUMED)",
+        "Bolt Circle Diameter: 70mm (ASSUMED)"
+      ],
+      "placement": "Centered at (35, -35, 0). Extends from Z=0 to Z=10.",
+      "evidence": "Bottom-right circle in Front view."
+    }
+  ],
+  "connections": [
+    "flange_body contains center_bore",
+    "flange_body contains bolt_hole_1",
+    "flange_body contains bolt_hole_2",
+    "flange_body contains bolt_hole_3",
+    "flange_body contains bolt_hole_4"
+  ],
+  "edit_rules": [
+    "Changing flange_body diameter must maintain clearance between bolt_hole centers and flange edge.",
+    "Changing bolt_hole diameter must maintain clearance between adjacent holes.",
+    "Changing center_bore diameter must maintain clearance to bolt_hole centers."
+  ],
+  "unresolved": [
+    "Flange outer diameter is not dimensioned.",
+    "Flange thickness is not dimensioned.",
+    "Center bore diameter is not dimensioned.",
+    "Bolt hole diameter is not dimensioned.",
+    "Bolt circle diameter is not dimensioned."
+  ]
+}

@@ -1,0 +1,115 @@
+{
+  "version": 2,
+  "units": "mm",
+  "name": "bevelled_block",
+  "parameters": {
+    "width": {
+      "value": 60,
+      "min": 10,
+      "max": 200,
+      "label": "Width (X)",
+      "unit": "mm"
+    },
+    "depth": {
+      "value": 40,
+      "min": 10,
+      "max": 200,
+      "label": "Depth (Y)",
+      "unit": "mm"
+    },
+    "height": {
+      "value": 20,
+      "min": 5,
+      "max": 100,
+      "label": "Height (Z)",
+      "unit": "mm"
+    },
+    "chamfer_size": {
+      "value": 2,
+      "min": 0.1,
+      "max": 10,
+      "label": "Chamfer Size",
+      "unit": "mm",
+      "description": "Setback distance along each face for the 45-degree chamfer"
+    }
+  },
+  "operations": [
+    {
+      "id": "base_block",
+      "kind": "box",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "size": [
+        "width",
+        "depth",
+        "height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "final_part",
+      "kind": "chamfer",
+      "body": "base_block",
+      "radius": "chamfer_size * 1.4142135623730951",
+      "frame": "world",
+      "depends_on": [
+        "base_block"
+      ],
+      "evidence": [
+        "e2"
+      ]
+    }
+  ],
+  "output": "final_part",
+  "frames": {
+    "world": {
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    }
+  },
+  "bodies": [
+    {
+      "id": "part",
+      "output": "final_part"
+    }
+  ],
+  "evidence": {
+    "observed": [
+      {
+        "id": "e1",
+        "text": "Outer dimensions 60 x 40 x 20 mm are explicitly stated in the drawing notes and shown in TOP and FRONT views."
+      },
+      {
+        "id": "e2",
+        "text": "Drawing notes state 'All edges: 2 mm x 45 degrees'. The TOP view shows chamfered vertical edges (corners), and the FRONT view shows chamfered top edges. The RIGHT view (implied by symmetry and standard block geometry) confirms chamfers on all 12 edges."
+      }
+    ],
+    "inferred": [
+      {
+        "id": "e3",
+        "text": "The 'inner contour' in the side view represents the visible edge of the chamfered faces, consistent with a solid block."
+      }
+    ],
+    "assumptions": [
+      {
+        "id": "e4",
+        "text": "The chamfer is applied uniformly to all 12 edges of the rectangular block as per the note 'All edges'."
+      }
+    ],
+    "unresolved": []
+  },
+  "constraints": []
+}

@@ -1,0 +1,112 @@
+{
+  "version": 2,
+  "units": "mm",
+  "name": "rounded_housing_blank",
+  "parameters": {
+    "width": {
+      "value": 80,
+      "min": 12,
+      "max": 128,
+      "label": "Width (X)"
+    },
+    "depth": {
+      "value": 50,
+      "min": 12,
+      "max": 128,
+      "label": "Depth (Y)"
+    },
+    "height": {
+      "value": 30,
+      "min": 1,
+      "max": 128,
+      "label": "Height (Z)"
+    },
+    "corner_radius": {
+      "value": 6,
+      "min": 0.1,
+      "max": 25,
+      "label": "Corner Radius"
+    }
+  },
+  "operations": [
+    {
+      "id": "block",
+      "kind": "box",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "size": [
+        "width",
+        "depth",
+        "height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1",
+        "e2",
+        "e3"
+      ]
+    },
+    {
+      "id": "part",
+      "kind": "fillet",
+      "body": "block",
+      "radius": "corner_radius",
+      "selector": "parallel_z",
+      "frame": "world",
+      "depends_on": [
+        "block"
+      ],
+      "evidence": [
+        "e4"
+      ]
+    }
+  ],
+  "output": "part",
+  "frames": {
+    "world": {
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    }
+  },
+  "bodies": [
+    {
+      "id": "part",
+      "output": "part"
+    }
+  ],
+  "evidence": {
+    "observed": [
+      {
+        "id": "e1",
+        "text": "Front view shows width 80 and height 30."
+      },
+      {
+        "id": "e2",
+        "text": "Top view shows depth 50."
+      },
+      {
+        "id": "e3",
+        "text": "Drawing text states 'Solid blank' and 'No cavity'."
+      }
+    ],
+    "inferred": [
+      {
+        "id": "e4",
+        "text": "Top view shows rounded corners labelled '4 corners: R6'."
+      }
+    ],
+    "assumptions": [],
+    "unresolved": []
+  },
+  "constraints": []
+}

@@ -1,0 +1,155 @@
+{
+  "object": "Front Grille Assembly",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "front",
+      "sheet_region": "view_2",
+      "constrains": "Outer profile shape, vertical slot positions, circular headlight cutouts, and overall width/height."
+    },
+    {
+      "direction": "top",
+      "sheet_region": "view_1",
+      "constrains": "Object depth (thickness) and flatness of the back plane."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "part_1",
+      "name": "Grille Plate",
+      "description": "A flat plate with a complex outer boundary, featuring 7 vertical slots and 2 circular cutouts."
+    }
+  ],
+  "features": [
+    {
+      "id": "feat_outer",
+      "type": "profile",
+      "description": "Main outer boundary of the grille plate."
+    },
+    {
+      "id": "feat_slots",
+      "type": "cutout",
+      "description": "7 vertical rectangular slots arranged in the center."
+    },
+    {
+      "id": "feat_headlights",
+      "type": "cutout",
+      "description": "2 circular cutouts on the left and right sides."
+    }
+  ],
+  "relations": [
+    {
+      "type": "contained_in",
+      "child": "feat_slots",
+      "parent": "feat_outer"
+    },
+    {
+      "type": "contained_in",
+      "child": "feat_headlights",
+      "parent": "feat_outer"
+    }
+  ],
+  "symmetry": {
+    "type": "bilateral",
+    "axis": "Z",
+    "description": "The object exhibits approximate left-right symmetry regarding the headlight positions and the central slot arrangement."
+  },
+  "repetitions": [
+    {
+      "feature_id": "feat_slots",
+      "count": 7,
+      "pattern": "linear",
+      "axis": "X"
+    }
+  ],
+  "dimensions": {
+    "max_dimension": 126,
+    "width": 126,
+    "height": 79,
+    "depth": 8,
+    "max_width": 126.0,
+    "max_depth": 7.52,
+    "max_height": 78.83,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "Exact depth of the grille plate is inferred from the thin top view; assumed to be a uniform flat plate thickness.",
+    "Slot widths and spacings are regularized based on visual repetition."
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "The object is interpreted as a flat plate (grille) with through-cutouts. The top view confirms a thin profile. The front view defines the XY geometry. The slots are treated as subtractive features.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "extrude",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_2",
+        "operation": "extrude",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "owner": "part_1",
+        "parameters": {
+          "depth": 8,
+          "watertight": true
+        },
+        "source_views": [
+          "view_1"
+        ]
+      },
+      {
+        "id": "feat_slots",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "7 vertical rectangular slots arranged in the center."
+        },
+        "source_views": []
+      },
+      {
+        "id": "feat_headlights",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "2 circular cutouts on the left and right sides."
+        },
+        "source_views": []
+      }
+    ],
+    "unresolved_constraints": [
+      "Exact depth of the grille plate is inferred from the thin top view; assumed to be a uniform flat plate thickness.",
+      "Slot widths and spacings are regularized based on visual repetition."
+    ]
+  },
+  "user_intent": {
+    "description": "Front grille with headlights and repeated slots",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "126"
+  },
+  "source_view_group_count": 2,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

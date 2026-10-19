@@ -1,0 +1,189 @@
+{
+  "object": "spoked wheel",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "front",
+      "sheet_region": "view_4",
+      "constrains": "Outer diameter (120mm), hub diameter, spoke count (8), spoke width, rim thickness, and radial symmetry."
+    },
+    {
+      "direction": "right",
+      "sheet_region": "view_5",
+      "constrains": "Wheel thickness (8mm) and rectangular profile of the rim/spokes."
+    },
+    {
+      "direction": "top",
+      "sheet_region": "view_6",
+      "constrains": "Confirms thickness and rectangular cross-section of spokes/rim."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "wheel_body",
+      "name": "Wheel",
+      "material": "plastic",
+      "color": "default"
+    }
+  ],
+  "features": [
+    {
+      "id": "rim",
+      "type": "ring",
+      "owner": "wheel_body",
+      "parameters": {
+        "outer_diameter": 120,
+        "inner_diameter": 100,
+        "thickness": 8
+      }
+    },
+    {
+      "id": "hub",
+      "type": "cylinder",
+      "owner": "wheel_body",
+      "parameters": {
+        "diameter": 30,
+        "thickness": 8
+      }
+    },
+    {
+      "id": "spokes",
+      "type": "array",
+      "owner": "wheel_body",
+      "parameters": {
+        "count": 8,
+        "width": 8,
+        "thickness": 8,
+        "length": 35
+      }
+    }
+  ],
+  "relations": [
+    {
+      "type": "concentric",
+      "targets": [
+        "rim",
+        "hub"
+      ]
+    },
+    {
+      "type": "connects",
+      "source": "hub",
+      "target": "rim",
+      "via": "spokes"
+    }
+  ],
+  "symmetry": {
+    "type": "radial",
+    "axis": "Z",
+    "count": 8
+  },
+  "repetitions": [
+    {
+      "feature_id": "spokes",
+      "count": 8,
+      "pattern": "radial"
+    }
+  ],
+  "dimensions": {
+    "max_width": 27.8,
+    "max_depth": 120.0,
+    "max_height": 9.5,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "Exact hub diameter estimated from visual proportion (approx 30mm).",
+    "Exact rim thickness estimated from visual proportion (approx 10mm)."
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "Generated a watertight spoked wheel based on the front view (view_4) and side view (view_5). The geometry is constructed by unioning a central hub, an outer rim, and 8 radial spokes. All features share the same thickness of 8mm as specified in the text and side view.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "multi_face_union",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_rim",
+        "operation": "extrude",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "owner": "rim",
+        "parameters": {
+          "profile": "annulus",
+          "outer_radius": 60,
+          "inner_radius": 50,
+          "height": 8
+        },
+        "source_views": [
+          "view_4",
+          "view_5"
+        ]
+      },
+      {
+        "id": "op_hub",
+        "operation": "extrude",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "owner": "hub",
+        "parameters": {
+          "profile": "circle",
+          "radius": 15,
+          "height": 8
+        },
+        "source_views": [
+          "view_4",
+          "view_5"
+        ]
+      },
+      {
+        "id": "op_spoke",
+        "operation": "extrude",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "owner": "spokes",
+        "parameters": {
+          "profile": "rectangle",
+          "width": 8,
+          "length": 35,
+          "height": 8,
+          "position": "radial"
+        },
+        "source_views": [
+          "view_4",
+          "view_5"
+        ]
+      }
+    ],
+    "unresolved_constraints": [
+      "Exact hub diameter estimated from visual proportion (approx 30mm).",
+      "Exact rim thickness estimated from visual proportion (approx 10mm)."
+    ]
+  },
+  "user_intent": {
+    "description": "spoked wheel: rim, hub, spokes, circular",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "120"
+  },
+  "source_view_group_count": 6,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

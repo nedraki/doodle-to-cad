@@ -1,0 +1,135 @@
+{
+  "version": 2,
+  "units": "mm",
+  "name": "wedge_ramp",
+  "parameters": {
+    "width": {
+      "value": 100,
+      "min": 10,
+      "max": 500,
+      "label": "Width (X)",
+      "description": "Width of the wedge along the X-axis"
+    },
+    "depth": {
+      "value": 100,
+      "min": 10,
+      "max": 500,
+      "label": "Depth (Y)",
+      "description": "Depth of the wedge along the Y-axis"
+    },
+    "height": {
+      "value": 50,
+      "min": 1,
+      "max": 250,
+      "label": "Height (Z)",
+      "description": "Maximum height of the wedge at the vertical edge"
+    }
+  },
+  "operations": [
+    {
+      "id": "wedge",
+      "kind": "extrude",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "plane": "xy",
+      "direction": 1,
+      "depth": "depth",
+      "loops": [
+        [
+          {
+            "kind": "line",
+            "start": [
+              0,
+              0
+            ],
+            "end": [
+              "width",
+              0
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              "width",
+              0
+            ],
+            "end": [
+              0,
+              "height"
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              0,
+              "height"
+            ],
+            "end": [
+              0,
+              0
+            ]
+          }
+        ]
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1",
+        "e2",
+        "e3"
+      ]
+    }
+  ],
+  "output": "wedge",
+  "frames": {
+    "world": {
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    }
+  },
+  "bodies": [
+    {
+      "id": "part",
+      "output": "wedge"
+    }
+  ],
+  "evidence": {
+    "observed": [
+      {
+        "id": "e1",
+        "text": "Front view shows a right-angled triangle profile with vertical left edge, horizontal bottom edge, and sloped hypotenuse."
+      },
+      {
+        "id": "e2",
+        "text": "Top view shows a rectangular outline corresponding to the planar projection of the wedge."
+      }
+    ],
+    "inferred": [
+      {
+        "id": "e3",
+        "text": "The object is a uniform wedge (prism) extruded along the Y-axis (depth)."
+      }
+    ],
+    "assumptions": [
+      {
+        "id": "e4",
+        "text": "Dimensions are assumed as Width=100mm, Depth=100mm, Height=50mm due to lack of explicit measurements on the drawing."
+      },
+      {
+        "id": "e5",
+        "text": "The small dot in the top view is interpreted as noise or a center mark and ignored for solid geometry."
+      }
+    ],
+    "unresolved": []
+  },
+  "constraints": []
+}

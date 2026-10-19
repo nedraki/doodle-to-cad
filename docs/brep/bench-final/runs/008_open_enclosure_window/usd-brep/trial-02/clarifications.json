@@ -1,0 +1,20 @@
+[
+  {
+    "question": {
+      "feature_id": "enclosure_body",
+      "feature_label": "Open-top enclosure walls",
+      "reason": "The drawing shows the outer envelope and the window, but does not specify the thickness of the walls.",
+      "kind": "wall_thickness",
+      "id": "13f459e617e94dee8cdef1b271c73eea",
+      "text": "Wall thickness (mm)?",
+      "maximum_thickness_mm": 120.0
+    },
+    "status": "answered",
+    "answer": {
+      "question_id": "13f459e617e94dee8cdef1b271c73eea",
+      "feature_id": "enclosure_body",
+      "kind": "wall_thickness",
+      "thickness_mm": 3
+    }
+  }
+]

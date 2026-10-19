@@ -1,0 +1,21 @@
+{
+  "drawing": "rectangular_sweep",
+  "backend": "usd-brep",
+  "trial": 2,
+  "submitted_at": "2026-10-19T16:48:26.895172+00:00",
+  "finished_at": "2026-10-19T16:50:11.211600+00:00",
+  "run_id": "54da8ee3d730",
+  "wall_seconds": 104.3,
+  "job_status": "error",
+  "error": {
+    "message": "handle: only the world frame is supported",
+    "code": "invalid_recipe"
+  },
+  "questions_asked": 0,
+  "question_kinds": [],
+  "build": null,
+  "checks": {
+    "build_success": false,
+    "overall_pass": false
+  }
+}

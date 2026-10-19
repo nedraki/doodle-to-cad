@@ -1,0 +1,52 @@
+{
+  "view_frame": "The drawing presents three views of a bracket. The primary view (top-left) is the Front view, showing the X (width) and Z (height) axes. The view below it (bottom-left) is the Top view, showing X (width) and Y (depth) axes. The view to the right (bottom-right) is the Right view, showing Y (depth) and Z (height) axes.",
+  "features": [
+    {
+      "id": "bracket_body",
+      "shape": "Extruded Profile",
+      "section": "Closed XY Profile",
+      "axis_or_plane": "XY Plane (Top View)",
+      "dimensions": [
+        "ASSUMED: 2.0mm (Thickness)"
+      ],
+      "placement": "Extrude the profile defined in the Top view along the Z-axis. The profile consists of a vertical back edge (left), a horizontal bottom edge, a vertical front edge (right), and a chamfered top-front corner.",
+      "evidence": "The bottom-left view shows the footprint of the part. The outline is a rectangle with the top-right corner chamfered."
+    },
+    {
+      "id": "mounting_holes",
+      "shape": "Cylindrical Cut",
+      "section": "Circle",
+      "axis_or_plane": "Z Axis (Vertical)",
+      "dimensions": [
+        "ASSUMED: 3.0mm (Diameter)"
+      ],
+      "placement": "Two circular cuts located in the Front view. One is positioned near the top-right (X_max, Z_max), and the other near the bottom-right (X_max, Z_min). They pass through the full thickness of the bracket.",
+      "evidence": "Two circles are visible in the Front view (top-left). The Right view (bottom-right) shows corresponding vertical lines indicating through-holes."
+    },
+    {
+      "id": "sensor_slot",
+      "shape": "Rectangular Cut",
+      "section": "Rectangle",
+      "axis_or_plane": "Z Axis (Vertical)",
+      "dimensions": [
+        "ASSUMED: 4.0mm (Width)",
+        "ASSUMED: 8.0mm (Height)"
+      ],
+      "placement": "A rectangular cut located centrally in the Front view, positioned between the two mounting holes.",
+      "evidence": "A rectangle is visible in the center of the Front view (top-left). The Right view (bottom-right) shows vertical lines corresponding to this slot."
+    }
+  ],
+  "connections": [
+    "The mounting holes and sensor slot are subtractive features applied to the bracket_body."
+  ],
+  "edit_rules": [
+    "Changing the bracket thickness (Z) updates the extrusion depth of the body and the depth of the cuts.",
+    "Changing the X or Y dimensions of the body updates the profile in the Top view.",
+    "Changing the position of the holes or slot updates their coordinates in the Front view."
+  ],
+  "unresolved": [
+    "Exact dimensions for the bracket body (width, height, depth) are not provided.",
+    "Exact dimensions for the mounting holes (diameter, position) are not provided.",
+    "Exact dimensions for the sensor slot (width, height, position) are not provided."
+  ]
+}

@@ -1,0 +1,119 @@
+{
+  "object": "Hex prism handle",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "front",
+      "sheet_region": "left",
+      "constrains": "Hexagonal cross-section (XZ plane) and overall width/height"
+    },
+    {
+      "direction": "right",
+      "sheet_region": "right",
+      "constrains": "Hexagonal cross-section (YZ plane) and overall depth"
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "part_1",
+      "name": "Hex Prism Body",
+      "material": "generic_plastic",
+      "geometry_type": "prism"
+    }
+  ],
+  "features": [
+    {
+      "id": "feat_hex_profile",
+      "type": "profile",
+      "owner": "part_1",
+      "description": "Regular hexagonal cross-section",
+      "source_views": [
+        "view_1",
+        "view_2"
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "type": "extrusion",
+      "profile": "feat_hex_profile",
+      "target": "part_1",
+      "axis": "Y"
+    }
+  ],
+  "symmetry": {
+    "type": "rotational",
+    "axis": "Y",
+    "order": 6
+  },
+  "repetitions": [],
+  "dimensions": {
+    "max_dimension": 70,
+    "hexagon_circumradius": 35,
+    "hexagon_side_length": 35,
+    "extrusion_length": 70,
+    "max_width": 70.0,
+    "max_depth": 69.51,
+    "max_height": 61.49,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "Exact orientation of the hexagon (point-up vs flat-top) is inferred from the front view polygon vertices.",
+    "The right view shows a hexagon profile, implying the object is a prism with the hexagonal face perpendicular to the viewing direction (Y-axis)."
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "The object is a hexagonal prism. The front view shows the hexagonal face. The right view also shows a hexagonal face, which is geometrically consistent with a hexagonal prism viewed from the side if the prism axis is aligned with the Y-axis (depth). The maximum dimension is 70mm, which corresponds to the length of the prism (extrusion depth) and the width of the hexagon (2 * circumradius).",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "extrude",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_2",
+        "operation": "extrude",
+        "profile_plane": "XZ",
+        "direction_axis": "Y",
+        "owner": "part_1",
+        "parameters": {
+          "length": 70,
+          "start": 0,
+          "end": 70
+        },
+        "source_views": [
+          "view_2"
+        ]
+      }
+    ],
+    "unresolved_constraints": [
+      "Exact orientation of the hexagon (point-up vs flat-top) is inferred from the front view polygon vertices.",
+      "The right view shows a hexagon profile, implying the object is a prism with the hexagonal face perpendicular to the viewing direction (Y-axis)."
+    ]
+  },
+  "user_intent": {
+    "description": "Hex prism handle (extruded hexagon)",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "70"
+  },
+  "source_view_group_count": 2,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

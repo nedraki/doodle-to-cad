@@ -1,0 +1,128 @@
+{
+  "object": "Stepped round knob",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "front",
+      "sheet_region": "left",
+      "what_it_constrains": "Defines the axial profile (radius vs height) of the revolved knob. The horizontal axis represents the radius (0 to max), and the vertical axis represents the height (0 to 56mm). The stepped shape indicates varying diameters along the height."
+    },
+    {
+      "direction": "right",
+      "sheet_region": "right",
+      "what_it_constrains": "Confirms the rotational symmetry of the object. The profile is identical to the front view, indicating the object is a solid of revolution."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "knob_body",
+      "name": "Knob Body",
+      "material": "PLA",
+      "quantity": 1
+    }
+  ],
+  "features": [
+    {
+      "id": "base_flange",
+      "type": "flange",
+      "owner": "knob_body",
+      "description": "Wide base section at the bottom (z=0 to z~10mm)."
+    },
+    {
+      "id": "neck",
+      "type": "cylinder",
+      "owner": "knob_body",
+      "description": "Narrower middle section (z~10mm to z~45mm)."
+    },
+    {
+      "id": "head",
+      "type": "flange",
+      "owner": "knob_body",
+      "description": "Wide top section (z~45mm to z=56mm)."
+    }
+  ],
+  "relations": [
+    {
+      "type": "revolved",
+      "target": "knob_body",
+      "axis": "Z"
+    }
+  ],
+  "symmetry": {
+    "type": "rotational",
+    "axis": "Z",
+    "order": "infinite"
+  },
+  "repetitions": [],
+  "dimensions": {
+    "height": 56.0,
+    "max_diameter": 56.0,
+    "max_width": 56.0,
+    "max_depth": 55.87,
+    "max_height": 38.64,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "Exact radii of the neck and head relative to the base are estimated from the drawing proportions.",
+    "The transition between the neck and the head/base is modeled as sharp steps based on the drawing, though real knobs often have fillets."
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": [
+    "The object is interpreted as a solid of revolution based on the 'Stepped round knob' description and the identical profiles in the front and right views.",
+    "The front view is treated as the half-profile (r-z plane) to be revolved around the Z-axis.",
+    "The maximum dimension of 56mm is applied to both the total height and the maximum diameter (base flange)."
+  ],
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "revolve",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "revolve_op",
+        "operation": "revolve",
+        "profile_plane": "XZ",
+        "direction_axis": "Z",
+        "owner": "knob_body",
+        "parameters": {
+          "angle": 360,
+          "axis": "Z"
+        },
+        "source_views": [
+          "view_1",
+          "view_2"
+        ]
+      }
+    ],
+    "unresolved_constraints": [
+      "Exact radii of the neck and head relative to the base are estimated from the drawing proportions.",
+      "The transition between the neck and the head/base is modeled as sharp steps based on the drawing, though real knobs often have fillets."
+    ]
+  },
+  "user_intent": {
+    "description": "Stepped round knob (revolved profile)",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "56"
+  },
+  "source_view_group_count": 2,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

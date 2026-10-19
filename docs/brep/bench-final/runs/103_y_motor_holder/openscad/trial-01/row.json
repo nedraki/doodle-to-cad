@@ -1,0 +1,22 @@
+{
+  "drawing": "103_y_motor_holder",
+  "backend": "openscad",
+  "trial": 1,
+  "submitted_at": "2026-10-19T16:17:36.768706+00:00",
+  "finished_at": "2026-10-19T16:24:35.857100+00:00",
+  "run_id": "fd84e145ebc7",
+  "wall_seconds": 419.1,
+  "job_status": "error",
+  "error": {
+    "message": "CAD code generation failed at 'repair' (RuntimeError): Model returned no final content (finish_reason=stop).",
+    "error_type": "RuntimeError",
+    "stage": "generation"
+  },
+  "questions_asked": 0,
+  "question_kinds": [],
+  "build": null,
+  "checks": {
+    "build_success": false,
+    "overall_pass": false
+  }
+}

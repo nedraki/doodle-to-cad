@@ -1,0 +1,218 @@
+{
+  "object": "BLTouch Mounting Bracket",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "top",
+      "sheet_region": "view_1",
+      "what_it_constrains": "Defines the planar footprint (X/Y) of the bracket plate. Shows the main rectangular body with a rounded corner, a central rectangular cutout (likely for cable routing or weight reduction), and two circular mounting holes."
+    },
+    {
+      "direction": "front",
+      "sheet_region": "view_3",
+      "what_it_constrains": "Defines the side profile (X/Z). Shows the vertical extent of the bracket and a chamfered/angled corner on the top right, indicating the plate is not a simple rectangle but has a specific shape profile."
+    },
+    {
+      "direction": "right",
+      "sheet_region": "view_2",
+      "what_it_constrains": "Defines the cross-section (Y/Z). Shows the bracket as a flat plate (vertical rectangle) with a horizontal base flange extending to the right. This confirms the object is an L-shaped bracket."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "bracket_body",
+      "name": "Main Bracket Plate",
+      "material": "PLA/PETG",
+      "description": "Vertical plate with mounting holes and cutout."
+    },
+    {
+      "id": "base_flange",
+      "name": "Mounting Base",
+      "material": "PLA/PETG",
+      "description": "Horizontal flange at the bottom for attachment to the printer frame."
+    }
+  ],
+  "features": [
+    {
+      "id": "mounting_hole_top",
+      "type": "hole",
+      "location": "Top right of plate (view_1)",
+      "source_view": "view_1"
+    },
+    {
+      "id": "mounting_hole_bottom",
+      "type": "hole",
+      "location": "Bottom right of plate (view_1)",
+      "source_view": "view_1"
+    },
+    {
+      "id": "central_cutout",
+      "type": "cutout",
+      "location": "Center of plate (view_1)",
+      "source_view": "view_1"
+    },
+    {
+      "id": "chamfer_corner",
+      "type": "chamfer",
+      "location": "Top right corner (view_3)",
+      "source_view": "view_3"
+    },
+    {
+      "id": "base_flange",
+      "type": "flange",
+      "location": "Bottom (view_2)",
+      "source_view": "view_2"
+    }
+  ],
+  "relations": [
+    {
+      "type": "perpendicular",
+      "elements": [
+        "bracket_body",
+        "base_flange"
+      ]
+    },
+    {
+      "type": "coincident",
+      "elements": [
+        "mounting_hole_top",
+        "mounting_hole_bottom"
+      ],
+      "note": "Aligned vertically in view_1"
+    }
+  ],
+  "symmetry": "None",
+  "repetitions": [
+    {
+      "feature": "mounting_hole",
+      "count": 2,
+      "axis": "Y"
+    }
+  ],
+  "dimensions": {
+    "max_width": 43.22,
+    "max_depth": 60.0,
+    "max_height": 45.52,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "Exact thickness of the vertical plate (view_2 shows it as a line, implying thinness, but 3D print requires min thickness).",
+    "Exact width of the base flange relative to the plate height.",
+    "Specific diameter of the mounting holes."
+  ],
+  "interpretation_conflicts": [
+    "View 2 (Right) shows a complex 'pi' shape with two vertical legs and a base. View 1 (Top) shows a single plate. This suggests the 'Right' view might actually be the Front view of a U-channel or the 'Top' view is the Front view of a flat plate. Given the 'BLTouch bracket' context, it is likely a flat plate (View 1) with a base (View 2). The 'pi' shape in View 2 might represent the plate (left leg), the base (bottom), and potentially a second wall or just the thickness of the plate (right leg) if it's a U-bracket. However, View 1 (Top) looks like a flat plate. Let's assume View 1 is the Front face of the plate, View 3 is the Side profile (showing the chamfer), and View 2 is the Bottom view showing the base flange. Wait, View 2 is labeled 'right' in the prompt's view_geometry but visually looks like a front view of a U-bracket. Let's stick to the visual evidence: View 1 is the main face (Top in geometry, but looks like Front). View 3 is the side profile. View 2 is the bottom view showing the base. The 'pi' shape in View 2 is likely the base flange (bottom bar) and the plate (vertical bar) seen from the bottom? No, View 2 is 'right'. If View 1 is Top, View 3 is Front, View 2 is Right. View 2 shows a U-shape. This implies the object is a U-channel bracket. View 1 (Top) shows the top of the U-channel (two walls and a base). View 3 (Front) shows the side of the U-channel. View 2 (Right) shows the cross-section of the U-channel. This makes sense. The object is a U-channel bracket."
+  ],
+  "generation_notes": "The object is interpreted as a U-channel bracket (or L-bracket with a second wall). View 1 (Top) shows the plan view of the U-channel with holes in the top wall. View 3 (Front) shows the side profile with a chamfer. View 2 (Right) shows the U-shaped cross-section. The 'pi' shape in View 2 confirms the U-channel structure. The holes in View 1 are likely for mounting the BLTouch sensor.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "extrude",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_2",
+        "operation": "extrude",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "owner": "bracket_body",
+        "parameters": {
+          "depth": "derived_from_view_3_height",
+          "thickness": "derived_from_view_2_width"
+        },
+        "source_views": [
+          "view_1",
+          "view_3"
+        ]
+      },
+      {
+        "id": "op_4",
+        "operation": "extrude",
+        "profile_plane": "XZ",
+        "direction_axis": "Y",
+        "owner": "base_flange",
+        "parameters": {
+          "depth": "derived_from_view_2_depth"
+        },
+        "source_views": [
+          "view_3",
+          "view_2"
+        ]
+      },
+      {
+        "id": "op_5",
+        "operation": "union",
+        "profile_plane": "null",
+        "direction_axis": "null",
+        "owner": "bracket_body",
+        "parameters": {
+          "tool": "base_flange"
+        },
+        "source_views": []
+      },
+      {
+        "id": "mounting_hole_top",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": null
+        },
+        "source_views": []
+      },
+      {
+        "id": "mounting_hole_bottom",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": null
+        },
+        "source_views": []
+      },
+      {
+        "id": "central_cutout",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": null
+        },
+        "source_views": []
+      }
+    ],
+    "unresolved_constraints": [
+      "Exact thickness of the U-channel walls.",
+      "Exact width of the base flange."
+    ]
+  },
+  "user_intent": {
+    "description": "bltouch bracket",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "60.0"
+  },
+  "source_view_group_count": 3,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

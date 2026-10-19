@@ -1,0 +1,93 @@
+{
+  "drawing": "005_bolt_flange",
+  "backend": "openscad",
+  "trial": 2,
+  "submitted_at": "2026-10-19T15:45:32.945204+00:00",
+  "finished_at": "2026-10-19T15:49:03.454145+00:00",
+  "run_id": "55d39a8ee275",
+  "wall_seconds": 210.5,
+  "job_status": "done",
+  "error": null,
+  "questions_asked": 0,
+  "question_kinds": [],
+  "build": {
+    "watertight": true,
+    "components": 1,
+    "genus": 5,
+    "extents_mm": [
+      120.0,
+      10.0,
+      120.0
+    ],
+    "volume_mm3": 95852.8,
+    "sha256": "cbefc8598884c072e3970c58f473b333999969a988d9f036cab4a9e8d635b73b",
+    "bytes": 252942
+  },
+  "checks": {
+    "build_success": true,
+    "extents_pass": false,
+    "genus_pass": true,
+    "volume_pass": false,
+    "fidelity_pass": true,
+    "overall_pass": false,
+    "not_applicable": []
+  },
+  "fidelity": {
+    "scores": {
+      "front": 0.998,
+      "top": 1.0
+    },
+    "pass": true,
+    "reason": null,
+    "topology": {
+      "front": {
+        "expected": 5,
+        "actual": 5,
+        "position_fidelity": 1.0
+      },
+      "top": {
+        "expected": 1,
+        "actual": 12,
+        "position_fidelity": null
+      }
+    }
+  },
+  "product": {
+    "success": false,
+    "accepted": false,
+    "status": null,
+    "score": 100.0,
+    "projection_status": null,
+    "geometry_status": null,
+    "failures": [
+      "openings do not go through the solid: the drawing demands 6 openings across the registered views (strongest: front) but the mesh has 5 true through-holes \u2014 the rendered openings are blind pockets or edge notches; cut all the way through the wall"
+    ]
+  },
+  "attempts": {
+    "count": 3,
+    "recovered": false,
+    "corrections": null,
+    "selected": 3
+  },
+  "unsupported": {
+    "flag": false,
+    "code": null
+  },
+  "edit": {
+    "available": true,
+    "ok": true,
+    "seconds": 1.0,
+    "param": "outer_diameter",
+    "old": 120.0,
+    "new": 144.0,
+    "message": null
+  },
+  "targeted": {
+    "available": false,
+    "ok": false,
+    "seconds": null,
+    "operation": null,
+    "value": null,
+    "message": "not_applicable: the product requires a BRep result for targeted edits"
+  }
+}

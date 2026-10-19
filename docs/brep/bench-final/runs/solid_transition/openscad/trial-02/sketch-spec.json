@@ -1,0 +1,141 @@
+{
+  "object": "Rectangular-to-Circular Transition Piece",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "front",
+      "sheet_region": "view_6",
+      "constrains": "Height (60mm) and width taper (60mm base to 30mm top)"
+    },
+    {
+      "direction": "left",
+      "sheet_region": "view_5",
+      "constrains": "Circular cross-section (30mm diameter) and depth (30mm)"
+    },
+    {
+      "direction": "bottom",
+      "sheet_region": "view_4",
+      "constrains": "Rectangular base profile (60mm x 40mm)"
+    },
+    {
+      "direction": "top",
+      "sheet_region": "view_3",
+      "constrains": "Circular top profile (30mm diameter)"
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "part_1",
+      "name": "Transition Body",
+      "material": "Generic Polymer",
+      "geometry_type": "loft"
+    }
+  ],
+  "features": [
+    {
+      "id": "feat_base",
+      "type": "profile",
+      "shape": "rectangle",
+      "dimensions": {
+        "width": 60,
+        "height": 40
+      },
+      "location": "bottom"
+    },
+    {
+      "id": "feat_top",
+      "type": "profile",
+      "shape": "circle",
+      "dimensions": {
+        "diameter": 30
+      },
+      "location": "top"
+    }
+  ],
+  "relations": [
+    {
+      "type": "loft",
+      "from": "feat_base",
+      "to": "feat_top",
+      "description": "Solid transition from rectangular base to circular top"
+    }
+  ],
+  "symmetry": {
+    "planes": [
+      "XZ",
+      "YZ"
+    ],
+    "axis": "Z"
+  },
+  "repetitions": [],
+  "dimensions": {
+    "width": 60.0,
+    "depth": 40.0,
+    "diameter": 30.0,
+    "height": 60.0,
+    "max_width": 33.4,
+    "max_depth": 6.8,
+    "max_height": 60.0,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "Exact curvature of the transition surface (linear vs. smooth) is inferred from the straight lines in the front view, implying a linear loft."
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "The object is a solid transition piece. The front view shows a trapezoid (width 60 to 30), the left view shows a circle (diameter 30), and the bottom view shows a rectangle (60x40). The top view confirms the circular end. The height is explicitly stated as 60mm.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "loft",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_3",
+        "operation": "loft",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "owner": "part_1",
+        "parameters": {
+          "profiles": [
+            "feat_base",
+            "feat_top"
+          ],
+          "solid": true,
+          "ruled": true
+        },
+        "source_views": [
+          "view_6"
+        ]
+      }
+    ],
+    "unresolved_constraints": [
+      "Exact curvature of the transition surface (linear vs. smooth) is inferred from the straight lines in the front view, implying a linear loft."
+    ]
+  },
+  "user_intent": {
+    "description": "solid transition from rectangular to round end",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "60"
+  },
+  "source_view_group_count": 9,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

@@ -1,0 +1,188 @@
+{
+  "object": "Vent grille plate",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "front",
+      "sheet_region": "center",
+      "constrains": "Outer rectangular profile (width/height) and 3x3 grid of circular holes (positions and diameters)"
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "plate_base",
+      "description": "Rectangular plate with 9 circular through-holes",
+      "material": "plastic",
+      "estimated_dimensions": {
+        "width": 100,
+        "height": 61.4,
+        "thickness": 3
+      }
+    }
+  ],
+  "features": [
+    {
+      "id": "outer_boundary",
+      "type": "profile",
+      "shape": "rectangle",
+      "source_view": "view_1",
+      "view_local_geometry": {
+        "center": [
+          0.4993,
+          0.5001
+        ],
+        "bbox": [
+          0.0118,
+          0.0145,
+          0.9749,
+          0.9711
+        ]
+      }
+    },
+    {
+      "id": "hole_grid",
+      "type": "hole_array",
+      "shape": "circle",
+      "count": 9,
+      "layout": "3x3",
+      "source_view": "view_1",
+      "view_local_geometry": {
+        "centers": [
+          [
+            0.34,
+            0.3673
+          ],
+          [
+            0.5015,
+            0.3787
+          ],
+          [
+            0.6625,
+            0.3787
+          ],
+          [
+            0.3435,
+            0.5013
+          ],
+          [
+            0.5025,
+            0.5027
+          ],
+          [
+            0.6625,
+            0.502
+          ],
+          [
+            0.3435,
+            0.6287
+          ],
+          [
+            0.5035,
+            0.6247
+          ],
+          [
+            0.664,
+            0.6247
+          ]
+        ],
+        "approx_diameter": 0.08
+      }
+    }
+  ],
+  "relations": [
+    {
+      "type": "through_cut",
+      "target": "hole_grid",
+      "tool": "plate_base"
+    }
+  ],
+  "symmetry": {
+    "vertical_axis": true,
+    "horizontal_axis": true
+  },
+  "repetitions": [
+    {
+      "feature_id": "hole_grid",
+      "pattern": "grid",
+      "rows": 3,
+      "cols": 3
+    }
+  ],
+  "dimensions": {
+    "max_width": 100.0,
+    "max_height": 61.39,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "Plate thickness is not explicitly defined in the drawing; assumed 3mm for structural integrity.",
+    "Hole diameter is estimated from the stroke width and relative size; exact value may vary."
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "The drawing shows a single rectangular plate with a 3x3 array of circular holes. The aspect ratio of the outer rectangle is approximately 1.63:1. Given the max dimension is 100mm, the width is set to 100mm and height to ~61.4mm. The holes are regularized to circles and arranged in a symmetric grid.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "extrude",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_2",
+        "operation": "extrude",
+        "profile_plane": "XZ",
+        "direction_axis": "Y",
+        "owner": "plate_base",
+        "parameters": {
+          "depth": 3,
+          "type": "solid"
+        },
+        "source_views": [
+          "view_1"
+        ]
+      },
+      {
+        "id": "op_4",
+        "operation": "extrude",
+        "profile_plane": "XZ",
+        "direction_axis": "Y",
+        "owner": "hole_grid",
+        "parameters": {
+          "depth": 3,
+          "type": "cut"
+        },
+        "source_views": [
+          "view_1"
+        ]
+      }
+    ],
+    "unresolved_constraints": [
+      "Exact plate thickness",
+      "Exact hole diameter"
+    ]
+  },
+  "user_intent": {
+    "description": "Vent grille plate with 3x3 round hole grid",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "100"
+  },
+  "source_view_group_count": 1,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

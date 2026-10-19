@@ -1,0 +1,21 @@
+{
+  "drawing": "009_hex_prism_knob",
+  "backend": "usd-brep",
+  "trial": 2,
+  "submitted_at": "2026-10-19T15:56:42.108335+00:00",
+  "finished_at": "2026-10-19T15:57:22.285201+00:00",
+  "run_id": "06646326e8e7",
+  "wall_seconds": 40.2,
+  "job_status": "error",
+  "error": {
+    "message": "Construction plan rejected: Unsupported clarification or unknown feature",
+    "code": "invalid_recipe"
+  },
+  "questions_asked": 0,
+  "question_kinds": [],
+  "build": null,
+  "checks": {
+    "build_success": false,
+    "overall_pass": false
+  }
+}

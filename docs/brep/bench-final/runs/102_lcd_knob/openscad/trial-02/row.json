@@ -1,0 +1,99 @@
+{
+  "drawing": "102_lcd_knob",
+  "backend": "openscad",
+  "trial": 2,
+  "submitted_at": "2026-10-19T16:13:42.957932+00:00",
+  "finished_at": "2026-10-19T16:17:01.576361+00:00",
+  "run_id": "d3e374067422",
+  "wall_seconds": 198.6,
+  "job_status": "done",
+  "error": null,
+  "questions_asked": 0,
+  "question_kinds": [],
+  "build": {
+    "watertight": true,
+    "components": 1,
+    "genus": 1,
+    "extents_mm": [
+      50.061,
+      48.808,
+      15.573
+    ],
+    "volume_mm3": 21424.4,
+    "sha256": "bc90ea787dfe3623343a7655e5b5da38be8f67ac21131c7b85e0f847e40c3307",
+    "bytes": 72921
+  },
+  "checks": {
+    "build_success": true,
+    "extents_pass": false,
+    "genus_pass": false,
+    "volume_pass": false,
+    "fidelity_pass": false,
+    "overall_pass": false,
+    "not_applicable": []
+  },
+  "fidelity": {
+    "scores": {
+      "front": 0.988,
+      "top": 0.385,
+      "right": 0.819
+    },
+    "pass": false,
+    "reason": null,
+    "topology": {
+      "front": {
+        "expected": 0,
+        "actual": 3,
+        "position_fidelity": null
+      },
+      "top": {
+        "expected": 0,
+        "actual": 1,
+        "position_fidelity": null
+      },
+      "right": {
+        "expected": 0,
+        "actual": 0,
+        "position_fidelity": null
+      }
+    }
+  },
+  "product": {
+    "success": false,
+    "accepted": false,
+    "status": null,
+    "score": 95.9,
+    "projection_status": null,
+    "geometry_status": null,
+    "failures": [
+      "CAD projections poorly match the drawing: top similarity 0.39 (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly."
+    ]
+  },
+  "attempts": {
+    "count": 3,
+    "recovered": false,
+    "corrections": null,
+    "selected": 3
+  },
+  "unsupported": {
+    "flag": false,
+    "code": null
+  },
+  "edit": {
+    "available": true,
+    "ok": true,
+    "seconds": 0.56,
+    "param": "overall_width",
+    "old": 53.04476978569913,
+    "new": 63.65,
+    "message": null
+  },
+  "targeted": {
+    "available": false,
+    "ok": false,
+    "seconds": null,
+    "operation": null,
+    "value": null,
+    "message": "not_applicable: the product requires a BRep result for targeted edits"
+  }
+}

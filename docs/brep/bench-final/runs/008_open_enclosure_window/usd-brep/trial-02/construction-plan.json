@@ -1,0 +1,42 @@
+{
+  "view_frame": "Front view (XZ plane) shows the enclosure body with a rectangular window. Top view (XY plane) shows the rectangular footprint of the enclosure. X is width, Y is depth, Z is height.",
+  "features": [
+    {
+      "id": "enclosure_body",
+      "shape": "box",
+      "section": "rectangle",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "ASSUMED: width 100mm",
+        "ASSUMED: depth 60mm",
+        "ASSUMED: height 40mm",
+        "wall_thickness 3mm (from user answer)"
+      ],
+      "placement": "Centred at (0,0,0) with base at Z=0. Extents: X[-50,50], Y[-30,30], Z[0,40].",
+      "evidence": "Rectangular outline in front and top views."
+    },
+    {
+      "id": "front_window",
+      "shape": "rectangle",
+      "section": "rectangle",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "ASSUMED: width 60mm",
+        "ASSUMED: height 20mm"
+      ],
+      "placement": "Centred on the front face (Y=-30). Extents: X[-30,30], Z[10,30].",
+      "evidence": "Inner rectangle in the front view."
+    }
+  ],
+  "connections": [
+    "front_window is a through-cut on the front face of enclosure_body"
+  ],
+  "edit_rules": [
+    "Changing enclosure_body dimensions must scale the window position proportionally to maintain centring.",
+    "Changing wall_thickness must update the shell thickness of the enclosure."
+  ],
+  "unresolved": [
+    "Missing floor_thickness: The drawing does not specify the thickness of the bottom wall. A uniform shell operation would apply the 3mm wall thickness to the floor as well, but this is an assumption.",
+    "Missing window extent: The drawing does not explicitly state if the window is a through-hole or a recessed pocket. Given the 'open-top enclosure' context, a through-hole is the most likely intent, but this is an assumption."
+  ]
+}

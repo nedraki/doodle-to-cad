@@ -1,0 +1,96 @@
+{
+  "view_frame": "Front view (left) shows the XZ plane (width and height). Right view (right) shows the YZ plane (depth and height). The object is an L-shaped bookend with a vertical back panel and a horizontal base.",
+  "features": [
+    {
+      "id": "back_panel",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "ASSUMED: width 60mm",
+        "ASSUMED: height 80mm",
+        "ASSUMED: thickness 10mm"
+      ],
+      "placement": "Vertical panel at the back. Centre X=0, Z=40. Extends from Y=0 to Y=10.",
+      "evidence": "The tall vertical rectangle in the front view and the vertical leg of the L-shape in the right view."
+    },
+    {
+      "id": "base_plate",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "ASSUMED: width 60mm",
+        "ASSUMED: depth 50mm",
+        "ASSUMED: thickness 10mm"
+      ],
+      "placement": "Horizontal base. Centre X=0, Z=5. Extends from Y=0 to Y=50.",
+      "evidence": "The horizontal leg of the L-shape in the right view."
+    },
+    {
+      "id": "cutout_top",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "ASSUMED: width 20mm",
+        "ASSUMED: height 15mm",
+        "ASSUMED: depth 10mm"
+      ],
+      "placement": "Cutout in the upper part of the back panel. Centre X=-15, Z=65.",
+      "evidence": "The top-left rectangular outline in the front view."
+    },
+    {
+      "id": "cutout_mid",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "ASSUMED: width 10mm",
+        "ASSUMED: height 30mm",
+        "ASSUMED: depth 10mm"
+      ],
+      "placement": "Cutout in the middle of the back panel. Centre X=5, Z=50.",
+      "evidence": "The central vertical rectangular outline in the front view."
+    },
+    {
+      "id": "cutout_bottom_left",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "ASSUMED: width 15mm",
+        "ASSUMED: height 35mm",
+        "ASSUMED: depth 10mm"
+      ],
+      "placement": "Cutout in the lower-left of the back panel. Centre X=-15, Z=30.",
+      "evidence": "The bottom-left vertical rectangular outline in the front view."
+    },
+    {
+      "id": "cutout_bottom_right",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "ASSUMED: width 12mm",
+        "ASSUMED: height 30mm",
+        "ASSUMED: depth 10mm"
+      ],
+      "placement": "Cutout in the lower-right of the back panel. Centre X=15, Z=30.",
+      "evidence": "The bottom-right vertical rectangular outline in the front view."
+    }
+  ],
+  "connections": [
+    "back_panel and base_plate are joined at the bottom edge of the back_panel (Z=0 to Z=10) and the back edge of the base_plate (Y=0 to Y=10).",
+    "All cutouts are subtracted from the back_panel."
+  ],
+  "edit_rules": [
+    "Changing the back_panel height moves the top edge of all cutouts relative to the top of the panel.",
+    "Changing the base_plate depth moves the front edge of the base.",
+    "Changing the thickness of the back_panel moves the Y position of the cutouts."
+  ],
+  "unresolved": [
+    "The exact dimensions of the L-shape (width, height, depth, thickness) are not provided and are assumed based on the 100mm maximum dimension constraint.",
+    "The exact dimensions and positions of the four rectangular cutouts are not provided and are assumed based on visual proportions."
+  ]
+}

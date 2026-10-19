@@ -1,0 +1,52 @@
+{
+  "view_frame": "Front view (primary) shows the XY plane (width X, depth Y). Top view (secondary) shows the XZ plane (width X, height Z). World origin is at the center of the flange.",
+  "features": [
+    {
+      "id": "flange_body",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "Z",
+      "dimensions": [
+        "ASSUMED: outer_diameter_mm = 100",
+        "thickness_mm = 3"
+      ],
+      "placement": "Centered at (0,0,0). Extruded from Z=0 to Z=3.",
+      "evidence": "Top view shows a large circular outline. Front view shows a thin rectangular profile indicating thickness."
+    },
+    {
+      "id": "center_bore",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "Z",
+      "dimensions": [
+        "ASSUMED: bore_diameter_mm = 30"
+      ],
+      "placement": "Centered at (0,0,0). Through-hole from Z=0 to Z=3.",
+      "evidence": "Top view shows a central circular hole. Front view shows a small dash indicating the bore."
+    },
+    {
+      "id": "bolt_holes",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "Z",
+      "dimensions": [
+        "ASSUMED: bolt_hole_diameter_mm = 8",
+        "ASSUMED: bolt_circle_diameter_mm = 70"
+      ],
+      "placement": "Four holes centered on a circle of radius 35mm at (0,0,0). Positions at (24.75, 24.75), (-24.75, 24.75), (-24.75, -24.75), (24.75, -24.75). Through-holes from Z=0 to Z=3.",
+      "evidence": "Top view shows four small circular holes arranged symmetrically around the center."
+    }
+  ],
+  "connections": [
+    "center_bore is subtracted from flange_body",
+    "bolt_holes are subtracted from flange_body"
+  ],
+  "edit_rules": [
+    "Changing outer_diameter_mm scales the flange_body radius.",
+    "Changing thickness_mm scales the flange_body height.",
+    "Changing bore_diameter_mm scales the center_bore radius.",
+    "Changing bolt_hole_diameter_mm scales the bolt_holes radius.",
+    "Changing bolt_circle_diameter_mm moves the bolt_holes radially."
+  ],
+  "unresolved": []
+}

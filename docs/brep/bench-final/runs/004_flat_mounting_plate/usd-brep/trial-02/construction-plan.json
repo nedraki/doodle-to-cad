@@ -1,0 +1,71 @@
+{
+  "view_frame": "The drawing presents a primary view (Front) and a secondary view (Top). The Front view displays the XY plane (width and height). The Top view displays the XZ plane (width and depth). The Z-axis represents the thickness of the plate.",
+  "features": [
+    {
+      "id": "plate_body",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "ASSUMED_WIDTH",
+        "ASSUMED_HEIGHT",
+        "ASSUMED_THICKNESS"
+      ],
+      "placement": "Centered at (0,0,0) in the Front view (XY). Extends along Z from -ASSUMED_THICKNESS/2 to +ASSUMED_THICKNESS/2.",
+      "evidence": "The large rectangular outline in the Front view and the corresponding strip in the Top view."
+    },
+    {
+      "id": "hole_1",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "Z",
+      "dimensions": [
+        "ASSUMED_HOLE_DIAMETER"
+      ],
+      "placement": "Centered at approximately (-0.35*ASSUMED_WIDTH, 0.25*ASSUMED_HEIGHT) in the Front view (XY). Extends through the full thickness along Z.",
+      "evidence": "The circular mark in the upper-left quadrant of the Front view."
+    },
+    {
+      "id": "hole_2",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "Z",
+      "dimensions": [
+        "ASSUMED_HOLE_DIAMETER"
+      ],
+      "placement": "Centered at approximately (0.35*ASSUMED_WIDTH, -0.25*ASSUMED_HEIGHT) in the Front view (XY). Extends through the full thickness along Z.",
+      "evidence": "The circular mark in the lower-right quadrant of the Front view."
+    },
+    {
+      "id": "center_slot",
+      "shape": "slot",
+      "section": "stadium",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "ASSUMED_SLOT_LENGTH",
+        "ASSUMED_SLOT_WIDTH"
+      ],
+      "placement": "Centered at (0,0) in the Front view (XY). Extends through the full thickness along Z.",
+      "evidence": "The elongated rounded shape in the center of the Front view."
+    }
+  ],
+  "connections": [
+    "hole_1 is subtracted from plate_body",
+    "hole_2 is subtracted from plate_body",
+    "center_slot is subtracted from plate_body"
+  ],
+  "edit_rules": [
+    "Changing ASSUMED_WIDTH or ASSUMED_HEIGHT scales the plate outline but must maintain the relative positions of holes and slot.",
+    "Changing ASSUMED_THICKNESS affects the depth of all cutouts.",
+    "Changing ASSUMED_HOLE_DIAMETER affects both holes simultaneously.",
+    "Changing ASSUMED_SLOT_LENGTH or ASSUMED_SLOT_WIDTH affects the central slot dimensions."
+  ],
+  "unresolved": [
+    "ASSUMED_WIDTH: The overall width of the plate is not dimensioned.",
+    "ASSUMED_HEIGHT: The overall height of the plate is not dimensioned.",
+    "ASSUMED_THICKNESS: The thickness of the plate is not dimensioned.",
+    "ASSUMED_HOLE_DIAMETER: The diameter of the mounting holes is not dimensioned.",
+    "ASSUMED_SLOT_LENGTH: The length of the center slot is not dimensioned.",
+    "ASSUMED_SLOT_WIDTH: The width of the center slot is not dimensioned."
+  ]
+}

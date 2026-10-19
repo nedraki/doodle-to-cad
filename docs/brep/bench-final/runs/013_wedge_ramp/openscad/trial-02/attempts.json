@@ -1,0 +1,436 @@
+[
+  {
+    "attempt": 1,
+    "action": "generate",
+    "preflight": {
+      "passed": true,
+      "errors": [],
+      "warnings": [
+        "multiple top-level geometry expressions detected (2); ensure they intentionally form one connected design"
+      ],
+      "expected_subtractive_feature_groups": 0
+    },
+    "compiler_repairs": [],
+    "uniform_scale": null,
+    "evaluation": {
+      "score": 83.8,
+      "valid_mesh": true,
+      "accepted": false,
+      "mandatory_gates": {
+        "compiled": true,
+        "topology": true,
+        "dimensions": true,
+        "shape_sanity": true,
+        "features": true,
+        "openings_through": true,
+        "projections": false,
+        "build_envelope": true
+      },
+      "scores": {
+        "topology": 40,
+        "dimensions": 20.0,
+        "features": 20,
+        "projections": 3.8
+      },
+      "projection_similarity": {
+        "front": 0.246,
+        "top": 0.264
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 0,
+          "source_aspect": 3.067,
+          "rendered_aspect": 1.6,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": []
+        },
+        "top": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 0,
+          "source_aspect": 1.603,
+          "rendered_aspect": 3.064,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": []
+        }
+      },
+      "demanded_openings": {
+        "total": 0,
+        "per_view": {
+          "front": 0,
+          "top": 0
+        },
+        "sheet_total": 0,
+        "registration_gap": 0
+      },
+      "failures": [
+        "CAD projections poorly match the drawing: front similarity 0.25, top similarity 0.26 (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly."
+      ]
+    },
+    "mesh_health": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 8,
+      "through_holes": 0,
+      "extents_mm": [
+        100.0,
+        32.58,
+        62.62
+      ],
+      "volume_mm3": 102007.98
+    },
+    "build": {
+      "version": 1,
+      "backend": "openscad",
+      "source_format": "openscad",
+      "ok": true,
+      "units": "mm",
+      "axes": {
+        "x": "width",
+        "y": "depth",
+        "z": "height"
+      },
+      "views": [
+        "isometric",
+        "front",
+        "top",
+        "right"
+      ],
+      "measurements": {
+        "watertight": true,
+        "components": 1,
+        "triangles": 8,
+        "through_holes": 0,
+        "extents_mm": [
+          100.0,
+          32.58,
+          62.62
+        ],
+        "volume_mm3": 102007.98
+      },
+      "diagnostics": [],
+      "drawing_evaluated": false
+    },
+    "compile_log": "Geometries in cache: 3\nGeometry cache size in bytes: 1584\nCGAL Polyhedrons in cache: 0\nCGAL cache size in bytes: 0\nTotal rendering time: 0:00:00.000\n   Top level object is a 3D object:\n   Facets:          8",
+    "files": {
+      "scad": "attempt-01/model.scad",
+      "stl": "attempt-01/model.stl",
+      "views": {
+        "isometric": "attempt-01/view-isometric.png",
+        "front": "attempt-01/view-front.png",
+        "top": "attempt-01/view-top.png",
+        "right": "attempt-01/view-right.png"
+      }
+    },
+    "supervisor": {
+      "action": "repair_scad",
+      "problems": [
+        "Front view renders as a rectangle instead of the required triangle (view axis mismatch).",
+        "Top view renders as a triangle instead of the required rectangle (view axis mismatch).",
+        "Projection similarity scores are critically low (0.25/0.26) due to swapped axes."
+      ],
+      "preserve": [
+        "Overall dimensions (100x62.62x32.58).",
+        "Wedge geometry (right-angled triangle profile).",
+        "Extrusion strategy."
+      ],
+      "instructions": "Rotate the wedge geometry 90 degrees around the Z-axis. The triangular profile must lie in the YZ plane (vertical back at Y=0, sloping to Y=depth) and be extruded along the X-axis (width). This ensures the Front view (looking along Y) displays the triangle and the Top view (looking along Z) displays the rectangle."
+    }
+  },
+  {
+    "attempt": 2,
+    "action": "repair_scad",
+    "preflight": {
+      "passed": true,
+      "errors": [],
+      "warnings": [
+        "multiple top-level geometry expressions detected (2); ensure they intentionally form one connected design"
+      ],
+      "expected_subtractive_feature_groups": 0
+    },
+    "compiler_repairs": [
+      {
+        "repair": 1,
+        "preflight": {
+          "passed": true,
+          "errors": [],
+          "warnings": [
+            "multiple top-level geometry expressions detected (2); ensure they intentionally form one connected design"
+          ],
+          "expected_subtractive_feature_groups": 0
+        },
+        "compile_log": "ERROR: Parser error: syntax error in file model.scad, line 1\nCan't parse file '/work/model.scad'!",
+        "failed_scad": "compiler-repair-01.failed.scad"
+      }
+    ],
+    "uniform_scale": null,
+    "evaluation": {
+      "score": 85.9,
+      "valid_mesh": true,
+      "accepted": false,
+      "mandatory_gates": {
+        "compiled": true,
+        "topology": true,
+        "dimensions": true,
+        "shape_sanity": true,
+        "features": true,
+        "openings_through": true,
+        "projections": false,
+        "build_envelope": true
+      },
+      "scores": {
+        "topology": 40,
+        "dimensions": 20.0,
+        "features": 20,
+        "projections": 5.9
+      },
+      "projection_similarity": {
+        "front": 0.246,
+        "top": 0.542
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 0,
+          "source_aspect": 3.067,
+          "rendered_aspect": 1.6,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": []
+        },
+        "top": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 0,
+          "source_aspect": 1.603,
+          "rendered_aspect": 3.086,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": []
+        }
+      },
+      "demanded_openings": {
+        "total": 0,
+        "per_view": {
+          "front": 0,
+          "top": 0
+        },
+        "sheet_total": 0,
+        "registration_gap": 0
+      },
+      "failures": [
+        "CAD projections poorly match the drawing: front similarity 0.25 (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly."
+      ]
+    },
+    "mesh_health": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 8,
+      "through_holes": 0,
+      "extents_mm": [
+        100.0,
+        32.58,
+        62.62
+      ],
+      "volume_mm3": 102007.98
+    },
+    "build": {
+      "version": 1,
+      "backend": "openscad",
+      "source_format": "openscad",
+      "ok": true,
+      "units": "mm",
+      "axes": {
+        "x": "width",
+        "y": "depth",
+        "z": "height"
+      },
+      "views": [
+        "isometric",
+        "front",
+        "top",
+        "right"
+      ],
+      "measurements": {
+        "watertight": true,
+        "components": 1,
+        "triangles": 8,
+        "through_holes": 0,
+        "extents_mm": [
+          100.0,
+          32.58,
+          62.62
+        ],
+        "volume_mm3": 102007.98
+      },
+      "diagnostics": [],
+      "drawing_evaluated": false
+    },
+    "compile_log": "Geometries in cache: 4\nGeometry cache size in bytes: 2312\nCGAL Polyhedrons in cache: 0\nCGAL cache size in bytes: 0\nTotal rendering time: 0:00:00.000\n   Top level object is a 3D object:\n   Facets:          8",
+    "files": {
+      "scad": "attempt-02/model.scad",
+      "stl": "attempt-02/model.stl",
+      "views": {
+        "isometric": "attempt-02/view-isometric.png",
+        "front": "attempt-02/view-front.png",
+        "top": "attempt-02/view-top.png",
+        "right": "attempt-02/view-right.png"
+      }
+    },
+    "supervisor": {
+      "action": "repair_scad",
+      "problems": [
+        "Front view projection is a rectangle (1.6 aspect) instead of the required triangle (3.07 aspect).",
+        "Top view projection is a rectangle (3.09 aspect) instead of the required rectangle (1.60 aspect).",
+        "The wedge profile is extruded along the wrong axis (X instead of Y), causing the triangular face to appear on the Right view instead of the Front view."
+      ],
+      "preserve": [
+        "Overall dimensions (100x62.62x32.58).",
+        "Wedge geometry (triangular profile extruded to a block).",
+        "Base alignment at Z=0."
+      ],
+      "instructions": "Modify the `wedge` module to extrude the triangular profile along the Y-axis (depth) instead of the X-axis. Define the polygon in the XZ plane with vertices at (0,0), (width,0), and (0,height). Extrude this polygon by `depth` along the Y-axis. This will ensure the Front view (looking down Y) displays the triangle and the Top view (looking down Z) displays the correct rectangular footprint."
+    }
+  },
+  {
+    "attempt": 3,
+    "action": "repair_scad",
+    "preflight": {
+      "passed": true,
+      "errors": [],
+      "warnings": [
+        "multiple top-level geometry expressions detected (2); ensure they intentionally form one connected design"
+      ],
+      "expected_subtractive_feature_groups": 0
+    },
+    "compiler_repairs": [
+      {
+        "repair": 1,
+        "preflight": {
+          "passed": true,
+          "errors": [],
+          "warnings": [
+            "multiple top-level geometry expressions detected (2); ensure they intentionally form one connected design"
+          ],
+          "expected_subtractive_feature_groups": 0
+        },
+        "compile_log": "ERROR: Parser error: syntax error in file model.scad, line 1\nCan't parse file '/work/model.scad'!",
+        "failed_scad": "compiler-repair-01.failed.scad"
+      }
+    ],
+    "uniform_scale": null,
+    "evaluation": {
+      "score": 83.8,
+      "valid_mesh": true,
+      "accepted": false,
+      "mandatory_gates": {
+        "compiled": true,
+        "topology": true,
+        "dimensions": true,
+        "shape_sanity": true,
+        "features": true,
+        "openings_through": true,
+        "projections": false,
+        "build_envelope": true
+      },
+      "scores": {
+        "topology": 40,
+        "dimensions": 20.0,
+        "features": 20,
+        "projections": 3.8
+      },
+      "projection_similarity": {
+        "front": 0.246,
+        "top": 0.264
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 0,
+          "source_aspect": 3.067,
+          "rendered_aspect": 1.6,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": []
+        },
+        "top": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 0,
+          "source_aspect": 1.603,
+          "rendered_aspect": 3.064,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": []
+        }
+      },
+      "demanded_openings": {
+        "total": 0,
+        "per_view": {
+          "front": 0,
+          "top": 0
+        },
+        "sheet_total": 0,
+        "registration_gap": 0
+      },
+      "failures": [
+        "CAD projections poorly match the drawing: front similarity 0.25, top similarity 0.26 (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly."
+      ]
+    },
+    "mesh_health": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 8,
+      "through_holes": 0,
+      "extents_mm": [
+        100.0,
+        32.58,
+        62.62
+      ],
+      "volume_mm3": 102007.98
+    },
+    "build": {
+      "version": 1,
+      "backend": "openscad",
+      "source_format": "openscad",
+      "ok": true,
+      "units": "mm",
+      "axes": {
+        "x": "width",
+        "y": "depth",
+        "z": "height"
+      },
+      "views": [
+        "isometric",
+        "front",
+        "top",
+        "right"
+      ],
+      "measurements": {
+        "watertight": true,
+        "components": 1,
+        "triangles": 8,
+        "through_holes": 0,
+        "extents_mm": [
+          100.0,
+          32.58,
+          62.62
+        ],
+        "volume_mm3": 102007.98
+      },
+      "diagnostics": [],
+      "drawing_evaluated": false
+    },
+    "compile_log": "Geometries in cache: 3\nGeometry cache size in bytes: 1584\nCGAL Polyhedrons in cache: 0\nCGAL cache size in bytes: 0\nTotal rendering time: 0:00:00.000\n   Top level object is a 3D object:\n   Facets:          8",
+    "files": {
+      "scad": "attempt-03/model.scad",
+      "stl": "attempt-03/model.stl",
+      "views": {
+        "isometric": "attempt-03/view-isometric.png",
+        "front": "attempt-03/view-front.png",
+        "top": "attempt-03/view-top.png",
+        "right": "attempt-03/view-right.png"
+      }
+    }
+  }
+]

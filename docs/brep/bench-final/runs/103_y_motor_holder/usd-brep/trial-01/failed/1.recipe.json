@@ -1,0 +1,221 @@
+{
+  "version": 2,
+  "units": "mm",
+  "name": "motor_holder",
+  "parameters": {
+    "width": {
+      "value": 60,
+      "min": 30,
+      "max": 100,
+      "label": "Width"
+    },
+    "height": {
+      "value": 60,
+      "min": 30,
+      "max": 100,
+      "label": "Height"
+    },
+    "thickness": {
+      "value": 3,
+      "min": 1,
+      "max": 10,
+      "label": "Thickness"
+    },
+    "hole_dia": {
+      "value": 6,
+      "min": 2,
+      "max": 15,
+      "label": "Hole Diameter"
+    }
+  },
+  "operations": [
+    {
+      "id": "plate",
+      "kind": "extrude",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "plane": "xy",
+      "direction": 1,
+      "depth": "thickness",
+      "loops": [
+        [
+          {
+            "kind": "line",
+            "start": [
+              0,
+              0
+            ],
+            "end": [
+              "width",
+              0
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              "width",
+              0
+            ],
+            "end": [
+              "width",
+              "height"
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              "width",
+              "height"
+            ],
+            "end": [
+              "width*0.6",
+              "height"
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              "width*0.6",
+              "height"
+            ],
+            "end": [
+              "width*0.6",
+              "height*0.6"
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              "width*0.6",
+              "height*0.6"
+            ],
+            "end": [
+              0,
+              "height*0.6"
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              0,
+              "height*0.6"
+            ],
+            "end": [
+              0,
+              0
+            ]
+          }
+        ]
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "hole1",
+      "kind": "cylinder",
+      "origin": [
+        "width*0.8",
+        "-1",
+        "height*0.8"
+      ],
+      "radius": "hole_dia/2",
+      "height": "thickness+2",
+      "axis": "y",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "hole2",
+      "kind": "cylinder",
+      "origin": [
+        "width*0.2",
+        "-1",
+        "height*0.3"
+      ],
+      "radius": "hole_dia/2",
+      "height": "thickness+2",
+      "axis": "y",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "cut1",
+      "kind": "difference",
+      "left": "plate",
+      "right": "hole1",
+      "frame": "world",
+      "depends_on": [
+        "plate",
+        "hole1"
+      ],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "part",
+      "kind": "difference",
+      "left": "cut1",
+      "right": "hole2",
+      "frame": "world",
+      "depends_on": [
+        "cut1",
+        "hole2"
+      ],
+      "evidence": [
+        "e3"
+      ]
+    }
+  ],
+  "output": "part",
+  "frames": {
+    "world": {
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    }
+  },
+  "bodies": [
+    {
+      "id": "part",
+      "output": "part"
+    }
+  ],
+  "evidence": {
+    "observed": [],
+    "inferred": [],
+    "assumptions": [
+      {
+        "id": "e1",
+        "text": "Assumed plate thickness 3 mm based on clarification."
+      },
+      {
+        "id": "e2",
+        "text": "Assumed hole diameter 6 mm and position based on visual estimate."
+      },
+      {
+        "id": "e3",
+        "text": "Assumed hole diameter 6 mm and position based on visual estimate."
+      }
+    ],
+    "unresolved": []
+  },
+  "constraints": []
+}

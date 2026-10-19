@@ -1,0 +1,121 @@
+{
+  "object": "Greek vase",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "front",
+      "sheet_region": "center",
+      "what_it_constrains": "Defines the vertical profile (silhouette) of the vase, including the flared rim, neck, shoulder, body, and base."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "vase_body",
+      "name": "Vase Body",
+      "description": "A single watertight solid of revolution generated from the front silhouette."
+    }
+  ],
+  "features": [
+    {
+      "id": "rim",
+      "type": "flange",
+      "description": "Top flared opening of the vase."
+    },
+    {
+      "id": "neck",
+      "type": "cylinder",
+      "description": "Narrow section below the rim."
+    },
+    {
+      "id": "shoulder",
+      "type": "fillet",
+      "description": "Transition from neck to body."
+    },
+    {
+      "id": "body",
+      "type": "bulge",
+      "description": "Main bulbous section of the vase."
+    },
+    {
+      "id": "base",
+      "type": "foot",
+      "description": "Bottom support of the vase."
+    }
+  ],
+  "relations": [
+    {
+      "type": "revolved",
+      "target": "vase_body",
+      "source": "front_view_profile"
+    }
+  ],
+  "symmetry": {
+    "type": "rotational",
+    "axis": "Z",
+    "order": "infinite"
+  },
+  "repetitions": [],
+  "dimensions": {
+    "max_width": 107.53,
+    "max_height": 120.0,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "Wall thickness is not specified; assumed solid for watertightness unless hollowing is applied.",
+    "Exact curvature of the shoulder and body is inferred from the hand-drawn silhouette."
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "The object is interpreted as a vase of revolution. The front view provides the profile curve. The profile is mirrored across the vertical axis to create a closed 2D shape, which is then revolved 360 degrees around the vertical axis to create the 3D solid.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "revolve",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_2",
+        "operation": "revolve",
+        "profile_plane": "XZ",
+        "direction_axis": "Z",
+        "owner": "vase_body",
+        "parameters": {
+          "angle": 360,
+          "axis": "Z"
+        },
+        "source_views": [
+          "view_1"
+        ]
+      }
+    ],
+    "unresolved_constraints": [
+      "Wall thickness is not specified; assumed solid for watertightness unless hollowing is applied.",
+      "Exact curvature of the shoulder and body is inferred from the hand-drawn silhouette."
+    ]
+  },
+  "user_intent": {
+    "description": "Greek vase from a single silhouette",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "120"
+  },
+  "source_view_group_count": 1,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

@@ -1,0 +1,123 @@
+{
+  "object": "Wedge ramp (lofted incline block)",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "front",
+      "sheet_region": "bottom",
+      "what_it_constrains": "Defines the side profile (X-Z plane) of the wedge. Shows a right-angled triangle with a vertical back edge (height) and a sloped top surface (ramp)."
+    },
+    {
+      "direction": "top",
+      "sheet_region": "top",
+      "what_it_constrains": "Defines the planar footprint (X-Y plane) of the wedge. Shows a rectangle, indicating the object has a uniform width (depth) and straight sides."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "part_1",
+      "name": "Wedge Body",
+      "material": "generic_plastic",
+      "description": "A solid block with a rectangular base and a triangular side profile."
+    }
+  ],
+  "features": [
+    {
+      "id": "feat_1",
+      "name": "Base",
+      "type": "face",
+      "owner": "part_1",
+      "description": "Rectangular bottom face."
+    },
+    {
+      "id": "feat_2",
+      "name": "Ramp Surface",
+      "type": "face",
+      "owner": "part_1",
+      "description": "Inclined top surface sloping from the back (high) to the front (low)."
+    },
+    {
+      "id": "feat_3",
+      "name": "Back Wall",
+      "type": "face",
+      "owner": "part_1",
+      "description": "Vertical face at the highest point of the wedge."
+    }
+  ],
+  "relations": [
+    {
+      "type": "coincident",
+      "target_a": "feat_1",
+      "target_b": "feat_3",
+      "description": "Base and Back Wall meet at a 90-degree angle."
+    }
+  ],
+  "symmetry": "none",
+  "repetitions": [],
+  "dimensions": {
+    "max_dimension": 100.0,
+    "max_width": 100.0,
+    "max_depth": 62.62,
+    "max_height": 32.58,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "Exact height of the wedge is not explicitly dimensioned, inferred from the aspect ratio of the front view relative to the width.",
+    "Exact slope angle is inferred from the front view geometry."
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "The object is interpreted as a standard wedge. The front view provides the cross-section (triangle), and the top view provides the extrusion depth (rectangle). The 'lofted' description in the user prompt is interpreted here as a linear extrusion of the triangular profile, which is the standard geometry for a ramp.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "extrude",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_2",
+        "operation": "extrude",
+        "profile_plane": "XZ",
+        "direction_axis": "Y",
+        "owner": "part_1",
+        "parameters": {
+          "depth": 1.0,
+          "scale_factor": 100,
+          "note": "Extrude the triangular profile along the Y-axis to match the rectangular footprint seen in the top view."
+        },
+        "source_views": [
+          "view_1"
+        ]
+      }
+    ],
+    "unresolved_constraints": [
+      "Exact height of the wedge is not explicitly dimensioned, inferred from the aspect ratio of the front view relative to the width.",
+      "Exact slope angle is inferred from the front view geometry."
+    ]
+  },
+  "user_intent": {
+    "description": "Wedge ramp (lofted incline block)",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "100"
+  },
+  "source_view_group_count": 2,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

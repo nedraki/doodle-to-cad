@@ -1,0 +1,23 @@
+{
+  "drawing": "002_greek_vase_silhouette",
+  "backend": "usd-brep",
+  "trial": 2,
+  "submitted_at": "2026-10-19T15:18:33.025653+00:00",
+  "finished_at": "2026-10-19T15:20:04.363847+00:00",
+  "run_id": "d4a6a75c2498",
+  "wall_seconds": 91.3,
+  "job_status": "error",
+  "error": {
+    "message": "The drawing still leaves a required design detail unclear after clarification. No part was built.",
+    "code": "unresolved_design"
+  },
+  "questions_asked": 1,
+  "question_kinds": [
+    "opening_extent"
+  ],
+  "build": null,
+  "checks": {
+    "build_success": false,
+    "overall_pass": false
+  }
+}

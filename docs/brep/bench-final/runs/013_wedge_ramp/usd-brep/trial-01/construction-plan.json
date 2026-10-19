@@ -1,0 +1,29 @@
+{
+  "view_frame": "The drawing presents two views in third-angle projection. The top view (upper sheet) shows the XY plane (width X, depth Y). The front view (lower sheet) shows the XZ plane (width X, height Z). The Y-axis represents depth, perpendicular to the front view.",
+  "features": [
+    {
+      "id": "wedge_block",
+      "shape": "loft",
+      "section": "rectangular",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "ASSUMED: width_mm = 100.0",
+        "ASSUMED: depth_mm = 100.0",
+        "ASSUMED: height_mm = 50.0"
+      ],
+      "placement": "The solid is defined by a loft between two parallel XY profiles. The bottom profile (Z=0) is a rectangle of width 100.0 and depth 100.0. The top profile (Z=50.0) is a line segment (degenerate rectangle) of width 100.0 and depth 0.0, centered at X=50.0, Y=50.0. The loft connects the bottom rectangle to the top line, creating a wedge shape.",
+      "evidence": "The front view shows a right-angled triangle profile, indicating a wedge shape. The top view shows a rectangle, indicating constant width along the depth. The user notes 'Wedge ramp (lofted incline block)'."
+    }
+  ],
+  "connections": [
+    "The loft connects the bottom rectangular profile to the top line profile."
+  ],
+  "edit_rules": [
+    "Changing width_mm scales the X dimension of both profiles.",
+    "Changing depth_mm scales the Y dimension of the bottom profile.",
+    "Changing height_mm scales the Z dimension of the top profile."
+  ],
+  "unresolved": [
+    "The drawing lacks explicit dimensions. Width, depth, and height are assumed based on the maximum_dimension_mm constraint and typical proportions for a wedge."
+  ]
+}

@@ -1,0 +1,365 @@
+{
+  "version": 2,
+  "units": "mm",
+  "name": "nameplate",
+  "parameters": {
+    "width": {
+      "value": 140,
+      "min": 100,
+      "max": 200,
+      "label": "Plate Width",
+      "description": "Total width of the nameplate along X"
+    },
+    "height": {
+      "value": 30,
+      "min": 20,
+      "max": 50,
+      "label": "Plate Height",
+      "description": "Total height of the nameplate along Z"
+    },
+    "thickness": {
+      "value": 5,
+      "min": 1,
+      "max": 10,
+      "label": "Plate Thickness",
+      "description": "Thickness of the plate along Y"
+    },
+    "hole_diameter": {
+      "value": 6,
+      "min": 3,
+      "max": 10,
+      "label": "Vent Hole Diameter",
+      "description": "Diameter of the five central holes"
+    },
+    "hole_spacing": {
+      "value": 12,
+      "min": 8,
+      "max": 20,
+      "label": "Vent Hole Spacing",
+      "description": "Center-to-center distance between adjacent holes"
+    },
+    "slot_width": {
+      "value": 14,
+      "min": 10,
+      "max": 20,
+      "label": "End Slot Width",
+      "description": "Width of the rectangular slots at the ends"
+    },
+    "slot_height": {
+      "value": 10,
+      "min": 6,
+      "max": 15,
+      "label": "End Slot Height",
+      "description": "Height of the rectangular slots at the ends"
+    },
+    "slot_margin": {
+      "value": 10,
+      "min": 5,
+      "max": 20,
+      "label": "End Slot Margin",
+      "description": "Distance from plate edge to the outer edge of the end slots"
+    }
+  },
+  "operations": [
+    {
+      "id": "plate_base",
+      "kind": "box",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "size": [
+        "width",
+        "thickness",
+        "height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "hole_1",
+      "kind": "cylinder",
+      "origin": [
+        "width/2 - 2*hole_spacing",
+        "-1",
+        "height/2"
+      ],
+      "radius": "hole_diameter/2",
+      "height": "thickness + 2",
+      "axis": "y",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "hole_2",
+      "kind": "cylinder",
+      "origin": [
+        "width/2 - hole_spacing",
+        "-1",
+        "height/2"
+      ],
+      "radius": "hole_diameter/2",
+      "height": "thickness + 2",
+      "axis": "y",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "hole_3",
+      "kind": "cylinder",
+      "origin": [
+        "width/2",
+        "-1",
+        "height/2"
+      ],
+      "radius": "hole_diameter/2",
+      "height": "thickness + 2",
+      "axis": "y",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "hole_4",
+      "kind": "cylinder",
+      "origin": [
+        "width/2 + hole_spacing",
+        "-1",
+        "height/2"
+      ],
+      "radius": "hole_diameter/2",
+      "height": "thickness + 2",
+      "axis": "y",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "hole_5",
+      "kind": "cylinder",
+      "origin": [
+        "width/2 + 2*hole_spacing",
+        "-1",
+        "height/2"
+      ],
+      "radius": "hole_diameter/2",
+      "height": "thickness + 2",
+      "axis": "y",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "slot_left",
+      "kind": "box",
+      "origin": [
+        "slot_margin",
+        "-1",
+        "height/2 - slot_height/2"
+      ],
+      "size": [
+        "slot_width",
+        "thickness + 2",
+        "slot_height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "slot_right",
+      "kind": "box",
+      "origin": [
+        "width - slot_margin - slot_width",
+        "-1",
+        "height/2 - slot_height/2"
+      ],
+      "size": [
+        "slot_width",
+        "thickness + 2",
+        "slot_height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "cut_holes",
+      "kind": "difference",
+      "left": "plate_base",
+      "right": "hole_1",
+      "frame": "world",
+      "depends_on": [
+        "plate_base",
+        "hole_1"
+      ],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "cut_holes_2",
+      "kind": "difference",
+      "left": "cut_holes",
+      "right": "hole_2",
+      "frame": "world",
+      "depends_on": [
+        "cut_holes",
+        "hole_2"
+      ],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "cut_holes_3",
+      "kind": "difference",
+      "left": "cut_holes_2",
+      "right": "hole_3",
+      "frame": "world",
+      "depends_on": [
+        "cut_holes_2",
+        "hole_3"
+      ],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "cut_holes_4",
+      "kind": "difference",
+      "left": "cut_holes_3",
+      "right": "hole_4",
+      "frame": "world",
+      "depends_on": [
+        "cut_holes_3",
+        "hole_4"
+      ],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "cut_holes_5",
+      "kind": "difference",
+      "left": "cut_holes_4",
+      "right": "hole_5",
+      "frame": "world",
+      "depends_on": [
+        "cut_holes_4",
+        "hole_5"
+      ],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "cut_slot_left",
+      "kind": "difference",
+      "left": "cut_holes_5",
+      "right": "slot_left",
+      "frame": "world",
+      "depends_on": [
+        "cut_holes_5",
+        "slot_left"
+      ],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "final_part",
+      "kind": "difference",
+      "left": "cut_slot_left",
+      "right": "slot_right",
+      "frame": "world",
+      "depends_on": [
+        "cut_slot_left",
+        "slot_right"
+      ],
+      "evidence": [
+        "e3"
+      ]
+    }
+  ],
+  "output": "final_part",
+  "frames": {
+    "world": {
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    }
+  },
+  "bodies": [
+    {
+      "id": "part",
+      "output": "final_part"
+    }
+  ],
+  "evidence": {
+    "observed": [
+      {
+        "id": "e1",
+        "text": "Main rectangular plate body observed in front view."
+      },
+      {
+        "id": "e2",
+        "text": "Five circular holes arranged horizontally in the center."
+      },
+      {
+        "id": "e3",
+        "text": "Two rectangular slots located at the left and right ends."
+      }
+    ],
+    "inferred": [],
+    "assumptions": [
+      {
+        "id": "a1",
+        "text": "Plate thickness assumed to be 5mm."
+      },
+      {
+        "id": "a2",
+        "text": "Hole diameter assumed to be 6mm."
+      },
+      {
+        "id": "a3",
+        "text": "Hole spacing assumed to be 12mm."
+      },
+      {
+        "id": "a4",
+        "text": "Slot dimensions assumed to be 14mm x 10mm."
+      },
+      {
+        "id": "a5",
+        "text": "Slot margin from edge assumed to be 10mm."
+      }
+    ],
+    "unresolved": []
+  },
+  "constraints": []
+}

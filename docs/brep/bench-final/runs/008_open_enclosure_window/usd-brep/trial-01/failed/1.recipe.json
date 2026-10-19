@@ -1,0 +1,207 @@
+{
+  "version": 2,
+  "units": "mm",
+  "name": "open_top_enclosure",
+  "parameters": {
+    "width": {
+      "value": 100,
+      "min": 50,
+      "max": 200,
+      "label": "Width",
+      "description": "Overall width of the enclosure (X)"
+    },
+    "depth": {
+      "value": 50,
+      "min": 20,
+      "max": 100,
+      "label": "Depth",
+      "description": "Overall depth of the enclosure (Y)"
+    },
+    "height": {
+      "value": 40,
+      "min": 10,
+      "max": 100,
+      "label": "Height",
+      "description": "Overall height of the enclosure (Z)"
+    },
+    "wall_thickness": {
+      "value": 2,
+      "min": 1,
+      "max": 10,
+      "label": "Wall Thickness",
+      "description": "Thickness of the side walls"
+    },
+    "floor_thickness": {
+      "value": 2,
+      "min": 1,
+      "max": 10,
+      "label": "Floor Thickness",
+      "description": "Thickness of the bottom floor"
+    },
+    "window_width": {
+      "value": 60,
+      "min": 10,
+      "max": 100,
+      "label": "Window Width",
+      "description": "Width of the front window opening"
+    },
+    "window_height": {
+      "value": 20,
+      "min": 5,
+      "max": 40,
+      "label": "Window Height",
+      "description": "Height of the front window opening"
+    }
+  },
+  "operations": [
+    {
+      "id": "base_block",
+      "kind": "box",
+      "origin": [
+        "-width/2",
+        "-depth/2",
+        0
+      ],
+      "size": [
+        "width",
+        "depth",
+        "height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "cavity_block",
+      "kind": "box",
+      "origin": [
+        "-width/2 + wall_thickness",
+        "-depth/2 + wall_thickness",
+        "floor_thickness"
+      ],
+      "size": [
+        "width - 2*wall_thickness",
+        "depth - 2*wall_thickness",
+        "height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "hollow_body",
+      "kind": "difference",
+      "left": "base_block",
+      "right": "cavity_block",
+      "frame": "world",
+      "depends_on": [
+        "base_block",
+        "cavity_block"
+      ],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "window_cutter",
+      "kind": "box",
+      "origin": [
+        "-window_width/2",
+        "-depth/2 - 1",
+        "floor_thickness + (height - floor_thickness - window_height)/2"
+      ],
+      "size": [
+        "window_width",
+        "depth/2 + 1",
+        "window_height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e4"
+      ]
+    },
+    {
+      "id": "final_part",
+      "kind": "difference",
+      "left": "hollow_body",
+      "right": "window_cutter",
+      "frame": "world",
+      "depends_on": [
+        "hollow_body",
+        "window_cutter"
+      ],
+      "evidence": [
+        "e5"
+      ]
+    }
+  ],
+  "output": "final_part",
+  "frames": {
+    "world": {
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    }
+  },
+  "bodies": [
+    {
+      "id": "part",
+      "output": "final_part"
+    }
+  ],
+  "evidence": {
+    "observed": [
+      {
+        "id": "e1",
+        "text": "Outer rectangular profile in Top and Front views."
+      },
+      {
+        "id": "e2",
+        "text": "Inner rectangular profile in Top view indicating a cavity."
+      },
+      {
+        "id": "e3",
+        "text": "Difference between outer and inner blocks creates the hollow shell."
+      },
+      {
+        "id": "e4",
+        "text": "Inner rectangular profile in Front view indicating a window."
+      },
+      {
+        "id": "e5",
+        "text": "Difference between hollow body and window cutter creates the final part."
+      }
+    ],
+    "inferred": [],
+    "assumptions": [
+      {
+        "id": "a1",
+        "text": "Assumed overall dimensions: Width 100mm, Depth 50mm, Height 40mm."
+      },
+      {
+        "id": "a2",
+        "text": "Assumed wall thickness 2mm and floor thickness 2mm."
+      },
+      {
+        "id": "a3",
+        "text": "Assumed window dimensions: Width 60mm, Height 20mm."
+      },
+      {
+        "id": "a4",
+        "text": "Assumed window is centered horizontally and vertically within the front wall."
+      }
+    ],
+    "unresolved": []
+  },
+  "constraints": []
+}

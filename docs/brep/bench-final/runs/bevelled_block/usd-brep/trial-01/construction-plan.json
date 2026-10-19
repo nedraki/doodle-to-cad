@@ -1,0 +1,40 @@
+{
+  "view_frame": "The drawing uses third-angle projection with two primary views: TOP (XY) and FRONT (XZ). The world coordinate system is defined as X = width (horizontal in both views), Y = depth (vertical in TOP view), and Z = height (vertical in FRONT view). The origin (0,0,0) is located at the bottom-front-left corner of the block.",
+  "features": [
+    {
+      "id": "block_base",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "60",
+        "40",
+        "20"
+      ],
+      "placement": "Centered at (30, 20, 10). Extends from X=0 to 60, Y=0 to 40, Z=0 to 20.",
+      "evidence": "Outer dimensions 60 x 40 x 20 are explicitly stated in the notes and shown in the TOP and FRONT views."
+    },
+    {
+      "id": "chamfer_top_edges",
+      "shape": "chamfer",
+      "section": "flat_bevel",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "2 mm x 45 degrees"
+      ],
+      "placement": "Applied to the four top edges of the block (intersection of top face Z=20 with side faces X=0, X=60, Y=0, Y=40).",
+      "evidence": "The notes state 'All edges: 2 mm x 45 degrees' and 'block with chamfered top edges'. The TOP view shows chamfered corners (45-degree cuts at the XY corners), and the FRONT view shows chamfered top corners (45-degree cuts at the XZ top corners). This confirms the top edges are chamfered."
+    }
+  ],
+  "connections": [
+    "The chamfer_top_edges feature modifies the top edges of the block_base feature."
+  ],
+  "edit_rules": [
+    "If the block height (Z) is changed, the chamfer_top_edges must remain applied to the new top edges.",
+    "If the chamfer size is changed, the top face dimensions and the vertical face heights must adjust accordingly to maintain the 45-degree angle.",
+    "The outer envelope dimensions (60x40x20) are fixed unless explicitly edited; chamfering removes material from these bounds."
+  ],
+  "unresolved": [
+    "The note 'All edges: 2 mm x 45 degrees' conflicts with the visual evidence which shows chamfers only on the top edges (and the vertical edges implied by the top chamfers). The bottom edges appear sharp in the FRONT view. The plan assumes only the top edges are chamfered as per the user note 'block with chamfered top edges' and the visual representation."
+  ]
+}

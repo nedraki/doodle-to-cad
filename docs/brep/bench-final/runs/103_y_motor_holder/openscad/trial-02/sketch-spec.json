@@ -1,0 +1,150 @@
+{
+  "object": "Y motor holder",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "front",
+      "sheet_region": "bottom-left",
+      "constrains": "Side profile (X-Z plane). Defines the object's height, depth, and the angled cut on the top surface."
+    },
+    {
+      "direction": "top",
+      "sheet_region": "top-center",
+      "constrains": "Plan view (X-Y plane). Defines the L-shaped footprint, the curved cutout on the left, and the positions of the mounting holes."
+    },
+    {
+      "direction": "right",
+      "sheet_region": "bottom-right",
+      "constrains": "End view (Y-Z plane). Defines the width (Y-axis) and the vertical arrangement of the mounting holes."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "part_1",
+      "name": "Motor Holder Body",
+      "description": "A single solid block with an L-shaped footprint, a curved cutout on one side, and an angled top surface."
+    }
+  ],
+  "features": [
+    {
+      "id": "feat_1",
+      "name": "Angled Top Surface",
+      "type": "planar_face",
+      "description": "The top surface slopes downwards from the back (high) to the front (low), visible in the front view."
+    },
+    {
+      "id": "feat_2",
+      "name": "Curved Cutout",
+      "type": "subtractive_feature",
+      "description": "A large curved indentation on the left side of the top view, likely for motor clearance."
+    },
+    {
+      "id": "feat_3",
+      "name": "Mounting Holes",
+      "type": "through_hole",
+      "description": "Two circular holes visible in the top view (one in the curved section, one in the upper right) and corresponding holes in the right view."
+    }
+  ],
+  "relations": [
+    {
+      "type": "alignment",
+      "elements": [
+        "feat_3 (top view hole 1)",
+        "feat_3 (right view hole 1)"
+      ],
+      "description": "The holes align vertically between the top and right views."
+    },
+    {
+      "type": "alignment",
+      "elements": [
+        "feat_3 (top view hole 2)",
+        "feat_3 (right view hole 2)"
+      ],
+      "description": "The holes align vertically between the top and right views."
+    }
+  ],
+  "symmetry": "none",
+  "repetitions": [
+    {
+      "feature_id": "feat_3",
+      "count": 2,
+      "description": "Two mounting holes are present."
+    }
+  ],
+  "dimensions": {
+    "max_width": 55.55,
+    "max_depth": 60.0,
+    "max_height": 27.5,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "Exact thickness of the base plate is inferred from the right view height.",
+    "Exact radius of the curved cutout is estimated from the top view."
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "The object is a Y-axis motor mount. It features a base plate with an angled top face. The top view shows an L-shape with a significant curved cutout on the left side. Two mounting holes are visible in the top view and correspond to the holes seen in the right view.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "extrude",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_1",
+        "operation": "extrude",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "owner": "part_1",
+        "parameters": {
+          "profile": "L-shaped outline with curved cutout from top view",
+          "height": "derived from front view height"
+        },
+        "source_views": [
+          "view_1",
+          "view_3"
+        ]
+      },
+      {
+        "id": "feat_3",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Two circular holes visible in the top view (one in the curved section, one in the upper right) and corresponding holes in the right view."
+        },
+        "source_views": []
+      }
+    ],
+    "unresolved_constraints": [
+      "Exact hole diameters",
+      "Exact fillet radii on corners"
+    ]
+  },
+  "user_intent": {
+    "description": "y motor holder",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "60.0"
+  },
+  "source_view_group_count": 3,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

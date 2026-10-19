@@ -1,0 +1,115 @@
+{
+  "drawing": "solid_transition",
+  "backend": "usd-brep",
+  "trial": 1,
+  "submitted_at": "2026-10-19T17:21:32.307637+00:00",
+  "finished_at": "2026-10-19T17:23:14.720381+00:00",
+  "run_id": "ab1cfdf614c0",
+  "wall_seconds": 102.4,
+  "job_status": "done",
+  "error": null,
+  "questions_asked": 0,
+  "question_kinds": [],
+  "build": {
+    "watertight": true,
+    "components": 1,
+    "genus": 0,
+    "extents_mm": [
+      60.0,
+      40.0,
+      60.0
+    ],
+    "volume_mm3": 89004.4,
+    "sha256": "dec2c78d8c1ebca57f3c7e6659407e1dc24bc89008e7050eb92414c49ffcf147",
+    "bytes": 460084
+  },
+  "checks": {
+    "build_success": true,
+    "extents_pass": true,
+    "genus_pass": true,
+    "volume_pass": false,
+    "fidelity_pass": false,
+    "overall_pass": false,
+    "not_applicable": []
+  },
+  "fidelity": {
+    "scores": {
+      "front": 0.544,
+      "top": 0.193,
+      "right": 0.668
+    },
+    "pass": false,
+    "reason": null,
+    "topology": {
+      "front": {
+        "expected": 0,
+        "actual": 0,
+        "position_fidelity": null
+      },
+      "top": {
+        "expected": 0,
+        "actual": 0,
+        "position_fidelity": null
+      },
+      "right": {
+        "expected": 0,
+        "actual": 0,
+        "position_fidelity": null
+      }
+    }
+  },
+  "product": {
+    "success": false,
+    "accepted": false,
+    "status": "failed",
+    "score": null,
+    "projection_status": "failed",
+    "geometry_status": "passed",
+    "failures": [
+      "top projection",
+      "Detailed drawing features and view assignments require review."
+    ]
+  },
+  "attempts": {
+    "count": 1,
+    "recovered": false,
+    "corrections": 1
+  },
+  "unsupported": {
+    "flag": false,
+    "code": null
+  },
+  "brep_only": {
+    "operations": [
+      "loft"
+    ],
+    "loft": true,
+    "shell": false,
+    "arc_pipe": false,
+    "sweep": false,
+    "extrude": false,
+    "parameter_names": [
+      "base_depth",
+      "base_width",
+      "height",
+      "top_diameter"
+    ]
+  },
+  "edit": {
+    "available": true,
+    "ok": true,
+    "seconds": 3.16,
+    "param": "base_width",
+    "old": 60,
+    "new": 72.0,
+    "message": null
+  },
+  "targeted": {
+    "available": false,
+    "ok": false,
+    "seconds": null,
+    "operation": null,
+    "value": null,
+    "message": "no probe value produced a valid targeted plan"
+  }
+}
