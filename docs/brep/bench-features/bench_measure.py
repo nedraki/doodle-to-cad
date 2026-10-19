@@ -181,50 +181,58 @@ def verify_fillet(stl, width, depth, height, radius, *, slice_z=None, tol=0.1):
     return {"ok": all(c["status"] == "passed" for c in checks.values()), "checks": checks}
 
 
-def verify_chamfer(stl, width, depth, height, radius, *, tol=0.1):
-    """45-degree chamfer via slice width reduction equal to the radius."""
+def verify_chamfer(stl, width, depth, height, radius, *, slope_tol=0.06, leg_tol=0.05, area_rel_tol=0.01):
+    """Chamfer measurement for the usd_brep `chamfer` operation.
+
+    Measured kernel semantics (calibrated on the exported mesh, not assumed):
+    the operation bevels the horizontal (top and bottom) edges only, at 45
+    degrees, and the `radius` argument is the hypotenuse of the chamfer
+    triangle: the horizontal leg equals radius / sqrt(2). Vertical edges are
+    left untouched. The checker fits width-vs-height inside the taper band and
+    asserts the slope (45 degrees) and the fitted leg, so a build with a
+    different radius fails on the fitted leg.
+    """
     mesh = load(stl)
     lo, hi = mesh.bounds
     checks = {}
-    # Width reduction along the top edge band: at z = H - d the footprint is
-    # inset by d on every straight side, so x-width = W - 2d (45 degrees).
-    for d in (radius / 4, radius / 2, 3 * radius / 4):
-        z = hi[2] - d
-        xb = march_transitions(mesh, (lo[0] - 2, hi[1] / 2, z), (1, 0, 0), 0.0, width + 4)
-        expected = width - 2 * d
-        got = round(xb[-1] - xb[0], 4) if len(xb) == 2 else None
-        ok = got is not None and abs(got - expected) <= tol
-        checks[f"top slice width at inset {round(d, 3)} mm"] = {
-            "status": "passed" if ok else "failed", "measured_width_mm": got,
-            "expected_width_mm": round(expected, 4), "tolerance_mm": tol, "z_mm": round(z, 4)}
-        yb = march_transitions(mesh, (hi[0] / 2, lo[1] - 2, z), (0, 1, 0), 0.0, depth + 4)
-        expected_y = depth - 2 * d
-        got_y = round(yb[-1] - yb[0], 4) if len(yb) == 2 else None
-        ok_y = got_y is not None and abs(got_y - expected_y) <= tol
-        checks[f"top slice depth at inset {round(d, 3)} mm"] = {
-            "status": "passed" if ok_y else "failed", "measured_depth_mm": got_y,
-            "expected_depth_mm": round(expected_y, 4), "tolerance_mm": tol}
-    # Mid height: vertical edges chamfered -> rectangle with 45-degree corner cuts.
-    z_mid = height / 2
-    area = footprint_area(mesh, z_mid, spacing=0.25)
-    expected_area = width * depth - 2 * radius * radius
-    ok = abs(area - expected_area) <= max(2.0, 0.005 * expected_area)
-    checks["mid slice area (four 45-degree corner cuts)"] = {
+    leg = radius / math.sqrt(2.0)
+    for side, z_at in (("top", lambda zb: hi[2] - zb), ("bottom", lambda zb: lo[2] + zb)):
+        samples = []
+        for frac in (0.05, 0.35, 0.70, 0.94):
+            zb = leg * frac
+            z = z_at(zb)
+            xb = march_transitions(mesh, (lo[0] - 2, (lo[1] + hi[1]) / 2, z), (1, 0, 0), 0.0, width + 4)
+            yb = march_transitions(mesh, ((lo[0] + hi[0]) / 2, lo[1] - 2, z), (0, 1, 0), 0.0, depth + 4)
+            w = xb[-1] - xb[0] if len(xb) == 2 else None
+            d = yb[-1] - yb[0] if len(yb) == 2 else None
+            samples.append((zb, w, d))
+        ok_samples = all(w is not None and d is not None for _, w, d in samples)
+        if not ok_samples:
+            checks[f"{side} taper sampled"] = {"status": "failed", "samples": samples}
+            continue
+        zs = np.array([s[0] for s in samples])
+        ws = np.array([s[1] for s in samples])
+        ds = np.array([s[2] for s in samples])
+        bx, ax = np.polyfit(zs, ws, 1)
+        by, ay = np.polyfit(zs, ds, 1)
+        fit_leg_x = (width - ax) / bx
+        fit_leg_y = (depth - ay) / by
+        checks[f"{side} taper is 45 degrees"] = {
+            "status": "passed" if abs(bx - 2.0) <= slope_tol and abs(by - 2.0) <= slope_tol else "failed",
+            "measured_slope_x": round(float(bx), 4), "measured_slope_y": round(float(by), 4),
+            "expected_slope": 2.0, "tolerance": slope_tol}
+        checks[f"{side} fitted leg equals radius/sqrt(2)"] = {
+            "status": "passed" if abs(fit_leg_x - leg) <= leg_tol and abs(fit_leg_y - leg) <= leg_tol else "failed",
+            "measured_leg_x_mm": round(float(fit_leg_x), 4), "measured_leg_y_mm": round(float(fit_leg_y), 4),
+            "expected_leg_mm": round(leg, 4), "tolerance_mm": leg_tol,
+            "radius_argument_mm": radius, "samples": [(round(z, 3), round(w, 3), round(d, 3)) for z, w, d in samples]}
+    # Vertical edges untouched: mid-height footprint is the full rectangle.
+    area = footprint_area(mesh, (lo[2] + hi[2]) / 2, spacing=0.25)
+    expected_area = width * depth
+    ok = abs(area - expected_area) <= area_rel_tol * expected_area
+    checks["mid footprint keeps vertical edges (full rectangle)"] = {
         "status": "passed" if ok else "failed", "measured_area_mm2": round(area, 3),
-        "expected_area_mm2": round(expected_area, 3), "tolerance_mm2": round(max(2.0, 0.005 * expected_area), 3)}
-    p_out = inside(mesh, [(width - radius / 3, depth - radius / 3, z_mid)])[0]
-    p_in = inside(mesh, [(width - radius * 1.5, depth - radius * 1.5, z_mid)])[0]
-    checks["corner cut present at mid height"] = {
-        "status": "passed" if (not p_out and p_in) else "failed",
-        "corner_point_outside": (not p_out), "inset_point_inside": p_in}
-    # Bottom mirror: chamfer also runs along the bottom edges (all-edges op).
-    zb = march_transitions(mesh, (lo[0] - 2, hi[1] / 2, lo[2] + radius / 2), (1, 0, 0), 0.0, width + 4)
-    expected_b = width - radius
-    ok_b = len(zb) == 2 and abs((zb[-1] - zb[0]) - expected_b) <= tol
-    checks["bottom slice width at inset r/2"] = {
-        "status": "passed" if ok_b else "failed",
-        "measured_width_mm": round(zb[-1] - zb[0], 4) if len(zb) == 2 else None,
-        "expected_width_mm": expected_b, "tolerance_mm": tol}
+        "expected_area_mm2": expected_area, "tolerance_mm2": round(area_rel_tol * expected_area, 3)}
     return {"ok": all(c["status"] == "passed" for c in checks.values()), "checks": checks}
 
 

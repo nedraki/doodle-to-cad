@@ -1,0 +1,120 @@
+{
+  "job": "chamfer_planted_wrong_radius",
+  "category": "planted-error",
+  "build_ok": true,
+  "expected_fail": true,
+  "verdict": {
+    "ok": false,
+    "checks": {
+      "top taper is 45 degrees": {
+        "status": "failed",
+        "measured_slope_x": 0.5689,
+        "measured_slope_y": 0.5689,
+        "expected_slope": 2.0,
+        "tolerance": 0.06
+      },
+      "top fitted leg equals radius/sqrt(2)": {
+        "status": "failed",
+        "measured_leg_x_mm": 1.6101,
+        "measured_leg_y_mm": 1.6101,
+        "expected_leg_mm": 2.1213,
+        "tolerance_mm": 0.05,
+        "radius_argument_mm": 3,
+        "samples": [
+          [
+            0.106,
+            48.798,
+            38.798
+          ],
+          [
+            0.742,
+            50.0,
+            40.0
+          ],
+          [
+            1.485,
+            50.0,
+            40.0
+          ],
+          [
+            1.994,
+            50.0,
+            40.0
+          ]
+        ]
+      },
+      "bottom taper is 45 degrees": {
+        "status": "failed",
+        "measured_slope_x": 0.5689,
+        "measured_slope_y": 0.5689,
+        "expected_slope": 2.0,
+        "tolerance": 0.06
+      },
+      "bottom fitted leg equals radius/sqrt(2)": {
+        "status": "failed",
+        "measured_leg_x_mm": 1.6101,
+        "measured_leg_y_mm": 1.6101,
+        "expected_leg_mm": 2.1213,
+        "tolerance_mm": 0.05,
+        "radius_argument_mm": 3,
+        "samples": [
+          [
+            0.106,
+            48.798,
+            38.798
+          ],
+          [
+            0.742,
+            50.0,
+            40.0
+          ],
+          [
+            1.485,
+            50.0,
+            40.0
+          ],
+          [
+            1.994,
+            50.0,
+            40.0
+          ]
+        ]
+      },
+      "mid footprint keeps vertical edges (full rectangle)": {
+        "status": "passed",
+        "measured_area_mm2": 1999.25,
+        "expected_area_mm2": 2000,
+        "tolerance_mm2": 20.0
+      }
+    }
+  },
+  "mesh_summary": {
+    "watertight": true,
+    "winding_consistent": true,
+    "volume_mm3": 39892.121,
+    "extents_mm": [
+      50.0,
+      40.0,
+      20.0
+    ],
+    "bounds_mm": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        50.0,
+        40.0,
+        20.0
+      ]
+    ],
+    "triangles": 60,
+    "euler_number": 2,
+    "components": 1
+  },
+  "face_count_change": null,
+  "note": "Built with chamfer_radius=1.0 mm, verified against the nominal 3 mm fixture expectation. The checker must fail; a checker that passes here is worthless.",
+  "captured_utc": "2026-10-19T05:18:31Z",
+  "status": "passed"
+}
