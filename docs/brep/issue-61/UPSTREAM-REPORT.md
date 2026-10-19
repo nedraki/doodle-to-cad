@@ -55,9 +55,21 @@ builds wheels with radial spokes (8 cylinders + hub unions) without this crash
 `build_contract.classify_kernel_crash` maps the exact signature to failure code
 `kernel_unavailable` with advice "Retry with the OpenSCAD backend" plus the fixture
 hash; any other `ModuleNotFoundError` keeps its generic code (planted-error tests in
-`tests/test_brep_kernel_containment.py`, 10 cases).
+`tests/test_brep_kernel_containment.py`, 12 cases).
+
+## Second defect (message-level evidence only)
+Two independent generated recipes in our frozen comparison failed on spoke
+unions with the worker message `"<op>: kernel produced an invalid solid"`
+(wheel trials 04/05 of an 8-spoke style wheel; trial-03 failed connectivity
+with `components=5`). The harness stored the error rows but not the failing
+recipes, and 8 hand-built mutations of our known-good wheel fixture did not
+reproduce the message (log in this dossier). We report it as observed kernel
+behaviour, not a reproducer: if the validity check in your boolean path is
+expected under rotated-union spoke patterns, we would like to know what makes
+the solid "invalid".
 
 ## Asks
 1. Ship `_omni_solid` (or document the optional kernel extra) in the 1.0.0 wheel.
 2. Raise a typed kernel error instead of a bare `ModuleNotFoundError`.
 3. Confirm whether the 180° sweep class is supported at all in 1.0.0.
+4. Explain the `kernel produced an invalid solid` validity rejection (see above).

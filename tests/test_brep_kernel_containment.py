@@ -109,8 +109,21 @@ def test_classifier_fires_only_on_the_real_signature():
     assert REPRODUCER_SCRIPT in hit[1]
     assert reproducer_hash() in hit[1]
     for unrelated in ["No module named 'numpy'", "No module named 'usd_brep'",
-                      "kernel produced an invalid solid", "", "RuntimeError: exploded"]:
+                      "kernel produced an invalid geometry", "", "RuntimeError: exploded"]:
         assert classify_kernel_crash(unrelated) is None, unrelated
+
+
+def test_second_kernel_signature_maps_without_reproducer_claim():
+    code, advice = classify_kernel_crash("wheel_s0: kernel produced an invalid solid")
+    assert code == "kernel_unavailable"
+    assert KERNEL_CRASH_ADVICE in advice
+    assert "Minimal reproducer" not in advice  # no reproducer exists for this one yet
+
+
+def test_second_signature_requires_exact_message():
+    assert classify_kernel_crash("kernel produced an invalid geometry") is None
+    assert classify_kernel_crash("invalid solid") is None
+    assert classify_kernel_crash("invalid solid produced by kernel") is None
 
 
 def test_reproducer_hash_matches_canonical_fixture():

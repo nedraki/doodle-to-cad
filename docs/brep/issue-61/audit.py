@@ -62,13 +62,23 @@ t = subprocess.run([sys.executable, "-m", "pytest", "tests/test_brep_kernel_cont
                    cwd=REPO, capture_output=True, text=True,
                    env={"PYTHONPATH": str(REPO), "PATH": "/usr/bin:/bin",
                         "DOODLE_BREP_PYTHON": str(REPO / "workers/brep/.venv/bin/python")})
-check("containment tests pass (10, incl. planted errors)", "10 passed" in t.stdout, t.stdout[-90:])
+check("containment tests pass (12, incl. planted errors)", "12 passed" in t.stdout, t.stdout[-90:])
 suite = (HERE / "logs/full-suite.txt").read_text()
-check("full-suite log records >= 261 passed", "261 passed" in suite or "262 passed" in suite)
+check("full-suite log records >= 263 passed", "263 passed" in suite)
 frozen = [p for p in Path(REPO, "docs/brep/task-17-comparison/runs").rglob("row.json")
           if "_omni_solid" in p.read_text()]
 check("frozen #34 crash rows are exactly the 3 curved_handle trials",
       len(frozen) == 3 and all("curved_handle" in str(p) for p in frozen), f"{len(frozen)} rows")
+invalid = [p for p in Path(REPO, "docs/brep/task-17-comparison/runs").rglob("row.json")
+           if "kernel produced an invalid solid" in p.read_text()]
+check("frozen #34 invalid-solid rows are exactly the 2 wheel trials (defect 2, no reproducer)",
+      len(invalid) == 2 and all("/wheel/" in str(p).replace("\\", "/") for p in invalid),
+      f"{len(invalid)} rows")
+hit2 = classify_kernel_crash("wheel_s0: kernel produced an invalid solid")
+check("defect 2 maps to kernel_unavailable without a reproducer claim",
+      hit2 is not None and hit2[0] == "kernel_unavailable" and "Minimal reproducer" not in hit2[1])
+check("negative probe evidence recorded (hand-built candidates did not reproduce defect 2)",
+      (Path(REPO, "docs/brep/issue-61/logs/invalid-solid-probe.log")).is_file())
 verify = subprocess.run(["sha256sum", "-c", "SHA256SUMS"], cwd=HERE, capture_output=True, text=True)
 check("SHA256SUMS verifies", verify.returncode == 0, f"{verify.stdout.count('OK')} files OK")
 

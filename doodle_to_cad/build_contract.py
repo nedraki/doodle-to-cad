@@ -21,6 +21,7 @@ FailureCode = Literal["invalid_input", "backend_unavailable", "build_failed", "t
 # switch backends, never to retry. Match only this exact message: a generic
 # ModuleNotFoundError must stay a generic build_failed.
 KERNEL_CRASH_SIGNATURE = "No module named '_omni_solid'"
+INVALID_SOLID_SIGNATURE = "kernel produced an invalid solid"
 KERNEL_CRASH_ADVICE = "Retry with the OpenSCAD backend."
 REPRODUCER_SCRIPT = "scripts/repro_omni_solid.py"
 REPRODUCER_FIXTURE = Path(__file__).resolve().parents[1] / "scripts" / "fixtures" / "omni_solid_minimal.recipe.json"
@@ -46,6 +47,12 @@ def classify_kernel_crash(message: str) -> tuple[FailureCode, str] | None:
                 "The kernel's private '_omni_solid' module is missing from the installed wheel "
                 f"for this body class (known packaging defect, issue #61). {KERNEL_CRASH_ADVICE} "
                 f"Minimal reproducer: {REPRODUCER_SCRIPT} (fixture sha256 {reproducer_hash()}).")
+    if isinstance(message, str) and INVALID_SOLID_SIGNATURE in message:
+        return ("kernel_unavailable",
+                f"usd_brep 1.0.0 kernel returned a non-manifold solid: {message}. "
+                "Observed twice in the frozen comparison on spoke operations "
+                "(docs/brep/task-17-comparison wheel trial-04/05); the triggering recipe was "
+                f"not retained, so no minimal reproducer exists yet (issue #61). {KERNEL_CRASH_ADVICE}")
     return None
 
 # X=width, Y=depth, Z=height; all distances are millimetres.
