@@ -84,8 +84,9 @@ view with 2 enclosed circles + an **open** hook elevation carrying 2 unenclosed 
 hook-view `_old_crop_count == 0`) while the fixed rules count 4 and 2; per-view
 assignment 2/2/0; sum == sheet; demanded-openings guard escalation, no-escalation at
 gap ≤ 1, per-view features gate, and the 2-of-4-bores rejection through
-`evaluate_candidate`. Full suite: **304 passed, 2 warnings** (baseline at base commit:
-292 passed, 2 warnings) — `logs/suite.txt`.
+`evaluate_candidate`. Full suite: **311 passed, 2 warnings** on the branch after
+merging in #68 (baseline at branch base 24946c7: 292 passed, 2 warnings;
+pre-merge head was 304 = 292 + 12 new) — `logs/suite.txt`.
 
 ## Reproduce
 

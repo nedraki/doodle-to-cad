@@ -1,8 +1,8 @@
 ........................................................................ [ 23%]
-........................................................................ [ 47%]
-........................................................................ [ 71%]
-........................................................................ [ 94%]
-................                                                         [100%]
+........................................................................ [ 46%]
+........................................................................ [ 69%]
+........................................................................ [ 92%]
+.......................                                                  [100%]
 =============================== warnings summary ===============================
 .venv/lib/python3.11/site-packages/fastapi/testclient.py:1
   /tmp/doodle-brep-67/.venv/lib/python3.11/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
@@ -13,4 +13,4 @@
     _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-304 passed, 2 warnings in 71.60s (0:01:11)
+311 passed, 2 warnings in 55.93s

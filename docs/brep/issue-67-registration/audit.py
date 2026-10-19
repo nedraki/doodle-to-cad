@@ -136,8 +136,8 @@ def main() -> int:
                            capture_output=True, text=True, cwd=ROOT,
                            env={**__import__("os").environ, "PYTHONPATH": ".",
                                 "DOODLE_BREP_PYTHON": str(ROOT / "workers/brep/.venv/bin/python")})
-    check("full suite: 304 passed, 2 warnings",
-          "304 passed" in suite.stdout and "2 warnings" in suite.stdout,
+    check("full suite: 311 passed, 2 warnings",
+          "311 passed" in suite.stdout and "2 warnings" in suite.stdout,
           suite.stdout.splitlines()[-1] if suite.stdout else suite.stderr[-200:])
 
     # ---- 7. environment -------------------------------------------------------
