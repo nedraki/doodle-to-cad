@@ -1,0 +1,166 @@
+{
+  "object": "Box with open top and rectangular window",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "top",
+      "sheet_region": "upper",
+      "constrains": "Outer footprint (X, Y) and wall thickness (uniform walls)"
+    },
+    {
+      "direction": "front",
+      "sheet_region": "lower",
+      "constrains": "Front face geometry (X, Z), window position and size, and wall height"
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "main_body",
+      "description": "Rectangular box shell with open top and front cutout",
+      "material": "generic_plastic"
+    }
+  ],
+  "features": [
+    {
+      "id": "outer_shell",
+      "type": "shell",
+      "description": "Rectangular box with uniform wall thickness"
+    },
+    {
+      "id": "open_top",
+      "type": "void",
+      "description": "Top face is open (no lid)"
+    },
+    {
+      "id": "front_window",
+      "type": "through_cutout",
+      "description": "Rectangular window through the front wall"
+    }
+  ],
+  "relations": [
+    {
+      "type": "contains",
+      "parent": "outer_shell",
+      "child": "front_window"
+    },
+    {
+      "type": "contains",
+      "parent": "outer_shell",
+      "child": "open_top"
+    }
+  ],
+  "symmetry": {
+    "type": "bilateral",
+    "axis": "X",
+    "description": "The window is centered horizontally on the front face."
+  },
+  "repetitions": [],
+  "dimensions": {
+    "max_dimension": 120.0,
+    "max_width": 120.0,
+    "max_depth": 81.68,
+    "max_height": 43.96,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "Exact wall thickness value is not specified numerically, inferred from visual stroke width relative to overall size.",
+    "Exact height (Z) and depth (Y) are inferred from aspect ratios of the views relative to the max width."
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "Constructed as a boolean subtraction: Outer box minus inner cavity (open top) minus window cutout (front).",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "multi_face_union",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op1",
+        "operation": "extrude",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "owner": "main_body",
+        "parameters": {
+          "profile": "outer_rectangle",
+          "height": "inferred_from_front_view",
+          "source_views": [
+            "view_1"
+          ]
+        },
+        "source_views": []
+      },
+      {
+        "id": "op2",
+        "operation": "extrude",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "owner": "main_body",
+        "parameters": {
+          "profile": "inner_rectangle",
+          "height": "inferred_from_front_view",
+          "offset": "wall_thickness",
+          "source_views": [
+            "view_1"
+          ]
+        },
+        "source_views": []
+      },
+      {
+        "id": "op3",
+        "operation": "extrude",
+        "profile_plane": "XZ",
+        "direction_axis": "Y",
+        "owner": "main_body",
+        "parameters": {
+          "profile": "window_rectangle",
+          "depth": "wall_thickness",
+          "source_views": [
+            "view_2"
+          ]
+        },
+        "source_views": []
+      },
+      {
+        "id": "front_window",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Rectangular window through the front wall"
+        },
+        "source_views": []
+      }
+    ],
+    "unresolved_constraints": [
+      "Exact wall thickness value",
+      "Exact box height and depth"
+    ]
+  },
+  "user_intent": {
+    "description": "Box with an open top and a rectangular window through the front wall. Uniform walls.",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "120"
+  },
+  "source_view_group_count": 2,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

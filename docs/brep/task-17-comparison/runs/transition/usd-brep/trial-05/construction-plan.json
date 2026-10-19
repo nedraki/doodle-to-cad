@@ -1,0 +1,51 @@
+{
+  "view_frame": "The drawing uses third-angle projection with three views: BOTTOM (XY), TOP (XY), and FRONT (XZ). The world coordinate system is defined with X as width (left-right), Y as depth (front-back), and Z as height (up-down). The BOTTOM view shows the rectangular base at Z=0, the TOP view shows the circular top at Z=60, and the FRONT view shows the trapezoidal profile in the XZ plane.",
+  "features": [
+    {
+      "id": "rect_base",
+      "shape": "rectangle",
+      "section": "XY plane",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "60 mm",
+        "40 mm"
+      ],
+      "placement": "Centered at (0,0) in XY plane at Z=0. Extends from X=-30 to X=30 and Y=-20 to Y=20.",
+      "evidence": "BOTTOM (XY) view shows a rectangle labeled '60 x 40 mm rectangle'."
+    },
+    {
+      "id": "circ_top",
+      "shape": "circle",
+      "section": "XY plane",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "30 mm"
+      ],
+      "placement": "Centered at (0,0) in XY plane at Z=60. Radius is 15 mm.",
+      "evidence": "TOP (XY) view shows a circle labeled 'diameter 30 mm'."
+    },
+    {
+      "id": "transition_solid",
+      "shape": "loft",
+      "section": "solid",
+      "axis_or_plane": "Z",
+      "dimensions": [
+        "60 mm"
+      ],
+      "placement": "Loft connecting rect_base at Z=0 to circ_top at Z=60. The transition is linear along the Z axis.",
+      "evidence": "FRONT (XZ) view shows a trapezoid labeled 'height 60 mm; solid'. The notes specify 'Solid transition piece: rectangular bottom, circular top, flat caps, straight sides'."
+    }
+  ],
+  "connections": [
+    "The rectangular base (rect_base) is the bottom face of the transition_solid.",
+    "The circular top (circ_top) is the top face of the transition_solid.",
+    "The transition_solid connects the rect_base and circ_top via a linear loft."
+  ],
+  "edit_rules": [
+    "Changing the width or length of rect_base will change the base dimensions of the transition_solid.",
+    "Changing the diameter of circ_top will change the top dimensions of the transition_solid.",
+    "Changing the height of the transition_solid will change the Z separation between rect_base and circ_top.",
+    "The transition_solid must remain a solid loft between the two profiles."
+  ],
+  "unresolved": []
+}

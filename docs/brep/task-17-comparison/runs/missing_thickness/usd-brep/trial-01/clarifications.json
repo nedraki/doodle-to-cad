@@ -1,0 +1,20 @@
+[
+  {
+    "question": {
+      "feature_id": "tray_cavity",
+      "feature_label": "Tray wall and floor thickness",
+      "reason": "The drawing states 'Same wall and floor thickness' and 'Thickness value is not given', but does not provide a numerical value for this dimension.",
+      "kind": "uniform_thickness",
+      "id": "ee39e6f76de2469191d340305629efe9",
+      "text": "Wall and floor thickness (mm)?",
+      "maximum_thickness_mm": 60.0
+    },
+    "status": "answered",
+    "answer": {
+      "question_id": "ee39e6f76de2469191d340305629efe9",
+      "feature_id": "tray_cavity",
+      "kind": "uniform_thickness",
+      "thickness_mm": 3
+    }
+  }
+]

@@ -1,0 +1,90 @@
+{
+  "drawing": "curved_handle",
+  "backend": "openscad",
+  "trial": 1,
+  "submitted_at": "2026-10-18T23:33:25.571180+00:00",
+  "finished_at": "2026-10-18T23:37:06.166922+00:00",
+  "run_id": "2e214ab408e5",
+  "wall_seconds": 220.6,
+  "job_status": "done",
+  "error": null,
+  "questions_asked": 0,
+  "question_kinds": [],
+  "build": {
+    "watertight": true,
+    "components": 2,
+    "genus": null,
+    "extents_mm": [
+      49.0,
+      8.951,
+      38.75
+    ],
+    "volume_mm3": 4792.7,
+    "sha256": "3d7ec05c874a40eadd17a6298290cb61a6246f95e0f5fd803e9ac677603626dd",
+    "bytes": 97466
+  },
+  "checks": {
+    "build_success": false,
+    "extents_pass": false,
+    "genus_pass": false,
+    "volume_pass": false,
+    "fidelity_pass": false,
+    "overall_pass": false,
+    "not_applicable": []
+  },
+  "fidelity": {
+    "scores": {
+      "top": 0.149
+    },
+    "pass": false,
+    "reason": null,
+    "topology": {
+      "top": {
+        "expected": 0,
+        "actual": 0,
+        "position_fidelity": null
+      }
+    }
+  },
+  "product": {
+    "success": false,
+    "accepted": false,
+    "status": null,
+    "score": 67.4,
+    "projection_status": null,
+    "geometry_status": null,
+    "failures": [
+      "mesh has 2 disconnected components",
+      "maximum dimension is 49 mm; target is 54 mm (tolerance 5%)",
+      "degenerate or implausible axis dimensions: X=49 mm vs expected 16.73 mm",
+      "CAD projections poorly match the drawing: top similarity 0.15 (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly."
+    ]
+  },
+  "attempts": {
+    "count": 3,
+    "recovered": false,
+    "corrections": null,
+    "selected": 2
+  },
+  "unsupported": {
+    "flag": false,
+    "code": null
+  },
+  "edit": {
+    "available": true,
+    "ok": true,
+    "seconds": 0.76,
+    "param": "bend_radius",
+    "old": 20.0,
+    "new": 24.0,
+    "message": null
+  },
+  "targeted": {
+    "available": false,
+    "ok": false,
+    "seconds": null,
+    "operation": null,
+    "value": null,
+    "message": "not_applicable: the product requires a BRep result for targeted edits"
+  }
+}

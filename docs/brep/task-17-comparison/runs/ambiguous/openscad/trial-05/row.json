@@ -1,0 +1,87 @@
+{
+  "drawing": "ambiguous",
+  "backend": "openscad",
+  "trial": 5,
+  "submitted_at": "2026-10-19T00:14:52.095801+00:00",
+  "finished_at": "2026-10-19T00:17:06.495768+00:00",
+  "run_id": "d4bacf98338b",
+  "wall_seconds": 134.4,
+  "job_status": "done",
+  "error": null,
+  "questions_asked": 0,
+  "question_kinds": [],
+  "build": {
+    "watertight": true,
+    "components": 2,
+    "genus": null,
+    "extents_mm": [
+      40.0,
+      4.34,
+      12.0
+    ],
+    "volume_mm3": 1696.5,
+    "sha256": "54a966a8b94acd8c7dee86b6978118076569eab58b5bef32184d40198c55a38f",
+    "bytes": 6444
+  },
+  "checks": {
+    "build_success": false,
+    "extents_pass": false,
+    "genus_pass": false,
+    "volume_pass": false,
+    "fidelity_pass": true,
+    "overall_pass": false,
+    "not_applicable": []
+  },
+  "fidelity": {
+    "scores": {
+      "top": 0.557
+    },
+    "pass": true,
+    "reason": null,
+    "topology": {
+      "top": {
+        "expected": 0,
+        "actual": 0,
+        "position_fidelity": null
+      }
+    }
+  },
+  "product": {
+    "success": false,
+    "accepted": false,
+    "status": null,
+    "score": 75.4,
+    "projection_status": null,
+    "geometry_status": null,
+    "failures": [
+      "mesh has 2 disconnected components"
+    ]
+  },
+  "attempts": {
+    "count": 3,
+    "recovered": false,
+    "corrections": null,
+    "selected": 3
+  },
+  "unsupported": {
+    "flag": false,
+    "code": null
+  },
+  "edit": {
+    "available": true,
+    "ok": true,
+    "seconds": 0.46,
+    "param": "width",
+    "old": 40.0,
+    "new": 48.0,
+    "message": null
+  },
+  "targeted": {
+    "available": false,
+    "ok": false,
+    "seconds": null,
+    "operation": null,
+    "value": null,
+    "message": "not_applicable: the product requires a BRep result for targeted edits"
+  }
+}

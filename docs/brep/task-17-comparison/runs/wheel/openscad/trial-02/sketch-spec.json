@@ -1,0 +1,131 @@
+{
+  "object": "Wheel Disc",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "front",
+      "sheet_region": "view_4",
+      "constrains": "Outer diameter (OD), hub diameter, spoke count (8), spoke angular distribution, rim thickness, spoke width."
+    },
+    {
+      "direction": "side",
+      "sheet_region": "view_5",
+      "constrains": "Disc thickness (uniform depth)."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "wheel_disc",
+      "name": "Wheel Disc",
+      "material": "generic_plastic",
+      "quantity": 1
+    }
+  ],
+  "features": [
+    {
+      "id": "outer_rim",
+      "type": "ring",
+      "owner": "wheel_disc",
+      "description": "Outer circular band connecting the spokes."
+    },
+    {
+      "id": "central_hub",
+      "type": "cylinder",
+      "owner": "wheel_disc",
+      "description": "Central solid disk."
+    },
+    {
+      "id": "spokes",
+      "type": "array",
+      "owner": "wheel_disc",
+      "description": "8 straight radial bars connecting hub to rim."
+    }
+  ],
+  "relations": [
+    {
+      "type": "connects",
+      "from": "central_hub",
+      "to": "spokes"
+    },
+    {
+      "type": "connects",
+      "from": "spokes",
+      "to": "outer_rim"
+    }
+  ],
+  "symmetry": {
+    "type": "rotational",
+    "axis": "Z",
+    "order": 8
+  },
+  "repetitions": [
+    {
+      "feature_id": "spokes",
+      "count": 8,
+      "pattern": "radial"
+    }
+  ],
+  "dimensions": {
+    "max_width": 27.8,
+    "max_depth": 120.0,
+    "max_height": 9.5,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "Exact hub diameter is estimated from visual proportions.",
+    "Exact rim and spoke widths are estimated from visual proportions."
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "The object is a flat wheel disc. The front view (view_4) defines the 2D profile (XY plane). The side view (view_5) defines the thickness (Z axis). The geometry is constructed by extruding the 2D profile defined in the front view by the thickness measured in the side view.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "extrude",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_2",
+        "operation": "extrude",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "owner": "wheel_disc",
+        "parameters": {
+          "depth": 8
+        },
+        "source_views": [
+          "view_5"
+        ]
+      }
+    ],
+    "unresolved_constraints": [
+      "Exact hub diameter is estimated from visual proportions.",
+      "Exact rim and spoke widths are estimated from visual proportions."
+    ]
+  },
+  "user_intent": {
+    "description": "Wheel disc: outer rim, eight evenly spaced straight spokes, central hub. One connected solid of uniform thickness.",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "120"
+  },
+  "source_view_group_count": 6,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

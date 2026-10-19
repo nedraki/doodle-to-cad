@@ -1,0 +1,147 @@
+{
+  "object": "Handle",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "top",
+      "sheet_region": "view_5",
+      "constrains": "Planar geometry of the handle (U-shape), defining the bend radius and leg spacing."
+    },
+    {
+      "direction": "left",
+      "sheet_region": "view_3",
+      "constrains": "Cross-sectional profile (circular) and height of the legs."
+    },
+    {
+      "direction": "front",
+      "sheet_region": "view_1",
+      "constrains": "Elevation view showing the arch height and leg length."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "handle_body",
+      "description": "Single continuous rod with circular cross-section, bent into a U-shape with two straight legs.",
+      "material": "generic_plastic"
+    }
+  ],
+  "features": [
+    {
+      "id": "bend",
+      "type": "curved_segment",
+      "owner": "handle_body",
+      "parameters": {
+        "centerline_radius": 20,
+        "angle": 180
+      }
+    },
+    {
+      "id": "leg_left",
+      "type": "straight_segment",
+      "owner": "handle_body",
+      "parameters": {
+        "length": 30
+      }
+    },
+    {
+      "id": "leg_right",
+      "type": "straight_segment",
+      "owner": "handle_body",
+      "parameters": {
+        "length": 30
+      }
+    },
+    {
+      "id": "cross_section",
+      "type": "profile",
+      "owner": "handle_body",
+      "parameters": {
+        "shape": "circle",
+        "diameter": 8
+      }
+    }
+  ],
+  "relations": [
+    {
+      "type": "tangent",
+      "from": "bend",
+      "to": "leg_left"
+    },
+    {
+      "type": "tangent",
+      "from": "bend",
+      "to": "leg_right"
+    }
+  ],
+  "symmetry": {
+    "type": "planar",
+    "axis": "Z",
+    "description": "Symmetric about the vertical centerline of the handle."
+  },
+  "repetitions": [],
+  "dimensions": {
+    "max_width": 16.73,
+    "max_depth": 26.81,
+    "max_height": 54.0,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "The exact orientation of the handle relative to the build plate is not specified, but the geometry is fully defined by the dimensions."
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "The object is a standard U-shaped handle. The geometry is defined by a sweep of a circular profile along a path consisting of two straight segments and a semicircular arc. The 'top' view in the drawing actually depicts the front elevation of the handle (the U-shape), while the 'left' view depicts the circular cross-section. The CAD mapping provided in the prompt aligns with this interpretation.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "sweep",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_3",
+        "operation": "sweep",
+        "profile_plane": "YZ",
+        "direction_axis": "X",
+        "owner": "handle_body",
+        "parameters": {
+          "path_id": "op_1",
+          "profile_id": "op_2",
+          "orientation": "fixed"
+        },
+        "source_views": [
+          "view_1",
+          "view_3",
+          "view_5"
+        ]
+      }
+    ],
+    "unresolved_constraints": [
+      "The exact orientation of the handle relative to the build plate is not specified, but the geometry is fully defined by the dimensions."
+    ]
+  },
+  "user_intent": {
+    "description": "Handle with two straight legs and one curved bend. The cross-section is circular throughout.",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "54"
+  },
+  "source_view_group_count": 6,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

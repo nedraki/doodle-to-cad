@@ -1,0 +1,312 @@
+{
+  "version": 2,
+  "units": "mm",
+  "name": "l_bracket",
+  "parameters": {
+    "width": {
+      "value": 80,
+      "min": 40,
+      "max": 120,
+      "label": "Width",
+      "description": "Overall width of the bracket (X)"
+    },
+    "height": {
+      "value": 100,
+      "min": 50,
+      "max": 150,
+      "label": "Height",
+      "description": "Overall height of the bracket (Z)"
+    },
+    "depth": {
+      "value": 60,
+      "min": 30,
+      "max": 100,
+      "label": "Depth",
+      "description": "Overall depth of the bracket (Y)"
+    },
+    "thickness": {
+      "value": 10,
+      "min": 5,
+      "max": 20,
+      "label": "Thickness",
+      "description": "Uniform thickness of the L-profile walls"
+    },
+    "open1_w": {
+      "value": 30,
+      "min": 10,
+      "max": 60,
+      "label": "Opening 1 Width",
+      "description": "Width of the top-left opening"
+    },
+    "open1_h": {
+      "value": 20,
+      "min": 10,
+      "max": 40,
+      "label": "Opening 1 Height",
+      "description": "Height of the top-left opening"
+    },
+    "open2_w": {
+      "value": 10,
+      "min": 5,
+      "max": 20,
+      "label": "Opening 2 Width",
+      "description": "Width of the center opening"
+    },
+    "open2_h": {
+      "value": 40,
+      "min": 20,
+      "max": 60,
+      "label": "Opening 2 Height",
+      "description": "Height of the center opening"
+    },
+    "open3_w": {
+      "value": 15,
+      "min": 5,
+      "max": 30,
+      "label": "Opening 3 Width",
+      "description": "Width of the bottom-left opening"
+    },
+    "open3_h": {
+      "value": 40,
+      "min": 20,
+      "max": 60,
+      "label": "Opening 3 Height",
+      "description": "Height of the bottom-left opening"
+    },
+    "open4_w": {
+      "value": 15,
+      "min": 5,
+      "max": 30,
+      "label": "Opening 4 Width",
+      "description": "Width of the bottom-right opening"
+    },
+    "open4_h": {
+      "value": 40,
+      "min": 20,
+      "max": 60,
+      "label": "Opening 4 Height",
+      "description": "Height of the bottom-right opening"
+    }
+  },
+  "operations": [
+    {
+      "id": "base_plate",
+      "kind": "box",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "size": [
+        "width",
+        "depth",
+        "thickness"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "upright_panel",
+      "kind": "box",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "size": [
+        "width",
+        "thickness",
+        "height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "l_shape",
+      "kind": "union",
+      "left": "base_plate",
+      "right": "upright_panel",
+      "frame": "world",
+      "depends_on": [
+        "base_plate",
+        "upright_panel"
+      ],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "cut_open1",
+      "kind": "box",
+      "origin": [
+        "width/2 - open1_w/2 - width/4",
+        "-1",
+        "height - open1_h - height/5"
+      ],
+      "size": [
+        "open1_w",
+        "thickness + 2",
+        "open1_h"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "cut_open2",
+      "kind": "box",
+      "origin": [
+        "width/2 - open2_w/2",
+        "-1",
+        "height/2 - open2_h/2"
+      ],
+      "size": [
+        "open2_w",
+        "thickness + 2",
+        "open2_h"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "cut_open3",
+      "kind": "box",
+      "origin": [
+        "width/2 - open3_w/2 - width/4",
+        "-1",
+        "thickness"
+      ],
+      "size": [
+        "open3_w",
+        "thickness + 2",
+        "open3_h"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "cut_open4",
+      "kind": "box",
+      "origin": [
+        "width/2 - open4_w/2 + width/4",
+        "-1",
+        "thickness"
+      ],
+      "size": [
+        "open4_w",
+        "thickness + 2",
+        "open4_h"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "part",
+      "kind": "difference",
+      "left": "l_shape",
+      "right": "cut_open1",
+      "frame": "world",
+      "depends_on": [
+        "l_shape",
+        "cut_open1"
+      ],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "part2",
+      "kind": "difference",
+      "left": "part",
+      "right": "cut_open2",
+      "frame": "world",
+      "depends_on": [
+        "part",
+        "cut_open2"
+      ],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "part3",
+      "kind": "difference",
+      "left": "part2",
+      "right": "cut_open3",
+      "frame": "world",
+      "depends_on": [
+        "part2",
+        "cut_open3"
+      ],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "final_part",
+      "kind": "difference",
+      "left": "part3",
+      "right": "cut_open4",
+      "frame": "world",
+      "depends_on": [
+        "part3",
+        "cut_open4"
+      ],
+      "evidence": [
+        "e2"
+      ]
+    }
+  ],
+  "output": "final_part",
+  "frames": {
+    "world": {
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    }
+  },
+  "bodies": [
+    {
+      "id": "part",
+      "output": "final_part"
+    }
+  ],
+  "evidence": {
+    "observed": [],
+    "inferred": [],
+    "assumptions": [
+      {
+        "id": "e1",
+        "text": "Assumed uniform thickness of 10mm for both base and upright panel based on visual proportions."
+      },
+      {
+        "id": "e2",
+        "text": "Assumed openings are through-holes extending completely through the panel thickness."
+      }
+    ],
+    "unresolved": []
+  },
+  "constraints": []
+}

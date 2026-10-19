@@ -1,0 +1,28 @@
+{
+  "view_frame": "The primary view is TOP (XY plane), showing the handle's footprint. The Z axis represents height (vertical in the physical part). The END SECTION view shows the circular cross-section perpendicular to the path. The part is a U-shaped handle lying flat in the XY plane.",
+  "features": [
+    {
+      "id": "handle_path",
+      "shape": "sweep",
+      "section": "circle",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "Bend centreline radius: 20 mm",
+        "Straight leg length: 30 mm",
+        "Section diameter: 8 mm"
+      ],
+      "placement": "The path consists of two straight segments and one semicircular arc in the XY plane. The arc is centered at (0, 30) with radius 20 mm, spanning from angle 0 to 180 degrees (counter-clockwise). The right straight leg runs from (20, 30) to (20, 0). The left straight leg runs from (-20, 30) to (-20, 0). The section is a circle of diameter 8 mm, centered on the path.",
+      "evidence": "Top view shows a U-shape. Text annotation 'Bend centreline R20; straight legs 30 mm'. End section view shows a circle with text 'diameter 8 mm'."
+    }
+  ],
+  "connections": [
+    "The straight legs are tangent to the semicircular arc at the junction points (\u00b120, 30)."
+  ],
+  "edit_rules": [
+    "Changing the section diameter updates the sweep profile radius.",
+    "Changing the bend centreline radius updates the arc geometry and the start/end points of the straight legs.",
+    "Changing the straight leg length updates the end coordinates of the straight segments."
+  ],
+  "unresolved": [],
+  "clarification": null
+}

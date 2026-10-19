@@ -1,0 +1,254 @@
+{
+  "version": 2,
+  "units": "mm",
+  "name": "notched_plate",
+  "parameters": {
+    "width": {
+      "value": 60,
+      "min": 30,
+      "max": 100,
+      "label": "Plate Width",
+      "unit": "mm"
+    },
+    "depth": {
+      "value": 40,
+      "min": 20,
+      "max": 80,
+      "label": "Plate Depth",
+      "unit": "mm"
+    },
+    "thickness": {
+      "value": 6,
+      "min": 1,
+      "max": 20,
+      "label": "Plate Thickness",
+      "unit": "mm"
+    },
+    "notch_width": {
+      "value": 20,
+      "min": 5,
+      "max": 50,
+      "label": "Notch Width",
+      "unit": "mm"
+    },
+    "notch_depth": {
+      "value": 10,
+      "min": 1,
+      "max": 30,
+      "label": "Notch Depth",
+      "unit": "mm"
+    },
+    "corner_radius": {
+      "value": 6,
+      "min": 1,
+      "max": 20,
+      "label": "Top-Right Corner Radius",
+      "unit": "mm"
+    },
+    "hole_diameter": {
+      "value": 8,
+      "min": 1,
+      "max": 30,
+      "label": "Hole Diameter",
+      "unit": "mm"
+    },
+    "hole_x": {
+      "value": 12,
+      "min": 0,
+      "max": 60,
+      "label": "Hole X Position",
+      "unit": "mm"
+    },
+    "hole_y": {
+      "value": 15,
+      "min": 0,
+      "max": 40,
+      "label": "Hole Y Position",
+      "unit": "mm"
+    }
+  },
+  "operations": [
+    {
+      "id": "plate_body",
+      "kind": "extrude",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "plane": "xy",
+      "direction": 1,
+      "depth": "thickness",
+      "loops": [
+        [
+          {
+            "kind": "line",
+            "start": [
+              0,
+              0
+            ],
+            "end": [
+              "width",
+              0
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              "width",
+              0
+            ],
+            "end": [
+              "width",
+              "depth - corner_radius"
+            ]
+          },
+          {
+            "kind": "arc",
+            "center": [
+              "width - corner_radius",
+              "depth - corner_radius"
+            ],
+            "radius": "corner_radius",
+            "start_angle": 0,
+            "end_angle": 90
+          },
+          {
+            "kind": "line",
+            "start": [
+              "width - corner_radius",
+              "depth"
+            ],
+            "end": [
+              "width/2 + notch_width/2",
+              "depth"
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              "width/2 + notch_width/2",
+              "depth"
+            ],
+            "end": [
+              "width/2 + notch_width/2",
+              "depth - notch_depth"
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              "width/2 + notch_width/2",
+              "depth - notch_depth"
+            ],
+            "end": [
+              "width/2 - notch_width/2",
+              "depth - notch_depth"
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              "width/2 - notch_width/2",
+              "depth - notch_depth"
+            ],
+            "end": [
+              "width/2 - notch_width/2",
+              "depth"
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              "width/2 - notch_width/2",
+              "depth"
+            ],
+            "end": [
+              0,
+              "depth"
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              0,
+              "depth"
+            ],
+            "end": [
+              0,
+              0
+            ]
+          }
+        ],
+        [
+          {
+            "kind": "arc",
+            "center": [
+              "hole_x",
+              "hole_y"
+            ],
+            "radius": "hole_diameter/2",
+            "start_angle": 0,
+            "end_angle": 360
+          }
+        ]
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1",
+        "e2",
+        "e3",
+        "e4",
+        "e5"
+      ]
+    }
+  ],
+  "output": "plate_body",
+  "frames": {
+    "world": {
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    }
+  },
+  "bodies": [
+    {
+      "id": "part",
+      "output": "plate_body"
+    }
+  ],
+  "evidence": {
+    "observed": [
+      {
+        "id": "e1",
+        "text": "Plate dimensions 60x40mm from TOP view."
+      },
+      {
+        "id": "e2",
+        "text": "Plate thickness 6mm from FRONT view."
+      },
+      {
+        "id": "e3",
+        "text": "Notch 20x10mm centered on top edge from TOP view."
+      },
+      {
+        "id": "e4",
+        "text": "Top-right corner radius R6 from TOP view."
+      },
+      {
+        "id": "e5",
+        "text": "Hole diameter 8mm at (12,15) from TOP view."
+      }
+    ],
+    "inferred": [],
+    "assumptions": [],
+    "unresolved": []
+  },
+  "constraints": []
+}

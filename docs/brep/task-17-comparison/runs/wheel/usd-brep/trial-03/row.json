@@ -1,0 +1,21 @@
+{
+  "drawing": "wheel",
+  "backend": "usd-brep",
+  "trial": 3,
+  "submitted_at": "2026-10-18T23:26:30.917634+00:00",
+  "finished_at": "2026-10-18T23:29:03.537033+00:00",
+  "run_id": "9450ce68bb6b",
+  "wall_seconds": 152.6,
+  "job_status": "error",
+  "error": {
+    "message": "Expected one connected part; components=5",
+    "code": "disconnected_output"
+  },
+  "questions_asked": 0,
+  "question_kinds": [],
+  "build": null,
+  "checks": {
+    "build_success": false,
+    "overall_pass": false
+  }
+}

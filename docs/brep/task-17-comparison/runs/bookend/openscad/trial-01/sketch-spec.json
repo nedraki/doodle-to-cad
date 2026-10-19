@@ -1,0 +1,212 @@
+{
+  "object": "L-shaped bookend",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "front",
+      "sheet_region": "left",
+      "constrains": "The upright panel's face geometry, including the shape and position of the four through-openings."
+    },
+    {
+      "direction": "right",
+      "sheet_region": "right",
+      "constrains": "The L-shaped cross-section profile (base and upright panel thickness and height)."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "part_1",
+      "name": "Bookend Body",
+      "material": "plastic",
+      "description": "A single L-shaped solid with a flat base and an upright panel containing four rectangular cutouts."
+    }
+  ],
+  "features": [
+    {
+      "id": "feat_base",
+      "type": "extrusion",
+      "owner": "part_1",
+      "description": "The horizontal base of the L-shape."
+    },
+    {
+      "id": "feat_panel",
+      "type": "extrusion",
+      "owner": "part_1",
+      "description": "The vertical upright panel of the L-shape."
+    },
+    {
+      "id": "feat_cutout_1",
+      "type": "through_hole",
+      "owner": "part_1",
+      "description": "Top-left rectangular opening in the panel."
+    },
+    {
+      "id": "feat_cutout_2",
+      "type": "through_hole",
+      "owner": "part_1",
+      "description": "Top-right vertical rectangular opening in the panel."
+    },
+    {
+      "id": "feat_cutout_3",
+      "type": "through_hole",
+      "owner": "part_1",
+      "description": "Bottom-left vertical rectangular opening in the panel."
+    },
+    {
+      "id": "feat_cutout_4",
+      "type": "through_hole",
+      "owner": "part_1",
+      "description": "Bottom-right vertical rectangular opening in the panel."
+    }
+  ],
+  "relations": [
+    {
+      "type": "perpendicular",
+      "target_1": "feat_base",
+      "target_2": "feat_panel",
+      "description": "The base and panel meet at a 90-degree angle."
+    },
+    {
+      "type": "through",
+      "target_1": "feat_cutout_1",
+      "target_2": "feat_panel",
+      "description": "Cutout passes through the panel thickness."
+    },
+    {
+      "type": "through",
+      "target_1": "feat_cutout_2",
+      "target_2": "feat_panel",
+      "description": "Cutout passes through the panel thickness."
+    },
+    {
+      "type": "through",
+      "target_1": "feat_cutout_3",
+      "target_2": "feat_panel",
+      "description": "Cutout passes through the panel thickness."
+    },
+    {
+      "type": "through",
+      "target_1": "feat_cutout_4",
+      "target_2": "feat_panel",
+      "description": "Cutout passes through the panel thickness."
+    }
+  ],
+  "symmetry": "none",
+  "repetitions": [
+    {
+      "feature_id": "feat_cutout_2",
+      "count": 2,
+      "pattern": "linear",
+      "description": "The two vertical rectangular cutouts (center and right) are similar in shape and size."
+    }
+  ],
+  "dimensions": {
+    "max_dimension": 100.0,
+    "max_width": 80.18,
+    "max_depth": 71.67,
+    "max_height": 100.0,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "Exact thickness of the base and panel relative to the overall height is estimated from the right view aspect ratio.",
+    "Exact dimensions of the cutouts are estimated from the front view relative to the panel size."
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "The object is modeled as a single L-shaped extrusion. The front view defines the panel face and cutouts. The right view defines the L-profile. The cutouts are treated as subtractive features through the panel wall.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "extrude",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_2",
+        "operation": "extrude",
+        "profile_plane": "YZ",
+        "direction_axis": "X",
+        "owner": "part_1",
+        "parameters": {
+          "depth": "panel_width",
+          "source_view": "view_1"
+        },
+        "source_views": [
+          "view_1"
+        ]
+      },
+      {
+        "id": "feat_cutout_1",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Top-left rectangular opening in the panel."
+        },
+        "source_views": []
+      },
+      {
+        "id": "feat_cutout_2",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Top-right vertical rectangular opening in the panel."
+        },
+        "source_views": []
+      },
+      {
+        "id": "feat_cutout_3",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Bottom-left vertical rectangular opening in the panel."
+        },
+        "source_views": []
+      },
+      {
+        "id": "feat_cutout_4",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Bottom-right vertical rectangular opening in the panel."
+        },
+        "source_views": []
+      }
+    ],
+    "unresolved_constraints": [
+      "Specific thickness values for base and panel.",
+      "Specific width of the bookend."
+    ]
+  },
+  "user_intent": {
+    "description": "L-shaped bookend: a flat base and an upright panel. The panel has four through openings cut all the way through its wall.",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "100"
+  },
+  "source_view_group_count": 2,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

@@ -92,8 +92,18 @@ DOODLE_BREP_PYTHON="$PWD/workers/brep/.venv/bin/python" uv run pytest -q
 uv run python scripts/evaluate_brep.py
 ```
 
+Run the issue #34 live backend comparison trials (in-process server, port 8130-8139):
+
+```sh
+DOODLE_BREP_PYTHON="$PWD/workers/brep/.venv/bin/python" PYTHONPATH=. \\
+  uv run python scripts/evaluate_brep.py trials --plan docs/brep/task-17-comparison/TRIAL-PLAN.json --port 8132
+```
+
 See [evaluation.json](evaluation.json) for measured build/edit timings and geometry
-results, and [DECISION.md](DECISION.md) for the adoption boundary. Mesh artifacts,
+results, and [decision-2026-10-13-prototype.md](decision-2026-10-13-prototype.md)
+for the 2026-10-13 prototype adoption boundary. The current product-default
+decision, measured over 80 live generations, is [DECISION.md](DECISION.md) with
+evidence under [task-17-comparison](task-17-comparison/README.md). Mesh artifacts,
 recipes, and captured worker warnings are saved under `results/brep-evaluation/`.
 
 ![BRep parameter drawer](bracket-editor.png)

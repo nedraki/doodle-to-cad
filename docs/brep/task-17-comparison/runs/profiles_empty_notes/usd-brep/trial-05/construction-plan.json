@@ -1,0 +1,46 @@
+{
+  "view_frame": "The drawing provides a TOP view (XY plane) and a FRONT view (XZ plane). The X-axis represents width (horizontal in TOP), the Y-axis represents depth (vertical in TOP), and the Z-axis represents height/thickness (vertical in FRONT). The part is a flat plate lying in the XY plane with thickness along Z.",
+  "features": [
+    {
+      "id": "plate_body",
+      "shape": "extruded_profile",
+      "section": "closed_xy_profile",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "60",
+        "40",
+        "6",
+        "R6",
+        "20",
+        "10"
+      ],
+      "placement": "Base profile in XY plane from Z=0 to Z=6. The outline is defined by the rectangle [0,0] to [60,40] with modifications: Top-Right corner rounded with R6 (center at [54, 34]). A notch is cut from the top edge (Y=40), centered on X=30, extending from X=20 to X=40 and Y=30 to Y=40.",
+      "evidence": "TOP view shows the outline with dimensions 60 (width) and 40 (height). Text notes specify 'Top-right corner R6 only', 'Notch: 20 wide x 10 deep', and 'Notch centred on top edge'. FRONT view shows '6 thick' and notes 'Same outline through full thickness'."
+    },
+    {
+      "id": "through_hole",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "Z",
+      "dimensions": [
+        "\u00d88",
+        "12",
+        "15"
+      ],
+      "placement": "Circular hole centered at X=12, Y=15. Extends through the full thickness Z=0 to Z=6.",
+      "evidence": "TOP view shows a circle labeled '\u00d88 THROUGH'. Text notes specify 'Hole centre: 12 from left edge, 15 from bottom edge'."
+    }
+  ],
+  "connections": [
+    "The through_hole is subtracted from the plate_body.",
+    "The notch and rounded corner are part of the plate_body profile definition."
+  ],
+  "edit_rules": [
+    "Changing the plate thickness (Z) updates the extrusion height but preserves the XY profile.",
+    "Changing the notch width or depth updates the XY profile vertices.",
+    "Changing the hole diameter or position updates the subtractive cylinder parameters.",
+    "Changing the corner radius updates the arc definition in the XY profile."
+  ],
+  "unresolved": [],
+  "clarification": null
+}

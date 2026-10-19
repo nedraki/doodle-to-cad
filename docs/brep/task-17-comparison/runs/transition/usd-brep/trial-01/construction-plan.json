@@ -1,0 +1,29 @@
+{
+  "view_frame": "The drawing presents three orthographic views: BOTTOM (XY), TOP (XY), and FRONT (XZ). The world coordinate system is defined with X as width (left-right), Y as depth (front-back), and Z as height (up-down). The FRONT view displays the XZ plane, showing the height and width profile. The TOP and BOTTOM views display the XY plane, showing the cross-sections at the top and bottom respectively.",
+  "features": [
+    {
+      "id": "transition_solid",
+      "shape": "loft",
+      "section": "rectangular bottom, circular top",
+      "axis_or_plane": "Z",
+      "dimensions": [
+        "60 mm (bottom width)",
+        "40 mm (bottom depth)",
+        "30 mm (top diameter)",
+        "60 mm (height)"
+      ],
+      "placement": "The solid is centered on the Z-axis. The bottom rectangular profile is located at Z=0 with corners at (\u00b130, \u00b120). The top circular profile is located at Z=60 with a radius of 15 centered at (0,0). The loft connects these two profiles linearly.",
+      "evidence": "BOTTOM view shows a '60 x 40 mm rectangle'. TOP view shows a 'diameter 30 mm' circle. FRONT view shows a trapezoid labeled 'height 60 mm; solid'."
+    }
+  ],
+  "connections": [
+    "The rectangular base (60x40) and circular top (diameter 30) are connected by a linear loft transition."
+  ],
+  "edit_rules": [
+    "Changing the bottom width (X) or depth (Y) updates the rectangular profile at Z=0.",
+    "Changing the top diameter updates the circular profile at Z=60.",
+    "Changing the height updates the Z-position of the top profile.",
+    "The loft maintains the correspondence between the rectangular and circular profiles without twist."
+  ],
+  "unresolved": []
+}

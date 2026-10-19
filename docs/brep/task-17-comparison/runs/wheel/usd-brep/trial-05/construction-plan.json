@@ -1,0 +1,36 @@
+{
+  "view_frame": "Front view (XZ plane) displays the wheel face with X as horizontal width and Z as vertical height. Right view (YZ plane) displays the wheel thickness with Y as depth and Z as height. The wheel is a planar solid extruded along the Y-axis.",
+  "features": [
+    {
+      "id": "wheel_body",
+      "shape": "Extruded Profile",
+      "section": "Closed XY profile (wheel face) extruded along Z",
+      "axis_or_plane": "XY plane",
+      "dimensions": [
+        "OD 120 mm",
+        "thickness 8 mm",
+        "ASSUMED rim_width 10 mm",
+        "ASSUMED hub_diameter 30 mm",
+        "ASSUMED spoke_width 10 mm"
+      ],
+      "placement": "Centered at (0,0). Outer boundary is a circle of radius 60. Inner boundary is a circle of radius 50 (rim inner edge). Hub is a circle of radius 15. Eight spokes connect hub to rim. Extrusion depth is 8 mm along Z.",
+      "evidence": "Front view shows concentric circles (rim and hub) and 8 radial lines (spokes). Text annotation specifies OD 120 mm and thickness 8 mm. Right view confirms uniform thickness."
+    }
+  ],
+  "connections": [
+    "Spokes connect the outer rim to the central hub.",
+    "All features are part of a single connected solid."
+  ],
+  "edit_rules": [
+    "Changing OD 120 mm updates the outer rim radius and spoke lengths.",
+    "Changing thickness 8 mm updates the extrusion depth.",
+    "Changing ASSUMED rim_width updates the inner rim radius.",
+    "Changing ASSUMED hub_diameter updates the hub radius and spoke inner endpoints.",
+    "Changing ASSUMED spoke_width updates the width of the 8 radial segments."
+  ],
+  "unresolved": [
+    "Rim width is not dimensioned; assumed 10 mm.",
+    "Hub diameter is not dimensioned; assumed 30 mm.",
+    "Spoke width is not dimensioned; assumed 10 mm."
+  ]
+}

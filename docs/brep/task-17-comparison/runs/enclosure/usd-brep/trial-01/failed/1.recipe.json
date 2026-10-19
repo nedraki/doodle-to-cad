@@ -1,0 +1,173 @@
+{
+  "version": 2,
+  "units": "mm",
+  "name": "open_box_with_window",
+  "parameters": {
+    "width": {
+      "value": 100,
+      "min": 30,
+      "max": 200,
+      "label": "Outer Width",
+      "unit": "mm",
+      "description": "Overall width of the box along X"
+    },
+    "depth": {
+      "value": 60,
+      "min": 20,
+      "max": 150,
+      "label": "Outer Depth",
+      "unit": "mm",
+      "description": "Overall depth of the box along Y"
+    },
+    "height": {
+      "value": 80,
+      "min": 20,
+      "max": 150,
+      "label": "Outer Height",
+      "unit": "mm",
+      "description": "Overall height of the box along Z"
+    },
+    "wall_thickness": {
+      "value": 3,
+      "min": 1,
+      "max": 10,
+      "label": "Wall and floor thickness",
+      "unit": "mm",
+      "description": "Uniform thickness of walls and floor"
+    },
+    "window_width": {
+      "value": 60,
+      "min": 10,
+      "max": 180,
+      "label": "Window Width",
+      "unit": "mm",
+      "description": "Width of the rectangular window on the front wall"
+    },
+    "window_height": {
+      "value": 40,
+      "min": 10,
+      "max": 130,
+      "label": "Window Height",
+      "unit": "mm",
+      "description": "Height of the rectangular window on the front wall"
+    }
+  },
+  "operations": [
+    {
+      "id": "base_block",
+      "kind": "box",
+      "origin": [
+        "-width/2",
+        "-depth/2",
+        0
+      ],
+      "size": [
+        "width",
+        "depth",
+        "height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e_outer_dims"
+      ]
+    },
+    {
+      "id": "hollow_box",
+      "kind": "shell",
+      "body": "base_block",
+      "thickness": "wall_thickness",
+      "opening": "top",
+      "preserve": "outer",
+      "frame": "world",
+      "depends_on": [
+        "base_block"
+      ],
+      "evidence": [
+        "e_wall_thickness"
+      ]
+    },
+    {
+      "id": "window_cutter",
+      "kind": "box",
+      "origin": [
+        "-window_width/2",
+        "-depth/2 - 1",
+        "height/2 - window_height/2"
+      ],
+      "size": [
+        "window_width",
+        "wall_thickness + 2",
+        "window_height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e_window_dims"
+      ]
+    },
+    {
+      "id": "final_part",
+      "kind": "difference",
+      "left": "hollow_box",
+      "right": "window_cutter",
+      "frame": "world",
+      "depends_on": [
+        "hollow_box",
+        "window_cutter"
+      ],
+      "evidence": [
+        "e_window_cut"
+      ]
+    }
+  ],
+  "output": "final_part",
+  "frames": {
+    "world": {
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    }
+  },
+  "bodies": [
+    {
+      "id": "part",
+      "output": "final_part"
+    }
+  ],
+  "evidence": {
+    "observed": [
+      {
+        "id": "e_outer_dims",
+        "text": "Outer rectangular boundaries observed in Top and Front views."
+      },
+      {
+        "id": "e_window_dims",
+        "text": "Inner rectangular contour observed in Front view indicating a window."
+      }
+    ],
+    "inferred": [
+      {
+        "id": "e_wall_thickness",
+        "text": "Uniform wall thickness of 3mm inferred from clarification and notes."
+      },
+      {
+        "id": "e_window_cut",
+        "text": "Window is a through-hole in the front wall."
+      }
+    ],
+    "assumptions": [
+      {
+        "id": "e_assumed_dims",
+        "text": "Outer dimensions (100x60x80) and window dimensions (60x40) are assumed as they are not dimensioned in the drawing."
+      }
+    ],
+    "unresolved": []
+  },
+  "constraints": []
+}

@@ -1,0 +1,43 @@
+{
+  "view_frame": "The drawing uses third-angle projection. The primary view is TOP (XY plane), showing the planar outline of the tray. The SECTION view is XZ (front), showing the height and wall/floor thickness. World axes: X is width (60mm), Y is depth (40mm), Z is height (20mm).",
+  "features": [
+    {
+      "id": "tray_outer",
+      "shape": "box",
+      "section": "rectangular",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "60",
+        "40",
+        "20"
+      ],
+      "placement": "Centered at (0,0,0) in XY, extending from Z=0 to Z=20. Outer corners are rounded with R6 in the XY plane.",
+      "evidence": "Top view shows outer rectangle 60x40. Section view shows height 20. Text states 'Outside: 60 x 40 x 20' and 'Outer vertical corners: R6'."
+    },
+    {
+      "id": "tray_inner",
+      "shape": "box",
+      "section": "rectangular",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "54",
+        "34",
+        "17",
+        "3"
+      ],
+      "placement": "Centered at (0,0,0) in XY. Inner walls are offset inward by 3mm from the outer walls. Inner floor is offset upward by 3mm from the bottom (Z=3). Inner corners are rounded with R3 (Outer R6 - Thickness 3).",
+      "evidence": "Top view shows inner rectangle. Section view shows 'EMPTY' interior with walls and floor. Text states 'Same wall and floor thickness' and 'Thickness value is not given'. User answer provides thickness_mm: 3 for feature tray_inner."
+    }
+  ],
+  "connections": [
+    "tray_inner is subtracted from tray_outer to create the open tray geometry.",
+    "The inner cavity is open at the top (Z=20) and closed at the bottom (Z=3)."
+  ],
+  "edit_rules": [
+    "Changing the uniform thickness (currently 3mm) must update both the wall offset and the floor height simultaneously.",
+    "Outer dimensions (60x40x20) and outer corner radius (R6) are fixed constraints.",
+    "Inner corner radius is derived as Outer Radius (6) minus Thickness (3)."
+  ],
+  "unresolved": [],
+  "clarification": null
+}

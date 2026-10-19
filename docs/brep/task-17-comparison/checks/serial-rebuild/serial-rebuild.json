@@ -1,0 +1,78 @@
+{
+ "note": "Supplementary to the frozen matrix: every failed BRep trial recipe was rebuilt one at a time (no concurrency, no LLM, workers/brep/build.py invoked directly). All failures reproduced exactly, so they are deterministic, not worker-load flakiness. The curved_handle arc_pipe+cylinder unions fail inside usd_brep 1.0.0 tessellate(chord_height_tolerance=0.05) with ModuleNotFoundError: No module named _omni_solid (kernel packaging defect for that body class); the wheel failures are kernel invalid-solid / disconnected-output on the circular spoke pattern, matching the known failure documented in docs/brep/task-14. Trial rows are unchanged.",
+ "runs": [
+  {
+   "drawing": "curved_handle",
+   "trial": 1,
+   "original_error": "build_failed",
+   "original_message": "No module named '_omni_solid'",
+   "serial": {
+    "ok": false,
+    "code": "build_failed",
+    "message": "No module named '_omni_solid'"
+   }
+  },
+  {
+   "drawing": "curved_handle",
+   "trial": 2,
+   "original_error": "build_failed",
+   "original_message": "No module named '_omni_solid'",
+   "serial": {
+    "ok": false,
+    "code": "build_failed",
+    "message": "No module named '_omni_solid'"
+   }
+  },
+  {
+   "drawing": "curved_handle",
+   "trial": 3,
+   "original_error": "build_failed",
+   "original_message": "No module named '_omni_solid'",
+   "serial": {
+    "ok": false,
+    "code": "build_failed",
+    "message": "No module named '_omni_solid'"
+   }
+  },
+  {
+   "drawing": "enclosure",
+   "trial": 5,
+   "original_error": "invalid_recipe",
+   "original_message": "Construction plan rejected: Unsupported clarification or unknown feature",
+   "serial": "no saved recipe (schema/prepare stage failed)"
+  },
+  {
+   "drawing": "wheel",
+   "trial": 3,
+   "original_error": "disconnected_output",
+   "original_message": "Expected one connected part; components=5",
+   "serial": {
+    "ok": false,
+    "code": "disconnected_output",
+    "message": "Expected one connected part; components=5"
+   }
+  },
+  {
+   "drawing": "wheel",
+   "trial": 4,
+   "original_error": "build_failed",
+   "original_message": "wheel_s0: kernel produced an invalid solid",
+   "serial": {
+    "ok": false,
+    "code": "build_failed",
+    "message": "wheel_s0: kernel produced an invalid solid"
+   }
+  },
+  {
+   "drawing": "wheel",
+   "trial": 5,
+   "original_error": "build_failed",
+   "original_message": "wheel_1: kernel produced an invalid solid",
+   "serial": {
+    "ok": false,
+    "code": "build_failed",
+    "message": "wheel_1: kernel produced an invalid solid"
+   }
+  }
+ ]
+}

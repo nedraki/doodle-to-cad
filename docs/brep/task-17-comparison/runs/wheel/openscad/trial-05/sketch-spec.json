@@ -1,0 +1,160 @@
+{
+  "object": "Wheel Disc",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "front",
+      "sheet_region": "view_4 (primary)",
+      "what_it_constrains": "Defines the XY profile: outer rim diameter, hub diameter, spoke count (8), spoke angular distribution, and spoke width."
+    },
+    {
+      "direction": "right",
+      "sheet_region": "view_5 (side)",
+      "what_it_constrains": "Defines the Z-axis thickness (depth) of the object."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "wheel_disc",
+      "name": "Main Body",
+      "material": "generic_plastic",
+      "description": "Single connected solid consisting of an outer ring, central hub, and 8 radial spokes."
+    }
+  ],
+  "features": [
+    {
+      "id": "outer_rim",
+      "type": "ring",
+      "owner": "wheel_disc",
+      "description": "Circular outer boundary of the wheel."
+    },
+    {
+      "id": "central_hub",
+      "type": "cylinder",
+      "owner": "wheel_disc",
+      "description": "Solid central circular region."
+    },
+    {
+      "id": "spokes",
+      "type": "radial_array",
+      "owner": "wheel_disc",
+      "description": "8 straight rectangular bars connecting hub to rim."
+    },
+    {
+      "id": "inter_spoke_voids",
+      "type": "subtractive_cutout",
+      "owner": "wheel_disc",
+      "description": "The empty space between spokes."
+    }
+  ],
+  "relations": [
+    {
+      "type": "concentric",
+      "targets": [
+        "outer_rim",
+        "central_hub"
+      ]
+    },
+    {
+      "type": "connects",
+      "source": "spokes",
+      "target": "central_hub",
+      "description": "Spokes attach to the outer edge of the hub."
+    },
+    {
+      "type": "connects",
+      "source": "spokes",
+      "target": "outer_rim",
+      "description": "Spokes attach to the inner edge of the rim."
+    }
+  ],
+  "symmetry": {
+    "type": "rotational",
+    "axis": "Z",
+    "order": 8
+  },
+  "repetitions": [
+    {
+      "feature_id": "spokes",
+      "count": 8,
+      "pattern": "radial",
+      "spacing": "45 degrees"
+    }
+  ],
+  "dimensions": {
+    "max_width": 27.8,
+    "max_depth": 120.0,
+    "max_height": 9.5,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "Exact hub diameter is estimated from visual proportions relative to the 120mm OD.",
+    "Exact rim and spoke widths are estimated from visual proportions."
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "The object is a flat wheel disc. The primary view (view_4) provides the XY profile. The side view (view_5) confirms uniform thickness. The construction will use a boolean subtraction approach: create a solid cylinder of the outer diameter, then subtract the void spaces between the spokes.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "extrude",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_base",
+        "operation": "extrude",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "owner": "wheel_disc",
+        "parameters": {
+          "profile": "circle_diameter_120",
+          "depth": 8
+        },
+        "source_views": [
+          "view_4",
+          "view_5"
+        ]
+      },
+      {
+        "id": "inter_spoke_voids",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "The empty space between spokes."
+        },
+        "source_views": []
+      }
+    ],
+    "unresolved_constraints": [
+      "Exact hub diameter is estimated from visual proportions relative to the 120mm OD.",
+      "Exact rim and spoke widths are estimated from visual proportions."
+    ]
+  },
+  "user_intent": {
+    "description": "Wheel disc: outer rim, eight evenly spaced straight spokes, central hub. One connected solid of uniform thickness.",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "120"
+  },
+  "source_view_group_count": 6,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

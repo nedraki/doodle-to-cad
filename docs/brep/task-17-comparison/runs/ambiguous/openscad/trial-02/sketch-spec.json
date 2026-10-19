@@ -1,0 +1,152 @@
+{
+  "object": "Rectangular block with central through-hole",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "top",
+      "sheet_region": "view_4",
+      "what_it_constrains": "Defines the XY footprint (40x30 rectangle) and the position/diameter of the central circular hole (\u00d88)."
+    },
+    {
+      "direction": "front",
+      "sheet_region": "view_2",
+      "what_it_constrains": "Defines the XZ profile (40x12 rectangle), confirming the thickness/height of the block."
+    },
+    {
+      "direction": "side",
+      "sheet_region": "view_3",
+      "what_it_constrains": "Defines the YZ profile (30x12 rectangle), confirming the depth and thickness."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "main_block",
+      "type": "solid",
+      "material": "generic_plastic",
+      "bounding_box": [
+        40,
+        30,
+        12
+      ]
+    }
+  ],
+  "features": [
+    {
+      "id": "base_block",
+      "type": "extrusion",
+      "profile": "rectangle_40x30",
+      "height": 12,
+      "source_views": [
+        "view_4",
+        "view_2",
+        "view_3"
+      ]
+    },
+    {
+      "id": "central_hole",
+      "type": "cutout",
+      "profile": "circle_d8",
+      "depth": "through",
+      "position": "center",
+      "source_views": [
+        "view_4"
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "type": "concentric",
+      "target": "central_hole",
+      "reference": "base_block",
+      "axis": "Z"
+    }
+  ],
+  "symmetry": {
+    "planes": [
+      "XZ",
+      "YZ"
+    ],
+    "axes": [
+      "Z"
+    ]
+  },
+  "repetitions": [],
+  "dimensions": {
+    "width": 40.0,
+    "depth": 30.0,
+    "height": 12.0,
+    "diameter": 8.0,
+    "max_width": 40.0,
+    "max_depth": 4.34,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "View 1 and View 5 appear to be text annotations or title blocks rather than geometric projections, though they are registered as views. They do not contribute to the solid geometry."
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "The object is a simple rectangular block (40x30x12) with a central through-hole (\u00d88). The geometry is fully defined by the text annotations and the top view. The hole is subtractive.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "extrude",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_1",
+        "operation": "extrude",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "owner": "main_block",
+        "parameters": {
+          "profile": "rectangle",
+          "width": 40,
+          "height": 30,
+          "depth": 12
+        },
+        "source_views": [
+          "view_4"
+        ]
+      },
+      {
+        "id": "central_hole",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": null
+        },
+        "source_views": []
+      }
+    ],
+    "unresolved_constraints": [
+      "View 1 and View 5 appear to be text annotations or title blocks rather than geometric projections, though they are registered as views. They do not contribute to the solid geometry."
+    ]
+  },
+  "user_intent": {
+    "description": "",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "40"
+  },
+  "source_view_group_count": 5,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

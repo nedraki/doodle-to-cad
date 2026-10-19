@@ -1,0 +1,366 @@
+[
+  {
+    "attempt": 1,
+    "action": "generate",
+    "preflight": {
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "expected_subtractive_feature_groups": 0
+    },
+    "compiler_repairs": [],
+    "uniform_scale": {
+      "factor": 1.125,
+      "before_max_mm": 48.0,
+      "after_max_mm": 49.0,
+      "params": [
+        "leg_length",
+        "handle_diameter"
+      ]
+    },
+    "evaluation": {
+      "score": 88.0,
+      "valid_mesh": true,
+      "accepted": false,
+      "mandatory_gates": {
+        "compiled": true,
+        "topology": true,
+        "dimensions": false,
+        "shape_sanity": false,
+        "features": true,
+        "projections": false,
+        "build_envelope": true
+      },
+      "scores": {
+        "topology": 45,
+        "dimensions": 18.1,
+        "features": 20,
+        "projections": 4.8
+      },
+      "projection_similarity": {
+        "top": 0.322
+      },
+      "profile_topology": {
+        "top": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 5,
+          "crop_internal_profiles": 0,
+          "source_aspect": 4.35,
+          "rendered_aspect": 1.448,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": [
+            [
+              0.844,
+              0.814
+            ],
+            [
+              0.024,
+              0.791
+            ],
+            [
+              0.851,
+              0.182
+            ]
+          ]
+        }
+      },
+      "failures": [
+        "maximum dimension is 49 mm; target is 54 mm (tolerance 5%)",
+        "degenerate or implausible axis dimensions: X=49 mm vs expected 16.73 mm",
+        "CAD projections poorly match the drawing: top similarity 0.32 (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly."
+      ]
+    },
+    "mesh_health": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 2044,
+      "extents_mm": [
+        49.0,
+        33.75,
+        45.875
+      ],
+      "volume_mm3": 9958.388
+    },
+    "build": {
+      "version": 1,
+      "backend": "openscad",
+      "source_format": "openscad",
+      "ok": true,
+      "units": "mm",
+      "axes": {
+        "x": "width",
+        "y": "depth",
+        "z": "height"
+      },
+      "views": [
+        "isometric",
+        "front",
+        "top",
+        "right"
+      ],
+      "measurements": {
+        "watertight": true,
+        "components": 1,
+        "triangles": 2044,
+        "extents_mm": [
+          49.0,
+          33.75,
+          45.875
+        ],
+        "volume_mm3": 9958.388
+      },
+      "diagnostics": [],
+      "drawing_evaluated": false
+    },
+    "compile_log": "Geometries in cache: 10\nGeometry cache size in bytes: 316896\nCGAL Polyhedrons in cache: 3\nCGAL cache size in bytes: 6450000\nTotal rendering time: 0:00:00.764\n   Top level object is a 3D object:\n   Simple:        yes\n   Vertices:     1024\n   Halfedges:    5292\n   Edges:        2646\n   Halffacets:   3248\n   Facets:       1624\n   Volumes:         2",
+    "files": {
+      "scad": "attempt-01/model.scad",
+      "stl": "attempt-01/uniform-scaled/model.stl",
+      "views": {
+        "isometric": "attempt-01/uniform-scaled/view-isometric.png",
+        "front": "attempt-01/uniform-scaled/view-front.png",
+        "top": "attempt-01/uniform-scaled/view-top.png",
+        "right": "attempt-01/uniform-scaled/view-right.png"
+      }
+    },
+    "supervisor": {
+      "action": "repair_scad",
+      "problems": [
+        "Legs are oriented along Y-axis (depth) instead of Z-axis (height), causing incorrect projections.",
+        "Dimensions are incorrect: Diameter is 9mm (spec 8mm), Leg length is 33.75mm (spec 30mm).",
+        "Top view shows an H-shape due to leg orientation error; should show U-shape or rectangle depending on view definition.",
+        "Front view shows legs as circles, confirming they are pointing towards the viewer (Y-axis) rather than up (Z-axis)."
+      ],
+      "preserve": [
+        "Overall U-shaped handle topology.",
+        "Circular cross-section profile.",
+        "Semi-circular bend geometry."
+      ],
+      "instructions": "Correct the leg orientation to align with the Z-axis (vertical) instead of the Y-axis. Update parameters to match specification: set handle_diameter to 8 and leg_length to 30. Ensure the bend connects the tops of the vertical legs. Verify that the Front view (XZ plane) displays the U-shape and the Top view (XY plane) displays the correct footprint."
+    }
+  },
+  {
+    "attempt": 2,
+    "action": "repair_scad",
+    "preflight": {
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "expected_subtractive_feature_groups": 0
+    },
+    "compiler_repairs": [],
+    "uniform_scale": null,
+    "evaluation": {
+      "score": 95.0,
+      "valid_mesh": true,
+      "accepted": false,
+      "mandatory_gates": {
+        "compiled": true,
+        "topology": true,
+        "dimensions": true,
+        "shape_sanity": false,
+        "features": true,
+        "projections": true,
+        "build_envelope": true
+      },
+      "scores": {
+        "topology": 45,
+        "dimensions": 20.0,
+        "features": 20,
+        "projections": 10.0
+      },
+      "projection_similarity": {
+        "top": 0.664
+      },
+      "profile_topology": {
+        "top": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 2,
+          "crop_internal_profiles": 0,
+          "source_aspect": 4.35,
+          "rendered_aspect": 6.034,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": [
+            [
+              0.413,
+              0.814
+            ]
+          ]
+        }
+      },
+      "failures": [
+        "degenerate or implausible axis dimensions: X=48 mm vs expected 16.73 mm"
+      ]
+    },
+    "mesh_health": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 1764,
+      "extents_mm": [
+        48.0,
+        8.0,
+        54.0
+      ],
+      "volume_mm3": 6463.013
+    },
+    "build": {
+      "version": 1,
+      "backend": "openscad",
+      "source_format": "openscad",
+      "ok": true,
+      "units": "mm",
+      "axes": {
+        "x": "width",
+        "y": "depth",
+        "z": "height"
+      },
+      "views": [
+        "isometric",
+        "front",
+        "top",
+        "right"
+      ],
+      "measurements": {
+        "watertight": true,
+        "components": 1,
+        "triangles": 1764,
+        "extents_mm": [
+          48.0,
+          8.0,
+          54.0
+        ],
+        "volume_mm3": 6463.013
+      },
+      "diagnostics": [],
+      "drawing_evaluated": false
+    },
+    "compile_log": "Geometries in cache: 9\nGeometry cache size in bytes: 312136\nCGAL Polyhedrons in cache: 3\nCGAL cache size in bytes: 6156432\nTotal rendering time: 0:00:00.760\n   Top level object is a 3D object:\n   Simple:        yes\n   Vertices:      884\n   Halfedges:    4664\n   Edges:        2332\n   Halffacets:   2900\n   Facets:       1450\n   Volumes:         2",
+    "files": {
+      "scad": "attempt-02/model.scad",
+      "stl": "attempt-02/model.stl",
+      "views": {
+        "isometric": "attempt-02/view-isometric.png",
+        "front": "attempt-02/view-front.png",
+        "top": "attempt-02/view-top.png",
+        "right": "attempt-02/view-right.png"
+      }
+    },
+    "supervisor": {
+      "action": "repair_scad",
+      "problems": [
+        "Shape sanity failure: The rendered Top view is a simple capsule (straight bar), but the source drawing (view_5) shows a U-shape.",
+        "Orientation mismatch: The handle is currently built in the XZ plane (standing up), but the primary view (view_5) implies the U-shape should be in the XY plane (lying flat).",
+        "Projection similarity is low (0.664) because the Top view projection does not match the U-shaped source."
+      ],
+      "preserve": [
+        "Leg length (30mm), Bend radius (20mm), and Handle diameter (8mm).",
+        "The continuous solid nature of the handle (sweep of circle along path)."
+      ],
+      "instructions": "Rotate the entire handle geometry by 90 degrees around the X-axis. This will lay the handle flat in the XY plane, ensuring the Top view projection matches the U-shaped source drawing (view_5). Ensure the legs extend in the negative Y direction and the bend is centered at the origin.",
+      "confidence": 1.0
+    }
+  },
+  {
+    "attempt": 3,
+    "action": "repair_scad",
+    "preflight": {
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "expected_subtractive_feature_groups": 0
+    },
+    "compiler_repairs": [],
+    "uniform_scale": null,
+    "evaluation": {
+      "score": 88.4,
+      "valid_mesh": true,
+      "accepted": false,
+      "mandatory_gates": {
+        "compiled": true,
+        "topology": true,
+        "dimensions": true,
+        "shape_sanity": false,
+        "features": true,
+        "projections": false,
+        "build_envelope": true
+      },
+      "scores": {
+        "topology": 45,
+        "dimensions": 20.0,
+        "features": 20,
+        "projections": 3.4
+      },
+      "projection_similarity": {
+        "top": 0.224
+      },
+      "profile_topology": {
+        "top": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 7,
+          "crop_internal_profiles": 0,
+          "source_aspect": 4.35,
+          "rendered_aspect": 0.888,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": []
+        }
+      },
+      "failures": [
+        "degenerate or implausible axis dimensions: X=48 mm vs expected 16.73 mm, Z=8 mm vs expected 54 mm",
+        "CAD projections poorly match the drawing: top similarity 0.22 (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly."
+      ]
+    },
+    "mesh_health": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 1764,
+      "extents_mm": [
+        48.0,
+        54.0,
+        8.0
+      ],
+      "volume_mm3": 6463.011
+    },
+    "build": {
+      "version": 1,
+      "backend": "openscad",
+      "source_format": "openscad",
+      "ok": true,
+      "units": "mm",
+      "axes": {
+        "x": "width",
+        "y": "depth",
+        "z": "height"
+      },
+      "views": [
+        "isometric",
+        "front",
+        "top",
+        "right"
+      ],
+      "measurements": {
+        "watertight": true,
+        "components": 1,
+        "triangles": 1764,
+        "extents_mm": [
+          48.0,
+          54.0,
+          8.0
+        ],
+        "volume_mm3": 6463.011
+      },
+      "diagnostics": [],
+      "drawing_evaluated": false
+    },
+    "compile_log": "Geometries in cache: 9\nGeometry cache size in bytes: 169288\nCGAL Polyhedrons in cache: 4\nCGAL cache size in bytes: 8166016\nTotal rendering time: 0:00:00.861\n   Top level object is a 3D object:\n   Simple:        yes\n   Vertices:      884\n   Halfedges:    4664\n   Edges:        2332\n   Halffacets:   2900\n   Facets:       1450\n   Volumes:         2",
+    "files": {
+      "scad": "attempt-03/model.scad",
+      "stl": "attempt-03/model.stl",
+      "views": {
+        "isometric": "attempt-03/view-isometric.png",
+        "front": "attempt-03/view-front.png",
+        "top": "attempt-03/view-top.png",
+        "right": "attempt-03/view-right.png"
+      }
+    }
+  }
+]

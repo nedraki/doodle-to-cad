@@ -1,0 +1,143 @@
+{
+  "object": "Wheel Disc",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "front",
+      "sheet_region": "view_4",
+      "what_it_constrains": "Primary geometry: Outer diameter (OD), hub diameter, spoke count (8), spoke angular distribution, and rim thickness. Defines the XY profile."
+    },
+    {
+      "direction": "right",
+      "sheet_region": "view_5",
+      "what_it_constrains": "Thickness (Z-axis depth) of the wheel disc. Shows the uniform thickness of the object."
+    },
+    {
+      "direction": "top",
+      "sheet_region": "view_2",
+      "what_it_constrains": "Confirms thickness and flatness (top-down view)."
+    },
+    {
+      "direction": "bottom",
+      "sheet_region": "view_3",
+      "what_it_constrains": "Confirms thickness and flatness (bottom-up view)."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "wheel_body",
+      "description": "Single connected solid consisting of an outer rim, central hub, and 8 radial spokes.",
+      "material": "plastic"
+    }
+  ],
+  "features": [
+    {
+      "id": "outer_rim",
+      "type": "ring",
+      "description": "Outer circular boundary of the wheel."
+    },
+    {
+      "id": "central_hub",
+      "type": "cylinder",
+      "description": "Central solid disk."
+    },
+    {
+      "id": "spokes",
+      "type": "radial_bar",
+      "description": "8 straight bars connecting hub to rim."
+    }
+  ],
+  "relations": [
+    {
+      "type": "concentric",
+      "targets": [
+        "outer_rim",
+        "central_hub"
+      ]
+    },
+    {
+      "type": "connects",
+      "source": "spokes",
+      "target": "central_hub"
+    },
+    {
+      "type": "connects",
+      "source": "spokes",
+      "target": "outer_rim"
+    }
+  ],
+  "symmetry": {
+    "type": "rotational",
+    "order": 8,
+    "axis": "Z"
+  },
+  "repetitions": [
+    {
+      "feature_id": "spokes",
+      "count": 8,
+      "pattern": "radial",
+      "spacing": "45 degrees"
+    }
+  ],
+  "dimensions": {
+    "max_width": 27.8,
+    "max_depth": 120.0,
+    "max_height": 9.5,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "Exact hub diameter and spoke width are estimated from the visual aspect ratio of the drawing relative to the OD."
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "The object is a flat wheel disc. The front view (view_4) provides the 2D profile. The side view (view_5) confirms a uniform thickness of 8mm. The geometry is constructed by extruding the 2D profile (Rim + Hub + Spokes) along the Z-axis.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "extrude",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_2",
+        "operation": "extrude",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "owner": "wheel_body",
+        "parameters": {
+          "depth": 8
+        },
+        "source_views": [
+          "view_5"
+        ]
+      }
+    ],
+    "unresolved_constraints": [
+      "Exact hub diameter and spoke width are estimated from the visual aspect ratio of the drawing relative to the OD."
+    ]
+  },
+  "user_intent": {
+    "description": "Wheel disc: outer rim, eight evenly spaced straight spokes, central hub. One connected solid of uniform thickness.",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "120"
+  },
+  "source_view_group_count": 6,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

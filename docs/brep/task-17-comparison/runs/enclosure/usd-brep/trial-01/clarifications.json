@@ -1,0 +1,20 @@
+[
+  {
+    "question": {
+      "feature_id": "box_body",
+      "feature_label": "Box body walls and floor",
+      "reason": "The drawing shows the outer envelope and the open top, but does not specify the wall thickness or floor thickness. The notes state 'Uniform walls', implying walls and floor might be the same, but the value is missing.",
+      "kind": "uniform_thickness",
+      "id": "8dc9f8c7506648edbb1a894da67e1f10",
+      "text": "Wall and floor thickness (mm)?",
+      "maximum_thickness_mm": 120.0
+    },
+    "status": "answered",
+    "answer": {
+      "question_id": "8dc9f8c7506648edbb1a894da67e1f10",
+      "feature_id": "box_body",
+      "kind": "uniform_thickness",
+      "thickness_mm": 3
+    }
+  }
+]

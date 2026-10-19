@@ -1,0 +1,44 @@
+{
+  "view_frame": "Front view (primary) uses XZ plane (X width, Z height). Top view uses XY plane (X width, Y depth). Right view (not shown) would use YZ plane. The drawing shows the Front view (bottom) and Top view (top).",
+  "features": [
+    {
+      "id": "box_body",
+      "shape": "Open-top rectangular box",
+      "section": "Uniform wall thickness",
+      "axis_or_plane": "XY profile extruded along Z",
+      "dimensions": [
+        "ASSUMED: Outer Width (X) = 100mm",
+        "ASSUMED: Outer Depth (Y) = 60mm",
+        "ASSUMED: Height (Z) = 40mm",
+        "Thickness = 3mm (from clarification)"
+      ],
+      "placement": "Centered at origin. Outer bounds: X[-50, 50], Y[-30, 30], Z[0, 40]. Inner cavity bounds: X[-47, 47], Y[-27, 27], Z[3, 40].",
+      "evidence": "Top view shows rectangular outline. Front view shows rectangular outline. Notes specify 'Box with an open top' and 'Uniform walls'."
+    },
+    {
+      "id": "front_window",
+      "shape": "Rectangular through-hole",
+      "section": "Rectangular",
+      "axis_or_plane": "Front face (XZ plane at Y=-30)",
+      "dimensions": [
+        "ASSUMED: Window Width (X) = 60mm",
+        "ASSUMED: Window Height (Z) = 20mm"
+      ],
+      "placement": "Centered on Front face. X[-30, 30], Z[10, 30]. Extends through wall thickness (Y[-30, -27]).",
+      "evidence": "Front view shows a rectangular outline inside the main rectangle. Notes specify 'rectangular window through the front wall'."
+    }
+  ],
+  "connections": [
+    "front_window is a subtractive feature from box_body front wall"
+  ],
+  "edit_rules": [
+    "Changing box_body outer dimensions must maintain wall thickness of 3mm.",
+    "Changing front_window dimensions must keep it centered on the front face.",
+    "Changing box_body height must keep the window vertically centered relative to the new height."
+  ],
+  "unresolved": [
+    "Exact outer dimensions (Width, Depth, Height) are not dimensioned in the drawing; assumed values provided.",
+    "Exact window dimensions (Width, Height) are not dimensioned in the drawing; assumed values provided."
+  ],
+  "clarification": null
+}

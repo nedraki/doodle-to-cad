@@ -1,0 +1,139 @@
+{
+  "object": "Solid transition piece (Rectangular-to-Circular Pyramid)",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "front",
+      "sheet_region": "view_6",
+      "what_it_constrains": "Height (60mm), bottom width (60mm), top width (30mm), and the trapezoidal profile of the front/back faces."
+    },
+    {
+      "direction": "top",
+      "sheet_region": "view_5",
+      "what_it_constrains": "Top circular face (diameter 30mm) and the overall footprint (60mm x 40mm rectangle)."
+    },
+    {
+      "direction": "left",
+      "sheet_region": "view_5",
+      "what_it_constrains": "Side profile (trapezoidal), bottom depth (40mm), and top depth (30mm)."
+    },
+    {
+      "direction": "bottom",
+      "sheet_region": "view_4",
+      "what_it_constrains": "Bottom rectangular face (60mm x 40mm)."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "part_1",
+      "name": "Transition Piece",
+      "material": "Generic Polymer",
+      "description": "A solid geometric primitive transitioning from a rectangular base to a circular top."
+    }
+  ],
+  "features": [
+    {
+      "id": "feat_bottom",
+      "type": "face",
+      "owner": "part_1",
+      "geometry": "Rectangle 60mm x 40mm",
+      "location": "Z=0"
+    },
+    {
+      "id": "feat_top",
+      "type": "face",
+      "owner": "part_1",
+      "geometry": "Circle Diameter 30mm",
+      "location": "Z=60"
+    },
+    {
+      "id": "feat_sides",
+      "type": "surface",
+      "owner": "part_1",
+      "geometry": "Lofted surface connecting bottom rectangle to top circle",
+      "description": "Straight sides connecting the two profiles."
+    }
+  ],
+  "relations": [
+    {
+      "type": "coaxial",
+      "targets": [
+        "feat_bottom",
+        "feat_top"
+      ],
+      "axis": "Z"
+    }
+  ],
+  "symmetry": "Symmetric about XZ and YZ planes",
+  "repetitions": [],
+  "dimensions": {
+    "width": 60.0,
+    "depth": 40.0,
+    "diameter": 30.0,
+    "height": 60.0,
+    "max_width": 33.4,
+    "max_depth": 6.8,
+    "max_height": 60.0,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "The exact curvature of the side faces (ruled vs. geodesic) is inferred from 'straight sides' to be ruled surfaces (loft)."
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "The object is a solid transition piece. The views clearly define a rectangular base (60x40) and a circular top (d=30) at a height of 60. The 'straight sides' constraint implies a lofted geometry between the two profiles.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "loft",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_3",
+        "operation": "loft",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "owner": "part_1",
+        "parameters": {
+          "profiles": [
+            "op_1",
+            "op_2"
+          ],
+          "ruled": true,
+          "solid": true
+        },
+        "source_views": [
+          "view_6"
+        ]
+      }
+    ],
+    "unresolved_constraints": [
+      "The exact curvature of the side faces (ruled vs. geodesic) is inferred from 'straight sides' to be ruled surfaces (loft)."
+    ]
+  },
+  "user_intent": {
+    "description": "Solid transition piece: rectangular bottom, circular top, flat caps, straight sides. Not a duct, not hollow.",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "60"
+  },
+  "source_view_group_count": 9,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

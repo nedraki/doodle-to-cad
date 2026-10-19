@@ -1,0 +1,191 @@
+{
+  "object": "Notched Plate",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "top",
+      "sheet_region": "view_5",
+      "constrains": "XY profile (60x40 rectangle), top notch (20x10), top-right fillet (R6), and hole position (12, 15) relative to bottom-left corner."
+    },
+    {
+      "direction": "front",
+      "sheet_region": "view_10",
+      "constrains": "Thickness (6mm) and vertical extent. Confirms uniform thickness."
+    },
+    {
+      "direction": "left",
+      "sheet_region": "view_11",
+      "constrains": "Thickness (6mm) and depth (40mm). Confirms uniform thickness."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "part_1",
+      "name": "Main Plate Body",
+      "material": "generic_plastic",
+      "bounding_box": [
+        60,
+        40,
+        6
+      ]
+    }
+  ],
+  "features": [
+    {
+      "id": "feat_1",
+      "type": "base_profile",
+      "owner": "part_1",
+      "description": "Rectangular base 60mm wide x 40mm deep.",
+      "source_views": [
+        "view_5"
+      ]
+    },
+    {
+      "id": "feat_2",
+      "type": "cutout",
+      "owner": "part_1",
+      "description": "Rectangular notch on top edge, 20mm wide x 10mm deep, centered horizontally.",
+      "parameters": {
+        "width": 20,
+        "depth": 10,
+        "position": "centered on top edge"
+      },
+      "source_views": [
+        "view_5"
+      ]
+    },
+    {
+      "id": "feat_3",
+      "type": "fillet",
+      "owner": "part_1",
+      "description": "R6 fillet on the top-right corner.",
+      "parameters": {
+        "radius": 6,
+        "location": "top_right"
+      },
+      "source_views": [
+        "view_5"
+      ]
+    },
+    {
+      "id": "feat_4",
+      "type": "hole",
+      "owner": "part_1",
+      "description": "\u00d88mm through hole.",
+      "parameters": {
+        "diameter": 8,
+        "depth": "through",
+        "position": {
+          "x": 12,
+          "y": 15,
+          "origin": "bottom_left"
+        }
+      },
+      "source_views": [
+        "view_5"
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "type": "coincidence",
+      "elements": [
+        "feat_1",
+        "feat_2",
+        "feat_3",
+        "feat_4"
+      ],
+      "description": "All features are part of the single extruded plate body."
+    }
+  ],
+  "symmetry": "None (asymmetric due to hole and fillet)",
+  "repetitions": [],
+  "dimensions": {
+    "length": 40.0,
+    "thickness": 6.0,
+    "width": 20.0,
+    "depth": 10.0,
+    "radius": 6.0,
+    "diameter": 8.0,
+    "position_x": 12.0,
+    "position_y": 15.0,
+    "max_width": 15.62,
+    "max_depth": 60.0,
+    "max_height": 14.15,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [],
+  "interpretation_conflicts": [],
+  "generation_notes": "The object is a simple 2.5D plate. The top view (view_5) provides the complete XY profile. The notch is centered on the top edge (Y=40), spanning X=20 to X=40. The fillet is at the top-right corner (X=60, Y=40). The hole is at (12, 15) from the bottom-left (0,0). The front view (view_10) confirms the thickness is 6mm.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "extrude",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_2",
+        "operation": "extrude",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "owner": "part_1",
+        "parameters": {
+          "height": 6
+        },
+        "source_views": [
+          "view_10",
+          "view_11"
+        ]
+      },
+      {
+        "id": "feat_2",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Rectangular notch on top edge, 20mm wide x 10mm deep, centered horizontally."
+        },
+        "source_views": []
+      },
+      {
+        "id": "feat_4",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "\u00d88mm through hole."
+        },
+        "source_views": []
+      }
+    ],
+    "unresolved_constraints": []
+  },
+  "user_intent": {
+    "description": "",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "60"
+  },
+  "source_view_group_count": 11,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

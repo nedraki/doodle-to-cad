@@ -1,0 +1,144 @@
+{
+  "object": "Box with open top and rectangular window",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "top",
+      "sheet_region": "upper",
+      "constrains": "Outer footprint (X, Y) and wall thickness"
+    },
+    {
+      "direction": "front",
+      "sheet_region": "lower",
+      "constrains": "Front elevation (X, Z), wall height, and window position/size"
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "box_body",
+      "description": "Single watertight body forming the box walls and floor"
+    }
+  ],
+  "features": [
+    {
+      "id": "box_shell",
+      "type": "shell",
+      "description": "Rectangular box with uniform walls and an open top"
+    },
+    {
+      "id": "front_window",
+      "type": "cutout",
+      "description": "Rectangular through-hole in the front wall"
+    }
+  ],
+  "relations": [
+    {
+      "type": "contains",
+      "parent": "box_shell",
+      "child": "front_window"
+    }
+  ],
+  "symmetry": {
+    "axes": [
+      "X"
+    ],
+    "description": "Symmetric about the vertical center plane (X-axis)"
+  },
+  "repetitions": [],
+  "dimensions": {
+    "max_dimension": 120,
+    "wall_thickness": "uniform",
+    "window_shape": "rectangular",
+    "max_width": 120.0,
+    "max_depth": 81.68,
+    "max_height": 43.96,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "Exact wall thickness value is not specified, inferred as uniform",
+    "Exact window dimensions relative to box are estimated from view proportions"
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "The object is modeled as a single watertight solid. The top view defines the outer footprint and wall thickness. The front view defines the height and the window cutout. The window is treated as a subtractive feature through the front wall.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "shell",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op1",
+        "operation": "extrude",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "owner": "box_body",
+        "parameters": {
+          "profile": "outer_rectangle",
+          "height": "box_height"
+        },
+        "source_views": [
+          "view_1",
+          "view_2"
+        ]
+      },
+      {
+        "id": "op2",
+        "operation": "shell",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "owner": "box_body",
+        "parameters": {
+          "remove_faces": [
+            "top"
+          ],
+          "thickness": "wall_thickness"
+        },
+        "source_views": [
+          "view_1",
+          "view_2"
+        ]
+      },
+      {
+        "id": "front_window",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Rectangular through-hole in the front wall"
+        },
+        "source_views": []
+      }
+    ],
+    "unresolved_constraints": [
+      "Exact wall thickness value",
+      "Exact window dimensions"
+    ]
+  },
+  "user_intent": {
+    "description": "Box with an open top and a rectangular window through the front wall. Uniform walls.",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "120"
+  },
+  "source_view_group_count": 2,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}
