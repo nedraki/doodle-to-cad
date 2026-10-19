@@ -3,7 +3,7 @@
 | backend | trials | done | product-accepted | accept rate | build OK | GT overall pass | mean score | median wall (s) |
 |---|---|---|---|---|---|---|---|---|
 | openscad | 46 | 44 | 22 | 50% | 95% | 5% | 91.3 | 192.5 |
-| usd-brep | 46 | 31 | 0 | 0% | 100% | 0% | None | 113.4 |
+| usd-brep | 46 | 31 | 1 | 3% | 100% | 0% | None | 113.4 |
 
 ## Ground-truth check pass rates (done trials)
 
@@ -29,7 +29,7 @@
 | 003_front_grille_multiview | 0/2 (pass 0/2) [74.4, 78.2] | 0/2 (pass 0/2)  |
 | 004_flat_mounting_plate | 2/2 (pass 0/2) [99.9, 99.9] | 0/2 (pass 0/2)  |
 | 005_bolt_flange | 0/2 (pass 0/2) [98.7, 100.0] | 0/2 (pass 0/2)  |
-| 006_stepped_knob | 2/2 (pass 0/2) [97.2, 92.3] | 0/2 (pass 0/2)  |
+| 006_stepped_knob | 2/2 (pass 0/2) [97.2, 92.3] | 1/2 (pass 0/2)  |
 | 007_angle_bracket_holes | 2/2 (pass 0/2) [100.0, 99.7] | 0/2 (pass 0/2)  |
 | 008_open_enclosure_window | 1/2 (pass 0/2) [98.4, 98.4] | 0/2 (pass 0/2)  |
 | 009_hex_prism_knob | 2/2 (pass 0/2) [97.9, 95.1] | 0/2 (pass 0/2)  |

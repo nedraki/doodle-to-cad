@@ -1,12 +1,21 @@
 """Compose failure montages for docs/brep/bench-final.
 
 Rows: [input drawing | what usd-brep built | ground truth], captioned with the
-published verdict/failure text. Renders missing meshes through the product's
-own CadViewer (wall app on 8114); reuses pipeline view-isometric.png renders
-where the run saved them.
+published verdict/failure text. Provenance rules (added after the Codex
+review of 907eed7, which caught that sorting brep-* dirs picks random
+revisions — it selected an edited 96 mm bracket instead of the measured
+80 mm original):
+  * the mesh rendered is ALWAYS the archived `runs/.../stl/model.stl` copy
+    written by the harness, verified sha256 against the row's build.sha256
+    BEFORE rendering — a mismatch aborts the montage;
+  * every montage gets a provenance.json entry binding image sha256 to
+    row.json sha256, mesh sha256 and panel sources, so audit.py can prove
+    image-to-row correspondence (a swapped image fails the audit);
+  * captions quote measured row data only — no visual impressions.
 """
-import glob
+import hashlib
 import json
+import os
 import shutil
 from pathlib import Path
 
@@ -24,12 +33,15 @@ FONT = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf'
 FONT_S = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf', 14)
 
 
-def render_stl(stl_path, out_png, view='isometric'):
+def sha256(path):
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+
+def render_stl(stl_path, out_png):
     dst = RENDER_SERVE / f"{out_png.stem}.stl"
     shutil.copy2(stl_path, dst)
     from playwright.sync_api import sync_playwright
     with sync_playwright() as p:
-        import os
         browser = p.chromium.launch(headless=True, executable_path=os.environ.get(
             'CHROMIUM_EXECUTABLE',
             '/home/sparkie/.cache/ms-playwright/chromium-1234/chrome-linux/chrome'), args=[
@@ -79,7 +91,7 @@ def refusal_panel(text, w=420, h=300):
     im = Image.new('RGB', (w, h), (255, 249, 237))
     d = ImageDraw.Draw(im)
     d.rectangle([0, 0, w - 1, h - 1], outline=(255, 89, 60), width=3)
-    d.text((16, 14), 'KERNEL REFUSAL (published)', font=FONT, fill=(180, 40, 20))
+    d.text((16, 14), 'MODEL-STAGE REFUSAL (published)', font=FONT, fill=(180, 40, 20))
     words, line, y = text.split(), '', 52
     for word in words:
         while d.textlength(line + word, font=FONT_S) > w - 32:
@@ -89,37 +101,57 @@ def refusal_panel(text, w=420, h=300):
     return im
 
 
-def brep_stl(run_id):
-    hits = sorted(glob.glob(f'{ROOT}/results/bench-final/{run_id}/brep-*/model.stl'))
-    return hits[-1] if hits else None
+def row(drawing, trial=1, gt=None):
+    cell = BENCH / 'runs' / drawing / 'usd-brep' / f'trial-{trial:02d}'
+    r = json.loads((cell / 'row.json').read_text())
+    status = (r.get('product') or {}).get('status') or r.get('job_status')
 
+    # mesh provenance: ONLY the harness-archived copy, hash-verified vs row
+    mesh = None
+    if r.get('build') and (r['build'] or {}).get('sha256'):
+        archived = cell / 'stl' / 'model.stl'
+        if not archived.exists():
+            raise SystemExit(f'{drawing}: archived STL missing — refusing to compose')
+        if sha256(archived) != r['build']['sha256']:
+            raise SystemExit(f'{drawing}: archived STL hash != row build.sha256 — refusing')
+        mesh = archived
 
-def row(drawing, backend='usd-brep', trial=1, gt=None, os_alt=None, refusal=None):
-    runs = json.load(open(BENCH / 'runs' / drawing / backend / f'trial-{trial:02d}' / 'row.json'))
-    input_png = BENCH / 'runs' / drawing / backend / f'trial-{trial:02d}' / 'input.png'
-    left = thumb(input_png)
-    rid = runs.get('run_id')
-    status = (runs.get('product') or {}).get('status') or runs.get('job_status')
-    fails = '; '.join((runs.get('product') or {}).get('failures') or [])[:150]
-    if refusal:
-        mid = refusal_panel(refusal)
-        cap_mid = 'usd-brep: refused (no mesh)'
+    panels = {'input': {'path': str(cell / 'input.png'), 'sha256': sha256(cell / 'input.png')}}
+    left = thumb(cell / 'input.png')
+    if mesh:
+        render_stl(mesh, OUT / f'{drawing}_usd-brep_t{trial}_brep.png')
+        mid = thumb(OUT / f'{drawing}_usd-brep_t{trial}_brep.png')
+        cap_mid = f'usd-brep built [{status}] (mesh sha {r["build"]["sha256"][:12]})'
+        panels['brep_mesh'] = {'path': str(mesh), 'sha256': r['build']['sha256']}
     else:
-        stl = brep_stl(rid)
-        mid = thumb(render_stl(stl, OUT / f'{drawing}_{backend}_t{trial}_brep.png')) if stl \
-            else refusal_panel('no mesh was produced for this trial')
-        cap_mid = f'usd-brep built  [{status}]'
+        msg = (r.get('error') or {}).get('message', 'no mesh produced')
+        mid = refusal_panel(msg)
+        cap_mid = 'usd-brep: refused at model stage (no mesh)'
+        panels['brep_mesh'] = {'path': None, 'sha256': None}
     if gt:
         gp = Path(gt)
         if gp.suffix == '.stl':
-            gp = render_stl(gp, OUT / f'{drawing}_t{trial}_gt.png')
-        g = thumb(gp)
-        cap_right = 'ground truth (reference STL)'
+            render_stl(gp, OUT / f'{drawing}_t{trial}_gt.png')
+            g = thumb(OUT / f'{drawing}_t{trial}_gt.png')
+            cap_right = 'ground truth (reference STL)'
+            panels['gt'] = {'path': str(gt), 'sha256': sha256(gt)}
+        else:
+            g = thumb(gp)
+            cap_right = 'ground truth (pipeline render)'
+            panels['gt'] = {'path': str(gp), 'sha256': sha256(gp)}
     else:
         der = ROOT / 'benchmarks/cases' / drawing / 'derived' / 'view-isometric.png'
         g = thumb(der)
         cap_right = 'ground truth (pipeline render)'
-    W, H, LBL, CAP = 420 * 3 + 32, 300 + 34 + 66, 40, 44
+        panels['gt'] = {'path': str(der), 'sha256': sha256(der)}
+
+    b = r.get('build') or {}
+    facts = (f"measured: genus={b.get('genus')} extents={b.get('extents_mm')} "
+             f"volume={b.get('volume_mm3')}mm3")
+    fails = '; '.join((r.get('product') or {}).get('failures') or []) \
+        or ((r.get('error') or {}).get('message') or '')
+
+    W, H, LBL = 420 * 3 + 32, 300 + 34 + 66, 40
     sheet = Image.new('RGB', (W, H), (250, 250, 250))
     d = ImageDraw.Draw(sheet)
     d.text((12, 8), f'{drawing}   ·   usd-brep trial {trial}', font=FONT, fill=(20, 30, 40))
@@ -127,37 +159,27 @@ def row(drawing, backend='usd-brep', trial=1, gt=None, os_alt=None, refusal=None
         x = 8 + i * 420
         sheet.paste(im, (x, LBL))
         d.text((x + 6, LBL + 300 + 6), cap, font=FONT_S, fill=(60, 70, 80))
-    d.text((12, H - 30), ('failure: ' + (fails or refusal or ''))[:170], font=FONT_S, fill=(150, 40, 30))
+    d.text((12, H - 52), facts[:185], font=FONT_S, fill=(30, 40, 60))
+    d.text((12, H - 30), ('failure: ' + fails)[:185], font=FONT_S, fill=(150, 40, 30))
     name = f'{drawing}_t{trial}.png'
     sheet.save(OUT / name)
+
+    prov_file = OUT / 'provenance.json'
+    prov = json.loads(prov_file.read_text()) if prov_file.exists() else {}
+    prov[name] = {'row': str(cell / 'row.json'), 'row_sha256': sha256(cell / 'row.json'),
+                  'image_sha256': sha256(OUT / name), 'verdict': status,
+                  'measured': facts, 'failures': fails, 'panels': panels}
+    prov_file.write_text(json.dumps(prov, indent=2))
     print('row', name, '|', status)
 
 
 if __name__ == '__main__':
+    for f in OUT.glob('*.png'):
+        f.unlink()
+    (OUT / 'provenance.json').unlink(missing_ok=True)
     row('003_front_grille_multiview')
     row('101_bltouch_bracket')
     row('007_angle_bracket_holes')
     row('wheel', trial=2, gt=BENCH / 'references' / 'wheel-reference.stl')
     row('constant_radius_handle', gt=BENCH / 'references' / 'curved_handle-reference.stl')
-    vase = json.load(open(BENCH / 'runs' / '002_greek_vase_silhouette' / 'usd-brep' / 'trial-01' / 'row.json'))
-    msg = (vase.get('error') or {}).get('message', '')
-    # rebuild the vase row manually: input + refusal panel + no GT render available
-    import PIL.Image as I
-    runs_dir = BENCH / 'runs' / '002_greek_vase_silhouette' / 'usd-brep' / 'trial-01'
-    left = thumb(runs_dir / 'input.png')
-    mid = refusal_panel(msg)
-    gtf = ROOT / 'benchmarks/cases/002_greek_vase_silhouette/derived/view-isometric.png'
-    g = thumb(gtf)
-    W, H, LBL = 420 * 3 + 32, 300 + 34 + 66, 40
-    sheet = I.new('RGB', (W, H), (250, 250, 250))
-    d = ImageDraw.Draw(sheet)
-    d.text((12, 8), '002_greek_vase_silhouette   ·   usd-brep trial 1', font=FONT, fill=(20, 30, 40))
-    for i, (im, cap) in enumerate(((left, 'input drawing (sheet)'),
-                                   (mid, 'usd-brep: refused'),
-                                   (g, 'ground truth (pipeline render)'))):
-        x = 8 + i * 420
-        sheet.paste(im, (x, LBL))
-        d.text((x + 6, LBL + 300 + 6), cap, font=FONT_S, fill=(60, 70, 80))
-    d.text((12, H - 30), msg[:170], font=FONT_S, fill=(150, 40, 30))
-    sheet.save(OUT / '002_greek_vase_silhouette_t1.png')
-    print('rows done')
+    row('002_greek_vase_silhouette')

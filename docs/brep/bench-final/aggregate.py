@@ -21,12 +21,19 @@ def rate(n, d):
 
 
 def verdict(r):
-    """Product verdict per backend semantics: openscad carries accepted+score;
-    the direct BRep path has score=None and reports via product.status."""
+    """Product acceptance EXACTLY as the frozen plan defines it
+    (TRIAL-PLAN.json product_acceptance):
+      openscad: result.success (agent accepted, score >= 70)
+      usd-brep: evaluation.status != 'failed'  -- the BRep path never
+      auto-accepts fidelity (accepted stays false by design), so 'not
+      failed' means 'automatic checks passed; still unverified', NOT
+      fully accepted. A stricter status=='passed' is unsatisfiable by the
+      evaluator (brep_checks.py only emits failed|unverified) and was a
+      reporting error in rev 907eed7; both counts are published now."""
     p = r.get("product") or {}
     if p.get("score") is not None:
         return bool(p.get("accepted"))
-    return p.get("status") == "passed"
+    return p.get("status") is not None and p.get("status") != "failed"
 
 
 def main():

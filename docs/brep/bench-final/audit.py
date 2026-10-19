@@ -1,14 +1,17 @@
 """Claim gate for docs/brep/bench-final/README.md.
 
 Recomputes every headline number from the published row.json artifacts and
-fails if any README claim drifted. Run from repo root:
+fails if any README claim drifted. Montages are bound to their rows through
+images/provenance.json: image sha256 -> row sha256 -> mesh sha256 -> archived
+STL bytes. Swapping or editing any link of that chain fails the audit.
+Run from repo root:
   PYTHONPATH=. .venv/bin/python docs/brep/bench-final/audit.py
 """
 import glob
 import hashlib
 import json
-import re
 import sys
+from datetime import datetime
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -17,6 +20,10 @@ results = []
 
 def check(name, ok, detail=""):
     results.append((name, bool(ok), detail))
+
+
+def sha256(path):
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
 rows = [json.load(open(f)) for f in glob.glob(str(HERE / "runs/*/*/trial-*/row.json"))]
@@ -37,16 +44,39 @@ for v in refs.values():
 check("references: 17 GT STL + 3 openscad refs + 3 no_ground_truth",
       kinds == {"ground_truth_stl": 17, "openscad_reference": 3, "no_ground_truth": 3}, str(kinds))
 
+# archived mesh provenance: every row build.sha256 must equal the archived STL
+n_hash = m_hash = 0
+for f in glob.glob(str(HERE / "runs/*/*/trial-*/row.json")):
+    r = json.load(open(f))
+    h = (r.get("build") or {}).get("sha256")
+    if not h:
+        continue
+    n_hash += 1
+    try:
+        m_hash += sha256(Path(f).parent / "stl" / "model.stl") == h
+    except FileNotFoundError:
+        pass
+check("archived STLs match row build.sha256 (75/75)", n_hash == 75 and m_hash == 75,
+      f"{m_hash}/{n_hash}")
+
+# headline table, using the FROZEN PLAN acceptance definition
 acc_os = sum(1 for r in osd if (r.get("product") or {}).get("accepted"))
 bld_os = sum(1 for r in osd if (r.get("checks") or {}).get("build_success"))
-ovr_os = sum(1 for r in osd if (r.get("checks") or {}).get("overall_pass"))
-check("openscad: 44/46 done, 22 accepted, 42 build_ok, 2 GT overall_pass",
-      (len(osd), acc_os, bld_os, ovr_os) == (44, 22, 42, 2),
-      f"{len(osd)},{acc_os},{bld_os},{ovr_os}")
-passed_usd = sum(1 for r in usdd if (r.get("product") or {}).get("status") == "passed")
+full_gt_os = [r for r in osd if (r.get("checks") or {}).get("extents_pass")
+              and (r.get("checks") or {}).get("genus_pass") and (r.get("checks") or {}).get("volume_pass")]
+check("openscad: 44/46 done, 22 accepted, 42 build_ok, complete-GT-match = 2x solid_transition",
+      (len(osd), acc_os, bld_os) == (44, 22, 42) and len(full_gt_os) == 2
+      and {r["drawing"] for r in full_gt_os} == {"solid_transition"},
+      f"{len(osd)},{acc_os},{bld_os},{sorted({r['drawing'] for r in full_gt_os})}")
+plan_acc_usd = [r for r in usdd if (r.get("product") or {}).get("status") not in (None, "failed")]
+strict_usd = sum(1 for r in usdd if (r.get("product") or {}).get("status") == "passed")
 bld_usd = sum(1 for r in usdd if (r.get("checks") or {}).get("build_success"))
-check("usd-brep: 31/46 done, 0 status=passed, 31/31 build_ok",
-      (len(usdd), passed_usd, bld_usd) == (31, 0, 31), f"{len(usdd)},{passed_usd},{bld_usd}")
+check("usd-brep: 31/46 done, plan-acceptance 1 (006_stepped_knob unverified), strict-passed 0, 31 build_ok",
+      len(usdd) == 31 and len(plan_acc_usd) == 1
+      and plan_acc_usd[0]["drawing"] == "006_stepped_knob"
+      and plan_acc_usd[0]["product"]["status"] == "unverified"
+      and strict_usd == 0 and bld_usd == 31,
+      f"{len(usdd)},{len(plan_acc_usd)},{strict_usd},{bld_usd}")
 check("errors published: openscad 2, usd-brep 15",
       len(os_) - len(osd) == 2 and len(usd) - len(usdd) == 15,
       f"{len(os_) - len(osd)}/{len(usd) - len(usdd)}")
@@ -54,45 +84,64 @@ q_os = sum(r.get("questions_asked") or 0 for r in os_)
 q_usd = sum(r.get("questions_asked") or 0 for r in usd)
 check("questions: openscad 0 (ask off), usd-brep 9", (q_os, q_usd) == (0, 9), f"{q_os}/{q_usd}")
 
-# wheel at corrected 120 mm: extents AND genus pass both trials
-wh = [json.load(open(f)) for f in glob.glob(str(HERE / "runs/wheel/openscad/trial-*/row.json"))]
-check("wheel @120 mm: both trials pass extents and genus (spokes present)",
-      len(wh) == 2 and all(r["checks"]["extents_pass"] and r["checks"]["genus_pass"]
-                           and r["build"]["genus"] == 8 for r in wh))
-# bevelled block full GT pass both trials
+# wheel: extents+genus pass (8 spokes) BUT volume fails +~18-19% on both backends
+WHEEL_REF_VOL = 43128.5
+wh = [r for r in (json.load(open(f)) for f in
+      glob.glob(str(HERE / "runs/wheel/*/trial-*/row.json")))
+      if r.get("job_status") == "done" and (r.get("checks") or {}).get("build_success")]
+check("wheel: all 3 completed wheel builds pass extents+genus (genus 8) and FAIL volume (+17..20% vs 43128.5 mm3)",
+      len(wh) == 3 and all(r["checks"]["extents_pass"] and r["checks"]["genus_pass"]
+                           and r["build"]["genus"] == 8 and not r["checks"]["volume_pass"]
+                           and 1.17 <= r["build"]["volume_mm3"] / WHEEL_REF_VOL <= 1.21 for r in wh),
+      str([(r["backend"], round(r["build"]["volume_mm3"] / WHEEL_REF_VOL, 3)) for r in wh]))
+# bevelled_block: automatic gates only — must have NO reference (honest labeling)
 bb = [json.load(open(f)) for f in glob.glob(str(HERE / "runs/bevelled_block/openscad/trial-*/row.json"))]
-check("bevelled_block: 2/2 GT overall_pass", all(r["checks"]["overall_pass"] for r in bb) and len(bb) == 2)
+check("bevelled_block: 2/2 automatic overall_pass AND no GT reference (never called a GT pass)",
+      len(bb) == 2 and all(r["checks"]["overall_pass"] and r["checks"]["extents_pass"] is None
+                           for r in bb) and refs["bevelled_block"]["kind"] == "no_ground_truth")
 # vase: usd-brep refused (error rows), never a bogus solid
 vase = [r for r in rows if r["drawing"] == "002_greek_vase_silhouette" and r["backend"] == "usd-brep"]
-check("greek vase usd-brep: refusal errors, no built mesh",
+check("greek vase usd-brep: model-stage refusal errors, no built mesh",
       all(r["job_status"] == "error" and not (r.get("build") or {}).get("watertight") for r in vase))
 # honesty: every error row carries a message (no silent skips)
 check("every error row publishes a message",
       all((r.get("error") or {}).get("message") for r in rows if r.get("job_status") == "error"))
 # README consistency
 text = (HERE / "README.md").read_text()
-check("README headline table matches", "22/44 (50%)" in text and "31/31 (100%)" in text
-      and "0/31 (0%)" in text)
+check("README headline table matches", "22/44 (50%)" in text and "1/31 (3%)" in text
+      and "31/31 (100%)" in text and "solid_transition" in text and "0/31 (0%)" in text)
+check("README carries the Codex-review errata section", "Rev errata" in text and "status != 'failed'" in text)
 # frozen plan precedes trials (honesty rule from #34, reused) — compare parsed datetimes
-from datetime import datetime
 first = min(datetime.fromisoformat(r["submitted_at"]) for r in rows if r.get("submitted_at"))
 check("plan frozen_at precedes every trial",
       datetime.fromisoformat(plan["frozen_at"]) < first)
-# montages: every published image exists and its underlying row still says what the caption claims
-MONTAGES = {
-    "003_front_grille_multiview_t1.png": ("003_front_grille_multiview", "usd-brep", 1, "failed"),
-    "wheel_t2.png": ("wheel", "usd-brep", 2, "failed"),
-    "constant_radius_handle_t1.png": ("constant_radius_handle", "usd-brep", 1, "failed"),
-    "007_angle_bracket_holes_t1.png": ("007_angle_bracket_holes", "usd-brep", 1, "failed"),
-    "101_bltouch_bracket_t1.png": ("101_bltouch_bracket", "usd-brep", 1, "failed"),
-    "002_greek_vase_silhouette_t1.png": ("002_greek_vase_silhouette", "usd-brep", 1, "error"),
-}
-for name, (drw, be, tr, want) in MONTAGES.items():
+
+# montages: PROVEN BINDING image -> provenance.json -> row -> mesh -> bytes.
+# Swapping two montage files, editing a row, or re-exporting a mesh breaks
+# one of the sha256 equalities below.
+prov = json.loads((HERE / "images" / "provenance.json").read_text())
+for name, meta in sorted(prov.items()):
     img = HERE / "images" / name
-    r = json.load(open(HERE / "runs" / drw / be / f"trial-{tr:02d}" / "row.json"))
+    row_path = Path(meta["row"])
+    r = json.load(open(row_path))
     got = (r.get("product") or {}).get("status") or r.get("job_status")
-    check(f"montage {name} committed + row verdict={want}",
-          img.exists() and img.stat().st_size > 10000 and got == want, f"verdict={got}")
+    ok_img = img.exists() and sha256(img) == meta["image_sha256"]
+    ok_row = sha256(row_path) == meta["row_sha256"]
+    ok_verdict = got == meta["verdict"]
+    ok_mesh = True
+    if meta["panels"]["brep_mesh"]["sha256"]:
+        archived = row_path.parent / "stl" / "model.stl"
+        ok_mesh = (archived.exists()
+                   and sha256(archived) == meta["panels"]["brep_mesh"]["sha256"]
+                   and meta["panels"]["brep_mesh"]["sha256"] == (r.get("build") or {}).get("sha256"))
+    check(f"montage {name}: image/row/mesh hash chain + verdict={meta['verdict']}",
+          ok_img and ok_row and ok_verdict and ok_mesh,
+          f"img={ok_img} row={ok_row} verdict={ok_verdict}/{got} mesh={ok_mesh}")
+check("montage set is the 6 published cases", len(prov) == 6, str(len(prov)))
+# non-vacuity: two different montages must NOT bind to each other's row hash
+_a = prov["wheel_t2.png"]["row_sha256"]
+_b = prov["003_front_grille_multiview_t1.png"]["row_sha256"]
+check("binding probe: cross-montage row hashes differ (swap would fail)", _a != _b)
 
 # planted-error self-test
 saved = results[:]
