@@ -1,0 +1,101 @@
+{
+  "job": "fillet_block",
+  "category": "feature",
+  "build_ok": true,
+  "expected_fail": false,
+  "verdict": {
+    "ok": true,
+    "checks": {
+      "corner 1 arc radius": {
+        "status": "passed",
+        "measured_radius_mm": 15.003,
+        "expected_radius_mm": 15.0,
+        "tolerance_mm": 0.1,
+        "centre_error_mm": 0.0092,
+        "fit_rms_mm": 0.0057,
+        "arc_points": 25
+      },
+      "corner 2 arc radius": {
+        "status": "passed",
+        "measured_radius_mm": 15.0072,
+        "expected_radius_mm": 15.0,
+        "tolerance_mm": 0.1,
+        "centre_error_mm": 0.0143,
+        "fit_rms_mm": 0.0048,
+        "arc_points": 25
+      },
+      "corner 3 arc radius": {
+        "status": "passed",
+        "measured_radius_mm": 15.0072,
+        "expected_radius_mm": 15.0,
+        "tolerance_mm": 0.1,
+        "centre_error_mm": 0.0143,
+        "fit_rms_mm": 0.0048,
+        "arc_points": 25
+      },
+      "corner 4 arc radius": {
+        "status": "passed",
+        "measured_radius_mm": 15.0072,
+        "expected_radius_mm": 15.0,
+        "tolerance_mm": 0.1,
+        "centre_error_mm": 0.0143,
+        "fit_rms_mm": 0.0048,
+        "arc_points": 25
+      },
+      "corner material removed": {
+        "status": "passed",
+        "probed": [
+          false,
+          false
+        ]
+      },
+      "body core intact": {
+        "status": "passed"
+      },
+      "face count change": {
+        "status": "passed",
+        "op": "rounded",
+        "kind": "fillet",
+        "faces_before": 21,
+        "faces_after": 25,
+        "face_delta": 4,
+        "expected_face_delta": 4
+      }
+    }
+  },
+  "mesh_summary": {
+    "watertight": true,
+    "winding_consistent": true,
+    "volume_mm3": 42674.321,
+    "extents_mm": [
+      60.0,
+      40.0,
+      20.0
+    ],
+    "bounds_mm": [
+      [
+        -0.0,
+        0.0,
+        0.0
+      ],
+      [
+        60.0,
+        40.0,
+        20.0
+      ]
+    ],
+    "triangles": 316,
+    "euler_number": 2,
+    "components": 1
+  },
+  "face_count_change": {
+    "op": "rounded",
+    "kind": "fillet",
+    "faces_before": 21,
+    "faces_after": 25,
+    "face_delta": 4
+  },
+  "note": null,
+  "captured_utc": "2026-10-19T05:29:28Z",
+  "status": "passed"
+}

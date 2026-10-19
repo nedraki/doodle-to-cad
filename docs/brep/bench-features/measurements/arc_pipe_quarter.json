@@ -1,0 +1,103 @@
+{
+  "job": "arc_pipe_quarter",
+  "category": "feature",
+  "build_ok": true,
+  "expected_fail": false,
+  "verdict": {
+    "ok": true,
+    "checks": {
+      "radial slice at dz 0.0 mm": {
+        "status": "passed",
+        "measured_centreline_mm": 24.99,
+        "expected_centreline_mm": 25,
+        "measured_half_width_mm": 4.003,
+        "expected_half_width_mm": 4.0,
+        "measured_inner_mm": 20.987,
+        "expected_inner_mm": 21.0,
+        "measured_outer_mm": 28.993,
+        "expected_outer_mm": 29.0,
+        "tolerance_mm": 0.1
+      },
+      "radial slice at dz 2.0 mm": {
+        "status": "passed",
+        "measured_centreline_mm": 24.99,
+        "expected_centreline_mm": 25,
+        "measured_half_width_mm": 3.449,
+        "expected_half_width_mm": 3.4641,
+        "measured_inner_mm": 21.541,
+        "expected_inner_mm": 21.5359,
+        "measured_outer_mm": 28.439,
+        "expected_outer_mm": 28.4641,
+        "tolerance_mm": 0.1
+      },
+      "radial slice at dz -2.0 mm": {
+        "status": "passed",
+        "measured_centreline_mm": 24.99,
+        "expected_centreline_mm": 25,
+        "measured_half_width_mm": 3.449,
+        "expected_half_width_mm": 3.4641,
+        "measured_inner_mm": 21.541,
+        "expected_inner_mm": 21.5359,
+        "measured_outer_mm": 28.439,
+        "expected_outer_mm": 28.4641,
+        "tolerance_mm": 0.1
+      },
+      "radial slice at dz 3.2 mm": {
+        "status": "passed",
+        "measured_centreline_mm": 24.99,
+        "expected_centreline_mm": 25,
+        "measured_half_width_mm": 2.375,
+        "expected_half_width_mm": 2.4,
+        "measured_inner_mm": 22.615,
+        "expected_inner_mm": 22.6,
+        "measured_outer_mm": 27.365,
+        "expected_outer_mm": 27.4,
+        "tolerance_mm": 0.1
+      },
+      "tube radius from slice circles": {
+        "status": "passed",
+        "measured_tube_radius_mm": 3.9861,
+        "expected_tube_radius_mm": 4,
+        "spread_mm": 0.0214,
+        "probes": 7,
+        "tolerance_mm": 0.1
+      },
+      "volume (Pappus)": {
+        "status": "passed",
+        "measured_volume_mm3": 1959.41,
+        "expected_volume_mm3": 1973.92,
+        "relative_tolerance": 0.02,
+        "relative_error": 0.00735
+      }
+    }
+  },
+  "mesh_summary": {
+    "watertight": true,
+    "winding_consistent": true,
+    "volume_mm3": 1959.408,
+    "extents_mm": [
+      29.0,
+      29.0,
+      8.0
+    ],
+    "bounds_mm": [
+      [
+        0.0,
+        -0.0,
+        -0.0
+      ],
+      [
+        29.0,
+        29.0,
+        8.0
+      ]
+    ],
+    "triangles": 1156,
+    "euler_number": 2,
+    "components": 1
+  },
+  "face_count_change": null,
+  "note": null,
+  "captured_utc": "2026-10-19T05:29:31Z",
+  "status": "passed"
+}

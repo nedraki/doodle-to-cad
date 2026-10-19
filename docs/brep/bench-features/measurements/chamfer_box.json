@@ -1,0 +1,120 @@
+{
+  "job": "chamfer_box",
+  "category": "feature",
+  "build_ok": true,
+  "expected_fail": false,
+  "verdict": {
+    "ok": true,
+    "checks": {
+      "top taper is 45 degrees": {
+        "status": "passed",
+        "measured_slope_x": 1.9998,
+        "measured_slope_y": 1.9998,
+        "expected_slope": 2.0,
+        "tolerance": 0.06
+      },
+      "top fitted leg equals radius/sqrt(2)": {
+        "status": "passed",
+        "measured_leg_x_mm": 2.1215,
+        "measured_leg_y_mm": 2.1215,
+        "expected_leg_mm": 2.1213,
+        "tolerance_mm": 0.05,
+        "radius_argument_mm": 3,
+        "samples": [
+          [
+            0.106,
+            45.97,
+            35.97
+          ],
+          [
+            0.742,
+            47.242,
+            37.242
+          ],
+          [
+            1.485,
+            48.726,
+            38.726
+          ],
+          [
+            1.994,
+            49.746,
+            39.746
+          ]
+        ]
+      },
+      "bottom taper is 45 degrees": {
+        "status": "passed",
+        "measured_slope_x": 1.9998,
+        "measured_slope_y": 1.9998,
+        "expected_slope": 2.0,
+        "tolerance": 0.06
+      },
+      "bottom fitted leg equals radius/sqrt(2)": {
+        "status": "passed",
+        "measured_leg_x_mm": 2.1215,
+        "measured_leg_y_mm": 2.1215,
+        "expected_leg_mm": 2.1213,
+        "tolerance_mm": 0.05,
+        "radius_argument_mm": 3,
+        "samples": [
+          [
+            0.106,
+            45.97,
+            35.97
+          ],
+          [
+            0.742,
+            47.242,
+            37.242
+          ],
+          [
+            1.485,
+            48.726,
+            38.726
+          ],
+          [
+            1.994,
+            49.746,
+            39.746
+          ]
+        ]
+      },
+      "mid footprint keeps vertical edges (full rectangle)": {
+        "status": "passed",
+        "measured_area_mm2": 1991.0,
+        "expected_area_mm2": 2000,
+        "tolerance_mm2": 20.0
+      }
+    }
+  },
+  "mesh_summary": {
+    "watertight": true,
+    "winding_consistent": true,
+    "volume_mm3": 39067.276,
+    "extents_mm": [
+      50.0,
+      40.0,
+      20.0
+    ],
+    "bounds_mm": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        50.0,
+        40.0,
+        20.0
+      ]
+    ],
+    "triangles": 60,
+    "euler_number": 2,
+    "components": 1
+  },
+  "face_count_change": null,
+  "note": null,
+  "captured_utc": "2026-10-19T05:29:29Z",
+  "status": "passed"
+}

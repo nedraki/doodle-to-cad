@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "units": "mm",
+  "name": "bench open-top shell tray",
+  "parameters": {
+    "tray_width": {"value": 80, "min": 40, "max": 120, "label": "Width", "unit": "mm", "group": "Body"},
+    "tray_depth": {"value": 60, "min": 40, "max": 100, "label": "Depth", "unit": "mm", "group": "Body"},
+    "tray_height": {"value": 30, "min": 15, "max": 60, "label": "Height", "unit": "mm", "group": "Body"},
+    "wall_thickness": {"value": 4, "min": 1, "max": 10, "label": "Wall and floor thickness", "unit": "mm", "group": "Details"}
+  },
+  "operations": [
+    {"id": "body", "kind": "box", "origin": [0, 0, 0], "size": ["tray_width", "tray_depth", "tray_height"]},
+    {"id": "tray", "kind": "shell", "body": "body", "thickness": "wall_thickness", "opening": "top", "preserve": "outer"}
+  ],
+  "output": "tray"
+}

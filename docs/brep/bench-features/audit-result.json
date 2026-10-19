@@ -1,0 +1,67 @@
+[
+ {
+  "check": "sha256sums",
+  "status": "passed",
+  "detail": "101 files, bad: []"
+ },
+ {
+  "check": "fillet_4_corners",
+  "status": "passed",
+  "detail": "{\"corner 1 arc radius\": null, \"corner 2 arc radius\": null, \"corner 3 arc radius\": null, \"corner 4 arc radius\": null, \"corner material removed\": null, \"body core intact\": null}"
+ },
+ {
+  "check": "chamfer_nominal_passes",
+  "status": "passed",
+  "detail": ""
+ },
+ {
+  "check": "chamfer_planted_fails",
+  "status": "passed",
+  "detail": "leg [1.6101]"
+ },
+ {
+  "check": "arc_pipes_pass",
+  "status": "passed",
+  "detail": ""
+ },
+ {
+  "check": "loft_nominal_passes",
+  "status": "passed",
+  "detail": ""
+ },
+ {
+  "check": "loft_planted_fails",
+  "status": "passed",
+  "detail": ""
+ },
+ {
+  "check": "shell_volume_and_genus",
+  "status": "passed",
+  "detail": "vol 46656.0 ideal 46656.0 euler 2"
+ },
+ {
+  "check": "shell_open_top_hollow",
+  "status": "passed",
+  "detail": ""
+ },
+ {
+  "check": "wheel_spokes_built_watertight_single",
+  "status": "passed",
+  "detail": "triangles 860"
+ },
+ {
+  "check": "curved_handle_kernel_failure_published",
+  "status": "passed",
+  "detail": "BRep build failed: No module named '_omni_solid'\n"
+ },
+ {
+  "check": "media_per_feature",
+  "status": "passed",
+  "detail": ""
+ },
+ {
+  "check": "environment_fingerprint",
+  "status": "passed",
+  "detail": ""
+ }
+]

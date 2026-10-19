@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "units": "mm",
+  "name": "bench fillet pocket block",
+  "parameters": {
+    "block_width": {"value": 60, "min": 40, "max": 100, "label": "Block width", "unit": "mm", "group": "Body"},
+    "block_depth": {"value": 40, "min": 30, "max": 80, "label": "Block depth", "unit": "mm", "group": "Body"},
+    "block_height": {"value": 20, "min": 10, "max": 40, "label": "Block height", "unit": "mm", "group": "Body"},
+    "pocket_width": {"value": 12, "min": 6, "max": 16, "label": "Pocket width", "unit": "mm", "group": "Pockets"},
+    "pocket_depth_1": {"value": 3, "min": 1, "max": 8, "label": "Pocket 1 depth", "unit": "mm", "group": "Pockets"},
+    "pocket_depth_2": {"value": 2, "min": 1, "max": 8, "label": "Pocket 2 depth", "unit": "mm", "group": "Pockets"},
+    "pocket_depth_3": {"value": 5, "min": 1, "max": 8, "label": "Pocket 3 depth", "unit": "mm", "group": "Pockets"}
+  },
+  "operations": [
+    {"id": "body", "kind": "box", "origin": [0, 0, 0], "size": ["block_width", "block_depth", "block_height"]},
+    {"id": "cut1b", "kind": "box", "origin": ["16 - pocket_width/2", 14, "block_height - pocket_depth_1"], "size": ["pocket_width", 12, "pocket_depth_1 + 1"]},
+    {"id": "cut1d", "kind": "difference", "left": "body", "right": "cut1b"},
+    {"id": "cut2b", "kind": "box", "origin": ["30 - pocket_width/2", 14, "block_height - pocket_depth_2"], "size": ["pocket_width", 12, "pocket_depth_2 + 1"]},
+    {"id": "cut2d", "kind": "difference", "left": "cut1d", "right": "cut2b"},
+    {"id": "cut3b", "kind": "box", "origin": ["44 - pocket_width/2", 14, "block_height - pocket_depth_3"], "size": ["pocket_width", 12, "pocket_depth_3 + 1"]},
+    {"id": "cut3d", "kind": "difference", "left": "cut2d", "right": "cut3b"},
+    {"id": "rounded", "kind": "fillet", "body": "cut3d", "radius": "block_width/4", "selector": "outer_vertical"}
+  ],
+  "output": "rounded"
+}

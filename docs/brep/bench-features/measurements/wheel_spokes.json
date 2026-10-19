@@ -1,0 +1,36 @@
+{
+  "job": "wheel_spokes",
+  "category": "regression-probe",
+  "build_ok": true,
+  "expected_fail": false,
+  "verdict": null,
+  "mesh_summary": {
+    "watertight": true,
+    "winding_consistent": true,
+    "volume_mm3": 5930.077,
+    "extents_mm": [
+      60.0,
+      60.0,
+      4.0
+    ],
+    "bounds_mm": [
+      [
+        -30.0,
+        -30.0,
+        0.0
+      ],
+      [
+        30.0,
+        30.0,
+        4.0
+      ]
+    ],
+    "triangles": 860,
+    "euler_number": -14,
+    "components": 1
+  },
+  "face_count_change": null,
+  "note": "Circular-pattern spoke union. Cross-ref issue #61 (usd_brep 1.0.0 tessellate _omni_solid defect on spoke/circular patterns): a kernel crash here is published data, never a hidden skip.",
+  "captured_utc": "2026-10-19T05:30:14Z",
+  "status": "built"
+}

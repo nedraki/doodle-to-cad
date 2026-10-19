@@ -1,0 +1,114 @@
+{
+  "selection_catalog": {
+    "version": 1,
+    "status": "available",
+    "unresolved": [
+      {
+        "rule": {
+          "kind": "extreme_face",
+          "owner": "pipe",
+          "axis": 0,
+          "side": "min"
+        },
+        "status": "lost",
+        "reason": "No matching face remains. Select again."
+      },
+      {
+        "rule": {
+          "kind": "extreme_face",
+          "owner": "pipe",
+          "axis": 0,
+          "side": "max"
+        },
+        "status": "lost",
+        "reason": "No matching face remains. Select again."
+      },
+      {
+        "rule": {
+          "kind": "extreme_face",
+          "owner": "pipe",
+          "axis": 1,
+          "side": "min"
+        },
+        "status": "ambiguous",
+        "reason": "The target changed or split. Select again."
+      },
+      {
+        "rule": {
+          "kind": "extreme_face",
+          "owner": "pipe",
+          "axis": 1,
+          "side": "max"
+        },
+        "status": "lost",
+        "reason": "No matching face remains. Select again."
+      },
+      {
+        "rule": {
+          "kind": "extreme_face",
+          "owner": "pipe",
+          "axis": 2,
+          "side": "min"
+        },
+        "status": "lost",
+        "reason": "No matching face remains. Select again."
+      },
+      {
+        "rule": {
+          "kind": "extreme_face",
+          "owner": "pipe",
+          "axis": 2,
+          "side": "max"
+        },
+        "status": "lost",
+        "reason": "No matching face remains. Select again."
+      }
+    ],
+    "output_owner": "pipe",
+    "targets": [],
+    "supported": "Axis-aligned extreme planar faces, four-wall box cutouts and straight outer vertical edges. Recheck after every rebuild."
+  },
+  "backend": "usd-brep",
+  "version": "1.0.0",
+  "recipe_version": 1,
+  "solid_volume_mm3": 3947.8349658002667,
+  "mesh_volume_mm3": 3920.199049704673,
+  "extents_mm": [
+    58.0,
+    28.99279022216797,
+    8.000000000000002
+  ],
+  "bounds_mm": [
+    [
+      -29.0,
+      -2.4492937051703357e-16,
+      -1.3256197973427809e-15
+    ],
+    [
+      29.0,
+      28.99279022216797,
+      8.0
+    ]
+  ],
+  "watertight": true,
+  "winding_consistent": true,
+  "euler_number": 2,
+  "triangles": 2324,
+  "usd_roundtrip": true,
+  "volume_relative_accuracy": 1e-08,
+  "usd_volume_mm3": 3947.834732655656,
+  "operations": [
+    {
+      "id": "pipe",
+      "kind": "arc_pipe",
+      "faces": 3
+    }
+  ],
+  "connections": [],
+  "resource_limits": {
+    "memory_bytes": 17179869184,
+    "cpu_seconds": 150,
+    "file_size_bytes": 536870912
+  },
+  "build_seconds": 1.659
+}
