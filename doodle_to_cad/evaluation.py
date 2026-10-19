@@ -316,8 +316,32 @@ def _render_aspect(image:np.ndarray)->float:
     if points is None:return 0.0
     x,y,w,h=cv2.boundingRect(points);return w/max(h,1)
 
+def openings_through_check(health: dict[str, Any] | None, expected: int,
+                           best_direction: str, strict: bool) -> tuple[bool, str]:
+    """Issue #62 genus floor: a rendered closed circle is not proof of a
+    through-opening — blind pockets and bottom-edge notches look identical in
+    orthographic renders. Only mesh topology (Euler genus) proves the material
+    was removed all the way through. Calibrated on the frozen 80-run set:
+    removes two blind-pocket false accepts with zero false rejections of
+    trusted rows (docs/brep/issue-62-gate/data/metrics.json); dimension-based
+    variants of this rule were measured and rejected (FRR)."""
+    if not (strict and expected and health and health.get("watertight")
+            and health.get("components") == 1):
+        return True, ""
+    holes = health.get("through_holes")
+    if holes is None:
+        return True, ""
+    if holes >= expected:
+        return True, ""
+    plural = "s" if expected != 1 else ""
+    return False, (f"openings do not go through the solid: {best_direction} view demands "
+                   f"{expected} opening{plural} but the mesh has {holes} true through-hole"
+                   f"{'s' if holes != 1 else ''} — the rendered openings are blind pockets "
+                   f"or edge notches; cut all the way through the wall")
+
+
 def evaluate_candidate(*,stl:Path|None,health:dict[str,Any]|None,scad:str,views:dict[str,Path],source:bytes,evidence:dict[str,Any],spec:dict[str,Any],target_dimension:str,strict:bool,primary_view:str="front",projection_standard:str="third-angle",dimension_tolerance:float=.05)->dict[str,Any]:
-    failures=[];gates={"compiled":bool(stl and health),"topology":False,"dimensions":True,"shape_sanity":True,"features":True,"projections":True,"build_envelope":True};topology_score=0.0
+    failures=[];gates={"compiled":bool(stl and health),"topology":False,"dimensions":True,"shape_sanity":True,"features":True,"openings_through":True,"projections":True,"build_envelope":True};topology_score=0.0
     if health:
         gates["topology"]=bool(health["watertight"] and (health["components"]==1 or not strict));topology_score=(22 if health["watertight"] else 0)+(18 if health["components"]==1 else 0)+(5 if health["triangles"]>=12 else 0)
         # BambuLab-class FDM build volume (X1C/P1S: 256 mm cube). A part that
@@ -371,6 +395,10 @@ def evaluate_candidate(*,stl:Path|None,health:dict[str,Any]|None,scad:str,views:
                 pts="; ".join(f"(u={a},v={b})" for a,b in missing[:6])
                 hint=f" Missing at these view-local centres — add cutters there: {pts}."
             failures.append(f"required internal profiles are missing: {best_direction} view demands {expected}, best rendered view has {observed}.{hint}")
+    through_ok, through_fail = openings_through_check(health, expected, best_direction, strict)
+    gates["openings_through"] = through_ok
+    if not through_ok:
+        failures.append(through_fail)
     feature_score=20 if not expected else 20*min(observed/expected,1)
     if projections:
         gates["projections"]=all(v>=.45 for v in projections.values())

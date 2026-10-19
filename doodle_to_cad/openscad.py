@@ -185,10 +185,17 @@ def mesh_health(stl: Path) -> dict[str, Any]:
         components.extend(mesh.split(only_watertight=False))
     triangles = sum(len(component.faces) for component in components)
     extents = loaded.extents.tolist() if hasattr(loaded, "extents") else [0, 0, 0]
+    # Topological through-opening count (Euler characteristic), per watertight
+    # component. Issue #62: rendered closed circles can be blind pockets; only
+    # the genus proves an opening goes all the way through.
+    through_holes: int | None = None
+    if components and all(component.is_watertight for component in components):
+        through_holes = int(sum(max((2 - component.euler_number) // 2, 0) for component in components))
     return {
         "watertight": bool(components and all(component.is_watertight for component in components)),
         "components": len(components),
         "triangles": int(triangles),
+        "through_holes": through_holes,
         "extents_mm": [round(float(value), 3) for value in extents],
         "volume_mm3": round(float(sum(abs(component.volume) for component in components)), 3),
     }
