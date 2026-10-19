@@ -1,0 +1,30 @@
+=== fillet_block (feature)
+OK   fillet_block: passed build_ok=True
+=== chamfer_box (feature)
+OK   chamfer_box: passed build_ok=True
+=== chamfer_planted_wrong_radius (planted-error)
+OK   chamfer_planted_wrong_radius: passed build_ok=True
+     ✗ top taper is 45 degrees: {"status": "failed", "measured_slope_x": 0.5689, "measured_slope_y": 0.5689, "expected_slope": 2.0, "tolerance": 0.06}
+     ✗ top fitted leg equals radius/sqrt(2): {"status": "failed", "measured_leg_x_mm": 1.6101, "measured_leg_y_mm": 1.6101, "expected_leg_mm": 2.1213, "tolerance_mm": 0.05, "radius_argument_mm": 3, "samples": [[0.106, 48.798, 38.798], [0.742, 50.0, 40.0], [1.485, 50.0, 40.0], [1.994, 50.0, 40.0]]}
+     ✗ bottom taper is 45 degrees: {"status": "failed", "measured_slope_x": 0.5689, "measured_slope_y": 0.5689, "expected_slope": 2.0, "tolerance": 0.06}
+     ✗ bottom fitted leg equals radius/sqrt(2): {"status": "failed", "measured_leg_x_mm": 1.6101, "measured_leg_y_mm": 1.6101, "expected_leg_mm": 2.1213, "tolerance_mm": 0.05, "radius_argument_mm": 3, "samples": [[0.106, 48.798, 38.798], [0.742, 50.0, 40.0], [1.485, 50.0, 40.0], [1.994, 50.0, 40.0]]}
+=== arc_pipe_quarter (feature)
+OK   arc_pipe_quarter: passed build_ok=True
+=== arc_pipe_half (feature)
+OK   arc_pipe_half: passed build_ok=True
+=== loft_transition (feature)
+OK   loft_transition: passed build_ok=True
+=== loft_planted_wrong_radius (planted-error)
+OK   loft_planted_wrong_radius: passed build_ok=True
+     ✗ top circle profile: {"status": "failed", "measured_radius_mm": 12.0035, "expected_radius_mm": 15, "max_deviation_mm": 3.006, "tolerance_mm": 0.15}
+     ✗ edge midpoint at 0 deg moves linearly to the circle: {"status": "failed", "measured_slope_mm_per_mm": -0.16, "expected_slope": -0.1, "measured_start_mm": 20.0004, "measured_end_mm": 12.0004, "tolerance_slope": 0.004, "tolerance_mm": 0.15, "samples": [[0.05, 19.992], [12.5, 18.0], [25.0, 16.002], [37.5, 14.0], [49.95, 12.008]]}
+     ✗ edge midpoint at 90 deg moves linearly to the circle: {"status": "failed", "measured_slope_mm_per_mm": -0.06, "expected_slope": 0.0, "measured_start_mm": 15.0008, "measured_end_mm": 12.0008, "tolerance_slope": 0.004, "tolerance_mm": 0.15, "samples": [[0.05, 14.998], [12.5, 14.25], [25.0, 13.502], [37.5, 12.75], [49.95, 12.004]]}
+     ✗ footprint shrinks monotonically from rectangle to circle: {"status": "failed", "areas_mm2": [1200.0, 981.5, 791.0, 610.0, 451.25], "bottom_ideal_mm2": 1200, "top_ideal_mm2": 706.86}
+=== shell_tray (feature)
+OK   shell_tray: passed build_ok=True
+=== wheel_spokes (regression-probe)
+OK   wheel_spokes: built build_ok=True
+=== curved_handle (regression-probe)
+OK   curved_handle: kernel_failure build_ok=False
+
+SUMMARY

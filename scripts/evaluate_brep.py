@@ -157,7 +157,8 @@ async def _run_trial(client, plan, item, backend, trial, out_dir, semaphore):
     form = {"backend": backend, "notes": item["notes"], "object_type": "", "method": "3D print",
             "primary_view": item["primary_view"], "projection_standard": "third-angle",
             "strict_watertight": "true", "view_directions": "[]", "refine_mode": "regularize",
-            "dimension": item["dimension"]}
+            "dimension": item["dimension"],
+            "ask_missing_dimensions": "true" if item.get("ask_dimensions") else "false"}
     (cell / "request.json").write_text(json.dumps(
         {"form": form, "image_sha256": hashlib.sha256(image).hexdigest(),
          "source": item["drawing"], "reference_geometry_sent": False}, indent=2))
@@ -188,6 +189,13 @@ async def _run_trial(client, plan, item, backend, trial, out_dir, semaphore):
                 kind = question.get("kind", "opening_extent")
                 answer_policy = plan["clarification_policy"]["answers"]
                 payload = {"question_id": question.get("id")}
+                if kind == "body_dimension" and kind not in answer_policy:
+                    # Unattended harness cannot invent a user dimension
+                    # (issue #68); let the ask time out instead of guessing.
+                    await asyncio.sleep(min(130, plan_infra["poll_timeout_seconds"] - (time.monotonic() - started)))
+                    questions.append({"kind": kind, "feature_id": question.get("feature_id"),
+                                      "text": question.get("text"), "answer": None, "note": "left to timeout"})
+                    continue
                 payload.update(answer_policy.get(kind, {"choice": "through"}))
                 try:
                     result = await client.post(f"/api/generate/{job}/answer", json=payload)
