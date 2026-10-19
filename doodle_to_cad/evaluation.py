@@ -399,14 +399,26 @@ def evaluate_candidate(*,stl:Path|None,health:dict[str,Any]|None,scad:str,views:
             gates["shape_sanity"]=False
             failures.append("degenerate or implausible axis dimensions: "+", ".join(mismatches))
     projections,profile_topology=projection_scores(source,evidence,views,primary_view,projection_standard)
-    sheet_expected=evidence.get("closed_internal_profile_count",0)
     # Issue #67: each registered view demands ITS OWN openings from the product;
     # the solid must satisfy every view at once, so the demanded total is the
     # SUM of per-view crop counts (a single-view sheet — the shape of every
     # frozen #34 row — keeps sum == the old best-view max, a measured no-op).
-    # Fail-safe: if the sheet shows openings no registered crop counted
-    # (registration gap > 1), demand the sheet total instead of letting the
-    # lost openings silently excuse the product.
+    # Fail-safe: if the sheet shows openings inside a REGISTERED view that no
+    # crop counted (registration gap > 1), demand the sheet total instead of
+    # letting the lost openings silently excuse the product. Profiles living
+    # outside every registered group (title blocks, notes clusters) are not a
+    # registration loss and must not inflate the demand — measured: the
+    # profiles_empty_notes frozen family would false-reject on them.
+    sheet_expected=evidence.get("closed_internal_profile_count",0)
+    assigned_for_guard=assign_view_groups(evidence,primary_view,projection_standard)
+    listed=evidence.get("closed_internal_profiles") or []
+    if assigned_for_guard and len(listed)>=sheet_expected:
+        def _in_registered(p):
+            cx,cy=p["center_normalized"]
+            return any(g["bbox_normalized"][0]<=cx<=g["bbox_normalized"][0]+g["bbox_normalized"][2]
+                       and g["bbox_normalized"][1]<=cy<=g["bbox_normalized"][1]+g["bbox_normalized"][3]
+                       for g in assigned_for_guard.values())
+        sheet_expected=sum(1 for p in listed if _in_registered(p))
     if profile_topology:
         demanded={d:int(t.get("crop_internal_profiles",0) or 0) for d,t in profile_topology.items()}
         rendered={d:int(t.get("rendered_internal_profiles",0) or 0) for d,t in profile_topology.items()}
