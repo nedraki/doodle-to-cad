@@ -71,9 +71,12 @@ acc_os = sum(1 for r in osd if (r.get("product") or {}).get("accepted"))
 bld_os = sum(1 for r in osd if (r.get("checks") or {}).get("build_success"))
 full_gt_os = [r for r in osd if (r.get("checks") or {}).get("extents_pass")
               and (r.get("checks") or {}).get("genus_pass") and (r.get("checks") or {}).get("volume_pass")]
-check("openscad: 44/46 done, 22 accepted, 42 build_ok, complete-GT-match = 2x solid_transition",
+check("openscad: 44/46 done, 22 accepted, 42 build_ok, ref dims/topo/vol pass = 2x solid_transition "
+      "(which still FAIL projection fidelity — not full matches)",
       (len(osd), acc_os, bld_os) == (44, 22, 42) and len(full_gt_os) == 2
-      and {r["drawing"] for r in full_gt_os} == {"solid_transition"},
+      and {r["drawing"] for r in full_gt_os} == {"solid_transition"}
+      and all(r["checks"].get("fidelity_pass") is False and r["checks"].get("overall_pass") is False
+              for r in full_gt_os),
       f"{len(osd)},{acc_os},{bld_os},{sorted({r['drawing'] for r in full_gt_os})}")
 plan_acc_usd = [r for r in usdd if (r.get("product") or {}).get("status") not in (None, "failed")]
 strict_usd = sum(1 for r in usdd if (r.get("product") or {}).get("status") == "passed")
@@ -117,6 +120,13 @@ check("every error row publishes a message",
 text = (HERE / "README.md").read_text()
 check("README headline table matches", "22/44 (50%)" in text and "1/31 (3%)" in text
       and "31/31 (100%)" in text and "solid_transition" in text and "0/31 (0%)" in text)
+res = (HERE / "RESULTS.md").read_text()
+check("RESULTS.md separates the two GT measurements (no 'GT overall pass' label)",
+      "GT overall pass" not in res and "automatic overall_pass" in res
+      and "ref dims/topo/vol pass" in res)
+prov_raw = (HERE / "images" / "provenance.json").read_text()
+check("provenance paths are checkout-relative (no absolute machine paths)",
+      '"/tmp/' not in prov_raw and '"/home/' not in prov_raw)
 check("README carries the Codex-review errata section", "Rev errata" in text and "status != 'failed'" in text)
 # frozen plan precedes trials (honesty rule from #34, reused) — compare parsed datetimes
 first = min(datetime.fromisoformat(r["submitted_at"]) for r in rows if r.get("submitted_at"))
@@ -126,10 +136,23 @@ check("plan frozen_at precedes every trial",
 # montages: PROVEN BINDING image -> provenance.json -> row -> mesh -> bytes.
 # Swapping two montage files, editing a row, or re-exporting a mesh breaks
 # one of the sha256 equalities below.
+def resolve_src(p):
+    """Provenance paths are checkout-relative: 'runs/...' under bench-final,
+    'repo:...' under the repo root. NEVER absolute — an audit must read the
+    checkout it audits, not whichever tree happened to produce the images."""
+    q = Path(p)
+    if q.is_absolute():
+        raise SystemExit(f"provenance path is absolute ({p}); re-run "
+                         "make_fail_montages.py from this checkout")
+    if p.startswith("repo:"):
+        return HERE.parents[2] / p[len("repo:"):]
+    return HERE / q
+
+
 prov = json.loads((HERE / "images" / "provenance.json").read_text())
 for name, meta in sorted(prov.items()):
     img = HERE / "images" / name
-    row_path = Path(meta["row"])
+    row_path = resolve_src(meta["row"])
     r = json.load(open(row_path))
     got = (r.get("product") or {}).get("status") or r.get("job_status")
     ok_img = img.exists() and sha256(img) == meta["image_sha256"]
@@ -141,9 +164,16 @@ for name, meta in sorted(prov.items()):
         ok_mesh = (archived.exists()
                    and sha256(archived) == meta["panels"]["brep_mesh"]["sha256"]
                    and meta["panels"]["brep_mesh"]["sha256"] == (r.get("build") or {}).get("sha256"))
-    check(f"montage {name}: image/row/mesh hash chain + verdict={meta['verdict']}",
-          ok_img and ok_row and ok_verdict and ok_mesh,
-          f"img={ok_img} row={ok_row} verdict={ok_verdict}/{got} mesh={ok_mesh}")
+    ok_panels = True
+    for panel in meta["panels"].values():
+        src = panel.get("path")
+        if not src or panel.get("sha256") is None:
+            continue
+        sp = resolve_src(src)
+        ok_panels = ok_panels and sp.exists() and sha256(sp) == panel["sha256"]
+    check(f"montage {name}: image/row/mesh/panel hash chain + verdict={meta['verdict']}",
+          ok_img and ok_row and ok_verdict and ok_mesh and ok_panels,
+          f"img={ok_img} row={ok_row} verdict={ok_verdict}/{got} mesh={ok_mesh} panels={ok_panels}")
 check("montage set is the 6 published cases", len(prov) == 6, str(len(prov)))
 # non-vacuity: two different montages must NOT bind to each other's row hash
 _a = prov["wheel_t2.png"]["row_sha256"]

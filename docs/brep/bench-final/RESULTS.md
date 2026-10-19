@@ -1,11 +1,15 @@
 # bench-final results — merged BRep line (plan 3f5d76d)
 
-| backend | trials | done | product-accepted | accept rate | build OK | GT overall pass | mean score | median wall (s) |
-|---|---|---|---|---|---|---|---|---|
-| openscad | 46 | 44 | 22 | 50% | 95% | 5% | 91.3 | 192.5 |
-| usd-brep | 46 | 31 | 1 | 3% | 100% | 0% | None | 113.4 |
+| backend | trials | done | product-accepted | accept rate | build OK | automatic overall_pass* | ref dims/topo/vol pass** | mean score | median wall (s) |
+|---|---|---|---|---|---|---|---|---|---|
+| openscad | 46 | 44 | 22 | 50% | 95% | 5% | 5% (solid_transition) | 91.3 | 192.5 |
+| usd-brep | 46 | 31 | 1 | 3% | 100% | 0% | 0% (—) | None | 113.4 |
 
-## Ground-truth check pass rates (done trials)
+\* automatic overall_pass includes `no_ground_truth` rows — it is NOT a reference match.
+\** extents+genus+volume all pass against a real reference; such rows may still
+     fail projection/fidelity gates and are not full model acceptances.
+
+## Per-check pass rates (done trials)
 
 - **openscad**: build_success 95%, extents_pass 11%, genus_pass 55%, volume_pass 5%, fidelity_pass 64%, overall_pass 5%
 - **usd-brep**: build_success 100%, extents_pass 10%, genus_pass 58%, volume_pass 0%, fidelity_pass 19%, overall_pass 0%

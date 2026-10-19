@@ -15,7 +15,13 @@ ground-truth STLs + 3 certified #34 references + 3 honest `no_ground_truth`
 `ask_missing_dimensions=false`, so the openscad numbers measure the product
 **without** the #68 answer loop — see "thickness lottery" below.
 
-> **Rev errata (2026-10-19, external review by Codex @ 907eed7).** Three
+> **Rev errata (2026-10-19, external reviews by Codex @ 907eed7 and @ 820800f).**
+> Round 2 (@ 820800f) fixed: absolute paths in `provenance.json` (the audit
+> could read another checkout — now checkout-relative and enforced), panel
+> input/GT source hashes recorded but unverified (now verified), the
+> "complete GT match" label (renamed ref dims/topo/vol pass, kept separate
+> from `automatic overall_pass`), and footer overlap in montages.
+> Round 1 (@ 907eed7) fixed: Three
 > reporting defects in the first version were confirmed against the rows and
 > are corrected here: (1) bevelled_block was called a "GT pass" but has NO
 > ground-truth reference — its `overall_pass` covers build+automatic-gates
@@ -40,13 +46,18 @@ Acceptance = the frozen plan's definition (`TRIAL-PLAN.json`
 `status != 'failed'` — for BRep that means **automatic checks passed, still
 unverified**, never full acceptance (the path never auto-accepts fidelity).
 
-| backend | done | plan-accepted | build OK | complete GT match¹ | median wall |
+| backend | done | plan-accepted | build OK | ref dims/topo/vol pass¹ | median wall |
 |---|---|---|---|---|---|
 | openscad | 44/46 | 22/44 (50%) | 42/44 (95%) | 2/44 (5%) — `solid_transition` ×2 | 193 s |
 | usd-brep | 31/46 | 1/31 (3%)² | 31/31 (100%) | 0/31 (0%) | 113 s |
 
-¹ extents AND genus AND volume all pass against a real reference (39 openscad
+¹ extents AND genus AND volume all true against a real reference (39 openscad
 rows have references; 3 are `no_ground_truth` and only get automatic gates).
+**This is NOT a full model match**: both `solid_transition` rows still FAIL
+projection/fidelity and `overall_pass` — they are dimension/topology/volume
+passes only. The separate `automatic overall_pass` metric (bevelled_block ×2)
+includes `no_ground_truth` rows and is not a reference match; the two totals
+coincide at 2 by accident and must never be conflated (Codex review round 2).
 ² `006_stepped_knob` trial-1: `status=unverified` = "automatic checks
 passed; still unverified". Under the stricter (unsatisfiable)
 `status=='passed'` the count is 0; both were published to avoid spin.
@@ -59,10 +70,12 @@ Questions asked during trials: openscad 0 (ask off by design), usd-brep 9
 - **OpenSCAD build reliability:** 95% watertight single-component; simple
   prisms/plates score 95–100 repeatedly (004 plate 99.9×2, 010 nameplate
   99.5, 102 knob 96.7).
-- **Complete ground-truth match exists, but is rare:** `solid_transition`
-  (rect→round) passes extents+genus+volume against the certified #34
-  reference on both trials (score 94.4×2). Bevelled_block passes all
-  AUTOMATIC gates both trials but has no reference — shape is NOT verified.
+- **Reference dims/topology/volume pass exists, but is rare:**
+  `solid_transition` (rect→round) passes extents+genus+volume against the
+  certified #34 reference on both trials (score 94.4×2) — while still
+  failing projection/fidelity. Bevelled_block passes all AUTOMATIC gates
+  both trials but has no reference — shape is NOT verified. These two
+  counts are different measurements (both happen to equal 2).
 - **Gate precision (#62/#67 in production):** failures are specific and
   actionable — blind-pocket detection, opening-position mismatches with
   cad_mapping hints, degenerate-axis detection. Zero silent passes observed:

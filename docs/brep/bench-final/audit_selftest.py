@@ -24,7 +24,7 @@ def scenario_swap_images(copy):
     """Codex's own test: wheel montage replaced by the vase montage."""
     img = copy / "images"
     shutil.copyfile(img / "002_greek_vase_silhouette_t1.png", img / "wheel_t2.png")
-    return "montage wheel_t2.png: image/row/mesh hash chain"
+    return "montage wheel_t2.png: image/row/mesh/panel hash chain"
 
 
 def scenario_tamper_row_hash(copy):
@@ -63,7 +63,7 @@ def scenario_provenance_rebind(copy):
     other = prov["003_front_grille_multiview_t1.png"]
     prov["101_bltouch_bracket_t1.png"]["row_sha256"] = other["row_sha256"]
     pf.write_text(json.dumps(prov))
-    return "montage 101_bltouch_bracket_t1.png: image/row/mesh hash chain"
+    return "montage 101_bltouch_bracket_t1.png: image/row/mesh/panel hash chain"
 
 
 def scenario_empty_reference(copy):
@@ -80,10 +80,29 @@ def scenario_empty_reference(copy):
         r = json.loads(rf.read_text())
         r["checks"].update({"extents_pass": None, "genus_pass": None, "volume_pass": None})
         rf.write_text(json.dumps(r))
-    return "complete-GT-match = 2x solid_transition"
+    return "ref dims/topo/vol pass = 2x solid_transition"
+
+
+def scenario_local_row_edit(copy):
+    """Codex round-2 repro: edit the LOCAL wheel row. With absolute provenance
+    paths the audit would follow out of this checkout and still pass."""
+    f = copy / "runs" / "wheel" / "usd-brep" / "trial-02" / "row.json"
+    r = json.loads(f.read_text())
+    r["wall_seconds"] = 1.0
+    f.write_text(json.dumps(r))
+    return "montage wheel_t2.png: image/row/mesh/panel hash chain"
+
+
+def scenario_local_input_corrupt(copy):
+    """Round-2 finding: panel sources recorded but not verified. Replace the
+    wheel input drawing with garbage; the panel hash must catch it."""
+    (copy / "runs" / "wheel" / "usd-brep" / "trial-02" / "input.png").write_bytes(b"not a png")
+    return "montage wheel_t2.png: image/row/mesh/panel hash chain"
 
 
 SCENARIOS = [
+    ("local row edit (Codex round-2 repro)", scenario_local_row_edit),
+    ("local input-bytes corruption (panel hash)", scenario_local_input_corrupt),
     ("image swap (Codex reproduction)", scenario_swap_images),
     ("row hash tamper", scenario_tamper_row_hash),
     ("acceptance flip", scenario_flip_acceptance),

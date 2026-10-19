@@ -8,7 +8,11 @@
         "accepted": 22,
         "accept_rate": "50%",
         "build_ok_rate": "95%",
-        "overall_pass_rate": "5%",
+        "automatic_overall_pass_rate": "5%",
+        "ref_dims_pass_rate": "5%",
+        "ref_dims_drawings": [
+          "solid_transition"
+        ],
         "check_pass": {
           "build_success": "95%",
           "extents_pass": "11%",
@@ -59,7 +63,9 @@
         "accepted": 1,
         "accept_rate": "3%",
         "build_ok_rate": "100%",
-        "overall_pass_rate": "0%",
+        "automatic_overall_pass_rate": "0%",
+        "ref_dims_pass_rate": "0%",
+        "ref_dims_drawings": [],
         "check_pass": {
           "build_success": "100%",
           "extents_pass": "10%",

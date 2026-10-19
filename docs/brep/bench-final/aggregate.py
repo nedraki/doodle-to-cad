@@ -56,12 +56,21 @@ def main():
         scores = [r["product"]["score"] for r in done
                   if (r.get("product") or {}).get("score") is not None]
         checks = {k: sum(1 for r in done if (r.get("checks") or {}).get(k) is True) for k in CHECK_KEYS}
+        # SEPARATE measurements, deliberately never conflated (Codex round 2):
+        #  - overall_pass: automatic gates green; ALSO true for no-reference rows
+        #  - ref-dims: extents+genus+volume all True (requires a real reference;
+        #    rows with null checks never count; may still fail projections)
+        ref_dims = [r["drawing"] for r in done
+                    if all((r.get("checks") or {}).get(k) is True
+                           for k in ("extents_pass", "genus_pass", "volume_pass"))]
         walls = [r["wall_seconds"] for r in rs if r.get("wall_seconds")]
         summary["backends"][backend] = {
             "trials": len(rs), "done": len(done),
             "accepted": len(accepted), "accept_rate": rate(len(accepted), len(done)),
             "build_ok_rate": rate(checks["build_success"], len(done)),
-            "overall_pass_rate": rate(checks["overall_pass"], len(done)),
+            "automatic_overall_pass_rate": rate(checks["overall_pass"], len(done)),
+            "ref_dims_pass_rate": rate(len(ref_dims), len(done)),
+            "ref_dims_drawings": sorted(set(ref_dims)),
             "check_pass": {k: rate(checks[k], len(done)) for k in CHECK_KEYS},
             "mean_score": round(sum(scores) / len(scores), 1) if scores else None,
             "median_wall_s": sorted(walls)[len(walls) // 2] if walls else None,
@@ -94,12 +103,18 @@ def main():
         {"summary": summary, "per_drawing": per_drawing}, indent=2) + "\n")
 
     lines = ["# bench-final results — merged BRep line (plan 3f5d76d)", "",
-             "| backend | trials | done | product-accepted | accept rate | build OK | GT overall pass | mean score | median wall (s) |",
-             "|---|---|---|---|---|---|---|---|---|"]
+             "| backend | trials | done | product-accepted | accept rate | build OK | automatic overall_pass* | ref dims/topo/vol pass** | mean score | median wall (s) |",
+             "|---|---|---|---|---|---|---|---|---|---|"]
     for backend, s in summary["backends"].items():
         lines.append(f"| {backend} | {s['trials']} | {s['done']} | {s['accepted']} | {s['accept_rate']} | "
-                     f"{s['build_ok_rate']} | {s['overall_pass_rate']} | {s['mean_score']} | {s['median_wall_s']} |")
-    lines += ["", "## Ground-truth check pass rates (done trials)", ""]
+                     f"{s['build_ok_rate']} | {s['automatic_overall_pass_rate']} | "
+                     f"{s['ref_dims_pass_rate']} ({','.join(s['ref_dims_drawings']) or '—'}) | "
+                     f"{s['mean_score']} | {s['median_wall_s']} |")
+    lines += ["",
+              "\* automatic overall_pass includes `no_ground_truth` rows — it is NOT a reference match.",
+              "\** extents+genus+volume all pass against a real reference; such rows may still",
+              "     fail projection/fidelity gates and are not full model acceptances.",
+              "", "## Per-check pass rates (done trials)", ""]
     for backend, s in summary["backends"].items():
         lines.append(f"- **{backend}**: " + ", ".join(f"{k} {v}" for k, v in s["check_pass"].items()))
     lines += ["", "## Top gate failures", ""]

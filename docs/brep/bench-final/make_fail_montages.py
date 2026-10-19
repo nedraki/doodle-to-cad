@@ -116,13 +116,14 @@ def row(drawing, trial=1, gt=None):
             raise SystemExit(f'{drawing}: archived STL hash != row build.sha256 — refusing')
         mesh = archived
 
-    panels = {'input': {'path': str(cell / 'input.png'), 'sha256': sha256(cell / 'input.png')}}
+    panels = {'input': {'path': str((cell / 'input.png').relative_to(BENCH)),
+                        'sha256': sha256(cell / 'input.png')}}
     left = thumb(cell / 'input.png')
     if mesh:
         render_stl(mesh, OUT / f'{drawing}_usd-brep_t{trial}_brep.png')
         mid = thumb(OUT / f'{drawing}_usd-brep_t{trial}_brep.png')
         cap_mid = f'usd-brep built [{status}] (mesh sha {r["build"]["sha256"][:12]})'
-        panels['brep_mesh'] = {'path': str(mesh), 'sha256': r['build']['sha256']}
+        panels['brep_mesh'] = {'path': str(mesh.relative_to(BENCH)), 'sha256': r['build']['sha256']}
     else:
         msg = (r.get('error') or {}).get('message', 'no mesh produced')
         mid = refusal_panel(msg)
@@ -134,16 +135,16 @@ def row(drawing, trial=1, gt=None):
             render_stl(gp, OUT / f'{drawing}_t{trial}_gt.png')
             g = thumb(OUT / f'{drawing}_t{trial}_gt.png')
             cap_right = 'ground truth (reference STL)'
-            panels['gt'] = {'path': str(gt), 'sha256': sha256(gt)}
+            panels['gt'] = {'path': str(Path(gt).relative_to(BENCH)), 'sha256': sha256(gt)}
         else:
             g = thumb(gp)
             cap_right = 'ground truth (pipeline render)'
-            panels['gt'] = {'path': str(gp), 'sha256': sha256(gp)}
+            panels['gt'] = {'path': str(gp.relative_to(BENCH)), 'sha256': sha256(gp)}
     else:
         der = ROOT / 'benchmarks/cases' / drawing / 'derived' / 'view-isometric.png'
         g = thumb(der)
         cap_right = 'ground truth (pipeline render)'
-        panels['gt'] = {'path': str(der), 'sha256': sha256(der)}
+        panels['gt'] = {'path': 'repo:' + str(der.relative_to(ROOT)), 'sha256': sha256(der)}
 
     b = r.get('build') or {}
     facts = (f"measured: genus={b.get('genus')} extents={b.get('extents_mm')} "
@@ -151,7 +152,7 @@ def row(drawing, trial=1, gt=None):
     fails = '; '.join((r.get('product') or {}).get('failures') or []) \
         or ((r.get('error') or {}).get('message') or '')
 
-    W, H, LBL = 420 * 3 + 32, 300 + 34 + 66, 40
+    W, H, LBL = 420 * 3 + 32, 300 + 34 + 96, 40
     sheet = Image.new('RGB', (W, H), (250, 250, 250))
     d = ImageDraw.Draw(sheet)
     d.text((12, 8), f'{drawing}   ·   usd-brep trial {trial}', font=FONT, fill=(20, 30, 40))
@@ -159,14 +160,15 @@ def row(drawing, trial=1, gt=None):
         x = 8 + i * 420
         sheet.paste(im, (x, LBL))
         d.text((x + 6, LBL + 300 + 6), cap, font=FONT_S, fill=(60, 70, 80))
-    d.text((12, H - 52), facts[:185], font=FONT_S, fill=(30, 40, 60))
-    d.text((12, H - 30), ('failure: ' + fails)[:185], font=FONT_S, fill=(150, 40, 30))
+    d.text((12, H - 66), facts[:185], font=FONT_S, fill=(30, 40, 60))
+    d.text((12, H - 42), ('failure: ' + fails)[:185], font=FONT_S, fill=(150, 40, 30))
     name = f'{drawing}_t{trial}.png'
     sheet.save(OUT / name)
 
     prov_file = OUT / 'provenance.json'
     prov = json.loads(prov_file.read_text()) if prov_file.exists() else {}
-    prov[name] = {'row': str(cell / 'row.json'), 'row_sha256': sha256(cell / 'row.json'),
+    prov[name] = {'row': str((cell / 'row.json').relative_to(BENCH)),
+                  'row_sha256': sha256(cell / 'row.json'),
                   'image_sha256': sha256(OUT / name), 'verdict': status,
                   'measured': facts, 'failures': fails, 'panels': panels}
     prov_file.write_text(json.dumps(prov, indent=2))
