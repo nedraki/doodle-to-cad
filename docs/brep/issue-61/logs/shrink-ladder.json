@@ -1,0 +1,157 @@
+{
+  "note": "Shrink ladder for issue #61. Each step runs workers/brep/build.py serially once. 'expected' is the characterisation claim.",
+  "steps": [
+    {
+      "case": "full_v2",
+      "expected": "crash",
+      "crashed": true,
+      "code": "build_failed",
+      "message": "No module named '_omni_solid'",
+      "seconds": 7.56
+    },
+    {
+      "case": "slim_v2",
+      "expected": "crash",
+      "crashed": true,
+      "code": "build_failed",
+      "message": "No module named '_omni_solid'",
+      "seconds": 7.36
+    },
+    {
+      "case": "minimal_v1",
+      "expected": "crash",
+      "crashed": true,
+      "code": "build_failed",
+      "message": "No module named '_omni_solid'",
+      "seconds": 6.89
+    },
+    {
+      "case": "both_legs_v1",
+      "expected": "crash",
+      "crashed": true,
+      "code": "build_failed",
+      "message": "No module named '_omni_solid'",
+      "seconds": 7.53
+    },
+    {
+      "case": "arc_plus_box_union",
+      "expected": "crash",
+      "crashed": false,
+      "code": "ok",
+      "message": "ModuleLoader.cpp -- Error loading lib vt's module 'pxr.Vt':\nModuleNotFoundError: No module named 'pxr'\n\nWarning: in _LoadLibModules at line 329 of /builds/omniverse/usd-ci/USD/pxr/base/tf/scriptModuleLoader.cpp -- Error loading lib work's module 'pxr.Work':\nModuleNotFoundError: No module named 'pxr'",
+      "seconds": 11.48
+    },
+    {
+      "case": "arc90_union",
+      "expected": "ok",
+      "crashed": false,
+      "code": "ok",
+      "message": "ModuleLoader.cpp -- Error loading lib vt's module 'pxr.Vt':\nModuleNotFoundError: No module named 'pxr'\n\nWarning: in _LoadLibModules at line 329 of /builds/omniverse/usd-ci/USD/pxr/base/tf/scriptModuleLoader.cpp -- Error loading lib work's module 'pxr.Work':\nModuleNotFoundError: No module named 'pxr'",
+      "seconds": 2.86
+    },
+    {
+      "case": "arc135_union",
+      "expected": "unknown",
+      "crashed": false,
+      "code": "ok",
+      "message": "ModuleLoader.cpp -- Error loading lib vt's module 'pxr.Vt':\nModuleNotFoundError: No module named 'pxr'\n\nWarning: in _LoadLibModules at line 329 of /builds/omniverse/usd-ci/USD/pxr/base/tf/scriptModuleLoader.cpp -- Error loading lib work's module 'pxr.Work':\nModuleNotFoundError: No module named 'pxr'",
+      "seconds": 12.85
+    },
+    {
+      "case": "arc270_union",
+      "expected": "unknown",
+      "crashed": false,
+      "code": "ok",
+      "message": "ModuleLoader.cpp -- Error loading lib vt's module 'pxr.Vt':\nModuleNotFoundError: No module named 'pxr'\n\nWarning: in _LoadLibModules at line 329 of /builds/omniverse/usd-ci/USD/pxr/base/tf/scriptModuleLoader.cpp -- Error loading lib work's module 'pxr.Work':\nModuleNotFoundError: No module named 'pxr'",
+      "seconds": 21.21
+    },
+    {
+      "case": "arc_leg_disjoint",
+      "expected": "unknown",
+      "crashed": false,
+      "code": "disconnected_output",
+      "message": "Expected one connected part; components=2",
+      "seconds": 0.81
+    },
+    {
+      "case": "arc_leg_other_end",
+      "expected": "unknown",
+      "crashed": false,
+      "code": "build_failed",
+      "message": "Independent mesh validation failed",
+      "seconds": 1.12
+    },
+    {
+      "case": "arc_leg_apex",
+      "expected": "unknown",
+      "crashed": false,
+      "code": "disconnected_output",
+      "message": "Expected one connected part; components=2",
+      "seconds": 0.82
+    },
+    {
+      "case": "arc180_difference",
+      "expected": "unknown",
+      "crashed": false,
+      "code": "ok",
+      "message": "ModuleLoader.cpp -- Error loading lib vt's module 'pxr.Vt':\nModuleNotFoundError: No module named 'pxr'\n\nWarning: in _LoadLibModules at line 329 of /builds/omniverse/usd-ci/USD/pxr/base/tf/scriptModuleLoader.cpp -- Error loading lib work's module 'pxr.Work':\nModuleNotFoundError: No module named 'pxr'",
+      "seconds": 8.65
+    },
+    {
+      "case": "arc_leg_west_stub",
+      "expected": "unknown",
+      "crashed": true,
+      "code": "build_failed",
+      "message": "No module named '_omni_solid'",
+      "seconds": 7.41
+    },
+    {
+      "case": "arc_leg_west_union_flip",
+      "expected": "unknown",
+      "crashed": true,
+      "code": "build_failed",
+      "message": "No module named '_omni_solid'",
+      "seconds": 7.44
+    },
+    {
+      "case": "arc_leg_west_axis_y",
+      "expected": "unknown",
+      "crashed": false,
+      "code": "ok",
+      "message": "ModuleLoader.cpp -- Error loading lib vt's module 'pxr.Vt':\nModuleNotFoundError: No module named 'pxr'\n\nWarning: in _LoadLibModules at line 329 of /builds/omniverse/usd-ci/USD/pxr/base/tf/scriptModuleLoader.cpp -- Error loading lib work's module 'pxr.Work':\nModuleNotFoundError: No module named 'pxr'",
+      "seconds": 1.89
+    },
+    {
+      "case": "arc_only",
+      "expected": "ok",
+      "crashed": false,
+      "code": "ok",
+      "message": "ModuleLoader.cpp -- Error loading lib vt's module 'pxr.Vt':\nModuleNotFoundError: No module named 'pxr'\n\nWarning: in _LoadLibModules at line 329 of /builds/omniverse/usd-ci/USD/pxr/base/tf/scriptModuleLoader.cpp -- Error loading lib work's module 'pxr.Work':\nModuleNotFoundError: No module named 'pxr'",
+      "seconds": 1.79
+    },
+    {
+      "case": "cyl_only",
+      "expected": "ok",
+      "crashed": false,
+      "code": "ok",
+      "message": "ModuleLoader.cpp -- Error loading lib vt's module 'pxr.Vt':\nModuleNotFoundError: No module named 'pxr'\n\nWarning: in _LoadLibModules at line 329 of /builds/omniverse/usd-ci/USD/pxr/base/tf/scriptModuleLoader.cpp -- Error loading lib work's module 'pxr.Work':\nModuleNotFoundError: No module named 'pxr'",
+      "seconds": 0.31
+    },
+    {
+      "case": "two_cyl_union",
+      "expected": "ok",
+      "crashed": false,
+      "code": "disconnected_output",
+      "message": "Expected one connected part; components=2",
+      "seconds": 0.29
+    },
+    {
+      "case": "box_only",
+      "expected": "ok",
+      "crashed": false,
+      "code": "ok",
+      "message": "ModuleLoader.cpp -- Error loading lib vt's module 'pxr.Vt':\nModuleNotFoundError: No module named 'pxr'\n\nWarning: in _LoadLibModules at line 329 of /builds/omniverse/usd-ci/USD/pxr/base/tf/scriptModuleLoader.cpp -- Error loading lib work's module 'pxr.Work':\nModuleNotFoundError: No module named 'pxr'",
+      "seconds": 0.33
+    }
+  ]
+}
