@@ -1,0 +1,212 @@
+{
+  "version": 1,
+  "units": "mm",
+  "name": "bench spoked wheel (circular pattern)",
+  "parameters": {
+    "spoke_count": {
+      "value": 8.0,
+      "min": 4,
+      "max": 12,
+      "label": "Spoke count",
+      "unit": "count",
+      "group": "Body"
+    }
+  },
+  "operations": [
+    {
+      "id": "outer",
+      "kind": "cylinder",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "radius": 30,
+      "height": 4,
+      "axis": "z"
+    },
+    {
+      "id": "inner",
+      "kind": "cylinder",
+      "origin": [
+        0,
+        0,
+        -1
+      ],
+      "radius": 26,
+      "height": 6,
+      "axis": "z"
+    },
+    {
+      "id": "rim",
+      "kind": "difference",
+      "left": "outer",
+      "right": "inner"
+    },
+    {
+      "id": "hub",
+      "kind": "cylinder",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "radius": 8,
+      "height": 4,
+      "axis": "z"
+    },
+    {
+      "id": "seed",
+      "kind": "box",
+      "origin": [
+        6,
+        -2,
+        0
+      ],
+      "size": [
+        22,
+        4,
+        4
+      ]
+    },
+    {
+      "id": "first",
+      "kind": "union",
+      "left": "seed",
+      "right": "hub"
+    },
+    {
+      "id": "spoke1",
+      "kind": "rotate",
+      "body": "seed",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "axis": "z",
+      "angle": 45
+    },
+    {
+      "id": "join1",
+      "kind": "union",
+      "left": "first",
+      "right": "spoke1"
+    },
+    {
+      "id": "spoke2",
+      "kind": "rotate",
+      "body": "seed",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "axis": "z",
+      "angle": 90
+    },
+    {
+      "id": "join2",
+      "kind": "union",
+      "left": "join1",
+      "right": "spoke2"
+    },
+    {
+      "id": "spoke3",
+      "kind": "rotate",
+      "body": "seed",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "axis": "z",
+      "angle": 135
+    },
+    {
+      "id": "join3",
+      "kind": "union",
+      "left": "join2",
+      "right": "spoke3"
+    },
+    {
+      "id": "spoke4",
+      "kind": "rotate",
+      "body": "seed",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "axis": "z",
+      "angle": 180
+    },
+    {
+      "id": "join4",
+      "kind": "union",
+      "left": "join3",
+      "right": "spoke4"
+    },
+    {
+      "id": "spoke5",
+      "kind": "rotate",
+      "body": "seed",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "axis": "z",
+      "angle": 225
+    },
+    {
+      "id": "join5",
+      "kind": "union",
+      "left": "join4",
+      "right": "spoke5"
+    },
+    {
+      "id": "spoke6",
+      "kind": "rotate",
+      "body": "seed",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "axis": "z",
+      "angle": 270
+    },
+    {
+      "id": "join6",
+      "kind": "union",
+      "left": "join5",
+      "right": "spoke6"
+    },
+    {
+      "id": "spoke7",
+      "kind": "rotate",
+      "body": "seed",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "axis": "z",
+      "angle": 315
+    },
+    {
+      "id": "join7",
+      "kind": "union",
+      "left": "join6",
+      "right": "spoke7"
+    },
+    {
+      "id": "wheel",
+      "kind": "union",
+      "left": "join7",
+      "right": "rim"
+    }
+  ],
+  "output": "wheel"
+}

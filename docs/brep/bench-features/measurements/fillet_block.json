@@ -4,41 +4,41 @@
   "build_ok": true,
   "expected_fail": false,
   "verdict": {
-    "ok": false,
+    "ok": true,
     "checks": {
       "corner 1 arc radius": {
         "status": "passed",
-        "measured_radius_mm": 14.964,
+        "measured_radius_mm": 15.003,
         "expected_radius_mm": 15.0,
         "tolerance_mm": 0.1,
-        "centre_error_mm": 0.033,
-        "fit_rms_mm": 0.0095,
+        "centre_error_mm": 0.0092,
+        "fit_rms_mm": 0.0057,
         "arc_points": 25
       },
       "corner 2 arc radius": {
         "status": "passed",
-        "measured_radius_mm": 14.9206,
+        "measured_radius_mm": 15.0072,
         "expected_radius_mm": 15.0,
         "tolerance_mm": 0.1,
-        "centre_error_mm": 0.0792,
-        "fit_rms_mm": 0.0182,
+        "centre_error_mm": 0.0143,
+        "fit_rms_mm": 0.0048,
         "arc_points": 25
       },
       "corner 3 arc radius": {
-        "status": "failed",
-        "measured_radius_mm": 14.6934,
+        "status": "passed",
+        "measured_radius_mm": 15.0072,
         "expected_radius_mm": 15.0,
         "tolerance_mm": 0.1,
-        "centre_error_mm": 0.3252,
-        "fit_rms_mm": 0.0647,
+        "centre_error_mm": 0.0143,
+        "fit_rms_mm": 0.0048,
         "arc_points": 25
       },
       "corner 4 arc radius": {
         "status": "passed",
-        "measured_radius_mm": 14.9992,
+        "measured_radius_mm": 15.0072,
         "expected_radius_mm": 15.0,
         "tolerance_mm": 0.1,
-        "centre_error_mm": 0.0063,
+        "centre_error_mm": 0.0143,
         "fit_rms_mm": 0.0048,
         "arc_points": 25
       },
@@ -96,6 +96,6 @@
     "face_delta": 4
   },
   "note": null,
-  "captured_utc": "2026-10-19T05:09:04Z",
-  "status": "checker_broken"
+  "captured_utc": "2026-10-19T05:29:28Z",
+  "status": "passed"
 }

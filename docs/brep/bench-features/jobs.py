@@ -80,6 +80,22 @@ def _loft_job():
     }
 
 
+def _loft_planted_job():
+    p = fixture_params("loft_transition")
+    built_radius = p["circle_radius"] * 0.8  # planted: 12 mm circle...
+    return {
+        "name": "loft_planted_wrong_radius", "category": "planted-error",
+        "fixture": "loft_transition", "overrides": {"circle_radius": built_radius},
+        "expected_fail": True,
+        "checker": "verify_loft",
+        # ...but presented to the checker as the nominal 15 mm circle.
+        "args": [p["rect_width"], p["rect_depth"], p["circle_radius"], p["transition_height"]],
+        "note": (f"Built with circle_radius={built_radius} mm, verified against the "
+                 f"nominal {p['circle_radius']} mm fixture expectation. The top-circle "
+                 "and edge-midline checks must fail; a checker that passes here is worthless."),
+    }
+
+
 def _shell_job():
     p = fixture_params("shell_tray")
     return {
@@ -102,6 +118,7 @@ JOBS = [
     _arc_job("arc_pipe_quarter", 45),
     _arc_job("arc_pipe_half", 90),
     _loft_job(),
+    _loft_planted_job(),
     _shell_job(),
     _probe("wheel_spokes",
            "Circular-pattern spoke union. Cross-ref issue #61 (usd_brep 1.0.0 "

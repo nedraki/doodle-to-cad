@@ -309,18 +309,35 @@ def _expected_loft_polygon(w, d, r, t, samples_per_segment=180):
 
 
 def verify_loft(stl, rect_width, rect_depth, circle_radius, height, *,
-                end_tol=0.15, section_tol=0.03, section_abs=4.0):
-    """End profiles exactly, intermediate sections against the skin interpolation model."""
+                end_tol=0.15, slope_tol=0.004):
+    """Rectangular-to-round loft: exact end profiles plus a smooth monotone blend.
+
+    The recipe promises the profiles at z = 0 and z = height. It does not
+    promise an interpolation law, so this checker asserts only properties a
+    sound loft must have, all measured from the exported mesh:
+      * bottom section is the exact rectangle (the 45-degree boundary is the
+        rectangle polar radius at 45 degrees, not the half diagonal),
+      * top section is the exact circle,
+      * the boundary at each rectangle edge midpoint travels linearly from the
+        rectangle edge to the circle,
+      * footprint area shrinks strictly monotonically bottom to top,
+      * every section is symmetric about both axes.
+    """
     mesh = load(stl)
+    hw, hd = rect_width / 2.0, rect_depth / 2.0
+    r_max = max(rect_width, rect_depth) * 1.5
     checks = {}
-    # Bottom rectangle: boundary distance along face normals and diagonals.
+
+    def rect_polar(theta):
+        c, s = abs(math.cos(theta)), abs(math.sin(theta))
+        return min(hw / c if c > 1e-9 else float("inf"),
+                   hd / s if s > 1e-9 else float("inf"))
+
     zb = 0.05
-    for deg, expected in ((0.0, rect_width / 2), (90.0, rect_depth / 2), (180.0, rect_width / 2),
-                          (270.0, rect_depth / 2),
-                          (45.0, math.hypot(rect_width / 2, rect_depth / 2))):
-        # diagonal direction hits the corner only for matching aspect; compare along that
-        # direction to the interpolated rectangle corner distance.
-        got = radial_boundary(mesh, (0.0, 0.0), zb, math.radians(deg), rect_width)
+    for deg in (0.0, 90.0, 180.0, 270.0, 45.0):
+        theta = math.radians(deg)
+        expected = rect_polar(theta)
+        got = radial_boundary(mesh, (0.0, 0.0), zb, theta, r_max)
         ok = abs(got - expected) <= end_tol
         checks[f"bottom profile at {deg:g} deg"] = {
             "status": "passed" if ok else "failed", "measured_mm": round(got, 4),
@@ -333,28 +350,45 @@ def verify_loft(stl, rect_width, rect_depth, circle_radius, height, *,
         "status": "passed" if worst <= end_tol else "failed",
         "measured_radius_mm": round(float(np.mean(radii)), 4), "expected_radius_mm": circle_radius,
         "max_deviation_mm": round(worst, 4), "tolerance_mm": end_tol}
-    # Intermediate sections at three heights vs the interpolation model.
-    for t in (0.25, 0.5, 0.75):
-        z = t * height
-        expected_pts, expected_area = _expected_loft_polygon(rect_width, rect_depth, circle_radius, t)
-        r_max = max(rect_width, rect_depth, 2 * circle_radius)
-        area, radii_mid = radial_polygon_area(mesh, (0.0, 0.0), z, r_max, n=360)
-        rel = abs(area - expected_area) / expected_area
-        ok = rel <= section_tol or abs(area - expected_area) <= section_abs
-        checks[f"section area at t={t}"] = {
-            "status": "passed" if ok else "failed", "measured_area_mm2": round(area, 3),
-            "expected_area_mm2": round(expected_area, 3), "relative_error": round(rel, 5),
-            "tolerance_relative": section_tol, "tolerance_absolute_mm2": section_abs}
-        # Corner correspondence: NE diagonal boundary must follow corner -> diagonal.
-        got = radial_boundary(mesh, (0.0, 0.0), z, math.pi / 4, r_max)
-        corner = np.array([rect_width / 2, rect_depth / 2])
-        diag = np.array([circle_radius / math.sqrt(2)] * 2)
-        p = (1 - t) * corner + t * diag
-        expected_dist = math.hypot(*p)
-        ok_c = abs(got - expected_dist) <= 0.25
-        checks[f"NE corner interpolation at t={t}"] = {
-            "status": "passed" if ok_c else "failed", "measured_boundary_mm": round(got, 4),
-            "expected_boundary_mm": round(expected_dist, 4), "tolerance_mm": 0.25}
+    zs = [0.05, 0.25 * height, 0.5 * height, 0.75 * height, height - 0.05]
+    for deg, start_r in ((0.0, hw), (90.0, hd)):
+        samples = [(z, radial_boundary(mesh, (0.0, 0.0), z, math.radians(deg), r_max)) for z in zs]
+        zz = np.array([s[0] for s in samples])
+        rr = np.array([s[1] for s in samples])
+        slope, intercept = np.polyfit(zz, rr, 1)
+        want_slope = (circle_radius - start_r) / height
+        end0 = float(intercept)
+        end_h = float(slope * height + intercept)
+        ok = (abs(float(slope) - want_slope) <= slope_tol
+              and abs(end0 - start_r) <= end_tol and abs(end_h - circle_radius) <= end_tol)
+        checks[f"edge midpoint at {deg:g} deg moves linearly to the circle"] = {
+            "status": "passed" if ok else "failed",
+            "measured_slope_mm_per_mm": round(float(slope), 5), "expected_slope": round(want_slope, 5),
+            "measured_start_mm": round(end0, 4), "measured_end_mm": round(end_h, 4),
+            "tolerance_slope": slope_tol, "tolerance_mm": end_tol,
+            "samples": [(round(z, 2), round(r, 4)) for z, r in samples]}
+    areas = [footprint_area(mesh, z, spacing=0.5) for z in zs]
+    strict = all(areas[i] > areas[i + 1] for i in range(len(areas) - 1))
+    rect_area = rect_width * rect_depth
+    circle_area = math.pi * circle_radius ** 2
+    ends_ok = abs(areas[0] - rect_area) <= 0.01 * rect_area and abs(areas[-1] - circle_area) <= 0.01 * circle_area
+    checks["footprint shrinks monotonically from rectangle to circle"] = {
+        "status": "passed" if strict and ends_ok else "failed",
+        "areas_mm2": [round(a, 2) for a in areas],
+        "bottom_ideal_mm2": round(rect_area, 2), "top_ideal_mm2": round(circle_area, 2)}
+    worst_sym = 0.0
+    band = 0.5
+    for z in zs:
+        sel = np.abs(mesh.vertices[:, 2] - z) <= band
+        verts = mesh.vertices[sel]
+        assert len(verts) >= 8, f"z={z}: too few vertices in band for a symmetry claim"
+        worst_sym = max(worst_sym,
+                        abs(verts[:, 0].max() + verts[:, 0].min()),
+                        abs(verts[:, 1].max() + verts[:, 1].min()))
+    checks["sections are symmetric about both axes"] = {
+        "status": "passed" if worst_sym <= end_tol else "failed",
+        "method": "vertex band symmetry (|max+min| per axis, band ±0.5 mm)",
+        "max_asymmetry_mm": round(float(worst_sym), 4), "tolerance_mm": end_tol}
     return {"ok": all(c["status"] == "passed" for c in checks.values()), "checks": checks}
 
 
@@ -391,8 +425,8 @@ def verify_shell(stl, width, depth, height, thickness, *, tol=0.1, area_tol=2.0)
     cavity_top = inside(mesh, [(width / 2, depth / 2, height - 1.0)])[0]
     wall_top = inside(mesh, [(thickness / 2, depth / 2, height - 1.0)])[0]
     cavity_mid = inside(mesh, [(width / 2, depth / 2, z)])[0]
-    ok = (not cavity_top) and wall_top and cavity_mid
+    ok = (not cavity_top) and wall_top and (not cavity_mid)
     checks["open top, hollow interior, walls reach top"] = {
         "status": "passed" if ok else "failed",
-        "cavity_open_at_top": not cavity_top, "wall_solid_at_top": wall_top, "cavity_hollow_at_mid": cavity_mid}
+        "cavity_open_at_top": not cavity_top, "wall_solid_at_top": wall_top, "cavity_hollow_at_mid": not cavity_mid}
     return {"ok": all(c["status"] == "passed" for c in checks.values()), "checks": checks}

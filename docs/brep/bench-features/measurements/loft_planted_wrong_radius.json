@@ -1,0 +1,157 @@
+{
+  "job": "loft_planted_wrong_radius",
+  "category": "planted-error",
+  "build_ok": true,
+  "expected_fail": true,
+  "verdict": {
+    "ok": false,
+    "checks": {
+      "bottom profile at 0 deg": {
+        "status": "passed",
+        "measured_mm": 19.992,
+        "expected_mm": 20.0,
+        "tolerance_mm": 0.15
+      },
+      "bottom profile at 90 deg": {
+        "status": "passed",
+        "measured_mm": 14.998,
+        "expected_mm": 15.0,
+        "tolerance_mm": 0.15
+      },
+      "bottom profile at 180 deg": {
+        "status": "passed",
+        "measured_mm": 19.992,
+        "expected_mm": 20.0,
+        "tolerance_mm": 0.15
+      },
+      "bottom profile at 270 deg": {
+        "status": "passed",
+        "measured_mm": 14.998,
+        "expected_mm": 15.0,
+        "tolerance_mm": 0.15
+      },
+      "bottom profile at 45 deg": {
+        "status": "passed",
+        "measured_mm": 21.206,
+        "expected_mm": 21.2132,
+        "tolerance_mm": 0.15
+      },
+      "top circle profile": {
+        "status": "failed",
+        "measured_radius_mm": 12.0035,
+        "expected_radius_mm": 15,
+        "max_deviation_mm": 3.006,
+        "tolerance_mm": 0.15
+      },
+      "edge midpoint at 0 deg moves linearly to the circle": {
+        "status": "failed",
+        "measured_slope_mm_per_mm": -0.16,
+        "expected_slope": -0.1,
+        "measured_start_mm": 20.0004,
+        "measured_end_mm": 12.0004,
+        "tolerance_slope": 0.004,
+        "tolerance_mm": 0.15,
+        "samples": [
+          [
+            0.05,
+            19.992
+          ],
+          [
+            12.5,
+            18.0
+          ],
+          [
+            25.0,
+            16.002
+          ],
+          [
+            37.5,
+            14.0
+          ],
+          [
+            49.95,
+            12.008
+          ]
+        ]
+      },
+      "edge midpoint at 90 deg moves linearly to the circle": {
+        "status": "failed",
+        "measured_slope_mm_per_mm": -0.06,
+        "expected_slope": 0.0,
+        "measured_start_mm": 15.0008,
+        "measured_end_mm": 12.0008,
+        "tolerance_slope": 0.004,
+        "tolerance_mm": 0.15,
+        "samples": [
+          [
+            0.05,
+            14.998
+          ],
+          [
+            12.5,
+            14.25
+          ],
+          [
+            25.0,
+            13.502
+          ],
+          [
+            37.5,
+            12.75
+          ],
+          [
+            49.95,
+            12.004
+          ]
+        ]
+      },
+      "footprint shrinks monotonically from rectangle to circle": {
+        "status": "failed",
+        "areas_mm2": [
+          1200.0,
+          981.5,
+          791.0,
+          610.0,
+          451.25
+        ],
+        "bottom_ideal_mm2": 1200,
+        "top_ideal_mm2": 706.86
+      },
+      "sections are symmetric about both axes": {
+        "status": "passed",
+        "method": "vertex band symmetry (|max+min| per axis, band \u00b10.5 mm)",
+        "max_asymmetry_mm": 0.0,
+        "tolerance_mm": 0.15
+      }
+    }
+  },
+  "mesh_summary": {
+    "watertight": true,
+    "winding_consistent": true,
+    "volume_mm3": 40069.226,
+    "extents_mm": [
+      40.0,
+      30.0,
+      50.0
+    ],
+    "bounds_mm": [
+      [
+        -20.0,
+        -15.0,
+        0.0
+      ],
+      [
+        20.0,
+        15.0,
+        50.0
+      ]
+    ],
+    "triangles": 5490,
+    "euler_number": 2,
+    "components": 1
+  },
+  "face_count_change": null,
+  "note": "Built with circle_radius=12.0 mm, verified against the nominal 15 mm fixture expectation. The top-circle and edge-midline checks must fail; a checker that passes here is worthless.",
+  "captured_utc": "2026-10-19T05:32:17Z",
+  "status": "passed"
+}
