@@ -1,0 +1,78 @@
+{
+  "view_frame": "The drawing presents two views arranged vertically. The top view is the Front view (XZ plane), showing the elevation of the bracket. The bottom view is the Top view (XY plane), showing the plan of the bracket with three holes. The Right view (YZ plane) is not explicitly drawn but is implied by the L-shape geometry. The world axes are X (width, left-right), Y (depth, front-back), and Z (height, up-down).",
+  "features": [
+    {
+      "id": "wall_vertical",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "width: 80.0",
+        "height: 40.0",
+        "thickness: 5.0 (ASSUMED)"
+      ],
+      "placement": "Centered at X=0, Z=20.0. Extends from Y=0 to Y=5.0. This forms the back wall of the L-bracket.",
+      "evidence": "Top view shows a rectangle. Bottom view shows the top edge of this wall."
+    },
+    {
+      "id": "wall_horizontal",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "width: 80.0",
+        "depth: 40.0",
+        "thickness: 5.0 (ASSUMED)"
+      ],
+      "placement": "Centered at X=0, Y=20.0. Extends from Z=0 to Z=5.0. This forms the base of the L-bracket.",
+      "evidence": "Bottom view shows a rectangle with holes. Top view shows the bottom edge of this base."
+    },
+    {
+      "id": "hole_1",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "Z",
+      "dimensions": [
+        "diameter: 8.0 (ASSUMED)"
+      ],
+      "placement": "Centered at X=-20.0, Y=20.0. Extends through the horizontal wall (Z=0 to Z=5.0).",
+      "evidence": "Leftmost circular mark in the bottom view."
+    },
+    {
+      "id": "hole_2",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "Z",
+      "dimensions": [
+        "diameter: 8.0 (ASSUMED)"
+      ],
+      "placement": "Centered at X=0.0, Y=20.0. Extends through the horizontal wall (Z=0 to Z=5.0).",
+      "evidence": "Middle circular mark in the bottom view."
+    },
+    {
+      "id": "hole_3",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "Z",
+      "dimensions": [
+        "diameter: 8.0 (ASSUMED)"
+      ],
+      "placement": "Centered at X=20.0, Y=20.0. Extends through the horizontal wall (Z=0 to Z=5.0).",
+      "evidence": "Rightmost circular mark in the bottom view."
+    }
+  ],
+  "connections": [
+    "wall_vertical and wall_horizontal meet at the corner (Y=0, Z=0) to form the L-shape.",
+    "hole_1, hole_2, and hole_3 are subtractive features from wall_horizontal."
+  ],
+  "edit_rules": [
+    "Changing the width of wall_vertical must also change the width of wall_horizontal to maintain alignment.",
+    "Changing the thickness of wall_horizontal must move the Z position of the holes if they are not centered, or adjust their depth.",
+    "Changing the diameter of the holes must maintain their center-to-center spacing if that is a fixed constraint."
+  ],
+  "unresolved": [
+    "The thickness of the bracket walls is not dimensioned. An assumption of 5.0mm is used.",
+    "The diameter of the holes is not dimensioned. An assumption of 8.0mm is used.",
+    "The exact height of the vertical wall and depth of the horizontal wall are estimated from the aspect ratio of the drawing (approx 2:1 width to height/depth)."
+  ]
+}

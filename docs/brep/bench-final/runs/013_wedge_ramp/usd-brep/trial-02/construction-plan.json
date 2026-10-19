@@ -1,0 +1,29 @@
+{
+  "view_frame": "The drawing presents two views in third-angle projection. The upper view is the Top view (XY plane), showing the plan outline of the block. The lower view is the Front view (XZ plane), showing the side profile (wedge shape). The Y-axis represents depth (width of the block), X-axis represents length, and Z-axis represents height.",
+  "features": [
+    {
+      "id": "wedge_block",
+      "shape": "Extruded Polygon",
+      "section": "Polygon",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "ASSUMED: Length (X) = 100.0",
+        "ASSUMED: Depth (Y) = 100.0",
+        "ASSUMED: Max Height (Z) = 50.0"
+      ],
+      "placement": "Base at Z=0. The profile is defined in the XZ plane (Front view) and extruded along the Y-axis (Depth). The profile vertices are (0,0), (100,0), (0,50).",
+      "evidence": "The lower view shows a right-angled triangle with a vertical left edge, horizontal bottom edge, and a hypotenuse sloping down from left to right. The upper view shows a rectangle corresponding to the top-down projection of this wedge."
+    }
+  ],
+  "connections": [
+    "The Top view (rectangle) and Front view (triangle) describe the same solid object. The width of the rectangle in the Top view corresponds to the depth (Y) of the wedge. The length of the rectangle in the Top view corresponds to the base length (X) of the wedge."
+  ],
+  "edit_rules": [
+    "Changing the 'Max Height' parameter adjusts the Z-coordinate of the top vertex in the Front view profile.",
+    "Changing the 'Length' parameter adjusts the X-coordinate of the rightmost vertex in the Front view profile.",
+    "Changing the 'Depth' parameter adjusts the extrusion length along the Y-axis."
+  ],
+  "unresolved": [
+    "No specific dimensions are provided in the drawing. The plan uses the maximum dimension (100mm) for Length and Depth, and an assumed height of 50mm to create a representative wedge. These values are marked as ASSUMED and should be edited to match specific requirements."
+  ]
+}

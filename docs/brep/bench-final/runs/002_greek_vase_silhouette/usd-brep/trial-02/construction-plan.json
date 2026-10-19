@@ -1,0 +1,34 @@
+{
+  "view_frame": "The drawing is a single silhouette in the Front view (XZ plane). The X axis represents the width of the vase, and the Z axis represents the height. The Y axis represents the depth, which is not explicitly dimensioned but is implied to be circular (axis of revolution) based on the 'Greek vase' description and the symmetric nature of the silhouette.",
+  "features": [
+    {
+      "id": "vase_silhouette",
+      "shape": "closed_profile",
+      "section": "none",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "ASSUMED: max_width=100",
+        "ASSUMED: height=120"
+      ],
+      "placement": "The profile is defined in the XZ plane. The bottom edge lies on the Z=0 plane. The profile is symmetric about the Z axis (X=0). The coordinates are estimated from the visual proportions of the sketch.",
+      "evidence": "A single continuous closed curve resembling a vase profile is visible. The bottom is flat, the body bulges out, the neck narrows, and the rim flares out."
+    }
+  ],
+  "connections": [
+    "The vase_silhouette is the primary profile for the object."
+  ],
+  "edit_rules": [
+    "Changing the max_width or height parameters will scale the entire vase proportionally.",
+    "The profile is symmetric; editing one side should mirror to the other."
+  ],
+  "unresolved": [
+    "The drawing is a 2D silhouette. The 3D form (solid of revolution vs. extruded slab) is not explicitly defined, though 'Greek vase' implies revolution.",
+    "No dimensions are provided. The maximum dimension is assumed to be 120mm (height) based on the canvas aspect ratio and typical vase proportions."
+  ],
+  "clarification": {
+    "feature_id": "vase_silhouette",
+    "feature_label": "Vase Body",
+    "reason": "The drawing shows a 2D silhouette. It is unclear if this should be modeled as a solid of revolution (circular cross-section) or an extruded slab (constant depth).",
+    "kind": "opening_extent"
+  }
+}

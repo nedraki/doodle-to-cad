@@ -1,0 +1,124 @@
+{
+  "version": 2,
+  "units": "mm",
+  "name": "rect_to_round_transition",
+  "parameters": {
+    "base_width": {
+      "value": 60,
+      "min": 10,
+      "max": 128,
+      "label": "Base Width",
+      "description": "Width of the rectangular base along X"
+    },
+    "base_depth": {
+      "value": 40,
+      "min": 10,
+      "max": 128,
+      "label": "Base Depth",
+      "description": "Depth of the rectangular base along Y"
+    },
+    "top_diameter": {
+      "value": 30,
+      "min": 10,
+      "max": 128,
+      "label": "Top Diameter",
+      "description": "Diameter of the circular top"
+    },
+    "height": {
+      "value": 60,
+      "min": 10,
+      "max": 256,
+      "label": "Height",
+      "description": "Vertical height of the transition piece"
+    }
+  },
+  "operations": [
+    {
+      "id": "transition",
+      "kind": "loft",
+      "plane": "xy",
+      "correspondence": "rectangle_corners_to_circle_diagonals",
+      "profiles": [
+        {
+          "shape": "rectangle",
+          "center": [
+            0,
+            0,
+            0
+          ],
+          "width": "base_width",
+          "height": "base_depth"
+        },
+        {
+          "shape": "circle",
+          "center": [
+            0,
+            0,
+            "height"
+          ],
+          "radius": "top_diameter/2"
+        }
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1",
+        "e2",
+        "e3"
+      ]
+    }
+  ],
+  "output": "transition",
+  "frames": {
+    "world": {
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    }
+  },
+  "bodies": [
+    {
+      "id": "part",
+      "output": "transition"
+    }
+  ],
+  "evidence": {
+    "observed": [
+      {
+        "id": "e1",
+        "text": "Bottom view shows a 60x40 mm rectangle."
+      },
+      {
+        "id": "e2",
+        "text": "Top view shows a circle with 30 mm diameter."
+      },
+      {
+        "id": "e3",
+        "text": "Front view shows a trapezoidal profile with 60 mm height."
+      }
+    ],
+    "inferred": [
+      {
+        "id": "e4",
+        "text": "The object is a solid transition piece connecting the rectangular base to the circular top."
+      }
+    ],
+    "assumptions": [
+      {
+        "id": "e5",
+        "text": "The rectangular base and circular top are concentric."
+      },
+      {
+        "id": "e6",
+        "text": "The transition is a linear loft (ruled surface) between the two profiles."
+      }
+    ],
+    "unresolved": []
+  },
+  "constraints": []
+}

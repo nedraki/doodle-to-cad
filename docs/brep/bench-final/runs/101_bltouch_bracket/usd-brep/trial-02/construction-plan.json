@@ -1,0 +1,78 @@
+{
+  "view_frame": "Front view (top-left) defines the XZ plane (X width, Z height). Top view (bottom-left) defines the XY plane (X width, Y depth). Right view (bottom-right) defines the YZ plane (Y depth, Z height). The part is a flat bracket with a vertical tab.",
+  "features": [
+    {
+      "id": "main_body",
+      "shape": "extrusion",
+      "section": "closed_xy_profile",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "ASSUMED_thickness: 2.0mm",
+        "ASSUMED_width: 20.0mm",
+        "ASSUMED_height: 30.0mm"
+      ],
+      "placement": "Base profile in XY plane. Extruded along Z axis from Z=0 to Z=2.0. Profile shape approximates a rectangle with a chamfered top-right corner (visible in Top view).",
+      "evidence": "Top view shows the outline of the main plate. Right view shows the thin profile of the plate."
+    },
+    {
+      "id": "vertical_tab",
+      "shape": "extrusion",
+      "section": "closed_xy_profile",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "ASSUMED_thickness: 2.0mm",
+        "ASSUMED_height: 15.0mm",
+        "ASSUMED_width: 10.0mm"
+      ],
+      "placement": "Base profile in XY plane (vertical orientation in Front view). Extruded along Z axis (depth) from Z=0 to Z=2.0. Located at the left edge of the main body (X=0).",
+      "evidence": "Front view shows a vertical rectangular tab on the left. Right view shows the tab extending upwards from the base."
+    },
+    {
+      "id": "top_hole",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "Z",
+      "dimensions": [
+        "ASSUMED_diameter: 3.0mm"
+      ],
+      "placement": "Centered at X=15.0, Z=25.0. Extruded through the main body (Z=0 to Z=2.0).",
+      "evidence": "Front view shows a circular hole near the top right. Right view shows the hole location."
+    },
+    {
+      "id": "bottom_hole",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "Z",
+      "dimensions": [
+        "ASSUMED_diameter: 3.0mm"
+      ],
+      "placement": "Centered at X=15.0, Z=5.0. Extruded through the main body (Z=0 to Z=2.0).",
+      "evidence": "Front view shows a circular hole near the bottom right. Right view shows the hole location."
+    },
+    {
+      "id": "slot",
+      "shape": "box",
+      "section": "rectangle",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "ASSUMED_width: 4.0mm",
+        "ASSUMED_height: 8.0mm"
+      ],
+      "placement": "Centered at X=15.0, Z=15.0. Extruded through the main body (Z=0 to Z=2.0).",
+      "evidence": "Front view shows a rectangular slot between the two holes."
+    }
+  ],
+  "connections": [
+    "vertical_tab is fused to the left edge of main_body",
+    "top_hole, bottom_hole, and slot are subtracted from main_body"
+  ],
+  "edit_rules": [
+    "Changing main_body thickness updates the extrusion depth of all features.",
+    "Changing hole positions updates the placement of top_hole and bottom_hole.",
+    "Changing slot dimensions updates the placement and size of slot."
+  ],
+  "unresolved": [
+    "Exact dimensions are missing; ASSUMED values are used for construction.",
+    "The specific chamfer angle in the Top view is not dimensioned."
+  ]
+}

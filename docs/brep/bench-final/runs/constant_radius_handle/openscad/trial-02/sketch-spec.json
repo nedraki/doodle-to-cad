@@ -1,0 +1,137 @@
+{
+  "object": "Curved Handle",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "front",
+      "sheet_region": "view_5",
+      "constrains": "Primary profile shape (inverted U), leg length, and bend radius."
+    },
+    {
+      "direction": "top",
+      "sheet_region": "view_3",
+      "constrains": "Cross-section shape (circular) and depth."
+    },
+    {
+      "direction": "left",
+      "sheet_region": "view_4",
+      "constrains": "Side profile (vertical extent)."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "handle_body",
+      "type": "swept_profile",
+      "material": "plastic",
+      "description": "A single continuous rod bent into a U-shape."
+    }
+  ],
+  "features": [
+    {
+      "id": "bend",
+      "type": "curved_segment",
+      "description": "Semi-circular bend connecting the two legs."
+    },
+    {
+      "id": "leg_left",
+      "type": "straight_segment",
+      "description": "Vertical straight section on the left."
+    },
+    {
+      "id": "leg_right",
+      "type": "straight_segment",
+      "description": "Vertical straight section on the right."
+    }
+  ],
+  "relations": [
+    {
+      "type": "tangent",
+      "elements": [
+        "bend",
+        "leg_left"
+      ],
+      "description": "The bend is tangent to the left leg."
+    },
+    {
+      "type": "tangent",
+      "elements": [
+        "bend",
+        "leg_right"
+      ],
+      "description": "The bend is tangent to the right leg."
+    }
+  ],
+  "symmetry": {
+    "type": "bilateral",
+    "axis": "vertical_centerline"
+  },
+  "repetitions": [],
+  "dimensions": {
+    "radius": 20.0,
+    "length": 30.0,
+    "diameter": 8.0,
+    "max_width": 28.6,
+    "max_depth": 54.0,
+    "max_height": 46.24,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "The 'view_1' and 'view_2' regions contain text labels ('CURVED HANDLE...', 'TOP (XY)') rather than geometric projections."
+  ],
+  "interpretation_conflicts": [
+    "The sheet layout places the 'TOP (XY)' label near the large U-shape (view_5), but geometrically the U-shape represents the Front view (XZ plane) and the circle (view_3) represents the Top view (XY plane) for a standard handle orientation. The CAD mapping has been corrected to match the physical geometry."
+  ],
+  "generation_notes": "The object is a standard U-shaped handle. The geometry is defined by a circular cross-section (diameter 8mm) swept along a path. The path consists of two straight legs (length 30mm) connected by a semi-circular arc (radius 20mm). The total width is 40mm (2 * R20) and total height is 50mm (30mm leg + 20mm radius).",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "sweep",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_3",
+        "operation": "sweep",
+        "profile_plane": "XY",
+        "direction_axis": "Y",
+        "owner": "handle_body",
+        "parameters": {
+          "path_id": "op_1",
+          "profile_id": "op_2"
+        },
+        "source_views": [
+          "view_5",
+          "view_3"
+        ]
+      }
+    ],
+    "unresolved_constraints": [
+      "The 'view_1' and 'view_2' regions contain text labels ('CURVED HANDLE...', 'TOP (XY)') rather than geometric projections."
+    ]
+  },
+  "user_intent": {
+    "description": "curved handle: constant-radius arc bend",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "54"
+  },
+  "source_view_group_count": 6,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

@@ -1,0 +1,21 @@
+{
+  "drawing": "102_lcd_knob",
+  "backend": "usd-brep",
+  "trial": 2,
+  "submitted_at": "2026-10-19T16:17:01.579218+00:00",
+  "finished_at": "2026-10-19T16:18:55.975021+00:00",
+  "run_id": "35ab028b9f03",
+  "wall_seconds": 114.4,
+  "job_status": "error",
+  "error": {
+    "message": "SmApiChamferFillet failed: SM_ERR (1001) at SmPyFillets.cpp:18",
+    "code": "build_failed"
+  },
+  "questions_asked": 0,
+  "question_kinds": [],
+  "build": null,
+  "checks": {
+    "build_success": false,
+    "overall_pass": false
+  }
+}

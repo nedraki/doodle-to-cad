@@ -1,0 +1,122 @@
+{
+  "object": "Wedge ramp (lofted incline block)",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "front",
+      "sheet_region": "bottom",
+      "what_it_constrains": "Defines the side profile (X-Z plane) of the wedge: a right-angled triangle with a vertical back, horizontal base, and sloped hypotenuse."
+    },
+    {
+      "direction": "top",
+      "sheet_region": "top",
+      "what_it_constrains": "Defines the planar footprint (X-Y plane) of the wedge: a rectangle with constant width."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "part_1",
+      "name": "Wedge Body",
+      "material": "generic_plastic",
+      "description": "A solid block with a rectangular footprint and a triangular side profile."
+    }
+  ],
+  "features": [
+    {
+      "id": "feat_1",
+      "name": "Ramp Surface",
+      "type": "planar_face",
+      "owner": "part_1",
+      "description": "The inclined surface connecting the top of the vertical back to the front edge of the base."
+    },
+    {
+      "id": "feat_2",
+      "name": "Vertical Back",
+      "type": "planar_face",
+      "owner": "part_1",
+      "description": "The vertical face at the rear of the object."
+    },
+    {
+      "id": "feat_3",
+      "name": "Base",
+      "type": "planar_face",
+      "owner": "part_1",
+      "description": "The flat bottom face of the object."
+    }
+  ],
+  "relations": [
+    {
+      "type": "extrusion",
+      "source": "feat_side_profile",
+      "target": "part_1",
+      "description": "The side profile is extruded along the Y-axis to create the solid volume."
+    }
+  ],
+  "symmetry": {
+    "type": "none",
+    "axis": null
+  },
+  "repetitions": [],
+  "dimensions": {
+    "max_width": 100.0,
+    "max_depth": 62.62,
+    "max_height": 32.58,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "Exact dimensions are estimated based on the 'max_dimension' constraint and the aspect ratios of the drawn views."
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "The object is interpreted as a standard wedge. The front view (bottom crop) shows the triangular profile. The top view (top crop) shows the rectangular footprint. The geometry is constructed by extruding the triangular profile along the depth axis.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "extrude",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_2",
+        "operation": "extrude",
+        "profile_plane": "XZ",
+        "direction_axis": "Y",
+        "owner": "part_1",
+        "parameters": {
+          "distance": 62.5,
+          "solid": true
+        },
+        "source_views": [
+          "view_1"
+        ]
+      }
+    ],
+    "unresolved_constraints": [
+      "Exact dimensions are estimated based on the 'max_dimension' constraint and the aspect ratios of the drawn views."
+    ]
+  },
+  "user_intent": {
+    "description": "Wedge ramp (lofted incline block)",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "100"
+  },
+  "source_view_group_count": 2,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

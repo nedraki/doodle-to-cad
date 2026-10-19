@@ -1,0 +1,260 @@
+{
+  "version": 2,
+  "units": "mm",
+  "name": "motor_holder_bracket",
+  "parameters": {
+    "width": {
+      "value": 60,
+      "min": 30,
+      "max": 100,
+      "label": "Width",
+      "description": "Total width of the bracket (X-axis)"
+    },
+    "depth": {
+      "value": 20,
+      "min": 10,
+      "max": 50,
+      "label": "Depth",
+      "description": "Total depth of the bracket (Y-axis)"
+    },
+    "height": {
+      "value": 40,
+      "min": 20,
+      "max": 80,
+      "label": "Height",
+      "description": "Total height of the bracket (Z-axis)"
+    },
+    "hole_diameter": {
+      "value": 6,
+      "min": 3,
+      "max": 12,
+      "label": "Hole Diameter",
+      "description": "Diameter of the mounting holes"
+    },
+    "hole_margin": {
+      "value": 8,
+      "min": 4,
+      "max": 20,
+      "label": "Hole Margin",
+      "description": "Distance from edges to hole centers"
+    }
+  },
+  "operations": [
+    {
+      "id": "base_block",
+      "kind": "box",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "size": [
+        "width",
+        "depth",
+        "height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "cut_top_left",
+      "kind": "box",
+      "origin": [
+        0,
+        0,
+        "height/2"
+      ],
+      "size": [
+        "width/2",
+        "depth",
+        "height/2"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "cut_bottom_right",
+      "kind": "box",
+      "origin": [
+        "width/2",
+        0,
+        0
+      ],
+      "size": [
+        "width/2",
+        "depth",
+        "height/2"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "bracket_body",
+      "kind": "difference",
+      "left": "base_block",
+      "right": "cut_top_left",
+      "frame": "world",
+      "depends_on": [
+        "base_block",
+        "cut_top_left"
+      ],
+      "evidence": [
+        "e1",
+        "e2"
+      ]
+    },
+    {
+      "id": "bracket_shape",
+      "kind": "difference",
+      "left": "bracket_body",
+      "right": "cut_bottom_right",
+      "frame": "world",
+      "depends_on": [
+        "bracket_body",
+        "cut_bottom_right"
+      ],
+      "evidence": [
+        "e1",
+        "e3"
+      ]
+    },
+    {
+      "id": "hole_1",
+      "kind": "cylinder",
+      "origin": [
+        "width - hole_margin",
+        "depth/2",
+        -1
+      ],
+      "radius": "hole_diameter/2",
+      "height": "height + 2",
+      "axis": "z",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e4"
+      ]
+    },
+    {
+      "id": "hole_2",
+      "kind": "cylinder",
+      "origin": [
+        "hole_margin",
+        "depth/2",
+        -1
+      ],
+      "radius": "hole_diameter/2",
+      "height": "height + 2",
+      "axis": "z",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e5"
+      ]
+    },
+    {
+      "id": "drill_hole_1",
+      "kind": "difference",
+      "left": "bracket_shape",
+      "right": "hole_1",
+      "frame": "world",
+      "depends_on": [
+        "bracket_shape",
+        "hole_1"
+      ],
+      "evidence": [
+        "e1",
+        "e4"
+      ]
+    },
+    {
+      "id": "final_part",
+      "kind": "difference",
+      "left": "drill_hole_1",
+      "right": "hole_2",
+      "frame": "world",
+      "depends_on": [
+        "drill_hole_1",
+        "hole_2"
+      ],
+      "evidence": [
+        "e1",
+        "e5"
+      ]
+    }
+  ],
+  "output": "final_part",
+  "frames": {
+    "world": {
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    }
+  },
+  "bodies": [
+    {
+      "id": "part",
+      "output": "final_part"
+    }
+  ],
+  "evidence": {
+    "observed": [
+      {
+        "id": "e1",
+        "text": "Overall rectangular bounding box observed in all views."
+      },
+      {
+        "id": "e2",
+        "text": "Top-left quadrant removed in Front view (View 3), creating a step."
+      },
+      {
+        "id": "e3",
+        "text": "Bottom-right quadrant removed in Front view (View 3), creating a step."
+      },
+      {
+        "id": "e4",
+        "text": "Circular hole observed in the upper-right section (View 1, View 2)."
+      },
+      {
+        "id": "e5",
+        "text": "Circular hole observed in the lower-left section (View 1, View 2)."
+      }
+    ],
+    "inferred": [
+      {
+        "id": "e6",
+        "text": "Holes are through-holes along the Z-axis (depth) based on circularity in Top view and visibility in Side view."
+      }
+    ],
+    "assumptions": [
+      {
+        "id": "e7",
+        "text": "Assumed uniform thickness (depth) of 20mm."
+      },
+      {
+        "id": "e8",
+        "text": "Assumed hole diameter of 6mm."
+      },
+      {
+        "id": "e9",
+        "text": "Assumed hole positions are centered in the remaining material blocks."
+      }
+    ],
+    "unresolved": []
+  },
+  "constraints": []
+}

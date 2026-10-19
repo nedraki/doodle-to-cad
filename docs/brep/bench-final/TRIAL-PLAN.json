@@ -1,0 +1,400 @@
+{
+  "schema_version": 1,
+  "issue": "nedraki/doodle-to-cad#17 (BRep line final evaluation)",
+  "title": "Final product evaluation on the merged BRep line: 17 benchmark cases + 6 feature drawings x 2 backends",
+  "frozen_at": "2026-10-19T16:56:38+02:00",
+  "frozen_git_rev": "3f5d76de8c34b4f7c232e5ee2d4a447cd33626ab",
+  "honesty_rules": [
+    "Every trial is published, including failures. No cherry-picking.",
+    "Drawing-fidelity results are kept separate from solid-build success.",
+    "Unsupported operations are recorded as outcomes, not silent skips.",
+    "BRep-only capabilities are reported in their own table and are never counted as OpenSCAD failures, or vice versa.",
+    "This plan was committed before any trial ran; audit.py re-checks that frozen_at precedes every trial timestamp."
+  ],
+  "new_since_issue_34": [
+    "issue #62 openings_through genus floor is active in the evaluator",
+    "issue #67 registers stroke-ring openings outside view outlines; demanded openings now sum per view",
+    "issue #68 size-ask runs with ask_missing_dimensions=false (harness default) so unattended trials never stall",
+    "003 grille drawing re-inked from trusted STL (24946c7); ink and reference now agree"
+  ],
+  "infrastructure": {
+    "server": "in-process uvicorn on 127.0.0.1:8132 (port range 8130-8139 reserved for this task)",
+    "results_dir": "results/task-17-comparison (DOODLE_RESULTS_DIR set before app import)",
+    "harness": "scripts/evaluate_brep.py trials subcommand",
+    "model": "local vLLM at http://127.0.0.1:8000/v1 (never restarted by the harness)",
+    "concurrency": 3,
+    "poll_timeout_seconds": 2400,
+    "trials_per_cell": 2,
+    "matrix": "8 drawings x 2 backends x 5 trials = 80 generations"
+  },
+  "model_settings": {
+    "policy": "App defaults exactly as shipped: OPENAI_MODEL empty, model auto-discovered from GET /v1/models. Both backends use the same settings and run in the same app instance.",
+    "base_url": "http://127.0.0.1:8000/v1",
+    "selected_model": "local-inference-lab/Qwen3.8-Flash-Next-NVFP4",
+    "model_source": "auto-discovery",
+    "enable_thinking": true,
+    "structured_enable_thinking": false,
+    "code_enable_thinking": false,
+    "max_tokens": 8192,
+    "code_max_tokens": 8192,
+    "agent_max_attempts": 3,
+    "agent_accept_score": 70,
+    "code_validation_repairs": 2,
+    "openscad": "openscad/openscad:latest via Docker fallback (OPENSCAD_BIN=openscad + DOODLE_OPENSCAD_DOCKER)"
+  },
+  "tolerances": {
+    "extents": "sorted extents within 2% per axis of the frozen reference (manifest tolerances.generated_dimension_relative = 0.02)",
+    "volume_relative": 0.02,
+    "projection_similarity_min": 0.45,
+    "feature_position_fidelity_min": 0.5,
+    "count_error": 0,
+    "note": "Feature-position and opening counts are carried by the product's projection/opening checks; the harness adds independent genus, extents and volume checks. Tolerances are copied from benchmarks/brep-baseline/*/manifest.json and are fixed before the trial."
+  },
+  "reference_measurements": "references/reference-measurements.json (reference STLs cached under references/, measured deterministically with trimesh during plan preparation, before the trial)",
+  "pass_criteria": {
+    "build_success": "Harness re-measures the run STL independently: watertight AND exactly 1 component. Recorded separately from fidelity.",
+    "extents_pass": "sorted run extents vs sorted reference extents, every axis within 2%.",
+    "genus_pass": "genus == frozen reference genus (where a ground truth exists).",
+    "volume_pass": "abs(volume - reference volume)/reference volume <= 0.02 (where a ground truth exists).",
+    "fidelity_pass": "Harness re-runs doodle_to_cad.evaluation.projection_scores on (source drawing, run geometry evidence, run view renders). Every assigned direction must score >= 0.45. Kept separate from build_success. Product's own acceptance is recorded too but is not the harness pass.",
+    "overall_pass": "build_success AND extents_pass AND genus_pass AND volume_pass AND fidelity_pass. If a required ground truth does not exist for a check, that check is not_applicable and excluded (never counted as failed).",
+    "product_acceptance": "openscad: result.success (agent accepted, score >= 70). usd-brep: evaluation.status != 'failed' (the BRep path never auto-accepts fidelity; evaluation.accepted stays false by design).",
+    "recovery": "openscad: attempts = len(result.attempts); recovered = success AND attempts > 1 (a failing first attempt recovered within the bounded 3-attempt loop). usd-brep: attempts = len(generation.attempts) + construction corrections len(generation.construction_attempts); recovered = built AND any of those > 1.",
+    "edit_time": "Parameter preview round-trip: GET /api/results/{run}/params, pick the first numeric parameter (prefer names matching thick|width|radius|depth|height), set value*1.2 clamped to [min,max], POST /api/results/{run}/parametrize; wall time to response. ok = response ok AND applied non-empty.",
+    "targeted_edit": "usd-brep only (the product rejects targeted edits on OpenSCAD results; recorded as not_applicable, not failed). Requires a non-empty diagnostics.selection_catalog.targets: choose the first target via POST selection, derive the operation name locally with targeted_edits.plan, then POST revisions/targeted with value*1.2. Time and outcome recorded.",
+    "unsupported_operation": "usd-brep jobs ending with error code unsupported_construction, unresolved_design, or a clarification stall are recorded as unsupported_operation outcomes. They stay in the tables."
+  },
+  "clarification_policy": {
+    "answers": {
+      "opening_extent": {
+        "choice": "through"
+      },
+      "wall_thickness": {
+        "thickness_mm": 3
+      },
+      "floor_thickness": {
+        "thickness_mm": 3
+      },
+      "uniform_thickness": {
+        "thickness_mm": 3
+      }
+    },
+    "max_answered_questions": 3,
+    "on_stall": "cancel the job and record status=clarification_stalled"
+  },
+  "corpus": [
+    {
+      "id": "001_l_bookend_multiview",
+      "role": "benchmark case: L-shaped bookend from front and right views",
+      "drawing": "benchmarks/cases/001_l_bookend_multiview/source/drawing.png",
+      "notes": "L-shaped bookend from front and right views",
+      "dimension": "100",
+      "primary_view": "front",
+      "reference": "ground_truth/model.stl (see case manifest)",
+      "checks": {
+        "openscad": "all",
+        "usd_brep": "all"
+      }
+    },
+    {
+      "id": "002_greek_vase_silhouette",
+      "role": "benchmark case: Greek vase from a single silhouette",
+      "drawing": "benchmarks/cases/002_greek_vase_silhouette/source/drawing.png",
+      "notes": "Greek vase from a single silhouette",
+      "dimension": "120",
+      "primary_view": "front",
+      "reference": "ground_truth/model.stl (see case manifest)",
+      "checks": {
+        "openscad": "all",
+        "usd_brep": "all"
+      }
+    },
+    {
+      "id": "003_front_grille_multiview",
+      "role": "benchmark case: Front grille with headlights and repeated slots",
+      "drawing": "benchmarks/cases/003_front_grille_multiview/source/drawing.png",
+      "notes": "Front grille with headlights and repeated slots",
+      "dimension": "126",
+      "primary_view": "front",
+      "reference": "ground_truth/model.stl (see case manifest)",
+      "checks": {
+        "openscad": "all",
+        "usd_brep": "all"
+      }
+    },
+    {
+      "id": "004_flat_mounting_plate",
+      "role": "benchmark case: Flat mounting plate with two holes and a center slot",
+      "drawing": "benchmarks/cases/004_flat_mounting_plate/source/drawing.png",
+      "notes": "Flat mounting plate with two holes and a center slot",
+      "dimension": "100",
+      "primary_view": "front",
+      "reference": "ground_truth/model.stl (see case manifest)",
+      "checks": {
+        "openscad": "all",
+        "usd_brep": "all"
+      }
+    },
+    {
+      "id": "005_bolt_flange",
+      "role": "benchmark case: Round flange with center bore and four bolt holes",
+      "drawing": "benchmarks/cases/005_bolt_flange/source/drawing.png",
+      "notes": "Round flange with center bore and four bolt holes",
+      "dimension": "120",
+      "primary_view": "front",
+      "reference": "ground_truth/model.stl (see case manifest)",
+      "checks": {
+        "openscad": "all",
+        "usd_brep": "all"
+      }
+    },
+    {
+      "id": "006_stepped_knob",
+      "role": "benchmark case: Stepped round knob (revolved profile)",
+      "drawing": "benchmarks/cases/006_stepped_knob/source/drawing.png",
+      "notes": "Stepped round knob (revolved profile)",
+      "dimension": "56",
+      "primary_view": "front",
+      "reference": "ground_truth/model.stl (see case manifest)",
+      "checks": {
+        "openscad": "all",
+        "usd_brep": "all"
+      }
+    },
+    {
+      "id": "007_angle_bracket_holes",
+      "role": "benchmark case: L angle bracket with three wall holes",
+      "drawing": "benchmarks/cases/007_angle_bracket_holes/source/drawing.png",
+      "notes": "L angle bracket with three wall holes",
+      "dimension": "80",
+      "primary_view": "front",
+      "reference": "ground_truth/model.stl (see case manifest)",
+      "checks": {
+        "openscad": "all",
+        "usd_brep": "all"
+      }
+    },
+    {
+      "id": "008_open_enclosure_window",
+      "role": "benchmark case: Open-top enclosure with front window",
+      "drawing": "benchmarks/cases/008_open_enclosure_window/source/drawing.png",
+      "notes": "Open-top enclosure with front window",
+      "dimension": "120",
+      "primary_view": "front",
+      "reference": "ground_truth/model.stl (see case manifest)",
+      "checks": {
+        "openscad": "all",
+        "usd_brep": "all"
+      }
+    },
+    {
+      "id": "009_hex_prism_knob",
+      "role": "benchmark case: Hex prism handle (extruded hexagon)",
+      "drawing": "benchmarks/cases/009_hex_prism_knob/source/drawing.png",
+      "notes": "Hex prism handle (extruded hexagon)",
+      "dimension": "70",
+      "primary_view": "front",
+      "reference": "ground_truth/model.stl (see case manifest)",
+      "checks": {
+        "openscad": "all",
+        "usd_brep": "all"
+      }
+    },
+    {
+      "id": "010_nameplate_slots_vents",
+      "role": "benchmark case: Nameplate with end slots and vent holes",
+      "drawing": "benchmarks/cases/010_nameplate_slots_vents/source/drawing.png",
+      "notes": "Nameplate with end slots and vent holes",
+      "dimension": "140",
+      "primary_view": "front",
+      "reference": "ground_truth/model.stl (see case manifest)",
+      "checks": {
+        "openscad": "all",
+        "usd_brep": "all"
+      }
+    },
+    {
+      "id": "011_wall_hook",
+      "role": "benchmark case: L wall hook extruded from front profile",
+      "drawing": "benchmarks/cases/011_wall_hook/source/drawing.png",
+      "notes": "L wall hook extruded from front profile",
+      "dimension": "60",
+      "primary_view": "front",
+      "reference": "ground_truth/model.stl (see case manifest)",
+      "checks": {
+        "openscad": "all",
+        "usd_brep": "all"
+      }
+    },
+    {
+      "id": "012_vent_grille_grid",
+      "role": "benchmark case: Vent grille plate with 3x3 round hole grid",
+      "drawing": "benchmarks/cases/012_vent_grille_grid/source/drawing.png",
+      "notes": "Vent grille plate with 3x3 round hole grid",
+      "dimension": "100",
+      "primary_view": "front",
+      "reference": "ground_truth/model.stl (see case manifest)",
+      "checks": {
+        "openscad": "all",
+        "usd_brep": "all"
+      }
+    },
+    {
+      "id": "013_wedge_ramp",
+      "role": "benchmark case: Wedge ramp (lofted incline block)",
+      "drawing": "benchmarks/cases/013_wedge_ramp/source/drawing.png",
+      "notes": "Wedge ramp (lofted incline block)",
+      "dimension": "100",
+      "primary_view": "front",
+      "reference": "ground_truth/model.stl (see case manifest)",
+      "checks": {
+        "openscad": "all",
+        "usd_brep": "all"
+      }
+    },
+    {
+      "id": "101_bltouch_bracket",
+      "role": "benchmark case: bltouch bracket",
+      "drawing": "benchmarks/cases/101_bltouch_bracket/source/drawing.png",
+      "notes": "bltouch bracket",
+      "dimension": "60.0",
+      "primary_view": "front",
+      "reference": "ground_truth/model.stl (see case manifest)",
+      "checks": {
+        "openscad": "all",
+        "usd_brep": "all"
+      }
+    },
+    {
+      "id": "102_lcd_knob",
+      "role": "benchmark case: lcd knob",
+      "drawing": "benchmarks/cases/102_lcd_knob/source/drawing.png",
+      "notes": "lcd knob",
+      "dimension": "50.0",
+      "primary_view": "front",
+      "reference": "ground_truth/model.stl (see case manifest)",
+      "checks": {
+        "openscad": "all",
+        "usd_brep": "all"
+      }
+    },
+    {
+      "id": "103_y_motor_holder",
+      "role": "benchmark case: y motor holder",
+      "drawing": "benchmarks/cases/103_y_motor_holder/source/drawing.png",
+      "notes": "y motor holder",
+      "dimension": "60.0",
+      "primary_view": "front",
+      "reference": "ground_truth/model.stl (see case manifest)",
+      "checks": {
+        "openscad": "all",
+        "usd_brep": "all"
+      }
+    },
+    {
+      "id": "104_cable_holder",
+      "role": "benchmark case: cable holder",
+      "drawing": "benchmarks/cases/104_cable_holder/source/drawing.png",
+      "notes": "cable holder",
+      "dimension": "40.0",
+      "primary_view": "front",
+      "reference": "ground_truth/model.stl (see case manifest)",
+      "checks": {
+        "openscad": "all",
+        "usd_brep": "all"
+      }
+    },
+    {
+      "id": "constant_radius_handle",
+      "role": "feature drawing (curves/fillets/chamfers)",
+      "drawing": "benchmarks/brep-baseline/curved_handle/drawing.png",
+      "notes": "curved handle: constant-radius arc bend",
+      "dimension": "54",
+      "primary_view": "front",
+      "reference": "#42/#43 feature contract (benchmarks/brep-features/selection.json)",
+      "checks": {
+        "openscad": "all",
+        "usd_brep": "all"
+      }
+    },
+    {
+      "id": "rounded_housing",
+      "role": "feature drawing (curves/fillets/chamfers)",
+      "drawing": "benchmarks/brep-features/rounded_housing/drawing.png",
+      "notes": "housing block with rounded (filleted) vertical edges",
+      "dimension": "90",
+      "primary_view": "front",
+      "reference": "#42/#43 feature contract (benchmarks/brep-features/selection.json)",
+      "checks": {
+        "openscad": "all",
+        "usd_brep": "all"
+      }
+    },
+    {
+      "id": "bevelled_block",
+      "role": "feature drawing (curves/fillets/chamfers)",
+      "drawing": "benchmarks/brep-features/bevelled_block/drawing.png",
+      "notes": "block with chamfered top edges",
+      "dimension": "80",
+      "primary_view": "front",
+      "reference": "#42/#43 feature contract (benchmarks/brep-features/selection.json)",
+      "checks": {
+        "openscad": "all",
+        "usd_brep": "all"
+      }
+    },
+    {
+      "id": "rectangular_sweep",
+      "role": "feature drawing (curves/fillets/chamfers)",
+      "drawing": "benchmarks/brep-features/rectangular_sweep/drawing.png",
+      "notes": "rectangular section swept along a curved path",
+      "dimension": "100",
+      "primary_view": "front",
+      "reference": "#42/#43 feature contract (benchmarks/brep-features/selection.json)",
+      "checks": {
+        "openscad": "all",
+        "usd_brep": "all"
+      }
+    },
+    {
+      "id": "solid_transition",
+      "role": "feature drawing (curves/fillets/chamfers)",
+      "drawing": "benchmarks/brep-baseline/transition/drawing.png",
+      "notes": "solid transition from rectangular to round end",
+      "dimension": "60",
+      "primary_view": "front",
+      "reference": "#42/#43 feature contract (benchmarks/brep-features/selection.json)",
+      "checks": {
+        "openscad": "all",
+        "usd_brep": "all"
+      }
+    },
+    {
+      "id": "wheel",
+      "role": "feature drawing (curves/fillets/chamfers)",
+      "drawing": "benchmarks/brep-baseline/wheel/drawing.png",
+      "notes": "spoked wheel: rim, hub, spokes, circular",
+      "dimension": "120",
+      "primary_view": "front",
+      "reference": "#42/#43 feature contract (benchmarks/brep-features/selection.json)",
+      "checks": {
+        "openscad": "all",
+        "usd_brep": "all"
+      }
+    }
+  ],
+  "evidence_layout": {
+    "runs": "runs/<drawing>/<backend>/trial-<NN>/{result.json, job.json, row.json, input.png, views/*, model.scad|model.recipe.json, failed/ (failed attempt scads/logs)}",
+    "index": "runs/index.jsonl (one raw row per trial; README counts are recomputed from it by audit.py)",
+    "stl_policy": "every run STL is sha256-pinned in the row; STL bytes are archived in the evidence folder only for failed-build runs and any run whose STL is under 1.5 MB",
+    "environment": "environment.json (git rev, python versions, usd-brep version, model, dates) written at trial end; SHA256SUMS sealed last"
+  },
+  "plan_revisions": [
+    {
+      "at": "2026-10-19T17:55:00+02:00",
+      "cells": "wheel, constant_radius_handle, solid_transition (all 12 cells)",
+      "change": "dimension corrected 100 -> 120/54/60 to match the certified #34 TRIAL-PLAN dimensions for these baseline drawings; the initial frozen plan had hand-picked 100 mm, which made the ground-truth extents checks measure against a size the drawing was never intended to build at.",
+      "affected_rows": "30 previously-published rows kept; 12 cells deleted and rerun at corrected dimensions"
+    }
+  ]
+}

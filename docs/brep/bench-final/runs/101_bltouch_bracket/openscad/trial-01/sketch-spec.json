@@ -1,0 +1,231 @@
+{
+  "object": "BLTouch Bracket",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "top",
+      "sheet_region": "view_1",
+      "what_it_constrains": "Defines the XY footprint (width and depth). Shows the main plate shape with a rounded right side, a mounting tab on the left, and three distinct holes (two circular, one rectangular)."
+    },
+    {
+      "direction": "front",
+      "sheet_region": "view_3",
+      "what_it_constrains": "Defines the XZ profile (width and height). Shows the L-shaped cross-section: a vertical mounting plate and a horizontal base plate extending forward. The chamfered top-right corner is visible."
+    },
+    {
+      "direction": "right",
+      "sheet_region": "view_2",
+      "what_it_constrains": "Defines the YZ profile (depth and height). Shows the side view of the L-bracket, confirming the thickness of the vertical wall and the depth of the horizontal base."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "bracket_body",
+      "name": "Main Bracket Body",
+      "material": "PLA/PETG",
+      "description": "L-shaped bracket with a vertical mounting face and a horizontal support base."
+    }
+  ],
+  "features": [
+    {
+      "id": "mounting_tab",
+      "type": "protrusion",
+      "location": "Left side of vertical face",
+      "description": "Small tab extending from the left edge of the vertical plate, likely for alignment or screw retention."
+    },
+    {
+      "id": "hole_top",
+      "type": "through_hole",
+      "location": "Top right of vertical face",
+      "shape": "circular",
+      "description": "Circular hole for mounting screw."
+    },
+    {
+      "id": "hole_bottom",
+      "type": "through_hole",
+      "location": "Bottom right of vertical face",
+      "shape": "circular",
+      "description": "Circular hole for mounting screw."
+    },
+    {
+      "id": "slot_center",
+      "type": "through_hole",
+      "location": "Center left of vertical face",
+      "shape": "rectangular",
+      "description": "Rectangular slot, likely for cable routing or specific component clearance."
+    },
+    {
+      "id": "base_plate",
+      "type": "flange",
+      "location": "Bottom",
+      "description": "Horizontal plate extending from the bottom of the vertical face."
+    }
+  ],
+  "relations": [
+    {
+      "type": "perpendicular",
+      "elements": [
+        "vertical_face",
+        "base_plate"
+      ]
+    },
+    {
+      "type": "coaxial",
+      "elements": [
+        "hole_top",
+        "hole_bottom"
+      ],
+      "axis": "Y"
+    }
+  ],
+  "symmetry": "None",
+  "repetitions": [
+    {
+      "feature": "hole",
+      "count": 2,
+      "description": "Two circular mounting holes on the vertical face."
+    }
+  ],
+  "dimensions": {
+    "max_width": 43.22,
+    "max_depth": 60.0,
+    "max_height": 45.52,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "Exact thickness of the vertical wall vs base plate (inferred from Right view).",
+    "Exact dimensions of the rectangular slot relative to the circular holes.",
+    "Purpose of the left-side tab (alignment vs retention)."
+  ],
+  "interpretation_conflicts": [
+    "The Right view (view_2) shows the holes as circles, implying they are drilled through the vertical wall (along Y axis). The Top view (view_1) confirms this by showing the holes on the vertical face. The Front view (view_3) shows the L-profile."
+  ],
+  "generation_notes": "The object is an L-bracket. The vertical face contains the mounting holes. The base plate provides support. The 'tab' on the left of the top view corresponds to a feature on the vertical face. The chamfer seen in the front view applies to the top-right corner of the vertical face.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "extrude",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_2",
+        "operation": "extrude",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "owner": "bracket_body",
+        "parameters": {
+          "height": "inferred_from_front_view",
+          "type": "blind"
+        },
+        "source_views": [
+          "view_1",
+          "view_3"
+        ]
+      },
+      {
+        "id": "op_4",
+        "operation": "extrude",
+        "profile_plane": "XZ",
+        "direction_axis": "Y",
+        "owner": "bracket_body",
+        "parameters": {
+          "depth": "inferred_from_top_view",
+          "type": "blind"
+        },
+        "source_views": [
+          "view_3",
+          "view_1"
+        ]
+      },
+      {
+        "id": "op_6",
+        "operation": "chamfer",
+        "profile_plane": "XZ",
+        "direction_axis": "Y",
+        "owner": "bracket_body",
+        "parameters": {
+          "target_edge": "top_right_vertical_face",
+          "source_view": "view_3"
+        },
+        "source_views": [
+          "view_3"
+        ]
+      },
+      {
+        "id": "mounting_tab",
+        "operation": "boss",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Small tab extending from the left edge of the vertical plate, likely for alignment or screw retention."
+        },
+        "source_views": []
+      },
+      {
+        "id": "hole_top",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Circular hole for mounting screw."
+        },
+        "source_views": []
+      },
+      {
+        "id": "hole_bottom",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Circular hole for mounting screw."
+        },
+        "source_views": []
+      },
+      {
+        "id": "slot_center",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Rectangular slot, likely for cable routing or specific component clearance."
+        },
+        "source_views": []
+      }
+    ],
+    "unresolved_constraints": [
+      "Exact wall thickness",
+      "Exact hole diameters",
+      "Exact slot dimensions"
+    ]
+  },
+  "user_intent": {
+    "description": "bltouch bracket",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "60.0"
+  },
+  "source_view_group_count": 3,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

@@ -1,0 +1,36 @@
+{
+  "view_frame": "The drawing presents three views of a cable holder. The top view (top center) shows the XY plane (width X, depth Y). The front view (bottom left) shows the XZ plane (width X, height Z). The right view (bottom right) shows the YZ plane (depth Y, height Z). The part is a vertical strip with a U-shaped notch at the top and a central hole.",
+  "features": [
+    {
+      "id": "main_body",
+      "shape": "Extruded Profile",
+      "section": "Rectangular strip with U-notch and central hole",
+      "axis_or_plane": "XY plane extruded along Z",
+      "dimensions": [
+        "ASSUMED: width 10mm",
+        "ASSUMED: depth 5mm",
+        "ASSUMED: height 40mm",
+        "ASSUMED: notch width 6mm",
+        "ASSUMED: notch depth 4mm",
+        "ASSUMED: hole diameter 3mm"
+      ],
+      "placement": "Centered at X=0, Y=0. Base at Z=0. Top at Z=40. Notch centered at X=0, Z=40. Hole centered at X=0, Z=20.",
+      "evidence": "Top view shows the U-notch and central hole. Front view shows the vertical extent and side profile. Right view shows the face with the hole and side notches."
+    }
+  ],
+  "connections": [
+    "The U-notch in the top view corresponds to the opening at the top of the front view.",
+    "The central hole in the top view corresponds to the central feature in the right view.",
+    "The side notches in the front view correspond to the stepped profile seen in the right view."
+  ],
+  "edit_rules": [
+    "Changing the main width scales the X dimension of the profile.",
+    "Changing the main height scales the Z dimension of the extrusion.",
+    "Changing the notch width/depth modifies the top profile geometry.",
+    "Changing the hole diameter modifies the central cut."
+  ],
+  "unresolved": [
+    "Exact dimensions are not provided; assumed values are used for construction.",
+    "The exact shape of the side notches (stepped vs continuous) is ambiguous between views."
+  ]
+}

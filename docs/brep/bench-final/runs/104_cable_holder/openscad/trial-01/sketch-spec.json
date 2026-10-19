@@ -1,0 +1,175 @@
+{
+  "object": "Cable Holder",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "front",
+      "sheet_region": "bottom-left",
+      "constrains": "Overall height (Z) and width (X). Defines the vertical extent and thickness of the mounting plate."
+    },
+    {
+      "direction": "top",
+      "sheet_region": "top-center",
+      "constrains": "Overall width (X) and depth (Y). Defines the profile of the mounting flange, including the central circular hole and the bottom edge geometry."
+    },
+    {
+      "direction": "right",
+      "sheet_region": "bottom-right",
+      "constrains": "Overall depth (Y) and height (Z). Defines the face with the array of cable retention slots."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "part_1",
+      "name": "Cable_Holder_Body",
+      "description": "A vertical rectangular plate with a mounting flange at the top and a series of through-slots for cable management."
+    }
+  ],
+  "features": [
+    {
+      "id": "feat_1",
+      "name": "Mounting_Hole",
+      "type": "hole",
+      "location": "Top flange center",
+      "source_views": [
+        "view_1"
+      ],
+      "description": "Circular through-hole for wall or surface mounting."
+    },
+    {
+      "id": "feat_2",
+      "name": "Cable_Slots",
+      "type": "slot_array",
+      "location": "Main body face",
+      "source_views": [
+        "view_2"
+      ],
+      "description": "Five rectangular through-slots arranged in a staggered vertical pattern for holding cables."
+    },
+    {
+      "id": "feat_3",
+      "name": "Bottom_Tabs",
+      "type": "profile_feature",
+      "location": "Bottom edge",
+      "source_views": [
+        "view_1"
+      ],
+      "description": "Two small protruding tabs at the bottom of the mounting flange."
+    }
+  ],
+  "relations": [
+    {
+      "type": "alignment",
+      "elements": [
+        "feat_1",
+        "view_1_center"
+      ],
+      "description": "Mounting hole is centered horizontally on the top flange."
+    },
+    {
+      "type": "distribution",
+      "elements": [
+        "feat_2"
+      ],
+      "description": "Slots are distributed vertically along the height of the object."
+    }
+  ],
+  "symmetry": {
+    "type": "none",
+    "description": "The object lacks global symmetry due to the staggered slot arrangement and the specific shape of the top flange."
+  },
+  "repetitions": [
+    {
+      "feature_id": "feat_2",
+      "count": 5,
+      "pattern": "vertical_staggered"
+    }
+  ],
+  "dimensions": {
+    "max_dimension": 40.0,
+    "max_width": 12.08,
+    "max_depth": 19.43,
+    "max_height": 40.0,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "The exact thickness of the object is not explicitly dimensioned but is inferred from the aspect ratio of the front view relative to the top view.",
+    "The specific width of the cable slots is estimated based on the drawing proportions."
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "The object is modeled as a single extruded body. The top view defines the cross-section (including the mounting hole and bottom tabs), which is extruded along the Z-axis. The cable slots are then subtracted from the resulting prism.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "extrude",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_2",
+        "operation": "extrude",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "owner": "part_1",
+        "parameters": {
+          "height": "max_dimension",
+          "solid": true
+        },
+        "source_views": [
+          "view_1",
+          "view_3"
+        ]
+      },
+      {
+        "id": "feat_1",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Circular through-hole for wall or surface mounting."
+        },
+        "source_views": []
+      },
+      {
+        "id": "feat_2",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Five rectangular through-slots arranged in a staggered vertical pattern for holding cables."
+        },
+        "source_views": []
+      }
+    ],
+    "unresolved_constraints": [
+      "Exact slot width and height relative to the 40mm max dimension."
+    ]
+  },
+  "user_intent": {
+    "description": "cable holder",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "40.0"
+  },
+  "source_view_group_count": 3,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

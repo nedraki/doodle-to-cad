@@ -1,0 +1,281 @@
+{
+  "version": 2,
+  "units": "mm",
+  "name": "mounting_plate",
+  "parameters": {
+    "width": {
+      "value": 100,
+      "min": 50,
+      "max": 200,
+      "label": "Plate Width",
+      "description": "Overall width of the plate along X"
+    },
+    "depth": {
+      "value": 60,
+      "min": 30,
+      "max": 120,
+      "label": "Plate Depth",
+      "description": "Overall depth of the plate along Y"
+    },
+    "thickness": {
+      "value": 3,
+      "min": 1,
+      "max": 10,
+      "label": "Plate Thickness",
+      "description": "Thickness of the plate along Z"
+    },
+    "hole_diameter": {
+      "value": 8,
+      "min": 2,
+      "max": 20,
+      "label": "Hole Diameter",
+      "description": "Diameter of the two circular holes"
+    },
+    "hole_margin": {
+      "value": 15,
+      "min": 5,
+      "max": 40,
+      "label": "Hole Margin",
+      "description": "Distance from plate edge to hole center"
+    },
+    "slot_width": {
+      "value": 12,
+      "min": 4,
+      "max": 30,
+      "label": "Slot Width",
+      "description": "Width of the central slot"
+    },
+    "slot_length": {
+      "value": 40,
+      "min": 10,
+      "max": 80,
+      "label": "Slot Length",
+      "description": "Overall length of the central slot"
+    }
+  },
+  "operations": [
+    {
+      "id": "plate",
+      "kind": "box",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "size": [
+        "width",
+        "depth",
+        "thickness"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1",
+        "e2"
+      ]
+    },
+    {
+      "id": "hole1",
+      "kind": "cylinder",
+      "origin": [
+        "hole_margin",
+        "depth - hole_margin",
+        -1
+      ],
+      "radius": "hole_diameter / 2",
+      "height": "thickness + 2",
+      "axis": "z",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "hole2",
+      "kind": "cylinder",
+      "origin": [
+        "width - hole_margin",
+        "hole_margin",
+        -1
+      ],
+      "radius": "hole_diameter / 2",
+      "height": "thickness + 2",
+      "axis": "z",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e4"
+      ]
+    },
+    {
+      "id": "slot",
+      "kind": "extrude",
+      "origin": [
+        "width / 2",
+        "depth / 2",
+        -1
+      ],
+      "plane": "xy",
+      "direction": 1,
+      "depth": "thickness + 2",
+      "loops": [
+        [
+          {
+            "kind": "line",
+            "start": [
+              "-slot_length/2 + slot_width/2",
+              "-slot_width/2"
+            ],
+            "end": [
+              "slot_length/2 - slot_width/2",
+              "-slot_width/2"
+            ]
+          },
+          {
+            "kind": "arc",
+            "center": [
+              "slot_length/2 - slot_width/2",
+              0
+            ],
+            "radius": "slot_width/2",
+            "start_angle": -90,
+            "end_angle": 90
+          },
+          {
+            "kind": "line",
+            "start": [
+              "slot_length/2 - slot_width/2",
+              "slot_width/2"
+            ],
+            "end": [
+              "-slot_length/2 + slot_width/2",
+              "slot_width/2"
+            ]
+          },
+          {
+            "kind": "arc",
+            "center": [
+              "-slot_length/2 + slot_width/2",
+              0
+            ],
+            "radius": "slot_width/2",
+            "start_angle": 90,
+            "end_angle": 270
+          }
+        ]
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e5"
+      ]
+    },
+    {
+      "id": "cut1",
+      "kind": "difference",
+      "left": "plate",
+      "right": "hole1",
+      "frame": "world",
+      "depends_on": [
+        "plate",
+        "hole1"
+      ],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "cut2",
+      "kind": "difference",
+      "left": "cut1",
+      "right": "hole2",
+      "frame": "world",
+      "depends_on": [
+        "cut1",
+        "hole2"
+      ],
+      "evidence": [
+        "e4"
+      ]
+    },
+    {
+      "id": "final_part",
+      "kind": "difference",
+      "left": "cut2",
+      "right": "slot",
+      "frame": "world",
+      "depends_on": [
+        "cut2",
+        "slot"
+      ],
+      "evidence": [
+        "e5"
+      ]
+    }
+  ],
+  "output": "final_part",
+  "frames": {
+    "world": {
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    }
+  },
+  "bodies": [
+    {
+      "id": "part",
+      "output": "final_part"
+    }
+  ],
+  "evidence": {
+    "observed": [
+      {
+        "id": "e1",
+        "text": "Rectangular plate outline observed in front view."
+      },
+      {
+        "id": "e2",
+        "text": "Plate thickness observed in top view (elevation)."
+      },
+      {
+        "id": "e3",
+        "text": "Circular hole observed in upper-left quadrant."
+      },
+      {
+        "id": "e4",
+        "text": "Circular hole observed in lower-right quadrant."
+      },
+      {
+        "id": "e5",
+        "text": "Central slot observed in front view."
+      }
+    ],
+    "inferred": [],
+    "assumptions": [
+      {
+        "id": "a1",
+        "text": "Assumed plate width 100mm and depth 60mm based on aspect ratio."
+      },
+      {
+        "id": "a2",
+        "text": "Assumed hole diameter 8mm and margin 15mm."
+      },
+      {
+        "id": "a3",
+        "text": "Assumed slot width 12mm and length 40mm."
+      },
+      {
+        "id": "a4",
+        "text": "Assumed holes and slot are through-holes."
+      }
+    ],
+    "unresolved": []
+  },
+  "constraints": []
+}

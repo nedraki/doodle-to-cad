@@ -1,0 +1,21 @@
+{
+  "drawing": "004_flat_mounting_plate",
+  "backend": "usd-brep",
+  "trial": 2,
+  "submitted_at": "2026-10-19T15:42:18.313884+00:00",
+  "finished_at": "2026-10-19T15:45:32.930256+00:00",
+  "run_id": "bcf0f2b2c4f4",
+  "wall_seconds": 194.6,
+  "job_status": "error",
+  "error": {
+    "message": "Expected canonical world frame: X width, Y depth, Z height, origin [0,0,0]",
+    "code": "invalid_recipe"
+  },
+  "questions_asked": 0,
+  "question_kinds": [],
+  "build": null,
+  "checks": {
+    "build_success": false,
+    "overall_pass": false
+  }
+}

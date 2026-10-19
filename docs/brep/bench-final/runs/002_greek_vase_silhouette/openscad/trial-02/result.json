@@ -1,0 +1,683 @@
+{
+  "backend": "openscad",
+  "build": {
+    "version": 1,
+    "backend": "openscad",
+    "source_format": "openscad",
+    "ok": true,
+    "units": "mm",
+    "axes": {
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    },
+    "views": [
+      "isometric",
+      "front",
+      "top",
+      "right"
+    ],
+    "measurements": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 1080,
+      "through_holes": 1,
+      "extents_mm": [
+        107.53,
+        106.941,
+        120.0
+      ],
+      "volume_mm3": 112437.032
+    },
+    "diagnostics": [],
+    "drawing_evaluated": false
+  },
+  "id": "a9952eb0caa0",
+  "success": true,
+  "model": "local-inference-lab/Qwen3.8-Flash-Next-NVFP4",
+  "model_source": "auto-discovery",
+  "base_url": "http://127.0.0.1:8000/v1",
+  "spec": {
+    "object": "Greek vase",
+    "object_count": 1,
+    "dimensionality": "3d",
+    "projection_standard": "third-angle",
+    "views": [
+      {
+        "direction": "front",
+        "sheet_region": "center",
+        "what_it_constrains": "Defines the vertical profile (silhouette) of the vase, including the flared rim, neck, shoulder, body, and base."
+      }
+    ],
+    "manufacturing_strategy": "3D print",
+    "parts": [
+      {
+        "id": "vase_body",
+        "name": "Vase Body",
+        "description": "A single watertight solid of revolution generated from the front silhouette."
+      }
+    ],
+    "features": [
+      {
+        "id": "rim",
+        "type": "flange",
+        "description": "Top flared opening of the vase."
+      },
+      {
+        "id": "neck",
+        "type": "cylinder",
+        "description": "Narrow section below the rim."
+      },
+      {
+        "id": "shoulder",
+        "type": "fillet",
+        "description": "Transition from neck to body."
+      },
+      {
+        "id": "body",
+        "type": "bulge",
+        "description": "Main bulbous section of the vase."
+      },
+      {
+        "id": "base",
+        "type": "foot",
+        "description": "Bottom support of the vase."
+      }
+    ],
+    "relations": [
+      {
+        "type": "revolved",
+        "target": "vase_body",
+        "source": "front_view_profile"
+      }
+    ],
+    "symmetry": {
+      "type": "rotational",
+      "axis": "Z",
+      "order": "infinite"
+    },
+    "repetitions": [],
+    "dimensions": {
+      "max_width": 107.53,
+      "max_height": 120.0,
+      "size_provenance": "measured ink spans x authoritative max dimension"
+    },
+    "uncertainties": [
+      "Wall thickness is not specified; assumed solid for watertightness unless hollowing is applied.",
+      "Exact curvature of the shoulder and body is inferred from the hand-drawn silhouette."
+    ],
+    "interpretation_conflicts": [],
+    "generation_notes": "The object is interpreted as a vase of revolution. The front view provides the profile curve. The profile is mirrored across the vertical axis to create a closed 2D shape, which is then revolved 360 degrees around the vertical axis to create the 3D solid.",
+    "construction_plan": {
+      "schema_version": 1,
+      "family": "revolve",
+      "coordinate_frame": {
+        "x": "width",
+        "y": "depth",
+        "z": "height",
+        "front": {
+          "plane": "XZ",
+          "view_axis": "Y"
+        },
+        "top": {
+          "plane": "XY",
+          "view_axis": "Z"
+        },
+        "right": {
+          "plane": "YZ",
+          "view_axis": "X"
+        }
+      },
+      "operations": [
+        {
+          "id": "op_2",
+          "operation": "revolve",
+          "profile_plane": "XZ",
+          "direction_axis": "Z",
+          "owner": "vase_body",
+          "parameters": {
+            "angle": 360,
+            "axis": "Z"
+          },
+          "source_views": [
+            "view_1"
+          ]
+        }
+      ],
+      "unresolved_constraints": [
+        "Wall thickness is not specified; assumed solid for watertightness unless hollowing is applied.",
+        "Exact curvature of the shoulder and body is inferred from the hand-drawn silhouette."
+      ]
+    },
+    "user_intent": {
+      "description": "Greek vase from a single silhouette",
+      "object_type_hint": "",
+      "authoritative_max_dimension_mm": "120"
+    },
+    "source_view_group_count": 1,
+    "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+    "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+  },
+  "geometry": {
+    "image_size_px": [
+      607,
+      504
+    ],
+    "ink_fraction": 0.0225,
+    "contour_count": 2,
+    "line_count": 51,
+    "drawing_sheet_contract": "All spatial groups are projections or isometric depictions of ONE physical object.",
+    "view_group_count": 1,
+    "view_groups": [
+      {
+        "bbox_normalized": [
+          0.1895,
+          0.127,
+          0.5684,
+          0.7639
+        ],
+        "center_normalized": [
+          0.4736,
+          0.5089
+        ],
+        "relative_size": 0.4342,
+        "meaning": "view_of_same_object",
+        "view_id": "view_1"
+      }
+    ],
+    "closed_internal_profile_count": 0,
+    "closed_internal_profiles": [],
+    "largest_regions": [
+      {
+        "contour_id": "contour_0",
+        "parent_contour_id": null,
+        "area_ratio": 0.26741,
+        "bbox_normalized": [
+          0.1977,
+          0.1349,
+          0.5519,
+          0.748
+        ],
+        "center_normalized": [
+          0.4736,
+          0.5089
+        ],
+        "vertices": 9,
+        "circularity": 0.562,
+        "hierarchy_depth": 0,
+        "closed_internal_profile": false,
+        "orphan_opening_ring": false,
+        "polygon_sheet_normalized": [
+          [
+            0.285,
+            0.1369
+          ],
+          [
+            0.3443,
+            0.4663
+          ],
+          [
+            0.1977,
+            0.6349
+          ],
+          [
+            0.2817,
+            0.8056
+          ],
+          [
+            0.4728,
+            0.881
+          ],
+          [
+            0.71,
+            0.8175
+          ],
+          [
+            0.7414,
+            0.7103
+          ],
+          [
+            0.5865,
+            0.3571
+          ],
+          [
+            0.6672,
+            0.1647
+          ]
+        ]
+      },
+      {
+        "contour_id": "contour_1",
+        "parent_contour_id": "contour_0",
+        "area_ratio": 0.24865,
+        "bbox_normalized": [
+          0.2059,
+          0.1508,
+          0.5354,
+          0.7222
+        ],
+        "center_normalized": [
+          0.4736,
+          0.5119
+        ],
+        "vertices": 9,
+        "circularity": 0.552,
+        "hierarchy_depth": 1,
+        "closed_internal_profile": false,
+        "orphan_opening_ring": false,
+        "polygon_sheet_normalized": [
+          [
+            0.29,
+            0.1508
+          ],
+          [
+            0.6606,
+            0.1706
+          ],
+          [
+            0.5783,
+            0.3512
+          ],
+          [
+            0.7315,
+            0.7004
+          ],
+          [
+            0.7084,
+            0.8075
+          ],
+          [
+            0.4662,
+            0.871
+          ],
+          [
+            0.285,
+            0.7956
+          ],
+          [
+            0.2059,
+            0.629
+          ],
+          [
+            0.3526,
+            0.4603
+          ]
+        ]
+      }
+    ],
+    "view_geometry": [
+      {
+        "view_id": "view_1",
+        "sheet_bbox_normalized": [
+          0.1895,
+          0.127,
+          0.5684,
+          0.7639
+        ],
+        "pixel_aspect_ratio_width_over_height": 0.8961,
+        "measured_span_pixels": {
+          "horizontal_axis_u": 345,
+          "vertical_axis_v": 385
+        },
+        "coordinate_system": {
+          "origin": "top-left of this view crop",
+          "u_axis": "right",
+          "v_axis": "down",
+          "range": "u and v are normalized from 0 to 1 within this view"
+        },
+        "outer_profile": {
+          "profile_id": "contour_0",
+          "bbox_view_normalized": [
+            0.0144,
+            0.0103,
+            0.971,
+            0.9792
+          ],
+          "center_view_normalized": [
+            0.4998,
+            0.4999
+          ],
+          "polygon_view_normalized": [
+            [
+              0.168,
+              0.013
+            ],
+            [
+              0.2723,
+              0.4442
+            ],
+            [
+              0.0144,
+              0.6649
+            ],
+            [
+              0.1622,
+              0.8883
+            ],
+            [
+              0.4984,
+              0.987
+            ],
+            [
+              0.9157,
+              0.9039
+            ],
+            [
+              0.971,
+              0.7636
+            ],
+            [
+              0.6985,
+              0.3012
+            ],
+            [
+              0.8404,
+              0.0494
+            ]
+          ],
+          "vertices": 9,
+          "circularity": 0.562,
+          "area_ratio_of_sheet": 0.26741
+        },
+        "internal_profiles": [],
+        "direction": "front",
+        "cad_mapping": {
+          "plane": "XZ",
+          "view_axis": "Y",
+          "u_maps_to": "+X",
+          "v_maps_to": "-Z"
+        }
+      }
+    ],
+    "coordinate_contract": {
+      "sheet": {
+        "origin": "top-left",
+        "x_axis": "right",
+        "y_axis": "down",
+        "units": "normalized image fraction"
+      },
+      "cad": {
+        "origin": "shared object origin",
+        "x_axis": "width",
+        "y_axis": "front-to-back depth",
+        "z_axis": "height",
+        "units": "millimetres"
+      },
+      "rule": "Use view-local profile coordinates and cad_mapping; sheet placement separates views and is never physical geometry."
+    }
+  },
+  "mesh_health": {
+    "watertight": true,
+    "components": 1,
+    "triangles": 1080,
+    "through_holes": 1,
+    "extents_mm": [
+      107.53,
+      106.941,
+      120.0
+    ],
+    "volume_mm3": 112437.032
+  },
+  "evaluation": {
+    "score": 94.4,
+    "valid_mesh": true,
+    "accepted": true,
+    "mandatory_gates": {
+      "compiled": true,
+      "topology": true,
+      "dimensions": true,
+      "shape_sanity": true,
+      "features": true,
+      "openings_through": true,
+      "projections": true,
+      "build_envelope": true
+    },
+    "scores": {
+      "topology": 45,
+      "dimensions": 20.0,
+      "features": 20,
+      "projections": 9.4
+    },
+    "projection_similarity": {
+      "front": 0.626
+    },
+    "profile_topology": {
+      "front": {
+        "source_internal_profiles": 0,
+        "rendered_internal_profiles": 12,
+        "crop_internal_profiles": 0,
+        "source_aspect": 0.896,
+        "rendered_aspect": 0.896,
+        "source_opening_centroids": [],
+        "rendered_opening_centroids": [
+          [
+            0.418,
+            0.978
+          ],
+          [
+            0.601,
+            0.915
+          ],
+          [
+            0.385,
+            0.915
+          ],
+          [
+            0.497,
+            0.803
+          ],
+          [
+            0.448,
+            0.803
+          ],
+          [
+            0.395,
+            0.64
+          ],
+          [
+            0.497,
+            0.397
+          ],
+          [
+            0.475,
+            0.091
+          ],
+          [
+            0.321,
+            0.017
+          ]
+        ]
+      }
+    },
+    "demanded_openings": {
+      "total": 0,
+      "per_view": {
+        "front": 0
+      },
+      "sheet_total": 0,
+      "registration_gap": 0
+    },
+    "failures": []
+  },
+  "selected_attempt": 1,
+  "attempts": [
+    {
+      "attempt": 1,
+      "action": "generate",
+      "preflight": {
+        "passed": true,
+        "errors": [],
+        "warnings": [],
+        "expected_subtractive_feature_groups": 0
+      },
+      "compiler_repairs": [],
+      "uniform_scale": null,
+      "evaluation": {
+        "score": 94.4,
+        "valid_mesh": true,
+        "accepted": true,
+        "mandatory_gates": {
+          "compiled": true,
+          "topology": true,
+          "dimensions": true,
+          "shape_sanity": true,
+          "features": true,
+          "openings_through": true,
+          "projections": true,
+          "build_envelope": true
+        },
+        "scores": {
+          "topology": 45,
+          "dimensions": 20.0,
+          "features": 20,
+          "projections": 9.4
+        },
+        "projection_similarity": {
+          "front": 0.626
+        },
+        "profile_topology": {
+          "front": {
+            "source_internal_profiles": 0,
+            "rendered_internal_profiles": 12,
+            "crop_internal_profiles": 0,
+            "source_aspect": 0.896,
+            "rendered_aspect": 0.896,
+            "source_opening_centroids": [],
+            "rendered_opening_centroids": [
+              [
+                0.418,
+                0.978
+              ],
+              [
+                0.601,
+                0.915
+              ],
+              [
+                0.385,
+                0.915
+              ],
+              [
+                0.497,
+                0.803
+              ],
+              [
+                0.448,
+                0.803
+              ],
+              [
+                0.395,
+                0.64
+              ],
+              [
+                0.497,
+                0.397
+              ],
+              [
+                0.475,
+                0.091
+              ],
+              [
+                0.321,
+                0.017
+              ]
+            ]
+          }
+        },
+        "demanded_openings": {
+          "total": 0,
+          "per_view": {
+            "front": 0
+          },
+          "sheet_total": 0,
+          "registration_gap": 0
+        },
+        "failures": []
+      },
+      "mesh_health": {
+        "watertight": true,
+        "components": 1,
+        "triangles": 1080,
+        "through_holes": 1,
+        "extents_mm": [
+          107.53,
+          106.941,
+          120.0
+        ],
+        "volume_mm3": 112437.032
+      },
+      "build": {
+        "version": 1,
+        "backend": "openscad",
+        "source_format": "openscad",
+        "ok": true,
+        "units": "mm",
+        "axes": {
+          "x": "width",
+          "y": "depth",
+          "z": "height"
+        },
+        "views": [
+          "isometric",
+          "front",
+          "top",
+          "right"
+        ],
+        "measurements": {
+          "watertight": true,
+          "components": 1,
+          "triangles": 1080,
+          "through_holes": 1,
+          "extents_mm": [
+            107.53,
+            106.941,
+            120.0
+          ],
+          "volume_mm3": 112437.032
+        },
+        "diagnostics": [],
+        "drawing_evaluated": false
+      },
+      "compile_log": "Geometries in cache: 2\nGeometry cache size in bytes: 78280\nCGAL Polyhedrons in cache: 0\nCGAL cache size in bytes: 0\nTotal rendering time: 0:00:00.000\n   Top level object is a 3D object:\n   Facets:       1080",
+      "files": {
+        "scad": "attempt-01/model.scad",
+        "stl": "attempt-01/model.stl",
+        "views": {
+          "isometric": "attempt-01/view-isometric.png",
+          "front": "attempt-01/view-front.png",
+          "top": "attempt-01/view-top.png",
+          "right": "attempt-01/view-right.png"
+        }
+      }
+    }
+  ],
+  "controls": {
+    "object_type_hint": "",
+    "method": "3D print",
+    "primary_view": "front",
+    "projection_standard": "third-angle",
+    "strict_watertight": true,
+    "refine_mode": "regularize"
+  },
+  "size_clarification": {
+    "unconstrained_axes": [
+      "depth"
+    ],
+    "asked": false
+  },
+  "additional_view_count": 0,
+  "repaired": false,
+  "compile_log": "Geometries in cache: 2\nGeometry cache size in bytes: 78280\nCGAL Polyhedrons in cache: 0\nCGAL cache size in bytes: 0\nTotal rendering time: 0:00:00.000\n   Top level object is a 3D object:\n   Facets:       1080",
+  "duration_seconds": 66.24,
+  "files": {
+    "scad": "/results/a9952eb0caa0/model.scad",
+    "stl": "/results/a9952eb0caa0/model.stl",
+    "attempts": "/results/a9952eb0caa0/attempts.json",
+    "overlay": "/results/a9952eb0caa0/geometry-overlay.png",
+    "views": {
+      "isometric": "/results/a9952eb0caa0/view-isometric.png",
+      "front": "/results/a9952eb0caa0/view-front.png",
+      "top": "/results/a9952eb0caa0/view-top.png",
+      "right": "/results/a9952eb0caa0/view-right.png"
+    }
+  }
+}

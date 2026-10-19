@@ -1,0 +1,53 @@
+{
+  "view_frame": "Front view (top-left) defines the XZ plane (width and height). Top view (bottom-left) defines the XY plane (width and depth). Right view (bottom-right) defines the YZ plane (depth and height). The part is a flat plate oriented vertically in the Front view.",
+  "features": [
+    {
+      "id": "main_plate",
+      "shape": "extrusion",
+      "section": "closed_profile",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "3.0 (ASSUMED thickness from user answer)",
+        "Max dimension 60.0 (from controls)"
+      ],
+      "placement": "Extrude the closed profile from the Front view (XZ plane) along the Y axis (depth) by 3.0 mm. The profile is defined by the outer boundary in the Front view.",
+      "evidence": "Front view shows the main outline. Top view shows a thin profile consistent with a flat plate. Right view shows the side profile with holes. User answer specifies uniform thickness of 3mm."
+    },
+    {
+      "id": "hole_top",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "Y",
+      "dimensions": [
+        "Diameter: Not specified (visual estimate ~10% of width)"
+      ],
+      "placement": "Located in the upper right quadrant of the Front view. Axis is parallel to Y (depth).",
+      "evidence": "Visible circle in the upper right of the Front view. Visible circle in the Right view."
+    },
+    {
+      "id": "hole_left",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "Y",
+      "dimensions": [
+        "Diameter: Not specified (visual estimate ~10% of width)"
+      ],
+      "placement": "Located in the lower left protrusion of the Front view. Axis is parallel to Y (depth).",
+      "evidence": "Visible circle in the lower left of the Front view. Visible circle in the Right view."
+    }
+  ],
+  "connections": [
+    "main_plate",
+    "hole_top",
+    "hole_left"
+  ],
+  "edit_rules": [
+    "Changing the thickness of main_plate updates the Y-dimension of the extrusion.",
+    "Changing the profile in the Front view updates the XY shape of main_plate.",
+    "Hole positions are relative to the Front view origin."
+  ],
+  "unresolved": [
+    "Hole diameters are not dimensioned.",
+    "Exact coordinates for hole centers are not dimensioned."
+  ]
+}

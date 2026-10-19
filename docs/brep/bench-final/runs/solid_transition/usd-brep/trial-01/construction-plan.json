@@ -1,0 +1,50 @@
+{
+  "view_frame": "The drawing uses third-angle projection with three views: BOTTOM (XY), TOP (XY), and FRONT (XZ). The world frame is defined as X (width, left-right), Y (depth, front-back), and Z (height, up-down). The BOTTOM view shows the rectangular base profile in the XY plane. The TOP view shows the circular top profile in the XY plane. The FRONT view shows the side elevation in the XZ plane, depicting the transition from the rectangular base width to the circular top diameter.",
+  "features": [
+    {
+      "id": "rect_base",
+      "shape": "rectangle",
+      "section": "XY plane",
+      "axis_or_plane": "Z=0",
+      "dimensions": [
+        "60 mm (X width)",
+        "40 mm (Y depth)"
+      ],
+      "placement": "Centered at (0,0) in the XY plane at Z=0. Extends from X=-30 to X=30 and Y=-20 to Y=20.",
+      "evidence": "BOTTOM (XY) view shows a rectangle labeled '60 x 40 mm rectangle'."
+    },
+    {
+      "id": "circ_top",
+      "shape": "circle",
+      "section": "XY plane",
+      "axis_or_plane": "Z=60",
+      "dimensions": [
+        "30 mm (diameter)"
+      ],
+      "placement": "Centered at (0,0) in the XY plane at Z=60. Radius is 15 mm.",
+      "evidence": "TOP (XY) view shows a circle labeled 'diameter 30 mm'."
+    },
+    {
+      "id": "transition_solid",
+      "shape": "loft",
+      "section": "solid",
+      "axis_or_plane": "Z axis",
+      "dimensions": [
+        "60 mm (height)"
+      ],
+      "placement": "Connects rect_base (at Z=0) to circ_top (at Z=60). The profiles are parallel XY planes sharing the same XY center (0,0).",
+      "evidence": "FRONT (XZ) view shows a trapezoid connecting the base width to the top width, labeled 'height 60 mm; solid'. The notes specify 'solid transition from rectangular to round end'."
+    }
+  ],
+  "connections": [
+    "The transition_solid connects the rect_base profile at Z=0 to the circ_top profile at Z=60.",
+    "The loft operation requires the rectangular base to be the bottom profile and the circular top to be the top profile, consistent with the supported loft configuration (rectangle below circle)."
+  ],
+  "edit_rules": [
+    "Changing the rect_base width (X) or depth (Y) updates the bottom profile of the loft.",
+    "Changing the circ_top diameter updates the top profile of the loft.",
+    "Changing the transition_solid height updates the Z position of the circ_top profile and the vertical extent of the loft.",
+    "The center of both profiles must remain aligned at (0,0) in XY to maintain the supported loft geometry."
+  ],
+  "unresolved": []
+}

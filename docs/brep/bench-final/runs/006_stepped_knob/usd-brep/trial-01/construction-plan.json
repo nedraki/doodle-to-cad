@@ -1,0 +1,61 @@
+{
+  "view_frame": "The drawing presents two views of a stepped round knob. The left view is the Front view (XZ plane), showing the profile of the knob's cross-section. The right view is the Right view (YZ plane), showing the mirrored profile, confirming rotational symmetry about the Z-axis. The Top view (XY plane) is not explicitly drawn but is implied to be concentric circles corresponding to the steps. The Z-axis represents the height/depth of the knob, and the X-axis represents the width (diameter).",
+  "features": [
+    {
+      "id": "knob_base",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "Z",
+      "dimensions": [
+        "ASSUMED_BASE_RADIUS",
+        "ASSUMED_BASE_HEIGHT"
+      ],
+      "placement": "Centered at (0,0,0), extending along +Z",
+      "evidence": "The bottom-most horizontal segment in the Front view (left) and Right view (right) represents the base of the knob."
+    },
+    {
+      "id": "knob_neck",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "Z",
+      "dimensions": [
+        "ASSUMED_NECK_RADIUS",
+        "ASSUMED_NECK_HEIGHT"
+      ],
+      "placement": "Centered at (0,0,ASSUMED_BASE_HEIGHT), extending along +Z",
+      "evidence": "The narrower vertical section in the middle of the profile in both views."
+    },
+    {
+      "id": "knob_head",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "Z",
+      "dimensions": [
+        "ASSUMED_HEAD_RADIUS",
+        "ASSUMED_HEAD_HEIGHT"
+      ],
+      "placement": "Centered at (0,0,ASSUMED_BASE_HEIGHT + ASSUMED_NECK_HEIGHT), extending along +Z",
+      "evidence": "The top-most horizontal segment in the Front view (left) and Right view (right) represents the head of the knob."
+    }
+  ],
+  "connections": [
+    "knob_base connects to knob_neck at z = ASSUMED_BASE_HEIGHT",
+    "knob_neck connects to knob_head at z = ASSUMED_BASE_HEIGHT + ASSUMED_NECK_HEIGHT"
+  ],
+  "edit_rules": [
+    "Changing ASSUMED_BASE_RADIUS affects the diameter of the base.",
+    "Changing ASSUMED_BASE_HEIGHT affects the height of the base and the starting Z of the neck.",
+    "Changing ASSUMED_NECK_RADIUS affects the diameter of the neck.",
+    "Changing ASSUMED_NECK_HEIGHT affects the height of the neck and the starting Z of the head.",
+    "Changing ASSUMED_HEAD_RADIUS affects the diameter of the head.",
+    "Changing ASSUMED_HEAD_HEIGHT affects the height of the head."
+  ],
+  "unresolved": [
+    "ASSUMED_BASE_RADIUS",
+    "ASSUMED_BASE_HEIGHT",
+    "ASSUMED_NECK_RADIUS",
+    "ASSUMED_NECK_HEIGHT",
+    "ASSUMED_HEAD_RADIUS",
+    "ASSUMED_HEAD_HEIGHT"
+  ]
+}

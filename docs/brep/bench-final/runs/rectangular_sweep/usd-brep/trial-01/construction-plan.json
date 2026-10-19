@@ -1,0 +1,31 @@
+{
+  "view_frame": "The drawing uses a third-angle projection with a primary Front view (XZ plane) and a Top view (XY plane). The Top view displays the curved path of the handle in the XY plane. The X-axis represents width, the Y-axis represents depth, and the Z-axis represents height (thickness of the part).",
+  "features": [
+    {
+      "id": "handle_path",
+      "shape": "Swept Path",
+      "section": "Rectangular",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "6",
+        "4",
+        "R20",
+        "10"
+      ],
+      "placement": "The path lies in the XY plane. It consists of a straight segment of length 10, followed by a quarter-circle bend (R20), a second quarter-circle bend (R20) in the opposite direction, and a final straight segment of length 10. The section is 6mm wide in the XY plane and 4mm thick in the Z direction. The section is centered on the path curve. The start and end centers are offset by X=40, Y=60.",
+      "evidence": "Top view shows the curved path. Text states 'Two opposite quarter bends: centreline R20 each. Straight ends: 10 each.' and 'End centre offset: X=40, Y=60'. End Section view shows a 6x4 rectangle."
+    }
+  ],
+  "connections": [
+    "The two quarter-circle bends are tangent to each other at the inflection point.",
+    "The straight ends are tangent to the respective quarter-circle bends."
+  ],
+  "edit_rules": [
+    "Changing the section width (6) or thickness (4) updates the sweep profile but preserves the path geometry.",
+    "Changing the bend radius (R20) or straight length (10) updates the path geometry but preserves the section profile.",
+    "Changing the end offset (X=40, Y=60) requires recalculating the path geometry to maintain tangency and segment lengths."
+  ],
+  "unresolved": [
+    "The specific orientation of the 6mm dimension relative to the path tangent (whether it is radial or tangential) is not explicitly dimensioned in the views, though '6 wide in the path plane' suggests it lies within the XY plane. The standard interpretation for a handle is that the wider dimension (6) is radial (grip width) and the thinner (4) is tangential (grip thickness), but this is an assumption based on typical design rather than explicit geometric constraints in the drawing."
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "view_frame": "The drawing presents a primary view (labeled 'front' in controls, but geometrically a top view of a flat plate) showing the XY plane, and a secondary view above showing the XZ plane (elevation). The world axes are X (width, horizontal), Y (depth, vertical on the main sheet), and Z (height/thickness, vertical on the elevation sheet).",
+  "features": [
+    {
+      "id": "base_plate",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "ASSUMED_WIDTH",
+        "ASSUMED_DEPTH",
+        "3"
+      ],
+      "placement": "Centered at (0,0,0) in XY. Extruded along Z from 0 to 3. The outline is a closed rectangle in the XY plane.",
+      "evidence": "The main view shows a large rectangular outline. The user notes describe a 'Flat mounting plate'. The thickness is established by the clarification answer as 3mm."
+    },
+    {
+      "id": "hole_1",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "Z",
+      "dimensions": [
+        "ASSUMED_HOLE_DIAMETER"
+      ],
+      "placement": "Located in the upper-left quadrant of the base_plate. Center coordinates (X_neg, Y_pos). Through-hole along Z.",
+      "evidence": "A circular scribble mark in the upper-left area of the main view."
+    },
+    {
+      "id": "hole_2",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "Z",
+      "dimensions": [
+        "ASSUMED_HOLE_DIAMETER"
+      ],
+      "placement": "Located in the lower-right quadrant of the base_plate. Center coordinates (X_pos, Y_neg). Through-hole along Z.",
+      "evidence": "A circular scribble mark in the lower-right area of the main view."
+    },
+    {
+      "id": "center_slot",
+      "shape": "obround",
+      "section": "obround",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "ASSUMED_SLOT_LENGTH",
+        "ASSUMED_SLOT_WIDTH"
+      ],
+      "placement": "Centered at (0,0) in XY. The long axis is aligned with X. Through-hole along Z.",
+      "evidence": "A central elongated shape with rounded ends in the main view."
+    }
+  ],
+  "connections": [
+    "hole_1 is subtracted from base_plate",
+    "hole_2 is subtracted from base_plate",
+    "center_slot is subtracted from base_plate"
+  ],
+  "edit_rules": [
+    "Changing base_plate thickness (Z) does not affect XY positions of holes or slot.",
+    "Changing base_plate width (X) or depth (Y) requires re-evaluating hole positions to maintain relative spacing.",
+    "Hole and slot diameters/widths are independent parameters."
+  ],
+  "unresolved": [
+    "Missing dimensions for base_plate width and depth.",
+    "Missing dimensions for hole diameters.",
+    "Missing dimensions for slot length and width.",
+    "Missing coordinates for hole centers relative to the plate edges."
+  ]
+}

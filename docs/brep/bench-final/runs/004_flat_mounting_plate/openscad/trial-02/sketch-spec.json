@@ -1,0 +1,188 @@
+{
+  "object": "Flat mounting plate",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "front",
+      "sheet_region": "view_2",
+      "constrains": "Primary geometry: outer rectangular profile (width and height) and internal cutouts (two holes and one center slot)."
+    },
+    {
+      "direction": "top",
+      "sheet_region": "view_1",
+      "constrains": "Thickness of the plate (vertical dimension in this view)."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "plate_body",
+      "name": "Mounting Plate",
+      "material": "generic_plastic",
+      "description": "A flat rectangular plate with two circular holes and a central slot."
+    }
+  ],
+  "features": [
+    {
+      "id": "outer_profile",
+      "type": "outline",
+      "owner": "plate_body",
+      "source_view": "view_2",
+      "profile_id": "contour_0",
+      "description": "Rectangular boundary of the plate."
+    },
+    {
+      "id": "hole_left",
+      "type": "hole",
+      "owner": "plate_body",
+      "source_view": "view_2",
+      "profile_id": "contour_6",
+      "description": "Circular hole located in the upper-left quadrant."
+    },
+    {
+      "id": "hole_right",
+      "type": "hole",
+      "owner": "plate_body",
+      "source_view": "view_2",
+      "profile_id": "contour_2",
+      "description": "Circular hole located in the lower-right quadrant."
+    },
+    {
+      "id": "center_slot",
+      "type": "slot",
+      "owner": "plate_body",
+      "source_view": "view_2",
+      "profile_id": "contour_4",
+      "description": "Elongated slot located in the center of the plate."
+    }
+  ],
+  "relations": [
+    {
+      "type": "contained_in",
+      "subject": "hole_left",
+      "object": "outer_profile"
+    },
+    {
+      "type": "contained_in",
+      "subject": "hole_right",
+      "object": "outer_profile"
+    },
+    {
+      "type": "contained_in",
+      "subject": "center_slot",
+      "object": "outer_profile"
+    }
+  ],
+  "symmetry": {
+    "type": "point_symmetry",
+    "description": "The two holes exhibit approximate 180-degree rotational symmetry around the center of the plate."
+  },
+  "repetitions": [
+    {
+      "feature_id": "hole_left",
+      "count": 2,
+      "pattern": "diagonal",
+      "description": "Two holes arranged diagonally."
+    }
+  ],
+  "dimensions": {
+    "width": 100.0,
+    "height": 61.8,
+    "thickness": 9.7,
+    "max_width": 100.0,
+    "max_depth": 9.65,
+    "max_height": 61.98,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "Exact hole diameters are not specified; estimated from relative area.",
+    "Exact slot dimensions are not specified; estimated from relative area.",
+    "Plate thickness is estimated from the top view aspect ratio relative to the width."
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "The object is a flat plate. The front view (view_2) defines the X-Z plane geometry. The top view (view_1) defines the thickness (Y-axis). The holes and slot are treated as through-cuts.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "extrude",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_2",
+        "operation": "extrude",
+        "profile_plane": "XZ",
+        "direction_axis": "Y",
+        "owner": "plate_body",
+        "parameters": {
+          "depth": 9.7,
+          "symmetric": true
+        },
+        "source_views": [
+          "view_1"
+        ]
+      },
+      {
+        "id": "hole_left",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Circular hole located in the upper-left quadrant."
+        },
+        "source_views": []
+      },
+      {
+        "id": "hole_right",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Circular hole located in the lower-right quadrant."
+        },
+        "source_views": []
+      },
+      {
+        "id": "center_slot",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Elongated slot located in the center of the plate."
+        },
+        "source_views": []
+      }
+    ],
+    "unresolved_constraints": [
+      "Specific hole diameters",
+      "Specific slot dimensions"
+    ]
+  },
+  "user_intent": {
+    "description": "Flat mounting plate with two holes and a center slot",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "100"
+  },
+  "source_view_group_count": 2,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

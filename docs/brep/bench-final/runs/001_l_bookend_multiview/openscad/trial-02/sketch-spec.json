@@ -1,0 +1,191 @@
+{
+  "object": "L-shaped bookend",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "front",
+      "sheet_region": "left",
+      "constrains": "Front face geometry (XZ plane), including the rectangular outer profile and the four internal cutouts (one wide rectangle at top, three vertical slots below)."
+    },
+    {
+      "direction": "right",
+      "sheet_region": "right",
+      "constrains": "Side profile geometry (YZ plane), defining the L-shaped cross-section (vertical back and horizontal base) and the object's depth."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "bookend_body",
+      "description": "Single solid L-shaped block with rectangular cutouts on the front face."
+    }
+  ],
+  "features": [
+    {
+      "id": "main_body",
+      "type": "extrusion",
+      "description": "L-shaped profile extruded along the X-axis to form the main body."
+    },
+    {
+      "id": "top_cutout",
+      "type": "through_hole",
+      "description": "Wide rectangular cutout located in the upper section of the front face."
+    },
+    {
+      "id": "slot_left",
+      "type": "through_hole",
+      "description": "Vertical rectangular slot located on the lower left of the front face."
+    },
+    {
+      "id": "slot_center",
+      "type": "through_hole",
+      "description": "Vertical rectangular slot located in the lower center of the front face."
+    },
+    {
+      "id": "slot_right",
+      "type": "through_hole",
+      "description": "Vertical rectangular slot located on the lower right of the front face."
+    }
+  ],
+  "relations": [
+    {
+      "type": "contains",
+      "parent": "main_body",
+      "child": "top_cutout"
+    },
+    {
+      "type": "contains",
+      "parent": "main_body",
+      "child": "slot_left"
+    },
+    {
+      "type": "contains",
+      "parent": "main_body",
+      "child": "slot_center"
+    },
+    {
+      "type": "contains",
+      "parent": "main_body",
+      "child": "slot_right"
+    }
+  ],
+  "symmetry": "None",
+  "repetitions": [
+    {
+      "feature_ids": [
+        "slot_left",
+        "slot_center",
+        "slot_right"
+      ],
+      "description": "Three vertical slots of similar aspect ratio arranged horizontally."
+    }
+  ],
+  "dimensions": {
+    "max_dimension": 100.0,
+    "max_width": 80.18,
+    "max_depth": 71.67,
+    "max_height": 100.0,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "Exact thickness of the L-profile (vertical and horizontal legs) is not dimensioned.",
+    "Exact depth of the cutouts is assumed to be through-cuts based on the 'bookend' context and lack of hidden lines."
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "The object is interpreted as a solid L-shaped block. The front view shows the face with cutouts, and the right view shows the L-profile. The cutouts are treated as subtractive features (holes) passing through the vertical leg of the L.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "extrude",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_base",
+        "operation": "extrude",
+        "profile_plane": "YZ",
+        "direction_axis": "X",
+        "owner": "main_body",
+        "parameters": {
+          "profile_source": "view_2_outer_profile",
+          "extrusion_length": "derived_from_view_1_width"
+        },
+        "source_views": [
+          "view_2"
+        ]
+      },
+      {
+        "id": "top_cutout",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Wide rectangular cutout located in the upper section of the front face."
+        },
+        "source_views": []
+      },
+      {
+        "id": "slot_left",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Vertical rectangular slot located on the lower left of the front face."
+        },
+        "source_views": []
+      },
+      {
+        "id": "slot_center",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Vertical rectangular slot located in the lower center of the front face."
+        },
+        "source_views": []
+      },
+      {
+        "id": "slot_right",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Vertical rectangular slot located on the lower right of the front face."
+        },
+        "source_views": []
+      }
+    ],
+    "unresolved_constraints": [
+      "Wall thickness of the L-profile",
+      "Exact width of the bookend (X-axis length)"
+    ]
+  },
+  "user_intent": {
+    "description": "L-shaped bookend from front and right views",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "100"
+  },
+  "source_view_group_count": 2,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

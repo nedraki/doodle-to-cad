@@ -1,0 +1,140 @@
+{
+  "object": "Stepped round knob",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "front",
+      "sheet_region": "left",
+      "constrains": "Radial profile (radius vs height) of the revolved body. The outer boundary defines the silhouette of the knob."
+    },
+    {
+      "direction": "right",
+      "sheet_region": "right",
+      "constrains": "Radial profile (radius vs height) of the revolved body. Confirms the silhouette is symmetric and circular in cross-section."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "knob_body",
+      "name": "Knob Body",
+      "material": "plastic",
+      "description": "A stepped cylindrical knob with a wide top cap, a narrower neck, and a wide base flange."
+    }
+  ],
+  "features": [
+    {
+      "id": "top_cap",
+      "type": "cylinder",
+      "owner": "knob_body",
+      "description": "The uppermost wide section of the knob."
+    },
+    {
+      "id": "neck",
+      "type": "cylinder",
+      "owner": "knob_body",
+      "description": "The narrower middle section connecting the cap and base."
+    },
+    {
+      "id": "base_flange",
+      "type": "cylinder",
+      "owner": "knob_body",
+      "description": "The lowermost wide section, likely for mounting or grip."
+    }
+  ],
+  "relations": [
+    {
+      "type": "coaxial",
+      "targets": [
+        "top_cap",
+        "neck",
+        "base_flange"
+      ]
+    },
+    {
+      "type": "adjacent",
+      "targets": [
+        "top_cap",
+        "neck"
+      ]
+    },
+    {
+      "type": "adjacent",
+      "targets": [
+        "neck",
+        "base_flange"
+      ]
+    }
+  ],
+  "symmetry": {
+    "type": "revolved",
+    "axis": "Z",
+    "count": 0
+  },
+  "repetitions": [],
+  "dimensions": {
+    "height": 56.0,
+    "max_width": 56.0,
+    "max_depth": 55.87,
+    "max_height": 38.64,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "Exact radii of the steps are estimated from the 2D profile aspect ratio.",
+    "The small marks in the center of the views are interpreted as center-marks for the axis of revolution, not physical holes."
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "The object is interpreted as a revolved solid based on the 'Stepped round knob' description and the identical front/right orthographic profiles. The profile is extracted from the front view (view_1) and revolved around the vertical Z-axis. The height is scaled to the authoritative maximum dimension of 56mm.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "revolve",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_2",
+        "operation": "revolve",
+        "profile_plane": "XZ",
+        "direction_axis": "Z",
+        "owner": "knob_body",
+        "parameters": {
+          "angle": 360,
+          "axis": "Z"
+        },
+        "source_views": [
+          "view_1",
+          "view_2"
+        ]
+      }
+    ],
+    "unresolved_constraints": [
+      "Exact radii of the steps are estimated from the 2D profile aspect ratio.",
+      "The small marks in the center of the views are interpreted as center-marks for the axis of revolution, not physical holes."
+    ]
+  },
+  "user_intent": {
+    "description": "Stepped round knob (revolved profile)",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "56"
+  },
+  "source_view_group_count": 2,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

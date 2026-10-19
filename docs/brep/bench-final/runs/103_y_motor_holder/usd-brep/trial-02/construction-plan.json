@@ -1,0 +1,68 @@
+{
+  "view_frame": "The drawing presents three views of a bracket. The primary view (top-left) is the Front view, showing the XZ plane (Width and Height). The view below it is the Top view, showing the XY plane (Width and Depth). The view to the right is the Right Side view, showing the YZ plane (Depth and Height). The object is a flat plate with a triangular gusset.",
+  "features": [
+    {
+      "id": "main_plate",
+      "shape": "extrusion",
+      "section": "closed_profile",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "ASSUMED: thickness 5mm",
+        "ASSUMED: width 40mm",
+        "ASSUMED: height 50mm"
+      ],
+      "placement": "Extruded from Z=0 to Z=5mm. The profile is defined in the XY plane. The plate occupies the region X:[0, 40], Y:[0, 5].",
+      "evidence": "The Front view shows the main body outline. The Top view shows the plate as a rectangle (left portion) and the gusset (right portion). The Right view shows the plate as a rectangle."
+    },
+    {
+      "id": "gusset",
+      "shape": "extrusion",
+      "section": "closed_profile",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "ASSUMED: thickness 5mm",
+        "ASSUMED: width 20mm",
+        "ASSUMED: height 15mm"
+      ],
+      "placement": "Extruded from Z=0 to Z=5mm. The profile is defined in the XY plane. The gusset occupies the region X:[40, 60], Y:[0, 5]. It connects to the main plate at X=40.",
+      "evidence": "The Top view shows a triangular shape extending to the right of the main plate. The Right view shows the gusset as a triangular profile."
+    },
+    {
+      "id": "hole_top",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "Z",
+      "dimensions": [
+        "ASSUMED: diameter 4mm"
+      ],
+      "placement": "Located at X=35, Y=2.5 (centered in plate thickness). Extends through Z=0 to Z=5.",
+      "evidence": "Visible as a circle in the upper right of the Front view."
+    },
+    {
+      "id": "hole_bottom",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "Z",
+      "dimensions": [
+        "ASSUMED: diameter 4mm"
+      ],
+      "placement": "Located at X=5, Y=2.5 (centered in plate thickness). Extends through Z=0 to Z=5.",
+      "evidence": "Visible as a circle in the lower left of the Front view."
+    }
+  ],
+  "connections": [
+    "The gusset is tangent to the main plate at the vertical edge X=40.",
+    "The holes are subtractive features from the main plate."
+  ],
+  "edit_rules": [
+    "Changing the plate width (X) moves the gusset connection point.",
+    "Changing the gusset width (X) extends the total length.",
+    "Changing the plate thickness (Y) updates the Top view width and Right view width.",
+    "Changing the hole positions updates the Front view."
+  ],
+  "unresolved": [
+    "Exact dimensions for the plate width, height, and gusset dimensions are missing.",
+    "Exact hole diameters and positions are missing.",
+    "The thickness of the part is not explicitly dimensioned."
+  ]
+}

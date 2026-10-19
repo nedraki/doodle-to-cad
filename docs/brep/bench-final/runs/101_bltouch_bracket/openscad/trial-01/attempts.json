@@ -1,0 +1,407 @@
+[
+  {
+    "attempt": 1,
+    "action": "generate",
+    "preflight": {
+      "passed": false,
+      "errors": [
+        "unbalanced braces"
+      ],
+      "warnings": [],
+      "expected_subtractive_feature_groups": 3
+    },
+    "compiler_repairs": [
+      {
+        "repair": 1,
+        "preflight": {
+          "passed": false,
+          "errors": [
+            "unbalanced braces"
+          ],
+          "warnings": [],
+          "expected_subtractive_feature_groups": 3
+        },
+        "compile_log": "PREFLIGHT: unbalanced braces",
+        "failed_scad": "compiler-repair-01.failed.scad"
+      },
+      {
+        "repair": 2,
+        "preflight": {
+          "passed": false,
+          "errors": [
+            "unbalanced braces"
+          ],
+          "warnings": [],
+          "expected_subtractive_feature_groups": 3
+        },
+        "compile_log": "PREFLIGHT: unbalanced braces",
+        "failed_scad": "compiler-repair-02.failed.scad"
+      }
+    ],
+    "uniform_scale": null,
+    "evaluation": {
+      "score": 0.0,
+      "valid_mesh": false,
+      "accepted": false,
+      "mandatory_gates": {
+        "compiled": false,
+        "topology": false,
+        "dimensions": false,
+        "shape_sanity": true,
+        "features": false,
+        "openings_through": true,
+        "projections": true,
+        "build_envelope": true
+      },
+      "scores": {
+        "topology": 0.0,
+        "dimensions": 0,
+        "features": 0.0,
+        "projections": 0
+      },
+      "projection_similarity": {},
+      "profile_topology": {},
+      "demanded_openings": {
+        "total": 3,
+        "per_view": {},
+        "sheet_total": 3,
+        "registration_gap": 0
+      },
+      "failures": [
+        "OpenSCAD did not produce a valid STL",
+        "maximum dimension is 0 mm; target is 60 mm (tolerance 5%)",
+        "required internal profiles are missing: sheet demands 3; best rendered view has 0."
+      ]
+    },
+    "mesh_health": null,
+    "build": null,
+    "compile_log": "PREFLIGHT: unbalanced braces",
+    "files": {
+      "scad": "attempt-01/model.scad",
+      "stl": null,
+      "views": {}
+    },
+    "supervisor": {
+      "action": "repair_scad",
+      "problems": [
+        "OpenSCAD compilation failed due to unbalanced braces and infinite comment loop.",
+        "Mesh generation failed (0mm dimensions), preventing evaluation.",
+        "Chamfer implementation logic was stuck in a repetitive comment block."
+      ],
+      "preserve": [
+        "L-shaped bracket geometry (vertical wall + base plate).",
+        "Parameter definitions (width, depth, height, thicknesses).",
+        "Feature locations (holes, slot, chamfer)."
+      ],
+      "instructions": "Rewrite the OpenSCAD code to fix syntax errors. Remove the infinite comment loop. Implement the chamfer using a simple `rotate` and `cube` subtraction or a `polygon` extrude. Ensure the `difference` block correctly subtracts the chamfer cutter, two circular holes, and the rectangular slot from the union of the vertical wall and base plate. Verify brace balance.",
+      "confidence": 1.0
+    }
+  },
+  {
+    "attempt": 2,
+    "action": "repair_scad",
+    "preflight": {
+      "passed": false,
+      "errors": [
+        "unbalanced braces"
+      ],
+      "warnings": [],
+      "expected_subtractive_feature_groups": 3
+    },
+    "compiler_repairs": [
+      {
+        "repair": 1,
+        "preflight": {
+          "passed": false,
+          "errors": [
+            "unbalanced braces"
+          ],
+          "warnings": [],
+          "expected_subtractive_feature_groups": 3
+        },
+        "compile_log": "PREFLIGHT: unbalanced braces",
+        "failed_scad": "compiler-repair-01.failed.scad"
+      },
+      {
+        "repair": 2,
+        "preflight": {
+          "passed": false,
+          "errors": [
+            "unbalanced braces"
+          ],
+          "warnings": [],
+          "expected_subtractive_feature_groups": 3
+        },
+        "compile_log": "PREFLIGHT: unbalanced braces",
+        "failed_scad": "compiler-repair-02.failed.scad"
+      }
+    ],
+    "uniform_scale": null,
+    "evaluation": {
+      "score": 0.0,
+      "valid_mesh": false,
+      "accepted": false,
+      "mandatory_gates": {
+        "compiled": false,
+        "topology": false,
+        "dimensions": false,
+        "shape_sanity": true,
+        "features": false,
+        "openings_through": true,
+        "projections": true,
+        "build_envelope": true
+      },
+      "scores": {
+        "topology": 0.0,
+        "dimensions": 0,
+        "features": 0.0,
+        "projections": 0
+      },
+      "projection_similarity": {},
+      "profile_topology": {},
+      "demanded_openings": {
+        "total": 3,
+        "per_view": {},
+        "sheet_total": 3,
+        "registration_gap": 0
+      },
+      "failures": [
+        "OpenSCAD did not produce a valid STL",
+        "maximum dimension is 0 mm; target is 60 mm (tolerance 5%)",
+        "required internal profiles are missing: sheet demands 3; best rendered view has 0."
+      ]
+    },
+    "mesh_health": null,
+    "build": null,
+    "compile_log": "PREFLIGHT: unbalanced braces",
+    "files": {
+      "scad": "attempt-02/model.scad",
+      "stl": null,
+      "views": {}
+    },
+    "supervisor": {
+      "action": "regenerate_scad",
+      "problems": [
+        "Syntax error: unbalanced braces in the provided SCAD code.",
+        "Code contains infinite loop of comments instead of geometry logic.",
+        "Missing implementation for chamfer, holes, slot, and mounting tab.",
+        "Mesh generation failed (0mm dimensions)."
+      ],
+      "preserve": [
+        "L-bracket topology (vertical wall + base plate).",
+        "Overall dimensions (43.22 x 60.0 x 45.52 mm).",
+        "Feature locations (holes on vertical face, chamfer on top-right).",
+        "Parameter definitions in the header."
+      ],
+      "instructions": "Previous repair made no measurable progress. Regenerate cleanly from the specification and mandatory gate failures using a different construction strategy.",
+      "confidence": 1.0
+    }
+  },
+  {
+    "attempt": 3,
+    "action": "regenerate_scad",
+    "preflight": {
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "expected_subtractive_feature_groups": 3
+    },
+    "compiler_repairs": [],
+    "uniform_scale": null,
+    "evaluation": {
+      "score": 72.6,
+      "valid_mesh": true,
+      "accepted": false,
+      "mandatory_gates": {
+        "compiled": true,
+        "topology": true,
+        "dimensions": true,
+        "shape_sanity": true,
+        "features": false,
+        "openings_through": false,
+        "projections": false,
+        "build_envelope": true
+      },
+      "scores": {
+        "topology": 45,
+        "dimensions": 20.0,
+        "features": 0.0,
+        "projections": 7.6
+      },
+      "projection_similarity": {
+        "front": 0.81,
+        "top": 0.35,
+        "right": 0.35
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 3,
+          "crop_internal_profiles": 0,
+          "source_aspect": 0.945,
+          "rendered_aspect": 0.95,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": [
+            [
+              0.632,
+              0.172
+            ],
+            [
+              0.265,
+              0.496
+            ],
+            [
+              0.632,
+              0.83
+            ]
+          ]
+        },
+        "top": {
+          "source_internal_profiles": 3,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 3,
+          "source_aspect": 0.713,
+          "rendered_aspect": 0.721,
+          "source_opening_centroids": [
+            [
+              0.651,
+              0.846
+            ],
+            [
+              0.251,
+              0.493
+            ],
+            [
+              0.637,
+              0.155
+            ]
+          ],
+          "rendered_opening_centroids": [],
+          "missing_opening_centroids": [
+            [
+              0.651,
+              0.846
+            ],
+            [
+              0.251,
+              0.493
+            ],
+            [
+              0.637,
+              0.155
+            ]
+          ],
+          "feature_position_fidelity": 0.0
+        },
+        "right": {
+          "source_internal_profiles": 3,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 3,
+          "source_aspect": 1.309,
+          "rendered_aspect": 1.317,
+          "source_opening_centroids": [
+            [
+              0.507,
+              0.616
+            ],
+            [
+              0.159,
+              0.183
+            ],
+            [
+              0.852,
+              0.182
+            ]
+          ],
+          "rendered_opening_centroids": [],
+          "missing_opening_centroids": [
+            [
+              0.507,
+              0.616
+            ],
+            [
+              0.159,
+              0.183
+            ],
+            [
+              0.852,
+              0.182
+            ]
+          ],
+          "feature_position_fidelity": 0.0
+        }
+      },
+      "demanded_openings": {
+        "total": 6,
+        "per_view": {
+          "front": 0,
+          "top": 3,
+          "right": 3
+        },
+        "sheet_total": 3,
+        "registration_gap": 0
+      },
+      "failures": [
+        "required internal profiles are missing: right demands 3, renders 0, top demands 3, renders 0; best rendered view has 3. Missing at these view-local centres \u2014 add cutters there: (u=0.651,v=0.846); (u=0.251,v=0.493); (u=0.637,v=0.155).",
+        "openings do not go through the solid: the drawing demands 6 openings across the registered views (strongest: top) but the mesh has 3 true through-holes \u2014 the rendered openings are blind pockets or edge notches; cut all the way through the wall",
+        "CAD projections poorly match the drawing: right similarity 0.35, top similarity 0.35 (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly.",
+        "features exist but sit at the wrong positions in top, right view(s): match each opening's location (u,v within the outer profile) to the drawing; check the cad_mapping signs (front: u->+X v->-Z; top: u->+X v->-Y i.e. sheet-down is the FRONT of the part)"
+      ]
+    },
+    "mesh_health": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 136,
+      "through_holes": 3,
+      "extents_mm": [
+        43.22,
+        60.0,
+        45.52
+      ],
+      "volume_mm3": 16922.373
+    },
+    "build": {
+      "version": 1,
+      "backend": "openscad",
+      "source_format": "openscad",
+      "ok": true,
+      "units": "mm",
+      "axes": {
+        "x": "width",
+        "y": "depth",
+        "z": "height"
+      },
+      "views": [
+        "isometric",
+        "front",
+        "top",
+        "right"
+      ],
+      "measurements": {
+        "watertight": true,
+        "components": 1,
+        "triangles": 136,
+        "through_holes": 3,
+        "extents_mm": [
+          43.22,
+          60.0,
+          45.52
+        ],
+        "volume_mm3": 16922.373
+      },
+      "diagnostics": [],
+      "drawing_evaluated": false
+    },
+    "compile_log": "Geometries in cache: 15\nGeometry cache size in bytes: 14376\nCGAL Polyhedrons in cache: 2\nCGAL cache size in bytes: 103712\nTotal rendering time: 0:00:00.079\n   Top level object is a 3D object:\n   Simple:        yes\n   Vertices:       64\n   Halfedges:     192\n   Edges:          96\n   Halffacets:     68\n   Facets:         34\n   Volumes:         2",
+    "files": {
+      "scad": "attempt-03/model.scad",
+      "stl": "attempt-03/model.stl",
+      "views": {
+        "isometric": "attempt-03/view-isometric.png",
+        "front": "attempt-03/view-front.png",
+        "top": "attempt-03/view-top.png",
+        "right": "attempt-03/view-right.png"
+      }
+    }
+  }
+]

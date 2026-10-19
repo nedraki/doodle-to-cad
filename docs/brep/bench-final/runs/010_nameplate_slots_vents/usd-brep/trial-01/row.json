@@ -1,0 +1,109 @@
+{
+  "drawing": "010_nameplate_slots_vents",
+  "backend": "usd-brep",
+  "trial": 1,
+  "submitted_at": "2026-10-19T15:58:06.021377+00:00",
+  "finished_at": "2026-10-19T16:00:54.532362+00:00",
+  "run_id": "df53b3e495ef",
+  "wall_seconds": 168.5,
+  "job_status": "done",
+  "error": null,
+  "questions_asked": 0,
+  "question_kinds": [],
+  "build": {
+    "watertight": true,
+    "components": 1,
+    "genus": 7,
+    "extents_mm": [
+      140.0,
+      5.0,
+      30.0
+    ],
+    "volume_mm3": 18897.7,
+    "sha256": "400f2431417cf9aa6706999f380e9e89a5bb4c2dd305098845730abfcd7d1486",
+    "bytes": 35684
+  },
+  "checks": {
+    "build_success": true,
+    "extents_pass": false,
+    "genus_pass": true,
+    "volume_pass": false,
+    "fidelity_pass": true,
+    "overall_pass": false,
+    "not_applicable": []
+  },
+  "fidelity": {
+    "scores": {
+      "front": 0.966
+    },
+    "pass": true,
+    "reason": null,
+    "topology": {
+      "front": {
+        "expected": 7,
+        "actual": 2,
+        "position_fidelity": 1.0
+      }
+    }
+  },
+  "product": {
+    "success": false,
+    "accepted": false,
+    "status": "failed",
+    "score": null,
+    "projection_status": "failed",
+    "geometry_status": "passed",
+    "failures": [
+      "front openings",
+      "Detailed drawing features and view assignments require review."
+    ]
+  },
+  "attempts": {
+    "count": 1,
+    "recovered": false,
+    "corrections": 1
+  },
+  "unsupported": {
+    "flag": false,
+    "code": null
+  },
+  "brep_only": {
+    "operations": [
+      "box",
+      "cylinder",
+      "difference"
+    ],
+    "loft": false,
+    "shell": false,
+    "arc_pipe": false,
+    "sweep": false,
+    "extrude": false,
+    "parameter_names": [
+      "height",
+      "hole_diameter",
+      "hole_spacing",
+      "slot_height",
+      "slot_margin",
+      "slot_width",
+      "thickness",
+      "width"
+    ]
+  },
+  "edit": {
+    "available": true,
+    "ok": true,
+    "seconds": 2.88,
+    "param": "width",
+    "old": 140,
+    "new": 168.0,
+    "message": null
+  },
+  "targeted": {
+    "available": false,
+    "ok": false,
+    "seconds": null,
+    "operation": null,
+    "value": null,
+    "message": "no probe value produced a valid targeted plan"
+  }
+}

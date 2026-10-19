@@ -1,0 +1,113 @@
+{
+  "object": "L-shaped wall hook",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "front",
+      "sheet_region": "lower view group",
+      "constrains": "The primary L-shaped profile defining the object's width (X) and height (Z). The vertical leg forms the mounting face, and the horizontal leg forms the hook arm."
+    },
+    {
+      "direction": "top",
+      "sheet_region": "upper view group",
+      "constrains": "The depth (Y) of the object. The uniform rectangular shape indicates a constant thickness (depth) extruded from the front profile."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "part_1",
+      "name": "L_wall_hook",
+      "material": "plastic",
+      "description": "Single solid object with an L-shaped cross-section."
+    }
+  ],
+  "features": [
+    {
+      "id": "feat_1",
+      "name": "L_profile",
+      "type": "profile",
+      "owner": "part_1",
+      "description": "The 2D L-shaped outline defining the front face of the hook."
+    },
+    {
+      "id": "feat_2",
+      "name": "extrusion_depth",
+      "type": "dimension",
+      "owner": "part_1",
+      "description": "The uniform thickness of the hook, derived from the top view."
+    }
+  ],
+  "relations": [
+    {
+      "type": "extrusion",
+      "profile": "feat_1",
+      "direction": "Y",
+      "target": "part_1"
+    }
+  ],
+  "symmetry": "none",
+  "repetitions": [],
+  "dimensions": {
+    "max_width": 60.0,
+    "max_depth": 13.6,
+    "max_height": 54.42,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "Exact thickness (Y-axis) is visually estimated from the top view aspect ratio relative to the front view width.",
+    "Exact leg lengths and thicknesses of the L-shape are estimated from pixel coordinates."
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "The object is interpreted as a simple extrusion of the L-shaped front profile. The top view confirms a uniform depth. The geometry is regularized to clean lines and sharp corners suitable for 3D printing.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "extrude",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_2",
+        "operation": "extrude",
+        "profile_plane": "XZ",
+        "direction_axis": "Y",
+        "owner": "part_1",
+        "parameters": {
+          "depth": 15,
+          "start_at": 0
+        },
+        "source_views": [
+          "view_1"
+        ]
+      }
+    ],
+    "unresolved_constraints": [
+      "Exact depth value (Y) is estimated based on visual aspect ratio."
+    ]
+  },
+  "user_intent": {
+    "description": "L wall hook extruded from front profile",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "60"
+  },
+  "source_view_group_count": 2,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

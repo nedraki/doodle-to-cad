@@ -1,0 +1,126 @@
+{
+  "object": "Open-top enclosure with front window",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "top",
+      "sheet_region": "upper",
+      "constrains": "Planar footprint (X/Y dimensions) and wall thickness. The outer rectangle defines the overall width and depth. The inner rectangle defines the internal cavity, implying a uniform wall thickness."
+    },
+    {
+      "direction": "front",
+      "sheet_region": "lower",
+      "constrains": "Front elevation (X/Z dimensions). The outer rectangle defines the overall width and height. The inner rectangle defines the window cutout location and size on the front face."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "part_1",
+      "name": "Enclosure Body",
+      "material": "plastic",
+      "description": "A rectangular box with an open top and a rectangular window cutout on the front face."
+    }
+  ],
+  "features": [
+    {
+      "id": "feat_1",
+      "type": "wall",
+      "owner": "part_1",
+      "description": "Vertical walls forming the perimeter of the enclosure."
+    },
+    {
+      "id": "feat_2",
+      "type": "floor",
+      "owner": "part_1",
+      "description": "Bottom face of the enclosure."
+    },
+    {
+      "id": "feat_3",
+      "type": "window",
+      "owner": "part_1",
+      "description": "Rectangular cutout on the front face."
+    }
+  ],
+  "relations": [
+    {
+      "type": "contains",
+      "parent": "part_1",
+      "child": "feat_3"
+    }
+  ],
+  "symmetry": {
+    "type": "bilateral",
+    "axis": "X",
+    "description": "The window appears centered horizontally on the front face."
+  },
+  "repetitions": [],
+  "dimensions": {
+    "width": 60.0,
+    "depth": 81.6,
+    "height": 26.0,
+    "max_width": 120.0,
+    "max_depth": 81.68,
+    "max_height": 43.96,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "Wall thickness is inferred from the difference between outer and inner profiles in the top view.",
+    "Floor thickness is inferred from the bottom edge of the front view (though not explicitly separated in the drawing, assumed uniform with walls)."
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "The object is a simple box. The top view shows the open top (inner rectangle) and outer walls. The front view shows the solid front face with a window. The window is centered horizontally and vertically within the front face bounds.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "extrude",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_2",
+        "operation": "extrude",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "owner": "part_1",
+        "parameters": {
+          "height": 44,
+          "start_z": 0,
+          "end_z": 44
+        },
+        "source_views": [
+          "view_1",
+          "view_2"
+        ]
+      }
+    ],
+    "unresolved_constraints": [
+      "Wall thickness is inferred from the difference between outer and inner profiles in the top view.",
+      "Floor thickness is inferred from the bottom edge of the front view (though not explicitly separated in the drawing, assumed uniform with walls)."
+    ]
+  },
+  "user_intent": {
+    "description": "Open-top enclosure with front window",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "120"
+  },
+  "source_view_group_count": 2,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

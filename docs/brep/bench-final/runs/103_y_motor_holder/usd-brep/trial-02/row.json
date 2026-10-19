@@ -1,0 +1,21 @@
+{
+  "drawing": "103_y_motor_holder",
+  "backend": "usd-brep",
+  "trial": 2,
+  "submitted_at": "2026-10-19T16:24:41.063430+00:00",
+  "finished_at": "2026-10-19T16:26:59.548343+00:00",
+  "run_id": "f5094f485f35",
+  "wall_seconds": 138.5,
+  "job_status": "error",
+  "error": {
+    "message": "usd_brep 1.0.0 kernel returned a non-manifold solid: bracket_shape: kernel produced an invalid solid. Observed twice in the frozen comparison on spoke operations (docs/brep/task-17-comparison wheel trial-04/05); the triggering recipe was not retained, so no minimal reproducer exists yet (issue #61). Retry with the OpenSCAD backend.",
+    "code": "kernel_unavailable"
+  },
+  "questions_asked": 0,
+  "question_kinds": [],
+  "build": null,
+  "checks": {
+    "build_success": false,
+    "overall_pass": false
+  }
+}

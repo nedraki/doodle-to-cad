@@ -1,0 +1,820 @@
+{
+  "version": 2,
+  "units": "mm",
+  "name": "grille_assembly",
+  "parameters": {
+    "width": {
+      "value": 126,
+      "min": 60,
+      "max": 200,
+      "label": "Grille Width",
+      "description": "Total width of the grille assembly"
+    },
+    "height": {
+      "value": 80,
+      "min": 40,
+      "max": 150,
+      "label": "Grille Height",
+      "description": "Total height of the grille assembly"
+    },
+    "thickness": {
+      "value": 3,
+      "min": 1,
+      "max": 10,
+      "label": "Grille Thickness",
+      "description": "Uniform thickness of the grille body"
+    },
+    "headlight_diameter": {
+      "value": 20,
+      "min": 10,
+      "max": 40,
+      "label": "Headlight Diameter",
+      "description": "Diameter of the circular headlight openings"
+    },
+    "slot_width": {
+      "value": 4,
+      "min": 2,
+      "max": 10,
+      "label": "Slot Width",
+      "description": "Width of the vertical grille slots"
+    },
+    "slot_height": {
+      "value": 48,
+      "min": 20,
+      "max": 80,
+      "label": "Slot Height",
+      "description": "Height of the vertical grille slots"
+    }
+  },
+  "operations": [
+    {
+      "id": "grille_body",
+      "kind": "extrude",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "plane": "xy",
+      "direction": 1,
+      "depth": "thickness",
+      "loops": [
+        [
+          {
+            "kind": "line",
+            "start": [
+              "width/2",
+              "height/2"
+            ],
+            "end": [
+              "-width/2",
+              "height/2"
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              "-width/2",
+              "height/2"
+            ],
+            "end": [
+              "-width/2",
+              "-height/2"
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              "-width/2",
+              "-height/2"
+            ],
+            "end": [
+              "width/2",
+              "-height/2"
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              "width/2",
+              "-height/2"
+            ],
+            "end": [
+              "width/2",
+              "height/2"
+            ]
+          }
+        ]
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "headlight_left",
+      "kind": "extrude",
+      "origin": [
+        "-width/3",
+        "-height/4",
+        "-1"
+      ],
+      "plane": "xy",
+      "direction": 1,
+      "depth": "thickness + 2",
+      "loops": [
+        [
+          {
+            "kind": "arc",
+            "center": [
+              0,
+              0
+            ],
+            "radius": "headlight_diameter/2",
+            "start_angle": 0,
+            "end_angle": 360
+          }
+        ]
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "headlight_right",
+      "kind": "extrude",
+      "origin": [
+        "width/3",
+        "-height/4",
+        "-1"
+      ],
+      "plane": "xy",
+      "direction": 1,
+      "depth": "thickness + 2",
+      "loops": [
+        [
+          {
+            "kind": "arc",
+            "center": [
+              0,
+              0
+            ],
+            "radius": "headlight_diameter/2",
+            "start_angle": 0,
+            "end_angle": 360
+          }
+        ]
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "slot_1",
+      "kind": "extrude",
+      "origin": [
+        "-width/4",
+        "height/8",
+        "-1"
+      ],
+      "plane": "xy",
+      "direction": 1,
+      "depth": "thickness + 2",
+      "loops": [
+        [
+          {
+            "kind": "line",
+            "start": [
+              "-slot_width/2",
+              "-slot_height/2"
+            ],
+            "end": [
+              "slot_width/2",
+              "-slot_height/2"
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              "slot_width/2",
+              "-slot_height/2"
+            ],
+            "end": [
+              "slot_width/2",
+              "slot_height/2"
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              "slot_width/2",
+              "slot_height/2"
+            ],
+            "end": [
+              "-slot_width/2",
+              "slot_height/2"
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              "-slot_width/2",
+              "slot_height/2"
+            ],
+            "end": [
+              "-slot_width/2",
+              "-slot_height/2"
+            ]
+          }
+        ]
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e4"
+      ]
+    },
+    {
+      "id": "slot_2",
+      "kind": "extrude",
+      "origin": [
+        "-width/8",
+        "height/8",
+        "-1"
+      ],
+      "plane": "xy",
+      "direction": 1,
+      "depth": "thickness + 2",
+      "loops": [
+        [
+          {
+            "kind": "line",
+            "start": [
+              "-slot_width/2",
+              "-slot_height/2"
+            ],
+            "end": [
+              "slot_width/2",
+              "-slot_height/2"
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              "slot_width/2",
+              "-slot_height/2"
+            ],
+            "end": [
+              "slot_width/2",
+              "slot_height/2"
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              "slot_width/2",
+              "slot_height/2"
+            ],
+            "end": [
+              "-slot_width/2",
+              "slot_height/2"
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              "-slot_width/2",
+              "slot_height/2"
+            ],
+            "end": [
+              "-slot_width/2",
+              "-slot_height/2"
+            ]
+          }
+        ]
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e4"
+      ]
+    },
+    {
+      "id": "slot_3",
+      "kind": "extrude",
+      "origin": [
+        "0",
+        "height/8",
+        "-1"
+      ],
+      "plane": "xy",
+      "direction": 1,
+      "depth": "thickness + 2",
+      "loops": [
+        [
+          {
+            "kind": "line",
+            "start": [
+              "-slot_width/2",
+              "-slot_height/2"
+            ],
+            "end": [
+              "slot_width/2",
+              "-slot_height/2"
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              "slot_width/2",
+              "-slot_height/2"
+            ],
+            "end": [
+              "slot_width/2",
+              "slot_height/2"
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              "slot_width/2",
+              "slot_height/2"
+            ],
+            "end": [
+              "-slot_width/2",
+              "slot_height/2"
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              "-slot_width/2",
+              "slot_height/2"
+            ],
+            "end": [
+              "-slot_width/2",
+              "-slot_height/2"
+            ]
+          }
+        ]
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e4"
+      ]
+    },
+    {
+      "id": "slot_4",
+      "kind": "extrude",
+      "origin": [
+        "width/8",
+        "height/8",
+        "-1"
+      ],
+      "plane": "xy",
+      "direction": 1,
+      "depth": "thickness + 2",
+      "loops": [
+        [
+          {
+            "kind": "line",
+            "start": [
+              "-slot_width/2",
+              "-slot_height/2"
+            ],
+            "end": [
+              "slot_width/2",
+              "-slot_height/2"
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              "slot_width/2",
+              "-slot_height/2"
+            ],
+            "end": [
+              "slot_width/2",
+              "slot_height/2"
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              "slot_width/2",
+              "slot_height/2"
+            ],
+            "end": [
+              "-slot_width/2",
+              "slot_height/2"
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              "-slot_width/2",
+              "slot_height/2"
+            ],
+            "end": [
+              "-slot_width/2",
+              "-slot_height/2"
+            ]
+          }
+        ]
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e4"
+      ]
+    },
+    {
+      "id": "slot_5",
+      "kind": "extrude",
+      "origin": [
+        "width/4",
+        "height/8",
+        "-1"
+      ],
+      "plane": "xy",
+      "direction": 1,
+      "depth": "thickness + 2",
+      "loops": [
+        [
+          {
+            "kind": "line",
+            "start": [
+              "-slot_width/2",
+              "-slot_height/2"
+            ],
+            "end": [
+              "slot_width/2",
+              "-slot_height/2"
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              "slot_width/2",
+              "-slot_height/2"
+            ],
+            "end": [
+              "slot_width/2",
+              "slot_height/2"
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              "slot_width/2",
+              "slot_height/2"
+            ],
+            "end": [
+              "-slot_width/2",
+              "slot_height/2"
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              "-slot_width/2",
+              "slot_height/2"
+            ],
+            "end": [
+              "-slot_width/2",
+              "-slot_height/2"
+            ]
+          }
+        ]
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e4"
+      ]
+    },
+    {
+      "id": "slot_6",
+      "kind": "extrude",
+      "origin": [
+        "3*width/16",
+        "height/8",
+        "-1"
+      ],
+      "plane": "xy",
+      "direction": 1,
+      "depth": "thickness + 2",
+      "loops": [
+        [
+          {
+            "kind": "line",
+            "start": [
+              "-slot_width/2",
+              "-slot_height/2"
+            ],
+            "end": [
+              "slot_width/2",
+              "-slot_height/2"
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              "slot_width/2",
+              "-slot_height/2"
+            ],
+            "end": [
+              "slot_width/2",
+              "slot_height/2"
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              "slot_width/2",
+              "slot_height/2"
+            ],
+            "end": [
+              "-slot_width/2",
+              "slot_height/2"
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              "-slot_width/2",
+              "slot_height/2"
+            ],
+            "end": [
+              "-slot_width/2",
+              "-slot_height/2"
+            ]
+          }
+        ]
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e4"
+      ]
+    },
+    {
+      "id": "slot_7",
+      "kind": "extrude",
+      "origin": [
+        "5*width/16",
+        "height/8",
+        "-1"
+      ],
+      "plane": "xy",
+      "direction": 1,
+      "depth": "thickness + 2",
+      "loops": [
+        [
+          {
+            "kind": "line",
+            "start": [
+              "-slot_width/2",
+              "-slot_height/2"
+            ],
+            "end": [
+              "slot_width/2",
+              "-slot_height/2"
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              "slot_width/2",
+              "-slot_height/2"
+            ],
+            "end": [
+              "slot_width/2",
+              "slot_height/2"
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              "slot_width/2",
+              "slot_height/2"
+            ],
+            "end": [
+              "-slot_width/2",
+              "slot_height/2"
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              "-slot_width/2",
+              "slot_height/2"
+            ],
+            "end": [
+              "-slot_width/2",
+              "-slot_height/2"
+            ]
+          }
+        ]
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e4"
+      ]
+    },
+    {
+      "id": "cut_headlight_left",
+      "kind": "difference",
+      "left": "grille_body",
+      "right": "headlight_left",
+      "frame": "world",
+      "depends_on": [
+        "grille_body",
+        "headlight_left"
+      ],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "cut_headlight_right",
+      "kind": "difference",
+      "left": "cut_headlight_left",
+      "right": "headlight_right",
+      "frame": "world",
+      "depends_on": [
+        "cut_headlight_left",
+        "headlight_right"
+      ],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "cut_slot_1",
+      "kind": "difference",
+      "left": "cut_headlight_right",
+      "right": "slot_1",
+      "frame": "world",
+      "depends_on": [
+        "cut_headlight_right",
+        "slot_1"
+      ],
+      "evidence": [
+        "e4"
+      ]
+    },
+    {
+      "id": "cut_slot_2",
+      "kind": "difference",
+      "left": "cut_slot_1",
+      "right": "slot_2",
+      "frame": "world",
+      "depends_on": [
+        "cut_slot_1",
+        "slot_2"
+      ],
+      "evidence": [
+        "e4"
+      ]
+    },
+    {
+      "id": "cut_slot_3",
+      "kind": "difference",
+      "left": "cut_slot_2",
+      "right": "slot_3",
+      "frame": "world",
+      "depends_on": [
+        "cut_slot_2",
+        "slot_3"
+      ],
+      "evidence": [
+        "e4"
+      ]
+    },
+    {
+      "id": "cut_slot_4",
+      "kind": "difference",
+      "left": "cut_slot_3",
+      "right": "slot_4",
+      "frame": "world",
+      "depends_on": [
+        "cut_slot_3",
+        "slot_4"
+      ],
+      "evidence": [
+        "e4"
+      ]
+    },
+    {
+      "id": "cut_slot_5",
+      "kind": "difference",
+      "left": "cut_slot_4",
+      "right": "slot_5",
+      "frame": "world",
+      "depends_on": [
+        "cut_slot_4",
+        "slot_5"
+      ],
+      "evidence": [
+        "e4"
+      ]
+    },
+    {
+      "id": "cut_slot_6",
+      "kind": "difference",
+      "left": "cut_slot_5",
+      "right": "slot_6",
+      "frame": "world",
+      "depends_on": [
+        "cut_slot_5",
+        "slot_6"
+      ],
+      "evidence": [
+        "e4"
+      ]
+    },
+    {
+      "id": "final_grille",
+      "kind": "difference",
+      "left": "cut_slot_6",
+      "right": "slot_7",
+      "frame": "world",
+      "depends_on": [
+        "cut_slot_6",
+        "slot_7"
+      ],
+      "evidence": [
+        "e4"
+      ]
+    }
+  ],
+  "output": "final_grille",
+  "frames": {
+    "world": {
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    }
+  },
+  "bodies": [
+    {
+      "id": "part",
+      "output": "final_grille"
+    }
+  ],
+  "evidence": {
+    "observed": [
+      {
+        "id": "e1",
+        "text": "Main grille body outline observed in front view."
+      },
+      {
+        "id": "e2",
+        "text": "Left circular headlight opening observed in front view."
+      },
+      {
+        "id": "e3",
+        "text": "Right circular headlight opening observed in front view."
+      },
+      {
+        "id": "e4",
+        "text": "Seven vertical slots observed in front view."
+      }
+    ],
+    "inferred": [
+      {
+        "id": "e5",
+        "text": "Uniform thickness inferred from top view and clarification answer."
+      }
+    ],
+    "assumptions": [
+      {
+        "id": "e6",
+        "text": "Assumed headlight diameter is 20mm based on visual proportion."
+      },
+      {
+        "id": "e7",
+        "text": "Assumed slot dimensions are 4mm width and 48mm height based on visual proportion."
+      },
+      {
+        "id": "e8",
+        "text": "Assumed slot positions are evenly distributed in the upper central region."
+      }
+    ],
+    "unresolved": []
+  },
+  "constraints": []
+}

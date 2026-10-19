@@ -1,0 +1,22 @@
+{
+  "drawing": "rectangular_sweep",
+  "backend": "openscad",
+  "trial": 2,
+  "submitted_at": "2026-10-19T16:45:49.920115+00:00",
+  "finished_at": "2026-10-19T17:01:54.387916+00:00",
+  "run_id": "d086b0331e40",
+  "wall_seconds": 964.5,
+  "job_status": "error",
+  "error": {
+    "message": "CAD code generation failed at 'generation' (ReadTimeout): ",
+    "error_type": "RuntimeError",
+    "stage": "generation"
+  },
+  "questions_asked": 0,
+  "question_kinds": [],
+  "build": null,
+  "checks": {
+    "build_success": false,
+    "overall_pass": false
+  }
+}

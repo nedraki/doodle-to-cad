@@ -1,0 +1,145 @@
+{
+  "object": "LCD Knob",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "top",
+      "sheet_region": "view_1",
+      "constrains": "XY plane profile (face of the knob). Defines the circular body and the three protruding wings (120-degree spacing) that form the grip."
+    },
+    {
+      "direction": "front",
+      "sheet_region": "view_2",
+      "constrains": "XZ plane profile (side view). Defines the height and the tapered (conical) cross-section of the knob body."
+    },
+    {
+      "direction": "right",
+      "sheet_region": "view_3",
+      "constrains": "YZ plane profile (side view). Confirms the height and tapered cross-section, consistent with the front view."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "knob_body",
+      "name": "Knob Body",
+      "material": "plastic",
+      "process": "3D print"
+    }
+  ],
+  "features": [
+    {
+      "id": "grip_wings",
+      "type": "protrusion",
+      "description": "Three radial wings extending from the main circular body to provide grip.",
+      "source_view": "view_1"
+    },
+    {
+      "id": "tapered_body",
+      "type": "chamfer",
+      "description": "The side profile indicates the knob tapers from a wider top face to a narrower base.",
+      "source_view": "view_2"
+    }
+  ],
+  "relations": [
+    {
+      "type": "symmetry",
+      "elements": [
+        "grip_wings"
+      ],
+      "axis": "Z",
+      "count": 3
+    }
+  ],
+  "symmetry": {
+    "type": "rotational",
+    "axis": "Z",
+    "order": 3
+  },
+  "repetitions": [
+    {
+      "feature_id": "grip_wings",
+      "count": 3,
+      "spacing": "120 degrees"
+    }
+  ],
+  "dimensions": {
+    "max": 50.0,
+    "max_width": 46.26,
+    "max_depth": 50.0,
+    "max_height": 14.67,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "The internal mounting mechanism (shaft hole, D-shape, or set screw) is not visible in the provided views and is assumed to be a standard central bore.",
+    "The exact height is estimated from the aspect ratio of the side views relative to the width."
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "The object is interpreted as a rotary control knob. The top view (view_1) shows the face geometry with three wings. The front (view_2) and right (view_3) views show a trapezoidal profile, indicating a conical or tapered shape. The construction will use a loft between the top profile and a scaled-down bottom profile to achieve the taper.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "loft",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_3",
+        "operation": "loft",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "owner": "knob_body",
+        "parameters": {
+          "profiles": [
+            "op_1",
+            "op_2"
+          ],
+          "ruled": true
+        },
+        "source_views": [
+          "view_1",
+          "view_2",
+          "view_3"
+        ]
+      },
+      {
+        "id": "grip_wings",
+        "operation": "boss",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Three radial wings extending from the main circular body to provide grip."
+        },
+        "source_views": []
+      }
+    ],
+    "unresolved_constraints": [
+      "Internal shaft hole geometry not specified."
+    ]
+  },
+  "user_intent": {
+    "description": "lcd knob",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "50.0"
+  },
+  "source_view_group_count": 3,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

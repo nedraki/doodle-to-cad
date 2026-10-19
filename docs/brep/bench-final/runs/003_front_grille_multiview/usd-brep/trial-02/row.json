@@ -1,0 +1,119 @@
+{
+  "drawing": "003_front_grille_multiview",
+  "backend": "usd-brep",
+  "trial": 2,
+  "submitted_at": "2026-10-19T15:23:01.887732+00:00",
+  "finished_at": "2026-10-19T15:27:31.686884+00:00",
+  "run_id": "a06af0eebd19",
+  "wall_seconds": 269.8,
+  "job_status": "done",
+  "error": null,
+  "questions_asked": 1,
+  "question_kinds": [
+    "uniform_thickness"
+  ],
+  "build": {
+    "watertight": true,
+    "components": 1,
+    "genus": 2,
+    "extents_mm": [
+      126.0,
+      3.0,
+      80.0
+    ],
+    "volume_mm3": 24158.1,
+    "sha256": "eab1df4fb824a30401a9d1aa88f5bb0f909cbeefc087d6bffa406cad2b15759d",
+    "bytes": 32284
+  },
+  "checks": {
+    "build_success": true,
+    "extents_pass": false,
+    "genus_pass": false,
+    "volume_pass": false,
+    "fidelity_pass": true,
+    "overall_pass": false,
+    "not_applicable": []
+  },
+  "fidelity": {
+    "scores": {
+      "front": 0.494,
+      "top": 0.989
+    },
+    "pass": true,
+    "reason": null,
+    "topology": {
+      "front": {
+        "expected": 9,
+        "actual": 2,
+        "position_fidelity": 0.222
+      },
+      "top": {
+        "expected": 0,
+        "actual": 0,
+        "position_fidelity": null
+      }
+    }
+  },
+  "product": {
+    "success": false,
+    "accepted": false,
+    "status": "failed",
+    "score": null,
+    "projection_status": "failed",
+    "geometry_status": "passed",
+    "failures": [
+      "front openings",
+      "front opening positions",
+      "Detailed drawing features and view assignments require review."
+    ]
+  },
+  "attempts": {
+    "count": 2,
+    "recovered": true,
+    "corrections": 1
+  },
+  "unsupported": {
+    "flag": false,
+    "code": null
+  },
+  "brep_only": {
+    "operations": [
+      "box",
+      "cylinder",
+      "difference"
+    ],
+    "loft": false,
+    "shell": false,
+    "arc_pipe": false,
+    "sweep": false,
+    "extrude": false,
+    "parameter_names": [
+      "headlight_diameter",
+      "headlight_x_offset",
+      "headlight_z_offset",
+      "height",
+      "slot_height",
+      "slot_spacing",
+      "slot_width",
+      "thickness",
+      "width"
+    ]
+  },
+  "edit": {
+    "available": true,
+    "ok": false,
+    "seconds": 0.0,
+    "param": "width",
+    "old": 126,
+    "new": 151.2,
+    "message": "http 422"
+  },
+  "targeted": {
+    "available": false,
+    "ok": false,
+    "seconds": null,
+    "operation": null,
+    "value": null,
+    "message": "no probe value produced a valid targeted plan"
+  }
+}

@@ -1,0 +1,240 @@
+{
+  "object": "Nameplate",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "front",
+      "sheet_region": "center",
+      "constrains": "Outer rectangular profile, end slot positions and shapes, central vent hole positions and shapes"
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "plate_body",
+      "type": "base_plate",
+      "description": "Rectangular plate with rounded corners, two end slots, and five central vent holes"
+    }
+  ],
+  "features": [
+    {
+      "id": "outer_profile",
+      "type": "outline",
+      "geometry": "Rectangular with rounded corners",
+      "source_view": "view_1",
+      "view_local_bbox": [
+        0.012,
+        0.0428,
+        0.9744,
+        0.9143
+      ]
+    },
+    {
+      "id": "left_slot",
+      "type": "slot",
+      "geometry": "Rounded rectangular slot",
+      "source_view": "view_1",
+      "view_local_bbox": [
+        0.0692,
+        0.3642,
+        0.0977,
+        0.293
+      ],
+      "view_local_center": [
+        0.118,
+        0.511
+      ]
+    },
+    {
+      "id": "right_slot",
+      "type": "slot",
+      "geometry": "Rounded rectangular slot",
+      "source_view": "view_1",
+      "view_local_bbox": [
+        0.8301,
+        0.3717,
+        0.0902,
+        0.2785
+      ],
+      "view_local_center": [
+        0.8752,
+        0.511
+      ]
+    },
+    {
+      "id": "vent_holes",
+      "type": "holes",
+      "geometry": "Five irregular circular/organic holes in a row",
+      "source_view": "view_1",
+      "view_local_bboxes": [
+        [
+          0.3278,
+          0.4071,
+          0.0571,
+          0.2212
+        ],
+        [
+          0.4015,
+          0.3931,
+          0.0541,
+          0.2501
+        ],
+        [
+          0.4722,
+          0.3856,
+          0.0496,
+          0.2357
+        ],
+        [
+          0.5414,
+          0.3856,
+          0.0511,
+          0.2426
+        ],
+        [
+          0.612,
+          0.3856,
+          0.0511,
+          0.2716
+        ]
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "type": "containment",
+      "parent": "outer_profile",
+      "children": [
+        "left_slot",
+        "right_slot",
+        "vent_holes"
+      ]
+    },
+    {
+      "type": "symmetry",
+      "elements": [
+        "left_slot",
+        "right_slot"
+      ],
+      "axis": "vertical_center"
+    },
+    {
+      "type": "alignment",
+      "elements": [
+        "vent_holes"
+      ],
+      "axis": "horizontal_center"
+    }
+  ],
+  "symmetry": {
+    "vertical_axis": true,
+    "horizontal_axis": false
+  },
+  "repetitions": [
+    {
+      "feature": "vent_holes",
+      "count": 5,
+      "spacing": "evenly distributed horizontally"
+    }
+  ],
+  "dimensions": {
+    "max_dimension": 140,
+    "aspect_ratio": 4.7492,
+    "estimated_width": 140,
+    "estimated_height": 29.5,
+    "max_width": 140.0,
+    "max_height": 29.47,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "Exact thickness of the plate is not specified in the drawing",
+    "Exact shape of vent holes is irregular; interpreted as organic blobs",
+    "Exact corner radius of outer profile and slots is estimated from stroke"
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "The object is a flat plate (nameplate) with a high aspect ratio. The drawing shows a single view. The 'end slots' are interpreted as mounting slots on the left and right ends. The 'vent holes' are interpreted as a series of 5 holes in the center. The irregularity of the vent holes is preserved as organic shapes. The plate thickness is assumed to be a standard 3-5mm for a nameplate.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "extrude",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_2",
+        "operation": "extrude",
+        "profile_plane": "XZ",
+        "direction_axis": "Y",
+        "owner": "plate_body",
+        "parameters": {
+          "depth": 5,
+          "type": "blind"
+        },
+        "source_views": [
+          "view_1"
+        ]
+      },
+      {
+        "id": "left_slot",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Rounded rectangular slot"
+        },
+        "source_views": []
+      },
+      {
+        "id": "right_slot",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Rounded rectangular slot"
+        },
+        "source_views": []
+      },
+      {
+        "id": "vent_holes",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Five irregular circular/organic holes in a row"
+        },
+        "source_views": []
+      }
+    ],
+    "unresolved_constraints": [
+      "Plate thickness",
+      "Exact corner radii"
+    ]
+  },
+  "user_intent": {
+    "description": "Nameplate with end slots and vent holes",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "140"
+  },
+  "source_view_group_count": 1,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

@@ -1,0 +1,159 @@
+{
+  "object": "cable holder",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "front",
+      "sheet_region": "bottom-left",
+      "constrains": "Overall height (Z) and width (X). Shows the object as a tall, thin rectangular profile."
+    },
+    {
+      "direction": "top",
+      "sheet_region": "top-left",
+      "constrains": "Top-down profile (X-Y plane). Shows the width (X) and depth (Y). Features a central circular hole and a curved top edge."
+    },
+    {
+      "direction": "right",
+      "sheet_region": "bottom-right",
+      "constrains": "Side profile (Y-Z plane). Shows the depth (Y) and height (Z). Features a vertical column of 5 rectangular slots."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "part_1",
+      "name": "cable_holder_body",
+      "material": "plastic",
+      "description": "A vertical rectangular block with a central mounting hole and a series of cable retention slots."
+    }
+  ],
+  "features": [
+    {
+      "id": "feat_1",
+      "type": "through_hole",
+      "owner": "part_1",
+      "description": "Circular hole located centrally in the upper section, passing through the depth (Y-axis).",
+      "source_views": [
+        "view_1"
+      ]
+    },
+    {
+      "id": "feat_2",
+      "type": "slot_array",
+      "owner": "part_1",
+      "description": "Five rectangular slots arranged vertically, passing through the width (X-axis).",
+      "source_views": [
+        "view_2"
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "type": "alignment",
+      "elements": [
+        "feat_1",
+        "feat_2"
+      ],
+      "description": "The central hole and the column of slots are aligned along the vertical centerline of the object."
+    }
+  ],
+  "symmetry": {
+    "type": "bilateral",
+    "axis": "vertical_centerline",
+    "description": "The object is symmetric about its vertical axis in the front view."
+  },
+  "repetitions": [
+    {
+      "pattern": "linear",
+      "count": 5,
+      "feature": "feat_2",
+      "description": "Five identical rectangular slots spaced evenly along the height."
+    }
+  ],
+  "dimensions": {
+    "max_width": 12.08,
+    "max_depth": 19.43,
+    "max_height": 40.0,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "Exact thickness of the object (Y-axis) is inferred from the top view aspect ratio.",
+    "Exact depth of the slots (X-axis) is inferred from the front view width."
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "The object is modeled as a rectangular prism. The top view defines the cross-section in the XY plane (width x depth), including the central hole. The right view defines the side profile (depth x height), showing the slots. The front view confirms the overall height and width. The slots are interpreted as cuts through the width (X-axis) to hold cables, while the hole is a cut through the depth (Y-axis) for mounting.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "extrude",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_1",
+        "operation": "extrude",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "owner": "part_1",
+        "parameters": {
+          "profile_source": "view_1_outer",
+          "height": "max_dimension",
+          "note": "Extrude the top view profile (width x depth) along the Z-axis to create the main body."
+        },
+        "source_views": [
+          "view_1"
+        ]
+      },
+      {
+        "id": "feat_1",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Circular hole located centrally in the upper section, passing through the depth (Y-axis)."
+        },
+        "source_views": []
+      },
+      {
+        "id": "feat_2",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Five rectangular slots arranged vertically, passing through the width (X-axis)."
+        },
+        "source_views": []
+      }
+    ],
+    "unresolved_constraints": [
+      "Exact thickness of the object (Y-axis) is inferred from the top view aspect ratio.",
+      "Exact depth of the slots (X-axis) is inferred from the front view width."
+    ]
+  },
+  "user_intent": {
+    "description": "cable holder",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "40.0"
+  },
+  "source_view_group_count": 3,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

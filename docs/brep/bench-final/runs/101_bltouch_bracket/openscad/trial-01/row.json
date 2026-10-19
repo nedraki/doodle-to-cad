@@ -1,0 +1,102 @@
+{
+  "drawing": "101_bltouch_bracket",
+  "backend": "openscad",
+  "trial": 1,
+  "submitted_at": "2026-10-19T16:08:41.894453+00:00",
+  "finished_at": "2026-10-19T16:34:20.751075+00:00",
+  "run_id": "7a4afee9ebda",
+  "wall_seconds": 1538.9,
+  "job_status": "done",
+  "error": null,
+  "questions_asked": 0,
+  "question_kinds": [],
+  "build": {
+    "watertight": true,
+    "components": 1,
+    "genus": 3,
+    "extents_mm": [
+      43.22,
+      60.0,
+      45.52
+    ],
+    "volume_mm3": 16922.4,
+    "sha256": "9feeb65b3271596ce1b3db047bf42f43db7fb62ca145b7ae751ce0bc0afadd72",
+    "bytes": 20712
+  },
+  "checks": {
+    "build_success": true,
+    "extents_pass": false,
+    "genus_pass": false,
+    "volume_pass": false,
+    "fidelity_pass": false,
+    "overall_pass": false,
+    "not_applicable": []
+  },
+  "fidelity": {
+    "scores": {
+      "front": 0.81,
+      "top": 0.35,
+      "right": 0.35
+    },
+    "pass": false,
+    "reason": null,
+    "topology": {
+      "front": {
+        "expected": 0,
+        "actual": 3,
+        "position_fidelity": null
+      },
+      "top": {
+        "expected": 3,
+        "actual": 0,
+        "position_fidelity": 0.0
+      },
+      "right": {
+        "expected": 3,
+        "actual": 0,
+        "position_fidelity": 0.0
+      }
+    }
+  },
+  "product": {
+    "success": false,
+    "accepted": false,
+    "status": null,
+    "score": 72.6,
+    "projection_status": null,
+    "geometry_status": null,
+    "failures": [
+      "required internal profiles are missing: right demands 3, renders 0, top demands 3, renders 0; best rendered view has 3. Missing at these view-local centres \u2014 add cutters there: (u=0.651,v=0.846); (u=0.251,v=0.493); (u=0.637,v=0.155).",
+      "openings do not go through the solid: the drawing demands 6 openings across the registered views (strongest: top) but the mesh has 3 true through-holes \u2014 the rendered openings are blind pockets or edge notches; cut all the way through the wall",
+      "CAD projections poorly match the drawing: right similarity 0.35, top similarity 0.35 (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly.",
+      "features exist but sit at the wrong positions in top, right view(s): match each opening's location (u,v within the outer profile) to the drawing; check the cad_mapping signs (front: u->+X v->-Z; top: u->+X v->-Y i.e. sheet-down is the FRONT of the part)"
+    ]
+  },
+  "attempts": {
+    "count": 3,
+    "recovered": false,
+    "corrections": null,
+    "selected": 3
+  },
+  "unsupported": {
+    "flag": false,
+    "code": null
+  },
+  "edit": {
+    "available": true,
+    "ok": true,
+    "seconds": 0.54,
+    "param": "width",
+    "old": 43.22,
+    "new": 51.86,
+    "message": null
+  },
+  "targeted": {
+    "available": false,
+    "ok": false,
+    "seconds": null,
+    "operation": null,
+    "value": null,
+    "message": "not_applicable: the product requires a BRep result for targeted edits"
+  }
+}
