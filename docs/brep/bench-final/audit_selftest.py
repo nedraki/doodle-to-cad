@@ -40,6 +40,22 @@ def reseal(copy):
                    capture_output=True)
 
 
+def make_copy():
+    """Disposable FAKE repo: the copy must sit at <fake-repo>/docs/brep/bench-final
+    with a real benchmarks/ tree beside it, so repo-relative recorded pointers
+    resolve INSIDE the copy — an audit copy that escapes its repo would test
+    nothing (the round-2 absolute-path bug in miniature)."""
+    tmp = Path(tempfile.mkdtemp(prefix="bench-selftest-"))
+    fake_repo = tmp / "repo"
+    copy = fake_repo / "docs" / "brep" / "bench-final"
+    copy.parent.mkdir(parents=True)
+    shutil.copytree(HERE, copy)
+    bench_src = HERE.parents[2] / "benchmarks"
+    if bench_src.exists():
+        shutil.copytree(bench_src, fake_repo / "benchmarks")
+    return tmp, copy
+
+
 # ---------------- RAW tamper (manifest gate must abort with the path)
 def sc_edit_row_field(copy):
     f = copy / "runs/004_flat_mounting_plate/openscad/trial-01/row.json"
@@ -95,12 +111,30 @@ def sc_image_swap(copy):
     return "montage wheel_t2.png: image/row/mesh/panel hash chain"
 
 
+def edit_row(copy, cell_rel, mutate):
+    """Edit a row.json AND its index.jsonl twin consistently, so the
+    index-consistency abort gate is satisfied and the scenario actually
+    reaches the semantic check it claims to prove (a scenario that aborts
+    earlier is testing the wrong wire)."""
+    f = copy / cell_rel / "row.json"
+    r = json.loads(f.read_text())
+    mutate(r)
+    f.write_text(json.dumps(r))
+    idf = copy / "runs/index.jsonl"
+    lines = idf.read_text().splitlines()
+    out = []
+    for ln in lines:
+        e = json.loads(ln)
+        if (e["drawing"], e["backend"], e["trial"]) == (r["drawing"], r["backend"], r["trial"]):
+            e = r
+        out.append(json.dumps(e))
+    idf.write_text("\n".join(out) + "\n")
+
+
 def sc_acceptance_flip(copy):
     """The single plan-accepted usd row silently downgraded to failed."""
-    f = copy / "runs/006_stepped_knob/usd-brep/trial-01/row.json"
-    r = json.loads(f.read_text())
-    r["product"]["status"] = "failed"
-    f.write_text(json.dumps(r))
+    edit_row(copy, "runs/006_stepped_knob/usd-brep/trial-01",
+             lambda r: r["product"].__setitem__("status", "failed"))
     reseal(copy)
     return "HISTORICAL frozen-plan counts: usd-brep 31/46"
 
@@ -132,11 +166,10 @@ def sc_empty_reference(copy):
     refs = json.loads(f.read_text())
     refs["solid_transition"] = {"kind": "no_ground_truth", "note": "planted"}
     f.write_text(json.dumps(refs))
-    for t in ("trial-01", "trial-02"):
-        rf = copy / f"runs/solid_transition/openscad/{t}/row.json"
-        r = json.loads(rf.read_text())
-        r["checks"].update({"extents_pass": None, "genus_pass": None, "volume_pass": None})
-        rf.write_text(json.dumps(r))
+    for t in (1, 2):
+        edit_row(copy, f"runs/solid_transition/openscad/trial-0{t}",
+                 lambda r: r["checks"].update(
+                     {"extents_pass": None, "genus_pass": None, "volume_pass": None}))
     reseal(copy)
     return "HISTORICAL frozen-plan counts: openscad 44/46"
 
@@ -144,10 +177,8 @@ def sc_empty_reference(copy):
 def sc_sophisticated_build_hash(copy):
     """Row claims a mesh sha the archived bytes never had, manifest re-sealed:
     the archived-STL-vs-row equality must fire, not just the manifest."""
-    f = copy / "runs/004_flat_mounting_plate/openscad/trial-01/row.json"
-    r = json.loads(f.read_text())
-    r["build"]["sha256"] = "0" * 64
-    f.write_text(json.dumps(r))
+    edit_row(copy, "runs/004_flat_mounting_plate/openscad/trial-01",
+             lambda r: r["build"].__setitem__("sha256", "0" * 64))
     reseal(copy)
     return "archived STLs match row build.sha256"
 
@@ -164,10 +195,8 @@ def sc_readme_drift(copy):
 def sc_excluded_no_reason(copy):
     """A row marked excluded without reason+replaced_by must fail the gate,
     not quietly vanish from the metrics."""
-    f = copy / "runs/004_flat_mounting_plate/openscad/trial-02/row.json"
-    r = json.loads(f.read_text())
-    r["excluded"] = {"reason": "because"}  # no replaced_by
-    f.write_text(json.dumps(r))
+    edit_row(copy, "runs/004_flat_mounting_plate/openscad/trial-02",
+             lambda r: r.__setitem__("excluded", {"reason": "because"}))  # no replaced_by
     reseal(copy)
     return "excluded/superseded rows"
 
@@ -255,10 +284,9 @@ def main():
     failures = 0
     selected = [s for s in SCENARIOS if not quick or s[2]]
     for name, plant, _ in selected:
-        tmp = Path(tempfile.mkdtemp(prefix="bench-selftest-"))
+        tmp = None
         try:
-            copy = tmp / "bench-final"
-            shutil.copytree(HERE, copy)
+            tmp, copy = make_copy()
             expected_failing = plant(copy)
             proc = run_audit(copy)
             out = proc.stdout + proc.stderr
@@ -268,7 +296,8 @@ def main():
                   "" if ok else f"(exit={proc.returncode}, expected line containing '{expected_failing}')")
             failures += 0 if ok else 1
         finally:
-            shutil.rmtree(tmp, ignore_errors=True)
+            if tmp:
+                shutil.rmtree(tmp, ignore_errors=True)
 
     # GREEN gate: an audit from a FRESH CLONE must pass standalone — 'green'
     # must be a property of the shipped artifacts, not of the author's tree.
