@@ -43,7 +43,7 @@ def test_http_default_stays_openscad_for_clients_that_omit_backend(monkeypatch):
     submitted = {}
 
     async def fake_generate(self, image, mime, notes, dimension, extra=None, controls=None,
-                            run_id=None, on_stage=None):
+                       run_id=None, on_stage=None, ask_user=None):
         submitted["run_id"] = run_id
         return {"id": run_id, "success": True, "evaluation": {"score": 99},
                 "attempts": [], "spec": {}, "model": "fake", "duration_seconds": 0.1,

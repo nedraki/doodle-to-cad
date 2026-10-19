@@ -368,6 +368,14 @@ def evaluate_candidate(*,stl:Path|None,health:dict[str,Any]|None,scad:str,views:
             try: expected=float(expected)
             except (TypeError,ValueError): continue
             ratio=float(actual)/expected if expected>0 else 1
+            axis_name=("width","depth","height")[axis]
+            # Issue #68: an axis the USER stated is a hard contract, not a
+            # suggestion — the loose sanity window below must not swallow it.
+            if axis_name in (dimensions.get("user_supplied_axes") or []):
+                if abs(ratio-1)>0.15:
+                    gates["dimensions"]=False
+                    failures.append(f"user-stated {axis_name} is {expected:g} mm but the mesh measures {actual:g} mm on {'XYZ'[axis]} ({(ratio-1):+.0%}); rebuild with exactly {expected:g} mm for that axis")
+                    continue
             # Window must catch axis COLLAPSE (flat-slab repairs) without
             # punishing good meshes over noisy LLM size estimates: reg4/101's
             # mesh matched GT exactly (Y=60) yet spec estimated 30 (ratio 2.0).

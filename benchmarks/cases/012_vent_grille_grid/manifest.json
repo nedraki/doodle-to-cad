@@ -15,6 +15,12 @@
       "drawing.png": "f6c58efb1a120883c2e4741d2353b3f661ec9c8b72bc9b73098a4e2848b0daa7",
       "model.scad": "fbad4346e2fadf921ed50d44c56e94ecd77ef8c5f4690fe7b0ca7e924427c000",
       "model.stl": "9b5a9c0d3ddc1d12d32753b3402a05bcfe2d52bf1758e27c64d17bdb16cf8f22"
+    },
+    "dimension_audit_issue_68": {
+      "date": "2026-10-19",
+      "finding": "Ground-truth plate thickness is 4 mm, but the sheet is a single front view: no registered projection constrains the depth axis. Any product run without a user-supplied depth is a thickness lottery and must not be scored on thickness.",
+      "action": "Product now asks for the unconstrained axis before generating (issue #68). Score thickness only for runs that answered the depth question or supplied it.",
+      "reference_thickness_mm": 4
     }
   },
   "reference": {
