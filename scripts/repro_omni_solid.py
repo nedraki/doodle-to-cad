@@ -205,7 +205,8 @@ def main(argv=None):
         recipe = json.loads(Path(args.recipe).read_text())
         expected = "crash"
     elif args.case:
-        recipe, expected = CASES[args.case]()
+        builder, expected = CASES[args.case]
+        recipe = builder()
     else:
         recipe, expected = json.loads(FIXTURE.read_text()), "crash"
 
