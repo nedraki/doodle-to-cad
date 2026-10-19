@@ -1,0 +1,31 @@
+OK  canonical_fixture  expected=crash crashed=True code=kernel_unavailable (6.79s) usd_brep 1.0.0 kernel crash during tessellation: No module named '_omni_solid'. 
+OK  full_v2            expected=crash crashed=True code=kernel_unavailable (7.29s) usd_brep 1.0.0 kernel crash during tessellation: No module named '_omni_solid'. 
+OK  slim_v2            expected=crash crashed=True code=kernel_unavailable (7.28s) usd_brep 1.0.0 kernel crash during tessellation: No module named '_omni_solid'. 
+OK  minimal_v1         expected=crash crashed=True code=kernel_unavailable (6.86s) usd_brep 1.0.0 kernel crash during tessellation: No module named '_omni_solid'. 
+OK  both_legs_v1       expected=crash crashed=True code=kernel_unavailable (7.3s) usd_brep 1.0.0 kernel crash during tessellation: No module named '_omni_solid'. 
+OK  arc_plus_box_union expected=ok    crashed=False code=ok (11.34s) ModuleLoader.cpp -- Error loading lib vt's module 'pxr.Vt':
+ModuleNotFoundError:
+OK  arc90_union        expected=ok    crashed=False code=ok (2.75s) ModuleLoader.cpp -- Error loading lib vt's module 'pxr.Vt':
+ModuleNotFoundError:
+OK  arc135_union       expected=unknown crashed=False code=ok (12.69s) ModuleLoader.cpp -- Error loading lib vt's module 'pxr.Vt':
+ModuleNotFoundError:
+OK  arc270_union       expected=unknown crashed=False code=ok (20.69s) ModuleLoader.cpp -- Error loading lib vt's module 'pxr.Vt':
+ModuleNotFoundError:
+OK  arc_leg_disjoint   expected=unknown crashed=False code=disconnected_output (0.79s) Expected one connected part; components=2
+OK  arc_leg_other_end  expected=unknown crashed=False code=build_failed (1.08s) Independent mesh validation failed
+OK  arc_leg_apex       expected=unknown crashed=False code=disconnected_output (0.79s) Expected one connected part; components=2
+OK  arc180_difference  expected=unknown crashed=False code=ok (8.47s) ModuleLoader.cpp -- Error loading lib vt's module 'pxr.Vt':
+ModuleNotFoundError:
+OK  arc_leg_west_stub  expected=unknown crashed=True code=kernel_unavailable (7.46s) usd_brep 1.0.0 kernel crash during tessellation: No module named '_omni_solid'. 
+OK  arc_leg_west_union_flip expected=unknown crashed=True code=kernel_unavailable (7.64s) usd_brep 1.0.0 kernel crash during tessellation: No module named '_omni_solid'. 
+OK  arc_leg_west_axis_y expected=unknown crashed=False code=ok (1.84s) ModuleLoader.cpp -- Error loading lib vt's module 'pxr.Vt':
+ModuleNotFoundError:
+OK  arc_only           expected=ok    crashed=False code=ok (1.72s) ModuleLoader.cpp -- Error loading lib vt's module 'pxr.Vt':
+ModuleNotFoundError:
+OK  cyl_only           expected=ok    crashed=False code=ok (0.29s) ModuleLoader.cpp -- Error loading lib vt's module 'pxr.Vt':
+ModuleNotFoundError:
+OK  two_cyl_union      expected=ok    crashed=False code=disconnected_output (0.26s) Expected one connected part; components=2
+OK  box_only           expected=ok    crashed=False code=ok (0.29s) ModuleLoader.cpp -- Error loading lib vt's module 'pxr.Vt':
+ModuleNotFoundError:
+ladder log: docs/brep/issue-61/logs/shrink-ladder.json (0 misbehaving steps)
+ladder_exit=0
