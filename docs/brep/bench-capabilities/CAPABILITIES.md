@@ -42,7 +42,7 @@ reloaded_volumes_mm3=[390806.37089063344]
 ```
 
 The difference, **16,085.0 mm³, equals exactly the two Ø8 through-holes**
-(π·16·80·2). The exported USD reloads with the holes FILLED. Deterministic:
+(π·16·80·2). The exported USD reloads with the `difference` behaving like a `union`: reloaded = filleted slab + BOTH cutter cylinders (delta = 4x one hole volume; hole walls become interior junk, shell not watertight). Export topology itself is correct (USDA contains the r=4 hole cones) — the defect is in usd-brep==1.0.0's import_breps. See #90 comment with injection-probe forensics. Deterministic:
 4/4 probe builds reproduce it (`probes/probe_roundtrip.py`). The STL side is
 correct (374,744 mm³ tessellated, genus 2, watertight) — so this is an
 export/reload defect, not a geometry defect, and the worker guard correctly
