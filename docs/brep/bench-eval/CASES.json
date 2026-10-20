@@ -1,0 +1,130 @@
+{
+  "schema": "bench-eval case definitions v1 (issue #81)",
+  "purpose": "Test inputs defined BEFORE generation: required shape, features, dimensions, relationships, tolerances; provenance per requirement (ink / notes / clarification / frozen policy); classification per the issue.",
+  "method": "Ink facts read from the source drawing PNGs by vision transcription (never from reference geometry). Notes and clarification answers are the frozen TRIAL-PLAN.json values. Reference measurements come from references/reference-measurements.json and are used ONLY by the evaluator, never sent to the model.",
+  "substitutions": [
+    {
+      "requested": "a missing-thickness case from the existing corpus",
+      "used": "008_open_enclosure_window",
+      "recorded_before_testing": true,
+      "reason": "The corpus entries that carried the missing-thickness role (missing_thickness, profiles_empty_notes) were deleted in the logged plan revision and predate this record-keeping. 008 is the strongest remaining missing-thickness case: ink shows wall thickness implied only (concentric rectangles), the floor is never drawn, and no numeric thickness exists. Its GT (vol 67548 mm3 of a 120x80x40 outer box) is consistent with the frozen 3 mm clarification answer, making it the counterexample that a pre-fixed clarification CAN match the reference."
+    }
+  ],
+  "classification_legend": {
+    "fully_specified": "every evaluator-checked requirement derivable from ink+notes+frozen dimension field",
+    "requires_clarification": "at least one checked requirement absent from ink+notes; the frozen policy answer stands in for it (disclosed)",
+    "requires_unsupported_construction": "intended shape needs an operation the product path does not expose"
+  },
+  "cases": {
+    "004_flat_mounting_plate": {
+      "drawing": "benchmarks/cases/004_flat_mounting_plate/source/drawing.png",
+      "classification": "requires_clarification",
+      "requirements": [
+        {"id": "shape", "text": "flat rectangular plate", "source": "notes+ink", "note": "ink: large rectangle + a narrow strip (edge view), unlabeled"},
+        {"id": "holes", "text": "2 through holes (upper-left, lower-right) + 1 center slot", "source": "notes+ink", "tolerance": "count_error 0"},
+        {"id": "primary_dimension", "text": "100 mm overall (frozen dimension field)", "source": "frozen-dimension"},
+        {"id": "thickness", "text": "NOT in ink, NOT in notes. Policy answer: 3 mm. GT reference: 5 mm (100x60x5 minus openings = 28519.1 mm3)", "source": "reference-only", "hidden_requirement": true}
+      ],
+      "relationships": ["holes pierce the plate (policy answer 'through')"],
+      "evaluator_defect_candidates": ["EV-1"],
+      "current_outcomes": "openscad t1/t2 done score 99.9, extents FAIL volume FAIL; usd t1 done, t2 error"
+    },
+    "007_angle_bracket_holes": {
+      "drawing": "benchmarks/cases/007_angle_bracket_holes/source/drawing.png",
+      "classification": "requires_clarification",
+      "requirements": [
+        {"id": "shape", "text": "L angle bracket (two walls at a bend)", "source": "notes-only", "note": "ink shows TWO independent rectangles and NO bend line; 'L' comes from the notes text 'L angle bracket with three wall holes'"},
+        {"id": "holes", "text": "3 holes in one wall, horizontal row", "source": "ink"},
+        {"id": "primary_dimension", "text": "80 mm (frozen dimension field)", "source": "frozen-dimension"},
+        {"id": "thickness", "text": "not in ink/notes; policy 3 mm; GT 80x40x50 with genus 3", "source": "reference-only", "hidden_requirement": true}
+      ],
+      "relationships": ["the two rectangles are the same body folded (bend asserted by notes only)"],
+      "evaluator_defect_candidates": ["EV-1", "EV-4"],
+      "current_outcomes": "both openscad trials built a PLATE and the product scored it 100.0/99.7 while GT says bracket; usd t1 plate, t2 error",
+      "attribution_note": "product projection-similarity acceptance passed a plate: acceptance insensitivity is EV-4, kept separate from the model's interpretation miss"
+    },
+    "101_bltouch_bracket": {
+      "drawing": "benchmarks/cases/101_bltouch_bracket/source/drawing.png",
+      "classification": "requires_clarification",
+      "requirements": [
+        {"id": "shape", "text": "sheet-metal style bracket: face with center slot + 2 holes + 2 left tabs; channel view with 4 bends, rounded flange ends with holes, central tab; chamfered profile", "source": "ink (3 views)", "note": "richest ink in the corpus; still no numeric dimensions besides the frozen field"},
+        {"id": "primary_dimension", "text": "60 mm (frozen dimension field)", "source": "frozen-dimension"},
+        {"id": "thickness", "text": "no sheet thickness anywhere in ink/notes", "source": "reference-only", "hidden_requirement": true}
+      ],
+      "gt": "39.53x60x43.6 mm, genus 5, vol 25970.0",
+      "evaluator_defect_candidates": ["EV-1"],
+      "current_outcomes": "openscad 72.6/49.8, all checks fail; usd both trials fail checks; built shape was a plate"
+    },
+    "003_front_grille_multiview": {
+      "drawing": "benchmarks/cases/003_front_grille_multiview/source/drawing.png",
+      "classification": "fully_specified",
+      "requirements": [
+        {"id": "shape", "text": "thin flat grille panel (side bar view)", "source": "ink"},
+        {"id": "openings", "text": "7 vertical pill slots in one centered row + 2 round headlight openings flanking them (9 openings total)", "source": "ink", "tolerance": "count_error 0"},
+        {"id": "outline", "text": "shouldered outline: narrower top, flared shoulders, rounded bottom corners", "source": "ink"},
+        {"id": "primary_dimension", "text": "126 mm (frozen dimension field)", "source": "frozen-dimension"},
+        {"id": "thickness", "text": "thin; GT 3 mm, uniform", "source": "ink-side-view+reference"}
+      ],
+      "gt": "126x76x3 mm, genus 9 (= 7 slots + 2 lights), vol 18266.0",
+      "evaluator_defect_candidates": [],
+      "current_outcomes": "model built 8 openings vs required 9, wrong outline; all checks fail on both backends"
+    },
+    "wheel": {
+      "drawing": "benchmarks/brep-baseline/wheel/drawing.png",
+      "classification": "fully_specified",
+      "requirements": [
+        {"id": "shape", "text": "spoked wheel: annular rim, center hub, 8 flat spokes at 12/1:30/3/4:30/6/7:30/9/10:30", "source": "ink (free-text note ON the sheet: 'OD 120 mm; thickness 8 mm; 8 spokes')", "tolerance": "count 8 explicit"},
+        {"id": "primary_dimension", "text": "OD 120 mm", "source": "ink-note"},
+        {"id": "thickness", "text": "8 mm axial", "source": "ink-note"},
+        {"id": "rim_width_hub_spoke_width", "text": "drawn but not dimensioned", "source": "ink-geometry-only"}
+      ],
+      "gt": "openscad reference 120x8x120 mm, genus 8 (the 8 spoke GAPS), vol 43128.5",
+      "evaluator_defect_candidates": ["EV-2", "EV-3"],
+      "current_outcomes": "openscad both trials extents+genus+projection pass, volume +18% FAIL; usd t1 error (kernel non-manifold), t2 volume +19% + projection FAIL",
+      "verified_evaluator_evidence": {
+        "opening_count_check": "drawing-checks.json (wheel/usd-brep/trial-02): 'front openings' PASSED with expected_at_least 1, actual 8 - the explicit ink count 8 is not enforced",
+        "position_check_expects_hub_hole": "'front opening positions' fidelity 0.0 missing [[0.499,0.499]] - demands an opening at the hub center; profile_topology source_internal_profiles=1 vs rendered=8",
+        "product_dimension_confusion": "openscad t1 result.json failures: 'degenerate or implausible axis dimensions: X=120 mm vs expected 27.8 mm' - product ink measurement produced 27.8 mm against the explicit sheet note OD 120"
+      }
+    },
+    "constant_radius_handle": {
+      "drawing": "benchmarks/brep-baseline/curved_handle/drawing.png",
+      "classification": "fully_specified",
+      "requirements": [
+        {"id": "path", "text": "straight leg 30 mm -> 180-degree arc of centerline radius R20 -> straight leg 30 mm; legs parallel", "source": "ink (dimension text on sheet)"},
+        {"id": "section", "text": "circular cross-section diameter 8 mm", "source": "ink (END SECTION view + dimension text)"},
+        {"id": "primary_dimension", "text": "54 (frozen dimension field); GT extents 48x54x8 consistent with R20+4 span and 30+20 leg+bend rise", "source": "frozen-dimension"}
+      ],
+      "gt": "openscad reference 48x54x8 mm, genus 0, vol 6170.5",
+      "evaluator_defect_candidates": [],
+      "construction_note": "needs swept circular section along an arc: openscad path built a FLAT plate (48x24x8) - curved legs absent; usd-brep path has arc_pipe exposed, yet both trials fail extents",
+      "current_outcomes": "openscad 86.5/74.0 flat-plate builds; usd both trials extents FAIL, genus pass (0), volume FAIL"
+    },
+    "008_open_enclosure_window": {
+      "drawing": "benchmarks/cases/008_open_enclosure_window/source/drawing.png",
+      "classification": "requires_clarification",
+      "substitute_for": "missing-thickness corpus case (see substitutions)",
+      "requirements": [
+        {"id": "shape", "text": "open-top box; top view = concentric rectangles (rim), side view = wall with centered rectangular window", "source": "ink"},
+        {"id": "window", "text": "1 rectangular window, centered on the drawn wall", "source": "ink", "tolerance": "count_error 0"},
+        {"id": "primary_dimension", "text": "120 mm (frozen dimension field)", "source": "frozen-dimension"},
+        {"id": "wall_thickness", "text": "implied by concentric rectangles, no value in ink/notes", "source": "clarification", "resolved": "policy answer 3 mm; GT volume 67548 mm3 IS consistent with 3 mm walls - clarification answer here is NOT a hidden-requirement trap"},
+        {"id": "floor_thickness", "text": "floor never drawn", "source": "clarification", "resolved": "policy answer 3 mm"}
+      ],
+      "gt": "120x80x40 mm, genus 1, vol 67548.0",
+      "evaluator_defect_candidates": ["EV-1"],
+      "current_outcomes": "openscad 98.4/98.4 extents FAIL volume FAIL (genus t1 fail, t2 pass); usd both trials genus pass, extents FAIL, volume FAIL"
+    }
+  },
+  "evaluator_defect_candidates": {
+    "EV-1": {"class": "evaluator defect", "where": "extents/volume checks on 004, 007, 101, 008", "claim": "thickness exists only in the reference; the frozen clarification policy (3 mm) cannot satisfy a ±2% volume check against a 5 mm GT (004/007). A check no compliant model can pass is unreliable, not a model failure.", "status": "VERIFIED by fixture (tests/test_bench_eval_fixtures.py::test_ev1_hidden_reference_thickness): policy-compliant 3 mm build passes build+genus, fails extents+volume for every compliant model"},
+    "EV-2": {"class": "evaluator defect", "where": "opening count + position checks (wheel)", "claim": "expected_at_least 1 passes the wrong count; position check demands an opening at the hub center; source extraction found 1 internal profile where the sheet shows 9 closed regions", "status": "VERIFIED from archived drawing-checks.json bytes"},
+    "EV-3": {"class": "image measurement/registration defect", "where": "product geometry.json on wheel openscad t1", "claim": "product measured expected X=27.8 mm against the explicit OD 120 mm sheet note", "status": "VERIFIED from archived result.json failures field"},
+    "EV-4": {"class": "evaluator defect (acceptance insensitivity)", "where": "product projection acceptance on 007", "claim": "plate built where notes+GT say bracket yet product scored 100.0/99.7: front-projection similarity cannot see a missing bend", "status": "VERIFIED by fixture (tests/test_bench_eval_fixtures.py::test_ev4_product_acceptance_cannot_distinguish_plate_from_bracket): the archived plate and the reviewed bracket receive IDENTICAL projection scores (front 1.0, top 1.0, identical topology) through the same projection_scores call"}
+  },
+  "discipline": [
+    "reference geometry was never sent to the model (request.json records reference_geometry_sent:false per cell)",
+    "clarification answers were fixed in advance in TRIAL-PLAN.json clarification_policy and are disclosed here and on the review page",
+    "cause is never assigned from a screenshot alone: every attribution cites the retained artifact that demonstrates the first failing stage"
+  ]
+}
