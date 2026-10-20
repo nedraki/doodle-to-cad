@@ -72,6 +72,19 @@ Marking only VERIFIED-unreliable checks: openscad 2→9 passing, usd-brep
 101/003 stay FAIL on the visible-topology checks: the reclassification
 measures the bench, not the parts. ATTRIBUTION.md holds the per-row blame.
 
+## One command that re-verifies every published claim
+
+```
+uv run python docs/brep/bench-eval/eval_status.py
+```
+
+Runs manifest seal + audit (expect 34/34), the adversarial selftest incl.
+the fresh-clone leg, the evaluator fixture gate, a reclassification
+regeneration, and the EV-7 probe with a published-numbers drift guard.
+Exit 0 only when every gate passes AND the probe reproduces the numbers in
+`EV7_PROBE.md`. Last full run: `ALL GATES GREEN` — audit 34/34, selftest
+29/29 + clone, fixtures 8 passed, reclassify 92 cells stable.
+
 ## Status
 
 * [x] Test inputs defined with provenance + classification (CASES.json v2,
