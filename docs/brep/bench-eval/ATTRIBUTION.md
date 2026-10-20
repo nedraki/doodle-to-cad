@@ -17,10 +17,10 @@ screenshot; each row cites the artifact bytes.
 | wheel usd t2 | same evaluator/input family as openscad rows (+ harness fid False on a correct-shape part: EV-2 extraction undercount) | evaluator + input | row.json; drawing-checks.json |
 | 004 openscad t1/t2 | **input** — thickness absent from ink/notes/form and never asked→never answered (EV-8); model silently guessed 10 mm (GT 5): extents/volume checks unachievable by any compliant model (EV-1 fixture proof). Shape was right: 3 openings ✓, product 99.9 | input + evaluator | request.json form (no thickness, ask_missing_dimensions=false); row.json ext [100,10,62] g3 |
 | 004 usd t1 | **evaluator** — same correct part (3 mm, genus 3 ✓), orientation flipped vs openscad, fidelity flipped True→False: 'front expects 3, renders 0 / top expects 0, renders 3' (EV-7) | evaluator | row.json fidelity.topology both backends |
-| 004 usd t2 | **contract-layer rejection** — 'Expected canonical world frame' (EV-9; model-vs-contract blame open) | model-or-pipeline (open) | row.json error |
+| 004 usd t2 | **model** — contract rejection 'Expected canonical world frame'; the canonical frames block is given VERBATIM in the model prompt (direct_brep.py:23), so this is a documented-contract violation. Rejected payload not retained (disclosed) | model (documented contract) | request/response bytes; direct_brep.py:23 prompt text |
 | 007 openscad t1/t2 | **input/evaluator** — model built the CORRECT L-bracket (scad base+wall+3 holes, genus 3, product 100.0/99.7); extents/volume fail only on hidden depth 40/height 50 (EV-1). No model failure in these rows | input + evaluator | model.scad; row.json ext [80,43.13,51.01] |
 | 007 usd t1 | **model** — flat plate [80,40,5] where notes+GT demand a bend; CAUGHT by harness (front similarity 0.35) AND product (accepted=False). EV-4 refuted — the bench sees this | model | row.json fidelity+product |
-| 007 usd t2 | **contract-layer rejection** — 'Unsupported clarification or unknown feature' (EV-9) | model-or-pipeline (open) | row.json error |
+| 007 usd t2 | **model** — contract rejection 'Unsupported clarification or unknown feature'; the four permitted kinds are enumerated in the intent prompt — documented-contract violation (rejected payload not retained, disclosed) | model (documented contract) | row.json error; construction_intent.py kind set |
 | 101 openscad t1 | **model** — genuine 3D part but genus 3 vs GT 5: flanges/tabs under-built on the richest ink in the corpus; reliably caught by the visible-topology check; product rejected 72.6 | model | row.json genus; product.failures |
 | 101 openscad t2 | **model/pipeline** — same geometry, mesh validation failed (build_success false) | model (output) | row.json build |
 | 101 usd t1/t2 | **model** — flat plates [40,50,4]/[40,50,3]; all checks correctly fail | model | row.json |
@@ -63,8 +63,10 @@ screenshot; each row cites the artifact bytes.
 
 ## Next probes
 
-- EV-9: diff the published recipe documentation against `validate_recipe`
-  and the canonical-frame error to assign blame (model or contract).
+- Retention gap (proposed product issue): rejected construction plans and
+  kernel-crash inputs must be written to the cell dir (attempts.json), so
+  EV-9-class blame can be byte-verified for the exact offending value and
+  the wheel spoke-union kernel crash can get a minimal reproducer.
 - EV-7 fix prototype: assign view groups per-backend render orientation
   (or normalize part orientation before scoring), re-score 004/wheel rows.
 - Live current-model baseline (level 3) only after these — with

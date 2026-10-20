@@ -58,9 +58,12 @@ lowered to pass existing outputs.
 * **EV-8 VERIFIED** — `ask_missing_dimensions=false` + no thickness in the
   form: the frozen 3 mm policy reaches the model only if it asks; openscad
   silently guessed 10 mm. The run measures guessing, not clarification.
-* **EV-9 CANDIDATE** — two contract-layer rejections (007 usd t2
-  "Unsupported clarification", 004 usd t2 "Expected canonical world frame");
-  blame (model vs contract strictness) open pending documentation diff.
+* **EV-9 RESOLVED** — the two contract rejections (007 usd t2
+  "Unsupported clarification", 004 usd t2 "Expected canonical world frame")
+  are model-side: both rules are documented verbatim in the model prompts
+  (direct_brep.py:23 frames block; intent-prompt clarification kinds).
+  Disclosed gap: rejected payloads not retained → proposed product issue
+  to write rejected plans/kernel-crash inputs into the cell dir.
 
 ## Re-scoring (RECLASSIFY.py — frozen numbers untouched)
 
@@ -79,6 +82,6 @@ measures the bench, not the parts. ATTRIBUTION.md holds the per-row blame.
 * [x] Per-case first-failing-stage attribution (ATTRIBUTION.md v2)
 * [x] Re-scoring with proven-unreliable checks (RECLASSIFY)
 * [x] Level-2 replay: handle usd recipe exonerates the pipeline (+0.1 % capability variant)
-* [ ] EV-9 contract-vs-documentation blame assignment
+* [x] EV-9 blame assignment (model-side, documented contracts; retention gap disclosed)
 * [ ] EV-7 fix prototype (orientation normalization) + re-score
 * [ ] Live current-model baseline (last, fixed settings, environment.json per #85)
