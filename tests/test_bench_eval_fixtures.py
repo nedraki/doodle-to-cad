@@ -147,29 +147,38 @@ def test_d1_geometry_checks_blind_to_opening_position(built):
     assert base == moved, "geometry verdicts identical: position is invisible to them"
 
 
-def test_ev4_product_acceptance_cannot_distinguish_plate_from_bracket(eb, tmp_path):
-    """The archived model.scad (a flat PLATE — the wrong part; notes + GT
-    require an L-bracket) and the reviewed bracket fixture, judged through
-    the same projection_scores call against the same drawing evidence,
-    receive IDENTICAL scores. This is why the product scored the plate 100.
-    Freeze: a future acceptance fix that can tell them apart must update
-    CASES.json EV-4 to 'fixed' and this assertion together with it."""
-    item = ITEMS["007_angle_bracket_holes"]
-    drawing = ROOT / item["drawing"]
-    result7 = json.loads((RUNS / "007_angle_bracket_holes" / "openscad"
-                          / "trial-01" / "result.json").read_text())
-    evidence = result7["geometry"]
-    assert evidence, "frozen evidence must exist"
+def test_ev4_refuted_the_bench_did_catch_the_wrong_part():
+    """The v1 claim 'the product accepted a plate at 100.0' was a row mix-up.
+    The bytes say: the accepted-100.0 openscad rows are shape-correct
+    L-brackets, and the actual plate (usd-brep trial-01, [80,40,5]) was
+    caught by BOTH the harness fidelity (front 0.35 < 0.45) and the product
+    (accepted=False). Freeze that correct behaviour: if a future product
+    change accepts the plate, this test fails and acceptance must be
+    re-audited."""
+    plate = json.loads((RUNS / "007_angle_bracket_holes" / "usd-brep" / "trial-01"
+                        / "row.json").read_text())
+    bracket = json.loads((RUNS / "007_angle_bracket_holes" / "openscad" / "trial-01"
+                          / "row.json").read_text())
+    assert plate["build"]["extents_mm"] == [80.0, 40.0, 5.0]  # flat plate
+    assert plate["fidelity"]["pass"] is False
+    assert plate["fidelity"]["scores"]["front"] < 0.45
+    assert plate["product"]["accepted"] is False
+    assert bracket["product"]["accepted"] is True and bracket["product"]["score"] == 100.0
+    assert bracket["checks"]["genus_pass"] is True  # correct bracket topology
 
-    archived_plate = RUNS / "007_angle_bracket_holes" / "openscad" / "trial-01" / "model.scad"
-    plate_scores, plate_topo = render_projection(
-        eb, archived_plate, drawing, evidence, item["primary_view"], tmp_path / "plate")
-    bracket_scores, bracket_topo = render_projection(
-        eb, FIX / "bracket_l_reviewed.scad", drawing, evidence,
-        item["primary_view"], tmp_path / "bracket")
 
-    assert plate_scores and all(v >= 0.9 for v in plate_scores.values()), \
-        "reproduces the accepted-at-100 behaviour"
-    assert plate_scores == bracket_scores, \
-        f"insensitivity broken? plate={plate_scores} bracket={bracket_scores}"
-    assert plate_topo == bracket_topo
+def test_ev7_fidelity_is_orientation_dependent_on_004():
+    """Same part, opposite verdicts: openscad (plate on edge, holes facing
+    front) passes fidelity; usd-brep (plate flat, holes facing up) fails
+    with topology 'front expects 3, renders 0 / top expects 0, renders 3'.
+    Freeze the defect so an orientation-normalization fix must break this
+    test and re-label CASES.json EV-7 together."""
+    occ = json.loads((RUNS / "004_flat_mounting_plate" / "openscad" / "trial-01"
+                      / "row.json").read_text())
+    ucb = json.loads((RUNS / "004_flat_mounting_plate" / "usd-brep" / "trial-01"
+                      / "row.json").read_text())
+    assert occ["fidelity"]["pass"] is True
+    assert ucb["fidelity"]["pass"] is False
+    topo = ucb["fidelity"]["topology"]
+    assert topo["front"]["expected"] == 3 and topo["front"]["actual"] == 0
+    assert topo["top"]["expected"] == 0 and topo["top"]["actual"] == 3

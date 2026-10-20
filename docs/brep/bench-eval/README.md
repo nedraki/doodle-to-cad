@@ -29,50 +29,56 @@ A reference-only thickness is flagged as such and can never be counted as a
 model failure (see EV-1). Reference geometry was never sent to the model
 (every `request.json` records `reference_geometry_sent: false`).
 
-## Evaluator defect candidates
+## Evaluator/input defects — final registry (v2 byte re-read)
 
 Statuses are machine-auditable: `VERIFIED` cites the exact archived JSON
-field; `candidate` must be proven by a fixture (below) before any relabel.
+field or a fixture in `tests/test_bench_eval_fixtures.py`; `REFUTED` records
+a withdrawn claim with the bytes that killed it. Unresolved checks are
+marked **unreliable** in RECLASSIFY (never deleted); thresholds were never
+lowered to pass existing outputs.
 
-* **EV-2 / EV-3 — VERIFIED from archived bytes (wheel).**
-  The opening-count check passed `actual 8` against `expected_at_least 1`
-  while the sheet explicitly notes "8 spokes"; the position check demands an
-  opening at the hub centre `(0.499, 0.499)` (a correct wheel has a solid
-  hub there — fidelity is 0.0 by construction); and the product's own ink
-  measurement expected `X=27.8 mm` against the explicit `OD 120 mm`.
-  The wheel's model-side verdicts cannot be trusted until these checks are
-  fixed: unresolved checks are marked **unreliable**, and thresholds are
-  never lowered to pass existing outputs.
-* **EV-1 — candidate: hidden thickness.** 004/007 GT thickness 5 mm exists
-  nowhere the model can see; the frozen clarification answer is 3 mm; the
-  ±2% volume check then fails for *any* compliant model. A correct answer
-  rejected by an unreliable check is an evaluator failure, not a model
-  failure.
-* **EV-4 — candidate: acceptance insensitivity.** 007 built a plate where
-  the notes + GT require an L-bracket; the product still scored 100.0.
-  Invalid model output and correct application rejection must stay separate
-  verdicts — this is the case where neither happened.
+* **EV-1 VERIFIED** — hidden GT dimensions (004 thickness, 007 depth/height,
+  008 depth/height, 101 x/z): extents/volume checks unachievable by any
+  compliant model (policy-compliant fixture passes build+genus, fails both).
+* **EV-2 VERIFIED** — wheel opening count (`expected_at_least 1` passed 8)
+  and the position check demanding an opening at the solid hub centre.
+* **EV-3 VERIFIED** — the 27.8 mm ink measurement vs the explicit OD 120
+  note; it REJECTED both score-100.0 wheel rows (false rejection).
+* **EV-4 REFUTED** — "product accepted the 007 plate at 100.0" was a row
+  mix-up from session notes. The accepted cells are shape-correct brackets;
+  the actual plate was caught by harness fidelity (0.35) and product
+  (accepted=False). Frozen in `test_ev4_refuted_the_bench_did_catch_the_wrong_part`.
+* **EV-5 VERIFIED** — wheel volume compares the reference author's
+  undimensioned rim (6 mm) / spoke (8 mm) choices.
+* **EV-6 VERIFIED** — the only numeric in every brief is an unlabeled bare
+  number (`dimension='54'`, `dimension_text=null`).
+* **EV-7 VERIFIED** — orientation-dependent fidelity: the same 004 part
+  passes fid on openscad and fails fid on usd-brep (front expects 3,
+  renders 0 / top expects 0, renders 3).
+* **EV-8 VERIFIED** — `ask_missing_dimensions=false` + no thickness in the
+  form: the frozen 3 mm policy reaches the model only if it asks; openscad
+  silently guessed 10 mm. The run measures guessing, not clarification.
+* **EV-9 CANDIDATE** — two contract-layer rejections (007 usd t2
+  "Unsupported clarification", 004 usd t2 "Expected canonical world frame");
+  blame (model vs contract strictness) open pending documentation diff.
 
-## Three test levels (issue #81)
+## Re-scoring (RECLASSIFY.py — frozen numbers untouched)
 
-1. **Trusted construction** — reviewed hand-authored OpenSCAD sources and
-   BRep recipes; measures the pipeline without any LLM.
-2. **Saved model responses** — archived `generation.json` /
-   `model.scad` / `model.recipe.json` replays; measures parsing, validation,
-   coordinate handling, execution without new inference. Repeatable.
-3. **Live current-model trials** — only after 1 and 2 and the check
-   validation are green; fixed run count and settings; isolated results
-   directory; environment.json written per #85.
+Marking only VERIFIED-unreliable checks: openscad 2→9 passing, usd-brep
+0→2. The 007 plate stays FAIL (fidelity is reliable — EV-4 refuted), and
+101/003 stay FAIL on the visible-topology checks: the reclassification
+measures the bench, not the parts. ATTRIBUTION.md holds the per-row blame.
 
 ## Status
 
-* [x] Test inputs defined with provenance + classification (CASES.json)
-* [x] EV-2 / EV-3 verified from archived drawing-checks/result bytes
-* [x] Fixture proof for EV-1 / EV-4 — `tests/test_bench_eval_fixtures.py`
-      (7 gates: known-correct passes; planted removed-opening, blind-hole,
-      disconnected-body each caught by exactly its declared check; hidden
-      3 mm policy build fails reference-only extents/volume — EV-1; plate
-      vs reviewed bracket score IDENTICALLY through projection_scores — EV-4)
-* [ ] Per-case first-failing-stage attribution (replays)
-* [ ] Substitution experiments (reviewed plan → downstream build)
-* [ ] Live current-model baseline (last, fixed settings)
+* [x] Test inputs defined with provenance + classification (CASES.json v2,
+      every outcome re-read from archived bytes; v1 corrections recorded)
+* [x] Fixture gate: known-correct passes; planted removed-opening,
+      blind-hole, disconnected-body each caught by exactly its declared
+      check; hidden-requirement (EV-1) fixture; EV-7/EV-4 byte freezes
+* [x] Per-case first-failing-stage attribution (ATTRIBUTION.md v2)
+* [x] Re-scoring with proven-unreliable checks (RECLASSIFY)
+* [x] Level-2 replay: handle usd recipe exonerates the pipeline (+0.1 % capability variant)
+* [ ] EV-9 contract-vs-documentation blame assignment
+* [ ] EV-7 fix prototype (orientation normalization) + re-score
+* [ ] Live current-model baseline (last, fixed settings, environment.json per #85)
