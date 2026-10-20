@@ -156,3 +156,21 @@ def test_health_endpoint_includes_worker_state(tmp_path, monkeypatch):
     with TestClient(app_module.app) as client_http:
         payload = client_http.get("/api/health").json()
     assert payload["brep_worker"]["available"] is True
+
+
+# Issue #90: the fillet+through-holes recipe triggers the known usd_brep 1.0.0
+# round-trip defect (difference reloads as a union). Before the fix, the worker
+# had ALREADY written model.stl/model.usda when the guard aborted, so the cell
+# looked built. A guard-rejected build must publish nothing at all.
+ROUNDTRIP_REJECT = json.loads((ROOT / "scripts" / "fixtures" / "roundtrip_reject_c1.recipe.json").read_text())
+
+
+@KERNEL
+def test_guard_rejected_build_publishes_no_artifacts(tmp_path):
+    out = tmp_path / "run-90"
+    result = build_brep(BuildInput("usd-brep", _stage_recipe(tmp_path, ROUNDTRIP_REJECT, "reject.json"), out, render=False))
+    assert not result.ok
+    assert "usd_roundtrip_failed" in [d.code for d in result.diagnostics]
+    # staging is renamed to a published revision only after every check passes
+    published = list(out.glob("brep-*"))
+    assert published == [], f"guard-rejected build published: {published}"

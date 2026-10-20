@@ -188,24 +188,39 @@ def build(source, output):
             f"minimum_z_mm={mesh.bounds[0, 2]:.6g}, extents_mm={mesh.extents.tolist()}")
     if abs(mesh.volume-volume)/volume > 0.02:
         raise ValueError("Mesh volume differs from solid by more than 2%")
-    mesh.export(str(output / "model.stl"))
-    # USDA metadata is text, so no second/conflicting pxr runtime is needed.
+    # Issue #90: publish artifacts only after every check passes. The worker
+    # used to write model.stl/model.usda BEFORE the USD round-trip guard, so a
+    # rejected build left a valid-looking STL beside construction-error.json —
+    # any consumer trusting "STL exists" saw a false success. Stage, validate,
+    # then publish with os.replace.
+    stl = output / "model.stl"
     usd = output / "model.usda"
-    sm.usd.export_brep(body.copy(), str(usd))
-    text = usd.read_text()
-    header, rest = text.split("\n", 1)
-    if rest.lstrip().startswith("("):
-        start = rest.index("(") + 1
-        rest = rest[:start] + '\n    metersPerUnit = 0.001\n    upAxis = "Z"\n' + rest[start:]
-    else:
-        rest = '(\n    metersPerUnit = 0.001\n    upAxis = "Z"\n)\n' + rest
-    usd.write_text(header + "\n" + rest)
-    imported = sm.usd.import_breps(str(usd))
-    if len(imported) != 1 or abs(imported[0].volume(relative_accuracy=1e-8)-volume)/volume > 1e-5:
-        raise ValueError(f"USD round-trip volume check failed: original_volume_mm3={volume:.12g}; reloaded_volumes_mm3={[item.volume(relative_accuracy=1e-8) for item in imported]}")
-    reloaded = trimesh.load(output / "model.stl", force="mesh")
-    if not reloaded.is_watertight or not reloaded.is_winding_consistent:
-        raise ValueError("Exported STL validation failed")
+    stl_stage = output / "model_check.stl"
+    usd_stage = output / "model_check.usda"
+    try:
+        mesh.export(str(stl_stage))
+        # USDA metadata is text, so no second/conflicting pxr runtime is needed.
+        sm.usd.export_brep(body.copy(), str(usd_stage))
+        text = usd_stage.read_text()
+        header, rest = text.split("\n", 1)
+        if rest.lstrip().startswith("("):
+            start = rest.index("(") + 1
+            rest = rest[:start] + '\n    metersPerUnit = 0.001\n    upAxis = "Z"\n' + rest[start:]
+        else:
+            rest = '(\n    metersPerUnit = 0.001\n    upAxis = "Z"\n)\n' + rest
+        usd_stage.write_text(header + "\n" + rest)
+        imported = sm.usd.import_breps(str(usd_stage))
+        if len(imported) != 1 or abs(imported[0].volume(relative_accuracy=1e-8)-volume)/volume > 1e-5:
+            raise BuildError("usd_roundtrip_failed", f"USD round-trip volume check failed: original_volume_mm3={volume:.12g}; reloaded_volumes_mm3={[item.volume(relative_accuracy=1e-8) for item in imported]}")
+        reloaded = trimesh.load(stl_stage, force="mesh")
+        if not reloaded.is_watertight or not reloaded.is_winding_consistent:
+            raise BuildError("stl_export_invalid", "Exported STL validation failed")
+    except Exception:
+        stl_stage.unlink(missing_ok=True)
+        usd_stage.unlink(missing_ok=True)
+        raise
+    os.replace(usd_stage, usd)
+    os.replace(stl_stage, stl)
     from selection_catalog import catalog
     try:
         selection_catalog = catalog(sm, body, bodies, operations, recipe['output'], mesh)

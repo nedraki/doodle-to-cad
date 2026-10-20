@@ -37,6 +37,22 @@ a withdrawn claim with the bytes that killed it. Unresolved checks are
 marked **unreliable** in RECLASSIFY (never deleted); thresholds were never
 lowered to pass existing outputs.
 
+Where each claim's primary bytes live (field paths, so a reviewer can go
+straight to them):
+
+| EV | Primary bytes |
+|---|---|
+| EV-1 | `fixtures/plate_3mm_policy.scad` vs `references/reference-measurements.json` entries for 004/007/008/101 |
+| EV-2 | `runs/wheel/usd-brep/trial-02/drawing-checks.json` (`expected_at_least` opening count, hub-centre position check) |
+| EV-3 | `runs/wheel/openscad/trial-01/row.json` → `product.failures[0]` (identical in trial-02; both `score=100.0`, `accepted=false`) |
+| EV-4 | `runs/007_*/…/row.json` rows; frozen by `test_ev4_refuted_the_bench_did_catch_the_wrong_part` |
+| EV-5 | `benchmarks/brep-baseline/wheel/reference.scad:3-6` (rim (120−108)/2=6 mm, spokes `cube([40,8,8])`) |
+| EV-6 | `runs/constant_radius_handle/*/trial-*/request.json` (`dimension='54'`, `dimension_text=null`) |
+| EV-7 | `probes/probe_ev7_orientation.py` output + `EV7_PROBE.md` (caveat: probe IoU, not harness metric) |
+| EV-8 | `runs/004_flat_mounting_plate/openscad/trial-01/model.scad:6` (`thickness = 10;`) + same dir `request.json` |
+| EV-9 | `result.json` contract errors quoted in `CASES.json`; payloads not retained → issue #89 |
+
+
 * **EV-1 VERIFIED** — hidden GT dimensions (004 thickness, 007 depth/height,
   008 depth/height, 101 x/z): extents/volume checks unachievable by any
   compliant model (policy-compliant fixture passes build+genus, fails both).
