@@ -1,0 +1,42 @@
+{
+  "case": "chamfer",
+  "track": "manually_authored",
+  "user_review": "pending",
+  "measurement_validation": "provisional; awaiting #81",
+  "attempts": [
+    {
+      "role": "initial",
+      "backend": "usd-brep",
+      "updates": {},
+      "attempt": "01-initial",
+      "build_ok": false,
+      "seconds": 0.376,
+      "diagnostics": [],
+      "stl_sha256": "92dfb59e965f0d52eeb043e447324fc1f88ccdd40a8fb6430cfaab4b0c1dad11",
+      "exception": "ModuleNotFoundError: No module named 'scipy'"
+    }
+  ],
+  "outcome": "failed",
+  "error": "ModuleNotFoundError: No module named 'scipy'",
+  "openscad": {
+    "status": "attempted",
+    "attempts": [
+      {
+        "role": "initial",
+        "build_ok": true,
+        "seconds": 0.4253,
+        "construction": "manually_authored OpenSCAD, $fn=96",
+        "note": "Measured convention: radius is bevel hypotenuse; setback=radius/sqrt(2), angle=45 degrees. No selective hole entrance API.",
+        "measurement_error": "No module named 'scipy'"
+      },
+      {
+        "role": "edited",
+        "build_ok": true,
+        "seconds": 0.4162,
+        "construction": "manually_authored OpenSCAD, $fn=96",
+        "note": "Measured convention: radius is bevel hypotenuse; setback=radius/sqrt(2), angle=45 degrees. No selective hole entrance API.",
+        "measurement_error": "No module named 'scipy'"
+      }
+    ]
+  }
+}

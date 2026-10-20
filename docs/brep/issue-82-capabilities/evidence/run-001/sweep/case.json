@@ -1,0 +1,42 @@
+{
+  "case": "sweep",
+  "track": "manually_authored",
+  "user_review": "pending",
+  "measurement_validation": "provisional; awaiting #81",
+  "attempts": [
+    {
+      "role": "initial",
+      "backend": "usd-brep",
+      "updates": {},
+      "attempt": "01-initial",
+      "build_ok": false,
+      "seconds": 0.9244,
+      "diagnostics": [],
+      "stl_sha256": "1c1fa794c7cc461c99b4186b3251b01b2914a2f290688baad8617f66319f94da",
+      "exception": "ModuleNotFoundError: No module named 'scipy'"
+    }
+  ],
+  "outcome": "failed",
+  "error": "ModuleNotFoundError: No module named 'scipy'",
+  "openscad": {
+    "status": "attempted",
+    "attempts": [
+      {
+        "role": "initial",
+        "build_ok": true,
+        "seconds": 0.4292,
+        "construction": "manually_authored OpenSCAD, $fn=96",
+        "note": "Rectangular section, not a circular tube. Native sweep avoids separate join booleans.",
+        "measurement_error": "No module named 'scipy'"
+      },
+      {
+        "role": "edited",
+        "build_ok": true,
+        "seconds": 0.4191,
+        "construction": "manually_authored OpenSCAD, $fn=96",
+        "note": "Rectangular section, not a circular tube. Native sweep avoids separate join booleans.",
+        "measurement_error": "No module named 'scipy'"
+      }
+    ]
+  }
+}

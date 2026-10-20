@@ -1,0 +1,42 @@
+{
+  "case": "loft",
+  "track": "manually_authored",
+  "user_review": "pending",
+  "measurement_validation": "provisional; awaiting #81",
+  "attempts": [
+    {
+      "role": "initial",
+      "backend": "usd-brep",
+      "updates": {},
+      "attempt": "01-initial",
+      "build_ok": false,
+      "seconds": 0.4823,
+      "diagnostics": [],
+      "stl_sha256": "b84cfb9d0424e73083326c4a9508e2a150b6bc3bc950cc8ecfc6fbe518e76756",
+      "exception": "ModuleNotFoundError: No module named 'scipy'"
+    }
+  ],
+  "outcome": "failed",
+  "error": "ModuleNotFoundError: No module named 'scipy'",
+  "openscad": {
+    "status": "attempted",
+    "attempts": [
+      {
+        "role": "initial",
+        "build_ok": true,
+        "seconds": 0.4068,
+        "construction": "manually_authored OpenSCAD, $fn=96",
+        "note": "Solid transition only. OpenSCAD polar-correspondence polyhedron is an explicit approximation; intermediate surfaces may differ.",
+        "measurement_error": "No module named 'scipy'"
+      },
+      {
+        "role": "edited",
+        "build_ok": true,
+        "seconds": 0.4078,
+        "construction": "manually_authored OpenSCAD, $fn=96",
+        "note": "Solid transition only. OpenSCAD polar-correspondence polyhedron is an explicit approximation; intermediate surfaces may differ.",
+        "measurement_error": "No module named 'scipy'"
+      }
+    ]
+  }
+}

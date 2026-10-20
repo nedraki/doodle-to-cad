@@ -1,0 +1,115 @@
+{
+  "case": "arc",
+  "track": "manually_authored",
+  "user_review": "pending",
+  "measurement_validation": "provisional; awaiting #81",
+  "attempts": [
+    {
+      "role": "initial",
+      "backend": "usd-brep",
+      "updates": {},
+      "attempt": "01-initial",
+      "build_ok": true,
+      "seconds": 1.6204,
+      "diagnostics": [],
+      "stl_sha256": "9efcebdc4881a0c77ac2c4d0bd19aee24f3499ee3321cb5899ebabe85c46c5c3",
+      "observations_within_provisional_tolerances": true,
+      "native_measurement_available": true
+    },
+    {
+      "role": "edited",
+      "backend": "usd-brep",
+      "updates": {
+        "radius": 25
+      },
+      "attempt": "02-edited",
+      "build_ok": true,
+      "seconds": 1.7312,
+      "diagnostics": [],
+      "stl_sha256": "41124e667da8d4d963275ab82711947ba06c6c07dc66495507d1072c0fc1bd07",
+      "observations_within_provisional_tolerances": true,
+      "native_measurement_available": true
+    },
+    {
+      "role": "rejected",
+      "backend": "usd-brep",
+      "updates": {
+        "radius": -1
+      },
+      "attempt": "03-rejected",
+      "build_ok": false,
+      "seconds": 0.0,
+      "exception": "ValueError: radius must be between 8.0 and 40.0"
+    },
+    {
+      "role": "continued",
+      "backend": "usd-brep",
+      "updates": {
+        "radius": 23
+      },
+      "attempt": "04-continued",
+      "build_ok": true,
+      "seconds": 1.6579,
+      "diagnostics": [],
+      "stl_sha256": "d108858a8d9ca15baf87ad15bfddf69372c8ddc7fa491346ee7094376e2ec776",
+      "observations_within_provisional_tolerances": true,
+      "native_measurement_available": true
+    }
+  ],
+  "selection_rule": null,
+  "selection_limitation": "Geometric rule for pocket or bottom face; arbitrary face/edge targeting is not implemented.",
+  "preview_keeps_original_selected": true,
+  "selection_after_edit": {
+    "status": "none"
+  },
+  "rejection": {
+    "rejected": true,
+    "error": "radius must be between 8.0 and 40.0",
+    "type": "ValueError"
+  },
+  "failure_recovery": {
+    "selected_revision_unchanged": true,
+    "store_unchanged": true,
+    "downloads_unchanged": true,
+    "download_sha256": {
+      "source": "57ca6f8a549f0550e82abe01bf398ee56ec9773db6851dff22a6432cf0842b31",
+      "stl": "41124e667da8d4d963275ab82711947ba06c6c07dc66495507d1072c0fc1bd07",
+      "usd": "c266a5557084d6f4550c8b61e0d340bfae54156d2452771a3c68a92541d2fa26"
+    }
+  },
+  "continued_edit_recorded": true,
+  "outcome": "constructed_and_edited",
+  "preservation": {
+    "tube_diameter": {
+      "before": 8.000005793980714,
+      "after": 8.000002504060145,
+      "tolerance_mm": 0.05,
+      "within_tolerance": true
+    },
+    "outside_z": {
+      "before": 8.000000203998283,
+      "after": 8.000000000000002,
+      "tolerance_mm": 0.05,
+      "within_tolerance": true
+    }
+  },
+  "openscad": {
+    "status": "attempted",
+    "attempts": [
+      {
+        "role": "initial",
+        "build_ok": true,
+        "seconds": 0.3729,
+        "construction": "manually_authored OpenSCAD, $fn=96",
+        "note": "Arc-only case explicitly does not satisfy the straight-ended handle; separate rectangular sweep below does."
+      },
+      {
+        "role": "edited",
+        "build_ok": true,
+        "seconds": 0.3935,
+        "construction": "manually_authored OpenSCAD, $fn=96",
+        "note": "Arc-only case explicitly does not satisfy the straight-ended handle; separate rectangular sweep below does."
+      }
+    ]
+  }
+}

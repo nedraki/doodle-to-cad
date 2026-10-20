@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "units": "mm",
+  "name": "Circular section half bend, WITHOUT straight ends",
+  "parameters": {
+    "radius": {
+      "value": 23.0,
+      "min": 8,
+      "max": 40,
+      "unit": "mm"
+    }
+  },
+  "operations": [
+    {
+      "id": "bend",
+      "kind": "arc_pipe",
+      "origin": [
+        0,
+        0,
+        4
+      ],
+      "bend_radius": "radius",
+      "radius": 4,
+      "angle": 180
+    }
+  ],
+  "output": "bend"
+}

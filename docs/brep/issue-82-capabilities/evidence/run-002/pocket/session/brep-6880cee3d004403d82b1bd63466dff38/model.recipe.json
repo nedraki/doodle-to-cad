@@ -1,0 +1,83 @@
+{
+  "version": 1,
+  "units": "mm",
+  "name": "Block with three top pockets of different depths",
+  "parameters": {},
+  "operations": [
+    {
+      "id": "body",
+      "kind": "box",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "size": [
+        60,
+        40,
+        20
+      ]
+    },
+    {
+      "id": "box_p1",
+      "kind": "box",
+      "origin": [
+        8,
+        8,
+        14.0
+      ],
+      "size": [
+        12,
+        12,
+        6.0
+      ]
+    },
+    {
+      "id": "cut1",
+      "kind": "difference",
+      "left": "body",
+      "right": "box_p1"
+    },
+    {
+      "id": "box_p2",
+      "kind": "box",
+      "origin": [
+        40,
+        8,
+        18
+      ],
+      "size": [
+        12,
+        12,
+        2
+      ]
+    },
+    {
+      "id": "cut2",
+      "kind": "difference",
+      "left": "cut1",
+      "right": "box_p2"
+    },
+    {
+      "id": "box_p3",
+      "kind": "box",
+      "origin": [
+        8,
+        24,
+        15
+      ],
+      "size": [
+        12,
+        12,
+        5
+      ]
+    },
+    {
+      "id": "cut3",
+      "kind": "difference",
+      "left": "cut2",
+      "right": "box_p3"
+    }
+  ],
+  "output": "cut3"
+}

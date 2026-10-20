@@ -1,0 +1,237 @@
+<!doctype html><meta charset="utf-8"><title>BRep capability review — issue 82</title>
+<style>body{font:16px system-ui;max-width:1300px;margin:36px auto;color:#202c39;background:#f7f9fb}img{width:100%}table{border-collapse:collapse}td,th{padding:8px;border:1px solid #ccd5dd}pre{white-space:pre-wrap}section{margin:48px 0}a{color:#2366a0}</style>
+<h1>BRep construction and edit review</h1><p>Manual fixtures only. No model calls. Measurements are provisional until #81; user acceptance is pending. All failed attempts are retained.</p>
+<p>Read <a href="plan.json">the frozen input contracts</a>, <a href="summary.json">all outcomes</a>, and <a href="review.json">the unfilled user review record</a>.</p>
+<section><h2>fillet</h2><p>Supported outer vertical edge family; no arbitrary bracket-junction selector.</p>
+<p><b>Input:</b> Rounded block with protected through hole. <b>Requested edit:</b> radius → 5 mm.</p>
+<p><b>Protected:</b> outside_x, outside_y, outside_z, hole_diameter</p>
+<img src="fillet/review.png" alt="fillet before and after with matching sections">
+<p><a href="fillet/sections.png">Section close-ups</a> · <a href="fillet/case.json">Build, selection and recovery record</a></p>
+<table><tr><th>Attempt</th><th>Build</th><th>Time (s)</th><th>Artifacts / measurements</th></tr>
+<tr><td>initial</td><td>True</td><td>0.4276</td><td><a href="fillet/01-initial/attempt.json">record</a> · <a href="fillet/01-initial/model.stl">STL</a> · <a href="fillet/01-initial/model.usda">native USD</a> · <a href="fillet/01-initial/mesh-observations.json">mesh</a> · <a href="fillet/01-initial/native-observations.json">native</a></td></tr>
+<tr><td>edited</td><td>True</td><td>0.3375</td><td><a href="fillet/02-edited/attempt.json">record</a> · <a href="fillet/02-edited/model.stl">STL</a> · <a href="fillet/02-edited/model.usda">native USD</a> · <a href="fillet/02-edited/mesh-observations.json">mesh</a> · <a href="fillet/02-edited/native-observations.json">native</a></td></tr>
+<tr><td>rejected</td><td>False</td><td>0.0</td><td><a href="fillet/03-rejected/attempt.json">record</a></td></tr>
+<tr><td>continued</td><td>True</td><td>0.3872</td><td><a href="fillet/04-continued/attempt.json">record</a> · <a href="fillet/04-continued/model.stl">STL</a> · <a href="fillet/04-continued/model.usda">native USD</a> · <a href="fillet/04-continued/mesh-observations.json">mesh</a> · <a href="fillet/04-continued/native-observations.json">native</a></td></tr>
+</table><h3>OpenSCAD comparison</h3>
+<pre>{
+  &quot;status&quot;: &quot;attempted&quot;,
+  &quot;attempts&quot;: [
+    {
+      &quot;role&quot;: &quot;initial&quot;,
+      &quot;build_ok&quot;: true,
+      &quot;seconds&quot;: 0.6399,
+      &quot;construction&quot;: &quot;manually_authored OpenSCAD, $fn=96&quot;,
+      &quot;note&quot;: &quot;Supported outer vertical edge family; no arbitrary bracket-junction selector.&quot;
+    },
+    {
+      &quot;role&quot;: &quot;edited&quot;,
+      &quot;build_ok&quot;: true,
+      &quot;seconds&quot;: 0.6271,
+      &quot;construction&quot;: &quot;manually_authored OpenSCAD, $fn=96&quot;,
+      &quot;note&quot;: &quot;Supported outer vertical edge family; no arbitrary bracket-junction selector.&quot;
+    }
+  ]
+}</pre>
+<p><b>User decision:</b> pending — inspect shape, section quality, and usefulness independently of the automatic observations.</p></section>
+<section><h2>chamfer</h2><p>Measured convention: radius is bevel hypotenuse; setback=radius/sqrt(2), angle=45 degrees. No selective hole entrance API.</p>
+<p><b>Input:</b> Horizontal block-edge chamfer. <b>Requested edit:</b> radius → 5 mm.</p>
+<p><b>Protected:</b> outside_x, outside_y, outside_z</p>
+<img src="chamfer/review.png" alt="chamfer before and after with matching sections">
+<p><a href="chamfer/sections.png">Section close-ups</a> · <a href="chamfer/case.json">Build, selection and recovery record</a></p>
+<table><tr><th>Attempt</th><th>Build</th><th>Time (s)</th><th>Artifacts / measurements</th></tr>
+<tr><td>initial</td><td>True</td><td>0.3845</td><td><a href="chamfer/01-initial/attempt.json">record</a> · <a href="chamfer/01-initial/model.stl">STL</a> · <a href="chamfer/01-initial/model.usda">native USD</a> · <a href="chamfer/01-initial/mesh-observations.json">mesh</a> · <a href="chamfer/01-initial/native-observations.json">native</a></td></tr>
+<tr><td>edited</td><td>True</td><td>0.3422</td><td><a href="chamfer/02-edited/attempt.json">record</a> · <a href="chamfer/02-edited/model.stl">STL</a> · <a href="chamfer/02-edited/model.usda">native USD</a> · <a href="chamfer/02-edited/mesh-observations.json">mesh</a> · <a href="chamfer/02-edited/native-observations.json">native</a></td></tr>
+<tr><td>rejected</td><td>False</td><td>0.0</td><td><a href="chamfer/03-rejected/attempt.json">record</a></td></tr>
+<tr><td>continued</td><td>True</td><td>0.3493</td><td><a href="chamfer/04-continued/attempt.json">record</a> · <a href="chamfer/04-continued/model.stl">STL</a> · <a href="chamfer/04-continued/model.usda">native USD</a> · <a href="chamfer/04-continued/mesh-observations.json">mesh</a> · <a href="chamfer/04-continued/native-observations.json">native</a></td></tr>
+</table><h3>OpenSCAD comparison</h3>
+<pre>{
+  &quot;status&quot;: &quot;attempted&quot;,
+  &quot;attempts&quot;: [
+    {
+      &quot;role&quot;: &quot;initial&quot;,
+      &quot;build_ok&quot;: true,
+      &quot;seconds&quot;: 0.4378,
+      &quot;construction&quot;: &quot;manually_authored OpenSCAD, $fn=96&quot;,
+      &quot;note&quot;: &quot;Measured convention: radius is bevel hypotenuse; setback=radius/sqrt(2), angle=45 degrees. No selective hole entrance API.&quot;
+    },
+    {
+      &quot;role&quot;: &quot;edited&quot;,
+      &quot;build_ok&quot;: true,
+      &quot;seconds&quot;: 0.4373,
+      &quot;construction&quot;: &quot;manually_authored OpenSCAD, $fn=96&quot;,
+      &quot;note&quot;: &quot;Measured convention: radius is bevel hypotenuse; setback=radius/sqrt(2), angle=45 degrees. No selective hole entrance API.&quot;
+    }
+  ]
+}</pre>
+<p><b>User decision:</b> pending — inspect shape, section quality, and usefulness independently of the automatic observations.</p></section>
+<section><h2>arc</h2><p>Arc-only case explicitly does not satisfy the straight-ended handle; separate rectangular sweep below does.</p>
+<p><b>Input:</b> Circular section half bend, WITHOUT straight ends. <b>Requested edit:</b> radius → 25 mm.</p>
+<p><b>Protected:</b> tube_diameter, outside_z</p>
+<img src="arc/review.png" alt="arc before and after with matching sections">
+<p><a href="arc/sections.png">Section close-ups</a> · <a href="arc/case.json">Build, selection and recovery record</a></p>
+<table><tr><th>Attempt</th><th>Build</th><th>Time (s)</th><th>Artifacts / measurements</th></tr>
+<tr><td>initial</td><td>True</td><td>1.7914</td><td><a href="arc/01-initial/attempt.json">record</a> · <a href="arc/01-initial/model.stl">STL</a> · <a href="arc/01-initial/model.usda">native USD</a> · <a href="arc/01-initial/mesh-observations.json">mesh</a> · <a href="arc/01-initial/native-observations.json">native</a></td></tr>
+<tr><td>edited</td><td>True</td><td>1.9192</td><td><a href="arc/02-edited/attempt.json">record</a> · <a href="arc/02-edited/model.stl">STL</a> · <a href="arc/02-edited/model.usda">native USD</a> · <a href="arc/02-edited/mesh-observations.json">mesh</a> · <a href="arc/02-edited/native-observations.json">native</a></td></tr>
+<tr><td>rejected</td><td>False</td><td>0.0</td><td><a href="arc/03-rejected/attempt.json">record</a></td></tr>
+<tr><td>continued</td><td>True</td><td>1.7419</td><td><a href="arc/04-continued/attempt.json">record</a> · <a href="arc/04-continued/model.stl">STL</a> · <a href="arc/04-continued/model.usda">native USD</a> · <a href="arc/04-continued/mesh-observations.json">mesh</a> · <a href="arc/04-continued/native-observations.json">native</a></td></tr>
+</table><h3>OpenSCAD comparison</h3>
+<pre>{
+  &quot;status&quot;: &quot;attempted&quot;,
+  &quot;attempts&quot;: [
+    {
+      &quot;role&quot;: &quot;initial&quot;,
+      &quot;build_ok&quot;: true,
+      &quot;seconds&quot;: 0.4951,
+      &quot;construction&quot;: &quot;manually_authored OpenSCAD, $fn=96&quot;,
+      &quot;note&quot;: &quot;Arc-only case explicitly does not satisfy the straight-ended handle; separate rectangular sweep below does.&quot;
+    },
+    {
+      &quot;role&quot;: &quot;edited&quot;,
+      &quot;build_ok&quot;: true,
+      &quot;seconds&quot;: 0.4709,
+      &quot;construction&quot;: &quot;manually_authored OpenSCAD, $fn=96&quot;,
+      &quot;note&quot;: &quot;Arc-only case explicitly does not satisfy the straight-ended handle; separate rectangular sweep below does.&quot;
+    }
+  ]
+}</pre>
+<p><b>User decision:</b> pending — inspect shape, section quality, and usefulness independently of the automatic observations.</p></section>
+<section><h2>sweep</h2><p>Rectangular section, not a circular tube. Native sweep avoids separate join booleans.</p>
+<p><b>Input:</b> Rectangular handle with two tangent straight ends. <b>Requested edit:</b> radius → 25 mm.</p>
+<p><b>Protected:</b> section_width, section_height, leg_length, minimum_x, minimum_y</p>
+<img src="sweep/review.png" alt="sweep before and after with matching sections">
+<p><a href="sweep/sections.png">Section close-ups</a> · <a href="sweep/case.json">Build, selection and recovery record</a></p>
+<table><tr><th>Attempt</th><th>Build</th><th>Time (s)</th><th>Artifacts / measurements</th></tr>
+<tr><td>initial</td><td>True</td><td>0.9208</td><td><a href="sweep/01-initial/attempt.json">record</a> · <a href="sweep/01-initial/model.stl">STL</a> · <a href="sweep/01-initial/model.usda">native USD</a> · <a href="sweep/01-initial/mesh-observations.json">mesh</a> · <a href="sweep/01-initial/native-observations.json">native</a></td></tr>
+<tr><td>edited</td><td>True</td><td>0.8814</td><td><a href="sweep/02-edited/attempt.json">record</a> · <a href="sweep/02-edited/model.stl">STL</a> · <a href="sweep/02-edited/model.usda">native USD</a> · <a href="sweep/02-edited/mesh-observations.json">mesh</a> · <a href="sweep/02-edited/native-observations.json">native</a></td></tr>
+<tr><td>rejected</td><td>False</td><td>0.0</td><td><a href="sweep/03-rejected/attempt.json">record</a></td></tr>
+<tr><td>continued</td><td>True</td><td>0.9417</td><td><a href="sweep/04-continued/attempt.json">record</a> · <a href="sweep/04-continued/model.stl">STL</a> · <a href="sweep/04-continued/model.usda">native USD</a> · <a href="sweep/04-continued/mesh-observations.json">mesh</a> · <a href="sweep/04-continued/native-observations.json">native</a></td></tr>
+</table><h3>OpenSCAD comparison</h3>
+<pre>{
+  &quot;status&quot;: &quot;attempted&quot;,
+  &quot;attempts&quot;: [
+    {
+      &quot;role&quot;: &quot;initial&quot;,
+      &quot;build_ok&quot;: true,
+      &quot;seconds&quot;: 0.4371,
+      &quot;construction&quot;: &quot;manually_authored OpenSCAD, $fn=96&quot;,
+      &quot;note&quot;: &quot;Rectangular section, not a circular tube. Native sweep avoids separate join booleans.&quot;
+    },
+    {
+      &quot;role&quot;: &quot;edited&quot;,
+      &quot;build_ok&quot;: true,
+      &quot;seconds&quot;: 0.4312,
+      &quot;construction&quot;: &quot;manually_authored OpenSCAD, $fn=96&quot;,
+      &quot;note&quot;: &quot;Rectangular section, not a circular tube. Native sweep avoids separate join booleans.&quot;
+    }
+  ]
+}</pre>
+<p><b>User decision:</b> pending — inspect shape, section quality, and usefulness independently of the automatic observations.</p></section>
+<section><h2>loft</h2><p>Solid transition only. OpenSCAD polar-correspondence polyhedron is an explicit approximation; intermediate surfaces may differ.</p>
+<p><b>Input:</b> bench rectangular-to-round transition. <b>Requested edit:</b> rect_width → 48 mm.</p>
+<p><b>Protected:</b> top_diameter, separation, bottom_depth</p>
+<img src="loft/review.png" alt="loft before and after with matching sections">
+<p><a href="loft/sections.png">Section close-ups</a> · <a href="loft/case.json">Build, selection and recovery record</a></p>
+<table><tr><th>Attempt</th><th>Build</th><th>Time (s)</th><th>Artifacts / measurements</th></tr>
+<tr><td>initial</td><td>True</td><td>0.4594</td><td><a href="loft/01-initial/attempt.json">record</a> · <a href="loft/01-initial/model.stl">STL</a> · <a href="loft/01-initial/model.usda">native USD</a> · <a href="loft/01-initial/mesh-observations.json">mesh</a> · <a href="loft/01-initial/native-observations.json">native</a></td></tr>
+<tr><td>edited</td><td>True</td><td>0.4739</td><td><a href="loft/02-edited/attempt.json">record</a> · <a href="loft/02-edited/model.stl">STL</a> · <a href="loft/02-edited/model.usda">native USD</a> · <a href="loft/02-edited/mesh-observations.json">mesh</a> · <a href="loft/02-edited/native-observations.json">native</a></td></tr>
+<tr><td>rejected</td><td>False</td><td>0.0001</td><td><a href="loft/03-rejected/attempt.json">record</a></td></tr>
+<tr><td>continued</td><td>True</td><td>0.4796</td><td><a href="loft/04-continued/attempt.json">record</a> · <a href="loft/04-continued/model.stl">STL</a> · <a href="loft/04-continued/model.usda">native USD</a> · <a href="loft/04-continued/mesh-observations.json">mesh</a> · <a href="loft/04-continued/native-observations.json">native</a></td></tr>
+</table><h3>OpenSCAD comparison</h3>
+<pre>{
+  &quot;status&quot;: &quot;attempted&quot;,
+  &quot;attempts&quot;: [
+    {
+      &quot;role&quot;: &quot;initial&quot;,
+      &quot;build_ok&quot;: true,
+      &quot;seconds&quot;: 0.4526,
+      &quot;construction&quot;: &quot;manually_authored OpenSCAD, $fn=96&quot;,
+      &quot;note&quot;: &quot;Solid transition only. OpenSCAD polar-correspondence polyhedron is an explicit approximation; intermediate surfaces may differ.&quot;
+    },
+    {
+      &quot;role&quot;: &quot;edited&quot;,
+      &quot;build_ok&quot;: true,
+      &quot;seconds&quot;: 0.4482,
+      &quot;construction&quot;: &quot;manually_authored OpenSCAD, $fn=96&quot;,
+      &quot;note&quot;: &quot;Solid transition only. OpenSCAD polar-correspondence polyhedron is an explicit approximation; intermediate surfaces may differ.&quot;
+    }
+  ]
+}</pre>
+<p><b>User decision:</b> pending — inspect shape, section quality, and usefulness independently of the automatic observations.</p></section>
+<section><h2>shell</h2><p>Uniform floor and wall thickness; varying wall/floor dimensions not exposed by shell.</p>
+<p><b>Input:</b> Rounded open tray. <b>Requested edit:</b> thickness → 4 mm.</p>
+<p><b>Protected:</b> outside_x, outside_y, outside_z, outer_radius</p>
+<img src="shell/review.png" alt="shell before and after with matching sections">
+<p><a href="shell/sections.png">Section close-ups</a> · <a href="shell/case.json">Build, selection and recovery record</a></p>
+<table><tr><th>Attempt</th><th>Build</th><th>Time (s)</th><th>Artifacts / measurements</th></tr>
+<tr><td>initial</td><td>True</td><td>0.5039</td><td><a href="shell/01-initial/attempt.json">record</a> · <a href="shell/01-initial/model.stl">STL</a> · <a href="shell/01-initial/model.usda">native USD</a> · <a href="shell/01-initial/mesh-observations.json">mesh</a> · <a href="shell/01-initial/native-observations.json">native</a></td></tr>
+<tr><td>edited</td><td>True</td><td>0.4732</td><td><a href="shell/02-edited/attempt.json">record</a> · <a href="shell/02-edited/model.stl">STL</a> · <a href="shell/02-edited/model.usda">native USD</a> · <a href="shell/02-edited/mesh-observations.json">mesh</a> · <a href="shell/02-edited/native-observations.json">native</a></td></tr>
+<tr><td>rejected</td><td>False</td><td>0.0</td><td><a href="shell/03-rejected/attempt.json">record</a></td></tr>
+<tr><td>continued</td><td>True</td><td>0.5016</td><td><a href="shell/04-continued/attempt.json">record</a> · <a href="shell/04-continued/model.stl">STL</a> · <a href="shell/04-continued/model.usda">native USD</a> · <a href="shell/04-continued/mesh-observations.json">mesh</a> · <a href="shell/04-continued/native-observations.json">native</a></td></tr>
+</table><h3>OpenSCAD comparison</h3>
+<pre>{
+  &quot;status&quot;: &quot;attempted&quot;,
+  &quot;attempts&quot;: [
+    {
+      &quot;role&quot;: &quot;initial&quot;,
+      &quot;build_ok&quot;: true,
+      &quot;seconds&quot;: 0.6994,
+      &quot;construction&quot;: &quot;manually_authored OpenSCAD, $fn=96&quot;,
+      &quot;note&quot;: &quot;Uniform floor and wall thickness; varying wall/floor dimensions not exposed by shell.&quot;
+    },
+    {
+      &quot;role&quot;: &quot;edited&quot;,
+      &quot;build_ok&quot;: true,
+      &quot;seconds&quot;: 0.5766,
+      &quot;construction&quot;: &quot;manually_authored OpenSCAD, $fn=96&quot;,
+      &quot;note&quot;: &quot;Uniform floor and wall thickness; varying wall/floor dimensions not exposed by shell.&quot;
+    }
+  ]
+}</pre>
+<p><b>User decision:</b> pending — inspect shape, section quality, and usefulness independently of the automatic observations.</p></section>
+<section><h2>combined</h2><p>Combination probe: does global chamfer bevel the opening as well as exterior edges? No selected-hole chamfer claim. OpenSCAD comparator deferred until operation placement is measured.</p>
+<p><b>Input:</b> Rounded block with opening plus global chamfer. <b>Requested edit:</b> radius → 2 mm.</p>
+<p><b>Protected:</b> outside_x, outside_y, outside_z, hole_core_diameter, outer_radius</p>
+<img src="combined/review.png" alt="combined before and after with matching sections">
+<p><a href="combined/sections.png">Section close-ups</a> · <a href="combined/case.json">Build, selection and recovery record</a></p>
+<table><tr><th>Attempt</th><th>Build</th><th>Time (s)</th><th>Artifacts / measurements</th></tr>
+<tr><td>initial</td><td>True</td><td>0.9842</td><td><a href="combined/01-initial/attempt.json">record</a> · <a href="combined/01-initial/model.stl">STL</a> · <a href="combined/01-initial/model.usda">native USD</a> · <a href="combined/01-initial/mesh-observations.json">mesh</a> · <a href="combined/01-initial/native-observations.json">native</a></td></tr>
+<tr><td>edited</td><td>True</td><td>1.0947</td><td><a href="combined/02-edited/attempt.json">record</a> · <a href="combined/02-edited/model.stl">STL</a> · <a href="combined/02-edited/model.usda">native USD</a> · <a href="combined/02-edited/mesh-observations.json">mesh</a> · <a href="combined/02-edited/native-observations.json">native</a></td></tr>
+<tr><td>rejected</td><td>False</td><td>0.0</td><td><a href="combined/03-rejected/attempt.json">record</a></td></tr>
+<tr><td>continued</td><td>True</td><td>0.9817</td><td><a href="combined/04-continued/attempt.json">record</a> · <a href="combined/04-continued/model.stl">STL</a> · <a href="combined/04-continued/model.usda">native USD</a> · <a href="combined/04-continued/mesh-observations.json">mesh</a> · <a href="combined/04-continued/native-observations.json">native</a></td></tr>
+</table><h3>OpenSCAD comparison</h3>
+<pre>{
+  &quot;status&quot;: &quot;not_attempted&quot;,
+  &quot;reason&quot;: &quot;Combination probe: does global chamfer bevel the opening as well as exterior edges? No selected-hole chamfer claim. OpenSCAD comparator deferred until operation placement is measured.&quot;
+}</pre>
+<p><b>User decision:</b> pending — inspect shape, section quality, and usefulness independently of the automatic observations.</p></section>
+<section><h2>pocket</h2><p>Uses production targeted-edit planning and verification, not a whole-part text rewrite.</p>
+<p><b>Input:</b> Block with three top pockets of different depths. <b>Requested edit:</b> selected_pocket_depth → 5 mm.</p>
+<p><b>Protected:</b> outside_x, outside_y, outside_z, neighbor_2_depth, neighbor_3_depth</p>
+<img src="pocket/review.png" alt="pocket before and after with matching sections">
+<p><a href="pocket/sections.png">Section close-ups</a> · <a href="pocket/case.json">Build, selection and recovery record</a></p>
+<table><tr><th>Attempt</th><th>Build</th><th>Time (s)</th><th>Artifacts / measurements</th></tr>
+<tr><td>initial</td><td>True</td><td>0.3653</td><td><a href="pocket/01-initial/attempt.json">record</a> · <a href="pocket/01-initial/model.stl">STL</a> · <a href="pocket/01-initial/model.usda">native USD</a> · <a href="pocket/01-initial/mesh-observations.json">mesh</a> · <a href="pocket/01-initial/native-observations.json">native</a></td></tr>
+<tr><td>edited</td><td>True</td><td>0.3132</td><td><a href="pocket/02-edited/attempt.json">record</a> · <a href="pocket/02-edited/model.stl">STL</a> · <a href="pocket/02-edited/model.usda">native USD</a> · <a href="pocket/02-edited/mesh-observations.json">mesh</a> · <a href="pocket/02-edited/native-observations.json">native</a></td></tr>
+<tr><td>rejected</td><td>False</td><td>n/a</td><td><a href="pocket/03-rejected/attempt.json">record</a></td></tr>
+<tr><td>continued</td><td>True</td><td>0.3493</td><td><a href="pocket/04-continued/attempt.json">record</a> · <a href="pocket/04-continued/model.stl">STL</a> · <a href="pocket/04-continued/model.usda">native USD</a> · <a href="pocket/04-continued/mesh-observations.json">mesh</a> · <a href="pocket/04-continued/native-observations.json">native</a></td></tr>
+</table><h3>OpenSCAD comparison</h3>
+<pre>{
+  &quot;status&quot;: &quot;attempted&quot;,
+  &quot;attempts&quot;: [
+    {
+      &quot;role&quot;: &quot;initial&quot;,
+      &quot;build_ok&quot;: true,
+      &quot;seconds&quot;: 0.4764,
+      &quot;construction&quot;: &quot;manually_authored OpenSCAD, $fn=96&quot;,
+      &quot;note&quot;: &quot;Uses production targeted-edit planning and verification, not a whole-part text rewrite.&quot;
+    },
+    {
+      &quot;role&quot;: &quot;edited&quot;,
+      &quot;build_ok&quot;: true,
+      &quot;seconds&quot;: 0.4614,
+      &quot;construction&quot;: &quot;manually_authored OpenSCAD, $fn=96&quot;,
+      &quot;note&quot;: &quot;Uses production targeted-edit planning and verification, not a whole-part text rewrite.&quot;
+    }
+  ]
+}</pre>
+<p><b>User decision:</b> pending — inspect shape, section quality, and usefulness independently of the automatic observations.</p></section>

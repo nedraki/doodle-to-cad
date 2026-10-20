@@ -1,0 +1,42 @@
+{
+  "case": "fillet",
+  "track": "manually_authored",
+  "user_review": "pending",
+  "measurement_validation": "provisional; awaiting #81",
+  "attempts": [
+    {
+      "role": "initial",
+      "backend": "usd-brep",
+      "updates": {},
+      "attempt": "01-initial",
+      "build_ok": false,
+      "seconds": 0.3404,
+      "diagnostics": [],
+      "stl_sha256": "ce95519ed89343baccc934f81f45011c4e0990f3f4875b5b8c44c7402a27ce73",
+      "exception": "ModuleNotFoundError: No module named 'scipy'"
+    }
+  ],
+  "outcome": "failed",
+  "error": "ModuleNotFoundError: No module named 'scipy'",
+  "openscad": {
+    "status": "attempted",
+    "attempts": [
+      {
+        "role": "initial",
+        "build_ok": true,
+        "seconds": 0.6162,
+        "construction": "manually_authored OpenSCAD, $fn=96",
+        "note": "Supported outer vertical edge family; no arbitrary bracket-junction selector.",
+        "measurement_error": "No module named 'scipy'"
+      },
+      {
+        "role": "edited",
+        "build_ok": true,
+        "seconds": 0.5983,
+        "construction": "manually_authored OpenSCAD, $fn=96",
+        "note": "Supported outer vertical edge family; no arbitrary bracket-junction selector.",
+        "measurement_error": "No module named 'scipy'"
+      }
+    ]
+  }
+}

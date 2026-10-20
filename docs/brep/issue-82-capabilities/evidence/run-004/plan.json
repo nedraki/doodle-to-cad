@@ -1,0 +1,600 @@
+{
+  "frozen_before_build_utc": "2026-10-20T05:38:18.468486+00:00",
+  "cases": {
+    "fillet": {
+      "recipe": {
+        "version": 1,
+        "units": "mm",
+        "name": "Rounded block with protected through hole",
+        "parameters": {
+          "radius": {
+            "value": 3,
+            "min": 1,
+            "max": 8,
+            "unit": "mm"
+          }
+        },
+        "operations": [
+          {
+            "id": "body",
+            "kind": "box",
+            "origin": [
+              0,
+              0,
+              0
+            ],
+            "size": [
+              60,
+              40,
+              20
+            ]
+          },
+          {
+            "id": "hole",
+            "kind": "cylinder",
+            "origin": [
+              30,
+              20,
+              -1
+            ],
+            "radius": 4,
+            "height": 22,
+            "axis": "z"
+          },
+          {
+            "id": "cut",
+            "kind": "difference",
+            "left": "body",
+            "right": "hole"
+          },
+          {
+            "id": "rounded",
+            "kind": "fillet",
+            "body": "cut",
+            "radius": "radius",
+            "selector": "outer_vertical"
+          }
+        ],
+        "output": "rounded"
+      },
+      "edit": "radius",
+      "value": 5,
+      "continued": 6,
+      "protected": [
+        "outside_x",
+        "outside_y",
+        "outside_z",
+        "hole_diameter"
+      ],
+      "authoring_steps": [
+        "Create box",
+        "Create through cylinder",
+        "Subtract cylinder",
+        "Select outer_vertical edges and fillet"
+      ],
+      "scad": "difference(){linear_extrude(20) offset(r=radius) translate([radius,radius]) square([60-2*radius,40-2*radius]); translate([30,20,-1]) cylinder(h=22,r=4);}",
+      "note": "Supported outer vertical edge family; no arbitrary bracket-junction selector."
+    },
+    "chamfer": {
+      "recipe": {
+        "version": 1,
+        "units": "mm",
+        "name": "Horizontal block-edge chamfer",
+        "parameters": {
+          "radius": {
+            "value": 3,
+            "min": 1,
+            "max": 6,
+            "unit": "mm"
+          }
+        },
+        "operations": [
+          {
+            "id": "body",
+            "kind": "box",
+            "origin": [
+              0,
+              0,
+              0
+            ],
+            "size": [
+              50,
+              40,
+              20
+            ]
+          },
+          {
+            "id": "bevel",
+            "kind": "chamfer",
+            "body": "body",
+            "radius": "radius"
+          }
+        ],
+        "output": "bevel"
+      },
+      "edit": "radius",
+      "value": 5,
+      "continued": 4,
+      "protected": [
+        "outside_x",
+        "outside_y",
+        "outside_z"
+      ],
+      "authoring_steps": [
+        "Create box",
+        "Apply chamfer operation (global kernel edge policy)"
+      ],
+      "scad": "leg=radius/sqrt(2); hull(){translate([leg,leg,0]) cube([50-2*leg,40-2*leg,20]); translate([0,0,leg]) cube([50,40,20-2*leg]);}",
+      "note": "Measured convention: radius is bevel hypotenuse; setback=radius/sqrt(2), angle=45 degrees. No selective hole entrance API."
+    },
+    "arc": {
+      "recipe": {
+        "version": 1,
+        "units": "mm",
+        "name": "Circular section half bend, WITHOUT straight ends",
+        "parameters": {
+          "radius": {
+            "value": 20,
+            "min": 8,
+            "max": 40,
+            "unit": "mm"
+          }
+        },
+        "operations": [
+          {
+            "id": "bend",
+            "kind": "arc_pipe",
+            "origin": [
+              0,
+              0,
+              4
+            ],
+            "bend_radius": "radius",
+            "radius": 4,
+            "angle": 180
+          }
+        ],
+        "output": "bend"
+      },
+      "edit": "radius",
+      "value": 25,
+      "continued": 23,
+      "protected": [
+        "tube_diameter",
+        "outside_z"
+      ],
+      "authoring_steps": [
+        "Create capped half arc pipe"
+      ],
+      "scad": "translate([0,0,4]) rotate_extrude(angle=180) translate([radius,0]) circle(r=4);",
+      "note": "Arc-only case explicitly does not satisfy the straight-ended handle; separate rectangular sweep below does."
+    },
+    "sweep": {
+      "recipe": {
+        "version": 1,
+        "units": "mm",
+        "name": "Rectangular handle with two tangent straight ends",
+        "parameters": {
+          "radius": {
+            "value": 20,
+            "min": 8,
+            "max": 40,
+            "unit": "mm"
+          }
+        },
+        "operations": [
+          {
+            "id": "handle",
+            "kind": "sweep",
+            "origin": [
+              0,
+              0,
+              0
+            ],
+            "plane": "xy",
+            "frame_rule": "normal_to_path_z_up",
+            "section_width": 6,
+            "section_height": 8,
+            "path": [
+              {
+                "kind": "line",
+                "start": [
+                  "2*radius+3",
+                  0
+                ],
+                "end": [
+                  "2*radius+3",
+                  15
+                ]
+              },
+              {
+                "kind": "arc",
+                "center": [
+                  "radius+3",
+                  15
+                ],
+                "radius": "radius",
+                "start_angle": 0,
+                "end_angle": 180
+              },
+              {
+                "kind": "line",
+                "start": [
+                  3,
+                  15
+                ],
+                "end": [
+                  3,
+                  0
+                ]
+              }
+            ]
+          }
+        ],
+        "output": "handle"
+      },
+      "edit": "radius",
+      "value": 25,
+      "continued": 23,
+      "protected": [
+        "section_width",
+        "section_height",
+        "leg_length",
+        "minimum_x",
+        "minimum_y"
+      ],
+      "authoring_steps": [
+        "Define rectangular section",
+        "Define tangent line / half arc / tangent line path",
+        "Sweep with flat caps"
+      ],
+      "scad": "linear_extrude(8) union(){translate([0,0]) square([6,15.01]); translate([2*radius,0]) square([6,15.01]); intersection(){translate([radius+3,15]) difference(){circle(r=radius+3);circle(r=radius-3);} translate([-1,15]) square([2*radius+8,radius+4]);}}",
+      "note": "Rectangular section, not a circular tube. Native sweep avoids separate join booleans."
+    },
+    "loft": {
+      "recipe": {
+        "version": 1,
+        "units": "mm",
+        "name": "bench rectangular-to-round transition",
+        "parameters": {
+          "rect_width": {
+            "value": 40,
+            "min": 20,
+            "max": 80,
+            "label": "Rectangle width (X)",
+            "unit": "mm",
+            "group": "Body"
+          },
+          "rect_depth": {
+            "value": 30,
+            "min": 15,
+            "max": 60,
+            "label": "Rectangle depth (Y)",
+            "unit": "mm",
+            "group": "Body"
+          },
+          "circle_radius": {
+            "value": 15,
+            "min": 5,
+            "max": 40,
+            "label": "Circle radius",
+            "unit": "mm",
+            "group": "Body"
+          },
+          "transition_height": {
+            "value": 50,
+            "min": 10,
+            "max": 100,
+            "label": "Transition height",
+            "unit": "mm",
+            "group": "Body"
+          }
+        },
+        "operations": [
+          {
+            "id": "transition",
+            "kind": "loft",
+            "plane": "xy",
+            "correspondence": "rectangle_corners_to_circle_diagonals",
+            "profiles": [
+              {
+                "shape": "rectangle",
+                "center": [
+                  0,
+                  0,
+                  0
+                ],
+                "width": "rect_width",
+                "height": "rect_depth"
+              },
+              {
+                "shape": "circle",
+                "center": [
+                  0,
+                  0,
+                  "transition_height"
+                ],
+                "radius": "circle_radius"
+              }
+            ]
+          }
+        ],
+        "output": "transition"
+      },
+      "edit": "rect_width",
+      "value": 48,
+      "continued": 44,
+      "protected": [
+        "top_diameter",
+        "separation",
+        "bottom_depth"
+      ],
+      "authoring_steps": [
+        "Define rectangle",
+        "Define coaxial circle on parallel plane",
+        "Choose fixed corner-to-diagonal correspondence and loft"
+      ],
+      "scad": "n=96; h=50; r=15; d=30;\nfunction q(a)=let(c=cos(a),s=sin(a),v=min((rect_width/2)/max(abs(c),0.000001),(d/2)/max(abs(s),0.000001))) [v*c,v*s,0];\np=concat([for(i=[0:n-1]) q(360*i/n)],[for(i=[0:n-1]) [r*cos(360*i/n),r*sin(360*i/n),h]]);\nf=concat([[for(i=[n-1:-1:0]) i]],[[for(i=[0:n-1]) n+i]], [for(i=[0:n-1]) [i,(i+1)%n,n+(i+1)%n,n+i]]);\npolyhedron(points=p,faces=f,convexity=10);",
+      "note": "Solid transition only. OpenSCAD polar-correspondence polyhedron is an explicit approximation; intermediate surfaces may differ."
+    },
+    "shell": {
+      "recipe": {
+        "version": 1,
+        "units": "mm",
+        "name": "Rounded open tray",
+        "parameters": {
+          "thickness": {
+            "value": 3,
+            "min": 1,
+            "max": 40,
+            "unit": "mm"
+          }
+        },
+        "operations": [
+          {
+            "id": "body",
+            "kind": "box",
+            "origin": [
+              0,
+              0,
+              0
+            ],
+            "size": [
+              80,
+              60,
+              30
+            ]
+          },
+          {
+            "id": "rounded",
+            "kind": "fillet",
+            "body": "body",
+            "radius": 8,
+            "selector": "outer_vertical"
+          },
+          {
+            "id": "tray",
+            "kind": "shell",
+            "body": "rounded",
+            "thickness": "thickness",
+            "opening": "top",
+            "preserve": "outer"
+          }
+        ],
+        "output": "tray"
+      },
+      "edit": "thickness",
+      "value": 4,
+      "continued": 5,
+      "protected": [
+        "outside_x",
+        "outside_y",
+        "outside_z",
+        "outer_radius"
+      ],
+      "authoring_steps": [
+        "Create box",
+        "Round outer vertical edges to 8 mm",
+        "Shell inward with one open top"
+      ],
+      "scad": "module rr(w,d,r){translate([r,r]) offset(r=r) square([w-2*r,d-2*r]);} difference(){linear_extrude(30) rr(80,60,8); translate([thickness,thickness,thickness]) linear_extrude(31) rr(80-2*thickness,60-2*thickness,8-thickness);}",
+      "note": "Uniform floor and wall thickness; varying wall/floor dimensions not exposed by shell.",
+      "rejection_value": 30
+    },
+    "combined": {
+      "recipe": {
+        "version": 1,
+        "units": "mm",
+        "name": "Rounded block with opening plus global chamfer",
+        "parameters": {
+          "radius": {
+            "value": 1,
+            "min": 0.5,
+            "max": 3,
+            "unit": "mm"
+          }
+        },
+        "operations": [
+          {
+            "id": "body",
+            "kind": "box",
+            "origin": [
+              0,
+              0,
+              0
+            ],
+            "size": [
+              60,
+              40,
+              20
+            ]
+          },
+          {
+            "id": "rounded",
+            "kind": "fillet",
+            "body": "body",
+            "radius": 6,
+            "selector": "outer_vertical"
+          },
+          {
+            "id": "hole",
+            "kind": "cylinder",
+            "origin": [
+              30,
+              20,
+              -1
+            ],
+            "radius": 5,
+            "height": 22,
+            "axis": "z"
+          },
+          {
+            "id": "cut",
+            "kind": "difference",
+            "left": "rounded",
+            "right": "hole"
+          },
+          {
+            "id": "bevel",
+            "kind": "chamfer",
+            "body": "cut",
+            "radius": "radius"
+          }
+        ],
+        "output": "bevel"
+      },
+      "edit": "radius",
+      "value": 2,
+      "continued": 1.5,
+      "protected": [
+        "outside_x",
+        "outside_y",
+        "outside_z",
+        "hole_core_diameter",
+        "outer_radius"
+      ],
+      "authoring_steps": [
+        "Create box",
+        "Round outer vertical edges",
+        "Create through cylinder",
+        "Subtract cylinder",
+        "Apply global chamfer"
+      ],
+      "scad": null,
+      "note": "Combination probe: does global chamfer bevel the opening as well as exterior edges? No selected-hole chamfer claim. OpenSCAD comparator deferred until operation placement is measured."
+    },
+    "pocket": {
+      "recipe": {
+        "version": 1,
+        "units": "mm",
+        "name": "Block with three top pockets of different depths",
+        "parameters": {},
+        "operations": [
+          {
+            "id": "body",
+            "kind": "box",
+            "origin": [
+              0,
+              0,
+              0
+            ],
+            "size": [
+              60,
+              40,
+              20
+            ]
+          },
+          {
+            "id": "box_p1",
+            "kind": "box",
+            "origin": [
+              8,
+              8,
+              17
+            ],
+            "size": [
+              12,
+              12,
+              3
+            ]
+          },
+          {
+            "id": "cut1",
+            "kind": "difference",
+            "left": "body",
+            "right": "box_p1"
+          },
+          {
+            "id": "box_p2",
+            "kind": "box",
+            "origin": [
+              40,
+              8,
+              18
+            ],
+            "size": [
+              12,
+              12,
+              2
+            ]
+          },
+          {
+            "id": "cut2",
+            "kind": "difference",
+            "left": "cut1",
+            "right": "box_p2"
+          },
+          {
+            "id": "box_p3",
+            "kind": "box",
+            "origin": [
+              8,
+              24,
+              15
+            ],
+            "size": [
+              12,
+              12,
+              5
+            ]
+          },
+          {
+            "id": "cut3",
+            "kind": "difference",
+            "left": "cut2",
+            "right": "box_p3"
+          }
+        ],
+        "output": "cut3"
+      },
+      "edit": "selected_pocket_depth",
+      "value": 5,
+      "continued": 6,
+      "protected": [
+        "outside_x",
+        "outside_y",
+        "outside_z",
+        "neighbor_2_depth",
+        "neighbor_3_depth"
+      ],
+      "authoring_steps": [
+        "Create block",
+        "Create and subtract pocket 1",
+        "Create and subtract pocket 2",
+        "Create and subtract pocket 3",
+        "Select pocket 1 by box_cutout rule"
+      ],
+      "scad": "difference(){cube([60,40,20]); translate([8,8,20-selected_pocket_depth]) cube([12,12,selected_pocket_depth+1]); translate([40,8,18]) cube([12,12,3]); translate([8,24,15]) cube([12,12,6]);}",
+      "note": "Uses production targeted-edit planning and verification, not a whole-part text rewrite."
+    }
+  },
+  "model_calls": 0,
+  "scope": "Independent trusted construction track of #82; #80/#81 gates remain pending",
+  "steps_measure": "Count explicit manual modeling actions below, not code lines or elapsed human time",
+  "edit_effort": "One named numeric update; pocket uses one selected-target depth update. No source rewriting after an edit.",
+  "tessellation": {
+    "brep_chord_height_mm": 0.05,
+    "brep_loft_max_edge_mm": 2,
+    "openscad_fn": 96
+  }
+}

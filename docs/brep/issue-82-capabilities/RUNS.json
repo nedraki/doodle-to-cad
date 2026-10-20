@@ -1,0 +1,29 @@
+{
+  "selected_run": "run-005",
+  "runs": {
+    "run-001": {
+      "status": "superseded",
+      "reason": "All native builds exported geometry, but section measurement lacked SciPy. The first runner incorrectly overwrote build_ok with false on that measurement exception; STL hashes, diagnostics and worker logs preserve the successful build evidence. No geometry acceptance claims use these records.",
+      "replaced_by": "run-002"
+    },
+    "run-002": {
+      "status": "superseded",
+      "reason": "SciPy installed in an isolated analysis directory. NumPy bool serialization stopped chamfer/shell/combined observations. PYTHONPATH leaked Python 3.11 analysis packages into the Python 3.12 native probe. These harness failures are retained, not geometry failures.",
+      "replaced_by": "run-003"
+    },
+    "run-003": {
+      "status": "superseded",
+      "reason": "All eight edit lifecycles completed and exported-mesh observations were recorded. Native sampling used an unavailable BSplineCurve.point_at method. Run-004 uses the installed evaluate_curve API and adds a worker-stage shell rejection probe (30 mm thickness inside the declared parameter range).",
+      "replaced_by": "run-004"
+    },
+    "run-004": {
+      "status": "superseded",
+      "reason": "Native section sampling succeeded, but the optional circle fit could not identify a lower-left arc among shell native section curves. A failed optional native radius fit now reports unavailable instead of aborting the edit lifecycle. Native sections and mesh measurements remain distinct.",
+      "replaced_by": "run-005"
+    },
+    "run-005": {
+      "status": "selected",
+      "reason": "Final manual construction track; provisional observations pending #81 and user visual review."
+    }
+  }
+}

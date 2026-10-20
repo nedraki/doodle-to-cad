@@ -1,0 +1,17 @@
+{
+  "role": "rejected",
+  "backend": "usd-brep",
+  "updates": {
+    "thickness": 30
+  },
+  "attempt": "03-rejected",
+  "build_ok": false,
+  "seconds": 0.1681,
+  "diagnostics": [
+    {
+      "code": "build_failed",
+      "message": "tray: thickness removes the required interior or floor",
+      "severity": "error"
+    }
+  ]
+}
