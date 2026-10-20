@@ -354,7 +354,7 @@ SCENARIOS = [
     ("falsified RESULTS.md supplementary count", sc_falsified_results_md, True),
     ("forged execution log (now sealed)", sc_forge_execution_log, True),
     ("duplicated index record, re-sealed (multiset gate)", sc_index_duplicate, True),
-    ("aggregate on missing cell (no shrunken denominator)", sc_aggregate_missing_cell, True),
+    ("aggregate on missing cell (no shrunken denominator)", sc_aggregate_missing_cell, True, "aggregate"),
     ("valid superseded 'trial-01' accepted (positive)", sc_superseded_plain_form, False, "expect"),
     ("valid superseded bare '02' accepted (positive)", sc_superseded_bare_number, False, "expect"),
 ]
