@@ -1,5 +1,11 @@
 {
 <<<<<<< HEAD
+ "ran_at": "2026-10-20T09:05:03",
+ "environment": {
+  "checkout": "/tmp/doodle-brep-81/docs/brep/bench-final",
+  "git_rev": "1c80caf8e1c6167adebc3940ddb924666353ddad",
+=======
+<<<<<<< HEAD
  "ran_at": "2026-10-20T07:58:45",
  "environment": {
   "checkout": "/tmp/doodle-brep-80/docs/brep/bench-final",
@@ -10,17 +16,23 @@
   "checkout": "/tmp/doodle-brep-79/docs/brep/bench-final",
   "git_rev": "a42357af1c685ad842c2f1f4e6599706e74c63e6",
 >>>>>>> origin/brep-integration
+>>>>>>> origin/brep-integration
   "python": "3.11.16",
   "platform": "Linux-6.17.0-1022-nvidia-aarch64-with-glibc2.39",
   "host": "spark-8322"
  },
  "summary": {
 <<<<<<< HEAD
+  "checks": 34,
+  "passed": 34,
+=======
+<<<<<<< HEAD
   "checks": 35,
   "passed": 35,
 =======
   "checks": 34,
   "passed": 34,
+>>>>>>> origin/brep-integration
 >>>>>>> origin/brep-integration
   "failed": 0
  },
@@ -147,12 +159,15 @@
   },
   {
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
    "check": "recorded human decisions bind to the archived mesh hash of an existing cell (decisions are human input; no metric derives from them)",
    "ok": true,
    "detail": "[]"
   },
   {
 =======
+>>>>>>> origin/brep-integration
 >>>>>>> origin/brep-integration
    "check": "montage 002_greek_vase_silhouette_t1.png: image/row/mesh/panel hash chain + verdict=error",
    "ok": true,

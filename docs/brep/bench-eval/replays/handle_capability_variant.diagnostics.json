@@ -1,0 +1,139 @@
+{
+  "selection_catalog": {
+    "version": 1,
+    "status": "available",
+    "unresolved": [
+      {
+        "rule": {
+          "kind": "extreme_face",
+          "owner": "final_part",
+          "axis": 0,
+          "side": "min"
+        },
+        "status": "lost",
+        "reason": "No matching face remains. Select again."
+      },
+      {
+        "rule": {
+          "kind": "extreme_face",
+          "owner": "final_part",
+          "axis": 0,
+          "side": "max"
+        },
+        "status": "lost",
+        "reason": "No matching face remains. Select again."
+      },
+      {
+        "rule": {
+          "kind": "extreme_face",
+          "owner": "final_part",
+          "axis": 1,
+          "side": "min"
+        },
+        "status": "lost",
+        "reason": "No matching face remains. Select again."
+      },
+      {
+        "rule": {
+          "kind": "extreme_face",
+          "owner": "final_part",
+          "axis": 1,
+          "side": "max"
+        },
+        "status": "lost",
+        "reason": "No matching face remains. Select again."
+      },
+      {
+        "rule": {
+          "kind": "extreme_face",
+          "owner": "final_part",
+          "axis": 2,
+          "side": "min"
+        },
+        "status": "ambiguous",
+        "reason": "The target changed or split. Select again."
+      },
+      {
+        "rule": {
+          "kind": "extreme_face",
+          "owner": "final_part",
+          "axis": 2,
+          "side": "max"
+        },
+        "status": "lost",
+        "reason": "No matching face remains. Select again."
+      }
+    ],
+    "output_owner": "final_part",
+    "targets": [],
+    "supported": "Axis-aligned extreme planar faces, four-wall box cutouts and straight outer vertical edges. Recheck after every rebuild."
+  },
+  "backend": "usd-brep",
+  "version": "1.0.0",
+  "recipe_version": 2,
+  "solid_volume_mm3": 6174.196890830427,
+  "mesh_volume_mm3": 6129.292235481778,
+  "extents_mm": [
+    48.0,
+    8.0,
+    53.99403381347656
+  ],
+  "bounds_mm": [
+    [
+      -24.0,
+      26.0,
+      0.0
+    ],
+    [
+      24.0,
+      34.0,
+      53.99403381347656
+    ]
+  ],
+  "watertight": true,
+  "winding_consistent": true,
+  "euler_number": 2,
+  "triangles": 2236,
+  "usd_roundtrip": true,
+  "volume_relative_accuracy": 1e-08,
+  "usd_volume_mm3": 6174.196483296837,
+  "operations": [
+    {
+      "id": "arc",
+      "kind": "arc_pipe",
+      "faces": 3
+    },
+    {
+      "id": "arc_up",
+      "kind": "rotate",
+      "faces": 3
+    },
+    {
+      "id": "leg_left",
+      "kind": "cylinder",
+      "faces": 3
+    },
+    {
+      "id": "leg_right",
+      "kind": "cylinder",
+      "faces": 3
+    },
+    {
+      "id": "u1",
+      "kind": "union",
+      "faces": 4
+    },
+    {
+      "id": "final_part",
+      "kind": "union",
+      "faces": 5
+    }
+  ],
+  "connections": [],
+  "resource_limits": {
+    "memory_bytes": null,
+    "cpu_seconds": null,
+    "file_size_bytes": null
+  },
+  "build_seconds": 1.625
+}

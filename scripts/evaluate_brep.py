@@ -217,6 +217,30 @@ def _rule_number(rule, recipe):
     return 10.0
 
 
+def reference_checks(measurement, reference):
+    """Pure comparison shared by _run_trial and the #81 fixture gate.
+
+    One source of truth for build/extents/genus/volume verdicts so a fixture
+    exercises exactly the check the live harness applies. Returns
+    (checks, not_applicable)."""
+    ground_truth = reference.get("kind") != "no_ground_truth" and "genus" in reference
+    build_success = bool(measurement and measurement.get("watertight")
+                         and measurement.get("components") == 1)
+    checks: dict = {"build_success": build_success}
+    na: list = []
+    if not ground_truth:
+        na += ["extents", "genus", "volume"]
+        checks.update({"extents_pass": None, "genus_pass": None, "volume_pass": None})
+    else:
+        extents_pass = bool(measurement) and all(
+            abs(a - b) <= 0.02 * max(b, 1e-9) for a, b in
+            zip(sorted(measurement["extents_mm"]), sorted(reference["extents_mm"])))
+        genus_pass = bool(measurement) and measurement.get("genus") == reference["genus"]
+        volume_pass = bool(measurement) and abs(measurement["volume_mm3"] - reference["volume_mm3"]) <= 0.02 * reference["volume_mm3"]
+        checks.update({"extents_pass": extents_pass, "genus_pass": genus_pass, "volume_pass": volume_pass})
+    return checks, na
+
+
 async def _run_trial(client, plan, item, backend, trial, out_dir, semaphore):
     import asyncio
     import hashlib
@@ -359,20 +383,7 @@ async def _run_trial(client, plan, item, backend, trial, out_dir, semaphore):
     reference = refs.get(ref_key) or {}
     ground_truth = reference.get("kind") != "no_ground_truth" and "genus" in reference
 
-    build_success = bool(measurement and measurement.get("watertight")
-                         and measurement.get("components") == 1)
-    checks = {"build_success": build_success}
-    na = []
-    if not ground_truth:
-        na += ["extents", "genus", "volume"]
-        checks.update({"extents_pass": None, "genus_pass": None, "volume_pass": None})
-    else:
-        extents_pass = bool(measurement) and all(
-            abs(a - b) <= 0.02 * max(b, 1e-9) for a, b in
-            zip(sorted(measurement["extents_mm"]), sorted(reference["extents_mm"])))
-        genus_pass = bool(measurement) and measurement.get("genus") == reference["genus"]
-        volume_pass = bool(measurement) and abs(measurement["volume_mm3"] - reference["volume_mm3"]) <= 0.02 * reference["volume_mm3"]
-        checks.update({"extents_pass": extents_pass, "genus_pass": genus_pass, "volume_pass": volume_pass})
+    checks, na = reference_checks(measurement, reference)
 
     # ---- harness-independent drawing fidelity (separate from build) --------
     fidelity = {"scores": None, "pass": None, "reason": None}
@@ -411,7 +422,7 @@ async def _run_trial(client, plan, item, backend, trial, out_dir, semaphore):
     if fidelity["pass"] is None:
         na.append("fidelity")
     applicable = [v for k, v in checks.items() if v is not None]
-    checks["overall_pass"] = bool(applicable) and all(applicable) and build_success
+    checks["overall_pass"] = bool(applicable) and all(applicable) and checks["build_success"]
     checks["not_applicable"] = na
     row["checks"] = checks
     row["fidelity"] = fidelity
@@ -441,7 +452,7 @@ async def _run_trial(client, plan, item, backend, trial, out_dir, semaphore):
         corrections = generation.get("construction_attempts") or []
         attempts_info["count"] = len(schema_attempts)
         attempts_info["corrections"] = len(corrections)
-        attempts_info["recovered"] = bool(build_success and (len(schema_attempts) > 1 or len(corrections) > 1))
+        attempts_info["recovered"] = bool(checks["build_success"] and (len(schema_attempts) > 1 or len(corrections) > 1))
     row["attempts"] = attempts_info
 
     # ---- unsupported-operation outcome -------------------------------------
