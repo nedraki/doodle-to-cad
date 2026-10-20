@@ -326,6 +326,41 @@ def sc_superseded_bare_number(copy):
     return "excluded/superseded rows are published"
 
 
+# ---------------- issue #80: human decision integrity
+def sc_decision_mesh_hash_mismatch(copy):
+    """A decision recorded against a mesh hash that is NOT the archived
+    build.sha256 must fail — a decision cannot silently point at swapped
+    bytes."""
+    rd = copy / "review"
+    rd.mkdir(exist_ok=True)
+    (rd / "decisions.json").write_text(json.dumps({
+        "wheel|usd-brep|t2": {"decision": "accepted", "mesh_sha256": "0" * 64,
+                              "recorded_at": "2026-10-20T00:00:00+00:00"}}))
+    return "decision mesh hash does not match"
+
+
+def sc_decision_unknown_cell(copy):
+    """A decision for a cell that does not exist must fail, not be ignored."""
+    rd = copy / "review"
+    rd.mkdir(exist_ok=True)
+    (rd / "decisions.json").write_text(json.dumps({
+        "ghost_drawing|openscad|t1": {"decision": "rejected", "mesh_sha256": "0" * 64}}))
+    return "no such cell"
+
+
+def sc_decision_valid(copy):
+    """Positive: a decision bound to the real archived hash must PASS the
+    integrity check."""
+    row = json.loads((copy / "runs/wheel/usd-brep/trial-02/row.json").read_text())
+    rd = copy / "review"
+    rd.mkdir(exist_ok=True)
+    (rd / "decisions.json").write_text(json.dumps({
+        "wheel|usd-brep|t2": {"decision": "needs-changes",
+                              "mesh_sha256": row["build"]["sha256"],
+                              "recorded_at": "2026-10-20T00:00:00+00:00"}}))
+    return "recorded human decisions bind to the archived mesh hash"
+
+
 SCENARIOS = [
     # (name, mutate, quick?)
     ("raw row edit (manifest must name the trial)", sc_edit_row_field, True),
@@ -357,6 +392,9 @@ SCENARIOS = [
     ("aggregate on missing cell (no shrunken denominator)", sc_aggregate_missing_cell, True, "aggregate"),
     ("valid superseded 'trial-01' accepted (positive)", sc_superseded_plain_form, False, "expect"),
     ("valid superseded bare '02' accepted (positive)", sc_superseded_bare_number, False, "expect"),
+    ("decision bound to wrong mesh hash (issue #80)", sc_decision_mesh_hash_mismatch, True),
+    ("decision for nonexistent cell (issue #80)", sc_decision_unknown_cell, True),
+    ("valid decision accepted (positive, issue #80)", sc_decision_valid, True, "expect"),
 ]
 
 

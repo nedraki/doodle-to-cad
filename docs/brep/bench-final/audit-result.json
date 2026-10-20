@@ -1,15 +1,27 @@
 {
+<<<<<<< HEAD
+ "ran_at": "2026-10-20T07:58:45",
+ "environment": {
+  "checkout": "/tmp/doodle-brep-80/docs/brep/bench-final",
+  "git_rev": "8fefbfde7851f49919dfe98bd0f6eba85baecfc8",
+=======
  "ran_at": "2026-10-20T07:47:14",
  "environment": {
   "checkout": "/tmp/doodle-brep-79/docs/brep/bench-final",
   "git_rev": "a42357af1c685ad842c2f1f4e6599706e74c63e6",
+>>>>>>> origin/brep-integration
   "python": "3.11.16",
   "platform": "Linux-6.17.0-1022-nvidia-aarch64-with-glibc2.39",
   "host": "spark-8322"
  },
  "summary": {
+<<<<<<< HEAD
+  "checks": 35,
+  "passed": 35,
+=======
   "checks": 34,
   "passed": 34,
+>>>>>>> origin/brep-integration
   "failed": 0
  },
  "results": [
@@ -134,6 +146,14 @@
    "detail": "0 excluded; bad=[]"
   },
   {
+<<<<<<< HEAD
+   "check": "recorded human decisions bind to the archived mesh hash of an existing cell (decisions are human input; no metric derives from them)",
+   "ok": true,
+   "detail": "[]"
+  },
+  {
+=======
+>>>>>>> origin/brep-integration
    "check": "montage 002_greek_vase_silhouette_t1.png: image/row/mesh/panel hash chain + verdict=error",
    "ok": true,
    "detail": "img=True row=True verdict=True/error mesh=True panels=True"
