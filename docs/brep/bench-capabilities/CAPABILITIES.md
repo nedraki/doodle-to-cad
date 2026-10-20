@@ -32,21 +32,29 @@ move (±0.01 mm); changed dimensions must reach the requested value.
 ## c1: genuine defect found by the trusted track
 
 `fillet(outer_vertical r6)` on a drilled plate: the worker computes native
-volume **374,721.415 mm³** — matching the hand calculation
-120·80·40 − 2·π·4²·80 − corner arcs = **374,720** within 0.004% — but its
-USD round-trip check reloads **390,806.4 mm³** and rejects the build:
+volume **374,721.415 mm³** — matching the closed-form value
+384,000 − 2·π·4²·80 − 4·(36 − π·36/4)·40 = **374,721.4** within one part per
+million — but its USD round-trip check reloads **390,806.4 mm³** and rejects
+the build:
 
 ```
 USD round-trip volume check failed: original_volume_mm3=374721.415175;
 reloaded_volumes_mm3=[390806.37089063344]
 ```
 
-The difference, **16,085.0 mm³, equals exactly the two Ø8 through-holes**
-(π·16·80·2). The exported USD reloads with the `difference` behaving like a `union`: reloaded = filleted slab + BOTH cutter cylinders (delta = 4x one hole volume; hole walls become interior junk, shell not watertight). Export topology itself is correct (USDA contains the r=4 hole cones) — the defect is in usd-brep==1.0.0's import_breps. See #90 comment with injection-probe forensics. Deterministic:
-4/4 probe builds reproduce it (`probes/probe_roundtrip.py`). The STL side is
-correct (374,744 mm³ tessellated, genus 2, watertight) — so this is an
-export/reload defect, not a geometry defect, and the worker guard correctly
-refuses to bless it. Filed as a separate issue.
+The difference, **16,084.96 mm³, equals exactly 4× one Ø8×80 hole volume**
+(π·4²·80 = 4,021.24; ratio 4.0000003). Injection-probe forensics (#90
+comment): the reloaded solid tessellates to a FILLED filleted box
+(not watertight, 402 faces) whose kernel volume = filleted slab + BOTH
+cutter cylinders — after the USD hop the `difference` behaves like a
+`union`. The exported USDA is topologically correct (it contains the two
+r=4 hole cones and four r=6 fillet cones): the defect lives in
+usd-brep==1.0.0's `import_breps`. Deterministic 4/4
+(`probes/probe_roundtrip.py`); the STL side is correct (374,744 mm³
+tessellated, genus 2, watertight), and the worker's guard correctly refuses
+to bless the USD. (An earlier revision of this file described the delta as
+"the two through-holes / holes fill" — wrong arithmetic; corrected per the
+forensics.)
 
 ## Authoring effort (trusted path cost, per the issue's ask)
 
