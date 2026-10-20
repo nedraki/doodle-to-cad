@@ -63,6 +63,10 @@ screenshot; each row cites the artifact bytes.
 
 ## Next probes
 
+- DONE: EV-7 rotation probe (EV7_PROBE.md) — 004-class failure proven
+  orientation-caused (best-of-24 IoU 0.76 vs 0.45 bar); wheel front not
+  excused (0.27 — EV-2 primary). Harness fix (best-of-24-rotations scoring)
+  must ship as a NEW plan revision + re-run, never on frozen numbers.
 - Retention gap (proposed product issue): rejected construction plans and
   kernel-crash inputs must be written to the cell dir (attempts.json), so
   EV-9-class blame can be byte-verified for the exact offending value and
