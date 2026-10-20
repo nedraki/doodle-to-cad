@@ -1,15 +1,15 @@
 {
- "ran_at": "2026-10-20T00:35:59",
+ "ran_at": "2026-10-20T07:39:10",
  "environment": {
   "checkout": "/tmp/doodle-brep-79/docs/brep/bench-final",
-  "git_rev": "48a75fa1a574452c10cfba566c63c2cf9cc3216f",
-  "python": "3.11.16",
+  "git_rev": "a18449fcbf542ddb6b7c1929088ee855184d4bae",
+  "python": "3.14.7",
   "platform": "Linux-6.17.0-1022-nvidia-aarch64-with-glibc2.39",
   "host": "spark-8322"
  },
  "summary": {
-  "checks": 33,
-  "passed": 33,
+  "checks": 34,
+  "passed": 34,
   "failed": 0
  },
  "results": [
@@ -21,7 +21,7 @@
   {
    "check": "manifest seals every artifact (rows, meshes, inputs, references, plan, montages)",
    "ok": true,
-   "detail": "1451 sealed files"
+   "detail": "1452 sealed files"
   },
   {
    "check": "acceptance definition matches the frozen plan text",
@@ -54,14 +54,19 @@
    "detail": "AUDIT:TABLE block mismatch"
   },
   {
-   "check": "RESULTS.md headline tables equal the metrics-recomputed tables",
-   "ok": true,
-   "detail": "AUDIT:TABLE block mismatch"
-  },
-  {
    "check": "README publishes the metric definitions verbatim",
    "ok": true,
    "detail": "AUDIT:METRICS block mismatch"
+  },
+  {
+   "check": "results.json is byte-identical to a fresh aggregation of the sealed rows (every number, headline or supplementary)",
+   "ok": true,
+   "detail": "length differs"
+  },
+  {
+   "check": "RESULTS.md is byte-identical to a fresh aggregation of the sealed rows (complete report, not only the headline blocks)",
+   "ok": true,
+   "detail": "length differs"
   },
   {
    "check": "HISTORICAL frozen-plan counts: openscad 44/46 done, 22 accepted, 42 build_ok; ref dims/topo/vol = 2x solid_transition (still FAIL projection \u2014 not full matches)",

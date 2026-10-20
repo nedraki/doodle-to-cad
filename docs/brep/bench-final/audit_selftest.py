@@ -225,7 +225,7 @@ def sc_index_desync(copy):
         out.append(json.dumps(e))
     idf.write_text("\n".join(out) + "\n")
     reseal(copy)
-    return "runs/index.jsonl disagrees with archived row.json"
+    return "does not correspond 1:1"
 
 
 def sc_remove_cell(copy):
@@ -246,6 +246,84 @@ def sc_duplicate_cell(copy):
     f.write_text(json.dumps(r))
     reseal(copy)
     return "cell coverage does not match the frozen plan"
+
+
+# ---------------- external-review regression probes (findings 1-5)
+def sc_falsified_results_json(copy):
+    """Review #1a: published results.json numerator inflated. The audit
+    re-derives the COMPLETE report and byte-compares — not just the blocks."""
+    f = copy / "results.json"
+    d = json.loads(f.read_text())
+    d["summary"]["usd-brep"]["metrics"]["automatic_checks_unverified"]["numerator"] = 31
+    f.write_text(json.dumps(d, indent=2) + "\n")
+    return "results.json is byte-identical"
+
+
+def sc_deleted_results_json(copy):
+    """Review #1b: results.json deleted entirely must not pass."""
+    (copy / "results.json").unlink()
+    return "file missing"
+
+
+def sc_falsified_results_md(copy):
+    """Review #1c: a supplementary Markdown count (42 -> 999) edited."""
+    f = copy / "RESULTS.md"
+    t = f.read_text().replace("build_success 42", "build_success 999")
+    assert t != f.read_text(), "probe lost its target string"
+    f.write_text(t)
+    return "RESULTS.md is byte-identical"
+
+
+def sc_forge_execution_log(copy):
+    """Review #4: the trial log is now SEALED — replacing it with a forged
+    one containing only the expected server-model line must abort."""
+    (copy / "logs-trials.log").write_text(
+        "server model: local-inference-lab/Qwen3.8-Flash-Next-NVFP4\n")
+    return "logs-trials.log"
+
+
+def sc_index_duplicate(copy):
+    """Review #5: an index record duplicated + manifest honestly re-sealed.
+    The multiset gate must abort — collapsing to a dict hides this."""
+    idf = copy / "runs/index.jsonl"
+    lines = idf.read_text().splitlines()
+    lines.append(lines[0])
+    idf.write_text("\n".join(lines) + "\n")
+    reseal(copy)
+    return "does not correspond 1:1"
+
+
+def sc_aggregate_missing_cell(copy):
+    """Review #2: with the manifest re-sealed (so the evidence gate passes),
+    aggregate must still ABORT on a missing expected cell — never publish a
+    shrunken denominator. Runner: aggregate.py, not audit.py."""
+    (copy / "runs/004_flat_mounting_plate/openscad/trial-02/row.json").unlink()
+    reseal(copy)
+    return "expected trial cell missing"
+
+
+def _exclude_row(copy, cell_rel, replaced_by):
+    edit_row(copy, cell_rel, lambda r: r.__setitem__(
+        "excluded", {"reason": "duplicate submission (planted)",
+                     "replaced_by": replaced_by}))
+    reseal(copy)
+    agg = subprocess.run([PY, str(copy / "aggregate.py")], capture_output=True,
+                         text=True, cwd=str(HERE.parents[2]))
+    assert agg.returncode == 0, f"aggregate refused a valid exclusion: {agg.stdout[-300:]}"
+
+
+def sc_superseded_plain_form(copy):
+    """Review #3 (form 'trial-01'): a VALID superseded reference must be
+    accepted, not searched for as 'trial-trial-01'. Expectation: PASS."""
+    _exclude_row(copy, "runs/004_flat_mounting_plate/openscad/trial-02", "trial-01")
+    return "excluded/superseded rows are published"
+
+
+def sc_superseded_bare_number(copy):
+    """Review #3 (bare '02' form): must resolve to the existing trial-02
+    directory instead of failing the old 'trial-' substring demand."""
+    _exclude_row(copy, "runs/004_flat_mounting_plate/openscad/trial-01", "02")
+    return "excluded/superseded rows are published"
 
 
 SCENARIOS = [
@@ -270,6 +348,15 @@ SCENARIOS = [
     ("index.jsonl vs row.json desync", sc_index_desync, False),
     ("re-sealed cell removal (coverage)", sc_remove_cell, True),
     ("re-sealed cell duplication (coverage)", sc_duplicate_cell, True),
+    # external-review regression probes (findings 1-5 of the PR #84 review)
+    ("falsified results.json numerator (full-report compare)", sc_falsified_results_json, True),
+    ("deleted results.json (full-report compare)", sc_deleted_results_json, True),
+    ("falsified RESULTS.md supplementary count", sc_falsified_results_md, True),
+    ("forged execution log (now sealed)", sc_forge_execution_log, True),
+    ("duplicated index record, re-sealed (multiset gate)", sc_index_duplicate, True),
+    ("aggregate on missing cell (no shrunken denominator)", sc_aggregate_missing_cell, True),
+    ("valid superseded 'trial-01' accepted (positive)", sc_superseded_plain_form, False, "expect"),
+    ("valid superseded bare '02' accepted (positive)", sc_superseded_bare_number, False, "expect"),
 ]
 
 
@@ -283,17 +370,35 @@ def main():
     quick = os.environ.get("BENCH_SELFTEST_SET", "full") == "quick"
     failures = 0
     selected = [s for s in SCENARIOS if not quick or s[2]]
-    for name, plant, _ in selected:
+    for entry in selected:
+        name, plant, _, kind = (entry + ("audit",))[:4]
         tmp = None
         try:
             tmp, copy = make_copy()
-            expected_failing = plant(copy)
-            proc = run_audit(copy)
-            out = proc.stdout + proc.stderr
-            fired = any(expected_failing in ln for ln in out.splitlines())
-            ok = proc.returncode != 0 and fired
+            expected = plant(copy)
+            if kind == "aggregate":
+                proc = subprocess.run([PY, str(copy / "aggregate.py")], capture_output=True,
+                                      text=True, cwd=str(HERE.parents[2]))
+                out = proc.stdout + proc.stderr
+                fired = any(expected in ln for ln in out.splitlines())
+                ok = proc.returncode != 0 and fired
+            elif kind == "expect":
+                # positive scenario: the named check must PASS (not merely
+                # 'nothing failed' — a check that vanishes also vanishes PASS)
+                proc = run_audit(copy)
+                out = proc.stdout + proc.stderr
+                ok = ("AUDIT ABORT" not in out
+                      and any(ln.startswith("PASS") and expected in ln
+                              for ln in out.splitlines()))
+                fired = ok
+            else:
+                proc = run_audit(copy)
+                out = proc.stdout + proc.stderr
+                fired = any(expected in ln for ln in out.splitlines())
+                ok = proc.returncode != 0 and fired
             print(("CAUGHT  " if ok else "MISSED  ") + name,
-                  "" if ok else f"(exit={proc.returncode}, expected line containing '{expected_failing}')")
+                  "" if ok else f"(exit={proc.returncode}, expected '{expected}' "
+                                f"{'in a PASS line' if kind == 'expect' else 'in output'})")
             failures += 0 if ok else 1
         finally:
             if tmp:

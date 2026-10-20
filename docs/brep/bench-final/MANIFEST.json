@@ -60,6 +60,10 @@
    "bytes": 80099,
    "sha256": "75b16399bb77040cb52a9b8fa0ed7e3143d850d667acfb15060ff67691bbf56f"
   },
+  "logs-trials.log": {
+   "bytes": 488,
+   "sha256": "e8cea543a91c45bf72d2b25986b707a1b238e079fac24da67bfb230ce756daa8"
+  },
   "references/bookend-reference.stl": {
    "bytes": 12625,
    "sha256": "189bff828f372a71ef0d3c1ee857e4235faea0e60a6f93be4d662c90c961d2a2"
@@ -5805,7 +5809,7 @@
    "sha256": "28b01ab9d5bc4d6837f9545fd83f585ae627aea175ef79190571bd3c0d162cb2"
   }
  },
- "generated_at": "2026-10-19T22:28:51.683535+00:00",
+ "generated_at": "2026-10-20T05:39:10.799425+00:00",
  "generated_by": "make_manifest.py (issue #79)",
  "schema_version": 1,
  "trust_note": "Sealed from bytes on disk; anchor of trust is git history. audit.py recomputes every hash; editing evidence requires rewriting this file in the same commit. Derived reports (results.json, RESULTS.md, audit-result.json) are excluded: audit.py re-derives and compares them instead."

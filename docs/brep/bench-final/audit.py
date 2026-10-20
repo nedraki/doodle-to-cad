@@ -37,11 +37,14 @@ import subprocess
 import sys
 from datetime import datetime
 from pathlib import Path
+from typing import NoReturn
 
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[2]
 sys.path.insert(0, str(HERE))
 import metrics  # noqa: E402
+import aggregate  # noqa: E402  (build_outputs: the one report generator, re-run here)
+from collections import Counter  # noqa: E402
 from make_manifest import build_manifest, resolve_recorded  # noqa: E402
 
 results = []
@@ -51,7 +54,7 @@ def check(name, ok, detail=""):
     results.append((name, bool(ok), detail))
 
 
-def abort(what, path, detail=""):
+def abort(what, path, detail="") -> NoReturn:
     """Clear, non-skippable failure with trial + path. Writes NO report."""
     print(f"AUDIT ABORT: {what}\n  path: {path}" + (f"\n  detail: {detail}" if detail else ""))
     sys.exit(2)
@@ -137,11 +140,17 @@ for ln in (HERE / "runs" / "index.jsonl").read_text().splitlines():
         index_rows.append(json.loads(ln))
     except json.JSONDecodeError as e:
         abort("runs/index.jsonl corrupt", HERE / "runs" / "index.jsonl", str(e))
+# Compare as a MULTISET, never collapse into a dict first: a duplicated index
+# record must abort, not silently overwrite its twin (external review #5).
+key_counts = Counter((r.get("drawing"), r.get("backend"), r.get("trial")) for r in index_rows)
+dup_idx = sorted(str(k) for k, n in key_counts.items() if n > 1)
 idx = {(r.get("drawing"), r.get("backend"), r.get("trial")): r for r in index_rows}
 idx_mismatch = [str(k) for k, r in cell_seen.items() if idx.get(k) != r]
 extra_idx = sorted(str(k) for k in set(idx) - set(cell_seen))
-if idx_mismatch or extra_idx:
-    abort("runs/index.jsonl disagrees with archived row.json files", HERE / "runs" / "index.jsonl",
+if dup_idx or len(index_rows) != len(cell_seen) or idx_mismatch or extra_idx:
+    abort("runs/index.jsonl does not correspond 1:1 with the archived row.json set",
+          HERE / "runs" / "index.jsonl",
+          f"duplicate_records={dup_idx[:3]} count={len(index_rows)} vs {len(cell_seen)} "
           f"mismatched={idx_mismatch[:3]} extra={extra_idx[:3]}")
 
 # ============================================================ 2. semantic
@@ -220,10 +229,33 @@ text = (HERE / "README.md").read_text()
 res_md = (HERE / "RESULTS.md").read_text()
 check("README headline tables equal the metrics-recomputed tables (one definition)",
       tables_block in text, "AUDIT:TABLE block mismatch")
-check("RESULTS.md headline tables equal the metrics-recomputed tables",
-      tables_block in res_md, "AUDIT:TABLE block mismatch")
 check("README publishes the metric definitions verbatim", defs_block in text,
       "AUDIT:METRICS block mismatch")
+# The COMPLETE generated reports, not just the headline blocks (external
+# review #1: falsified supplementary counts and a deleted results.json used
+# to pass). Re-run the one report generator over the sealed rows and
+# byte-compare; any difference in any number anywhere is a FAIL.
+try:
+    exp_json, exp_md = aggregate.build_outputs(rows, refs, decisions)
+except SystemExit as exc:  # aggregate itself refuses: hard abort, name it
+    abort("aggregate refuses to build outputs from the sealed rows", HERE, str(exc))
+try:
+    committed_json = (HERE / "results.json").read_text()
+except FileNotFoundError:
+    committed_json = None
+def _first_diff(a, b):
+    if a is None:
+        return "file missing"
+    for i, (x, y) in enumerate(zip(a.splitlines(), b.splitlines())):
+        if x != y:
+            return f"line {i + 1}: committed '{x[:70]}' != recomputed '{y[:70]}'"
+    return "length differs"
+check("results.json is byte-identical to a fresh aggregation of the sealed rows "
+      "(every number, headline or supplementary)",
+      committed_json == exp_json, _first_diff(committed_json, exp_json))
+check("RESULTS.md is byte-identical to a fresh aggregation of the sealed rows "
+      "(complete report, not only the headline blocks)",
+      res_md == exp_md, _first_diff(res_md, exp_md))
 
 # ---------------- historical frozen counts (kept labeled, never silently edited)
 acc_os = sum(1 for r in osd if (r.get("product") or {}).get("accepted"))
@@ -326,9 +358,12 @@ for r in excl_rows:
         excl_bad.append(f"{r['drawing']}/{r['backend']}/t{r['trial']}: {e}")
     else:
         rb = str(e["replaced_by"])
-        repl_dir = HERE / "runs" / r["drawing"] / r["backend"] / f"trial-{rb}"
-        if "trial-" not in rb or not repl_dir.exists():
-            excl_bad.append(f"{r['drawing']}: replaced_by '{rb}' has no directory")
+        # accept both "trial-02" and "02" (external review #3: the old code
+        # built 'trial-trial-02' for one form and rejected the other)
+        rb_dir = rb if rb.startswith("trial-") else (f"trial-{rb}" if rb.isdigit() else None)
+        if rb_dir is None or not (HERE / "runs" / r["drawing"] / r["backend"] / rb_dir).is_dir():
+            excl_bad.append(f"{r['drawing']}: replaced_by '{rb}' is not an existing trial "
+                            f"directory of this drawing/backend")
 check("excluded/superseded rows are published, carry reason+replaced_by, and are "
       "counted in NO metric", not excl_bad, f"{len(excl_rows)} excluded; bad={excl_bad[:2]}")
 

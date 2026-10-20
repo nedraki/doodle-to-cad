@@ -10,6 +10,10 @@ hashes nowhere). This script seals the complete evidence set instead:
   references/**      reference STLs + reference-measurements.json
   images/**          montages + provenance.json
   TRIAL-PLAN.json    the frozen plan itself
+  logs-trials.log    the surviving execution evidence (README's 'Limits'
+                     relies on its server-model lines when environment.json
+                     is absent — external review #4: it used to be
+                     describable as sealed while nothing sealed it)
   repo:<path>        reference *sources* the measurements were taken from
                      (benchmarks/cases/**/ground_truth/model.stl, derived renders)
 
@@ -32,7 +36,7 @@ HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[2]
 DERIVED = {"results.json", "RESULTS.md", "audit-result.json", "MANIFEST.json"}
 SEALED_DIRS = ("runs", "references", "images")
-SEALED_FILES = ("TRIAL-PLAN.json",)
+SEALED_FILES = ("TRIAL-PLAN.json", "logs-trials.log")
 
 
 def sha256(path):
