@@ -367,8 +367,6 @@ for r in excl_rows:
 check("excluded/superseded rows are published, carry reason+replaced_by, and are "
       "counted in NO metric", not excl_bad, f"{len(excl_rows)} excluded; bad={excl_bad[:2]}")
 
-<<<<<<< HEAD
-=======
 # ---------------- recorded human decisions (issue #80): integrity, never derived
 dec_bad = []
 for k, v in sorted(decisions.items()):
@@ -390,7 +388,6 @@ check("recorded human decisions bind to the archived mesh hash of an existing ce
       "(decisions are human input; no metric derives from them)",
       not dec_bad, str(dec_bad[:3]))
 
->>>>>>> origin/brep-integration
 # ---------------- montages: PROVEN BINDING image -> provenance.json -> row -> mesh -> bytes
 for name, meta in sorted(prov.items()):
     img = HERE / "images" / name
