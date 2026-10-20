@@ -72,6 +72,84 @@ def _iso_now():
     return datetime.now(timezone.utc).isoformat()
 
 
+# ---- environment fingerprint (issue #85) -----------------------------------
+# The frozen plan's evidence_layout declared 'environment.json ... written at
+# trial end' but the harness never wrote it. Declared evidence that is never
+# written is worse than absent evidence, so this is now a single choke point:
+# EVERY row.json write goes through _finish_row, which always writes the
+# environment file alongside (collection errors land in _collect_error,
+# never a silently missing file).
+_SERVER_MODEL = None  # set once by _drive from /api/health, like the log line
+_ENV_STATIC = None
+
+
+def _environment_static():
+    """Build once per harness run; per-trial calls only stamp dates."""
+    global _ENV_STATIC
+    if _ENV_STATIC is not None:
+        return _ENV_STATIC
+    import platform
+    import subprocess
+    from urllib.parse import urlsplit
+    from doodle_to_cad.config import settings
+    record = {"collected_by": "evaluate_brep.py (issue #85)",
+              "tested_commit": None, "python": sys.version,
+              "platform": platform.platform(),
+              "model_base_url": getattr(settings, "base_url", None),
+              "model_host": urlsplit(getattr(settings, "base_url", "") or "").hostname,
+              "server_model": _SERVER_MODEL,
+              "doodle_brep_python": os.environ.get("DOODLE_BREP_PYTHON"),
+              "results_dir": os.environ.get("DOODLE_RESULTS_DIR")}
+    try:
+        record["tested_commit"] = subprocess.check_output(
+            ["git", "rev-parse", "HEAD"], cwd=str(ROOT), text=True).strip()
+    except Exception as exc:
+        record.setdefault("_collect_error", [])\
+            .append(f"git rev: {exc}")
+    worker = os.environ.get("DOODLE_BREP_PYTHON")
+    if worker:
+        try:
+            record["worker_packages"] = json.loads(subprocess.check_output(
+                ["uv", "pip", "list", "--python", worker, "--format", "json"],
+                text=True))
+        except Exception as exc:
+            record.setdefault("_collect_error", []).append(f"worker pkgs: {exc}")
+    try:
+        from importlib.metadata import version
+        record["application_packages"] = {
+            name: version(name) for name in
+            ("fastapi", "httpx", "numpy", "trimesh", "networkx", "pillow")}
+    except Exception as exc:
+        record.setdefault("_collect_error", []).append(f"app pkgs: {exc}")
+    image = os.environ.get("DOODLE_OPENSCAD_DOCKER")
+    if image:
+        record["openscad_docker_image"] = image
+        try:
+            record["openscad_docker_image_id"] = subprocess.check_output(
+                ["docker", "image", "inspect", image, "--format", "{{.Id}}"],
+                text=True).strip()
+        except Exception as exc:
+            record.setdefault("_collect_error", []).append(f"docker image: {exc}")
+    _ENV_STATIC = record
+    return record
+
+
+def _finish_row(cell, row):
+    """The ONLY sanctioned way to persist a trial row: environment.json first
+    (declared evidence must exist), then row.json, atomically enough that a
+    crash mid-write never leaves a row without its environment record."""
+    try:
+        env = dict(_environment_static())
+        env["trial"] = f'{row.get("drawing")}/{row.get("backend")}/t{row.get("trial")}'
+        env["trial_submitted_at"] = row.get("submitted_at")
+        env["trial_finished_at"] = row.get("finished_at") or _iso_now()
+        env["written_at"] = _iso_now()
+        (cell / "environment.json").write_text(json.dumps(env, indent=2) + "\n")
+    except Exception as exc:  # the file is still attempted; failure is recorded in row
+        row["environment_write_error"] = str(exc)
+    (cell / "row.json").write_text(json.dumps(row, indent=2))
+
+
 def _measure_stl(path):
     """Independent trimesh re-measurement of a run STL."""
     import trimesh
@@ -196,7 +274,7 @@ async def _run_trial(client, plan, item, backend, trial, out_dir, semaphore):
             job = response.json()["job_id"]
         except Exception as exc:
             row.update(job_status="submit_failed", error={"message": str(exc)})
-            (cell / "row.json").write_text(json.dumps(row, indent=2))
+            _finish_row(cell, row)
             return row
         row["run_id"] = job
         deadline = started + plan_infra["poll_timeout_seconds"]
@@ -276,7 +354,7 @@ async def _run_trial(client, plan, item, backend, trial, out_dir, semaphore):
     if result is None:
         row["build"] = None
         row["checks"] = {"build_success": False, "overall_pass": False}
-        (cell / "row.json").write_text(json.dumps(row, indent=2))
+        _finish_row(cell, row)
         _append_index(out_dir, row)
         return row
 
@@ -473,7 +551,7 @@ async def _run_trial(client, plan, item, backend, trial, out_dir, semaphore):
                 targeted["message"] = str(exc)[:400]
     row["targeted"] = targeted
 
-    (cell / "row.json").write_text(json.dumps(row, indent=2))
+    _finish_row(cell, row)
     _append_index(out_dir, row)
     return row
 
@@ -500,7 +578,9 @@ async def _drive(plan, cells, out_dir, port, parallel):
     try:
         async with httpx.AsyncClient(base_url=f"http://127.0.0.1:{port}", timeout=120) as client:
             health = (await client.get("/api/health")).json()
-            print("server model:", health["agentic"]["selected_model"], flush=True)
+            global _SERVER_MODEL
+            _SERVER_MODEL = health["agentic"]["selected_model"]
+            print("server model:", _SERVER_MODEL, flush=True)
             semaphore = asyncio.Semaphore(parallel)
             jobs = []
             for item, backend, trial in cells:
@@ -513,7 +593,7 @@ async def _drive(plan, cells, out_dir, port, parallel):
                         row = {"drawing": item["id"], "backend": backend, "trial": trial,
                                "job_status": "harness_error", "harness_error": str(exc),
                                "checks": {"overall_pass": False}}
-                        (cell / "row.json").write_text(json.dumps(row, indent=2))
+                        _finish_row(cell, row)
                         _append_index(out_dir, row)
                         return row
                 jobs.append(safe())
