@@ -1,0 +1,1167 @@
+{
+  "version": 1,
+  "selected": "cd6b7ae113054d32aa6b21d126348129",
+  "selection_version": 2,
+  "revisions": {
+    "original": {
+      "id": "original",
+      "parent_id": null,
+      "result": {
+        "backend": "usd-brep",
+        "success": false,
+        "files": {
+          "source": "/results/session/brep-23d247ab5ffc440d8dc9d43526b75e8a/model.recipe.json",
+          "stl": "/results/session/brep-23d247ab5ffc440d8dc9d43526b75e8a/model.stl",
+          "usd": "/results/session/brep-23d247ab5ffc440d8dc9d43526b75e8a/model.usda",
+          "views": {}
+        },
+        "diagnostics": {
+          "selection_catalog": {
+            "version": 1,
+            "status": "available",
+            "unresolved": [],
+            "output_owner": "bevel",
+            "targets": [
+              {
+                "id": "f1d576b41b4cfcfe",
+                "label": "Outside X min face",
+                "rule": {
+                  "kind": "extreme_face",
+                  "owner": "bevel",
+                  "axis": 0,
+                  "side": "min"
+                },
+                "match_count": 1,
+                "geometry": {
+                  "triangles": [
+                    [
+                      0.0,
+                      37.87868118286133,
+                      2.1213202476501465
+                    ],
+                    [
+                      0.0,
+                      2.1213202476501465,
+                      17.878679275512695
+                    ],
+                    [
+                      0.0,
+                      37.87868118286133,
+                      17.878679275512695
+                    ],
+                    [
+                      0.0,
+                      2.1213202476501465,
+                      17.878679275512695
+                    ],
+                    [
+                      0.0,
+                      37.87868118286133,
+                      2.1213202476501465
+                    ],
+                    [
+                      0.0,
+                      2.1213202476501465,
+                      2.1213202476501465
+                    ]
+                  ]
+                }
+              },
+              {
+                "id": "b8d2756accfe47c6",
+                "label": "Outside X max face",
+                "rule": {
+                  "kind": "extreme_face",
+                  "owner": "bevel",
+                  "axis": 0,
+                  "side": "max"
+                },
+                "match_count": 1,
+                "geometry": {
+                  "triangles": [
+                    [
+                      50.0,
+                      2.1213202476501465,
+                      2.1213202476501465
+                    ],
+                    [
+                      50.0,
+                      37.87868118286133,
+                      17.878679275512695
+                    ],
+                    [
+                      50.0,
+                      2.1213202476501465,
+                      17.878679275512695
+                    ],
+                    [
+                      50.0,
+                      37.87868118286133,
+                      17.878679275512695
+                    ],
+                    [
+                      50.0,
+                      2.1213202476501465,
+                      2.1213202476501465
+                    ],
+                    [
+                      50.0,
+                      37.87868118286133,
+                      2.1213202476501465
+                    ]
+                  ]
+                }
+              },
+              {
+                "id": "27563d5e8adf5b03",
+                "label": "Outside Y min face",
+                "rule": {
+                  "kind": "extreme_face",
+                  "owner": "bevel",
+                  "axis": 1,
+                  "side": "min"
+                },
+                "match_count": 1,
+                "geometry": {
+                  "triangles": [
+                    [
+                      2.1213202476501465,
+                      0.0,
+                      17.878679275512695
+                    ],
+                    [
+                      47.87868118286133,
+                      0.0,
+                      2.1213202476501465
+                    ],
+                    [
+                      47.87868118286133,
+                      0.0,
+                      17.878679275512695
+                    ],
+                    [
+                      47.87868118286133,
+                      0.0,
+                      2.1213202476501465
+                    ],
+                    [
+                      2.1213202476501465,
+                      0.0,
+                      17.878679275512695
+                    ],
+                    [
+                      2.1213202476501465,
+                      0.0,
+                      2.1213202476501465
+                    ]
+                  ]
+                }
+              },
+              {
+                "id": "b46321de9c660c01",
+                "label": "Outside Y max face",
+                "rule": {
+                  "kind": "extreme_face",
+                  "owner": "bevel",
+                  "axis": 1,
+                  "side": "max"
+                },
+                "match_count": 1,
+                "geometry": {
+                  "triangles": [
+                    [
+                      47.87868118286133,
+                      40.0,
+                      2.1213202476501465
+                    ],
+                    [
+                      2.1213202476501465,
+                      40.0,
+                      17.878679275512695
+                    ],
+                    [
+                      47.87868118286133,
+                      40.0,
+                      17.878679275512695
+                    ],
+                    [
+                      2.1213202476501465,
+                      40.0,
+                      17.878679275512695
+                    ],
+                    [
+                      47.87868118286133,
+                      40.0,
+                      2.1213202476501465
+                    ],
+                    [
+                      2.1213202476501465,
+                      40.0,
+                      2.1213202476501465
+                    ]
+                  ]
+                }
+              },
+              {
+                "id": "e7aabc474dd038e9",
+                "label": "Outside Z min face",
+                "rule": {
+                  "kind": "extreme_face",
+                  "owner": "bevel",
+                  "axis": 2,
+                  "side": "min"
+                },
+                "match_count": 1,
+                "geometry": {
+                  "triangles": [
+                    [
+                      47.87868118286133,
+                      37.87868118286133,
+                      0.0
+                    ],
+                    [
+                      2.1213202476501465,
+                      2.1213202476501465,
+                      0.0
+                    ],
+                    [
+                      2.1213202476501465,
+                      37.87868118286133,
+                      0.0
+                    ],
+                    [
+                      2.1213202476501465,
+                      2.1213202476501465,
+                      0.0
+                    ],
+                    [
+                      47.87868118286133,
+                      37.87868118286133,
+                      0.0
+                    ],
+                    [
+                      47.87868118286133,
+                      2.1213202476501465,
+                      0.0
+                    ]
+                  ]
+                }
+              },
+              {
+                "id": "27a8105ffca73e01",
+                "label": "Outside Z max face",
+                "rule": {
+                  "kind": "extreme_face",
+                  "owner": "bevel",
+                  "axis": 2,
+                  "side": "max"
+                },
+                "match_count": 1,
+                "geometry": {
+                  "triangles": [
+                    [
+                      2.1213202476501465,
+                      2.1213202476501465,
+                      20.0
+                    ],
+                    [
+                      47.87868118286133,
+                      37.87868118286133,
+                      20.0
+                    ],
+                    [
+                      2.1213202476501465,
+                      37.87868118286133,
+                      20.0
+                    ],
+                    [
+                      47.87868118286133,
+                      37.87868118286133,
+                      20.0
+                    ],
+                    [
+                      2.1213202476501465,
+                      2.1213202476501465,
+                      20.0
+                    ],
+                    [
+                      47.87868118286133,
+                      2.1213202476501465,
+                      20.0
+                    ]
+                  ]
+                }
+              }
+            ],
+            "supported": "Axis-aligned extreme planar faces, four-wall box cutouts and straight outer vertical edges. Recheck after every rebuild."
+          },
+          "backend": "usd-brep",
+          "version": "1.0.0",
+          "recipe_version": 1,
+          "solid_volume_mm3": 39067.275648869996,
+          "mesh_volume_mm3": 39067.27599371527,
+          "extents_mm": [
+            50.0,
+            40.0,
+            20.0
+          ],
+          "bounds_mm": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              50.0,
+              40.0,
+              20.0
+            ]
+          ],
+          "watertight": true,
+          "winding_consistent": true,
+          "euler_number": 2,
+          "triangles": 60,
+          "usd_roundtrip": true,
+          "volume_relative_accuracy": 1e-08,
+          "usd_volume_mm3": 39067.275647681185,
+          "operations": [
+            {
+              "id": "body",
+              "kind": "box",
+              "faces": 6
+            },
+            {
+              "id": "bevel",
+              "kind": "chamfer",
+              "faces": 18
+            }
+          ],
+          "connections": [],
+          "resource_limits": {
+            "memory_bytes": 17179869184,
+            "cpu_seconds": 150,
+            "file_size_bytes": 536870912
+          },
+          "build_seconds": 0.236
+        },
+        "evaluation": {
+          "status": "unverified",
+          "accepted": false
+        }
+      },
+      "source_text": "{\n  \"version\": 1,\n  \"units\": \"mm\",\n  \"name\": \"Horizontal block-edge chamfer\",\n  \"parameters\": {\n    \"radius\": {\n      \"value\": 3.0,\n      \"min\": 1,\n      \"max\": 6,\n      \"unit\": \"mm\"\n    }\n  },\n  \"operations\": [\n    {\n      \"id\": \"body\",\n      \"kind\": \"box\",\n      \"origin\": [\n        0,\n        0,\n        0\n      ],\n      \"size\": [\n        50,\n        40,\n        20\n      ]\n    },\n    {\n      \"id\": \"bevel\",\n      \"kind\": \"chamfer\",\n      \"body\": \"body\",\n      \"radius\": \"radius\"\n    }\n  ],\n  \"output\": \"bevel\"\n}",
+      "parameters": [
+        {
+          "name": "radius",
+          "value": 3.0,
+          "low": 1,
+          "high": 6,
+          "step": 0.01,
+          "label": "radius",
+          "unit": "mm",
+          "description": "Rebuilds the saved construction recipe",
+          "group": "Details",
+          "feature": null
+        }
+      ],
+      "kind": "generation"
+    },
+    "16b59b5dfd1e4cada6c6c3a7c68ae83c": {
+      "id": "16b59b5dfd1e4cada6c6c3a7c68ae83c",
+      "parent_id": "original",
+      "kind": "parameter_edit",
+      "result": {
+        "backend": "usd-brep",
+        "success": false,
+        "files": {
+          "source": "/results/session/brep-94695042f654497e9c643155c0bbbaac/model.recipe.json",
+          "stl": "/results/session/brep-94695042f654497e9c643155c0bbbaac/model.stl",
+          "usd": "/results/session/brep-94695042f654497e9c643155c0bbbaac/model.usda",
+          "views": {}
+        },
+        "diagnostics": {
+          "selection_catalog": {
+            "version": 1,
+            "status": "available",
+            "unresolved": [],
+            "output_owner": "bevel",
+            "targets": [
+              {
+                "id": "f1d576b41b4cfcfe",
+                "label": "Outside X min face",
+                "rule": {
+                  "kind": "extreme_face",
+                  "owner": "bevel",
+                  "axis": 0,
+                  "side": "min"
+                },
+                "match_count": 1,
+                "geometry": {
+                  "triangles": [
+                    [
+                      0.0,
+                      36.4644660949707,
+                      3.535533905029297
+                    ],
+                    [
+                      0.0,
+                      3.535533905029297,
+                      16.464466094970703
+                    ],
+                    [
+                      0.0,
+                      36.4644660949707,
+                      16.464466094970703
+                    ],
+                    [
+                      0.0,
+                      3.535533905029297,
+                      16.464466094970703
+                    ],
+                    [
+                      0.0,
+                      36.4644660949707,
+                      3.535533905029297
+                    ],
+                    [
+                      0.0,
+                      3.535533905029297,
+                      3.535533905029297
+                    ]
+                  ]
+                }
+              },
+              {
+                "id": "b8d2756accfe47c6",
+                "label": "Outside X max face",
+                "rule": {
+                  "kind": "extreme_face",
+                  "owner": "bevel",
+                  "axis": 0,
+                  "side": "max"
+                },
+                "match_count": 1,
+                "geometry": {
+                  "triangles": [
+                    [
+                      50.0,
+                      3.535533905029297,
+                      16.464466094970703
+                    ],
+                    [
+                      50.0,
+                      36.4644660949707,
+                      3.535533905029297
+                    ],
+                    [
+                      50.0,
+                      36.4644660949707,
+                      16.464466094970703
+                    ],
+                    [
+                      50.0,
+                      36.4644660949707,
+                      3.535533905029297
+                    ],
+                    [
+                      50.0,
+                      3.535533905029297,
+                      16.464466094970703
+                    ],
+                    [
+                      50.0,
+                      3.535533905029297,
+                      3.535533905029297
+                    ]
+                  ]
+                }
+              },
+              {
+                "id": "27563d5e8adf5b03",
+                "label": "Outside Y min face",
+                "rule": {
+                  "kind": "extreme_face",
+                  "owner": "bevel",
+                  "axis": 1,
+                  "side": "min"
+                },
+                "match_count": 1,
+                "geometry": {
+                  "triangles": [
+                    [
+                      3.535533905029297,
+                      0.0,
+                      16.464466094970703
+                    ],
+                    [
+                      46.4644660949707,
+                      0.0,
+                      3.535533905029297
+                    ],
+                    [
+                      46.4644660949707,
+                      0.0,
+                      16.464466094970703
+                    ],
+                    [
+                      46.4644660949707,
+                      0.0,
+                      3.535533905029297
+                    ],
+                    [
+                      3.535533905029297,
+                      0.0,
+                      16.464466094970703
+                    ],
+                    [
+                      3.535533905029297,
+                      0.0,
+                      3.535533905029297
+                    ]
+                  ]
+                }
+              },
+              {
+                "id": "b46321de9c660c01",
+                "label": "Outside Y max face",
+                "rule": {
+                  "kind": "extreme_face",
+                  "owner": "bevel",
+                  "axis": 1,
+                  "side": "max"
+                },
+                "match_count": 1,
+                "geometry": {
+                  "triangles": [
+                    [
+                      46.4644660949707,
+                      40.0,
+                      3.535533905029297
+                    ],
+                    [
+                      3.535533905029297,
+                      40.0,
+                      16.464466094970703
+                    ],
+                    [
+                      46.4644660949707,
+                      40.0,
+                      16.464466094970703
+                    ],
+                    [
+                      3.535533905029297,
+                      40.0,
+                      16.464466094970703
+                    ],
+                    [
+                      46.4644660949707,
+                      40.0,
+                      3.535533905029297
+                    ],
+                    [
+                      3.535533905029297,
+                      40.0,
+                      3.535533905029297
+                    ]
+                  ]
+                }
+              },
+              {
+                "id": "e7aabc474dd038e9",
+                "label": "Outside Z min face",
+                "rule": {
+                  "kind": "extreme_face",
+                  "owner": "bevel",
+                  "axis": 2,
+                  "side": "min"
+                },
+                "match_count": 1,
+                "geometry": {
+                  "triangles": [
+                    [
+                      46.4644660949707,
+                      36.4644660949707,
+                      0.0
+                    ],
+                    [
+                      3.535533905029297,
+                      3.535533905029297,
+                      0.0
+                    ],
+                    [
+                      3.535533905029297,
+                      36.4644660949707,
+                      0.0
+                    ],
+                    [
+                      3.535533905029297,
+                      3.535533905029297,
+                      0.0
+                    ],
+                    [
+                      46.4644660949707,
+                      36.4644660949707,
+                      0.0
+                    ],
+                    [
+                      46.4644660949707,
+                      3.535533905029297,
+                      0.0
+                    ]
+                  ]
+                }
+              },
+              {
+                "id": "27a8105ffca73e01",
+                "label": "Outside Z max face",
+                "rule": {
+                  "kind": "extreme_face",
+                  "owner": "bevel",
+                  "axis": 2,
+                  "side": "max"
+                },
+                "match_count": 1,
+                "geometry": {
+                  "triangles": [
+                    [
+                      46.4644660949707,
+                      3.535533905029297,
+                      20.0
+                    ],
+                    [
+                      3.535533905029297,
+                      36.4644660949707,
+                      20.0
+                    ],
+                    [
+                      3.535533905029297,
+                      3.535533905029297,
+                      20.0
+                    ],
+                    [
+                      3.535533905029297,
+                      36.4644660949707,
+                      20.0
+                    ],
+                    [
+                      46.4644660949707,
+                      3.535533905029297,
+                      20.0
+                    ],
+                    [
+                      46.4644660949707,
+                      36.4644660949707,
+                      20.0
+                    ]
+                  ]
+                }
+              }
+            ],
+            "supported": "Axis-aligned extreme planar faces, four-wall box cutouts and straight outer vertical edges. Recheck after every rebuild."
+          },
+          "backend": "usd-brep",
+          "version": "1.0.0",
+          "recipe_version": 1,
+          "solid_volume_mm3": 37515.16504281994,
+          "mesh_volume_mm3": 37515.16501235796,
+          "extents_mm": [
+            50.0,
+            40.0,
+            20.0
+          ],
+          "bounds_mm": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              50.0,
+              40.0,
+              20.0
+            ]
+          ],
+          "watertight": true,
+          "winding_consistent": true,
+          "euler_number": 2,
+          "triangles": 60,
+          "usd_roundtrip": true,
+          "volume_relative_accuracy": 1e-08,
+          "usd_volume_mm3": 37515.16504256476,
+          "operations": [
+            {
+              "id": "body",
+              "kind": "box",
+              "faces": 6
+            },
+            {
+              "id": "bevel",
+              "kind": "chamfer",
+              "faces": 18
+            }
+          ],
+          "connections": [],
+          "resource_limits": {
+            "memory_bytes": 17179869184,
+            "cpu_seconds": 150,
+            "file_size_bytes": 536870912
+          },
+          "build_seconds": 0.205
+        },
+        "evaluation": {
+          "status": "unverified",
+          "accepted": false,
+          "failures": [
+            "Drawing checks have not been rerun for this edit."
+          ]
+        },
+        "build": {
+          "version": 1,
+          "backend": "usd-brep",
+          "source_format": "brep-recipe-v1",
+          "ok": true,
+          "units": "mm",
+          "axes": {
+            "x": "width",
+            "y": "depth",
+            "z": "height"
+          },
+          "views": [],
+          "measurements": {
+            "watertight": true,
+            "components": 1,
+            "triangles": 60,
+            "through_holes": 0,
+            "extents_mm": [
+              50.0,
+              40.0,
+              20.0
+            ],
+            "volume_mm3": 37515.165
+          },
+          "diagnostics": [],
+          "drawing_evaluated": false
+        }
+      },
+      "source_text": "{\n  \"version\": 1,\n  \"units\": \"mm\",\n  \"name\": \"Horizontal block-edge chamfer\",\n  \"parameters\": {\n    \"radius\": {\n      \"value\": 5.0,\n      \"min\": 1,\n      \"max\": 6,\n      \"unit\": \"mm\"\n    }\n  },\n  \"operations\": [\n    {\n      \"id\": \"body\",\n      \"kind\": \"box\",\n      \"origin\": [\n        0,\n        0,\n        0\n      ],\n      \"size\": [\n        50,\n        40,\n        20\n      ]\n    },\n    {\n      \"id\": \"bevel\",\n      \"kind\": \"chamfer\",\n      \"body\": \"body\",\n      \"radius\": \"radius\"\n    }\n  ],\n  \"output\": \"bevel\"\n}",
+      "parameters": [
+        {
+          "name": "radius",
+          "value": 5.0,
+          "low": 1,
+          "high": 6,
+          "step": 0.01,
+          "label": "radius",
+          "unit": "mm",
+          "description": "Rebuilds the saved construction recipe",
+          "group": "Details",
+          "feature": null
+        }
+      ]
+    },
+    "cd6b7ae113054d32aa6b21d126348129": {
+      "id": "cd6b7ae113054d32aa6b21d126348129",
+      "parent_id": "16b59b5dfd1e4cada6c6c3a7c68ae83c",
+      "kind": "parameter_edit",
+      "result": {
+        "backend": "usd-brep",
+        "success": false,
+        "files": {
+          "source": "/results/session/brep-2f95aeb5365c44588e90b7988bf2b35b/model.recipe.json",
+          "stl": "/results/session/brep-2f95aeb5365c44588e90b7988bf2b35b/model.stl",
+          "usd": "/results/session/brep-2f95aeb5365c44588e90b7988bf2b35b/model.usda",
+          "views": {}
+        },
+        "diagnostics": {
+          "selection_catalog": {
+            "version": 1,
+            "status": "available",
+            "unresolved": [],
+            "output_owner": "bevel",
+            "targets": [
+              {
+                "id": "f1d576b41b4cfcfe",
+                "label": "Outside X min face",
+                "rule": {
+                  "kind": "extreme_face",
+                  "owner": "bevel",
+                  "axis": 0,
+                  "side": "min"
+                },
+                "match_count": 1,
+                "geometry": {
+                  "triangles": [
+                    [
+                      0.0,
+                      37.171573638916016,
+                      2.8284270763397217
+                    ],
+                    [
+                      0.0,
+                      2.8284270763397217,
+                      17.171573638916016
+                    ],
+                    [
+                      0.0,
+                      37.171573638916016,
+                      17.171573638916016
+                    ],
+                    [
+                      0.0,
+                      2.8284270763397217,
+                      17.171573638916016
+                    ],
+                    [
+                      0.0,
+                      37.171573638916016,
+                      2.8284270763397217
+                    ],
+                    [
+                      0.0,
+                      2.8284270763397217,
+                      2.8284270763397217
+                    ]
+                  ]
+                }
+              },
+              {
+                "id": "b8d2756accfe47c6",
+                "label": "Outside X max face",
+                "rule": {
+                  "kind": "extreme_face",
+                  "owner": "bevel",
+                  "axis": 0,
+                  "side": "max"
+                },
+                "match_count": 1,
+                "geometry": {
+                  "triangles": [
+                    [
+                      50.0,
+                      2.8284270763397217,
+                      17.171573638916016
+                    ],
+                    [
+                      50.0,
+                      37.171573638916016,
+                      2.8284270763397217
+                    ],
+                    [
+                      50.0,
+                      37.171573638916016,
+                      17.171573638916016
+                    ],
+                    [
+                      50.0,
+                      37.171573638916016,
+                      2.8284270763397217
+                    ],
+                    [
+                      50.0,
+                      2.8284270763397217,
+                      17.171573638916016
+                    ],
+                    [
+                      50.0,
+                      2.8284270763397217,
+                      2.8284270763397217
+                    ]
+                  ]
+                }
+              },
+              {
+                "id": "27563d5e8adf5b03",
+                "label": "Outside Y min face",
+                "rule": {
+                  "kind": "extreme_face",
+                  "owner": "bevel",
+                  "axis": 1,
+                  "side": "min"
+                },
+                "match_count": 1,
+                "geometry": {
+                  "triangles": [
+                    [
+                      2.8284270763397217,
+                      0.0,
+                      17.171573638916016
+                    ],
+                    [
+                      47.171573638916016,
+                      0.0,
+                      2.8284270763397217
+                    ],
+                    [
+                      47.171573638916016,
+                      0.0,
+                      17.171573638916016
+                    ],
+                    [
+                      47.171573638916016,
+                      0.0,
+                      2.8284270763397217
+                    ],
+                    [
+                      2.8284270763397217,
+                      0.0,
+                      17.171573638916016
+                    ],
+                    [
+                      2.8284270763397217,
+                      0.0,
+                      2.8284270763397217
+                    ]
+                  ]
+                }
+              },
+              {
+                "id": "b46321de9c660c01",
+                "label": "Outside Y max face",
+                "rule": {
+                  "kind": "extreme_face",
+                  "owner": "bevel",
+                  "axis": 1,
+                  "side": "max"
+                },
+                "match_count": 1,
+                "geometry": {
+                  "triangles": [
+                    [
+                      47.171573638916016,
+                      40.0,
+                      2.8284270763397217
+                    ],
+                    [
+                      2.8284270763397217,
+                      40.0,
+                      17.171573638916016
+                    ],
+                    [
+                      47.171573638916016,
+                      40.0,
+                      17.171573638916016
+                    ],
+                    [
+                      2.8284270763397217,
+                      40.0,
+                      17.171573638916016
+                    ],
+                    [
+                      47.171573638916016,
+                      40.0,
+                      2.8284270763397217
+                    ],
+                    [
+                      2.8284270763397217,
+                      40.0,
+                      2.8284270763397217
+                    ]
+                  ]
+                }
+              },
+              {
+                "id": "e7aabc474dd038e9",
+                "label": "Outside Z min face",
+                "rule": {
+                  "kind": "extreme_face",
+                  "owner": "bevel",
+                  "axis": 2,
+                  "side": "min"
+                },
+                "match_count": 1,
+                "geometry": {
+                  "triangles": [
+                    [
+                      47.171573638916016,
+                      37.171573638916016,
+                      0.0
+                    ],
+                    [
+                      2.8284270763397217,
+                      2.8284270763397217,
+                      0.0
+                    ],
+                    [
+                      2.8284270763397217,
+                      37.171573638916016,
+                      0.0
+                    ],
+                    [
+                      2.8284270763397217,
+                      2.8284270763397217,
+                      0.0
+                    ],
+                    [
+                      47.171573638916016,
+                      37.171573638916016,
+                      0.0
+                    ],
+                    [
+                      47.171573638916016,
+                      2.8284270763397217,
+                      0.0
+                    ]
+                  ]
+                }
+              },
+              {
+                "id": "27a8105ffca73e01",
+                "label": "Outside Z max face",
+                "rule": {
+                  "kind": "extreme_face",
+                  "owner": "bevel",
+                  "axis": 2,
+                  "side": "max"
+                },
+                "match_count": 1,
+                "geometry": {
+                  "triangles": [
+                    [
+                      47.171573638916016,
+                      2.8284270763397217,
+                      20.0
+                    ],
+                    [
+                      2.8284270763397217,
+                      37.171573638916016,
+                      20.0
+                    ],
+                    [
+                      2.8284270763397217,
+                      2.8284270763397217,
+                      20.0
+                    ],
+                    [
+                      2.8284270763397217,
+                      37.171573638916016,
+                      20.0
+                    ],
+                    [
+                      47.171573638916016,
+                      2.8284270763397217,
+                      20.0
+                    ],
+                    [
+                      47.171573638916016,
+                      37.171573638916016,
+                      20.0
+                    ]
+                  ]
+                }
+              }
+            ],
+            "supported": "Axis-aligned extreme planar faces, four-wall box cutouts and straight outer vertical edges. Recheck after every rebuild."
+          },
+          "backend": "usd-brep",
+          "version": "1.0.0",
+          "recipe_version": 1,
+          "solid_volume_mm3": 38375.7645016856,
+          "mesh_volume_mm3": 38375.76492848676,
+          "extents_mm": [
+            50.0,
+            40.0,
+            20.0
+          ],
+          "bounds_mm": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              50.0,
+              40.0,
+              20.0
+            ]
+          ],
+          "watertight": true,
+          "winding_consistent": true,
+          "euler_number": 2,
+          "triangles": 60,
+          "usd_roundtrip": true,
+          "volume_relative_accuracy": 1e-08,
+          "usd_volume_mm3": 38375.76449962993,
+          "operations": [
+            {
+              "id": "body",
+              "kind": "box",
+              "faces": 6
+            },
+            {
+              "id": "bevel",
+              "kind": "chamfer",
+              "faces": 18
+            }
+          ],
+          "connections": [],
+          "resource_limits": {
+            "memory_bytes": 17179869184,
+            "cpu_seconds": 150,
+            "file_size_bytes": 536870912
+          },
+          "build_seconds": 0.204
+        },
+        "evaluation": {
+          "status": "unverified",
+          "accepted": false,
+          "failures": [
+            "Drawing checks have not been rerun for this edit."
+          ]
+        },
+        "build": {
+          "version": 1,
+          "backend": "usd-brep",
+          "source_format": "brep-recipe-v1",
+          "ok": true,
+          "units": "mm",
+          "axes": {
+            "x": "width",
+            "y": "depth",
+            "z": "height"
+          },
+          "views": [],
+          "measurements": {
+            "watertight": true,
+            "components": 1,
+            "triangles": 60,
+            "through_holes": 0,
+            "extents_mm": [
+              50.0,
+              40.0,
+              20.0
+            ],
+            "volume_mm3": 38375.765
+          },
+          "diagnostics": [],
+          "drawing_evaluated": false
+        }
+      },
+      "source_text": "{\n  \"version\": 1,\n  \"units\": \"mm\",\n  \"name\": \"Horizontal block-edge chamfer\",\n  \"parameters\": {\n    \"radius\": {\n      \"value\": 4.0,\n      \"min\": 1,\n      \"max\": 6,\n      \"unit\": \"mm\"\n    }\n  },\n  \"operations\": [\n    {\n      \"id\": \"body\",\n      \"kind\": \"box\",\n      \"origin\": [\n        0,\n        0,\n        0\n      ],\n      \"size\": [\n        50,\n        40,\n        20\n      ]\n    },\n    {\n      \"id\": \"bevel\",\n      \"kind\": \"chamfer\",\n      \"body\": \"body\",\n      \"radius\": \"radius\"\n    }\n  ],\n  \"output\": \"bevel\"\n}",
+      "parameters": [
+        {
+          "name": "radius",
+          "value": 4.0,
+          "low": 1,
+          "high": 6,
+          "step": 0.01,
+          "label": "radius",
+          "unit": "mm",
+          "description": "Rebuilds the saved construction recipe",
+          "group": "Details",
+          "feature": null
+        }
+      ]
+    }
+  },
+  "target_selection": {
+    "rule": {
+      "kind": "extreme_face",
+      "owner": "bevel",
+      "axis": 2,
+      "side": "min"
+    },
+    "label": "Outside Z min face",
+    "selected_in_revision": "original"
+  },
+  "target_version": 1
+}

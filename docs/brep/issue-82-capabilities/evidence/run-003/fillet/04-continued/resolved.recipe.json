@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "units": "mm",
+  "name": "Rounded block with protected through hole",
+  "parameters": {
+    "radius": {
+      "value": 6.0,
+      "min": 1,
+      "max": 8,
+      "unit": "mm"
+    }
+  },
+  "operations": [
+    {
+      "id": "body",
+      "kind": "box",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "size": [
+        60,
+        40,
+        20
+      ]
+    },
+    {
+      "id": "hole",
+      "kind": "cylinder",
+      "origin": [
+        30,
+        20,
+        -1
+      ],
+      "radius": 4,
+      "height": 22,
+      "axis": "z"
+    },
+    {
+      "id": "cut",
+      "kind": "difference",
+      "left": "body",
+      "right": "hole"
+    },
+    {
+      "id": "rounded",
+      "kind": "fillet",
+      "body": "cut",
+      "radius": "radius",
+      "selector": "outer_vertical"
+    }
+  ],
+  "output": "rounded"
+}

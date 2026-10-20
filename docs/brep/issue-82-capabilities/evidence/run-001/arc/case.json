@@ -1,0 +1,42 @@
+{
+  "case": "arc",
+  "track": "manually_authored",
+  "user_review": "pending",
+  "measurement_validation": "provisional; awaiting #81",
+  "attempts": [
+    {
+      "role": "initial",
+      "backend": "usd-brep",
+      "updates": {},
+      "attempt": "01-initial",
+      "build_ok": false,
+      "seconds": 1.7709,
+      "diagnostics": [],
+      "stl_sha256": "9efcebdc4881a0c77ac2c4d0bd19aee24f3499ee3321cb5899ebabe85c46c5c3",
+      "exception": "ModuleNotFoundError: No module named 'scipy'"
+    }
+  ],
+  "outcome": "failed",
+  "error": "ModuleNotFoundError: No module named 'scipy'",
+  "openscad": {
+    "status": "attempted",
+    "attempts": [
+      {
+        "role": "initial",
+        "build_ok": true,
+        "seconds": 0.4741,
+        "construction": "manually_authored OpenSCAD, $fn=96",
+        "note": "Arc-only case explicitly does not satisfy the straight-ended handle; separate rectangular sweep below does.",
+        "measurement_error": "No module named 'scipy'"
+      },
+      {
+        "role": "edited",
+        "build_ok": true,
+        "seconds": 0.4888,
+        "construction": "manually_authored OpenSCAD, $fn=96",
+        "note": "Arc-only case explicitly does not satisfy the straight-ended handle; separate rectangular sweep below does.",
+        "measurement_error": "No module named 'scipy'"
+      }
+    ]
+  }
+}

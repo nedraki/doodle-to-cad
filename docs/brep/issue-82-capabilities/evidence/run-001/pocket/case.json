@@ -1,0 +1,42 @@
+{
+  "case": "pocket",
+  "track": "manually_authored",
+  "user_review": "pending",
+  "measurement_validation": "provisional; awaiting #81",
+  "attempts": [
+    {
+      "role": "initial",
+      "backend": "usd-brep",
+      "updates": {},
+      "attempt": "01-initial",
+      "build_ok": false,
+      "seconds": 0.308,
+      "diagnostics": [],
+      "stl_sha256": "9baf9f4b98e14e67930230a938ec4f2e4c3deeaad1f22c3f428754893516b9a7",
+      "exception": "ModuleNotFoundError: No module named 'scipy'"
+    }
+  ],
+  "outcome": "failed",
+  "error": "ModuleNotFoundError: No module named 'scipy'",
+  "openscad": {
+    "status": "attempted",
+    "attempts": [
+      {
+        "role": "initial",
+        "build_ok": true,
+        "seconds": 0.4807,
+        "construction": "manually_authored OpenSCAD, $fn=96",
+        "note": "Uses production targeted-edit planning and verification, not a whole-part text rewrite.",
+        "measurement_error": "No module named 'scipy'"
+      },
+      {
+        "role": "edited",
+        "build_ok": true,
+        "seconds": 0.465,
+        "construction": "manually_authored OpenSCAD, $fn=96",
+        "note": "Uses production targeted-edit planning and verification, not a whole-part text rewrite.",
+        "measurement_error": "No module named 'scipy'"
+      }
+    ]
+  }
+}

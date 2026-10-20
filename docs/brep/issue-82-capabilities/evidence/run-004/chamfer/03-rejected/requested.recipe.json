@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "units": "mm",
+  "name": "Horizontal block-edge chamfer",
+  "parameters": {
+    "radius": {
+      "value": 5.0,
+      "min": 1,
+      "max": 6,
+      "unit": "mm"
+    }
+  },
+  "operations": [
+    {
+      "id": "body",
+      "kind": "box",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "size": [
+        50,
+        40,
+        20
+      ]
+    },
+    {
+      "id": "bevel",
+      "kind": "chamfer",
+      "body": "body",
+      "radius": "radius"
+    }
+  ],
+  "output": "bevel"
+}

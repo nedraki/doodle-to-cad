@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "units": "mm",
+  "name": "Rounded block with opening plus global chamfer",
+  "parameters": {
+    "radius": {
+      "value": 2.0,
+      "min": 0.5,
+      "max": 3,
+      "unit": "mm"
+    }
+  },
+  "operations": [
+    {
+      "id": "body",
+      "kind": "box",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "size": [
+        60,
+        40,
+        20
+      ]
+    },
+    {
+      "id": "rounded",
+      "kind": "fillet",
+      "body": "body",
+      "radius": 6,
+      "selector": "outer_vertical"
+    },
+    {
+      "id": "hole",
+      "kind": "cylinder",
+      "origin": [
+        30,
+        20,
+        -1
+      ],
+      "radius": 5,
+      "height": 22,
+      "axis": "z"
+    },
+    {
+      "id": "cut",
+      "kind": "difference",
+      "left": "rounded",
+      "right": "hole"
+    },
+    {
+      "id": "bevel",
+      "kind": "chamfer",
+      "body": "cut",
+      "radius": "radius"
+    }
+  ],
+  "output": "bevel"
+}

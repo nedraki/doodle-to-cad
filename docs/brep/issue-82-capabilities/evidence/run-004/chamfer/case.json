@@ -1,0 +1,179 @@
+{
+  "case": "chamfer",
+  "track": "manually_authored",
+  "user_review": "pending",
+  "measurement_validation": "provisional; awaiting #81",
+  "attempts": [
+    {
+      "role": "initial",
+      "backend": "usd-brep",
+      "updates": {},
+      "attempt": "01-initial",
+      "build_ok": true,
+      "seconds": 0.3245,
+      "diagnostics": [],
+      "stl_sha256": "92dfb59e965f0d52eeb043e447324fc1f88ccdd40a8fb6430cfaab4b0c1dad11",
+      "observations_within_provisional_tolerances": true,
+      "native_measurement_available": true
+    },
+    {
+      "role": "edited",
+      "backend": "usd-brep",
+      "updates": {
+        "radius": 5
+      },
+      "attempt": "02-edited",
+      "build_ok": true,
+      "seconds": 0.3657,
+      "diagnostics": [],
+      "stl_sha256": "29db1e88ad5048343de02c4789654abbb51b6afb35af79af0794ee11a9160f8f",
+      "observations_within_provisional_tolerances": true,
+      "native_measurement_available": true
+    },
+    {
+      "role": "rejected",
+      "backend": "usd-brep",
+      "updates": {
+        "radius": -1
+      },
+      "attempt": "03-rejected",
+      "build_ok": false,
+      "seconds": 0.0,
+      "exception": "ValueError: radius must be between 1.0 and 6.0"
+    },
+    {
+      "role": "continued",
+      "backend": "usd-brep",
+      "updates": {
+        "radius": 4
+      },
+      "attempt": "04-continued",
+      "build_ok": true,
+      "seconds": 0.3209,
+      "diagnostics": [],
+      "stl_sha256": "9e3d409ca39c30f22baa167ba59912ce87a40ae7f814d68c4f635328e0c68e08",
+      "observations_within_provisional_tolerances": true,
+      "native_measurement_available": true
+    }
+  ],
+  "selection_rule": {
+    "kind": "extreme_face",
+    "owner": "bevel",
+    "axis": 2,
+    "side": "min"
+  },
+  "selection_limitation": "Geometric rule for pocket or bottom face; arbitrary face/edge targeting is not implemented.",
+  "preview_keeps_original_selected": true,
+  "selection_after_edit": {
+    "rule": {
+      "kind": "extreme_face",
+      "owner": "bevel",
+      "axis": 2,
+      "side": "min"
+    },
+    "label": "Outside Z min face",
+    "selected_in_revision": "original",
+    "status": "matched",
+    "target": {
+      "id": "e7aabc474dd038e9",
+      "label": "Outside Z min face",
+      "rule": {
+        "kind": "extreme_face",
+        "owner": "bevel",
+        "axis": 2,
+        "side": "min"
+      },
+      "match_count": 1,
+      "geometry": {
+        "triangles": [
+          [
+            46.4644660949707,
+            36.4644660949707,
+            0.0
+          ],
+          [
+            3.535533905029297,
+            3.535533905029297,
+            0.0
+          ],
+          [
+            3.535533905029297,
+            36.4644660949707,
+            0.0
+          ],
+          [
+            3.535533905029297,
+            3.535533905029297,
+            0.0
+          ],
+          [
+            46.4644660949707,
+            36.4644660949707,
+            0.0
+          ],
+          [
+            46.4644660949707,
+            3.535533905029297,
+            0.0
+          ]
+        ]
+      }
+    }
+  },
+  "rejection": {
+    "rejected": true,
+    "error": "radius must be between 1.0 and 6.0",
+    "type": "ValueError"
+  },
+  "failure_recovery": {
+    "selected_revision_unchanged": true,
+    "store_unchanged": true,
+    "downloads_unchanged": true,
+    "download_sha256": {
+      "source": "c50af04be159f054ad955f3ce06c550d6b9364a85e7d4e1eaffa1cc1a8e9f0e8",
+      "stl": "29db1e88ad5048343de02c4789654abbb51b6afb35af79af0794ee11a9160f8f",
+      "usd": "9002e55e8a128e28a425dc25e8b92322a5236c47b65bc569bf5e624b0c1e2332"
+    }
+  },
+  "continued_edit_recorded": true,
+  "outcome": "constructed_and_edited",
+  "preservation": {
+    "outside_x": {
+      "before": 50.0,
+      "after": 50.0,
+      "tolerance_mm": 0.05,
+      "within_tolerance": true
+    },
+    "outside_y": {
+      "before": 40.0,
+      "after": 40.0,
+      "tolerance_mm": 0.05,
+      "within_tolerance": true
+    },
+    "outside_z": {
+      "before": 20.0,
+      "after": 20.0,
+      "tolerance_mm": 0.05,
+      "within_tolerance": true
+    }
+  },
+  "openscad": {
+    "status": "attempted",
+    "attempts": [
+      {
+        "role": "initial",
+        "build_ok": true,
+        "seconds": 0.4332,
+        "construction": "manually_authored OpenSCAD, $fn=96",
+        "note": "Measured convention: radius is bevel hypotenuse; setback=radius/sqrt(2), angle=45 degrees. No selective hole entrance API."
+      },
+      {
+        "role": "edited",
+        "build_ok": true,
+        "seconds": 0.4086,
+        "construction": "manually_authored OpenSCAD, $fn=96",
+        "note": "Measured convention: radius is bevel hypotenuse; setback=radius/sqrt(2), angle=45 degrees. No selective hole entrance API."
+      }
+    ]
+  }
+}
