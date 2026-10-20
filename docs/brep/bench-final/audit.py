@@ -367,6 +367,27 @@ for r in excl_rows:
 check("excluded/superseded rows are published, carry reason+replaced_by, and are "
       "counted in NO metric", not excl_bad, f"{len(excl_rows)} excluded; bad={excl_bad[:2]}")
 
+# ---------------- recorded human decisions (issue #80): integrity, never derived
+dec_bad = []
+for k, v in sorted(decisions.items()):
+    if not isinstance(v, dict) or v.get("decision") in (None, "", "not-reviewed"):
+        continue
+    try:
+        d_, b_, t_ = k.split("|")
+        key = (d_, b_, int(t_.lstrip("t")))
+    except ValueError:
+        dec_bad.append(f"{k}: malformed cell key")
+        continue
+    if key not in cell_seen:
+        dec_bad.append(f"{k}: no such cell")
+        continue
+    want = (cell_seen[key].get("build") or {}).get("sha256")
+    if not want or v.get("mesh_sha256") != want:
+        dec_bad.append(f"{k}: decision mesh hash does not match the archived build.sha256")
+check("recorded human decisions bind to the archived mesh hash of an existing cell "
+      "(decisions are human input; no metric derives from them)",
+      not dec_bad, str(dec_bad[:3]))
+
 # ---------------- montages: PROVEN BINDING image -> provenance.json -> row -> mesh -> bytes
 for name, meta in sorted(prov.items()):
     img = HERE / "images" / name
