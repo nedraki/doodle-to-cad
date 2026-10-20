@@ -260,7 +260,7 @@
   },
   "wheel": {
     "kind": "openscad_reference",
-    "source": "/tmp/doodle-brep-34/benchmarks/brep-baseline/wheel/reference.scad",
+    "source": "benchmarks/brep-baseline/wheel/reference.scad",
     "watertight": true,
     "components": 1,
     "extents_mm": [
@@ -269,6 +269,8 @@
       120.0
     ],
     "volume_mm3": 43128.5,
-    "genus": 8
+    "genus": 8,
+    "source_original": "/tmp/doodle-brep-34/benchmarks/brep-baseline/wheel/reference.scad",
+    "source_note": "normalized from the author tree path at issue #79; bytes are identical (sha256 25be26a7... verified against benchmarks/brep-baseline/wheel/reference.scad)"
   }
 }
