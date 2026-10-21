@@ -74,7 +74,7 @@ CASES = [
                     "chamfer_45_facets": 12, "volume_less_than": 60*40*25},
         "edit": {"param": "chamfer_c", "new": 3.0,
                  "protected": {"genus": 0},
-                 "changed_note": "extents shrink by 2*3.0 per axis"},
+                 "changed_note": "bbox preserved; 45-degree chamfer setback is chamfer_c/sqrt(2), matching the kernel radius convention"},
         "author_ops": 2, "author_params": 4,
         "constraint_note": "chamfer applies to ALL edges (build.py chamfer_fillet); hole-inlet chamfer unsupported",
     },

@@ -3,7 +3,8 @@
 Human-authored recipes, no LLM in the loop. Every cell is reproducible:
 
 ```
-PYTHONPATH=<repo> <worker-venv>/bin/python docs/brep/bench-capabilities/build_capabilities.py
+<analysis-python> docs/brep/bench-capabilities/build_capabilities.py \
+  --worker-python <worker-venv>/bin/python --output <new-run-directory>
 ```
 
 The runner validates each recipe with the product's own `validate_recipe`
@@ -15,9 +16,35 @@ guard can abort after export — a guard nobody obeys is decoration).
 
 Edits are PARAMETER-ONLY: identical operation sequence, one parameter value
 changed (`ops_identical: true` is recorded). Protected dimensions must not
-move (±0.01 mm); changed dimensions must reach the requested value.
+move; changed dimensions must reach the requested value. Current checks use
+0.05 mm for outer bounds and 0.15 mm for tessellated feature measurements.
 
-## Matrix (run of 2026-10-20, `results.json` is the machine copy)
+## Correction to the original edit claims
+
+The original `results.json`, `evidence/`, and demo server remain historical.
+Their edit PASS flags did not establish bevel size, wall thickness, or hole
+diameter; sweep section/leg and loft bottom-profile protection were incomplete.
+Do not use the historical table below as proof of those measurements.
+
+The corrected runner measures sections for chamfer setbacks at two heights,
+bend radius and section width/height, leg length, both loft ends, shell side
+walls and floor, corner fillets, and both pierced-wall hole diameters. The
+45-degree chamfer uses the existing kernel radius convention: setback =
+`chamfer_c / sqrt(2)`; the bounding box does not shrink. Measurements are
+checked on initial and edited meshes. Tests reject unchanged initial meshes
+against every successful edited contract and detect unrelated dimension drift.
+
+Each invocation requires a new output directory and saves recipes, frozen
+plan, runner sources, environment, complete stdout/stderr, diagnostics and
+incremental results. Existing directories and attempts are refused. Timeouts
+are retained. Any failed initial or edit cell gives exit status 1, including
+exploratory failures. The known c1 round-trip defect remains a failure.
+
+See [RUNS.md](RUNS.md) for retained development attempts and the selected run.
+These remain trusted human-authored demonstrations, not LLM scores or human
+acceptance. Analysis dependencies match ../issue-82-capabilities/requirements-analysis.txt.
+
+## Historical matrix (run of 2026-10-20, `results.json` is the machine copy)
 
 | case | capability | initial | parametric edit | note |
 |---|---|---|---|---|

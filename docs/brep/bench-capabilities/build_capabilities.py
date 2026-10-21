@@ -3,7 +3,8 @@
 Run with the WORKER venv python (needs trimesh+numpy; doodle_to_cad.brep_recipe
 is stdlib-only so the product's own validator is used verbatim):
 
-  PYTHONPATH=<repo> <worker-venv>/bin/python docs/brep/bench-capabilities/build_capabilities.py
+  python docs/brep/bench-capabilities/build_capabilities.py --output <new-run-dir>
+      --worker-python <worker-venv>/bin/python
 
 For every case: validate -> build via workers/brep/build.py -> measure ->
 compare to expected. Then (if the case defines an edit) change ONLY the named
@@ -11,7 +12,8 @@ parameter value, rebuild, and verify protected dimensions did not move and
 changed dimensions reached the requested value. Builds that fail are still
 recorded (matrix cell 'failed') — no case is dropped.
 """
-import json, subprocess, sys, time
+import argparse, importlib.util, json, os, subprocess, sys, time
+from datetime import datetime, timezone
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -19,10 +21,15 @@ ROOT = HERE.parents[2]
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(HERE))
 from doodle_to_cad.brep_recipe import validate_recipe  # product validator, verbatim
-from cases import CASES
+# Other evidence tools also have a cases.py; do not depend on sys.modules order.
+_case_spec = importlib.util.spec_from_file_location("bench_capability_cases", HERE / "cases.py")
+_cases = importlib.util.module_from_spec(_case_spec)
+_case_spec.loader.exec_module(_cases)
+CASES = _cases.CASES
+from feature_checks import feature_checks
 import trimesh
 
-WORKER_PY = Path("/home/sparkie/playground/doodle-to-cad/workers/brep/.venv/bin/python")
+WORKER_PY = Path(os.environ.get("DOODLE_BREP_PYTHON", ROOT / "workers/brep/.venv/bin/python"))
 BUILD = ROOT / "workers" / "brep" / "build.py"
 OUT = HERE / "evidence"
 
@@ -30,17 +37,27 @@ OUT = HERE / "evidence"
 def build(recipe: dict, tag: str) -> dict:
     """Write recipe bytes, run the worker, return diagnostics + measurement."""
     d = OUT / tag
-    if d.exists():  # never trust evidence from a previous run
-        import shutil
-        shutil.rmtree(d)
-    d.mkdir(parents=True, exist_ok=True)
+    d.mkdir(parents=True, exist_ok=False)
     rp = d / "model.recipe.json"
     rp.write_text(json.dumps(recipe, indent=1, sort_keys=True))
     t0 = time.time()
-    p = subprocess.run([str(WORKER_PY), str(BUILD), str(rp), str(d)],
-                       capture_output=True, text=True, timeout=300)
-    record = {"worker_exit": p.returncode, "wall_seconds": round(time.time() - t0, 2),
-              "stderr_tail": (p.stderr or "").strip().splitlines()[-3:]}
+    env = dict(os.environ)
+    env.pop("PYTHONPATH", None)
+    env.pop("PYTHONHOME", None)
+    try:
+        p = subprocess.run([str(WORKER_PY), str(BUILD), str(rp), str(d)],
+                           capture_output=True, text=True, timeout=300, env=env)
+        code, stdout, stderr = p.returncode, p.stdout, p.stderr
+    except (subprocess.TimeoutExpired, OSError) as exc:
+        code = -1
+        stdout = getattr(exc, "stdout", None) or ""
+        stderr = getattr(exc, "stderr", None) or str(exc)
+    def decoded(value):
+        return value.decode(errors="replace") if isinstance(value, bytes) else value
+    (d / "stdout.log").write_text(decoded(stdout))
+    (d / "stderr.log").write_text(decoded(stderr))
+    record = {"worker_exit": code, "wall_seconds": round(time.time() - t0, 2),
+              "stderr_tail": decoded(stderr).strip().splitlines()[-3:]}
     diag = d / "diagnostics.json"
     err = d / "construction-error.json"
     if diag.exists():
@@ -126,8 +143,25 @@ def edit_variants(case, base):
 
 
 def main():
-    OUT.mkdir(exist_ok=True)
-    results = {"schema": 1, "issue": 82, "trust": "trusted-recipe (human authored, no LLM)",
+    global OUT, WORKER_PY
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--output", type=Path, required=True, help="New run directory; existing paths are refused")
+    parser.add_argument("--worker-python", type=Path, default=WORKER_PY)
+    args = parser.parse_args()
+    OUT = args.output.resolve()
+    WORKER_PY = args.worker_python.absolute()
+    OUT.mkdir(parents=True, exist_ok=False)
+    for source in (Path(__file__), HERE / "cases.py", HERE / "feature_checks.py"):
+        (OUT / source.name).write_bytes(source.read_bytes())
+    (OUT / "plan.json").write_text(json.dumps(CASES, indent=2))
+    (OUT / "environment.json").write_text(json.dumps({
+        "started_utc": datetime.now(timezone.utc).isoformat(),
+        "python": sys.version, "worker_python": str(WORKER_PY),
+        "git_commit": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip(),
+        "git_status": subprocess.check_output(["git", "status", "--porcelain"], cwd=ROOT, text=True),
+        "trimesh": trimesh.__version__,
+    }, indent=2))
+    results = {"schema": 2, "issue": 82, "trust": "trusted-recipe (human authored, no LLM)",
                "worker_python": str(WORKER_PY), "cases": []}
     for case in CASES:
         name = case["id"]
@@ -139,13 +173,17 @@ def main():
             entry["constraint_note"] = case["constraint_note"]
         try:
             base = _build_recipe(case)
+            validate_recipe(base)
         except Exception as exc:  # authoring bug — record, keep going
             entry["initial"] = {"status": "invalid_recipe", "error": str(exc)}
             results["cases"].append(entry)
             print(f"{name}: INVALID RECIPE: {exc}")
+            (OUT / "results.json").write_text(json.dumps(results, indent=1))
             continue
         initial = build(base, f"{name}/initial")
         initial["checks"] = compare(initial, case["initial"] or {}, f"{name}/initial") if case["initial"] else []
+        if case["edit"]:
+            initial["checks"].extend(feature_checks(OUT / f"{name}/initial/model.stl", case, base))
         # The worker's own verdict outranks a present STL: the round-trip
         # guard can abort AFTER writing artifacts, so a build with a
         # construction-error or non-zero exit is FAILED regardless of bytes.
@@ -156,32 +194,15 @@ def main():
         if initial["status"] == "built" and initial["checks"]:
             initial["status"] = "pass" if all(c["pass"] for c in initial["checks"]) else "checks_failed"
         entry["initial"] = initial
-        _save(base, f"{name}/initial")
 
         if case["edit"] and initial["status"] in ("pass", "checks_failed", "built"):
             edited = edit_variants(case, base)
+            validate_recipe(edited)
             edit_rec = build(edited, f"{name}/edited")
-            exp = {"extents": case["edit"]["protected"].get("extents"),
-                   "genus": case["edit"]["protected"].get("genus")}
-            checks = compare(edit_rec, {k: v for k, v in exp.items() if v is not None}, f"{name}/edited") if exp else []
-            # explicit protected-dimension comparisons (tight tolerance)
-            p = case["edit"]["protected"]
-            meas = edit_rec.get("measure") or {}
-            if "extents" in p:
-                ok = meas.get("extents") and all(abs(g - w) <= 0.01 for g, w in zip(meas["extents"], p["extents"]))
-                checks.append({"check": "protected_extents_unchanged", "pass": ok,
-                               "got": meas.get("extents"), "expected": p["extents"]})
-            if "extents_z" in p:
-                ok = meas.get("extents") and abs(meas["extents"][2] - p["extents_z"]) <= 0.01
-                checks.append({"check": "protected_z", "pass": ok,
-                               "got": (meas.get("extents") or [None])[2], "expected": p["extents_z"]})
-            c = case["edit"].get("changed") or {}
-            if "extents_x" in c:
-                want = c["extents_x"]
-                # new outer parameter feeds extents; tolerance loose: tessellation
-                ok = meas.get("extents") and abs(meas["extents"][0] - want) <= max(0.35, abs(want) * 0.01)
-                checks.append({"check": "changed_x_reached", "pass": ok,
-                               "got": (meas.get("extents") or [None])[0], "expected": want})
+            exp = {k: v for k, v in case["initial"].items()
+                   if k in ("genus", "watertight", "components")}
+            checks = compare(edit_rec, exp, f"{name}/edited")
+            checks.extend(feature_checks(OUT / f"{name}/edited/model.stl", case, edited))
             edit_rec["checks"] = checks
             edit_rec["status"] = ("failed" if ("construction_error" in edit_rec
                                                or edit_rec.get("worker_exit") != 0)
@@ -192,28 +213,24 @@ def main():
                 [ {k: v for k, v in op.items() if k != "evidence"} for op in base["operations"] ]
                 == [ {k: v for k, v in op.items() if k != "evidence"} for op in edited["operations"] ])
             entry["edit"] = edit_rec
-            _save(edited, f"{name}/edited")
         results["cases"].append(entry)
         line = (f"{name}: initial={initial['status']} "
                 f"edit={'-' if 'edit' not in entry else entry['edit']['status']}")
-        print(line)
-    (HERE / "results.json").write_text(json.dumps(results, indent=1))
-    print("wrote", HERE / "results.json")
+        print(line, flush=True)
+        (OUT / "results.json").write_text(json.dumps(results, indent=1))
+    (OUT / "results.json").write_text(json.dumps(results, indent=1))
+    print("wrote", OUT / "results.json")
     fails = [c["id"] for c in results["cases"]
-             if c["initial"]["status"] not in ("pass",) and not c["author_effort"]["exploratory"]]
-    print("non-exploratory cells not passing:", fails or "none")
+             if c["initial"]["status"] != "pass" or
+             (c.get("edit", {}).get("status", "pass") != "pass")]
+    print("cells not passing:", fails or "none")
+    return int(bool(fails))
 
 
 def _build_recipe(case):
-    from cases import _recipe
-    return _recipe(case["id"], case["params"], json.loads(json.dumps(case["ops"])), case["output"])
+    return _cases._recipe(case["id"], case["params"], json.loads(json.dumps(case["ops"])), case["output"])
 
-
-def _save(recipe, tag):
-    p = OUT / tag
-    p.mkdir(parents=True, exist_ok=True)
-    (p / "model.recipe.json").write_text(json.dumps(recipe, indent=1, sort_keys=True))
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

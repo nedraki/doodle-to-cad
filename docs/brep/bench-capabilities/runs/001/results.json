@@ -1,0 +1,416 @@
+{
+ "schema": 1,
+ "issue": 82,
+ "trust": "trusted-recipe (human authored, no LLM)",
+ "worker_python": "/usr/bin/python3.12",
+ "cases": [
+  {
+   "id": "c1_fillet_enclosure",
+   "capability": "fillet (vertical corner rounding) + preserved through-holes",
+   "author_effort": {
+    "operations": 6,
+    "parameters": 5,
+    "exploratory": false
+   },
+   "initial": {
+    "worker_exit": 1,
+    "wall_seconds": 0.05,
+    "stderr_tail": [
+     "BRep build failed: No package metadata was found for usd-brep"
+    ],
+    "construction_error": {
+     "code": "build_failed",
+     "message": "No package metadata was found for usd-brep"
+    },
+    "checks": [
+     {
+      "check": "extents",
+      "pass": false,
+      "got": null,
+      "expected": [
+       120.0,
+       80.0,
+       40.0
+      ]
+     },
+     {
+      "check": "genus",
+      "pass": false,
+      "got": null,
+      "expected": 2
+     },
+     {
+      "check": "watertight",
+      "pass": false,
+      "got": null,
+      "expected": true
+     },
+     {
+      "check": "components",
+      "pass": false,
+      "got": null,
+      "expected": 1
+     },
+     {
+      "check": "volume",
+      "pass": false,
+      "got": null,
+      "expected": 375957.5
+     },
+     {
+      "check": "feature_measurement",
+      "pass": false,
+      "error": "string is not a file: `/tmp/capability-check-run-1/c1_fillet_enclosure/initial/model.stl`"
+     }
+    ],
+    "status": "failed"
+   }
+  },
+  {
+   "id": "c2_chamfer_block",
+   "capability": "chamfer (edge bevel) \u2014 documents all-edges constraint",
+   "author_effort": {
+    "operations": 2,
+    "parameters": 4,
+    "exploratory": false
+   },
+   "constraint_note": "chamfer applies to ALL edges (build.py chamfer_fillet); hole-inlet chamfer unsupported",
+   "initial": {
+    "worker_exit": 1,
+    "wall_seconds": 0.04,
+    "stderr_tail": [
+     "BRep build failed: No package metadata was found for usd-brep"
+    ],
+    "construction_error": {
+     "code": "build_failed",
+     "message": "No package metadata was found for usd-brep"
+    },
+    "checks": [
+     {
+      "check": "extents",
+      "pass": false,
+      "got": null,
+      "expected": [
+       60.0,
+       40.0,
+       25.0
+      ]
+     },
+     {
+      "check": "genus",
+      "pass": false,
+      "got": null,
+      "expected": 0
+     },
+     {
+      "check": "watertight",
+      "pass": false,
+      "got": null,
+      "expected": true
+     },
+     {
+      "check": "components",
+      "pass": false,
+      "got": null,
+      "expected": 1
+     },
+     {
+      "check": "chamfer_45_facets",
+      "pass": false,
+      "got": null,
+      "expected": 12
+     },
+     {
+      "check": "volume_less_than",
+      "pass": false,
+      "got": null,
+      "expected": "< 60000"
+     },
+     {
+      "check": "feature_measurement",
+      "pass": false,
+      "error": "string is not a file: `/tmp/capability-check-run-1/c2_chamfer_block/initial/model.stl`"
+     }
+    ],
+    "status": "failed"
+   }
+  },
+  {
+   "id": "c3_sweep_handle",
+   "capability": "curved sweep (bent bar, tangent legs, rectangular section)",
+   "author_effort": {
+    "operations": 1,
+    "parameters": 4,
+    "exploratory": false
+   },
+   "initial": {
+    "worker_exit": 1,
+    "wall_seconds": 0.05,
+    "stderr_tail": [
+     "BRep build failed: No package metadata was found for usd-brep"
+    ],
+    "construction_error": {
+     "code": "build_failed",
+     "message": "No package metadata was found for usd-brep"
+    },
+    "checks": [
+     {
+      "check": "extents",
+      "pass": false,
+      "got": null,
+      "expected": [
+       68.0,
+       54.0,
+       3.0
+      ]
+     },
+     {
+      "check": "genus",
+      "pass": false,
+      "got": null,
+      "expected": 0
+     },
+     {
+      "check": "watertight",
+      "pass": false,
+      "got": null,
+      "expected": true
+     },
+     {
+      "check": "components",
+      "pass": false,
+      "got": null,
+      "expected": 1
+     },
+     {
+      "check": "volume",
+      "pass": false,
+      "got": null,
+      "expected": 3221.9
+     },
+     {
+      "check": "feature_measurement",
+      "pass": false,
+      "error": "string is not a file: `/tmp/capability-check-run-1/c3_sweep_handle/initial/model.stl`"
+     }
+    ],
+    "status": "failed"
+   }
+  },
+  {
+   "id": "c4_loft_transition",
+   "capability": "loft (rectangular end to circular end)",
+   "author_effort": {
+    "operations": 1,
+    "parameters": 3,
+    "exploratory": false
+   },
+   "initial": {
+    "worker_exit": 1,
+    "wall_seconds": 0.05,
+    "stderr_tail": [
+     "BRep build failed: No package metadata was found for usd-brep"
+    ],
+    "construction_error": {
+     "code": "build_failed",
+     "message": "No package metadata was found for usd-brep"
+    },
+    "checks": [
+     {
+      "check": "extents",
+      "pass": false,
+      "got": null,
+      "expected": [
+       60.0,
+       60.0,
+       30.0
+      ]
+     },
+     {
+      "check": "genus",
+      "pass": false,
+      "got": null,
+      "expected": 0
+     },
+     {
+      "check": "watertight",
+      "pass": false,
+      "got": null,
+      "expected": true
+     },
+     {
+      "check": "components",
+      "pass": false,
+      "got": null,
+      "expected": 1
+     },
+     {
+      "check": "feature_measurement",
+      "pass": false,
+      "error": "string is not a file: `/tmp/capability-check-run-1/c4_loft_transition/initial/model.stl`"
+     }
+    ],
+    "status": "failed"
+   }
+  },
+  {
+   "id": "c5_shell_tray",
+   "capability": "shell (open-top tray, protected outer faces)",
+   "author_effort": {
+    "operations": 3,
+    "parameters": 5,
+    "exploratory": false
+   },
+   "initial": {
+    "worker_exit": 1,
+    "wall_seconds": 0.05,
+    "stderr_tail": [
+     "BRep build failed: No package metadata was found for usd-brep"
+    ],
+    "construction_error": {
+     "code": "build_failed",
+     "message": "No package metadata was found for usd-brep"
+    },
+    "checks": [
+     {
+      "check": "extents",
+      "pass": false,
+      "got": null,
+      "expected": [
+       100.0,
+       70.0,
+       25.0
+      ]
+     },
+     {
+      "check": "genus",
+      "pass": false,
+      "got": null,
+      "expected": 0
+     },
+     {
+      "check": "watertight",
+      "pass": false,
+      "got": null,
+      "expected": true
+     },
+     {
+      "check": "components",
+      "pass": false,
+      "got": null,
+      "expected": 1
+     },
+     {
+      "check": "volume",
+      "pass": false,
+      "got": null,
+      "expected": 42648
+     },
+     {
+      "check": "feature_measurement",
+      "pass": false,
+      "error": "string is not a file: `/tmp/capability-check-run-1/c5_shell_tray/initial/model.stl`"
+     }
+    ],
+    "status": "failed"
+   }
+  },
+  {
+   "id": "c6_combined",
+   "capability": "feature coexistence: fillet + shell + window pierce",
+   "author_effort": {
+    "operations": 5,
+    "parameters": 6,
+    "exploratory": false
+   },
+   "initial": {
+    "worker_exit": 1,
+    "wall_seconds": 0.05,
+    "stderr_tail": [
+     "BRep build failed: No package metadata was found for usd-brep"
+    ],
+    "construction_error": {
+     "code": "build_failed",
+     "message": "No package metadata was found for usd-brep"
+    },
+    "checks": [
+     {
+      "check": "extents",
+      "pass": false,
+      "got": null,
+      "expected": [
+       100.0,
+       60.0,
+       30.0
+      ]
+     },
+     {
+      "check": "genus",
+      "pass": false,
+      "got": null,
+      "expected": 2
+     },
+     {
+      "check": "watertight",
+      "pass": false,
+      "got": null,
+      "expected": true
+     },
+     {
+      "check": "components",
+      "pass": false,
+      "got": null,
+      "expected": 1
+     },
+     {
+      "check": "feature_measurement",
+      "pass": false,
+      "error": "string is not a file: `/tmp/capability-check-run-1/c6_combined/initial/model.stl`"
+     }
+    ],
+    "status": "failed"
+   }
+  },
+  {
+   "id": "c7_chamfer_stress",
+   "capability": "chamfer after drilling (all-edges stress; may honestly fail)",
+   "author_effort": {
+    "operations": 6,
+    "parameters": 4,
+    "exploratory": true
+   },
+   "initial": {
+    "worker_exit": 1,
+    "wall_seconds": 0.05,
+    "stderr_tail": [
+     "BRep build failed: No package metadata was found for usd-brep"
+    ],
+    "construction_error": {
+     "code": "build_failed",
+     "message": "No package metadata was found for usd-brep"
+    },
+    "checks": [
+     {
+      "check": "genus",
+      "pass": false,
+      "got": null,
+      "expected": 2
+     },
+     {
+      "check": "watertight",
+      "pass": false,
+      "got": null,
+      "expected": true
+     },
+     {
+      "check": "components",
+      "pass": false,
+      "got": null,
+      "expected": 1
+     }
+    ],
+    "status": "failed"
+   }
+  }
+ ]
+}
