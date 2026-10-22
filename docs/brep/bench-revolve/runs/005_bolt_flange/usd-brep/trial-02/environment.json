@@ -1,0 +1,43 @@
+{
+  "collected_by": "evaluate_brep.py (issue #85)",
+  "tested_commit": "88fa0eca51b928050d46470e7cbc3be124204ea6",
+  "python": "3.11.16 (main, Sep  1 2026, 14:18:39) [Clang 22.1.3 ]",
+  "platform": "Linux-6.17.0-1022-nvidia-aarch64-with-glibc2.39",
+  "model_base_url": "http://127.0.0.1:8000/v1",
+  "model_host": "127.0.0.1",
+  "server_model": "local-inference-lab/Qwen3.8-Flash-Next-NVFP4",
+  "doodle_brep_python": "/home/sparkie/playground/doodle-to-cad/workers/brep/.venv/bin/python",
+  "results_dir": "results/task-17-comparison",
+  "worker_packages": [
+    {
+      "name": "networkx",
+      "version": "3.6.1"
+    },
+    {
+      "name": "numpy",
+      "version": "2.5.4"
+    },
+    {
+      "name": "trimesh",
+      "version": "5.1.1"
+    },
+    {
+      "name": "usd-brep",
+      "version": "1.0.0"
+    }
+  ],
+  "application_packages": {
+    "fastapi": "0.141.1",
+    "httpx": "0.28.1",
+    "numpy": "2.4.6",
+    "trimesh": "5.1.0",
+    "networkx": "3.6.1",
+    "pillow": "12.3.0"
+  },
+  "openscad_docker_image": "openscad/openscad:latest",
+  "openscad_docker_image_id": "sha256:147e48525bec392bcf628d7a6d5ea4ccac71b16251952328f86e1061cbf47c37",
+  "trial": "005_bolt_flange/usd-brep/t2",
+  "trial_submitted_at": "2026-10-22T05:17:37.522978+00:00",
+  "trial_finished_at": "2026-10-22T05:20:28.062389+00:00",
+  "written_at": "2026-10-22T05:20:31.511459+00:00"
+}

@@ -1,0 +1,104 @@
+{
+  "drawing": "002_greek_vase_silhouette",
+  "backend": "usd-brep",
+  "trial": 1,
+  "submitted_at": "2026-10-22T05:07:20.758604+00:00",
+  "finished_at": "2026-10-22T05:09:11.141469+00:00",
+  "run_id": "572c79fcb2c5",
+  "wall_seconds": 110.4,
+  "job_status": "done",
+  "error": null,
+  "questions_asked": 0,
+  "question_kinds": [],
+  "build": {
+    "watertight": true,
+    "components": 1,
+    "genus": 0,
+    "extents_mm": [
+      90.0,
+      90.0,
+      120.0
+    ],
+    "volume_mm3": 79672.6,
+    "sha256": "a844570f949b52628232275459875f04dc386d5b6f92fdae23d452d9b14b9e25",
+    "bytes": 169484
+  },
+  "checks": {
+    "build_success": true,
+    "extents_pass": false,
+    "genus_pass": true,
+    "volume_pass": false,
+    "fidelity_pass": true,
+    "overall_pass": false,
+    "not_applicable": []
+  },
+  "fidelity": {
+    "scores": {
+      "front": 0.706
+    },
+    "pass": true,
+    "reason": null,
+    "topology": {
+      "front": {
+        "expected": 0,
+        "actual": 6,
+        "position_fidelity": null
+      }
+    }
+  },
+  "product": {
+    "success": false,
+    "accepted": false,
+    "status": "unverified",
+    "score": null,
+    "projection_status": "passed",
+    "geometry_status": "passed",
+    "failures": [
+      "Detailed drawing features and view assignments require review."
+    ]
+  },
+  "attempts": {
+    "count": 1,
+    "recovered": false,
+    "corrections": 1
+  },
+  "unsupported": {
+    "flag": false,
+    "code": null
+  },
+  "brep_only": {
+    "operations": [
+      "revolve"
+    ],
+    "loft": false,
+    "shell": false,
+    "arc_pipe": false,
+    "sweep": false,
+    "extrude": false,
+    "parameter_names": [
+      "floor_thickness",
+      "height",
+      "max_radius",
+      "neck_radius",
+      "rim_radius",
+      "wall_thickness"
+    ]
+  },
+  "edit": {
+    "available": true,
+    "ok": true,
+    "seconds": 3.02,
+    "param": "height",
+    "old": 120,
+    "new": 144.0,
+    "message": null
+  },
+  "targeted": {
+    "available": false,
+    "ok": false,
+    "seconds": null,
+    "operation": null,
+    "value": null,
+    "message": "no probe value produced a valid targeted plan"
+  }
+}

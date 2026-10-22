@@ -1,0 +1,27 @@
+{
+  "view_frame": "The drawing presents two views of a hexagonal prism. The left view is the Front view (XZ plane), showing the hexagonal cross-section. The right view is the Top view (XY plane), showing the hexagonal profile of the prism's length. The world axes are X (width), Y (depth), and Z (height).",
+  "features": [
+    {
+      "id": "hex_prism",
+      "shape": "hexagonal_prism",
+      "section": "hexagon",
+      "axis_or_plane": "Y",
+      "dimensions": [
+        "ASSUMED_hexagon_width_mm",
+        "ASSUMED_hexagon_height_mm",
+        "ASSUMED_prism_length_mm"
+      ],
+      "placement": "Centered at (0, 0, 0). The hexagonal cross-section lies in the XZ plane. The prism extends along the Y-axis from -ASSUMED_prism_length_mm/2 to +ASSUMED_prism_length_mm/2.",
+      "evidence": "The drawing shows two views of a hexagonal shape. The left view (Front) shows the hexagonal cross-section. The right view (Top) shows the hexagonal profile of the prism's length."
+    }
+  ],
+  "connections": [],
+  "edit_rules": [
+    "Changing ASSUMED_hexagon_width_mm or ASSUMED_hexagon_height_mm will resize the hexagonal cross-section in the XZ plane.",
+    "Changing ASSUMED_prism_length_mm will resize the prism along the Y-axis."
+  ],
+  "unresolved": [
+    "The exact dimensions of the hexagon (width and height) are not provided in the drawing.",
+    "The length of the prism is not provided in the drawing."
+  ]
+}

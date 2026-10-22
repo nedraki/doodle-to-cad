@@ -1,0 +1,270 @@
+[
+  {
+    "attempt": 1,
+    "action": "generate",
+    "preflight": {
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "expected_subtractive_feature_groups": 0
+    },
+    "compiler_repairs": [],
+    "uniform_scale": null,
+    "evaluation": {
+      "score": 99.3,
+      "valid_mesh": true,
+      "accepted": true,
+      "mandatory_gates": {
+        "compiled": true,
+        "topology": true,
+        "dimensions": true,
+        "shape_sanity": true,
+        "features": true,
+        "openings_through": true,
+        "projections": true,
+        "build_envelope": true
+      },
+      "scores": {
+        "topology": 45,
+        "dimensions": 20.0,
+        "features": 20,
+        "projections": 14.3
+      },
+      "projection_similarity": {
+        "front": 0.956,
+        "right": 0.953
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 19,
+          "crop_internal_profiles": 0,
+          "source_aspect": 1.432,
+          "rendered_aspect": 1.5,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": [
+            [
+              0.85,
+              0.871
+            ],
+            [
+              0.795,
+              0.871
+            ],
+            [
+              0.753,
+              0.871
+            ],
+            [
+              0.71,
+              0.871
+            ],
+            [
+              0.594,
+              0.87
+            ],
+            [
+              0.424,
+              0.871
+            ],
+            [
+              0.375,
+              0.871
+            ],
+            [
+              0.85,
+              0.121
+            ],
+            [
+              0.795,
+              0.121
+            ],
+            [
+              0.753,
+              0.121
+            ],
+            [
+              0.71,
+              0.121
+            ],
+            [
+              0.666,
+              0.495
+            ],
+            [
+              0.619,
+              0.122
+            ],
+            [
+              0.57,
+              0.122
+            ],
+            [
+              0.517,
+              0.495
+            ],
+            [
+              0.424,
+              0.121
+            ],
+            [
+              0.375,
+              0.121
+            ],
+            [
+              0.24,
+              0.496
+            ]
+          ]
+        },
+        "right": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 19,
+          "crop_internal_profiles": 0,
+          "source_aspect": 1.463,
+          "rendered_aspect": 1.5,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": [
+            [
+              0.85,
+              0.871
+            ],
+            [
+              0.795,
+              0.871
+            ],
+            [
+              0.753,
+              0.871
+            ],
+            [
+              0.71,
+              0.871
+            ],
+            [
+              0.594,
+              0.87
+            ],
+            [
+              0.424,
+              0.871
+            ],
+            [
+              0.375,
+              0.871
+            ],
+            [
+              0.85,
+              0.121
+            ],
+            [
+              0.795,
+              0.121
+            ],
+            [
+              0.753,
+              0.121
+            ],
+            [
+              0.71,
+              0.121
+            ],
+            [
+              0.666,
+              0.495
+            ],
+            [
+              0.619,
+              0.122
+            ],
+            [
+              0.57,
+              0.122
+            ],
+            [
+              0.517,
+              0.495
+            ],
+            [
+              0.424,
+              0.121
+            ],
+            [
+              0.375,
+              0.121
+            ],
+            [
+              0.24,
+              0.496
+            ]
+          ]
+        }
+      },
+      "demanded_openings": {
+        "total": 0,
+        "per_view": {
+          "front": 0,
+          "right": 0
+        },
+        "sheet_total": 0,
+        "registration_gap": 0
+      },
+      "failures": []
+    },
+    "mesh_health": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 1276,
+      "through_holes": 0,
+      "extents_mm": [
+        56.0,
+        56.0,
+        37.307
+      ],
+      "volume_mm3": 45648.622
+    },
+    "build": {
+      "version": 1,
+      "backend": "openscad",
+      "source_format": "openscad",
+      "ok": true,
+      "units": "mm",
+      "axes": {
+        "x": "width",
+        "y": "depth",
+        "z": "height"
+      },
+      "views": [
+        "isometric",
+        "front",
+        "top",
+        "right"
+      ],
+      "measurements": {
+        "watertight": true,
+        "components": 1,
+        "triangles": 1276,
+        "through_holes": 0,
+        "extents_mm": [
+          56.0,
+          56.0,
+          37.307
+        ],
+        "volume_mm3": 45648.622
+      },
+      "diagnostics": [],
+      "drawing_evaluated": false
+    },
+    "compile_log": "Geometries in cache: 9\nGeometry cache size in bytes: 96600\nCGAL Polyhedrons in cache: 2\nCGAL cache size in bytes: 1572768\nTotal rendering time: 0:00:00.936\n   Top level object is a 3D object:\n   Simple:        yes\n   Vertices:      736\n   Halfedges:    2368\n   Edges:        1184\n   Halffacets:    904\n   Facets:        452\n   Volumes:         2",
+    "files": {
+      "scad": "attempt-01/model.scad",
+      "stl": "attempt-01/model.stl",
+      "views": {
+        "isometric": "attempt-01/view-isometric.png",
+        "front": "attempt-01/view-front.png",
+        "top": "attempt-01/view-top.png",
+        "right": "attempt-01/view-right.png"
+      }
+    }
+  }
+]

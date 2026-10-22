@@ -1,0 +1,291 @@
+{
+  "version": 2,
+  "units": "mm",
+  "name": "flange",
+  "parameters": {
+    "flange_diameter": {
+      "value": 100,
+      "min": 50,
+      "max": 200,
+      "label": "Flange Diameter",
+      "description": "Outer diameter of the flange"
+    },
+    "flange_thickness": {
+      "value": 10,
+      "min": 5,
+      "max": 50,
+      "label": "Flange Thickness",
+      "description": "Thickness of the flange plate"
+    },
+    "bore_diameter": {
+      "value": 30,
+      "min": 10,
+      "max": 80,
+      "label": "Bore Diameter",
+      "description": "Diameter of the central bore"
+    },
+    "bolt_circle_diameter": {
+      "value": 60,
+      "min": 40,
+      "max": 150,
+      "label": "Bolt Circle Diameter",
+      "description": "Diameter of the circle passing through bolt hole centers"
+    },
+    "bolt_hole_diameter": {
+      "value": 8,
+      "min": 4,
+      "max": 20,
+      "label": "Bolt Hole Diameter",
+      "description": "Diameter of the four bolt holes"
+    }
+  },
+  "operations": [
+    {
+      "id": "flange_base",
+      "kind": "cylinder",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "radius": "flange_diameter/2",
+      "height": "flange_thickness",
+      "axis": "z",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1",
+        "e2"
+      ]
+    },
+    {
+      "id": "bore_cutter",
+      "kind": "cylinder",
+      "origin": [
+        0,
+        0,
+        -1
+      ],
+      "radius": "bore_diameter/2",
+      "height": "flange_thickness + 2",
+      "axis": "z",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "flange_with_bore",
+      "kind": "difference",
+      "left": "flange_base",
+      "right": "bore_cutter",
+      "frame": "world",
+      "depends_on": [
+        "flange_base",
+        "bore_cutter"
+      ],
+      "evidence": [
+        "e1",
+        "e3"
+      ]
+    },
+    {
+      "id": "bolt_hole_1",
+      "kind": "cylinder",
+      "origin": [
+        "bolt_circle_diameter/2 * 0.70710678",
+        "bolt_circle_diameter/2 * 0.70710678",
+        -1
+      ],
+      "radius": "bolt_hole_diameter/2",
+      "height": "flange_thickness + 2",
+      "axis": "z",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e4"
+      ]
+    },
+    {
+      "id": "flange_with_hole1",
+      "kind": "difference",
+      "left": "flange_with_bore",
+      "right": "bolt_hole_1",
+      "frame": "world",
+      "depends_on": [
+        "flange_with_bore",
+        "bolt_hole_1"
+      ],
+      "evidence": [
+        "e1",
+        "e4"
+      ]
+    },
+    {
+      "id": "bolt_hole_2",
+      "kind": "cylinder",
+      "origin": [
+        "-bolt_circle_diameter/2 * 0.70710678",
+        "bolt_circle_diameter/2 * 0.70710678",
+        -1
+      ],
+      "radius": "bolt_hole_diameter/2",
+      "height": "flange_thickness + 2",
+      "axis": "z",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e4"
+      ]
+    },
+    {
+      "id": "flange_with_hole2",
+      "kind": "difference",
+      "left": "flange_with_hole1",
+      "right": "bolt_hole_2",
+      "frame": "world",
+      "depends_on": [
+        "flange_with_hole1",
+        "bolt_hole_2"
+      ],
+      "evidence": [
+        "e1",
+        "e4"
+      ]
+    },
+    {
+      "id": "bolt_hole_3",
+      "kind": "cylinder",
+      "origin": [
+        "-bolt_circle_diameter/2 * 0.70710678",
+        "-bolt_circle_diameter/2 * 0.70710678",
+        -1
+      ],
+      "radius": "bolt_hole_diameter/2",
+      "height": "flange_thickness + 2",
+      "axis": "z",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e4"
+      ]
+    },
+    {
+      "id": "flange_with_hole3",
+      "kind": "difference",
+      "left": "flange_with_hole2",
+      "right": "bolt_hole_3",
+      "frame": "world",
+      "depends_on": [
+        "flange_with_hole2",
+        "bolt_hole_3"
+      ],
+      "evidence": [
+        "e1",
+        "e4"
+      ]
+    },
+    {
+      "id": "bolt_hole_4",
+      "kind": "cylinder",
+      "origin": [
+        "bolt_circle_diameter/2 * 0.70710678",
+        "-bolt_circle_diameter/2 * 0.70710678",
+        -1
+      ],
+      "radius": "bolt_hole_diameter/2",
+      "height": "flange_thickness + 2",
+      "axis": "z",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e4"
+      ]
+    },
+    {
+      "id": "final_flange",
+      "kind": "difference",
+      "left": "flange_with_hole3",
+      "right": "bolt_hole_4",
+      "frame": "world",
+      "depends_on": [
+        "flange_with_hole3",
+        "bolt_hole_4"
+      ],
+      "evidence": [
+        "e1",
+        "e4"
+      ]
+    }
+  ],
+  "output": "final_flange",
+  "frames": {
+    "world": {
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    }
+  },
+  "bodies": [
+    {
+      "id": "part",
+      "output": "final_flange"
+    }
+  ],
+  "evidence": {
+    "observed": [
+      {
+        "id": "e1",
+        "text": "Top view shows a large circular outline representing the flange body."
+      },
+      {
+        "id": "e2",
+        "text": "Front view shows a rectangular profile representing the flange thickness."
+      },
+      {
+        "id": "e3",
+        "text": "Top view shows a central circular outline representing the bore."
+      },
+      {
+        "id": "e4",
+        "text": "Top view shows four small circular outlines arranged symmetrically representing bolt holes."
+      }
+    ],
+    "inferred": [
+      {
+        "id": "e5",
+        "text": "The bolt holes are arranged on a square pattern (45 degrees from axes) based on visual symmetry."
+      }
+    ],
+    "assumptions": [
+      {
+        "id": "e6",
+        "text": "Flange diameter assumed to be 100mm based on visual proportions relative to the 120mm max dimension."
+      },
+      {
+        "id": "e7",
+        "text": "Flange thickness assumed to be 10mm based on the aspect ratio in the front view."
+      },
+      {
+        "id": "e8",
+        "text": "Bore diameter assumed to be 30mm based on visual proportion relative to the flange diameter."
+      },
+      {
+        "id": "e9",
+        "text": "Bolt circle diameter assumed to be 60mm (midway between bore and outer edge)."
+      },
+      {
+        "id": "e10",
+        "text": "Bolt hole diameter assumed to be 8mm based on visual proportion."
+      }
+    ],
+    "unresolved": []
+  },
+  "constraints": []
+}

@@ -1,0 +1,88 @@
+{
+  "view_frame": "The drawing presents a top view (XY plane) and a front view (XZ plane). The part is a flat flange lying on the XY plane. The front view shows the thickness along the Z axis. The top view shows the circular outline and hole pattern in XY.",
+  "features": [
+    {
+      "id": "flange_body",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "Z",
+      "dimensions": [
+        "Diameter: ASSUMED 100mm",
+        "Thickness: ASSUMED 10mm"
+      ],
+      "placement": "Centered at (0,0,0). Extends from Z=0 to Z=10. Radius is 50mm.",
+      "evidence": "Top view shows a large circular outline. Front view shows a rectangular profile representing the thickness."
+    },
+    {
+      "id": "center_bore",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "Z",
+      "dimensions": [
+        "Diameter: ASSUMED 30mm"
+      ],
+      "placement": "Centered at (0,0,0). Extends through the full thickness (Z=0 to Z=10).",
+      "evidence": "Top view shows a central circular hole. Notes specify 'center bore'."
+    },
+    {
+      "id": "bolt_hole_1",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "Z",
+      "dimensions": [
+        "Diameter: ASSUMED 8mm",
+        "Bolt Circle Diameter: ASSUMED 70mm"
+      ],
+      "placement": "Centered at (35, 35, 0). Extends through the full thickness (Z=0 to Z=10).",
+      "evidence": "Top view shows a small circular hole in the upper-right quadrant. Notes specify 'four bolt holes'."
+    },
+    {
+      "id": "bolt_hole_2",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "Z",
+      "dimensions": [
+        "Diameter: ASSUMED 8mm",
+        "Bolt Circle Diameter: ASSUMED 70mm"
+      ],
+      "placement": "Centered at (-35, 35, 0). Extends through the full thickness (Z=0 to Z=10).",
+      "evidence": "Top view shows a small circular hole in the upper-left quadrant."
+    },
+    {
+      "id": "bolt_hole_3",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "Z",
+      "dimensions": [
+        "Diameter: ASSUMED 8mm",
+        "Bolt Circle Diameter: ASSUMED 70mm"
+      ],
+      "placement": "Centered at (-35, -35, 0). Extends through the full thickness (Z=0 to Z=10).",
+      "evidence": "Top view shows a small circular hole in the lower-left quadrant."
+    },
+    {
+      "id": "bolt_hole_4",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "Z",
+      "dimensions": [
+        "Diameter: ASSUMED 8mm",
+        "Bolt Circle Diameter: ASSUMED 70mm"
+      ],
+      "placement": "Centered at (35, -35, 0). Extends through the full thickness (Z=0 to Z=10).",
+      "evidence": "Top view shows a small circular hole in the lower-right quadrant."
+    }
+  ],
+  "connections": [
+    "The flange body is the base solid.",
+    "The center bore and four bolt holes are subtractive features (cuts) through the flange body."
+  ],
+  "edit_rules": [
+    "Changing the flange diameter requires updating the outer radius of the flange_body.",
+    "Changing the bolt circle diameter requires updating the X and Y coordinates of all four bolt holes.",
+    "Changing the flange thickness requires updating the Z-height of the flange_body and the depth of all holes."
+  ],
+  "unresolved": [
+    "No dimensions are provided in the drawing. All dimensions (flange diameter, thickness, bore diameter, bolt hole diameter, bolt circle diameter) are assumed based on visual proportions and standard flange geometry."
+  ]
+}

@@ -1,0 +1,180 @@
+{
+  "version": 2,
+  "units": "mm",
+  "name": "vase",
+  "parameters": {
+    "height": {
+      "value": 120,
+      "min": 50,
+      "max": 200,
+      "label": "Overall Height",
+      "unit": "mm"
+    },
+    "max_radius": {
+      "value": 45,
+      "min": 20,
+      "max": 80,
+      "label": "Maximum Radius",
+      "unit": "mm"
+    },
+    "rim_radius": {
+      "value": 35,
+      "min": 10,
+      "max": 60,
+      "label": "Rim Radius",
+      "unit": "mm"
+    },
+    "neck_radius": {
+      "value": 20,
+      "min": 5,
+      "max": 40,
+      "label": "Neck Radius",
+      "unit": "mm"
+    },
+    "wall_thickness": {
+      "value": 3,
+      "min": 1,
+      "max": 10,
+      "label": "Wall Thickness",
+      "unit": "mm"
+    },
+    "floor_thickness": {
+      "value": 3,
+      "min": 1,
+      "max": 10,
+      "label": "Floor Thickness",
+      "unit": "mm"
+    }
+  },
+  "operations": [
+    {
+      "id": "vase",
+      "kind": "revolve",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "axis": "z",
+      "profile": [
+        [
+          0,
+          0
+        ],
+        [
+          "max_radius",
+          0
+        ],
+        [
+          "max_radius",
+          10
+        ],
+        [
+          "max_radius - 5",
+          20
+        ],
+        [
+          "neck_radius",
+          40
+        ],
+        [
+          "neck_radius",
+          80
+        ],
+        [
+          "rim_radius",
+          100
+        ],
+        [
+          "rim_radius",
+          "height"
+        ],
+        [
+          "rim_radius - wall_thickness",
+          "height"
+        ],
+        [
+          "rim_radius - wall_thickness",
+          100
+        ],
+        [
+          "neck_radius - wall_thickness",
+          80
+        ],
+        [
+          "neck_radius - wall_thickness",
+          40
+        ],
+        [
+          "max_radius - 5 - wall_thickness",
+          20
+        ],
+        [
+          "max_radius - wall_thickness",
+          10
+        ],
+        [
+          "max_radius - wall_thickness",
+          "floor_thickness"
+        ],
+        [
+          0,
+          "floor_thickness"
+        ]
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1",
+        "e2",
+        "e3",
+        "e4"
+      ]
+    }
+  ],
+  "output": "vase",
+  "frames": {
+    "world": {
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    }
+  },
+  "bodies": [
+    {
+      "id": "part",
+      "output": "vase"
+    }
+  ],
+  "evidence": {
+    "observed": [
+      {
+        "id": "e1",
+        "text": "Front view shows a continuous outer silhouette of a vase with a flared base, bulbous body, narrow neck, and flared rim."
+      }
+    ],
+    "inferred": [
+      {
+        "id": "e2",
+        "text": "The object is assumed to be axisymmetric (a solid of revolution) based on the typical shape of such vessels."
+      }
+    ],
+    "assumptions": [
+      {
+        "id": "e3",
+        "text": "Wall thickness is assumed to be 3 mm."
+      },
+      {
+        "id": "e4",
+        "text": "Floor thickness is assumed to be 3 mm."
+      }
+    ],
+    "unresolved": []
+  },
+  "constraints": []
+}

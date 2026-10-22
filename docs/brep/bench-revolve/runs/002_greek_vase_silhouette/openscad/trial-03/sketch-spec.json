@@ -1,0 +1,126 @@
+{
+  "object": "Greek vase",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "front",
+      "sheet_region": "center",
+      "constrains": "Silhouette profile (XZ plane) defining the vase's height, neck, shoulder, and base curvature."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "vase_body",
+      "name": "Vase Body",
+      "material": "PLA/Resin",
+      "description": "Single solid body formed by revolving the 2D silhouette."
+    }
+  ],
+  "features": [
+    {
+      "id": "rim",
+      "type": "edge",
+      "location": "top",
+      "description": "Flared opening at the top of the neck."
+    },
+    {
+      "id": "neck",
+      "type": "surface",
+      "location": "upper",
+      "description": "Narrowed section below the rim."
+    },
+    {
+      "id": "shoulder",
+      "type": "surface",
+      "location": "middle",
+      "description": "Curved transition from neck to body."
+    },
+    {
+      "id": "base",
+      "type": "surface",
+      "location": "bottom",
+      "description": "Rounded bottom profile."
+    }
+  ],
+  "relations": [
+    {
+      "type": "revolved",
+      "source": "vase_body",
+      "target": "axis_z",
+      "description": "The 2D silhouette is revolved 360 degrees around the vertical axis."
+    }
+  ],
+  "symmetry": {
+    "type": "rotational",
+    "axis": "Z",
+    "order": "infinite"
+  },
+  "repetitions": [],
+  "dimensions": {
+    "height": 120.0,
+    "max_width": 107.53,
+    "max_height": 120.0,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "The drawing is a single silhouette; the object is assumed to be rotationally symmetric (a vase) rather than a flat cutout or irregular shape.",
+    "Wall thickness is not specified; the model is generated as a solid (watertight) for 3D printing."
+  ],
+  "interpretation_conflicts": [
+    "OpenCV detected two contours (outer and inner), but the visual evidence is a single line drawing. The inner contour is interpreted as a stroke artifact or thickness, not a separate hole."
+  ],
+  "generation_notes": "The silhouette is regularized to smooth out hand-drawn jitter. The profile is closed at the bottom to ensure watertightness. The top is left open to represent the vase opening.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "revolve",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_2",
+        "operation": "revolve",
+        "profile_plane": "XZ",
+        "direction_axis": "Z",
+        "owner": "vase_body",
+        "parameters": {
+          "angle": 360,
+          "axis": "Z",
+          "watertight": true
+        },
+        "source_views": [
+          "view_1"
+        ]
+      }
+    ],
+    "unresolved_constraints": [
+      "The drawing is a single silhouette; the object is assumed to be rotationally symmetric (a vase) rather than a flat cutout or irregular shape.",
+      "Wall thickness is not specified; the model is generated as a solid (watertight) for 3D printing."
+    ]
+  },
+  "user_intent": {
+    "description": "Greek vase from a single silhouette",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "120"
+  },
+  "source_view_group_count": 1,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

@@ -1,0 +1,145 @@
+{
+  "version": 2,
+  "units": "mm",
+  "name": "hex_prism",
+  "parameters": {
+    "across_flats": {
+      "value": 50,
+      "min": 10,
+      "max": 100,
+      "label": "Across Flats"
+    },
+    "length": {
+      "value": 50,
+      "min": 10,
+      "max": 100,
+      "label": "Length"
+    }
+  },
+  "operations": [
+    {
+      "id": "hex_prism",
+      "kind": "extrude",
+      "origin": [
+        -25,
+        -25,
+        0
+      ],
+      "plane": "xy",
+      "direction": 1,
+      "depth": "length",
+      "loops": [
+        [
+          {
+            "kind": "line",
+            "start": [
+              "across_flats/2*0.5773502691896257",
+              "0"
+            ],
+            "end": [
+              "across_flats/2*0.2886751345948129",
+              "across_flats/2"
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              "across_flats/2*0.2886751345948129",
+              "across_flats/2"
+            ],
+            "end": [
+              "-across_flats/2*0.2886751345948129",
+              "across_flats/2"
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              "-across_flats/2*0.2886751345948129",
+              "across_flats/2"
+            ],
+            "end": [
+              "-across_flats/2*0.5773502691896257",
+              "0"
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              "-across_flats/2*0.5773502691896257",
+              "0"
+            ],
+            "end": [
+              "-across_flats/2*0.2886751345948129",
+              "-across_flats/2"
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              "-across_flats/2*0.2886751345948129",
+              "-across_flats/2"
+            ],
+            "end": [
+              "across_flats/2*0.2886751345948129",
+              "-across_flats/2"
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              "across_flats/2*0.2886751345948129",
+              "-across_flats/2"
+            ],
+            "end": [
+              "across_flats/2*0.5773502691896257",
+              "0"
+            ]
+          }
+        ]
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1",
+        "e2"
+      ]
+    }
+  ],
+  "output": "hex_prism",
+  "frames": {
+    "world": {
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    }
+  },
+  "bodies": [
+    {
+      "id": "part",
+      "output": "hex_prism"
+    }
+  ],
+  "evidence": {
+    "observed": [],
+    "inferred": [
+      {
+        "id": "e1",
+        "text": "The drawing shows two views of a hexagonal prism. The left view (Front) shows the hexagonal cross-section. The right view (Top) shows the hexagonal profile of the prism's length."
+      }
+    ],
+    "assumptions": [
+      {
+        "id": "e2",
+        "text": "Assumed hexagon across flats is 50 mm and prism length is 50 mm."
+      }
+    ],
+    "unresolved": []
+  },
+  "constraints": []
+}

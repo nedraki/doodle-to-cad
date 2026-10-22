@@ -1,0 +1,28 @@
+{
+  "view_frame": "The drawing displays two views of a stepped round knob. The left view is the Front view (XZ plane), showing the silhouette of the knob's profile. The right view is the Right view (YZ plane), showing the mirrored silhouette, confirming axisymmetry about the Z-axis. The world axes are X (width), Y (depth), and Z (height). The part is centered on the Z-axis.",
+  "features": [
+    {
+      "id": "knob_body",
+      "shape": "revolve",
+      "section": "closed_polyline",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "56.0",
+        "ASSUMED: 10.0"
+      ],
+      "placement": "Revolve the profile defined in the XZ plane (r, z) about the Z-axis (r=0) by 360 degrees. The profile starts at (0,0), goes to (28,0), up to (28,10), in to (10,10), up to (10,46), out to (28,46), up to (28,56), and closes to (0,56).",
+      "evidence": "The drawing shows a stepped profile with a wide base, a narrow neck, and a wide top. The maximum dimension is 56.0mm. The profile is symmetric in the front and right views."
+    }
+  ],
+  "connections": [
+    "The base, neck, and top sections are connected in a continuous stepped profile."
+  ],
+  "edit_rules": [
+    "Changing the maximum dimension (56.0) scales the entire height of the knob.",
+    "Changing the neck width (20.0) adjusts the radius of the middle section.",
+    "Changing the base/top width (56.0) adjusts the radius of the flanges."
+  ],
+  "unresolved": [
+    "The specific heights of the base, neck, and top sections are not dimensioned in the drawing. The placement uses an assumed height of 10.0mm for the base and top, and 36.0mm for the neck, to sum to the total height of 56.0mm. These values should be confirmed or adjusted."
+  ]
+}

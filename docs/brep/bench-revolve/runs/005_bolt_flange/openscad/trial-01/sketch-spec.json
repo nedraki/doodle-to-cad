@@ -1,0 +1,228 @@
+{
+  "object": "Round flange with center bore and four bolt holes",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "front",
+      "sheet_region": "view_2",
+      "what_it_constrains": "Defines the primary geometry: outer circular profile, central bore, and the pattern of four bolt holes. Establishes the XY plane layout."
+    },
+    {
+      "direction": "top",
+      "sheet_region": "view_1",
+      "what_it_constrains": "Defines the thickness (height) of the flange and the vertical extent of the holes (through-cuts). Establishes the Z-axis dimension."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "flange_body",
+      "name": "Flange Plate",
+      "material": "generic_plastic",
+      "geometry_type": "extruded_profile"
+    }
+  ],
+  "features": [
+    {
+      "id": "outer_profile",
+      "type": "outer_boundary",
+      "owner": "flange_body",
+      "description": "Circular outer edge of the flange."
+    },
+    {
+      "id": "center_bore",
+      "type": "through_hole",
+      "owner": "flange_body",
+      "description": "Large central circular hole."
+    },
+    {
+      "id": "bolt_hole_1",
+      "type": "through_hole",
+      "owner": "flange_body",
+      "description": "Top-left bolt hole."
+    },
+    {
+      "id": "bolt_hole_2",
+      "type": "through_hole",
+      "owner": "flange_body",
+      "description": "Top-right bolt hole."
+    },
+    {
+      "id": "bolt_hole_3",
+      "type": "through_hole",
+      "owner": "flange_body",
+      "description": "Bottom-left bolt hole."
+    },
+    {
+      "id": "bolt_hole_4",
+      "type": "through_hole",
+      "owner": "flange_body",
+      "description": "Bottom-right bolt hole."
+    }
+  ],
+  "relations": [
+    {
+      "type": "concentric",
+      "targets": [
+        "outer_profile",
+        "center_bore"
+      ]
+    },
+    {
+      "type": "symmetric_pattern",
+      "targets": [
+        "bolt_hole_1",
+        "bolt_hole_2",
+        "bolt_hole_3",
+        "bolt_hole_4"
+      ],
+      "pattern": "rectangular"
+    },
+    {
+      "type": "through",
+      "targets": [
+        "center_bore",
+        "bolt_hole_1",
+        "bolt_hole_2",
+        "bolt_hole_3",
+        "bolt_hole_4"
+      ],
+      "reference": "flange_body"
+    }
+  ],
+  "symmetry": {
+    "type": "orthogonal",
+    "axes": [
+      "X",
+      "Y"
+    ],
+    "description": "The object exhibits symmetry across the X and Y axes passing through the center bore."
+  },
+  "repetitions": [
+    {
+      "feature_id": "bolt_hole",
+      "count": 4,
+      "arrangement": "rectangular_grid"
+    }
+  ],
+  "dimensions": {
+    "diameter": 10.0,
+    "thickness": 15.0,
+    "max_width": 120.0,
+    "max_depth": 18.75,
+    "max_height": 117.32,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "Exact thickness of the flange is estimated from the top view aspect ratio.",
+    "Exact diameter of the center bore and bolt holes are estimated relative to the outer diameter.",
+    "Exact bolt circle diameter is estimated."
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "The object is a standard circular flange. The front view (view_2) provides the XY layout, showing a large outer circle, a central circle, and four smaller circles arranged in a square pattern. The top view (view_1) confirms the object is a flat plate with uniform thickness. The 'through' nature of the holes is inferred from the standard flange design and the visibility of the hole edges in the top view.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "extrude",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_2",
+        "operation": "extrude",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "owner": "flange_body",
+        "parameters": {
+          "thickness": 15
+        },
+        "source_views": [
+          "view_1"
+        ]
+      },
+      {
+        "id": "center_bore",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Large central circular hole."
+        },
+        "source_views": []
+      },
+      {
+        "id": "bolt_hole_1",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Top-left bolt hole."
+        },
+        "source_views": []
+      },
+      {
+        "id": "bolt_hole_2",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Top-right bolt hole."
+        },
+        "source_views": []
+      },
+      {
+        "id": "bolt_hole_3",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Bottom-left bolt hole."
+        },
+        "source_views": []
+      },
+      {
+        "id": "bolt_hole_4",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Bottom-right bolt hole."
+        },
+        "source_views": []
+      }
+    ],
+    "unresolved_constraints": [
+      "Exact thickness value",
+      "Exact hole diameters"
+    ]
+  },
+  "user_intent": {
+    "description": "Round flange with center bore and four bolt holes",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "120"
+  },
+  "source_view_group_count": 2,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

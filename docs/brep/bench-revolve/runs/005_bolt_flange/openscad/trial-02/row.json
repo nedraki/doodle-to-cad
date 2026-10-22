@@ -1,0 +1,95 @@
+{
+  "drawing": "005_bolt_flange",
+  "backend": "openscad",
+  "trial": 2,
+  "submitted_at": "2026-10-22T05:11:13.365257+00:00",
+  "finished_at": "2026-10-22T05:18:06.399551+00:00",
+  "run_id": "327cd25038d9",
+  "wall_seconds": 413.0,
+  "job_status": "done",
+  "error": null,
+  "questions_asked": 0,
+  "question_kinds": [],
+  "build": {
+    "watertight": true,
+    "components": 1,
+    "genus": 10,
+    "extents_mm": [
+      80.0,
+      80.0,
+      120.0
+    ],
+    "volume_mm3": 75466.4,
+    "sha256": "e5514490e8750456a49b57047620a42114f0cb71984568bae56607c8a4124dce",
+    "bytes": 496578
+  },
+  "checks": {
+    "build_success": true,
+    "extents_pass": false,
+    "genus_pass": false,
+    "volume_pass": false,
+    "fidelity_pass": false,
+    "overall_pass": false,
+    "not_applicable": []
+  },
+  "fidelity": {
+    "scores": {
+      "front": 0.616,
+      "top": 0.392
+    },
+    "pass": false,
+    "reason": null,
+    "topology": {
+      "front": {
+        "expected": 5,
+        "actual": 3,
+        "position_fidelity": 0.8
+      },
+      "top": {
+        "expected": 1,
+        "actual": 0,
+        "position_fidelity": null
+      }
+    }
+  },
+  "product": {
+    "success": false,
+    "accepted": false,
+    "status": null,
+    "score": 72.6,
+    "projection_status": null,
+    "geometry_status": null,
+    "failures": [
+      "degenerate or implausible axis dimensions: Y=80 mm vs expected 18.75 mm",
+      "required internal profiles are missing: front demands 5, renders 3, top demands 1, renders 0; best rendered view has 3. Missing at these view-local centres \u2014 add cutters there: (u=0.496,v=0.503).",
+      "CAD projections poorly match the drawing: top similarity 0.39 (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly."
+    ]
+  },
+  "attempts": {
+    "count": 3,
+    "recovered": false,
+    "corrections": null,
+    "selected": 3
+  },
+  "unsupported": {
+    "flag": false,
+    "code": null
+  },
+  "edit": {
+    "available": true,
+    "ok": true,
+    "seconds": 3.21,
+    "param": "flange_diameter",
+    "old": 80.0,
+    "new": 96.0,
+    "message": null
+  },
+  "targeted": {
+    "available": false,
+    "ok": false,
+    "seconds": null,
+    "operation": null,
+    "value": null,
+    "message": "not_applicable: the product requires a BRep result for targeted edits"
+  }
+}

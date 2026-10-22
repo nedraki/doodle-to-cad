@@ -1,0 +1,37 @@
+{
+  "view_frame": "The drawing presents two views of an axisymmetric object. The left view is the Front view (XZ plane), showing the silhouette. The right view is the Right view (YZ plane), showing the mirrored silhouette. The object is symmetric about the vertical Z axis. The horizontal axis in the Front view represents X (width/radius), and the vertical axis represents Z (height). The horizontal axis in the Right view represents Y (depth/radius).",
+  "features": [
+    {
+      "id": "knob_body",
+      "shape": "revolve",
+      "section": "closed_polyline",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "ASSUMED_total_height_mm",
+        "ASSUMED_base_radius_mm",
+        "ASSUMED_top_radius_mm",
+        "ASSUMED_neck_radius_mm",
+        "ASSUMED_neck_height_mm",
+        "ASSUMED_base_height_mm"
+      ],
+      "placement": "Revolve the closed profile defined by vertices (0,0), (R_base,0), (R_base,H_base), (R_neck,H_base), (R_neck,H_neck), (R_top,H_neck), (R_top,H_total), (0,H_total) around the Z axis (X=0).",
+      "evidence": "The drawing shows a stepped silhouette with a wide base, a narrow neck, and a wide top cap. The symmetry between the left and right views confirms axisymmetry. The profile consists of horizontal and vertical segments forming a stepped shaft shape."
+    }
+  ],
+  "connections": [
+    "The base, neck, and top cap are connected as a single continuous solid of revolution."
+  ],
+  "edit_rules": [
+    "Changing ASSUMED_total_height_mm scales the Z coordinates of all vertices proportionally or shifts the top cap.",
+    "Changing ASSUMED_base_radius_mm updates the X coordinate of the base vertices.",
+    "Changing ASSUMED_top_radius_mm updates the X coordinate of the top cap vertices.",
+    "Changing ASSUMED_neck_radius_mm updates the X coordinate of the neck vertices.",
+    "Changing ASSUMED_neck_height_mm updates the Z coordinate of the neck top and bottom vertices.",
+    "Changing ASSUMED_base_height_mm updates the Z coordinate of the base top and neck bottom vertices."
+  ],
+  "unresolved": [
+    "The drawing lacks explicit dimension labels. All radii and heights are currently marked as ASSUMED and require user input or estimation from the maximum_dimension_mm constraint to be finalized.",
+    "The exact height of the base section (H_base) relative to the total height is not specified.",
+    "The exact height of the neck section (H_neck - H_base) is not specified."
+  ]
+}
