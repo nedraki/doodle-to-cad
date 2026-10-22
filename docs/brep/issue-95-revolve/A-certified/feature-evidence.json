@@ -1,0 +1,261 @@
+{
+  "id": "064f8b26b31a",
+  "interpretation": {
+    "version": 1,
+    "object_hypothesis": "A vase-like or bottle-like object with a flared rim, narrow neck, and bulbous body.",
+    "features": [
+      {
+        "id": "f_body",
+        "type": "body",
+        "description": "The main lower section of the object, characterized by a bulbous, rounded shape.",
+        "status": "observed",
+        "evidence": [
+          {
+            "view_id": "view_1",
+            "region_id": "profile_contour_0"
+          }
+        ],
+        "reason": "The lower portion of the contour shows a wide, curved profile typical of a vessel body."
+      },
+      {
+        "id": "f_neck",
+        "type": "neck",
+        "description": "A narrower section connecting the body to the top opening.",
+        "status": "observed",
+        "evidence": [
+          {
+            "view_id": "view_1",
+            "region_id": "profile_contour_0"
+          }
+        ],
+        "reason": "The contour narrows significantly in the upper-middle section, forming a neck."
+      },
+      {
+        "id": "f_rim",
+        "type": "rim",
+        "description": "The top edge of the object, which appears to flare outwards slightly.",
+        "status": "observed",
+        "evidence": [
+          {
+            "view_id": "view_1",
+            "region_id": "profile_contour_0"
+          }
+        ],
+        "reason": "The top of the contour shows a distinct lip or flare, suggesting a rim."
+      },
+      {
+        "id": "f_opening",
+        "type": "opening",
+        "description": "The top aperture of the object.",
+        "status": "inferred",
+        "evidence": [
+          {
+            "view_id": "view_1",
+            "region_id": "profile_contour_0"
+          }
+        ],
+        "reason": "The shape strongly suggests a vessel with an opening at the top, though the interior is not visible."
+      }
+    ],
+    "relationships": [
+      {
+        "id": "r_neck_body",
+        "type": "connected",
+        "features": [
+          "f_neck",
+          "f_body"
+        ],
+        "description": "The neck connects the body to the upper section.",
+        "status": "inferred",
+        "evidence": [
+          {
+            "view_id": "view_1",
+            "region_id": "profile_contour_0"
+          }
+        ],
+        "reason": "The contour shows a continuous transition from the wide body to the narrow neck.",
+        "model_status": "observed",
+        "review_note": "Visible projected continuity does not prove a connected 3D solid."
+      },
+      {
+        "id": "r_rim_neck",
+        "type": "connected",
+        "features": [
+          "f_rim",
+          "f_neck"
+        ],
+        "description": "The rim is located at the top of the neck.",
+        "status": "inferred",
+        "evidence": [
+          {
+            "view_id": "view_1",
+            "region_id": "profile_contour_0"
+          }
+        ],
+        "reason": "The contour shows the neck flaring out into the rim at the top.",
+        "model_status": "observed",
+        "review_note": "Visible projected continuity does not prove a connected 3D solid."
+      },
+      {
+        "id": "r_symmetry",
+        "type": "symmetry",
+        "features": [
+          "f_body",
+          "f_neck",
+          "f_rim"
+        ],
+        "description": "The object appears to have approximate bilateral symmetry.",
+        "status": "inferred",
+        "evidence": [
+          {
+            "view_id": "view_1",
+            "region_id": "profile_contour_0"
+          }
+        ],
+        "reason": "The left and right sides of the contour are roughly mirror images, suggesting rotational symmetry around a vertical axis."
+      }
+    ],
+    "assumptions": [
+      "The object is a solid vessel or container.",
+      "The drawing represents a 3D object with rotational symmetry."
+    ],
+    "unresolved": [
+      "The exact shape of the bottom (flat or rounded).",
+      "The internal structure (hollow or solid).",
+      "The precise material or surface texture."
+    ],
+    "conflicts": [],
+    "review": {
+      "reference_integrity_checked": true,
+      "drawing_fidelity_verified": false,
+      "policy_warnings": [
+        "r_neck_body: Visible projected continuity does not prove a connected 3D solid.",
+        "r_rim_neck: Visible projected continuity does not prove a connected 3D solid."
+      ],
+      "executable": false
+    }
+  },
+  "regions": [
+    {
+      "view_id": "view_1",
+      "direction": "front",
+      "sheet_bbox_normalized": [
+        0.1895,
+        0.127,
+        0.5684,
+        0.7639
+      ],
+      "cad_mapping": {
+        "plane": "XZ",
+        "view_axis": "Y",
+        "u_maps_to": "+X",
+        "v_maps_to": "-Z"
+      },
+      "view_assignment": "spatial heuristic",
+      "region_id": "view",
+      "kind": "view",
+      "bbox_view_normalized": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "measured_span_pixels": {
+        "horizontal_axis_u": 345,
+        "vertical_axis_v": 385
+      }
+    },
+    {
+      "view_id": "view_1",
+      "direction": "front",
+      "sheet_bbox_normalized": [
+        0.1895,
+        0.127,
+        0.5684,
+        0.7639
+      ],
+      "cad_mapping": {
+        "plane": "XZ",
+        "view_axis": "Y",
+        "u_maps_to": "+X",
+        "v_maps_to": "-Z"
+      },
+      "view_assignment": "spatial heuristic",
+      "region_id": "profile_contour_0",
+      "kind": "outer",
+      "profile_id": "contour_0",
+      "bbox_view_normalized": [
+        0.0144,
+        0.0103,
+        0.971,
+        0.9792
+      ],
+      "center_view_normalized": [
+        0.4998,
+        0.4999
+      ],
+      "polygon_view_normalized": [
+        [
+          0.168,
+          0.013
+        ],
+        [
+          0.2723,
+          0.4442
+        ],
+        [
+          0.0144,
+          0.6649
+        ],
+        [
+          0.1622,
+          0.8883
+        ],
+        [
+          0.4984,
+          0.987
+        ],
+        [
+          0.9157,
+          0.9039
+        ],
+        [
+          0.971,
+          0.7636
+        ],
+        [
+          0.6985,
+          0.3012
+        ],
+        [
+          0.8404,
+          0.0494
+        ]
+      ],
+      "vertices": 9,
+      "circularity": 0.562,
+      "area_ratio_of_sheet": 0.26741
+    }
+  ],
+  "shared_axis_evidence": [],
+  "view_assignment_review": {
+    "excluded_from_direction_assignment": [],
+    "rule": "Groups below 5% of the largest group box area remain unassigned; they may be text or detail views.",
+    "regions_retained": true
+  },
+  "controls": {
+    "object_type_hint": "",
+    "method": "3D print",
+    "primary_view": "front",
+    "projection_standard": "third-angle",
+    "strict_watertight": true,
+    "refine_mode": "regularize"
+  },
+  "notes": "",
+  "default_generation_changed": false,
+  "files": {
+    "input": "/results/064f8b26b31a/input.png",
+    "overlay": "/results/064f8b26b31a/geometry-overlay.png",
+    "interpretation": "/results/064f8b26b31a/feature-evidence.json"
+  }
+}

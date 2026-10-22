@@ -132,6 +132,14 @@ def build(source, output):
                 if not edges:
                     raise ValueError(f"{op['id']}: selector matched no edges")
                 sm.fillet_edges(body, edges, radius=op["radius"])
+        elif kind == "revolve":
+            points = [(r, 0.0, z) for r, z in op["profile"]]
+            curves = [sm.create_line_segment(a, b) for a, b in zip(points, points[1:] + points[:1])]
+            try:
+                body = sm.rotational_sweep(curves, (0, 0, 0), (0, 0, 1), 360)
+            except Exception as exc:
+                raise ValueError(f"{op['id']}: revolve failed for the given profile: {exc}") from exc
+            sm.translate(body, tuple(op["origin"]))
         elif kind == "arc_pipe":
             path = arc_curve(sm,tuple(op["origin"]), op["bend_radius"], 0, op["angle"])
             body = sm.pipe_sweep(path, radius=op["radius"], cap_ends=True)

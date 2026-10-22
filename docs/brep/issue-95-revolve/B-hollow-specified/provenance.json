@@ -1,0 +1,54 @@
+{
+  "label": "B-hollow-specified",
+  "job_id": "ca0b0967df41",
+  "server": "http://127.0.0.1:8135",
+  "panels": [
+    {
+      "index": 0,
+      "title": "input drawing"
+    },
+    {
+      "index": 1,
+      "title": "built by usd-brep revolve"
+    },
+    {
+      "index": 2,
+      "title": "ground truth"
+    }
+  ],
+  "montage": "docs/brep/issue-95-revolve/B-hollow-specified/triptych.png",
+  "montage_sha256": "719536685f225b91b25fa9afc2abb643de6eebf5be11fa7ad20f49b53e8354ba",
+  "built_stl_sha256": "07de95ca573e0294e6ee68adfa4cf25309997469b3a2ba3996f3c2bd461145dc",
+  "gt_stl_sha256": "43e9c1a57c83f08dd2e4b5814fa0ce3a6b789c859df2a9692701b2c0ea7e52c1",
+  "input_sha256": "fcd10bfadce5c6d8d331790963fb63691101a71f4c5ad707c974af39ed3145b1",
+  "row": {
+    "label": "B-hollow-specified",
+    "job_id": "ca0b0967df41",
+    "status": "done",
+    "error": null,
+    "evaluation": false,
+    "built_stl": "/tmp/doodle-brep-95/results/ca0b0967df41/brep-d1fe035042bc44bebedc874d8902a89e/model.stl",
+    "built_measurement": {
+      "components": 1,
+      "watertight": true,
+      "genus": 0,
+      "volume_mm3": 98661.9,
+      "extents_mm": [
+        90.0,
+        90.0,
+        120.0
+      ]
+    },
+    "gt_measurement": {
+      "components": 1,
+      "watertight": true,
+      "genus": 0,
+      "volume_mm3": 116828.8,
+      "extents_mm": [
+        102.5,
+        102.5,
+        120.0
+      ]
+    }
+  }
+}
