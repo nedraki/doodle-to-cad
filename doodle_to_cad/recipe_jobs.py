@@ -134,6 +134,11 @@ async def run_recipe_job(job, recipe, results_dir: Path, save_result, *, prepare
                 (attempt_dir / 'failure.json').write_text(json.dumps(record['error'], indent=2))
                 if (out / 'runner.log').exists():
                     shutil.copyfile(out / 'runner.log', attempt_dir / 'runner.log')
+                # #89: stage.txt is a single top-level file rewritten per stage
+                # and deleted per attempt; snapshot it while it still holds the
+                # op id (e.g. 'union_2') that the kernel died on.
+                if (out / 'stage.txt').exists():
+                    shutil.copyfile(out / 'stage.txt', attempt_dir / 'stage.txt')
                 if process is not None:
                     await _stop(process, job_id)
                     process = None

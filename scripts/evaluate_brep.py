@@ -241,6 +241,45 @@ def reference_checks(measurement, reference):
     return checks, na
 
 
+def _copy_evidence(run_dir: Path, cell: Path) -> None:
+    """Copy the whitelisted per-run files into the frozen trial cell.
+
+    Gate for the #95 follow-up: a construction plan rejected by the gate never
+    produces construction-plan.json (direct_brep writes that only after
+    validate_plan passes), so the model's raw transcript is the only surviving
+    witness of WHY the gate fired. _json_call already writes it next to the
+    run; without copying it here the evidence is produced and then discarded,
+    the same 'produced-but-never-persisted' family as issue #85.
+    """
+    import shutil
+    for name in ("model.scad", "model.recipe.json", "geometry.json", "generation.json",
+                 "attempts.json", "clarifications.json", "construction-plan.json",
+                 "error.json", "drawing-checks.json", "geometry-overlay.png", "sketch-spec.json",
+                 "input.png"):
+        if (run_dir / name).exists():
+            shutil.copyfile(run_dir / name, cell / name)
+    for raw in sorted(run_dir.glob("construction-plan*.raw.txt")):
+        if (cell / raw.name).exists():
+            raise RuntimeError(f"refusing to overwrite existing evidence {cell / raw.name}")
+        shutil.copyfile(raw, cell / raw.name)
+    # #89: kernel-crash forensics. Each build attempt leaves its triggering
+    # recipe, kernel failure payload, the stage (op id) captured at the crash,
+    # and the runner log in construction-attempts/N/. Only the LAST attempt's
+    # error.json survives at top level, so a crash on attempt 1 of 3 was
+    # frozen as a recipe without the message that killed it (ATTRIBUTION
+    # 'wheel usd t1'). Carry all four, append-only, next to the attempts.
+    for attempt_dir in sorted(run_dir.glob("construction-attempts/*")):
+        for name in ("recipe.json", "failure.json", "stage.txt", "runner.log"):
+            src = attempt_dir / name
+            if not src.exists():
+                continue
+            dest = cell / "failed" / f"{attempt_dir.name}.{name}"
+            dest.parent.mkdir(exist_ok=True)
+            if dest.exists():
+                raise RuntimeError(f"refusing to overwrite existing evidence {dest}")
+            shutil.copyfile(src, dest)
+
+
 async def _run_trial(client, plan, item, backend, trial, out_dir, semaphore):
     import asyncio
     import hashlib
@@ -338,19 +377,10 @@ async def _run_trial(client, plan, item, backend, trial, out_dir, semaphore):
     if (run_dir / "result.json").exists():
         result = json.loads((run_dir / "result.json").read_text())
         shutil.copyfile(run_dir / "result.json", cell / "result.json")
-    for name in ("model.scad", "model.recipe.json", "geometry.json", "generation.json",
-                 "attempts.json", "clarifications.json", "construction-plan.json",
-                 "error.json", "drawing-checks.json", "geometry-overlay.png", "sketch-spec.json",
-                 "input.png"):
-        if (run_dir / name).exists():
-            shutil.copyfile(run_dir / name, cell / name)
+    _copy_evidence(run_dir, cell)
     for failed in sorted(run_dir.glob("attempt-*/*.failed.scad")):
         (cell / "failed").mkdir(exist_ok=True)
         shutil.copyfile(failed, cell / "failed" / f"{failed.parent.name}-{failed.name}")
-    for attempt_dir in sorted(run_dir.glob("construction-attempts/*")):
-        if (attempt_dir / "recipe.json").exists():
-            (cell / "failed").mkdir(exist_ok=True)
-            shutil.copyfile(attempt_dir / "recipe.json", cell / "failed" / f"{attempt_dir.name}.recipe.json")
     if result is None:
         row["build"] = None
         row["checks"] = {"build_success": False, "overall_pass": False}
