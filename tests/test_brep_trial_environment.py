@@ -34,6 +34,39 @@ def test_no_row_write_bypasses_the_choke_point():
     assert '(cell / "row.json").write_text' in body
 
 
+def test_copy_evidence_retains_gate_rejection_transcripts(tmp_path):
+    """#95 follow-up: a gate-rejected construction plan never produces
+    construction-plan.json — the raw model transcript written by _json_call
+    is the only witness of WHY the gate fired (2 of 9 bench-revolve rows were
+    undiagnosable for exactly this reason). _copy_evidence must carry every
+    construction-plan* transcript, base round and clarification rounds alike,
+    and must never overwrite already-frozen evidence."""
+    import pytest
+    run = tmp_path / "run"
+    run.mkdir()
+    cell = tmp_path / "cell"
+    cell.mkdir()
+    (run / "construction-plan.raw.txt").write_text('{"clarification":{"kind":"radius"}}')
+    (run / "construction-plan-answer-1.raw.txt").write_text('{"features":[]}')
+    (run / "construction-plan-request.json").write_text('{"controls":{}}')  # not a raw transcript
+    (run / "secret-ish-other-raw.txt").write_text("must not be copied")
+    (run / "generation.json").write_text("{}")
+
+    evaluate_brep._copy_evidence(run, cell)
+
+    assert json.loads((cell / "construction-plan.raw.txt").read_text())["clarification"]["kind"] == "radius"
+    assert (cell / "construction-plan-answer-1.raw.txt").exists()
+    assert (cell / "generation.json").exists()
+    assert not (cell / "secret-ish-other-raw.txt").exists()
+    assert not (cell / "construction-plan-request.json").exists()
+
+    # Append-only: a second trial replaying into the same cell must not overwrite.
+    (run / "construction-plan.raw.txt").write_text("clobber-attempt")
+    with pytest.raises(RuntimeError, match="refusing to overwrite"):
+        evaluate_brep._copy_evidence(run, cell)
+    assert "radius" in (cell / "construction-plan.raw.txt").read_text()
+
+
 def test_finish_row_writes_environment_with_plan_declared_fields(tmp_path, monkeypatch):
     monkeypatch.setattr(evaluate_brep, "_ENV_STATIC", None)
     monkeypatch.setattr(evaluate_brep, "_SERVER_MODEL", "test/model-FP4")
