@@ -126,6 +126,31 @@ def test_revolve_dimension_bounds_reject_oversize():
                                   "axis": "z", "profile": [[0, 0], [20000, 0], [0, 5]]}]))
 
 
+def test_revolve_fuzz_fails_closed():
+    """Derived-seed fuzz: random loops must never raise anything but ValueError."""
+    import random
+    from datetime import datetime, timezone
+    from doodle_to_cad.revolve_profile import resolve_revolve_profile
+    rng = random.Random(int(datetime.now(timezone.utc).strftime("%Y%m%d")))
+    accepted = rejected = 0
+    for _ in range(300):
+        n = rng.randint(2, 9)
+        loop = [[round(rng.choice([0.0, rng.uniform(-3, 30)]), 3),
+                 round(rng.uniform(-5, 40), 3)] for _ in range(n)]
+        if rng.random() < 0.3:
+            loop.append(list(loop[0]))  # explicit closure variant
+        if rng.random() < 0.2:
+            loop[-1] = list(loop[0])  # forced degenerate tail
+        try:
+            got = resolve_revolve_profile(loop, {}, lambda v, _: float(v))
+            assert isinstance(got, list) and 3 <= len(got) <= 128
+            accepted += 1
+        except ValueError:
+            rejected += 1
+    assert accepted > 0 and rejected > 0  # both paths exercised
+    print(f"fuzz: {accepted} accepted, {rejected} rejected")
+
+
 # ---------- worker fixtures (real kernel) ----------
 
 def _build(tmp_path, recipe):
