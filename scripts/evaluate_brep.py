@@ -217,12 +217,19 @@ def _rule_number(rule, recipe):
     return 10.0
 
 
-def reference_checks(measurement, reference):
+def reference_checks(measurement, reference, supplied_dimension=None, tolerance_mm=1.0):
     """Pure comparison shared by _run_trial and the #81 fixture gate.
 
     One source of truth for build/extents/genus/volume verdicts so a fixture
     exercises exactly the check the live harness applies. Returns
-    (checks, not_applicable)."""
+    (checks, not_applicable).
+
+    #102 supplied-dimension contract: a dimension the case actually gave the
+    model (plan corpus 'dimension', the requested maximum) must survive to
+    the mesh within tolerance_mm (plan tolerances.supplied_dimension_mm).
+    Reference-only expectations (ground-truth extents nobody supplied) stay
+    on the 2% extents check - the two tracks never gate each other. The
+    result is reported alongside, never inside, overall_pass."""
     ground_truth = reference.get("kind") != "no_ground_truth" and "genus" in reference
     build_success = bool(measurement and measurement.get("watertight")
                          and measurement.get("components") == 1)
@@ -238,6 +245,12 @@ def reference_checks(measurement, reference):
         genus_pass = bool(measurement) and measurement.get("genus") == reference["genus"]
         volume_pass = bool(measurement) and abs(measurement["volume_mm3"] - reference["volume_mm3"]) <= 0.02 * reference["volume_mm3"]
         checks.update({"extents_pass": extents_pass, "genus_pass": genus_pass, "volume_pass": volume_pass})
+    if supplied_dimension is None:
+        na.append("supplied_dimension")  # key absent, same as no-ground-truth na style
+    else:
+        checks["supplied_dimension_pass"] = (
+            bool(measurement) and "extents_mm" in measurement
+            and abs(max(measurement["extents_mm"]) - supplied_dimension) <= tolerance_mm)
     return checks, na
 
 
@@ -413,7 +426,13 @@ async def _run_trial(client, plan, item, backend, trial, out_dir, semaphore):
     reference = refs.get(ref_key) or {}
     ground_truth = reference.get("kind") != "no_ground_truth" and "genus" in reference
 
-    checks, na = reference_checks(measurement, reference)
+    # #102: fail-loud on a malformed certified dimension - a frozen plan
+    # must be exact, silent fallback here would hide a plan typo.
+    _dim = str(item.get("dimension") or "").strip()
+    supplied_dimension = float(item["dimension"]) if _dim else None
+    checks, na = reference_checks(
+        measurement, reference, supplied_dimension=supplied_dimension,
+        tolerance_mm=float(plan.get("tolerances", {}).get("supplied_dimension_mm", 1.0)))
 
     # ---- harness-independent drawing fidelity (separate from build) --------
     fidelity = {"scores": None, "pass": None, "reason": None}
@@ -451,7 +470,10 @@ async def _run_trial(client, plan, item, backend, trial, out_dir, semaphore):
     checks["fidelity_pass"] = fidelity["pass"]
     if fidelity["pass"] is None:
         na.append("fidelity")
-    applicable = [v for k, v in checks.items() if v is not None]
+    # #102: the supplied-dimension contract is a separate track (like
+    # build_success was made separate from fidelity); it never changes the
+    # meaning of already-frozen overall_pass values.
+    applicable = [v for k, v in checks.items() if v is not None and k != "supplied_dimension_pass"]
     checks["overall_pass"] = bool(applicable) and all(applicable) and checks["build_success"]
     checks["not_applicable"] = na
     row["checks"] = checks

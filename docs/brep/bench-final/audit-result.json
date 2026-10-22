@@ -1,9 +1,9 @@
 {
- "ran_at": "2026-10-20T20:27:07",
+ "ran_at": "2026-10-23T01:32:08",
  "environment": {
-  "checkout": "/tmp/brep-final/docs/brep/bench-final",
-  "git_rev": "2d4e96a550b5998a14aa4532f09afa14bba8aebf",
-  "python": "3.14.7",
+  "checkout": "/tmp/doodle-brep-102/docs/brep/bench-final",
+  "git_rev": "68a00d54dd8e243e1723ca105fcd72e708a54f7e",
+  "python": "3.11.16",
   "platform": "Linux-6.17.0-1022-nvidia-aarch64-with-glibc2.39",
   "host": "spark-8322"
  },
@@ -29,7 +29,7 @@
    "detail": "openscad: result.success (agent accepted, score >= 70). usd-brep: evaluation.sta"
   },
   {
-   "check": "plan revision logged (dimension fix, 12 cells)",
+   "check": "plan revisions logged (dimension fix, 12 cells)",
    "ok": true,
    "detail": ""
   },

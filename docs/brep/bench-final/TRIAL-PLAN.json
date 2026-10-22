@@ -45,6 +45,7 @@
   "tolerances": {
     "extents": "sorted extents within 2% per axis of the frozen reference (manifest tolerances.generated_dimension_relative = 0.02)",
     "volume_relative": 0.02,
+    "supplied_dimension_mm": 1.0,
     "projection_similarity_min": 0.45,
     "feature_position_fidelity_min": 0.5,
     "count_error": 0,
@@ -56,6 +57,7 @@
     "extents_pass": "sorted run extents vs sorted reference extents, every axis within 2%.",
     "genus_pass": "genus == frozen reference genus (where a ground truth exists).",
     "volume_pass": "abs(volume - reference volume)/reference volume <= 0.02 (where a ground truth exists).",
+    "supplied_dimension_pass": "abs(max(run extents) - case-supplied maximum dimension) <= tolerances.supplied_dimension_mm (1.0 mm). The case-supplied dimension is the frozen plan corpus 'dimension' actually sent with the request; reference-only ground-truth numbers are NOT part of this contract (they stay on extents_pass). Separate track: excluded from overall_pass, never retro-gates frozen rows.",
     "fidelity_pass": "Harness re-runs doodle_to_cad.evaluation.projection_scores on (source drawing, run geometry evidence, run view renders). Every assigned direction must score >= 0.45. Kept separate from build_success. Product's own acceptance is recorded too but is not the harness pass.",
     "overall_pass": "build_success AND extents_pass AND genus_pass AND volume_pass AND fidelity_pass. If a required ground truth does not exist for a check, that check is not_applicable and excluded (never counted as failed).",
     "product_acceptance": "openscad: result.success (agent accepted, score >= 70). usd-brep: evaluation.status != 'failed' (the BRep path never auto-accepts fidelity; evaluation.accepted stays false by design).",
@@ -395,6 +397,12 @@
       "cells": "wheel, constant_radius_handle, solid_transition (all 12 cells)",
       "change": "dimension corrected 100 -> 120/54/60 to match the certified #34 TRIAL-PLAN dimensions for these baseline drawings; the initial frozen plan had hand-picked 100 mm, which made the ground-truth extents checks measure against a size the drawing was never intended to build at.",
       "affected_rows": "30 previously-published rows kept; 12 cells deleted and rerun at corrected dimensions"
+    },
+    {
+      "at": "2026-10-22T23:59:00+02:00",
+      "cells": "all cells (additive check, no rerun)",
+      "change": "added supplied_dimension_pass (tolerances.supplied_dimension_mm = 1.0): a dimension actually supplied with the request must be honoured in the mesh within 1 mm. Declared per #102 because the plan previously had no check that the model honoured a number the user gave it; the 2% extents check measures reference-only values (dimensions never supplied), conflating propagation failures with ink-inference failures.",
+      "affected_rows": "none: separate track excluded from overall_pass; already-frozen rows keep their meaning; future runs gain the check"
     }
   ]
 }
