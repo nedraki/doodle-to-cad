@@ -54,3 +54,52 @@ def test_missing_dimension_and_missing_mesh():
 def test_invalid_tolerance_rejected(tolerance):
     with pytest.raises(ValueError):
         eb.reference_checks(None, {}, 120, tolerance)
+
+
+def test_live_trial_uses_plan_dimension_without_changing_overall(tmp_path, monkeypatch):
+    """Exercise the actual async call path, not a source-code string assertion."""
+    import asyncio
+    import json
+    from types import SimpleNamespace
+    import trimesh
+    from doodle_to_cad import config, evaluation
+
+    run = tmp_path/'results'/'trial'; run.mkdir(parents=True)
+    mesh = trimesh.creation.box(extents=[118.5, 30, 20]); mesh.export(run/'model.stl')
+    measured = eb._measure_stl(run/'model.stl')
+    refs = tmp_path/'references'; refs.mkdir()
+    (refs/'reference-measurements.json').write_text(json.dumps({'case':measured}))
+    (tmp_path/'drawing.png').write_bytes(b'fixture')
+    (run/'front.png').write_bytes(b'fixture')
+    (run/'result.json').write_text(json.dumps({'geometry':{'fixture':True}, 'files':{'stl':'/results/trial/model.stl','views':{'front':'/results/trial/front.png'}}}))
+    monkeypatch.setattr(eb, 'ROOT', tmp_path)
+    monkeypatch.setattr(config, 'settings', SimpleNamespace(results_dir=tmp_path/'results'))
+    monkeypatch.setattr(eb, '_ENV_STATIC', {'tested_commit':'fixture'})
+    monkeypatch.setattr(evaluation, 'projection_scores', lambda *a: ({'front':1.0},{}))
+    class Response:
+        status_code = 200
+        def __init__(self, data): self.data = data
+        def json(self): return self.data
+        def raise_for_status(self): pass
+    class Client:
+        async def post(self, url, **kwargs):
+            assert kwargs['data']['dimension'] == '120'
+            return Response({'job_id':'trial'})
+        async def get(self, url):
+            return Response({'status':'done'} if url.startswith('/api/generate/') else {'params':[]})
+    plan = {'_plan_dir':str(tmp_path), 'infrastructure':{'poll_timeout_seconds':10},
+            'tolerances':{'supplied_dimension_mm':1.0,'projection_similarity_min':.45}}
+    item = {'id':'case','drawing':'drawing.png','notes':'','dimension':'120','primary_view':'front'}
+    row = asyncio.run(eb._run_trial(Client(), plan, item, 'openscad', 1, tmp_path/'out', asyncio.Semaphore(1)))
+    assert row['checks']['overall_pass'] is True
+    assert row['checks']['supplied_dimension_pass'] is False
+    saved = json.loads((tmp_path/'out/case/openscad/trial-01/row.json').read_text())
+    assert saved['checks'] == row['checks']
+
+
+def test_measurement_error_with_reference_still_records_dimension_failure():
+    checks, _ = eb.reference_checks({'measure_error':'invalid STL'}, measurement([120,30,20]), 120)
+    assert checks['supplied_dimension_pass'] is False
+    assert checks['extents_pass'] is False
+    assert checks['volume_pass'] is False
+    assert checks['build_success'] is False

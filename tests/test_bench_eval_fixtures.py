@@ -4,9 +4,8 @@ Two claims, each proven from retained artifacts or freshly compiled fixtures:
 
 1. The evaluator's checks detect planted defects with known answers, and
    detect them ONLY with the check that was declared (fixtures/*.scad).
-2. Some checks are structurally blind: they pass a wrong part and a correct
-   part with identical scores (EV-4 acceptance insensitivity; opening
-   position insensitivity), and the hidden-requirement fixture (EV-1) shows
+2. Some geometry checks are structurally blind: they pass moved and original
+   openings with identical scores (opening position insensitivity), and the hidden-requirement fixture (EV-1) shows
    a policy-compliant model can never pass a reference-only dimension.
 
 The gate freezes today's verified behaviour. If a product fix changes any of
@@ -140,8 +139,7 @@ def test_ev1_hidden_reference_thickness(built):
 
 def test_d1_geometry_checks_blind_to_opening_position(built):
     """A 20 mm hole move leaves extents/genus/volume byte-identical: the
-    geometry checks alone cannot see opening position; only the projection
-    path can — and there the position fidelity does not react either."""
+    geometry checks alone cannot see opening position; the separate projection-position fixture below detects the move."""
     _, base = built["plate_5mm"]
     _, moved = built["plate_hole_moved"]
     assert base == moved, "geometry verdicts identical: position is invisible to them"

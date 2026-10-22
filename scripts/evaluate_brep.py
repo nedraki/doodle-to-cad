@@ -99,7 +99,11 @@ def _environment_static():
               "model_host": urlsplit(getattr(settings, "base_url", "") or "").hostname,
               "server_model": _SERVER_MODEL,
               "doodle_brep_python": os.environ.get("DOODLE_BREP_PYTHON"),
-              "results_dir": os.environ.get("DOODLE_RESULTS_DIR")}
+              "results_dir": os.environ.get("DOODLE_RESULTS_DIR"),
+              "model_settings": {name: getattr(settings, name) for name in (
+                  "requested_model", "enable_thinking", "structured_enable_thinking",
+                  "code_enable_thinking", "max_tokens", "code_max_tokens",
+                  "agent_max_attempts", "agent_accept_score", "code_validation_repairs")}}
     try:
         record["tested_commit"] = subprocess.check_output(
             ["git", "rev-parse", "HEAD"], cwd=str(ROOT), text=True).strip()
@@ -249,6 +253,7 @@ def reference_checks(measurement, reference, supplied_dimension=None, tolerance_
     One source of truth for build/extents/genus/volume verdicts so a fixture
     exercises exactly the check the live harness applies. Returns
     (checks, not_applicable)."""
+    import math
     ground_truth = reference.get("kind") != "no_ground_truth" and "genus" in reference
     build_success = bool(measurement and measurement.get("watertight")
                          and measurement.get("components") == 1)
@@ -258,11 +263,17 @@ def reference_checks(measurement, reference, supplied_dimension=None, tolerance_
         na += ["extents", "genus", "volume"]
         checks.update({"extents_pass": None, "genus_pass": None, "volume_pass": None})
     else:
-        extents_pass = bool(measurement) and all(
+        extents = (measurement or {}).get("extents_mm")
+        valid_extents = (isinstance(extents, (list, tuple)) and len(extents) == 3
+                         and all(isinstance(x, (int, float)) and not isinstance(x, bool)
+                                 and math.isfinite(x) and x > 0 for x in extents))
+        extents_pass = bool(valid_extents) and all(
             abs(a - b) <= 0.02 * max(b, 1e-9) for a, b in
-            zip(sorted(measurement["extents_mm"]), sorted(reference["extents_mm"])))
+            zip(sorted(extents), sorted(reference["extents_mm"])))
         genus_pass = bool(measurement) and measurement.get("genus") == reference["genus"]
-        volume_pass = bool(measurement) and abs(measurement["volume_mm3"] - reference["volume_mm3"]) <= 0.02 * reference["volume_mm3"]
+        volume = (measurement or {}).get("volume_mm3")
+        volume_pass = (isinstance(volume, (int, float)) and math.isfinite(volume)
+                       and abs(volume - reference["volume_mm3"]) <= 0.02 * reference["volume_mm3"])
         checks.update({"extents_pass": extents_pass, "genus_pass": genus_pass, "volume_pass": volume_pass})
     supplied = supplied_dimension_check(measurement, supplied_dimension, tolerance_mm)
     if supplied is not None:
@@ -657,6 +668,9 @@ async def _drive(plan, cells, out_dir, port, parallel):
             health = (await client.get("/api/health")).json()
             global _SERVER_MODEL
             _SERVER_MODEL = health["agentic"]["selected_model"]
+            expected_model = plan.get("model_settings", {}).get("selected_model")
+            if expected_model and _SERVER_MODEL != expected_model:
+                raise RuntimeError(f"Frozen model mismatch: expected {expected_model}, got {_SERVER_MODEL}")
             print("server model:", _SERVER_MODEL, flush=True)
             semaphore = asyncio.Semaphore(parallel)
             jobs = []

@@ -1,0 +1,94 @@
+/* doodle-meta {"version":1,"parameters":{"width":{"label":"Overall width","description":"Changes the body width","unit":"mm","feature":"body_width"},"height":{"label":"Overall height","description":"Changes the body height","unit":"mm","feature":"body_height"},"thickness":{"label":"Plate thickness","description":"Changes the plate thickness","unit":"mm","feature":"body_thickness"},"slot_count":{"label":"Grille slot count","description":"Number of vertical grille slots","unit":"count","feature":"grille_slots"},"slot_width":{"label":"Grille slot width","description":"Width of each vertical grille slot","unit":"mm","feature":"grille_slots"},"slot_height":{"label":"Grille slot height","description":"Height of each vertical grille slot","unit":"mm","feature":"grille_slots"},"headlight_diameter":{"label":"Headlight diameter","description":"Diameter of the circular headlight cutouts","unit":"mm","feature":"headlights"}},"features":{"body_width":{"kind":"dimension","axis":"x","label":"Overall width"},"body_height":{"kind":"dimension","axis":"z","label":"Overall height"},"body_thickness":{"kind":"dimension","axis":"y","label":"Plate thickness"},"grille_slots":{"kind":"region","label":"Grille slots","min":[{"parameter":"width","scale":0.2895,"offset":0},{"parameter":"thickness","scale":0,"offset":0},{"parameter":"height","scale":0.1324,"offset":0}],"max":[{"parameter":"width","scale":0.7084,"offset":0},{"parameter":"thickness","scale":1,"offset":0},{"parameter":"height","scale":0.7417,"offset":0}]},"headlights":{"kind":"region","label":"Headlights","min":[{"parameter":"width","scale":0.0927,"offset":0},{"parameter":"thickness","scale":0,"offset":0},{"parameter":"height","scale":0.4893,"offset":0}],"max":[{"parameter":"width","scale":0.9035,"offset":0},{"parameter":"thickness","scale":1,"offset":0},{"parameter":"height","scale":0.7509,"offset":0}]}}} */
+
+// Parameters
+width = 126.0;
+height = 78.83;
+thickness = 7.52;
+slot_count = 7;
+slot_width = 5.1;
+slot_height = 48.0;
+headlight_diameter = 20.0;
+
+// Derived constants (not user-editable)
+eps = 0.1;
+slot_pitch = 16.0;
+slot_center_x = width / 2.0;
+slot_center_z = height * 0.437;
+headlight_center_z = height * 0.6217;
+headlight_center_x_left = width * 0.1747;
+headlight_center_x_right = width * 0.8253;
+
+// Outer profile polygon in XZ plane (normalized u, v)
+// u maps to +X, v maps to -Z (v=0 is top, v=1 is bottom)
+outer_profile_uv = [
+    [0.0097, 0.5785],
+    [0.0521, 0.9202],
+    [0.2027, 0.9787],
+    [0.9267, 0.9417],
+    [0.9865, 0.7385],
+    [0.9768, 0.5509],
+    [0.8359, 0.3478],
+    [0.8243, 0.0954],
+    [0.6524, 0.0185],
+    [0.1833, 0.0954],
+    [0.1622, 0.3509]
+];
+
+// Convert normalized UV to CAD coordinates (X, Z)
+function uv_to_xz(u, v) = [u * width, (1.0 - v) * height];
+
+// Generate polygon points for the outer profile
+function generate_outer_polygon() = [
+    for (i = [0 : len(outer_profile_uv) - 1])
+        uv_to_xz(outer_profile_uv[i][0], outer_profile_uv[i][1])
+];
+
+// Module for the main grille body
+module grille_body() {
+    polygon_points = generate_outer_polygon();
+    linear_extrude(height = thickness, center = true) {
+        polygon(polygon_points);
+    }
+}
+
+// Module for a single vertical slot cutter
+// Cuts along Y axis (through the plate)
+module slot_cutter(x_center, z_center, w, h) {
+    translate([x_center, 0, z_center]) {
+        // Rotate so cylinder axis is along Y
+        rotate([90, 0, 0]) {
+            cylinder(h = thickness + 2 * eps, r = w / 2.0, center = true);
+        }
+    }
+}
+
+// Module for a single circular headlight cutter
+// Cuts along Y axis (through the plate)
+module headlight_cutter(x_center, z_center, d) {
+    translate([x_center, 0, z_center]) {
+        // Rotate so cylinder axis is along Y
+        rotate([90, 0, 0]) {
+            cylinder(h = thickness + 2 * eps, r = d / 2.0, center = true);
+        }
+    }
+}
+
+// Main design instantiation
+difference() {
+    // 1. Positive Body
+    grille_body();
+
+    // 2. Subtractive Cutters
+    
+    // Grille Slots (7 vertical slots)
+    for (i = [0 : slot_count - 1]) {
+        // Calculate X position for each slot
+        // Centered around width/2
+        slot_x = slot_center_x + (i - (slot_count - 1) / 2.0) * slot_pitch;
+        slot_cutter(slot_x, slot_center_z, slot_width, slot_height);
+    }
+
+    // Headlights (Left and Right)
+    headlight_cutter(headlight_center_x_left, headlight_center_z, headlight_diameter);
+    headlight_cutter(headlight_center_x_right, headlight_center_z, headlight_diameter);
+}

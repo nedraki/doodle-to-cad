@@ -19,13 +19,14 @@
   ],
   "infrastructure": {
     "server": "in-process uvicorn on 127.0.0.1:8137",
-    "results_dir": "results/issue-81-followup",
+    "results_dir": "results/issue-81-followup-verified",
     "harness": "scripts/evaluate_brep.py trials subcommand",
     "model": "local vLLM at http://127.0.0.1:8000/v1 (never restarted by the harness)",
     "concurrency": 2,
     "poll_timeout_seconds": 1200,
     "trials_per_cell": 2,
-    "matrix": "6 drawings x 2 backends x 2 trials = 24 submissions"
+    "matrix": "6 drawings x 2 backends x 2 trials = 24 submissions",
+    "worker_python": "/home/sparkie/playground/doodle-to-cad/workers/brep/.venv/bin/python"
   },
   "model_settings": {
     "policy": "App defaults exactly as shipped: OPENAI_MODEL empty, model auto-discovered from GET /v1/models. Both backends use the same settings and run in the same app instance.",
@@ -188,6 +189,12 @@
       "issue": 81,
       "change": "New independent 24-cell run; add joint orientation diagnostic, never an acceptance gate. Historical rows stay immutable.",
       "affected_rows": "New followup/runs only."
+    },
+    {
+      "at": "2026-10-23T01:41:40.687663+02:00",
+      "issue": 81,
+      "change": "Restart the full 24-cell matrix with the established pinned worker after 406 regression tests passed. Prior environment attempt retained in aborted-environment-run; no per-cell selection. Add model-identity enforcement, actual model-settings fingerprints and fail-closed measurement diagnostics.",
+      "affected_rows": "New runs/ only. Prior two submissions remain interrupted infrastructure outcomes, excluded from model-quality rates but included in submission accounting."
     }
   ],
   "frozen_git_rev_note": "Parent commit; harness implementation and this plan are committed together before submissions. Per-cell environment records the tested commit.",
