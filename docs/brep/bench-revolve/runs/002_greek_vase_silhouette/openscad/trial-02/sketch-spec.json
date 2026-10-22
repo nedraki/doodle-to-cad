@@ -1,0 +1,97 @@
+{
+  "object": "Greek vase",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "front",
+      "sheet_region": "center",
+      "constrains": "silhouette profile (radius vs height)"
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "vase_body",
+      "name": "Vase Body",
+      "material": "plastic",
+      "quantity": 1
+    }
+  ],
+  "features": [
+    {
+      "id": "vase_silhouette",
+      "type": "profile",
+      "owner": "vase_body",
+      "description": "The 2D outline of the vase from the front view, defining the radius at each height."
+    }
+  ],
+  "relations": [],
+  "symmetry": {
+    "type": "rotational",
+    "axis": "Z",
+    "order": "continuous"
+  },
+  "repetitions": [],
+  "dimensions": {
+    "max_width": 107.53,
+    "max_height": 120.0,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "The vase is assumed to be rotationally symmetric around the vertical axis (Z) based on the single silhouette view.",
+    "The base is assumed to be flat for stability, though the drawing shows a curved bottom."
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "The object is interpreted as a rotationally symmetric vase. The front view provides the profile curve. The profile will be revolved 360 degrees around the Z-axis to create the 3D solid. The maximum dimension is set to 120mm.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "revolve",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "revolve_profile",
+        "operation": "revolve",
+        "profile_plane": "XZ",
+        "direction_axis": "Z",
+        "owner": "vase_body",
+        "parameters": {
+          "angle": 360,
+          "axis": "Z",
+          "source_profile": "create_profile"
+        },
+        "source_views": [
+          "view_1"
+        ]
+      }
+    ],
+    "unresolved_constraints": [
+      "Wall thickness is not specified; the object will be generated as a solid."
+    ]
+  },
+  "user_intent": {
+    "description": "Greek vase from a single silhouette",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "120"
+  },
+  "source_view_group_count": 1,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

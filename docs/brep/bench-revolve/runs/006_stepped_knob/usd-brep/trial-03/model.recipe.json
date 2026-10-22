@@ -1,0 +1,162 @@
+{
+  "version": 2,
+  "units": "mm",
+  "name": "stepped_knob",
+  "parameters": {
+    "total_height": {
+      "value": 56,
+      "min": 10,
+      "max": 100,
+      "label": "Total Height",
+      "description": "Overall height of the knob"
+    },
+    "base_radius": {
+      "value": 20,
+      "min": 5,
+      "max": 50,
+      "label": "Base Radius",
+      "description": "Radius of the bottom flange"
+    },
+    "base_height": {
+      "value": 14,
+      "min": 1,
+      "max": 50,
+      "label": "Base Height",
+      "description": "Height of the bottom flange"
+    },
+    "neck_radius": {
+      "value": 10,
+      "min": 1,
+      "max": 50,
+      "label": "Neck Radius",
+      "description": "Radius of the central neck"
+    },
+    "neck_height": {
+      "value": 28,
+      "min": 1,
+      "max": 100,
+      "label": "Neck Height",
+      "description": "Height of the central neck section"
+    },
+    "top_radius": {
+      "value": 20,
+      "min": 5,
+      "max": 50,
+      "label": "Top Radius",
+      "description": "Radius of the top flange"
+    }
+  },
+  "operations": [
+    {
+      "id": "knob",
+      "kind": "revolve",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "axis": "z",
+      "profile": [
+        [
+          0,
+          0
+        ],
+        [
+          "base_radius",
+          0
+        ],
+        [
+          "base_radius",
+          "base_height"
+        ],
+        [
+          "neck_radius",
+          "base_height"
+        ],
+        [
+          "neck_radius",
+          "base_height + neck_height"
+        ],
+        [
+          "top_radius",
+          "base_height + neck_height"
+        ],
+        [
+          "top_radius",
+          "total_height"
+        ],
+        [
+          0,
+          "total_height"
+        ]
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1",
+        "e2"
+      ]
+    }
+  ],
+  "output": "knob",
+  "frames": {
+    "world": {
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    }
+  },
+  "bodies": [
+    {
+      "id": "part",
+      "output": "knob"
+    }
+  ],
+  "evidence": {
+    "observed": [
+      {
+        "id": "e1",
+        "text": "Front and Right views show a stepped profile with wide base, narrow neck, and wide top."
+      },
+      {
+        "id": "e2",
+        "text": "Symmetry between Front and Right views indicates an axisymmetric object."
+      }
+    ],
+    "inferred": [
+      {
+        "id": "e3",
+        "text": "The object is a solid of revolution (knob/pulley shape)."
+      }
+    ],
+    "assumptions": [
+      {
+        "id": "e4",
+        "text": "Total height is assumed to be 56 mm based on maximum dimension constraint."
+      },
+      {
+        "id": "e5",
+        "text": "Base and Top radii are assumed to be 20 mm (40 mm diameter)."
+      },
+      {
+        "id": "e6",
+        "text": "Neck radius is assumed to be 10 mm (20 mm diameter)."
+      },
+      {
+        "id": "e7",
+        "text": "Base and Top flange heights are assumed to be 14 mm each."
+      },
+      {
+        "id": "e8",
+        "text": "Neck height is assumed to be 28 mm."
+      }
+    ],
+    "unresolved": []
+  },
+  "constraints": []
+}

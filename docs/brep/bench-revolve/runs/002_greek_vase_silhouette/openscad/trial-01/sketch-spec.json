@@ -1,0 +1,133 @@
+{
+  "object": "Greek vase (amphora style)",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "front",
+      "sheet_region": "center",
+      "what_it_constrains": "Outer silhouette profile defining the vase's height, neck width, shoulder bulge, and base curvature."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "vase_body",
+      "name": "Vase Body",
+      "material": "PLA/Resin (3D print)",
+      "description": "Single continuous solid of revolution forming the vessel."
+    }
+  ],
+  "features": [
+    {
+      "id": "rim",
+      "type": "edge",
+      "location": "top",
+      "description": "Flared opening at the top of the neck."
+    },
+    {
+      "id": "neck",
+      "type": "surface",
+      "location": "upper-middle",
+      "description": "Narrow cylindrical section connecting rim to shoulder."
+    },
+    {
+      "id": "shoulder",
+      "type": "surface",
+      "location": "middle",
+      "description": "Curved transition expanding from neck to body."
+    },
+    {
+      "id": "belly",
+      "type": "surface",
+      "location": "lower-middle",
+      "description": "Widest part of the vessel."
+    },
+    {
+      "id": "base",
+      "type": "surface",
+      "location": "bottom",
+      "description": "Curved bottom closing the vessel."
+    }
+  ],
+  "relations": [
+    {
+      "type": "revolved_profile",
+      "source": "front_view_silhouette",
+      "target": "vase_body",
+      "description": "The 2D silhouette is interpreted as the half-profile of a rotationally symmetric object."
+    }
+  ],
+  "symmetry": {
+    "type": "rotational",
+    "axis": "Z",
+    "degree": "infinite",
+    "justification": "Greek vases are typically thrown on a wheel, implying rotational symmetry around the vertical axis."
+  },
+  "repetitions": [],
+  "dimensions": {
+    "max_width": 107.53,
+    "max_height": 120.0,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "Wall thickness is not specified; assumed thin-walled shell for 3D printing efficiency.",
+    "Base flatness is not explicitly drawn; assumed flat bottom for stability.",
+    "Handle presence is not indicated in the silhouette; assumed handle-less (hydria/amphora variant without handles or simplified model)."
+  ],
+  "interpretation_conflicts": [
+    "The input is a single closed contour. For a vase, this usually implies a solid or a shell. Given '3D print' and 'Greek vase', a hollow shell is the standard interpretation, but the silhouette itself defines the outer envelope."
+  ],
+  "generation_notes": "The object is modeled as a solid of revolution. The provided front view silhouette is treated as the profile curve. The profile is mirrored across the vertical axis (Z) to create a full cross-section, which is then revolved 360 degrees around the Z-axis. The maximum dimension (height) is scaled to 120mm.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "revolve",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_2",
+        "operation": "revolve",
+        "profile_plane": "XZ",
+        "direction_axis": "Z",
+        "owner": "vase_body",
+        "parameters": {
+          "angle": 360,
+          "axis": "Z",
+          "shell_thickness": "auto_thin_wall"
+        },
+        "source_views": [
+          "view_1"
+        ]
+      }
+    ],
+    "unresolved_constraints": [
+      "Exact wall thickness",
+      "Base geometry (flat vs rounded)"
+    ]
+  },
+  "user_intent": {
+    "description": "Greek vase from a single silhouette",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "120"
+  },
+  "source_view_group_count": 1,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

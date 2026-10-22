@@ -1,0 +1,102 @@
+{
+  "object": "Hex prism handle",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "front",
+      "sheet_region": "left",
+      "constrains": "Hexagonal cross-section in the XZ plane (width and height)"
+    },
+    {
+      "direction": "right",
+      "sheet_region": "right",
+      "constrains": "Hexagonal cross-section in the YZ plane (depth and height)"
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "part_1",
+      "name": "Hex Prism Body",
+      "material": "plastic",
+      "description": "A solid hexagonal prism handle."
+    }
+  ],
+  "features": [
+    {
+      "id": "feat_hex_profile",
+      "type": "profile",
+      "owner": "part_1",
+      "description": "Regular hexagon shape defining the cross-section."
+    }
+  ],
+  "relations": [],
+  "symmetry": {
+    "type": "rotational",
+    "axis": "Z",
+    "order": 6
+  },
+  "repetitions": [],
+  "dimensions": {
+    "max_dimension": 70.0,
+    "max_width": 70.0,
+    "max_depth": 69.51,
+    "max_height": 61.49,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "The extrusion length (depth) is not explicitly dimensioned but is inferred to be equal to the width (70mm) based on the aspect ratio of the right view and the 'handle' description."
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "The drawing shows two orthographic views of a hexagonal prism. The front view shows the hexagonal profile. The right view shows the same hexagonal profile (implying the object is a prism with equal width and depth, or a hexagonal cylinder). The user specified 'Hex prism handle' and 'extruded hexagon'. The maximum dimension is 70mm. The geometry is constructed by extruding a regular hexagon.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "extrude",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_2",
+        "operation": "extrude",
+        "profile_plane": "XZ",
+        "direction_axis": "Y",
+        "owner": "part_1",
+        "parameters": {
+          "distance": 70,
+          "symmetric": true
+        },
+        "source_views": [
+          "view_2"
+        ]
+      }
+    ],
+    "unresolved_constraints": [
+      "The extrusion length (depth) is not explicitly dimensioned but is inferred to be equal to the width (70mm) based on the aspect ratio of the right view and the 'handle' description."
+    ]
+  },
+  "user_intent": {
+    "description": "Hex prism handle (extruded hexagon)",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "70"
+  },
+  "source_view_group_count": 2,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}
