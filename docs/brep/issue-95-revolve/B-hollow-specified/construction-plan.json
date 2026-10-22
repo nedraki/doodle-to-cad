@@ -1,0 +1,34 @@
+{
+  "view_frame": "Front view (XZ plane) displays the vase silhouette. The vertical axis is Z (height), and the horizontal axis is X (width). The part is axisymmetric about the Z axis. The base rests at Z=0.",
+  "features": [
+    {
+      "id": "vase_solid",
+      "shape": "revolve",
+      "section": "closed polyline",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "height: 120 mm (ASSUMED max dimension)",
+        "wall_thickness: 4 mm",
+        "floor_thickness: 4 mm",
+        "base_radius: 30 mm (ASSUMED)",
+        "belly_radius: 45 mm (ASSUMED)",
+        "neck_radius: 15 mm (ASSUMED)",
+        "rim_radius: 25 mm (ASSUMED)"
+      ],
+      "placement": "Revolve 360 degrees about Z axis. Profile defined by vertices (r, z): (0,0) -> (30,0) -> (45,40) -> (15,90) -> (25,120) -> (21,120) -> (11,90) -> (41,40) -> (26,4) -> (0,4) -> (0,0).",
+      "evidence": "Single silhouette outline showing a vase shape with a flared rim, narrow neck, and wide belly. User notes specify a hollow vessel with 4mm wall and floor thickness."
+    }
+  ],
+  "connections": [
+    "The outer profile and inner profile are connected at the rim (Z=120) and the floor (Z=4) to form a single closed loop for the revolve operation."
+  ],
+  "edit_rules": [
+    "Changing wall_thickness or floor_thickness requires recalculating the inner profile vertices (r_inner = r_outer - thickness).",
+    "Changing the overall height requires scaling all Z coordinates of the profile vertices.",
+    "Changing the base_radius requires updating the first and last vertices of the outer and inner profiles respectively."
+  ],
+  "unresolved": [
+    "Exact radii for the base, belly, neck, and rim are not dimensioned in the drawing; ASSUMED values based on the 120mm height constraint are used.",
+    "The specific curvature of the vase body is approximated by straight segments between key control points (base, belly, neck, rim) due to lack of spline data."
+  ]
+}

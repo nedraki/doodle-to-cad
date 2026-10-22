@@ -1,0 +1,38 @@
+{
+  "view_frame": "The drawing presents a single side silhouette view. The vertical axis represents height (Z) and the horizontal axis represents width (X). The object is axisymmetric about the vertical Z-axis. The base of the vase is located at Z=0.",
+  "features": [
+    {
+      "id": "vase_solid",
+      "shape": "revolve",
+      "section": "closed radius-height polyline",
+      "axis_or_plane": "XZ plane revolved about Z axis",
+      "dimensions": [
+        "height: 120mm (max dimension)",
+        "max_radius: 40mm (estimated from proportions)",
+        "neck_radius: 15mm (estimated from proportions)",
+        "rim_radius: 18mm (estimated from proportions)",
+        "base_radius: 25mm (estimated from proportions)",
+        "wall_thickness: 4mm (ASSUMED)",
+        "floor_thickness: 4mm (ASSUMED)",
+        "recess_depth: 116mm (from clarification)"
+      ],
+      "placement": "Revolve the profile 360 degrees about the Z axis. The profile is defined by vertices (radius, height) in the XZ plane. The profile is a closed loop representing a hollow vessel with a recessed interior. Outer profile points (approximate): (0,0) -> (25,0) -> (35,10) -> (40,30) -> (30,60) -> (15,80) -> (15,110) -> (18,120) -> (0,120). Inner profile points (offset by wall/floor thickness): (0,4) -> (21,4) -> (31,14) -> (36,30) -> (26,60) -> (11,80) -> (11,110) -> (14,116) -> (0,116). The recess depth of 116mm implies the interior floor is at Z=4mm (120-116=4).",
+      "evidence": "Single continuous outline resembling a Greek vase. Clarification answer specifies 'recess' with depth 116mm."
+    }
+  ],
+  "connections": [
+    "The outer and inner profiles form a single closed loop for the revolve operation.",
+    "The recess depth determines the Z-height of the inner floor."
+  ],
+  "edit_rules": [
+    "Changing the max dimension (height) scales the Z coordinates of all vertices.",
+    "Changing the max radius scales the X coordinates of the widest points.",
+    "Changing wall/floor thickness adjusts the offset of the inner profile from the outer profile.",
+    "Changing recess depth adjusts the Z coordinate of the inner floor vertices."
+  ],
+  "unresolved": [
+    "Exact coordinates for the curved silhouette are approximated from the image proportions.",
+    "Wall and floor thickness are assumed values as they are not explicitly dimensioned."
+  ],
+  "clarification": null
+}
