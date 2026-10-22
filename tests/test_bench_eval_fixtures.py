@@ -182,3 +182,32 @@ def test_ev7_fidelity_is_orientation_dependent_on_004():
     topo = ucb["fidelity"]["topology"]
     assert topo["front"]["expected"] == 3 and topo["front"]["actual"] == 0
     assert topo["top"]["expected"] == 0 and topo["top"]["actual"] == 3
+
+
+def test_planted_position_and_stated_thickness_detected(built, eb, tmp_path):
+    """Use canonical projections of trusted geometry, not noisy ink labels.
+
+    The existing move fixture is invisible to genus/extents/volume. A 20 mm
+    move must exceed 0.1 of the normalized view while those checks stay green.
+    Stating the 5 mm thickness makes the 3 mm fixture a real dimension defect,
+    in contrast to the historical drawing where that requirement was hidden.
+    """
+    import numpy as np
+    import trimesh
+    from scripts.bench_orientation import render_mask, normalize_mask, opening_displacement
+    masks = {}
+    for name in ('plate_5mm', 'plate_hole_moved'):
+        d = tmp_path / name; d.mkdir()
+        shutil.copyfile(FIX / f'{name}.scad', d/'f.scad')
+        ok, log = run([settings.openscad_bin, '-o', 'f.stl', 'f.scad'], cwd=d, timeout=240)
+        assert ok, log
+        mesh = trimesh.load_mesh(d/'f.stl')
+        masks[name] = normalize_mask(render_mask(mesh, np.eye(3), 'top'))
+    control = opening_displacement(masks['plate_5mm'], masks['plate_5mm'])
+    defect = opening_displacement(masks['plate_5mm'], masks['plate_hole_moved'])
+    assert control['max_nearest_center_shift'] == 0
+    assert defect['expected_count'] == defect['actual_count'] == 3
+    assert defect['max_nearest_center_shift'] > .1
+    assert built['plate_5mm'][1] == built['plate_hole_moved'][1]
+    assert built['plate_5mm'][1]['extents_pass'] is True
+    assert built['plate_3mm_policy'][1]['extents_pass'] is False

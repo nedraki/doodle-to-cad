@@ -217,7 +217,33 @@ def _rule_number(rule, recipe):
     return 10.0
 
 
-def reference_checks(measurement, reference):
+def supplied_dimension_check(measurement, supplied_dimension, tolerance_mm=1.0):
+    """Check only the maximum extent the user supplied, independently of GT."""
+    import math
+    if supplied_dimension is None or supplied_dimension == "":
+        return None
+    if isinstance(supplied_dimension, bool) or isinstance(tolerance_mm, bool):
+        raise ValueError("Dimension and tolerance must be finite positive numbers")
+    target, tolerance = float(supplied_dimension), float(tolerance_mm)
+    if not math.isfinite(target) or target <= 0 or not math.isfinite(tolerance) or tolerance <= 0:
+        raise ValueError("Dimension and tolerance must be finite positive numbers")
+    extents = (measurement or {}).get("extents_mm")
+    if not isinstance(extents, (list, tuple)) or len(extents) != 3:
+        return False
+    if any(isinstance(x, bool) or not isinstance(x, (int, float))
+           or not math.isfinite(x) or x <= 0 for x in extents):
+        return False
+    return abs(max(extents) - target) <= tolerance
+
+
+def overall_checks(checks):
+    """Historical overall definition; new diagnostic tracks cannot change it."""
+    keys = ("build_success", "extents_pass", "genus_pass", "volume_pass", "fidelity_pass")
+    return bool(checks.get("build_success")) and all(
+        checks[k] for k in keys if checks.get(k) is not None)
+
+
+def reference_checks(measurement, reference, supplied_dimension=None, tolerance_mm=1.0):
     """Pure comparison shared by _run_trial and the #81 fixture gate.
 
     One source of truth for build/extents/genus/volume verdicts so a fixture
@@ -238,6 +264,11 @@ def reference_checks(measurement, reference):
         genus_pass = bool(measurement) and measurement.get("genus") == reference["genus"]
         volume_pass = bool(measurement) and abs(measurement["volume_mm3"] - reference["volume_mm3"]) <= 0.02 * reference["volume_mm3"]
         checks.update({"extents_pass": extents_pass, "genus_pass": genus_pass, "volume_pass": volume_pass})
+    supplied = supplied_dimension_check(measurement, supplied_dimension, tolerance_mm)
+    if supplied is not None:
+        checks["supplied_dimension_pass"] = supplied
+    else:
+        na.append("supplied_dimension")
     return checks, na
 
 
@@ -291,7 +322,11 @@ async def _run_trial(client, plan, item, backend, trial, out_dir, semaphore):
         return json.loads((cell / "row.json").read_text())
     cell.mkdir(parents=True, exist_ok=True)
     row = {"drawing": item["id"], "backend": backend, "trial": trial,
-           "submitted_at": None, "finished_at": None}
+           "submitted_at": None, "finished_at": None,
+           "checks": {"build_success": False, "overall_pass": False,
+                      "supplied_dimension_pass": supplied_dimension_check(
+                          None, item.get("dimension"),
+                          plan.get("tolerances", {}).get("supplied_dimension_mm", 1.0))}}
     plan_infra = plan["infrastructure"]
     image = (ROOT / item["drawing"]).read_bytes()
     (cell / "input.png").write_bytes(image)
@@ -303,6 +338,9 @@ async def _run_trial(client, plan, item, backend, trial, out_dir, semaphore):
     (cell / "request.json").write_text(json.dumps(
         {"form": form, "image_sha256": hashlib.sha256(image).hexdigest(),
          "source": item["drawing"], "reference_geometry_sent": False}, indent=2))
+    # Validate the plan before submitting a generation.
+    supplied_dimension_check(None, item.get("dimension"),
+                             plan.get("tolerances", {}).get("supplied_dimension_mm", 1.0))
     questions = []
     async with semaphore:
         started = time.monotonic()
@@ -383,7 +421,6 @@ async def _run_trial(client, plan, item, backend, trial, out_dir, semaphore):
         shutil.copyfile(failed, cell / "failed" / f"{failed.parent.name}-{failed.name}")
     if result is None:
         row["build"] = None
-        row["checks"] = {"build_success": False, "overall_pass": False}
         _finish_row(cell, row)
         _append_index(out_dir, row)
         return row
@@ -413,7 +450,9 @@ async def _run_trial(client, plan, item, backend, trial, out_dir, semaphore):
     reference = refs.get(ref_key) or {}
     ground_truth = reference.get("kind") != "no_ground_truth" and "genus" in reference
 
-    checks, na = reference_checks(measurement, reference)
+    checks, na = reference_checks(
+        measurement, reference, supplied_dimension=item.get("dimension"),
+        tolerance_mm=plan.get("tolerances", {}).get("supplied_dimension_mm", 1.0))
 
     # ---- harness-independent drawing fidelity (separate from build) --------
     fidelity = {"scores": None, "pass": None, "reason": None}
@@ -451,11 +490,19 @@ async def _run_trial(client, plan, item, backend, trial, out_dir, semaphore):
     checks["fidelity_pass"] = fidelity["pass"]
     if fidelity["pass"] is None:
         na.append("fidelity")
-    applicable = [v for k, v in checks.items() if v is not None]
-    checks["overall_pass"] = bool(applicable) and all(applicable) and checks["build_success"]
+    checks["overall_pass"] = overall_checks(checks)
     checks["not_applicable"] = na
     row["checks"] = checks
     row["fidelity"] = fidelity
+
+    # New diagnostic track only; never silently reinterpret frozen fidelity.
+    if plan.get("orientation_diagnostic") and stl is not None:
+        try:
+            from scripts.bench_orientation import evaluate_orientation
+            row["orientation_diagnostic"] = await asyncio.to_thread(
+                evaluate_orientation, stl, image, evidence, cell / "orientation", item["primary_view"])
+        except Exception as exc:
+            row["orientation_diagnostic"] = {"status": "unavailable", "reason": str(exc)}
 
     # ---- product's own verdicts (recorded, never the harness pass) --------
     evaluation = result.get("evaluation") or {}
