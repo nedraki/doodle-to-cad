@@ -20,6 +20,7 @@ FIELDS = {
     "chamfer": {"body", "radius"},
     "rotate": {"body", "origin", "axis", "angle"},
     "arc_pipe": {"origin", "bend_radius", "radius", "angle"},
+    "revolve": {"origin", "axis", "profile"},
 }
 
 
@@ -146,6 +147,14 @@ def validate_recipe(recipe, updates=None):
             from .planar_sweep import resolve_sweep
             try:
                 item.update(resolve_sweep(op,values,scalar))
+            except ValueError as exc:
+                raise ValueError(f"{op['id']}: {exc}") from exc
+        if kind == 'revolve':
+            if op['axis'] != 'z':
+                raise ValueError(f"{op['id']}: Revolve supports the +Z axis only")
+            from .revolve_profile import resolve_revolve_profile
+            try:
+                item['profile'] = resolve_revolve_profile(op['profile'], values, scalar)
             except ValueError as exc:
                 raise ValueError(f"{op['id']}: {exc}") from exc
         if kind == 'extrude':
