@@ -262,6 +262,22 @@ def _copy_evidence(run_dir: Path, cell: Path) -> None:
         if (cell / raw.name).exists():
             raise RuntimeError(f"refusing to overwrite existing evidence {cell / raw.name}")
         shutil.copyfile(raw, cell / raw.name)
+    # #89: kernel-crash forensics. Each build attempt leaves its triggering
+    # recipe, kernel failure payload, the stage (op id) captured at the crash,
+    # and the runner log in construction-attempts/N/. Only the LAST attempt's
+    # error.json survives at top level, so a crash on attempt 1 of 3 was
+    # frozen as a recipe without the message that killed it (ATTRIBUTION
+    # 'wheel usd t1'). Carry all four, append-only, next to the attempts.
+    for attempt_dir in sorted(run_dir.glob("construction-attempts/*")):
+        for name in ("recipe.json", "failure.json", "stage.txt", "runner.log"):
+            src = attempt_dir / name
+            if not src.exists():
+                continue
+            dest = cell / "failed" / f"{attempt_dir.name}.{name}"
+            dest.parent.mkdir(exist_ok=True)
+            if dest.exists():
+                raise RuntimeError(f"refusing to overwrite existing evidence {dest}")
+            shutil.copyfile(src, dest)
 
 
 async def _run_trial(client, plan, item, backend, trial, out_dir, semaphore):
@@ -365,10 +381,6 @@ async def _run_trial(client, plan, item, backend, trial, out_dir, semaphore):
     for failed in sorted(run_dir.glob("attempt-*/*.failed.scad")):
         (cell / "failed").mkdir(exist_ok=True)
         shutil.copyfile(failed, cell / "failed" / f"{failed.parent.name}-{failed.name}")
-    for attempt_dir in sorted(run_dir.glob("construction-attempts/*")):
-        if (attempt_dir / "recipe.json").exists():
-            (cell / "failed").mkdir(exist_ok=True)
-            shutil.copyfile(attempt_dir / "recipe.json", cell / "failed" / f"{attempt_dir.name}.recipe.json")
     if result is None:
         row["build"] = None
         row["checks"] = {"build_success": False, "overall_pass": False}
