@@ -59,6 +59,8 @@ Hard requirements:
 - Implement every feature marked hole, slot or through_cutout subtractively with difference(); cutters must fully traverse the owning wall/plate with a small epsilon margin.
 - A cutter's axis must be PERPENDICULAR to the wall it pierces: front-view openings cut along Y -> rotate([90,0,0]) before cylinder(), or use a cube whose Y side spans -eps..thickness+eps. A plain cylinder() has its axis along Z and will drill a vertical tunnel (breaking top/bottom edges) instead of a front hole. Right-view openings cut along X -> rotate([0,90,0]). Rounded slot ends need the same rotation as their slot's through-axis.
 - For a through-cutter, the primitive's own axis must cross the material: use `cylinder(..., center=true)` at the hole centre, or a cube spanning from one epsilon outside the far face to the other (e.g. y from -eps to thickness+eps). A cylinder started at the near face with center=false cuts nothing.
+- Single-rotation rule for rotated profiles: when you define a polygon in the XY plane and rotate([90,0,0]) it into its canonical plane, the body AND its cutters must live inside ONE enclosing transform (e.g. rotate([90,0,0]) difference(){ body; cutters; }), or be placed in the same rotated frame. Placing cutters in canonical coordinates while the body sits in the pre-rotation frame makes them miss the material silently — the model compiles solid with no holes. After choosing coordinates, sanity-check each cutter against the body's actual axis extents (the rotated slab spans negative Y, not 0..depth).
+- A measured slot with high length/width ratio (a slit/bar/louvre slat) is a stadium: rectangle with half-round ends — cut it with a cube spanning the straight part plus two cylinders (same rotation as the wall's through-axis), not a plain cube with sharp corners.
 - Connected parts must overlap enough to form the requested manifold. Do not leave floating decorations or components.
 - Preserve the authoritative maximum dimension and stated manufacturing method.
 - derived_sizes (when non-null) lists measured physical sizes in millimetres per axis from measured ink spans: set the top-level size parameters to exactly those values for non-null axes — they override your own pixel estimates; choose sensible proportions only for null axes.
@@ -67,8 +69,9 @@ Hard requirements:
 - Do not flatten a perspective object into a traced slab.
 - Use only real OpenSCAD primitives. For rotational solids use rotate_extrude(), never revolve(). Use cube(), never box().
 - OpenSCAD geometry/CSG/module invocations cannot be assigned to variables. Put reusable geometry in module definitions.
-- measured_view_geometry is the measured truth of feature placement: for each internal profile place its opening centre at center_view_normalized (u right, v down within its view). Convert with the view's cad_mapping (front: X = u*width from the left edge, Z = (1-v)*height from the bottom; top: Y = (1-v)*depth, so v=0 at the top of the view is the BACK (+Y) of the part and increasing v moves toward the FRONT; right: Y = u*depth, so u=0 at the left of the view is the FRONT (-Y) and increasing v/up stays height). Never distribute holes evenly, centre them "for symmetry", or invent margins when measured coordinates exist.
-- intent_refinements (when present) is the user's DESIGN INTENT distilled from the hand-drawn strokes and takes precedence over raw polygon tracing: model ideal_shape forms exactly — circle -> cylinder(d=...), rectangle -> cube, slot -> stadium (rounded-ends) cutter; use snapped centres and uniform sizes; build grids/patterns with nested for-loops over the reported pitch. Do not reproduce stroke wobble with polyhedron() or polygon(). Only fall back to raw measured_view_geometry polygons for profiles labelled polygon with low confidence.
+- measured_view_geometry is the measured truth of feature placement: when feature_placements_mm is present, use it VERBATIM — its center_mm/polygon_mm are already in CAD-world millimetres with the (1-v) vertical flip applied; cutter centres go exactly at center_mm on the plane's axes and the body outline is polygon_mm extruded along through_axis. Only when it is absent convert view-local (u,v) yourself via cad_mapping (front: X = u*width from the left edge, Z = (1-v)*height from the bottom; top: Y = (1-v)*depth, so v=0 at the top of the view is the BACK (+Y) of the part and increasing v moves toward the FRONT; right: Y = u*depth, so u=0 at the left of the view is the FRONT (-Y) and increasing v/up stays height). Never distribute holes evenly, centre them "for symmetry", or invent margins when measured coordinates exist.
+- OUTER SILHOUETTE IS A HARD CONSTRAINT: each view's outer_profile polygon is that view's extrusion profile and the truth of the body outline. When intent_refinements has outer_profile_fit.accepted=false (or the profile is labelled polygon), build the body outline EXACTLY from outer_profile.polygon_dense_view_normalized — polygon() + linear_extrude() (or polyhedron()) with those view-local coordinates mapped through the view's cad_mapping. Use curve_segments to regularize the outline honestly: lines stay lines, arcs are rebuilt through their from/mid/to points; keep every shoulder, step and curved transition. Never replace that outline with a rounded rectangle, ellipse, box or circle, and never recover a lost silhouette with corner fillets.
+- intent_refinements (when present) is the user's DESIGN INTENT for the INTERNAL profiles and takes precedence over raw polygon tracing THERE ONLY: model ideal_shape forms exactly — circle -> cylinder(d=...), rectangle -> cube, slot -> stadium (rounded-ends) cutter; use snapped centres and uniform sizes; build grids/patterns with nested for-loops over the reported pitch. Do not reproduce stroke wobble with polyhedron() or polygon() for internal profiles. Only fall back to raw measured_view_geometry polygons for profiles labelled polygon with low confidence. Outer silhouettes are exempt: see the hard constraint above.
 - Chirality is evidence, not semantics: each view's outer_profile polygon is the silhouette truth for that axis. In the right view u=0 is the FRONT (Y=0) and u=1 the back — if the tall/thick mass sits on the left of the right view, that material belongs near Y=0, even if naming the part "back panel" feels natural. Never mirror the solid to satisfy a semantic expectation when the measured outer polygon says otherwise.
 - Model exactly what the registered views show: no curvature, bevels, fillets or decoration that no view depicts (a rectangular top-view outer profile means flat faces, not a curved front). Simplicity that matches every silhouette beats invented realism.
 - Prefer one explicit top-level CSG tree: a complete positive body first, followed by subtractive cutters.
@@ -196,6 +199,7 @@ class Pipeline:
         (out / "sketch-spec.json").write_text(json.dumps(spec,indent=2))
         generation_input = {"design_contract": {"object_count": 1, "views_are_constraints_not_parts": True, "projection_standard": controls.get("projection_standard"), "strict_watertight": controls.get("strict_watertight"), "method": controls.get("method")}, "specification": spec,
                             "measured_view_geometry": {"coordinate_contract": evidence.get("coordinate_contract"), "views": evidence.get("view_geometry", [])},
+                            "feature_placements_mm": self.feature_placements_mm(evidence, derived_sizes),
                             "intent_refinements": refine_evidence(evidence, controls.get("refine_mode", "regularize")),
                             "derived_sizes": derived_sizes}
         strict = bool(controls.get("strict_watertight", True))
@@ -418,6 +422,63 @@ class Pipeline:
                 return extract_json(repaired)
             except (ValueError,json.JSONDecodeError) as repair_exc:
                 raise ValueError(f"{label} returned malformed JSON and repair failed: {repair_exc}") from repair_exc
+
+    @staticmethod
+    def feature_placements_mm(evidence: dict[str, Any], derived_sizes: dict[str, Any] | None) -> dict[str, Any] | None:
+        """Pre-convert measured view-local profile centres/sizes to CAD mm.
+
+        LLM authors keep flipping the v-axis (front-view openings rendered at
+        mirrored heights, cutters landing outside the body). The mapping is
+        deterministic — cad_mapping signs x derived_sizes spans — so compute
+        it here and hand the generator exact coordinates to place.
+        """
+        if not derived_sizes:
+            return None
+        W, D, H = derived_sizes.get("width_mm"), derived_sizes.get("depth_mm"), derived_sizes.get("height_mm")
+        planes: list[dict[str, Any]] = []
+        for view in evidence.get("view_geometry", []):
+            direction = view.get("direction")
+            if direction == "front" and W and H:
+                axes, values, formula = (["x", "z"], [W, H], "X = u*W from the left edge, Z = (1-v)*H from the bottom (v=0 is the TOP of the view)")
+            elif direction == "top" and W and D:
+                axes, values, formula = (["x", "y"], [W, D], "X = u*W, Y = (1-v)*D: v=0 is the BACK (+Y), increasing v moves toward the FRONT")
+            else:
+                continue
+            items = []
+            for profile in view.get("internal_profiles") or []:
+                cu, cv = profile.get("center_view_normalized") or [None, None]
+                size = profile.get("size_view_normalized")
+                if size is None:
+                    bbox = profile.get("bbox_view_normalized") or []
+                    size = [bbox[2], bbox[3]] if len(bbox) == 4 else [None, None]
+                su, sv = size
+                if cu is None or cv is None:
+                    continue
+                c_u, c_v = cu, 1.0 - cv
+                items.append({
+                    "profile_id": profile.get("profile_id"),
+                    "center_mm": [round(c_u * values[0], 2), round(c_v * values[1], 2)],
+                    "size_mm": [round(su * values[0], 2) if su is not None else None,
+                                round(sv * values[1], 2) if sv is not None else None],
+                })
+            for outer in [view.get("outer_profile")]:
+                if outer:
+                    pts = outer.get("polygon_dense_view_normalized") or outer.get("polygon_view_normalized") or []
+                    items.append({
+                        "profile_id": outer.get("profile_id"), "role": "outer_silhouette",
+                        "polygon_mm": [[round(p[0] * values[0], 2), round((1.0 - p[1]) * values[1], 2)] for p in pts],
+                    })
+            if items:
+                planes.append({"view": direction, "axes": axes, "coordinate_formula": formula,
+                               "through_axis": "y" if direction == "front" else "z", "profiles": items})
+        if not planes:
+            return None
+        return {"contract": ("Exact CAD-world millimetre coordinates for every measured profile, pre-converted "
+                             "from view-local (u,v) using the view's cad_mapping and the derived sizes — centre "
+                             "and polygon coordinates ALREADY include the (1-v) vertical flip; use them as-is. "
+                             "Place each cutter centre at center_mm on the plane's axes and extrude the "
+                             "outer_silhouette polygon_mm; the through_axis is where cutters traverse."),
+                "views": planes}
 
     async def _scad_call(self,messages:list[dict[str,Any]],output_dir:Path,label:str,temperature:float=.1)->str:
         """Generate SCAD with a distinct reasoning policy and durable diagnostics."""

@@ -602,3 +602,187 @@ def test_concurrent_parameter_edits_use_isolated_artifacts(tmp_path, monkeypatch
         assert (tmp_path / scad_filename).read_text() == (tmp_path / filename).read_text()
     assert original.read_text() == SAMPLE_SCAD
     assert history.read_text() == '[{"attempt": 1, "score": 100}]'
+
+
+# ---- outer silhouette preservation (regression: the grille shoulder contour
+# was reduced to an 11-gon, classified "circle" at 0.879 confidence after
+# per-axis normalization, then replaced by a rounded rectangle) ----
+from pathlib import Path as _Path
+from doodle_to_cad.geometry import fit_curve_segments
+from doodle_to_cad.refine import (classify_profile, refine_view, _corrected,
+                                  _primitive_fit_iou)
+from doodle_to_cad.evaluation import _silhouette_fidelity
+
+GRILLE_FIXTURE = _Path(__file__).resolve().parent / "fixtures" / "grille_shoulders.png"
+
+
+def test_grille_outer_contour_keeps_curvature_and_refuses_circle():
+    image = GRILLE_FIXTURE.read_bytes()
+    evidence, _ = analyze_image(image)
+    evidence = label_view_geometry(evidence, assign_view_groups(evidence, "front", "third-angle"))
+    front = [v for v in evidence["view_geometry"] if v.get("direction") == "front"][0]
+    outer = front["outer_profile"]
+    # 1) extraction retains curvature detail: denser polygon + line/arc split
+    assert len(outer["polygon_dense_view_normalized"]) > 11
+    assert outer["segments"] and outer["fit_error"] <= 0.03
+    # 2) intent refinement may not replace the complex outline: paper aspect
+    #    (1.59:1) and the fitted-primitive IoU veto the circle snap
+    assert front["pixel_aspect_ratio_width_over_height"] > 1.3
+    refined = refine_view(front)
+    assert refined["outer_profile_ideal"] != "circle"
+    assert refined["outer_profile_fit"]["accepted"] is False
+
+
+def test_true_circle_survives_wide_view_aspect():
+    # A circle drawn on paper inside a 1.6:1 view is squashed into a 0.625
+    # aspect polygon by per-axis normalization; classification must undo that.
+    poly = [[0.5 + 0.08 / 1.6 * np.cos(i / 24 * 2 * np.pi),
+             0.5 + 0.08 * np.sin(i / 24 * 2 * np.pi)] for i in range(24)]
+    profile = {"profile_id": "c", "polygon_view_normalized": poly,
+               "center_view_normalized": [0.5, 0.5], "bbox_view_normalized": [0.45, 0.42, 0.1, 0.16]}
+    assert classify_profile(profile, 1.6)[0] == "circle"
+    assert classify_profile(profile, 1.0)[0] != "circle"   # squashed, so honestly not a circle
+
+
+def test_primitive_fit_check_blocks_circle_replacement_of_a_square():
+    square = [[0.4, 0.4], [0.6, 0.4], [0.6, 0.6], [0.4, 0.6]]
+    profile = {"profile_id": "s", "polygon_view_normalized": square,
+               "center_view_normalized": [0.5, 0.5], "bbox_view_normalized": [0.4, 0.4, 0.2, 0.2]}
+    circle_metrics = 4 * np.pi * 0.04 / (0.8 * 0.8)   # 0.785: inside the circle window
+    assert circle_metrics >= 0.78
+    assert classify_profile(profile)[0] == "rectangle"  # never "circle"
+    round_poly = [[0.5 + 0.08 * np.cos(i / 24 * 2 * np.pi),
+                   0.5 + 0.08 * np.sin(i / 24 * 2 * np.pi)] for i in range(24)]
+    assert _primitive_fit_iou(round_poly, "circle") > 0.9
+    # The measured regression polygon itself, in its squashed sheet metrics:
+    # equal-area-circle fit must be too poor to license a circle replacement.
+    grille = [[0.0097, 0.5785], [0.0521, 0.9202], [0.2027, 0.9787], [0.9267, 0.9417],
+              [0.9865, 0.7385], [0.9768, 0.5509], [0.8359, 0.3478], [0.8243, 0.0954],
+              [0.6524, 0.0185], [0.1833, 0.0954], [0.1622, 0.3509]]
+    assert _primitive_fit_iou(grille, "circle") < 0.85
+    assert _primitive_fit_iou(grille, "slot") < 0.85
+    outer = {"profile_id": "g", "polygon_view_normalized": grille,
+             "center_view_normalized": [0.5, 0.5], "bbox_view_normalized": [0, 0, 1, 1]}
+    assert classify_profile(outer, 1.0)[0] == "polygon"      # squashed metrics: no primitive fits
+    assert classify_profile(outer, 1.5939)[0] == "polygon"   # paper aspect: no primitive fits
+
+
+def test_fit_curve_segments_separates_lines_from_arcs():
+    pts = []
+    for i in range(24):   # top-left quarter arc of a rounded rectangle
+        t = np.pi / 2 + (np.pi / 2) * i / 23
+        pts.append([0.3 + 0.1 * np.cos(t), 0.3 + 0.1 * np.sin(t)])
+    pts += [[0.7, 0.2], [0.8, 0.3]]                       # right arc start corners via lines
+    for i in range(1, 24):
+        t = (np.pi / 2) * (1 - i / 23)
+        pts.append([0.7 + 0.1 * np.cos(t), 0.3 + 0.1 * np.sin(t)])
+    pts += [[0.8, 0.7], [0.7, 0.8]]
+    for i in range(1, 24):
+        t = np.pi / 2 + (np.pi / 2) * i / 23
+        pts.append([0.7 + 0.1 * np.cos(t), 0.7 + 0.1 * np.sin(t)])
+    pts += [[0.3, 0.8], [0.2, 0.7]]
+    for i in range(1, 24):
+        t = (np.pi / 2) * i / 23
+        pts.append([0.3 + 0.1 * np.cos(t + np.pi), 0.7 + 0.1 * np.sin(t + np.pi)])
+    pts += [[0.2, 0.3]]
+    result = fit_curve_segments(pts)
+    kinds = {s["type"] for s in result["segments"]}
+    assert "arc" in kinds and "line" in kinds
+    assert result["fit_error"] <= 0.03
+
+
+def test_silhouette_gate_rejects_rounded_rectangle_substitution():
+    src = np.zeros((96, 96), np.uint8)
+    shoulders = np.array([[10, 50], [10, 86], [86, 86], [86, 50],
+                          [70, 26], [70, 10], [26, 10], [26, 26]], np.int32)
+    cv2.fillPoly(src, [shoulders], 255)
+    bbox_fill = np.zeros_like(src)
+    bbox_fill[10:87, 10:87] = 255                 # the rounded-rectangle "plate"
+    assert _silhouette_fidelity(src, bbox_fill) < 0.93
+    faithful = cv2.morphologyEx(src, cv2.MORPH_CLOSE, np.ones((5, 5), np.uint8))
+    assert _silhouette_fidelity(src, faithful) >= 0.93
+
+
+def test_silhouette_gate_is_mandatory_on_real_fixture(tmp_path):
+    image = GRILLE_FIXTURE.read_bytes()
+    evidence, _ = analyze_image(image)
+    evidence = label_view_geometry(evidence, assign_view_groups(evidence, "front", "third-angle"))
+    body = np.full((400, 400, 3), 255, np.uint8)
+    cv2.rectangle(body, (40, 60), (360, 340), (20, 170, 190), -1)   # plain plate render
+    ok, encoded = cv2.imencode(".png", body)
+    assert ok
+    render_path = tmp_path / "view-front.png"
+    render_path.write_bytes(encoded.tobytes())
+    health = {"watertight": True, "components": 1, "triangles": 100,
+              "extents_mm": [120, 40, 66], "volume_mm3": 100000}
+    evaluation = evaluate_candidate(stl=object(), health=health, scad="cube(1);",
+                                    views={"front": render_path}, source=image, evidence=evidence,
+                                    target_dimension="120", strict=True, spec={})
+    assert not evaluation["mandatory_gates"]["silhouette"]
+    assert any("outer silhouette lost" in f for f in evaluation["failures"])
+
+
+# ---- internal element intent: thin slits + mixed-size row separation ----
+
+def _slit_poly(u, v=0.437, w=0.04, h=0.61):
+    return [[u - w/2, v - h/2], [u + w/2, v - h/2 + 0.01],
+            [u + w/2, v + h/2 - 0.01], [u - w/2, v + h/2]]
+
+def _bar_poly(cx, cy, w, h):   # thin rounded-ish bar as drawn (slight wobble)
+    return [[cx-w/2, cy-h/2], [cx+w/2, cy-h/2+0.005],
+            [cx+w/2, cy+h/2-0.005], [cx-w/2, cy+h/2]]
+
+def test_thin_slits_become_slots_and_headlights_stay_in_their_row():
+    # Regression: tall 0.61 slots inflated the global row-snap tolerance to
+    # 0.213 and dragged the headlights (v 0.625) onto the slot row (0.437),
+    # destroying their measured position; slits were "polygon" so the 7-item
+    # row never earned a loop hint.
+    image = GRILLE_FIXTURE.read_bytes()
+    evidence, _ = analyze_image(image)
+    evidence = label_view_geometry(evidence, assign_view_groups(evidence, "front", "third-angle"))
+    front = [v for v in evidence["view_geometry"] if v.get("direction") == "front"][0]
+    out = refine_view(front)
+    shapes = [p["ideal_shape"] for p in out["profiles"]]
+    assert shapes.count("slot") == 7 and shapes.count("circle") == 2
+    headlights = [p for p in out["profiles"] if p["ideal_shape"] == "circle"]
+    assert all(abs(p["center_view_normalized"][1] - 0.625) < 0.05 for p in headlights)
+    slots = [p for p in out["profiles"] if p["ideal_shape"] == "slot"]
+    assert len({p["center_view_normalized"][1] for p in slots}) == 1   # one snapped row
+    grid = out["grid"]
+    assert grid and grid["type"] == "linear_v-row" and grid["count"] == 7
+
+def test_mixed_size_rows_do_not_merge_across_pairwise_tolerance():
+    # One pairwise rule: two items share a row only if the gap is small
+    # compared to BOTH sizes — tall features cannot absorb distant small ones.
+    tall = [_prof(f"s{i}", _bar_poly(0.2 + i * 0.07, 0.42, 0.03, 0.60), 0.2 + i * 0.07, 0.42, 0.03, 0.60)
+            for i in range(5)]
+    small = [_prof(f"l{i}", _circle_poly(0.15 + i * 0.7, 0.63, 0.065, 24), 0.15 + i * 0.7, 0.63, 0.13, 0.13)
+             for i in range(2)]
+    out = refine_view({"view_id": "v", "internal_profiles": tall + small})
+    tall_v = {p["center_view_normalized"][1] for p in out["profiles"] if p["profile_id"].startswith("s")}
+    small_v = {p["center_view_normalized"][1] for p in out["profiles"] if p["profile_id"] == "l0"}
+    assert len(tall_v) == 1                                   # the row snaps
+    assert abs(next(iter(small_v)) - 0.63) < 1e-9             # the small row does not move
+    grid = out["grid"]
+    assert grid and grid["type"] == "linear_v-row" and grid["count"] == 5
+
+
+def test_feature_placements_mm_pre_applies_the_v_flip():
+    from doodle_to_cad.pipeline import Pipeline
+    evidence = {"view_geometry": [{
+        "view_id": "v1", "direction": "front",
+        "internal_profiles": [{"profile_id": "light", "center_view_normalized": [0.1747, 0.624],
+                               "bbox_view_normalized": [0.13, 0.56, 0.11, 0.13]}],
+        "outer_profile": {"profile_id": "outer", "polygon_dense_view_normalized": [[0.0, 0.0], [1.0, 0.0], [1.0, 1.0], [0.0, 1.0]]},
+    }]}
+    out = Pipeline.feature_placements_mm(evidence, {"width_mm": 120.0, "depth_mm": None, "height_mm": 75.0})
+    front = out["views"][0]
+    assert front["axes"] == ["x", "z"] and front["through_axis"] == "y"
+    light = front["profiles"][0]
+    assert light["center_mm"] == [round(0.1747 * 120, 2), round((1 - 0.624) * 75, 2)]   # 14.54, 28.2
+    assert light["size_mm"] == [round(0.11 * 120, 2), round(0.13 * 75, 2)]
+    outer = front["profiles"][1]
+    assert outer["role"] == "outer_silhouette"
+    assert outer["polygon_mm"][0] == [0.0, 75.0] and outer["polygon_mm"][2] == [120.0, 0.0]  # v flipped
+    # top view with unknown depth is omitted; missing derived sizes yields None
+    assert Pipeline.feature_placements_mm(evidence, None) is None
