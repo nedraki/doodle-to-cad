@@ -1,0 +1,172 @@
+{
+  "object": "Front Grille",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "front",
+      "sheet_region": "view_2",
+      "constrains": "Outer profile shape (width/height), headlight cutouts (left/right), and vertical grille slots (center)."
+    },
+    {
+      "direction": "top",
+      "sheet_region": "view_1",
+      "constrains": "Object depth (thickness) and planar profile."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "grille_body",
+      "name": "Grille Panel",
+      "material": "plastic",
+      "description": "A flat panel with a complex outer boundary, two circular cutouts for headlights, and seven vertical slots for the grille."
+    }
+  ],
+  "features": [
+    {
+      "id": "outer_profile",
+      "type": "boundary",
+      "source_view": "view_2",
+      "description": "The main silhouette of the grille, featuring a wider bottom section and a narrower top section with rounded corners."
+    },
+    {
+      "id": "headlight_left",
+      "type": "hole",
+      "source_view": "view_2",
+      "description": "Circular cutout on the left side."
+    },
+    {
+      "id": "headlight_right",
+      "type": "hole",
+      "source_view": "view_2",
+      "description": "Circular cutout on the right side."
+    },
+    {
+      "id": "grille_slots",
+      "type": "slot_array",
+      "source_view": "view_2",
+      "description": "Seven vertical rectangular slots arranged in the center."
+    }
+  ],
+  "relations": [
+    {
+      "type": "containment",
+      "parent": "outer_profile",
+      "children": [
+        "headlight_left",
+        "headlight_right",
+        "grille_slots"
+      ]
+    }
+  ],
+  "symmetry": {
+    "type": "bilateral",
+    "axis": "vertical_center",
+    "description": "The object is symmetric about the vertical centerline, with the headlight cutouts mirroring each other and the slots centered."
+  },
+  "repetitions": [
+    {
+      "feature_id": "grille_slots",
+      "count": 7,
+      "arrangement": "linear_horizontal",
+      "description": "Seven vertical slots repeated horizontally."
+    }
+  ],
+  "dimensions": {
+    "max_width": 126.0,
+    "max_depth": 7.52,
+    "max_height": 78.83,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "Exact thickness is estimated from the top view aspect ratio relative to the width.",
+    "Slot width and spacing are estimated from the drawing proportions."
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "The object is interpreted as a flat front grille panel. The top view confirms it is a thin plate. The front view defines the 2D profile which will be extruded.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "extrude",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_2",
+        "operation": "extrude",
+        "profile_plane": "XZ",
+        "direction_axis": "Y",
+        "owner": "grille_body",
+        "parameters": {
+          "depth": 5,
+          "type": "blind"
+        },
+        "source_views": [
+          "view_1",
+          "view_2"
+        ]
+      },
+      {
+        "id": "headlight_left",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Circular cutout on the left side."
+        },
+        "source_views": []
+      },
+      {
+        "id": "headlight_right",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Circular cutout on the right side."
+        },
+        "source_views": []
+      },
+      {
+        "id": "grille_slots",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Seven vertical rectangular slots arranged in the center."
+        },
+        "source_views": []
+      }
+    ],
+    "unresolved_constraints": [
+      "Exact thickness is estimated from the top view aspect ratio relative to the width.",
+      "Slot width and spacing are estimated from the drawing proportions."
+    ]
+  },
+  "user_intent": {
+    "description": "Front grille with headlights and repeated slots",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "126"
+  },
+  "source_view_group_count": 2,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

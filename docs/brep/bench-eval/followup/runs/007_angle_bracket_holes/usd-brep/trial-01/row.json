@@ -1,0 +1,24 @@
+{
+  "drawing": "007_angle_bracket_holes",
+  "backend": "usd-brep",
+  "trial": 1,
+  "submitted_at": "2026-10-22T23:59:39.491091+00:00",
+  "finished_at": "2026-10-23T00:01:20.824955+00:00",
+  "checks": {
+    "build_success": false,
+    "overall_pass": false,
+    "supplied_dimension_pass": false
+  },
+  "run_id": "0e2ee91075d4",
+  "wall_seconds": 101.3,
+  "job_status": "error",
+  "error": {
+    "message": "The drawing still leaves a required design detail unclear after clarification. No part was built.",
+    "code": "unresolved_design"
+  },
+  "questions_asked": 1,
+  "question_kinds": [
+    "opening_extent"
+  ],
+  "build": null
+}

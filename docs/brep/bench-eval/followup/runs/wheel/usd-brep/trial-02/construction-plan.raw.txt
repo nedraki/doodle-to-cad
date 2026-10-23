@@ -1,0 +1,64 @@
+{
+  "view_frame": "Front view is XZ plane (X horizontal, Z vertical). Right view is YZ plane (Y depth, Z vertical). Top view is XY plane (X horizontal, Y depth). The wheel axis is along Y.",
+  "features": [
+    {
+      "id": "rim",
+      "shape": "annulus",
+      "section": "rectangular",
+      "axis_or_plane": "YZ",
+      "dimensions": [
+        "OD 120 mm",
+        "thickness 8 mm",
+        "ASSUMED rim_width 10 mm"
+      ],
+      "placement": "Centred at (0, 0, 0). Outer radius 60 mm, inner radius 50 mm. Extends from Y = -4 mm to Y = 4 mm.",
+      "evidence": "Front view shows outer and inner circles. Label 'OD 120 mm; thickness 8 mm'."
+    },
+    {
+      "id": "hub",
+      "shape": "cylinder",
+      "section": "circular",
+      "axis_or_plane": "Y",
+      "dimensions": [
+        "ASSUMED hub_diameter 30 mm",
+        "thickness 8 mm"
+      ],
+      "placement": "Centred at (0, 0, 0). Radius 15 mm. Extends from Y = -4 mm to Y = 4 mm.",
+      "evidence": "Front view shows central circle. Label 'thickness 8 mm'."
+    },
+    {
+      "id": "spokes",
+      "shape": "box_array",
+      "section": "rectangular",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "8 spokes",
+        "ASSUMED spoke_width 6 mm",
+        "thickness 8 mm"
+      ],
+      "placement": "8 radial boxes centred at (0, 0, 0). Each spoke extends from hub radius (15 mm) to rim inner radius (50 mm). Extends from Y = -4 mm to Y = 4 mm.",
+      "evidence": "Front view shows 8 radial lines. Label '8 spokes'."
+    }
+  ],
+  "connections": [
+    "Spokes connect hub to rim",
+    "All features share Y-axis alignment and thickness"
+  ],
+  "edit_rules": [
+    "Changing OD updates rim outer radius",
+    "Changing thickness updates Y extent of all features",
+    "Changing spoke count updates spoke array",
+    "Changing hub_diameter updates hub radius and spoke inner start"
+  ],
+  "unresolved": [
+    "Rim width (radial thickness) not specified",
+    "Hub diameter not specified",
+    "Spoke width not specified"
+  ],
+  "clarification": {
+    "feature_id": "rim",
+    "feature_label": "Rim radial width",
+    "reason": "Drawing shows rim as annulus but does not specify radial width (difference between outer and inner radius)",
+    "kind": "wall_thickness"
+  }
+}

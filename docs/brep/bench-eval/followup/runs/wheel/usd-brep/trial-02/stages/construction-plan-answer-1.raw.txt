@@ -1,0 +1,58 @@
+{
+  "view_frame": "Front view is XZ plane (X horizontal, Z vertical). Right view is YZ plane (Y depth, Z vertical). The wheel axis is along Y. The wheel lies in the XZ plane.",
+  "features": [
+    {
+      "id": "rim",
+      "shape": "annulus",
+      "section": "rectangular",
+      "axis_or_plane": "Y",
+      "dimensions": [
+        "OD 120 mm",
+        "thickness 3 mm",
+        "width 8 mm"
+      ],
+      "placement": "Centered at (0, 0, 0). Outer radius 60 mm, inner radius 57 mm. Extends from Y = -4 mm to Y = 4 mm.",
+      "evidence": "Front view shows outer and inner circles. Label 'OD 120 mm' and 'thickness 8 mm' (interpreted as axial width). Clarification answer sets radial thickness to 3 mm."
+    },
+    {
+      "id": "hub",
+      "shape": "cylinder",
+      "section": "circular",
+      "axis_or_plane": "Y",
+      "dimensions": [
+        "diameter 30 mm",
+        "width 8 mm"
+      ],
+      "placement": "Centered at (0, 0, 0). Radius 15 mm. Extends from Y = -4 mm to Y = 4 mm.",
+      "evidence": "Front view shows central circle. Diameter estimated as 1/4 of OD (30 mm) based on visual proportion. Width matches rim width."
+    },
+    {
+      "id": "spokes",
+      "shape": "box",
+      "section": "rectangular",
+      "axis_or_plane": "radial in XZ",
+      "dimensions": [
+        "length 42 mm",
+        "width 6 mm",
+        "thickness 8 mm"
+      ],
+      "placement": "8 spokes arranged radially in XZ plane. Each spoke connects hub (r=15) to rim (r=57). Centered at Y=0. Spoke width 6 mm (visual estimate).",
+      "evidence": "Front view shows 8 radial lines connecting hub to rim. Label '8 spokes'. Width estimated visually."
+    }
+  ],
+  "connections": [
+    "Spokes connect hub outer surface to rim inner surface.",
+    "Rim, hub, and spokes share the same axial width (Y extent) of 8 mm."
+  ],
+  "edit_rules": [
+    "Changing OD updates rim outer radius and spoke length.",
+    "Changing hub diameter updates hub radius and spoke length.",
+    "Changing rim thickness updates rim inner radius.",
+    "Changing width updates Y extent of all components.",
+    "Changing spoke width updates spoke cross-section."
+  ],
+  "unresolved": [
+    "Hub diameter is not explicitly dimensioned; assumed 30 mm based on visual proportion.",
+    "Spoke width is not explicitly dimensioned; assumed 6 mm based on visual proportion."
+  ]
+}

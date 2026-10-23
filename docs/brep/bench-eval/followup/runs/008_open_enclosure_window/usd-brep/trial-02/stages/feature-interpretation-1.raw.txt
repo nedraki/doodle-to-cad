@@ -1,0 +1,90 @@
+```json
+{
+  "version": 1,
+  "object_hypothesis": "Rectangular frame or block with a central rectangular opening",
+  "features": [
+    {
+      "id": "outer_body",
+      "type": "body",
+      "description": "Rectangular outer boundary defining the overall extent of the object",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_4"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_0"
+        }
+      ],
+      "reason": "Visible in both top and front views as the primary outer contour."
+    },
+    {
+      "id": "central_opening",
+      "type": "opening",
+      "description": "Rectangular void located centrally within the object",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_2"
+        }
+      ],
+      "reason": "Visible as an internal contour in the front view. While not explicitly isolated as a separate region in the top view, the double-line nature of the top view suggests a boundary consistent with this opening."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "opening_in_body",
+      "type": "position",
+      "features": [
+        "central_opening",
+        "outer_body"
+      ],
+      "description": "The central opening is positioned within the outer body",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_2"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_0"
+        }
+      ],
+      "reason": "In the front view, the internal contour is spatially contained within the outer contour."
+    },
+    {
+      "id": "view_consistency",
+      "type": "other",
+      "features": [
+        "outer_body"
+      ],
+      "description": "The object maintains a rectangular profile across both views",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_4"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_0"
+        }
+      ],
+      "reason": "Both views display a rectangular outer shape, suggesting a prismatic geometry."
+    }
+  ],
+  "assumptions": [
+    "The double lines in the top view represent the thickness of the frame walls surrounding the central opening.",
+    "The object is a single solid piece with a through-hole or pocket."
+  ],
+  "unresolved": [
+    "Depth of the central opening (whether it is a through-hole or a blind pocket).",
+    "Exact wall thickness (inferred from double lines in top view but not explicitly measured as a distinct region)."
+  ],
+  "conflicts": []
+}
+```

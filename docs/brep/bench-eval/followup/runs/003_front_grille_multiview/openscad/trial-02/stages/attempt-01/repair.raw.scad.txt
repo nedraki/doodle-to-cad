@@ -1,0 +1,72 @@
+Looking at the diagnosis, the core problem is that the `linear_extrude` in `grille_body()` extrudes along Z (default) instead of Y, and the profile is drawn in XY instead of XZ. This swaps the Y and Z dimensions. I need to:
+
+1. Draw the profile in the XZ plane (using `rotate([90,0,0])` before `linear_extrude`)
+2. Fix the headlight Z position to match measured data (~29.8mm from bottom)
+3. Ensure all cutters properly traverse the Y-axis
+
+/* doodle-meta {"version":1,"parameters":{"width":{"label":"Overall width","description":"Changes the body width","unit":"mm","feature":"body_width"},"height":{"label":"Overall height","description":"Changes the body height","unit":"mm","feature":"body_height"},"thickness":{"label":"Plate thickness","description":"Changes the plate depth","unit":"mm","feature":"body_thickness"},"slot_count":{"label":"Slot count","description":"Number of vertical slots","unit":"count","feature":"slots"},"slot_width":{"label":"Slot width","description":"Width of each vertical slot","unit":"mm","feature":"slots"},"slot_height":{"label":"Slot height","description":"Height of each vertical slot","unit":"mm","feature":"slots"},"slot_pitch":{"label":"Slot pitch","description":"Center-to-center distance between slots","unit":"mm","feature":"slots"},"headlight_diameter":{"label":"Headlight diameter","description":"Diameter of circular headlight cutouts","unit":"mm","feature":"headlights"},"headlight_x_offset":{"label":"Headlight offset","description":"Horizontal distance of headlights from center","unit":"mm","feature":"headlights"},"headlight_z_offset":{"label":"Headlight height","description":"Vertical center of headlights from bottom","unit":"mm","feature":"headlights"}},"features":{"body_width":{"kind":"dimension","axis":"x","label":"Overall width"},"body_height":{"kind":"dimension","axis":"z","label":"Overall height"},"body_thickness":{"kind":"dimension","axis":"y","label":"Plate thickness"},"slots":{"kind":"region","label":"Vertical slots","min":[{"parameter":"width","scale":0.25,"offset":0},{"parameter":"thickness","scale":-0.1,"offset":0},{"parameter":"height","scale":0.13,"offset":0}],"max":[{"parameter":"width","scale":0.75,"offset":0},{"parameter":"thickness","scale":1.1,"offset":0},{"parameter":"height","scale":0.74,"offset":0}]},"headlights":{"kind":"region","label":"Headlight cutouts","min":[{"parameter":"width","scale":0.09,"offset":0},{"parameter":"thickness","scale":-0.1,"offset":0},{"parameter":"height","scale":0.25,"offset":0}],"max":[{"parameter":"width","scale":0.91,"offset":0},{"parameter":"thickness","scale":1.1,"offset":0},{"parameter":"height","scale":0.55,"offset":0}]}}} */
+
+// Parameters
+width = 126.0;
+height = 78.83;
+thickness = 7.52;
+slot_count = 7;
+slot_width = 5.1;
+slot_height = 48.0;
+slot_pitch = 16.0;
+headlight_diameter = 20.7;
+headlight_x_offset = 41.0;
+headlight_z_offset = 29.8;
+
+// Derived constants
+eps = 0.1;
+corner_radius = 10;
+
+// Module: grille body profile in XZ plane, extruded along Y
+module grille_body() {
+    // Profile is in XZ plane, extruded along Y
+    // We draw in XY then rotate to XZ, then extrude along Y
+    translate([0, 0, height/2])
+        rotate([90, 0, 0])
+            linear_extrude(height=thickness, center=true)
+                hull() {
+                    translate([-width/2 + corner_radius, -height/2 + corner_radius]) circle(r=corner_radius);
+                    translate([width/2 - corner_radius, -height/2 + corner_radius]) circle(r=corner_radius);
+                    translate([-width/2 + corner_radius, height/2 - corner_radius]) circle(r=corner_radius);
+                    translate([width/2 - corner_radius, height/2 - corner_radius]) circle(r=corner_radius);
+                }
+}
+
+// Module: vertical slot cutter (box through Y-axis)
+module slot_cutter_box() {
+    cube([slot_width, thickness + 2*eps, slot_height], center=true);
+}
+
+// Module: headlight circular cutter (cylinder through Y-axis)
+module headlight_cutter() {
+    rotate([90, 0, 0])
+        cylinder(h=thickness + 2*eps, d=headlight_diameter, center=true);
+}
+
+// Main Design
+difference() {
+    // Positive body
+    grille_body();
+    
+    // Subtract vertical slots
+    for (i = [0 : slot_count - 1]) {
+        slot_x = -(slot_count - 1) * slot_pitch / 2 + i * slot_pitch;
+        // Slot center Z: measured v~0.437 -> Z = (1-0.437)*height = 0.563*78.83 ≈ 44.38
+        slot_z = (1 - 0.437) * height;
+        
+        translate([slot_x, 0, slot_z])
+            slot_cutter_box();
+    }
+    
+    // Subtract headlight cutouts (left and right)
+    translate([-headlight_x_offset, 0, headlight_z_offset])
+        headlight_cutter();
+        
+    translate([headlight_x_offset, 0, headlight_z_offset])
+        headlight_cutter();
+}

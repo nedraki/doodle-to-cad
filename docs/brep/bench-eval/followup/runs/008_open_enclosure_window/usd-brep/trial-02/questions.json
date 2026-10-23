@@ -1,0 +1,22 @@
+[
+  {
+    "kind": "uniform_thickness",
+    "feature_id": "enclosure_body",
+    "text": "Wall and floor thickness (mm)?",
+    "answer": {
+      "question_id": "37b10c45d62b4d459fd7cf5479cd320c",
+      "thickness_mm": 3
+    },
+    "http": 200
+  },
+  {
+    "kind": "opening_extent",
+    "feature_id": "enclosure_body",
+    "text": "Should this hole go all the way through the part?",
+    "answer": {
+      "question_id": "94f5531393db405aa110ba97c11219dc",
+      "choice": "through"
+    },
+    "http": 200
+  }
+]

@@ -1,0 +1,14 @@
+{
+  "action": "repair_scad",
+  "problems": [
+    "Hole Z-positions were incorrectly regularized to the center; drawing shows diagonal placement (Left High, Right Low).",
+    "Front view projection similarity is low (0.35) due to mismatched feature centroids."
+  ],
+  "preserve": [
+    "Plate dimensions (100x62x9.65mm).",
+    "Slot geometry and center position.",
+    "Hole X-positions (symmetric about center)."
+  ],
+  "instructions": "Update the OpenSCAD code to use the raw measured Z-coordinates for the holes instead of the regularized center value. Set the left hole Z to approximately 44.8mm (derived from v=0.2775) and the right hole Z to approximately 16.8mm (derived from v=0.7295). Keep the slot centered at Z=30.6mm. This restores the diagonal arrangement visible in the source drawing.",
+  "confidence": 0.95
+}

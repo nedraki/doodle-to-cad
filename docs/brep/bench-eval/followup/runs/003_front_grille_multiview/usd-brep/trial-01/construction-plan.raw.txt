@@ -1,0 +1,30 @@
+{
+  "view_frame": "The drawing presents a Front view (XZ plane) and a Top view (XY plane). The Front view displays the grille's width (X) and height (Z). The Top view displays the width (X) and depth (Y). The part is a flat plate oriented in the XZ plane with thickness along the Y axis.",
+  "features": [
+    {
+      "id": "grille_plate",
+      "shape": "extrusion",
+      "section": "closed_profile",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "ASSUMED_thickness",
+        "ASSUMED_width",
+        "ASSUMED_height"
+      ],
+      "placement": "Extrude the closed XY profile (representing the front face outline) along the Y axis by ASSUMED_thickness. The profile includes the outer boundary and the internal loops for the 7 slots and 2 headlights.",
+      "evidence": "Front view shows the grille outline with 7 vertical slots and 2 circular headlights. Top view shows a thin rectangular profile indicating uniform thickness."
+    }
+  ],
+  "connections": [
+    "The grille_plate is a single solid body with through-holes."
+  ],
+  "edit_rules": [
+    "Changing ASSUMED_thickness modifies the Y dimension of the extrusion.",
+    "Changing ASSUMED_width or ASSUMED_height scales the XY profile."
+  ],
+  "unresolved": [
+    "No dimensions are provided in the drawing. Width, height, thickness, slot dimensions, and headlight positions/sizes are missing.",
+    "The specific shape of the grille outline (e.g., exact corner radii, slope of the 'shoulders') is not dimensioned."
+  ],
+  "clarification": null
+}

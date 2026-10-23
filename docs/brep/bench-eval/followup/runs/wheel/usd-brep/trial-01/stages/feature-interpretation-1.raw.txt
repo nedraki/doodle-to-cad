@@ -1,0 +1,154 @@
+```json
+{
+  "version": 1,
+  "object_hypothesis": "Spoked wheel with 8 radial spokes, central hub, and outer rim.",
+  "features": [
+    {
+      "id": "f_outer_rim",
+      "type": "rim",
+      "description": "Outer circular boundary of the wheel.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "High circularity (0.898) and large area in the front view indicate a circular outer boundary."
+    },
+    {
+      "id": "f_inner_rim",
+      "type": "rim",
+      "description": "Inner circular boundary of the rim structure.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "Visible as a concentric circle inside the outer boundary in the front view."
+    },
+    {
+      "id": "f_hub",
+      "type": "hub",
+      "description": "Central circular hub.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "Visible as a central circle in the front view."
+    },
+    {
+      "id": "f_spokes",
+      "type": "spoke",
+      "description": "Radial spokes connecting hub to rim.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "Visible as linear segments radiating from the center in the front view."
+    },
+    {
+      "id": "f_thickness",
+      "type": "body",
+      "description": "Axial thickness of the wheel.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_14"
+        }
+      ],
+      "reason": "Rectangular profile in the right view indicates uniform thickness."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "r_spoke_hub",
+      "type": "connected",
+      "features": [
+        "f_spokes",
+        "f_hub"
+      ],
+      "description": "Spokes connect to the central hub.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "Visible junctions between spoke lines and the hub circle in the front view."
+    },
+    {
+      "id": "r_spoke_rim",
+      "type": "connected",
+      "features": [
+        "f_spokes",
+        "f_inner_rim"
+      ],
+      "description": "Spokes connect to the inner rim.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "Visible junctions between spoke lines and the inner rim circle in the front view."
+    },
+    {
+      "id": "r_symmetry",
+      "type": "symmetry",
+      "features": [
+        "f_spokes"
+      ],
+      "description": "Radial symmetry of spokes.",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "Even distribution of spokes around the center suggests rotational symmetry."
+    },
+    {
+      "id": "r_thickness_consistency",
+      "type": "shared_dimension",
+      "features": [
+        "f_outer_rim",
+        "f_thickness"
+      ],
+      "description": "Uniform thickness across the wheel.",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_14"
+        }
+      ],
+      "reason": "The right view shows a uniform rectangular profile, implying consistent thickness."
+    }
+  ],
+  "assumptions": [
+    "The object is a wheel based on the visual structure.",
+    "The front view represents the primary face of the wheel.",
+    "The right view represents the side profile of the wheel."
+  ],
+  "unresolved": [
+    "Exact material properties.",
+    "Internal structure of the hub (e.g., solid or hollow)."
+  ],
+  "conflicts": [
+    "None identified."
+  ]
+}
+```

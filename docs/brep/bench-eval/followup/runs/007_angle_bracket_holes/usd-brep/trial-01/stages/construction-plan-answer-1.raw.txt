@@ -1,0 +1,91 @@
+```json
+{
+  "view_frame": "The drawing presents two views of an L-angle bracket. The top view (upper rectangle) represents the horizontal flange, showing its XY footprint. The bottom view (lower rectangle with holes) represents the vertical flange, showing its XZ face. The world axes are X (width), Y (depth), and Z (height).",
+  "features": [
+    {
+      "id": "vertical_flange",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "ASSUMED_WIDTH",
+        "ASSUMED_HEIGHT",
+        "ASSUMED_THICKNESS"
+      ],
+      "placement": "Centered at X=0, Y=0. Extends from Z=0 to Z=ASSUMED_HEIGHT. Thickness is along Y.",
+      "evidence": "Lower rectangle in the drawing."
+    },
+    {
+      "id": "horizontal_flange",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "ASSUMED_WIDTH",
+        "ASSUMED_DEPTH",
+        "ASSUMED_THICKNESS"
+      ],
+      "placement": "Centered at X=0, Z=ASSUMED_HEIGHT. Extends from Y=0 to Y=ASSUMED_DEPTH. Thickness is along Z.",
+      "evidence": "Upper rectangle in the drawing."
+    },
+    {
+      "id": "hole_1",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "Y",
+      "dimensions": [
+        "ASSUMED_HOLE_DIAMETER"
+      ],
+      "placement": "Centered at X=-ASSUMED_SPACING, Z=ASSUMED_HOLE_HEIGHT. Axis is along Y.",
+      "evidence": "Leftmost circle in the lower view."
+    },
+    {
+      "id": "hole_2",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "Y",
+      "dimensions": [
+        "ASSUMED_HOLE_DIAMETER"
+      ],
+      "placement": "Centered at X=0, Z=ASSUMED_HOLE_HEIGHT. Axis is along Y.",
+      "evidence": "Middle circle in the lower view."
+    },
+    {
+      "id": "hole_3",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "Y",
+      "dimensions": [
+        "ASSUMED_HOLE_DIAMETER"
+      ],
+      "placement": "Centered at X=ASSUMED_SPACING, Z=ASSUMED_HOLE_HEIGHT. Axis is along Y.",
+      "evidence": "Rightmost circle in the lower view."
+    }
+  ],
+  "connections": [
+    "vertical_flange and horizontal_flange meet at the corner (X=0, Y=0, Z=ASSUMED_HEIGHT) to form the L-shape.",
+    "Holes 1, 2, and 3 are subtractive features passing through the vertical_flange."
+  ],
+  "edit_rules": [
+    "Changing ASSUMED_WIDTH must update the width of both flanges and the spacing of the holes.",
+    "Changing ASSUMED_HEIGHT must update the height of the vertical flange and the Z-position of the horizontal flange.",
+    "Changing ASSUMED_THICKNESS must update the thickness of both flanges.",
+    "Changing ASSUMED_HOLE_DIAMETER must update the diameter of all three holes."
+  ],
+  "unresolved": [
+    "ASSUMED_WIDTH: The width of the bracket is not dimensioned.",
+    "ASSUMED_HEIGHT: The height of the vertical flange is not dimensioned.",
+    "ASSUMED_DEPTH: The depth of the horizontal flange is not dimensioned.",
+    "ASSUMED_THICKNESS: The thickness of the material is not dimensioned.",
+    "ASSUMED_HOLE_DIAMETER: The diameter of the holes is not dimensioned.",
+    "ASSUMED_SPACING: The horizontal spacing between holes is not dimensioned.",
+    "ASSUMED_HOLE_HEIGHT: The vertical position of the holes is not dimensioned."
+  ],
+  "clarification": {
+    "feature_id": "hole_1",
+    "feature_label": "Leftmost hole in vertical flange",
+    "reason": "The drawing does not specify if the holes are through-holes or recesses.",
+    "kind": "opening_extent"
+  }
+}
+```

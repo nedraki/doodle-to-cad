@@ -1,0 +1,155 @@
+{
+  "version": 2,
+  "units": "mm",
+  "name": "enclosure",
+  "parameters": {
+    "width": {
+      "value": 120,
+      "min": 60,
+      "max": 200,
+      "label": "Overall Width"
+    },
+    "depth": {
+      "value": 80,
+      "min": 40,
+      "max": 150,
+      "label": "Overall Depth"
+    },
+    "height": {
+      "value": 60,
+      "min": 30,
+      "max": 100,
+      "label": "Overall Height"
+    },
+    "thickness": {
+      "value": 3,
+      "min": 1,
+      "max": 10,
+      "label": "Wall and Floor Thickness"
+    },
+    "window_width": {
+      "value": 60,
+      "min": 10,
+      "max": 100,
+      "label": "Window Width"
+    },
+    "window_height": {
+      "value": 30,
+      "min": 5,
+      "max": 50,
+      "label": "Window Height"
+    }
+  },
+  "operations": [
+    {
+      "id": "outer_box",
+      "kind": "box",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "size": [
+        "width",
+        "depth",
+        "height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "enclosure",
+      "kind": "shell",
+      "body": "outer_box",
+      "thickness": "thickness",
+      "opening": "top",
+      "preserve": "outer",
+      "frame": "world",
+      "depends_on": [
+        "outer_box"
+      ],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "window_cutter",
+      "kind": "box",
+      "origin": [
+        "(width - window_width) / 2",
+        -1,
+        "(height - window_height) / 2"
+      ],
+      "size": [
+        "window_width",
+        "thickness + 2",
+        "window_height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "final_part",
+      "kind": "difference",
+      "left": "enclosure",
+      "right": "window_cutter",
+      "frame": "world",
+      "depends_on": [
+        "enclosure",
+        "window_cutter"
+      ],
+      "evidence": [
+        "e4"
+      ]
+    }
+  ],
+  "output": "final_part",
+  "frames": {
+    "world": {
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    }
+  },
+  "bodies": [
+    {
+      "id": "part",
+      "output": "final_part"
+    }
+  ],
+  "evidence": {
+    "observed": [],
+    "inferred": [
+      {
+        "id": "e1",
+        "text": "Outer dimensions assumed as 120x80x60 mm based on maximum dimension constraint and aspect ratio."
+      },
+      {
+        "id": "e2",
+        "text": "Uniform thickness of 3 mm applied to walls and floor as per clarification."
+      },
+      {
+        "id": "e3",
+        "text": "Front window dimensions assumed as 60x30 mm, centered on the front face."
+      },
+      {
+        "id": "e4",
+        "text": "Window is a through-cut in the front wall as per clarification."
+      }
+    ],
+    "assumptions": [],
+    "unresolved": []
+  },
+  "constraints": []
+}

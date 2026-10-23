@@ -1,0 +1,166 @@
+{
+  "attempt": 1,
+  "action": "generate",
+  "preflight": {
+    "passed": true,
+    "errors": [],
+    "warnings": [],
+    "expected_subtractive_feature_groups": 0
+  },
+  "compiler_repairs": [],
+  "uniform_scale": null,
+  "evaluation": {
+    "score": 82.0,
+    "valid_mesh": false,
+    "accepted": false,
+    "mandatory_gates": {
+      "compiled": true,
+      "topology": false,
+      "dimensions": true,
+      "shape_sanity": false,
+      "features": true,
+      "openings_through": true,
+      "projections": true,
+      "build_envelope": true
+    },
+    "scores": {
+      "topology": 27,
+      "dimensions": 20.0,
+      "features": 20,
+      "projections": 15.0
+    },
+    "projection_similarity": {
+      "front": 0.997
+    },
+    "profile_topology": {
+      "front": {
+        "source_internal_profiles": 0,
+        "rendered_internal_profiles": 9,
+        "crop_internal_profiles": 0,
+        "source_aspect": 3.45,
+        "rendered_aspect": 12.467,
+        "source_opening_centroids": [],
+        "rendered_opening_centroids": [
+          [
+            0.929,
+            0.468
+          ],
+          [
+            0.868,
+            0.468
+          ],
+          [
+            0.79,
+            0.467
+          ],
+          [
+            0.701,
+            0.467
+          ],
+          [
+            0.602,
+            0.467
+          ],
+          [
+            0.497,
+            0.467
+          ],
+          [
+            0.393,
+            0.467
+          ],
+          [
+            0.294,
+            0.467
+          ],
+          [
+            0.143,
+            0.468
+          ]
+        ]
+      }
+    },
+    "demanded_openings": {
+      "total": 0,
+      "per_view": {
+        "front": 0
+      },
+      "sheet_total": 0,
+      "registration_gap": 0
+    },
+    "failures": [
+      "mesh has 2 disconnected components",
+      "degenerate or implausible axis dimensions: X=120 mm vs expected 27.8 mm"
+    ]
+  },
+  "mesh_health": {
+    "watertight": true,
+    "components": 2,
+    "triangles": 444,
+    "through_holes": 1,
+    "extents_mm": [
+      120.0,
+      119.343,
+      9.5
+    ],
+    "volume_mm3": 29035.244
+  },
+  "build": {
+    "version": 1,
+    "backend": "openscad",
+    "source_format": "openscad",
+    "ok": true,
+    "units": "mm",
+    "axes": {
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    },
+    "views": [
+      "isometric",
+      "front",
+      "top",
+      "right"
+    ],
+    "measurements": {
+      "watertight": true,
+      "components": 2,
+      "triangles": 444,
+      "through_holes": 1,
+      "extents_mm": [
+        120.0,
+        119.343,
+        9.5
+      ],
+      "volume_mm3": 29035.244
+    },
+    "diagnostics": [],
+    "drawing_evaluated": false
+  },
+  "compile_log": "Geometries in cache: 13\nGeometry cache size in bytes: 20696\nCGAL Polyhedrons in cache: 4\nCGAL cache size in bytes: 917664\nTotal rendering time: 0:00:00.630\n   Top level object is a 3D object:\n   Simple:        yes\n   Vertices:      240\n   Halfedges:     720\n   Edges:         360\n   Halffacets:    248\n   Facets:        124\n   Volumes:         3",
+  "files": {
+    "scad": "attempt-01/model.scad",
+    "stl": "attempt-01/model.stl",
+    "views": {
+      "isometric": "attempt-01/view-isometric.png",
+      "front": "attempt-01/view-front.png",
+      "top": "attempt-01/view-top.png",
+      "right": "attempt-01/view-right.png"
+    }
+  },
+  "supervisor": {
+    "action": "repair_scad",
+    "problems": [
+      "Mesh has 2 disconnected components (rim and spokes/hub are separate)",
+      "Spokes do not connect to the rim (gap between spoke end and rim inner wall)",
+      "Front view projection is incorrect (rendered as a line, likely due to axis orientation mismatch)"
+    ],
+    "preserve": [
+      "Overall dimensions (OD 120mm, Thickness 9.5mm)",
+      "Spoke count (8) and angular distribution",
+      "Hub and rim diameters"
+    ],
+    "instructions": "Modify the spoke generation logic to ensure connectivity. Extend the spoke length to overlap with the rim (e.g., set spoke length to outer_radius instead of outer_radius - hub_radius) or adjust the translate position so the spoke end intersects the rim volume. Ensure the union of rim, hub, and spokes forms a single watertight manifold. Verify the front view projection matches the circular profile of the drawing.",
+    "confidence": 0.95
+  }
+}

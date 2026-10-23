@@ -1,0 +1,176 @@
+{
+  "attempt": 1,
+  "action": "generate",
+  "preflight": {
+    "passed": true,
+    "errors": [],
+    "warnings": [],
+    "expected_subtractive_feature_groups": 0
+  },
+  "compiler_repairs": [
+    {
+      "repair": 1,
+      "preflight": {
+        "passed": true,
+        "errors": [],
+        "warnings": [],
+        "expected_subtractive_feature_groups": 0
+      },
+      "compile_log": "ERROR: Parser error: syntax error in file model.scad, line 421\nCan't parse file '/work/model.scad'!",
+      "failed_scad": "compiler-repair-01.failed.scad"
+    }
+  ],
+  "uniform_scale": {
+    "factor": 1.1277,
+    "before_max_mm": 47.884,
+    "after_max_mm": 48.923,
+    "params": [
+      "rod_diameter",
+      "leg_length"
+    ]
+  },
+  "evaluation": {
+    "score": 68.6,
+    "valid_mesh": false,
+    "accepted": false,
+    "mandatory_gates": {
+      "compiled": true,
+      "topology": false,
+      "dimensions": false,
+      "shape_sanity": false,
+      "features": true,
+      "openings_through": true,
+      "projections": false,
+      "build_envelope": true
+    },
+    "scores": {
+      "topology": 27,
+      "dimensions": 18.1,
+      "features": 20,
+      "projections": 3.5
+    },
+    "projection_similarity": {
+      "front": 0.139,
+      "top": 0.329
+    },
+    "profile_topology": {
+      "front": {
+        "source_internal_profiles": 0,
+        "rendered_internal_profiles": 0,
+        "crop_internal_profiles": 0,
+        "source_aspect": 4.35,
+        "rendered_aspect": 5.513,
+        "source_opening_centroids": [],
+        "rendered_opening_centroids": []
+      },
+      "top": {
+        "source_internal_profiles": 0,
+        "rendered_internal_profiles": 3,
+        "crop_internal_profiles": 0,
+        "source_aspect": 1.075,
+        "rendered_aspect": 1.443,
+        "source_opening_centroids": [],
+        "rendered_opening_centroids": [
+          [
+            0.731,
+            0.497
+          ],
+          [
+            0.538,
+            0.497
+          ],
+          [
+            0.333,
+            0.497
+          ]
+        ]
+      }
+    },
+    "demanded_openings": {
+      "total": 0,
+      "per_view": {
+        "front": 0,
+        "top": 0
+      },
+      "sheet_total": 0,
+      "registration_gap": 0
+    },
+    "failures": [
+      "mesh has 2 disconnected components",
+      "maximum dimension is 48.923 mm; target is 54 mm (tolerance 5%)",
+      "degenerate or implausible axis dimensions: Z=8.972 mm vs expected 46.24 mm",
+      "CAD projections poorly match the drawing: front similarity 0.14, top similarity 0.33 (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly."
+    ]
+  },
+  "mesh_health": {
+    "watertight": true,
+    "components": 2,
+    "triangles": 112,
+    "through_holes": 0,
+    "extents_mm": [
+      48.923,
+      33.832,
+      8.972
+    ],
+    "volume_mm3": 4200.06
+  },
+  "build": {
+    "version": 1,
+    "backend": "openscad",
+    "source_format": "openscad",
+    "ok": true,
+    "units": "mm",
+    "axes": {
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    },
+    "views": [
+      "isometric",
+      "front",
+      "top",
+      "right"
+    ],
+    "measurements": {
+      "watertight": true,
+      "components": 2,
+      "triangles": 112,
+      "through_holes": 0,
+      "extents_mm": [
+        48.923,
+        33.832,
+        8.972
+      ],
+      "volume_mm3": 4200.06
+    },
+    "diagnostics": [],
+    "drawing_evaluated": false
+  },
+  "compile_log": "WARNING: Ignoring unknown module 'torus' in file model.scad, line 35\nGeometries in cache: 8\nGeometry cache size in bytes: 10704\nCGAL Polyhedrons in cache: 1\nCGAL cache size in bytes: 81728\nTotal rendering time: 0:00:00.031\n   Top level object is a 3D object:\n   Simple:        yes\n   Vertices:       60\n   Halfedges:     180\n   Edges:          90\n   Halffacets:     68\n   Facets:         34\n   Volumes:         3",
+  "files": {
+    "scad": "attempt-01/model.scad",
+    "stl": "attempt-01/uniform-scaled/model.stl",
+    "views": {
+      "isometric": "attempt-01/uniform-scaled/view-isometric.png",
+      "front": "attempt-01/uniform-scaled/view-front.png",
+      "top": "attempt-01/uniform-scaled/view-top.png",
+      "right": "attempt-01/uniform-scaled/view-right.png"
+    }
+  },
+  "supervisor": {
+    "action": "repair_scad",
+    "problems": [
+      "Mesh has 2 disconnected components (arch is missing)",
+      "Unknown module 'torus' used in code, causing arch to fail generation",
+      "Leg length parameter is incorrect (33.8mm vs spec 30mm)",
+      "Rod diameter parameter is incorrect (9.02mm vs spec 8mm)",
+      "Total height is ~49mm, target is 54mm"
+    ],
+    "preserve": [
+      "U-shape orientation in XZ plane",
+      "Bilateral symmetry",
+      "Circular cross-section profile"
+    ],
+    "instructions": "Replace the invalid 'torus' module with a valid OpenSCAD torus definition (e.g., rotate_extrude of a circle). Correct 'leg_length' to 30 and 'rod_diameter' to 8. Ensure the arch connects the legs at Z=30 to achieve the total height of 54mm. Verify the mesh is a single connected component."
+  }
+}

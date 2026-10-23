@@ -1,0 +1,79 @@
+```json
+{
+  "view_frame": "The drawing presents a flat part in a primary view (Front) and a secondary view (Top) above it. The Front view displays the XY plane (width and length). The Top view displays the XZ plane (width and thickness). The world frame is defined with X as width (horizontal), Y as length (vertical in Front view), and Z as thickness (vertical in Top view).",
+  "features": [
+    {
+      "id": "plate_body",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "ASSUMED_WIDTH",
+        "ASSUMED_LENGTH",
+        "ASSUMED_THICKNESS"
+      ],
+      "placement": "Centered at (0,0,0). Extends from (-W/2, -L/2, -T/2) to (W/2, L/2, T/2).",
+      "evidence": "The main rectangular outline in the Front view and the corresponding strip in the Top view."
+    },
+    {
+      "id": "hole_1",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "Z",
+      "dimensions": [
+        "ASSUMED_HOLE_RADIUS"
+      ],
+      "placement": "Centered at (-W/4, L/4, 0). Axis is parallel to Z.",
+      "evidence": "Circular mark in the upper-left quadrant of the Front view."
+    },
+    {
+      "id": "hole_2",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "Z",
+      "dimensions": [
+        "ASSUMED_HOLE_RADIUS"
+      ],
+      "placement": "Centered at (W/4, -L/4, 0). Axis is parallel to Z.",
+      "evidence": "Circular mark in the lower-right quadrant of the Front view."
+    },
+    {
+      "id": "center_slot",
+      "shape": "slot",
+      "section": "stadium",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "ASSUMED_SLOT_WIDTH",
+        "ASSUMED_SLOT_LENGTH"
+      ],
+      "placement": "Centered at (0,0,0). Extends from (-Ls/2, -Ws/2, -T/2) to (Ls/2, Ws/2, T/2).",
+      "evidence": "Elongated rounded shape in the center of the Front view."
+    }
+  ],
+  "connections": [
+    "hole_1 is subtracted from plate_body",
+    "hole_2 is subtracted from plate_body",
+    "center_slot is subtracted from plate_body"
+  ],
+  "edit_rules": [
+    "Changing ASSUMED_WIDTH or ASSUMED_LENGTH scales the plate_body outline.",
+    "Changing ASSUMED_THICKNESS scales the plate_body Z dimension.",
+    "Changing ASSUMED_HOLE_RADIUS updates the radius of hole_1 and hole_2.",
+    "Changing ASSUMED_SLOT_WIDTH or ASSUMED_SLOT_LENGTH updates the dimensions of center_slot."
+  ],
+  "unresolved": [
+    "ASSUMED_WIDTH",
+    "ASSUMED_LENGTH",
+    "ASSUMED_THICKNESS",
+    "ASSUMED_HOLE_RADIUS",
+    "ASSUMED_SLOT_WIDTH",
+    "ASSUMED_SLOT_LENGTH"
+  ],
+  "clarification": {
+    "feature_id": "center_slot",
+    "feature_label": "Center slot",
+    "reason": "The drawing does not explicitly label the center slot as a through-hole or a recessed pocket. While the top view shows a continuous line, the distinction is critical for construction.",
+    "kind": "opening_extent"
+  }
+}
+```

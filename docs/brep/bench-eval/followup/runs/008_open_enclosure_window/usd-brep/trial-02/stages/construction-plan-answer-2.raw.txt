@@ -1,0 +1,46 @@
+{
+  "view_frame": "Front view (top) shows the XZ plane (width vs height). Top view (bottom) shows the XY plane (width vs depth). The part is an open-top enclosure with a front window.",
+  "features": [
+    {
+      "id": "enclosure_body",
+      "shape": "box",
+      "section": "rectangular",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "ASSUMED_WIDTH",
+        "ASSUMED_DEPTH",
+        "ASSUMED_HEIGHT",
+        "3"
+      ],
+      "placement": "Centered at (0,0,0) in XY. Base at Z=0. Top at Z=ASSUMED_HEIGHT. Walls are 3mm thick.",
+      "evidence": "Outer rectangle in Front view (top) and Top view (bottom). Inner rectangle in Top view indicates the open top. Uniform thickness of 3mm established by user answer."
+    },
+    {
+      "id": "front_window",
+      "shape": "rectangle",
+      "section": "rectangular",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "ASSUMED_WINDOW_WIDTH",
+        "ASSUMED_WINDOW_HEIGHT"
+      ],
+      "placement": "Centered on the front face (Y = -ASSUMED_DEPTH/2). Extends through the front wall (Y from -ASSUMED_DEPTH/2 to -ASSUMED_DEPTH/2 + 3).",
+      "evidence": "Inner rectangle in Front view (top). User answer specifies 'through' extent."
+    }
+  ],
+  "connections": [
+    "front_window is a through-cut in the front wall of enclosure_body"
+  ],
+  "edit_rules": [
+    "Changing ASSUMED_WIDTH or ASSUMED_HEIGHT must update the outer envelope of enclosure_body.",
+    "Changing ASSUMED_WINDOW_WIDTH or ASSUMED_WINDOW_HEIGHT must update the cutout in the front wall.",
+    "Changing the uniform thickness (3mm) must update both the wall thickness of enclosure_body and the depth of the front_window cut."
+  ],
+  "unresolved": [
+    "ASSUMED_WIDTH: The overall width of the enclosure is not dimensioned.",
+    "ASSUMED_DEPTH: The overall depth of the enclosure is not dimensioned.",
+    "ASSUMED_HEIGHT: The overall height of the enclosure is not dimensioned.",
+    "ASSUMED_WINDOW_WIDTH: The width of the front window is not dimensioned.",
+    "ASSUMED_WINDOW_HEIGHT: The height of the front window is not dimensioned."
+  ]
+}

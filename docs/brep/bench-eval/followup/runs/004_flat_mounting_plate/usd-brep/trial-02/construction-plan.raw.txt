@@ -1,0 +1,75 @@
+```json
+{
+  "view_frame": "The drawing presents a flat plate in a top-down view (XY plane). The X-axis represents the width (horizontal), the Y-axis represents the depth (vertical on the sheet), and the Z-axis represents the thickness (perpendicular to the sheet). The view is consistent with the 'Flat mounting plate' description.",
+  "features": [
+    {
+      "id": "plate_body",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "ASSUMED_WIDTH",
+        "ASSUMED_DEPTH",
+        "ASSUMED_THICKNESS"
+      ],
+      "placement": "Centered at (0,0) in XY. Extends from -Width/2 to +Width/2 in X, -Depth/2 to +Depth/2 in Y, and 0 to Thickness in Z.",
+      "evidence": "The main rectangular outline visible in the drawing."
+    },
+    {
+      "id": "hole_left",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "Z",
+      "dimensions": [
+        "ASSUMED_HOLE_RADIUS"
+      ],
+      "placement": "Centered at approximately (-0.3*Width, 0.2*Depth). Extends through the full Z thickness (0 to Thickness).",
+      "evidence": "The circular mark in the upper-left quadrant of the plate."
+    },
+    {
+      "id": "hole_right",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "Z",
+      "dimensions": [
+        "ASSUMED_HOLE_RADIUS"
+      ],
+      "placement": "Centered at approximately (0.3*Width, -0.2*Depth). Extends through the full Z thickness (0 to Thickness).",
+      "evidence": "The circular mark in the lower-right quadrant of the plate."
+    },
+    {
+      "id": "center_slot",
+      "shape": "obround",
+      "section": "obround",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "ASSUMED_SLOT_LENGTH",
+        "ASSUMED_SLOT_WIDTH"
+      ],
+      "placement": "Centered at (0,0). Extends through the full Z thickness (0 to Thickness).",
+      "evidence": "The elongated shape with rounded ends in the center of the plate."
+    }
+  ],
+  "connections": [
+    "The plate_body is the base solid.",
+    "hole_left, hole_right, and center_slot are subtractive features (cuts) applied to the plate_body."
+  ],
+  "edit_rules": [
+    "Changing ASSUMED_WIDTH or ASSUMED_DEPTH scales the plate outline.",
+    "Changing ASSUMED_THICKNESS extrudes the plate along Z.",
+    "Changing ASSUMED_HOLE_RADIUS scales the diameter of both holes.",
+    "Changing ASSUMED_SLOT_LENGTH or ASSUMED_SLOT_WIDTH resizes the central slot."
+  ],
+  "unresolved": [
+    "The drawing lacks explicit dimensions for the plate width, depth, and thickness.",
+    "The drawing lacks explicit dimensions for the hole diameter and slot dimensions.",
+    "The exact positions of the holes relative to the plate edges are not dimensioned."
+  ],
+  "clarification": {
+    "feature_id": "plate_body",
+    "feature_label": "Plate Thickness",
+    "reason": "The drawing shows a flat plate but does not specify its thickness (Z-dimension), which is required for 3D construction.",
+    "kind": "uniform_thickness"
+  }
+}
+```

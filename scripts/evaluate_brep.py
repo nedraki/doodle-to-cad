@@ -99,7 +99,11 @@ def _environment_static():
               "model_host": urlsplit(getattr(settings, "base_url", "") or "").hostname,
               "server_model": _SERVER_MODEL,
               "doodle_brep_python": os.environ.get("DOODLE_BREP_PYTHON"),
-              "results_dir": os.environ.get("DOODLE_RESULTS_DIR")}
+              "results_dir": os.environ.get("DOODLE_RESULTS_DIR"),
+              "model_settings": {name: getattr(settings, name) for name in (
+                  "requested_model", "enable_thinking", "structured_enable_thinking",
+                  "code_enable_thinking", "max_tokens", "code_max_tokens",
+                  "agent_max_attempts", "agent_accept_score", "code_validation_repairs")}}
     try:
         record["tested_commit"] = subprocess.check_output(
             ["git", "rev-parse", "HEAD"], cwd=str(ROOT), text=True).strip()
@@ -217,19 +221,39 @@ def _rule_number(rule, recipe):
     return 10.0
 
 
+def supplied_dimension_check(measurement, supplied_dimension, tolerance_mm=1.0):
+    """Check only the maximum extent the user supplied, independently of GT."""
+    import math
+    if supplied_dimension is None or supplied_dimension == "":
+        return None
+    if isinstance(supplied_dimension, bool) or isinstance(tolerance_mm, bool):
+        raise ValueError("Dimension and tolerance must be finite positive numbers")
+    target, tolerance = float(supplied_dimension), float(tolerance_mm)
+    if not math.isfinite(target) or target <= 0 or not math.isfinite(tolerance) or tolerance <= 0:
+        raise ValueError("Dimension and tolerance must be finite positive numbers")
+    extents = (measurement or {}).get("extents_mm")
+    if not isinstance(extents, (list, tuple)) or len(extents) != 3:
+        return False
+    if any(isinstance(x, bool) or not isinstance(x, (int, float))
+           or not math.isfinite(x) or x <= 0 for x in extents):
+        return False
+    return abs(max(extents) - target) <= tolerance
+
+
+def overall_checks(checks):
+    """Historical overall definition; new diagnostic tracks cannot change it."""
+    keys = ("build_success", "extents_pass", "genus_pass", "volume_pass", "fidelity_pass")
+    return bool(checks.get("build_success")) and all(
+        checks[k] for k in keys if checks.get(k) is not None)
+
+
 def reference_checks(measurement, reference, supplied_dimension=None, tolerance_mm=1.0):
     """Pure comparison shared by _run_trial and the #81 fixture gate.
 
     One source of truth for build/extents/genus/volume verdicts so a fixture
     exercises exactly the check the live harness applies. Returns
-    (checks, not_applicable).
-
-    #102 supplied-dimension contract: a dimension the case actually gave the
-    model (plan corpus 'dimension', the requested maximum) must survive to
-    the mesh within tolerance_mm (plan tolerances.supplied_dimension_mm).
-    Reference-only expectations (ground-truth extents nobody supplied) stay
-    on the 2% extents check - the two tracks never gate each other. The
-    result is reported alongside, never inside, overall_pass."""
+    (checks, not_applicable)."""
+    import math
     ground_truth = reference.get("kind") != "no_ground_truth" and "genus" in reference
     build_success = bool(measurement and measurement.get("watertight")
                          and measurement.get("components") == 1)
@@ -239,18 +263,23 @@ def reference_checks(measurement, reference, supplied_dimension=None, tolerance_
         na += ["extents", "genus", "volume"]
         checks.update({"extents_pass": None, "genus_pass": None, "volume_pass": None})
     else:
-        extents_pass = bool(measurement) and all(
+        extents = (measurement or {}).get("extents_mm")
+        valid_extents = (isinstance(extents, (list, tuple)) and len(extents) == 3
+                         and all(isinstance(x, (int, float)) and not isinstance(x, bool)
+                                 and math.isfinite(x) and x > 0 for x in extents))
+        extents_pass = bool(valid_extents) and all(
             abs(a - b) <= 0.02 * max(b, 1e-9) for a, b in
-            zip(sorted(measurement["extents_mm"]), sorted(reference["extents_mm"])))
+            zip(sorted(extents), sorted(reference["extents_mm"])))
         genus_pass = bool(measurement) and measurement.get("genus") == reference["genus"]
-        volume_pass = bool(measurement) and abs(measurement["volume_mm3"] - reference["volume_mm3"]) <= 0.02 * reference["volume_mm3"]
+        volume = (measurement or {}).get("volume_mm3")
+        volume_pass = (isinstance(volume, (int, float)) and math.isfinite(volume)
+                       and abs(volume - reference["volume_mm3"]) <= 0.02 * reference["volume_mm3"])
         checks.update({"extents_pass": extents_pass, "genus_pass": genus_pass, "volume_pass": volume_pass})
-    if supplied_dimension is None:
-        na.append("supplied_dimension")  # key absent, same as no-ground-truth na style
+    supplied = supplied_dimension_check(measurement, supplied_dimension, tolerance_mm)
+    if supplied is not None:
+        checks["supplied_dimension_pass"] = supplied
     else:
-        checks["supplied_dimension_pass"] = (
-            bool(measurement) and "extents_mm" in measurement
-            and abs(max(measurement["extents_mm"]) - supplied_dimension) <= tolerance_mm)
+        na.append("supplied_dimension")
     return checks, na
 
 
@@ -304,7 +333,11 @@ async def _run_trial(client, plan, item, backend, trial, out_dir, semaphore):
         return json.loads((cell / "row.json").read_text())
     cell.mkdir(parents=True, exist_ok=True)
     row = {"drawing": item["id"], "backend": backend, "trial": trial,
-           "submitted_at": None, "finished_at": None}
+           "submitted_at": None, "finished_at": None,
+           "checks": {"build_success": False, "overall_pass": False,
+                      "supplied_dimension_pass": supplied_dimension_check(
+                          None, item.get("dimension"),
+                          plan.get("tolerances", {}).get("supplied_dimension_mm", 1.0))}}
     plan_infra = plan["infrastructure"]
     image = (ROOT / item["drawing"]).read_bytes()
     (cell / "input.png").write_bytes(image)
@@ -316,6 +349,9 @@ async def _run_trial(client, plan, item, backend, trial, out_dir, semaphore):
     (cell / "request.json").write_text(json.dumps(
         {"form": form, "image_sha256": hashlib.sha256(image).hexdigest(),
          "source": item["drawing"], "reference_geometry_sent": False}, indent=2))
+    # Validate the plan before submitting a generation.
+    supplied_dimension_check(None, item.get("dimension"),
+                             plan.get("tolerances", {}).get("supplied_dimension_mm", 1.0))
     questions = []
     async with semaphore:
         started = time.monotonic()
@@ -396,7 +432,6 @@ async def _run_trial(client, plan, item, backend, trial, out_dir, semaphore):
         shutil.copyfile(failed, cell / "failed" / f"{failed.parent.name}-{failed.name}")
     if result is None:
         row["build"] = None
-        row["checks"] = {"build_success": False, "overall_pass": False}
         _finish_row(cell, row)
         _append_index(out_dir, row)
         return row
@@ -426,13 +461,9 @@ async def _run_trial(client, plan, item, backend, trial, out_dir, semaphore):
     reference = refs.get(ref_key) or {}
     ground_truth = reference.get("kind") != "no_ground_truth" and "genus" in reference
 
-    # #102: fail-loud on a malformed certified dimension - a frozen plan
-    # must be exact, silent fallback here would hide a plan typo.
-    _dim = str(item.get("dimension") or "").strip()
-    supplied_dimension = float(item["dimension"]) if _dim else None
     checks, na = reference_checks(
-        measurement, reference, supplied_dimension=supplied_dimension,
-        tolerance_mm=float(plan.get("tolerances", {}).get("supplied_dimension_mm", 1.0)))
+        measurement, reference, supplied_dimension=item.get("dimension"),
+        tolerance_mm=plan.get("tolerances", {}).get("supplied_dimension_mm", 1.0))
 
     # ---- harness-independent drawing fidelity (separate from build) --------
     fidelity = {"scores": None, "pass": None, "reason": None}
@@ -470,14 +501,19 @@ async def _run_trial(client, plan, item, backend, trial, out_dir, semaphore):
     checks["fidelity_pass"] = fidelity["pass"]
     if fidelity["pass"] is None:
         na.append("fidelity")
-    # #102: the supplied-dimension contract is a separate track (like
-    # build_success was made separate from fidelity); it never changes the
-    # meaning of already-frozen overall_pass values.
-    applicable = [v for k, v in checks.items() if v is not None and k != "supplied_dimension_pass"]
-    checks["overall_pass"] = bool(applicable) and all(applicable) and checks["build_success"]
+    checks["overall_pass"] = overall_checks(checks)
     checks["not_applicable"] = na
     row["checks"] = checks
     row["fidelity"] = fidelity
+
+    # New diagnostic track only; never silently reinterpret frozen fidelity.
+    if plan.get("orientation_diagnostic") and stl is not None:
+        try:
+            from scripts.bench_orientation import evaluate_orientation
+            row["orientation_diagnostic"] = await asyncio.to_thread(
+                evaluate_orientation, stl, image, evidence, cell / "orientation", item["primary_view"])
+        except Exception as exc:
+            row["orientation_diagnostic"] = {"status": "unavailable", "reason": str(exc)}
 
     # ---- product's own verdicts (recorded, never the harness pass) --------
     evaluation = result.get("evaluation") or {}
@@ -632,6 +668,9 @@ async def _drive(plan, cells, out_dir, port, parallel):
             health = (await client.get("/api/health")).json()
             global _SERVER_MODEL
             _SERVER_MODEL = health["agentic"]["selected_model"]
+            expected_model = plan.get("model_settings", {}).get("selected_model")
+            if expected_model and _SERVER_MODEL != expected_model:
+                raise RuntimeError(f"Frozen model mismatch: expected {expected_model}, got {_SERVER_MODEL}")
             print("server model:", _SERVER_MODEL, flush=True)
             semaphore = asyncio.Semaphore(parallel)
             jobs = []

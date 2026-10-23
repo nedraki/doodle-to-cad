@@ -1,0 +1,154 @@
+```json
+{
+  "version": 1,
+  "object_hypothesis": "A rectangular plate or flange with a central slot and two circular mounting holes, accompanied by a separate thin strip component.",
+  "features": [
+    {
+      "id": "plate_body",
+      "type": "body",
+      "description": "The main rectangular component containing the internal features.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_0"
+        }
+      ],
+      "reason": "Identified as the primary outer boundary in the front view (view_2)."
+    },
+    {
+      "id": "central_slot",
+      "type": "opening",
+      "description": "A horizontal, elongated opening located in the center of the plate.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_4"
+        }
+      ],
+      "reason": "An internal contour with a high aspect ratio located centrally within the plate body."
+    },
+    {
+      "id": "hole_upper_left",
+      "type": "opening",
+      "description": "A small circular opening located in the upper-left quadrant of the plate.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_6"
+        }
+      ],
+      "reason": "A small internal contour with high circularity in the upper-left region."
+    },
+    {
+      "id": "hole_lower_right",
+      "type": "opening",
+      "description": "A small circular opening located in the lower-right quadrant of the plate.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_2"
+        }
+      ],
+      "reason": "A small internal contour with high circularity in the lower-right region."
+    },
+    {
+      "id": "top_strip",
+      "type": "body",
+      "description": "A separate, thin horizontal component located above the main plate.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_7"
+        }
+      ],
+      "reason": "A distinct outer contour in the top view (view_1) with a very low height-to-width ratio."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "slot_in_plate",
+      "type": "position",
+      "features": [
+        "central_slot",
+        "plate_body"
+      ],
+      "description": "The central slot is positioned within the plate body.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_4"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_0"
+        }
+      ],
+      "reason": "The slot contour is spatially contained within the plate boundary in the front view."
+    },
+    {
+      "id": "holes_in_plate",
+      "type": "position",
+      "features": [
+        "hole_upper_left",
+        "hole_lower_right",
+        "plate_body"
+      ],
+      "description": "The two circular holes are positioned within the plate body.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_6"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_2"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_0"
+        }
+      ],
+      "reason": "Both hole contours are spatially contained within the plate boundary in the front view."
+    },
+    {
+      "id": "hole_symmetry",
+      "type": "symmetry",
+      "features": [
+        "hole_upper_left",
+        "hole_lower_right"
+      ],
+      "description": "The two holes appear to be arranged with point symmetry relative to the center.",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_6"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_2"
+        }
+      ],
+      "reason": "The holes are located in opposite quadrants (upper-left and lower-right) and appear to be of similar size."
+    }
+  ],
+  "assumptions": [
+    "The top view (view_1) represents a separate component or a distinct feature not fully captured in the front view.",
+    "The internal contours in the front view represent through-holes or pockets."
+  ],
+  "unresolved": [
+    "The physical connection or relationship between the top strip (view_1) and the main plate (view_2).",
+    "The depth or thickness of the plate and the nature of the openings (through vs. blind)."
+  ],
+  "conflicts": [
+    "The top view (view_1) shows a thin strip, while the front view (view_2) shows a large rectangular plate; these views do not align to describe a single simple rectangular prism."
+  ]
+}
+```

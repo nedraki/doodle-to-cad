@@ -1,0 +1,58 @@
+{
+  "view_frame": "Front view is XZ plane (X horizontal, Z vertical). Right view is YZ plane (Y depth, Z vertical). The wheel axis is along Y. The wheel lies in the XZ plane.",
+  "features": [
+    {
+      "id": "rim",
+      "shape": "annulus",
+      "section": "rectangular",
+      "axis_or_plane": "Y",
+      "dimensions": [
+        "OD 120 mm",
+        "thickness 8 mm",
+        "ASSUMED rim width 10 mm"
+      ],
+      "placement": "Centred at (0,0,0). Outer radius 60 mm. Inner radius 50 mm (60 - 10). Extends from Y=-4 to Y=4.",
+      "evidence": "Front view shows outer and inner circles. Label 'OD 120 mm'. Right view shows rectangular profile of height 8 mm."
+    },
+    {
+      "id": "hub",
+      "shape": "cylinder",
+      "section": "circular",
+      "axis_or_plane": "Y",
+      "dimensions": [
+        "ASSUMED hub radius 15 mm",
+        "thickness 8 mm"
+      ],
+      "placement": "Centred at (0,0,0). Radius 15 mm. Extends from Y=-4 to Y=4.",
+      "evidence": "Front view shows central circle. Right view shows rectangular profile of height 8 mm."
+    },
+    {
+      "id": "spokes",
+      "shape": "box_array",
+      "section": "rectangular",
+      "axis_or_plane": "radial in XZ",
+      "dimensions": [
+        "8 spokes",
+        "ASSUMED spoke width 6 mm",
+        "thickness 8 mm"
+      ],
+      "placement": "8 radial boxes connecting hub (r=15) to rim (r=50). Each spoke is a box of width 6 mm (tangential), length 35 mm (radial), height 8 mm (Y). Positioned at angles 0, 45, 90, 135, 180, 225, 270, 315 degrees.",
+      "evidence": "Front view shows 8 radial lines connecting hub to rim. Label '8 spokes'. Right view shows rectangular profile of height 8 mm."
+    }
+  ],
+  "connections": [
+    "Spokes connect hub outer surface to rim inner surface.",
+    "Rim, hub, and spokes share the same Y extent (-4 to 4)."
+  ],
+  "edit_rules": [
+    "Changing OD changes rim outer radius and spoke length.",
+    "Changing thickness changes Y extent of all features.",
+    "Changing spoke count changes number of radial boxes.",
+    "Changing hub radius changes spoke inner start point."
+  ],
+  "unresolved": [
+    "Rim width (radial thickness) is not dimensioned; assumed 10 mm.",
+    "Hub radius is not dimensioned; assumed 15 mm.",
+    "Spoke width (tangential thickness) is not dimensioned; assumed 6 mm."
+  ]
+}

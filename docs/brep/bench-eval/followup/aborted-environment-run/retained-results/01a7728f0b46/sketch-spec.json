@@ -1,0 +1,170 @@
+{
+  "object": "Front Grille",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "front",
+      "sheet_region": "view_2",
+      "constrains": "Outer profile shape (width/height), vertical slot positions, circular headlight positions"
+    },
+    {
+      "direction": "top",
+      "sheet_region": "view_1",
+      "constrains": "Object thickness (depth), flatness of the front face"
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "grille_body",
+      "description": "Main structural plate with integrated vertical bars and circular headlight bezels",
+      "material": "plastic"
+    }
+  ],
+  "features": [
+    {
+      "id": "outer_frame",
+      "type": "profile",
+      "description": "The main outline of the grille, featuring a central raised section and lower side wings",
+      "source_views": [
+        "view_2"
+      ]
+    },
+    {
+      "id": "vertical_slots",
+      "type": "cutout",
+      "description": "Seven vertical rectangular openings arranged in the center",
+      "source_views": [
+        "view_2"
+      ]
+    },
+    {
+      "id": "headlight_openings",
+      "type": "cutout",
+      "description": "Two circular openings located on the lower left and right wings",
+      "source_views": [
+        "view_2"
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "type": "containment",
+      "parent": "outer_frame",
+      "child": "vertical_slots"
+    },
+    {
+      "type": "containment",
+      "parent": "outer_frame",
+      "child": "headlight_openings"
+    },
+    {
+      "type": "symmetry",
+      "elements": [
+        "headlight_openings"
+      ],
+      "axis": "vertical_center"
+    }
+  ],
+  "symmetry": {
+    "type": "bilateral",
+    "axis": "vertical",
+    "description": "The object is symmetric about the vertical centerline, with headlight openings mirroring each other and slots centered."
+  },
+  "repetitions": [
+    {
+      "feature_id": "vertical_slots",
+      "count": 7,
+      "spacing": "uniform",
+      "orientation": "vertical"
+    }
+  ],
+  "dimensions": {
+    "max_dimension": 126,
+    "unit": "mm",
+    "estimated_thickness": "thin (based on top view aspect ratio)",
+    "max_width": 126.0,
+    "max_depth": 7.52,
+    "max_height": 78.83,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "Exact thickness is not explicitly dimensioned, inferred from the thin profile in the top view.",
+    "Slot width and spacing are estimated from pixel measurements."
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "The object is a flat plate with through-cuts. The top view confirms it is a single planar object with minimal depth. The front view defines the 2D geometry to be extruded.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "extrude",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_2",
+        "operation": "extrude",
+        "profile_plane": "XZ",
+        "direction_axis": "Y",
+        "owner": "grille_body",
+        "parameters": {
+          "depth": "inferred_from_top_view",
+          "watertight": true
+        },
+        "source_views": [
+          "view_1",
+          "view_2"
+        ]
+      },
+      {
+        "id": "vertical_slots",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Seven vertical rectangular openings arranged in the center"
+        },
+        "source_views": []
+      },
+      {
+        "id": "headlight_openings",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Two circular openings located on the lower left and right wings"
+        },
+        "source_views": []
+      }
+    ],
+    "unresolved_constraints": [
+      "Exact thickness value"
+    ]
+  },
+  "user_intent": {
+    "description": "Front grille with headlights and repeated slots",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "126"
+  },
+  "source_view_group_count": 2,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

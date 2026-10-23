@@ -1,0 +1,52 @@
+```json
+{
+  "view_frame": "The drawing presents two views. The top view (upper sheet) represents the XY plane (Top), showing the rectangular footprint of the enclosure. The bottom view (lower sheet) represents the XZ plane (Front), showing the elevation of the enclosure with a window opening. The Z axis represents height, increasing upwards from the base.",
+  "features": [
+    {
+      "id": "enclosure_body",
+      "shape": "box",
+      "section": "rectangular",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "ASSUMED: 100mm (width)",
+        "ASSUMED: 60mm (depth)",
+        "ASSUMED: 40mm (height)",
+        "3mm (wall thickness)"
+      ],
+      "placement": "Centered at (0,0,0) in XY. Base at Z=0. Top at Z=40.",
+      "evidence": "Rectangular outline in Top view and Front view. User notes specify 'Open-top enclosure'. Clarification answer specifies uniform thickness of 3mm."
+    },
+    {
+      "id": "front_window",
+      "shape": "rectangle",
+      "section": "rectangular",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "ASSUMED: 60mm (width)",
+        "ASSUMED: 20mm (height)"
+      ],
+      "placement": "Centered on the front face (Y = -30). Centered horizontally (X=0). Centered vertically (Z=20).",
+      "evidence": "Inner rectangle visible in the Front view (lower sheet). User notes specify 'front window'."
+    }
+  ],
+  "connections": [
+    "The front_window is a through-cut on the front face of the enclosure_body.",
+    "The enclosure_body is hollowed out from the top (Z=40) downwards, leaving a floor at Z=3 (based on 3mm uniform thickness)."
+  ],
+  "edit_rules": [
+    "Changing the enclosure_body width or depth must maintain the 3mm wall thickness relative to the outer dimensions.",
+    "Changing the enclosure_body height must maintain the floor thickness at 3mm.",
+    "Changing the front_window dimensions must keep the window centered on the front face."
+  ],
+  "unresolved": [
+    "Exact outer dimensions (width, depth, height) are not provided in the drawing and are assumed based on the maximum_dimension_mm constraint.",
+    "Exact window dimensions are not provided and are assumed to be proportional to the body."
+  ],
+  "clarification": {
+    "feature_id": "enclosure_body",
+    "feature_label": "Enclosure Body",
+    "reason": "The drawing does not specify the outer dimensions (width, depth, height) of the enclosure.",
+    "kind": "opening_extent"
+  }
+}
+```

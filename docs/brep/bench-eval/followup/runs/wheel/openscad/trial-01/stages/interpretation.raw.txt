@@ -1,0 +1,169 @@
+```json
+{
+  "object": "spoked wheel",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "front",
+      "sheet_region": "view_4",
+      "constrains": "Outer diameter (OD), hub diameter, spoke count (8), spoke angular distribution, rim thickness."
+    },
+    {
+      "direction": "right",
+      "sheet_region": "view_5",
+      "constrains": "Wheel thickness (width), rim profile depth."
+    },
+    {
+      "direction": "top",
+      "sheet_region": "view_6",
+      "constrains": "Rim cross-section (rectangular profile), thickness consistency."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "wheel_body",
+      "name": "Wheel Body",
+      "material": "plastic",
+      "description": "Single watertight solid comprising the outer rim, central hub, and 8 connecting spokes."
+    }
+  ],
+  "features": [
+    {
+      "id": "rim",
+      "type": "ring",
+      "owner": "wheel_body",
+      "description": "Outer circular band."
+    },
+    {
+      "id": "hub",
+      "type": "cylinder",
+      "owner": "wheel_body",
+      "description": "Central circular boss."
+    },
+    {
+      "id": "spokes",
+      "type": "array",
+      "owner": "wheel_body",
+      "description": "8 radial rectangular bars connecting hub to rim."
+    }
+  ],
+  "relations": [
+    {
+      "type": "concentric",
+      "targets": [
+        "rim",
+        "hub"
+      ]
+    },
+    {
+      "type": "connects",
+      "source": "spokes",
+      "target": "rim",
+      "description": "Spokes attach to inner face of rim."
+    },
+    {
+      "type": "connects",
+      "source": "spokes",
+      "target": "hub",
+      "description": "Spokes attach to outer face of hub."
+    }
+  ],
+  "symmetry": {
+    "type": "rotational",
+    "axis": "Z",
+    "order": 8
+  },
+  "repetitions": [
+    {
+      "feature_id": "spokes",
+      "count": 8,
+      "pattern": "radial",
+      "spacing": "45 degrees"
+    }
+  ],
+  "dimensions": [
+    {
+      "feature_id": "rim",
+      "attribute": "outer_diameter",
+      "value": 120,
+      "unit": "mm",
+      "source": "user_note"
+    },
+    {
+      "feature_id": "wheel_body",
+      "attribute": "thickness",
+      "value": 8,
+      "unit": "mm",
+      "source": "user_note"
+    },
+    {
+      "feature_id": "hub",
+      "attribute": "diameter",
+      "value": 30,
+      "unit": "mm",
+      "source": "visual_estimate"
+    },
+    {
+      "feature_id": "rim",
+      "attribute": "thickness",
+      "value": 8,
+      "unit": "mm",
+      "source": "visual_estimate"
+    },
+    {
+      "feature_id": "spokes",
+      "attribute": "width",
+      "value": 8,
+      "unit": "mm",
+      "source": "visual_estimate"
+    }
+  ],
+  "uncertainties": [
+    "Exact hub diameter is estimated from visual proportions.",
+    "Exact rim thickness is estimated from visual proportions.",
+    "Exact spoke width is estimated from visual proportions."
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "The object is a spoked wheel. The front view (view_4) defines the 2D profile: a large circle (OD 120mm), a smaller concentric circle (hub), and 8 radial spokes. The side view (view_5) and top view (view_6) define the thickness as 8mm. The geometry is a planar extrusion of the front profile.",
+  "construction_plan": {
+    "family": "extrude",
+    "operations": [
+      {
+        "id": "op_1",
+        "operation": "create_profile",
+        "owner": "wheel_body",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "parameters": {
+          "outer_radius": 60,
+          "hub_radius": 15,
+          "spoke_count": 8,
+          "spoke_width": 8,
+          "rim_thickness": 8
+        },
+        "source_views": [
+          "view_4"
+        ]
+      },
+      {
+        "id": "op_2",
+        "operation": "extrude",
+        "owner": "wheel_body",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "parameters": {
+          "depth": 8
+        },
+        "source_views": [
+          "view_5",
+          "view_6"
+        ]
+      }
+    ],
+    "unresolved_constraints": []
+  }
+}
+```

@@ -1,0 +1,143 @@
+```json
+{
+  "version": 1,
+  "object_hypothesis": "Curved Handle (U-shape)",
+  "features": [
+    {
+      "id": "body_u_shape",
+      "type": "body",
+      "description": "Main U-shaped body with two parallel legs and a curved bridge",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_19"
+        }
+      ],
+      "reason": "View 5 (Top) displays the primary U-shaped silhouette. The polygon points define the outer boundary of the legs and the curved top."
+    },
+    {
+      "id": "cross_section_circle",
+      "type": "profile",
+      "description": "Circular cross-section of the handle material",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_3",
+          "region_id": "profile_contour_17"
+        }
+      ],
+      "reason": "View 3 (Right) shows a high-circularity (0.892) contour, representing the cross-section of the handle legs."
+    },
+    {
+      "id": "leg_left",
+      "type": "body",
+      "description": "Left vertical leg of the handle",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_19"
+        }
+      ],
+      "reason": "The left vertical segment of the U-shape in View 5."
+    },
+    {
+      "id": "leg_right",
+      "type": "body",
+      "description": "Right vertical leg of the handle",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_19"
+        }
+      ],
+      "reason": "The right vertical segment of the U-shape in View 5."
+    },
+    {
+      "id": "bridge_curve",
+      "type": "body",
+      "description": "Curved top section connecting the legs",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_19"
+        }
+      ],
+      "reason": "The curved upper portion of the U-shape in View 5."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "rel_cross_section",
+      "type": "shared_dimension",
+      "features": [
+        "body_u_shape",
+        "cross_section_circle"
+      ],
+      "description": "The U-shaped body has a circular cross-section",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_19"
+        },
+        {
+          "view_id": "view_3",
+          "region_id": "profile_contour_17"
+        }
+      ],
+      "reason": "View 5 shows the planar shape (width) and View 3 shows the profile (circularity). The width of the legs in View 5 corresponds to the diameter of the circle in View 3."
+    },
+    {
+      "id": "rel_legs_parallel",
+      "type": "symmetry",
+      "features": [
+        "leg_left",
+        "leg_right"
+      ],
+      "description": "The two legs are parallel and symmetrical",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_19"
+        }
+      ],
+      "reason": "The geometry in View 5 shows the legs extending vertically with parallel outer and inner edges."
+    },
+    {
+      "id": "rel_bridge_connection",
+      "type": "connected",
+      "features": [
+        "bridge_curve",
+        "leg_left",
+        "leg_right"
+      ],
+      "description": "The bridge connects the tops of the two legs",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_19"
+        }
+      ],
+      "reason": "The continuous contour in View 5 shows the curve transitioning directly into the vertical legs."
+    }
+  ],
+  "assumptions": [
+    "View 5 represents the Top view (XY plane) showing the handle's footprint.",
+    "View 3 represents the Right view (YZ plane) showing the cross-section.",
+    "The object is a solid rod bent into a U-shape, not a hollow tube (unless hidden geometry exists)."
+  ],
+  "unresolved": [
+    "Internal structure (solid vs hollow) is not explicitly defined by the outer contours alone.",
+    "Exact dimensions (R20, 30mm) are not verified by pixel measurements in the JSON data."
+  ],
+  "conflicts": [
+    "View 1, 2, 4, and 6 contain noisy, low-circularity contours that do not clearly map to the primary geometry defined in Views 3 and 5."
+  ]
+}
+```

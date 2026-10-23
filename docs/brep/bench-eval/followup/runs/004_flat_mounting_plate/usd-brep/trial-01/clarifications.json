@@ -1,0 +1,30 @@
+[
+  {
+    "question": {
+      "feature_id": "center_slot",
+      "feature_label": "Center slot",
+      "reason": "The drawing does not explicitly label the center slot as a through-hole or a recessed pocket. While the top view shows a continuous line, the distinction is critical for construction.",
+      "kind": "opening_extent",
+      "id": "07ff32e5f91040369e6a81c030ac81bd",
+      "text": "Should this hole go all the way through the part?",
+      "maximum_depth_mm": 100.0,
+      "choices": [
+        {
+          "id": "through",
+          "label": "Yes \u2014 make a through-hole"
+        },
+        {
+          "id": "recess",
+          "label": "No \u2014 leave a bottom"
+        }
+      ]
+    },
+    "status": "answered",
+    "answer": {
+      "question_id": "07ff32e5f91040369e6a81c030ac81bd",
+      "feature_id": "center_slot",
+      "kind": "opening_extent",
+      "choice": "through"
+    }
+  }
+]

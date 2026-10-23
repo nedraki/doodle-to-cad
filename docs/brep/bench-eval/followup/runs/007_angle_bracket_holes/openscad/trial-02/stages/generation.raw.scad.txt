@@ -1,0 +1,47 @@
+/* doodle-meta {"version":1,"parameters":{"width":{"label":"Overall width","description":"Changes the overall width of the bracket","unit":"mm","feature":"body_width"},"depth":{"label":"Overall depth","description":"Changes the overall depth of the bracket","unit":"mm","feature":"body_depth"},"height":{"label":"Overall height","description":"Changes the overall height of the bracket","unit":"mm","feature":"body_height"},"wall_thickness":{"label":"Wall thickness","description":"Changes the thickness of the bracket walls","unit":"mm","feature":"wall_thickness"},"hole_diameter":{"label":"Hole diameter","description":"Changes the diameter of the mounting holes","unit":"mm","feature":"holes"}},"features":{"body_width":{"kind":"dimension","axis":"x","label":"Overall width"},"body_depth":{"kind":"dimension","axis":"y","label":"Overall depth"},"body_height":{"kind":"dimension","axis":"z","label":"Overall height"},"wall_thickness":{"kind":"region","label":"Wall thickness","min":[0,0,0],"max":[{"parameter":"wall_thickness"},{"parameter":"depth"},{"parameter":"height"}]},"holes":{"kind":"region","label":"Mounting holes","min":[{"parameter":"width","scale":0.15},{"parameter":"wall_thickness"},{"parameter":"height","scale":0.3}],"max":[{"parameter":"width","scale":0.85},{"parameter":"wall_thickness","scale":1.0},{"parameter":"height","scale":0.7}]}}} */
+
+// Top-level parameters (user-editable)
+width = 80.0;
+depth = 43.13;
+height = 51.01;
+wall_thickness = 6.0;
+hole_diameter = 8.0;
+
+// Derived sizes (not user-editable)
+hole_spacing = (width - 2 * wall_thickness) / 2.0;
+hole_z = height * 0.4158; // From front view center v=0.4158 -> Z = (1-0.4158)*height? No, v is down. Z = (1-v)*height. Wait.
+// Front view: v=0 is top, v=1 is bottom. Z = (1-v)*height.
+// Center v = 0.4158. Z = (1 - 0.4158) * height = 0.5842 * height.
+hole_z_pos = (1.0 - 0.4158) * height;
+
+// Modules
+module l_bracket_body() {
+    // Vertical wall (back)
+    translate([0, depth - wall_thickness, 0])
+        cube([width, wall_thickness, height]);
+        
+    // Horizontal base (bottom)
+    translate([0, 0, 0])
+        cube([width, depth, wall_thickness]);
+}
+
+module hole_cutter() {
+    // Cylinder axis along Y to cut through the vertical wall (which is in XZ plane, thickness along Y)
+    // The wall is at Y from depth-wall_thickness to depth.
+    // We need a cutter that spans the wall thickness.
+    // Using center=true and placing it at the center of the wall thickness.
+    translate([0, depth - wall_thickness/2, 0])
+        rotate([90, 0, 0])
+            cylinder(h = wall_thickness + 2, d = hole_diameter, center=true);
+}
+
+// Main design
+difference() {
+    l_bracket_body();
+    
+    // Three holes
+    for (i = [0:2]) {
+        translate([wall_thickness + i * hole_spacing, 0, hole_z_pos])
+            hole_cutter();
+    }
+}

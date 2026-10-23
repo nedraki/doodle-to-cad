@@ -1,0 +1,75 @@
+/* doodle-meta {"version":1,"parameters":{"width":{"label":"Overall width","description":"Changes the body width","unit":"mm","feature":"body_width"},"height":{"label":"Overall height","description":"Changes the body height","unit":"mm","feature":"body_height"},"thickness":{"label":"Plate thickness","description":"Changes the plate thickness","unit":"mm","feature":"body_thickness"},"hole_diameter":{"label":"Hole diameter","description":"Changes the diameter of the mounting holes","unit":"mm","feature":"holes"},"slot_width":{"label":"Slot width","description":"Changes the width of the center slot","unit":"mm","feature":"slot"},"slot_height":{"label":"Slot height","description":"Changes the height of the center slot","unit":"mm","feature":"slot"}},"features":{"body_width":{"kind":"dimension","axis":"x","label":"Overall width"},"body_height":{"kind":"dimension","axis":"z","label":"Overall height"},"body_thickness":{"kind":"dimension","axis":"y","label":"Plate thickness"},"holes":{"kind":"region","label":"Mounting Holes","min":[{"parameter":"hole_x_left","scale":1,"offset":-10},{"parameter":"thickness","scale":0,"offset":-1},{"parameter":"hole_z_left","scale":1,"offset":-10}],"max":[{"parameter":"hole_x_right","scale":1,"offset":10},{"parameter":"thickness","scale":1,"offset":1},{"parameter":"hole_z_right","scale":1,"offset":10}]},"slot":{"kind":"region","label":"Center Slot","min":[{"parameter":"width","scale":0.5,"offset":-15},{"parameter":"thickness","scale":0,"offset":-1},{"parameter":"height","scale":0.5,"offset":-5}],"max":[{"parameter":"width","scale":0.5,"offset":15},{"parameter":"thickness","scale":1,"offset":1},{"parameter":"height","scale":0.5,"offset":5}]}}} */
+
+// Parameters
+width = 100.0;
+height = 61.98;
+thickness = 9.65;
+hole_diameter = 8.0;
+slot_width = 30.0;
+slot_height = 10.0;
+
+// Derived positions based on measured view geometry
+// Front view mapping: X = u * width, Z = (1-v) * height
+// Hole Left: center u=0.1647, v=0.2775
+hole_x_left = 0.1647 * width;
+hole_z_left = (1.0 - 0.2775) * height;
+
+// Hole Right: center u=0.8302, v=0.7295
+hole_x_right = 0.8302 * width;
+hole_z_right = (1.0 - 0.7295) * height;
+
+// Slot center: u=0.4907, v=0.5055
+slot_x = 0.4907 * width;
+slot_z = (1.0 - 0.5055) * height;
+
+// Epsilon for CSG
+eps = 0.01;
+
+module plate_body() {
+    difference() {
+        // Main Plate
+        cube([width, thickness, height], center=true);
+        
+        // Left Hole
+        translate([hole_x_left - width/2, 0, hole_z_left - height/2]) {
+            rotate([90, 0, 0]) {
+                cylinder(d=hole_diameter, h=thickness + 2*eps, center=true);
+            }
+        }
+        
+        // Right Hole
+        translate([hole_x_right - width/2, 0, hole_z_right - height/2]) {
+            rotate([90, 0, 0]) {
+                cylinder(d=hole_diameter, h=thickness + 2*eps, center=true);
+            }
+        }
+        
+        // Center Slot
+        // Slot is a rounded rectangle (stadium) in XZ plane, cut along Y
+        // Width (X) = slot_width, Height (Z) = slot_height
+        // Radius = slot_height / 2
+        translate([slot_x - width/2, 0, slot_z - height/2]) {
+            // Create a stadium shape cutter
+            // Two cylinders and a cube connecting them
+            // Or use a hull of two cylinders
+            hull() {
+                translate([-slot_width/2 + slot_height/2, 0, 0]) {
+                    rotate([90, 0, 0]) {
+                        cylinder(d=slot_height, h=thickness + 2*eps, center=true);
+                    }
+                }
+                translate([slot_width/2 - slot_height/2, 0, 0]) {
+                    rotate([90, 0, 0]) {
+                        cylinder(d=slot_height, h=thickness + 2*eps, center=true);
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Position the plate so it sits on the build plate (Z=0 is bottom)
+// The cube was centered, so we need to shift it up by height/2
+translate([0, 0, height/2]) {
+    plate_body();
+}

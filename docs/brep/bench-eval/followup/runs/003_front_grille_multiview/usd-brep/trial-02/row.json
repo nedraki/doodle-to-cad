@@ -1,0 +1,24 @@
+{
+  "drawing": "003_front_grille_multiview",
+  "backend": "usd-brep",
+  "trial": 2,
+  "submitted_at": "2026-10-22T23:46:42.297356+00:00",
+  "finished_at": "2026-10-22T23:52:56.343415+00:00",
+  "checks": {
+    "build_success": false,
+    "overall_pass": false,
+    "supplied_dimension_pass": false
+  },
+  "run_id": "59556e805565",
+  "wall_seconds": 374.0,
+  "job_status": "error",
+  "error": {
+    "message": "Profile loops intersect, touch or self-intersect",
+    "code": "invalid_recipe"
+  },
+  "questions_asked": 1,
+  "question_kinds": [
+    "uniform_thickness"
+  ],
+  "build": null
+}

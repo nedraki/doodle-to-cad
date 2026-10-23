@@ -1,0 +1,213 @@
+{
+  "attempt": 3,
+  "action": "regenerate_scad",
+  "preflight": {
+    "passed": true,
+    "errors": [],
+    "warnings": [],
+    "expected_subtractive_feature_groups": 3
+  },
+  "compiler_repairs": [],
+  "uniform_scale": null,
+  "evaluation": {
+    "score": 76.2,
+    "valid_mesh": true,
+    "accepted": false,
+    "mandatory_gates": {
+      "compiled": true,
+      "topology": true,
+      "dimensions": true,
+      "shape_sanity": false,
+      "features": false,
+      "openings_through": false,
+      "projections": false,
+      "build_envelope": true
+    },
+    "scores": {
+      "topology": 45,
+      "dimensions": 19.5,
+      "features": 6.7,
+      "projections": 5.0
+    },
+    "projection_similarity": {
+      "front": 0.422,
+      "top": 0.249
+    },
+    "profile_topology": {
+      "front": {
+        "source_internal_profiles": 9,
+        "rendered_internal_profiles": 3,
+        "crop_internal_profiles": 9,
+        "source_aspect": 1.594,
+        "rendered_aspect": 16.071,
+        "source_opening_centroids": [
+          [
+            0.832,
+            0.628
+          ],
+          [
+            0.166,
+            0.625
+          ],
+          [
+            0.564,
+            0.421
+          ],
+          [
+            0.694,
+            0.441
+          ],
+          [
+            0.629,
+            0.426
+          ],
+          [
+            0.499,
+            0.43
+          ],
+          [
+            0.434,
+            0.425
+          ],
+          [
+            0.369,
+            0.423
+          ],
+          [
+            0.304,
+            0.42
+          ]
+        ],
+        "rendered_opening_centroids": [
+          [
+            0.968,
+            0.465
+          ],
+          [
+            0.567,
+            0.464
+          ],
+          [
+            0.097,
+            0.465
+          ]
+        ],
+        "missing_opening_centroids": [
+          [
+            0.304,
+            0.42
+          ],
+          [
+            0.369,
+            0.423
+          ],
+          [
+            0.434,
+            0.425
+          ],
+          [
+            0.629,
+            0.426
+          ],
+          [
+            0.499,
+            0.43
+          ],
+          [
+            0.694,
+            0.441
+          ],
+          [
+            0.166,
+            0.625
+          ],
+          [
+            0.832,
+            0.628
+          ]
+        ],
+        "feature_position_fidelity": 0.111
+      },
+      "top": {
+        "source_internal_profiles": 0,
+        "rendered_internal_profiles": 0,
+        "crop_internal_profiles": 0,
+        "source_aspect": 16.806,
+        "rendered_aspect": 1.625,
+        "source_opening_centroids": [],
+        "rendered_opening_centroids": []
+      }
+    },
+    "demanded_openings": {
+      "total": 9,
+      "per_view": {
+        "front": 9,
+        "top": 0
+      },
+      "sheet_total": 9,
+      "registration_gap": 0
+    },
+    "failures": [
+      "degenerate or implausible axis dimensions: Y=75.693 mm vs expected 7.52 mm, Z=7.52 mm vs expected 78.83 mm",
+      "required internal profiles are missing: front demands 9, renders 3; best rendered view has 3. Missing at these view-local centres \u2014 add cutters there: (u=0.304,v=0.42); (u=0.369,v=0.423); (u=0.434,v=0.425); (u=0.629,v=0.426); (u=0.499,v=0.43); (u=0.694,v=0.441).",
+      "openings do not go through the solid: the drawing demands 9 openings across the registered views (strongest: front) but the mesh has 0 true through-holes \u2014 the rendered openings are blind pockets or edge notches; cut all the way through the wall",
+      "CAD projections poorly match the drawing: front similarity 0.42, top similarity 0.25 (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly.",
+      "features exist but sit at the wrong positions in front view(s): match each opening's location (u,v within the outer profile) to the drawing; check the cad_mapping signs (front: u->+X v->-Z; top: u->+X v->-Y i.e. sheet-down is the FRONT of the part)"
+    ]
+  },
+  "mesh_health": {
+    "watertight": true,
+    "components": 1,
+    "triangles": 40,
+    "through_holes": 0,
+    "extents_mm": [
+      123.077,
+      75.693,
+      7.52
+    ],
+    "volume_mm3": 54971.359
+  },
+  "build": {
+    "version": 1,
+    "backend": "openscad",
+    "source_format": "openscad",
+    "ok": true,
+    "units": "mm",
+    "axes": {
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    },
+    "views": [
+      "isometric",
+      "front",
+      "top",
+      "right"
+    ],
+    "measurements": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 40,
+      "through_holes": 0,
+      "extents_mm": [
+        123.077,
+        75.693,
+        7.52
+      ],
+      "volume_mm3": 54971.359
+    },
+    "diagnostics": [],
+    "drawing_evaluated": false
+  },
+  "compile_log": "Geometries in cache: 14\nGeometry cache size in bytes: 27000\nCGAL Polyhedrons in cache: 3\nCGAL cache size in bytes: 271360\nTotal rendering time: 0:00:00.136\n   Top level object is a 3D object:\n   Simple:        yes\n   Vertices:       22\n   Halfedges:      66\n   Edges:          33\n   Halffacets:     26\n   Facets:         13\n   Volumes:         2",
+  "files": {
+    "scad": "attempt-03/model.scad",
+    "stl": "attempt-03/model.stl",
+    "views": {
+      "isometric": "attempt-03/view-isometric.png",
+      "front": "attempt-03/view-front.png",
+      "top": "attempt-03/view-top.png",
+      "right": "attempt-03/view-right.png"
+    }
+  }
+}

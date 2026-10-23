@@ -1,0 +1,1309 @@
+......................................................F................. [ 17%]
+...............F......................................FF................ [ 35%]
+...............................................FF.FFFFF................. [ 53%]
+............FFF........FF..........FF.....F..........FFFFFFFF..F........ [ 71%]
+...................................FFFFFFFFF.......FF................... [ 88%]
+...............F.FFFFFFF...............F.F..F                            [100%]
+=================================== FAILURES ===================================
+_________________ test_kernel_build_edit_and_failure_recovery __________________
+
+tmp_path = PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_kernel_build_edit_and_fai0')
+
+    @pytest.mark.skipif(not worker_available(), reason="Isolated BRep worker not configured")
+    def test_kernel_build_edit_and_failure_recovery(tmp_path):
+        import trimesh
+        source = recipe()
+>       original = build_recipe(tmp_path, source)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_brep.py:78: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+out = PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_kernel_build_edit_and_fai0')
+recipe = {'version': 1, 'units': 'mm', 'name': 'bracket', 'parameters': {'width': {'value': 60, 'min': 50, 'max': 100, 'group':...80, 'min': 70, 'max': 120, 'group': 'Body'}, 'thickness': {'value': 5, 'min': 3, 'max': 8, 'group': 'Body'}, ...}, ...}
+updates = None, on_stage = <function <lambda> at 0xeab67b57c180>
+
+    def build_recipe(out: Path, recipe: dict, updates: dict | None = None, *, on_stage=lambda _: None):
+        """Compatibility API for the existing recipe and parameter endpoints."""
+        from .config import settings
+        edited, _ = validate_recipe(recipe, updates)
+        out.mkdir(parents=True, exist_ok=True)
+        with tempfile.TemporaryDirectory(prefix=".input-", dir=out) as tmp:
+            source = Path(tmp) / "model.recipe.json"
+            source.write_text(json.dumps(edited))
+            result = build_brep(BuildInput("usd-brep", source, out), settings.openscad_bin, on_stage)
+        if not result.ok:
+            error = next(d for d in result.diagnostics if d.severity == "error")
+>           raise BuildError(error.code, error.message)
+E           doodle_to_cad.build_contract.BuildError: no graph engines available!
+
+doodle_to_cad/brep.py:228: BuildError
+__________________ test_real_worker_still_builds_simple_boxes __________________
+
+tmp_path = PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_real_worker_still_builds_0')
+
+    @pytest.mark.skipif(not worker_available(), reason="Isolated BRep worker not configured")
+    def test_real_worker_still_builds_simple_boxes(tmp_path):
+        from doodle_to_cad.brep import build_recipe
+>       built = build_recipe(tmp_path, json.loads(json.dumps(SIMPLE_RECIPE)))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_brep_kernel_containment.py:200: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+out = PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_real_worker_still_builds_0')
+recipe = {'version': 1, 'units': 'mm', 'parameters': {}, 'operations': [{'id': 'block', 'kind': 'box', 'origin': [0, 0, 0], 'size': [10, 10, 10]}], ...}
+updates = None, on_stage = <function <lambda> at 0xeab67b57c180>
+
+    def build_recipe(out: Path, recipe: dict, updates: dict | None = None, *, on_stage=lambda _: None):
+        """Compatibility API for the existing recipe and parameter endpoints."""
+        from .config import settings
+        edited, _ = validate_recipe(recipe, updates)
+        out.mkdir(parents=True, exist_ok=True)
+        with tempfile.TemporaryDirectory(prefix=".input-", dir=out) as tmp:
+            source = Path(tmp) / "model.recipe.json"
+            source.write_text(json.dumps(edited))
+            result = build_brep(BuildInput("usd-brep", source, out), settings.openscad_bin, on_stage)
+        if not result.ok:
+            error = next(d for d in result.diagnostics if d.severity == "error")
+>           raise BuildError(error.code, error.message)
+E           doodle_to_cad.build_contract.BuildError: no graph engines available!
+
+doodle_to_cad/brep.py:228: BuildError
+__________ test_wheel_connections_survive_radius_edit_and_reject_gap ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_wheel_connections_survive0')
+
+    @pytest.mark.skipif(not worker_available(), reason='Isolated worker not configured')
+    def test_wheel_connections_survive_radius_edit_and_reject_gap(tmp_path):
+        wheel=fixture()
+>       base=build_recipe(tmp_path, wheel)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_construction_recipe.py:47: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+out = PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_wheel_connections_survive0')
+recipe = {'version': 2, 'units': 'mm', 'name': 'Four-spoke wheel', 'parameters': {'radius': {'value': 60, 'min': 40, 'max': 100...lue': 12, 'min': 10, 'max': 16, 'unit': 'mm'}, 'thickness': {'value': 8, 'min': 4, 'max': 12, 'unit': 'mm'}, ...}, ...}
+updates = None, on_stage = <function <lambda> at 0xeab67b57c180>
+
+    def build_recipe(out: Path, recipe: dict, updates: dict | None = None, *, on_stage=lambda _: None):
+        """Compatibility API for the existing recipe and parameter endpoints."""
+        from .config import settings
+        edited, _ = validate_recipe(recipe, updates)
+        out.mkdir(parents=True, exist_ok=True)
+        with tempfile.TemporaryDirectory(prefix=".input-", dir=out) as tmp:
+            source = Path(tmp) / "model.recipe.json"
+            source.write_text(json.dumps(edited))
+            result = build_brep(BuildInput("usd-brep", source, out), settings.openscad_bin, on_stage)
+        if not result.ok:
+            error = next(d for d in result.diagnostics if d.severity == "error")
+>           raise BuildError(error.code, error.message)
+E           doodle_to_cad.build_contract.BuildError: no graph engines available!
+
+doodle_to_cad/brep.py:228: BuildError
+______________ test_existing_v1_result_and_migrated_bookend_edit _______________
+
+tmp_path = PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_existing_v1_result_and_mi0')
+
+    @pytest.mark.skipif(not worker_available(), reason='Isolated worker not configured')
+    def test_existing_v1_result_and_migrated_bookend_edit(tmp_path):
+        old=json.loads((ROOT/'benchmarks/brep/bracket.json').read_text())
+>       base=build_recipe(tmp_path,old)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_construction_recipe.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+out = PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_existing_v1_result_and_mi0')
+recipe = {'version': 1, 'units': 'mm', 'name': 'bracket', 'parameters': {'width': {'value': 60, 'min': 50, 'max': 100, 'group':...80, 'min': 70, 'max': 120, 'group': 'Body'}, 'thickness': {'value': 5, 'min': 3, 'max': 8, 'group': 'Body'}, ...}, ...}
+updates = None, on_stage = <function <lambda> at 0xeab67b57c180>
+
+    def build_recipe(out: Path, recipe: dict, updates: dict | None = None, *, on_stage=lambda _: None):
+        """Compatibility API for the existing recipe and parameter endpoints."""
+        from .config import settings
+        edited, _ = validate_recipe(recipe, updates)
+        out.mkdir(parents=True, exist_ok=True)
+        with tempfile.TemporaryDirectory(prefix=".input-", dir=out) as tmp:
+            source = Path(tmp) / "model.recipe.json"
+            source.write_text(json.dumps(edited))
+            result = build_brep(BuildInput("usd-brep", source, out), settings.openscad_bin, on_stage)
+        if not result.ok:
+            error = next(d for d in result.diagnostics if d.severity == "error")
+>           raise BuildError(error.code, error.message)
+E           doodle_to_cad.build_contract.BuildError: no graph engines available!
+
+doodle_to_cad/brep.py:228: BuildError
+___________________________ test_real_rotated_wheel ____________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_real_rotated_wheel0')
+
+    @pytest.mark.skipif(not worker_available(),reason='Isolated worker not configured')
+    def test_real_rotated_wheel(tmp_path):
+        from doodle_to_cad.brep import build_brep
+        from doodle_to_cad.build_contract import BuildInput
+        from doodle_to_cad.construction_recipe import migrate_v1
+        recipe={'version':1,'units':'mm','parameters':{},'operations':[
+            {'id':'outer','kind':'cylinder','origin':[0,0,0],'radius':30,'height':4,'axis':'z'},
+            {'id':'inner','kind':'cylinder','origin':[0,0,-1],'radius':26,'height':6,'axis':'z'},
+            {'id':'rim','kind':'difference','left':'outer','right':'inner'},
+            {'id':'hub','kind':'cylinder','origin':[0,0,0],'radius':8,'height':4,'axis':'z'},
+            {'id':'seed','kind':'box','origin':[6,-2,0],'size':[22,4,4]},
+            {'id':'first','kind':'union','left':'seed','right':'hub'}], 'output':'first'}
+        previous='first'
+        for i in range(1,8):
+            recipe['operations'] += [
+                {'id':f'spoke{i}','kind':'rotate','body':'seed','origin':[0,0,0],'axis':'z','angle':i*45},
+                {'id':f'join{i}','kind':'union','left':previous,'right':f'spoke{i}'}]
+            previous=f'join{i}'
+        recipe['operations'].append({'id':'wheel','kind':'union','left':previous,'right':'rim'})
+        recipe['output']='wheel'
+        recipe=migrate_v1(recipe)
+        recipe['constraints']=[{'id':f'joint{i}','kind':'connected','left':spoke,'right':'rim','min_volume_mm3':.01}
+                               for i,spoke in enumerate(['seed']+[f'spoke{i}' for i in range(1,8)])]
+        source=tmp_path/'recipe.json';source.write_text(json.dumps(recipe))
+        result=build_brep(BuildInput('usd-brep',source,tmp_path,render=False))
+>       assert result.ok,result.log
+E       AssertionError: BRep build failed: no graph engines available!
+E         
+E       assert False
+E        +  where False = BuildResult(backend='usd-brep', source=PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_real_rotated_wheel0/recipe.js...ble!', severity='error')], measurements={}, backend_details={}, log='BRep build failed: no graph engines available!\n').ok
+
+tests/test_direct_brep.py:129: AssertionError
+____________ test_direct_job_publishes_native_recipe_and_provenance ____________
+
+tmp_path = PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_direct_job_publishes_nati0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0xeab64b877290>
+
+    @pytest.mark.skipif(not worker_available(),reason='Isolated worker not configured')
+    def test_direct_job_publishes_native_recipe_and_provenance(tmp_path,monkeypatch):
+        monkeypatch.setattr(app,'settings',replace(app.settings,results_dir=tmp_path))
+        recipe=json.loads(Path('benchmarks/brep-v2/bookend.json').read_text())
+        async def interpret(image,mime,controls,*,out):
+            evidence={'interpretation':{'object_hypothesis':'test bookend'}}
+            (out/'feature-evidence.json').write_text(json.dumps(evidence))
+            return evidence
+        async def model(messages,out,label,**kwargs):
+            if label=='construction-plan':return PLAN
+            assert 'scad' not in json.loads(messages[1]['content'][0]['text'])
+            (out/(label+'.raw.txt')).write_text(json.dumps(recipe))
+            return recipe
+        async def discover():return type('Model',(),{'selected':'fixture-model'})()
+        async def forbidden(*a,**kw):pytest.fail('Direct BRep must never generate SCAD')
+        monkeypatch.setattr(app.pipeline,'interpret_features',interpret)
+        monkeypatch.setattr(app.pipeline,'_json_call',model)
+        monkeypatch.setattr(app.pipeline.client,'discover',discover)
+        monkeypatch.setattr(app.pipeline,'generate',forbidden)
+        with TestClient(app.app) as client:
+            response=client.post('/api/generate',files={'image':('drawing.png',IMAGE,'image/png')},data={'backend':'usd-brep'})
+            assert response.status_code==200,response.text
+            job=response.json()['job_id']
+            for _ in range(600):
+                state=client.get('/api/generate/'+job).json()
+                if state['status']!='running':break
+                time.sleep(.1)
+>           assert state['status']=='done',state
+E           AssertionError: {'job_id': '97b24dfd26c1', 'status': 'error', 'stage': 'failed', 'result': None, ...}
+E           assert 'error' == 'done'
+E             
+E             - done
+E             + error
+
+tests/test_direct_brep.py:162: AssertionError
+_______ test_bounded_construction_correction_with_real_worker[placement] _______
+
+tmp_path = PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_bounded_construction_corr0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0xeab64b955350>
+mode = 'placement'
+
+    @pytest.mark.skipif(not worker_available(),reason='Isolated worker not configured')
+    @pytest.mark.parametrize('mode',['placement','size','exhausted','cancel'])
+    def test_bounded_construction_correction_with_real_worker(tmp_path,monkeypatch,mode):
+        from doodle_to_cad.construction_recipe import migrate_v1
+        monkeypatch.setattr(app,'settings',replace(app.settings,results_dir=tmp_path))
+        def recipe(z,width=20):
+            return migrate_v1({'version':1,'units':'mm','parameters':{},'operations':[
+                {'id':'body','kind':'box','origin':[0,0,z],'size':[width,10,10]}],'output':'body'})
+        calls=[]
+        async def interpret(image,mime,controls,*,out):
+            (out/'feature-evidence.json').write_text('{}')
+            return {}
+        async def model(messages,out,label,**kwargs):
+            if label=='construction-plan':return PLAN
+            calls.append(label)
+            if label.startswith('direct-recipe'):
+                return recipe(0,200) if mode=='size' else recipe(-2)
+            payload=json.loads(messages[1]['content'])
+            assert payload['diagnostic']['code'] in {'placement_failed','dimension_exceeded'}
+            if mode=='cancel':await asyncio.sleep(60)
+            if mode=='exhausted':return recipe(-2/len(calls))
+            return recipe(0)
+        async def discover():return type('Model',(),{'selected':'fixture-model'})()
+        monkeypatch.setattr(app.pipeline,'interpret_features',interpret)
+        monkeypatch.setattr(app.pipeline,'_json_call',model)
+        monkeypatch.setattr(app.pipeline.client,'discover',discover)
+        with TestClient(app.app) as client:
+            response=client.post('/api/generate',files={'image':('drawing.png',IMAGE,'image/png')},data={'backend':'usd-brep'})
+            job=response.json()['job_id']
+            for _ in range(900):
+                state=client.get('/api/generate/'+job).json()
+                if mode=='cancel' and len(calls)>1:
+                    client.post('/api/generate/'+job+'/cancel')
+                if state['status'] not in {'running','cancelling'}:break
+                time.sleep(.05)
+            out=tmp_path/job
+            history=json.loads((out/'build-history.json').read_text())
+            assert history[0]['status']=='failed'
+            assert (out/'construction-attempts/1/recipe.json').exists()
+            if mode in {'placement','size'}:
+>               assert state['status']=='done',state
+E               AssertionError: {'job_id': 'aa4b66904410', 'status': 'error', 'stage': 'failed', 'result': None, ...}
+E               assert 'error' == 'done'
+E                 
+E                 - done
+E                 + error
+
+tests/test_direct_brep.py:233: AssertionError
+_________ test_bounded_construction_correction_with_real_worker[size] __________
+
+tmp_path = PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_bounded_construction_corr1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0xeab64b957d90>
+mode = 'size'
+
+    @pytest.mark.skipif(not worker_available(),reason='Isolated worker not configured')
+    @pytest.mark.parametrize('mode',['placement','size','exhausted','cancel'])
+    def test_bounded_construction_correction_with_real_worker(tmp_path,monkeypatch,mode):
+        from doodle_to_cad.construction_recipe import migrate_v1
+        monkeypatch.setattr(app,'settings',replace(app.settings,results_dir=tmp_path))
+        def recipe(z,width=20):
+            return migrate_v1({'version':1,'units':'mm','parameters':{},'operations':[
+                {'id':'body','kind':'box','origin':[0,0,z],'size':[width,10,10]}],'output':'body'})
+        calls=[]
+        async def interpret(image,mime,controls,*,out):
+            (out/'feature-evidence.json').write_text('{}')
+            return {}
+        async def model(messages,out,label,**kwargs):
+            if label=='construction-plan':return PLAN
+            calls.append(label)
+            if label.startswith('direct-recipe'):
+                return recipe(0,200) if mode=='size' else recipe(-2)
+            payload=json.loads(messages[1]['content'])
+            assert payload['diagnostic']['code'] in {'placement_failed','dimension_exceeded'}
+            if mode=='cancel':await asyncio.sleep(60)
+            if mode=='exhausted':return recipe(-2/len(calls))
+            return recipe(0)
+        async def discover():return type('Model',(),{'selected':'fixture-model'})()
+        monkeypatch.setattr(app.pipeline,'interpret_features',interpret)
+        monkeypatch.setattr(app.pipeline,'_json_call',model)
+        monkeypatch.setattr(app.pipeline.client,'discover',discover)
+        with TestClient(app.app) as client:
+            response=client.post('/api/generate',files={'image':('drawing.png',IMAGE,'image/png')},data={'backend':'usd-brep'})
+            job=response.json()['job_id']
+            for _ in range(900):
+                state=client.get('/api/generate/'+job).json()
+                if mode=='cancel' and len(calls)>1:
+                    client.post('/api/generate/'+job+'/cancel')
+                if state['status'] not in {'running','cancelling'}:break
+                time.sleep(.05)
+            out=tmp_path/job
+            history=json.loads((out/'build-history.json').read_text())
+            assert history[0]['status']=='failed'
+            assert (out/'construction-attempts/1/recipe.json').exists()
+            if mode in {'placement','size'}:
+>               assert state['status']=='done',state
+E               AssertionError: {'job_id': '00c9d5b395bf', 'status': 'error', 'stage': 'failed', 'result': None, ...}
+E               assert 'error' == 'done'
+E                 
+E                 - done
+E                 + error
+
+tests/test_direct_brep.py:233: AssertionError
+_______ test_bounded_construction_correction_with_real_worker[exhausted] _______
+
+tmp_path = PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_bounded_construction_corr2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0xeab64b983390>
+mode = 'exhausted'
+
+    @pytest.mark.skipif(not worker_available(),reason='Isolated worker not configured')
+    @pytest.mark.parametrize('mode',['placement','size','exhausted','cancel'])
+    def test_bounded_construction_correction_with_real_worker(tmp_path,monkeypatch,mode):
+        from doodle_to_cad.construction_recipe import migrate_v1
+        monkeypatch.setattr(app,'settings',replace(app.settings,results_dir=tmp_path))
+        def recipe(z,width=20):
+            return migrate_v1({'version':1,'units':'mm','parameters':{},'operations':[
+                {'id':'body','kind':'box','origin':[0,0,z],'size':[width,10,10]}],'output':'body'})
+        calls=[]
+        async def interpret(image,mime,controls,*,out):
+            (out/'feature-evidence.json').write_text('{}')
+            return {}
+        async def model(messages,out,label,**kwargs):
+            if label=='construction-plan':return PLAN
+            calls.append(label)
+            if label.startswith('direct-recipe'):
+                return recipe(0,200) if mode=='size' else recipe(-2)
+            payload=json.loads(messages[1]['content'])
+            assert payload['diagnostic']['code'] in {'placement_failed','dimension_exceeded'}
+            if mode=='cancel':await asyncio.sleep(60)
+            if mode=='exhausted':return recipe(-2/len(calls))
+            return recipe(0)
+        async def discover():return type('Model',(),{'selected':'fixture-model'})()
+        monkeypatch.setattr(app.pipeline,'interpret_features',interpret)
+        monkeypatch.setattr(app.pipeline,'_json_call',model)
+        monkeypatch.setattr(app.pipeline.client,'discover',discover)
+        with TestClient(app.app) as client:
+            response=client.post('/api/generate',files={'image':('drawing.png',IMAGE,'image/png')},data={'backend':'usd-brep'})
+            job=response.json()['job_id']
+            for _ in range(900):
+                state=client.get('/api/generate/'+job).json()
+                if mode=='cancel' and len(calls)>1:
+                    client.post('/api/generate/'+job+'/cancel')
+                if state['status'] not in {'running','cancelling'}:break
+                time.sleep(.05)
+            out=tmp_path/job
+            history=json.loads((out/'build-history.json').read_text())
+            assert history[0]['status']=='failed'
+            assert (out/'construction-attempts/1/recipe.json').exists()
+            if mode in {'placement','size'}:
+                assert state['status']=='done',state
+                assert len(calls)==2 and history[-1]['status']=='built'
+                assert state['result']['generation']['construction_attempts']==history
+                assert state['result']['success'] is False
+            else:
+                assert state['status']==('cancelled' if mode=='cancel' else 'error'),state
+                assert not (out/'result.json').exists()
+>               assert len(calls)==(2 if mode=='cancel' else 3)
+E               AssertionError: assert 1 == 3
+E                +  where 1 = len(['direct-recipe-1'])
+
+tests/test_direct_brep.py:240: AssertionError
+________ test_bounded_construction_correction_with_real_worker[cancel] _________
+
+tmp_path = PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_bounded_construction_corr3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0xeab64ba90f90>
+mode = 'cancel'
+
+    @pytest.mark.skipif(not worker_available(),reason='Isolated worker not configured')
+    @pytest.mark.parametrize('mode',['placement','size','exhausted','cancel'])
+    def test_bounded_construction_correction_with_real_worker(tmp_path,monkeypatch,mode):
+        from doodle_to_cad.construction_recipe import migrate_v1
+        monkeypatch.setattr(app,'settings',replace(app.settings,results_dir=tmp_path))
+        def recipe(z,width=20):
+            return migrate_v1({'version':1,'units':'mm','parameters':{},'operations':[
+                {'id':'body','kind':'box','origin':[0,0,z],'size':[width,10,10]}],'output':'body'})
+        calls=[]
+        async def interpret(image,mime,controls,*,out):
+            (out/'feature-evidence.json').write_text('{}')
+            return {}
+        async def model(messages,out,label,**kwargs):
+            if label=='construction-plan':return PLAN
+            calls.append(label)
+            if label.startswith('direct-recipe'):
+                return recipe(0,200) if mode=='size' else recipe(-2)
+            payload=json.loads(messages[1]['content'])
+            assert payload['diagnostic']['code'] in {'placement_failed','dimension_exceeded'}
+            if mode=='cancel':await asyncio.sleep(60)
+            if mode=='exhausted':return recipe(-2/len(calls))
+            return recipe(0)
+        async def discover():return type('Model',(),{'selected':'fixture-model'})()
+        monkeypatch.setattr(app.pipeline,'interpret_features',interpret)
+        monkeypatch.setattr(app.pipeline,'_json_call',model)
+        monkeypatch.setattr(app.pipeline.client,'discover',discover)
+        with TestClient(app.app) as client:
+            response=client.post('/api/generate',files={'image':('drawing.png',IMAGE,'image/png')},data={'backend':'usd-brep'})
+            job=response.json()['job_id']
+            for _ in range(900):
+                state=client.get('/api/generate/'+job).json()
+                if mode=='cancel' and len(calls)>1:
+                    client.post('/api/generate/'+job+'/cancel')
+                if state['status'] not in {'running','cancelling'}:break
+                time.sleep(.05)
+            out=tmp_path/job
+            history=json.loads((out/'build-history.json').read_text())
+            assert history[0]['status']=='failed'
+            assert (out/'construction-attempts/1/recipe.json').exists()
+            if mode in {'placement','size'}:
+                assert state['status']=='done',state
+                assert len(calls)==2 and history[-1]['status']=='built'
+                assert state['result']['generation']['construction_attempts']==history
+                assert state['result']['success'] is False
+            else:
+>               assert state['status']==('cancelled' if mode=='cancel' else 'error'),state
+E               AssertionError: {'job_id': '65c390a6340a', 'status': 'error', 'stage': 'failed', 'result': None, ...}
+E               assert 'error' == 'cancelled'
+E                 
+E                 - cancelled
+E                 + error
+
+tests/test_direct_brep.py:238: AssertionError
+___________ test_usd_comparison_requests_sufficient_volume_accuracy ____________
+
+tmp_path = PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_usd_comparison_requests_s0')
+
+    @pytest.mark.skipif(not worker_available(),reason='Isolated worker not configured')
+    def test_usd_comparison_requests_sufficient_volume_accuracy(tmp_path):
+        from doodle_to_cad.brep import build_brep
+        from doodle_to_cad.build_contract import BuildInput
+        # This unchanged live-generated recipe fails the 1e-5 export gate when
+        # volume() uses its default 1e-3 integration accuracy.
+        source=Path('benchmarks/brep-v2/volume-precision-wheel.json')
+        result=build_brep(BuildInput('usd-brep',source,tmp_path,render=False))
+>       assert result.ok,result.log
+E       AssertionError: BRep build failed: no graph engines available!
+E         
+E       assert False
+E        +  where False = BuildResult(backend='usd-brep', source=PosixPath('benchmarks/brep-v2/volume-precision-wheel.json'), stl=None, views={}...ble!', severity='error')], measurements={}, backend_details={}, log='BRep build failed: no graph engines available!\n').ok
+
+tests/test_direct_brep.py:252: AssertionError
+____ test_native_catalog_tracks_all_cutouts_and_split[bookend-None-matched] ____
+
+tmp_path = PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_native_catalog_tracks_all0')
+fixture = 'bookend', bridge_z = None, expected = 'matched'
+
+    @pytest.mark.parametrize('fixture,bridge_z,expected',[('bookend',None,'matched'),('split-bookend',40,'matched'),('split-bookend',56,'ambiguous')])
+    def test_native_catalog_tracks_all_cutouts_and_split(tmp_path,fixture,bridge_z,expected):
+     import os
+     if not worker_available():pytest.skip('Native worker not configured')
+     from pathlib import Path
+     from doodle_to_cad.brep import build_brep
+     from doodle_to_cad.build_contract import BuildInput
+     recipe=json.loads(Path(f'benchmarks/brep-selection/{fixture}.json').read_text())
+     if bridge_z is not None:recipe['parameters']['bridge_z']['value']=bridge_z
+     source=tmp_path/'recipe.json';source.write_text(json.dumps(recipe))
+>    built=build_brep(BuildInput('usd-brep',source,tmp_path,render=False));assert built.ok,built.log
+                                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^
+E    AssertionError: BRep build failed: no graph engines available!
+E      
+E    assert False
+E     +  where False = BuildResult(backend='usd-brep', source=PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_native_catalog_tracks_all0/re...ble!', severity='error')], measurements={}, backend_details={}, log='BRep build failed: no graph engines available!\n').ok
+
+tests/test_feature_selection.py:53: AssertionError
+__ test_native_catalog_tracks_all_cutouts_and_split[split-bookend-40-matched] __
+
+tmp_path = PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_native_catalog_tracks_all1')
+fixture = 'split-bookend', bridge_z = 40, expected = 'matched'
+
+    @pytest.mark.parametrize('fixture,bridge_z,expected',[('bookend',None,'matched'),('split-bookend',40,'matched'),('split-bookend',56,'ambiguous')])
+    def test_native_catalog_tracks_all_cutouts_and_split(tmp_path,fixture,bridge_z,expected):
+     import os
+     if not worker_available():pytest.skip('Native worker not configured')
+     from pathlib import Path
+     from doodle_to_cad.brep import build_brep
+     from doodle_to_cad.build_contract import BuildInput
+     recipe=json.loads(Path(f'benchmarks/brep-selection/{fixture}.json').read_text())
+     if bridge_z is not None:recipe['parameters']['bridge_z']['value']=bridge_z
+     source=tmp_path/'recipe.json';source.write_text(json.dumps(recipe))
+>    built=build_brep(BuildInput('usd-brep',source,tmp_path,render=False));assert built.ok,built.log
+                                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^
+E    AssertionError: BRep build failed: no graph engines available!
+E      
+E    assert False
+E     +  where False = BuildResult(backend='usd-brep', source=PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_native_catalog_tracks_all1/re...ble!', severity='error')], measurements={}, backend_details={}, log='BRep build failed: no graph engines available!\n').ok
+
+tests/test_feature_selection.py:53: AssertionError
+_ test_native_catalog_tracks_all_cutouts_and_split[split-bookend-56-ambiguous] _
+
+tmp_path = PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_native_catalog_tracks_all2')
+fixture = 'split-bookend', bridge_z = 56, expected = 'ambiguous'
+
+    @pytest.mark.parametrize('fixture,bridge_z,expected',[('bookend',None,'matched'),('split-bookend',40,'matched'),('split-bookend',56,'ambiguous')])
+    def test_native_catalog_tracks_all_cutouts_and_split(tmp_path,fixture,bridge_z,expected):
+     import os
+     if not worker_available():pytest.skip('Native worker not configured')
+     from pathlib import Path
+     from doodle_to_cad.brep import build_brep
+     from doodle_to_cad.build_contract import BuildInput
+     recipe=json.loads(Path(f'benchmarks/brep-selection/{fixture}.json').read_text())
+     if bridge_z is not None:recipe['parameters']['bridge_z']['value']=bridge_z
+     source=tmp_path/'recipe.json';source.write_text(json.dumps(recipe))
+>    built=build_brep(BuildInput('usd-brep',source,tmp_path,render=False));assert built.ok,built.log
+                                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^
+E    AssertionError: BRep build failed: no graph engines available!
+E      
+E    assert False
+E     +  where False = BuildResult(backend='usd-brep', source=PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_native_catalog_tracks_all2/re...ble!', severity='error')], measurements={}, backend_details={}, log='BRep build failed: no graph engines available!\n').ok
+
+tests/test_feature_selection.py:53: AssertionError
+______________________ test_native_loft_and_end_edit[40] _______________________
+
+tmp_path = PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_native_loft_and_end_edit_0')
+width = 40
+
+    @pytest.mark.skipif(not worker_available(),reason='Worker not configured')
+    @pytest.mark.parametrize('width',[40,48])
+    def test_native_loft_and_end_edit(tmp_path,width):
+     r=recipe();r['parameters']['rectangle_width']['value']=width
+     p=tmp_path/'recipe.json';p.write_text(json.dumps(r));b=build_brep(BuildInput('usd-brep',p,tmp_path,render=False))
+>    assert b.ok,b.log
+E    AssertionError: BRep build failed: no graph engines available!
+E      
+E    assert False
+E     +  where False = BuildResult(backend='usd-brep', source=PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_native_loft_and_end_edit_0/re...ble!', severity='error')], measurements={}, backend_details={}, log='BRep build failed: no graph engines available!\n').ok
+
+tests/test_loft_profiles.py:28: AssertionError
+______________________ test_native_loft_and_end_edit[48] _______________________
+
+tmp_path = PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_native_loft_and_end_edit_1')
+width = 48
+
+    @pytest.mark.skipif(not worker_available(),reason='Worker not configured')
+    @pytest.mark.parametrize('width',[40,48])
+    def test_native_loft_and_end_edit(tmp_path,width):
+     r=recipe();r['parameters']['rectangle_width']['value']=width
+     p=tmp_path/'recipe.json';p.write_text(json.dumps(r));b=build_brep(BuildInput('usd-brep',p,tmp_path,render=False))
+>    assert b.ok,b.log
+E    AssertionError: BRep build failed: no graph engines available!
+E      
+E    assert False
+E     +  where False = BuildResult(backend='usd-brep', source=PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_native_loft_and_end_edit_1/re...ble!', severity='error')], measurements={}, backend_details={}, log='BRep build failed: no graph engines available!\n').ok
+
+tests/test_loft_profiles.py:28: AssertionError
+______________ test_native_extrusion_direction_and_inner_loop[1] _______________
+
+tmp_path = PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_native_extrusion_directio0')
+direction = 1
+
+    @pytest.mark.skipif(not worker_available(),reason='Worker not configured')
+    @pytest.mark.parametrize('direction',[1,-1])
+    def test_native_extrusion_direction_and_inner_loop(tmp_path,direction):
+        r=recipe();r['operations'][0]['direction']=direction
+        if direction==-1:r['operations'][0]['origin'][2]=6
+        path=tmp_path/'recipe.json';path.write_text(json.dumps(r))
+        result=build_brep(BuildInput('usd-brep',path,tmp_path,render=False))
+>       assert result.ok,result.log
+E       AssertionError: BRep build failed: no graph engines available!
+E         
+E       assert False
+E        +  where False = BuildResult(backend='usd-brep', source=PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_native_extrusion_directio0/re...ble!', severity='error')], measurements={}, backend_details={}, log='BRep build failed: no graph engines available!\n').ok
+
+tests/test_planar_profile.py:41: AssertionError
+______________ test_native_extrusion_direction_and_inner_loop[-1] ______________
+
+tmp_path = PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_native_extrusion_directio1')
+direction = -1
+
+    @pytest.mark.skipif(not worker_available(),reason='Worker not configured')
+    @pytest.mark.parametrize('direction',[1,-1])
+    def test_native_extrusion_direction_and_inner_loop(tmp_path,direction):
+        r=recipe();r['operations'][0]['direction']=direction
+        if direction==-1:r['operations'][0]['origin'][2]=6
+        path=tmp_path/'recipe.json';path.write_text(json.dumps(r))
+        result=build_brep(BuildInput('usd-brep',path,tmp_path,render=False))
+>       assert result.ok,result.log
+E       AssertionError: BRep build failed: no graph engines available!
+E         
+E       assert False
+E        +  where False = BuildResult(backend='usd-brep', source=PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_native_extrusion_directio1/re...ble!', severity='error')], measurements={}, backend_details={}, log='BRep build failed: no graph engines available!\n').ok
+
+tests/test_planar_profile.py:41: AssertionError
+________________ test_periodic_arc_angles_keep_the_same_profile ________________
+
+tmp_path = PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_periodic_arc_angles_keep_0')
+
+    @pytest.mark.skipif(not worker_available(),reason='Worker not configured')
+    def test_periodic_arc_angles_keep_the_same_profile(tmp_path):
+        r=recipe();arc=r['operations'][0]['loops'][0][2]
+        arc['start_angle']+=360;arc['end_angle']+=360
+        path=tmp_path/'recipe.json';path.write_text(json.dumps(r))
+        result=build_brep(BuildInput('usd-brep',path,tmp_path,render=False))
+>       assert result.ok,result.log
+E       AssertionError: BRep build failed: no graph engines available!
+E         
+E       assert False
+E        +  where False = BuildResult(backend='usd-brep', source=PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_periodic_arc_angles_keep_0/re...ble!', severity='error')], measurements={}, backend_details={}, log='BRep build failed: no graph engines available!\n').ok
+
+tests/test_planar_profile.py:76: AssertionError
+_______________ test_native_rectangular_sweep_and_height_edit[8] _______________
+
+tmp_path = PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_native_rectangular_sweep_0')
+height = 8
+
+    @pytest.mark.skipif(not worker_available(),reason='Worker not configured')
+    @pytest.mark.parametrize('height',[8,10])
+    def test_native_rectangular_sweep_and_height_edit(tmp_path,height):
+     r=recipe();r['parameters']['section_height']['value']=height
+     p=tmp_path/'recipe.json';p.write_text(json.dumps(r));b=build_brep(BuildInput('usd-brep',p,tmp_path,render=False))
+>    assert b.ok,b.log
+E    AssertionError: BRep build failed: no graph engines available!
+E      
+E    assert False
+E     +  where False = BuildResult(backend='usd-brep', source=PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_native_rectangular_sweep_0/re...ble!', severity='error')], measurements={}, backend_details={}, log='BRep build failed: no graph engines available!\n').ok
+
+tests/test_planar_sweep.py:30: AssertionError
+______________ test_native_rectangular_sweep_and_height_edit[10] _______________
+
+tmp_path = PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_native_rectangular_sweep_1')
+height = 10
+
+    @pytest.mark.skipif(not worker_available(),reason='Worker not configured')
+    @pytest.mark.parametrize('height',[8,10])
+    def test_native_rectangular_sweep_and_height_edit(tmp_path,height):
+     r=recipe();r['parameters']['section_height']['value']=height
+     p=tmp_path/'recipe.json';p.write_text(json.dumps(r));b=build_brep(BuildInput('usd-brep',p,tmp_path,render=False))
+>    assert b.ok,b.log
+E    AssertionError: BRep build failed: no graph engines available!
+E      
+E    assert False
+E     +  where False = BuildResult(backend='usd-brep', source=PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_native_rectangular_sweep_1/re...ble!', severity='error')], measurements={}, backend_details={}, log='BRep build failed: no graph engines available!\n').ok
+
+tests/test_planar_sweep.py:30: AssertionError
+_________________ test_quarter_bend_keeps_rectangular_frame[0] _________________
+
+tmp_path = PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_quarter_bend_keeps_rectan0')
+start_angle = 0
+
+    @pytest.mark.skipif(not worker_available(),reason='Worker not configured')
+    @pytest.mark.parametrize('start_angle',[0,45,90,315])
+    def test_quarter_bend_keeps_rectangular_frame(tmp_path,start_angle):
+     r=recipe();o=r['operations'][0];o['path']=[{'kind':'arc','center':[23,23],'radius':20,'start_angle':start_angle,'end_angle':start_angle+90}]
+     p=tmp_path/'recipe.json';p.write_text(json.dumps(r));b=build_brep(BuildInput('usd-brep',p,tmp_path,render=False))
+>    assert b.ok,b.log
+E    AssertionError: BRep build failed: no graph engines available!
+E      
+E    assert False
+E     +  where False = BuildResult(backend='usd-brep', source=PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_quarter_bend_keeps_rectan0/re...ble!', severity='error')], measurements={}, backend_details={}, log='BRep build failed: no graph engines available!\n').ok
+
+tests/test_planar_sweep.py:40: AssertionError
+________________ test_quarter_bend_keeps_rectangular_frame[45] _________________
+
+tmp_path = PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_quarter_bend_keeps_rectan1')
+start_angle = 45
+
+    @pytest.mark.skipif(not worker_available(),reason='Worker not configured')
+    @pytest.mark.parametrize('start_angle',[0,45,90,315])
+    def test_quarter_bend_keeps_rectangular_frame(tmp_path,start_angle):
+     r=recipe();o=r['operations'][0];o['path']=[{'kind':'arc','center':[23,23],'radius':20,'start_angle':start_angle,'end_angle':start_angle+90}]
+     p=tmp_path/'recipe.json';p.write_text(json.dumps(r));b=build_brep(BuildInput('usd-brep',p,tmp_path,render=False))
+>    assert b.ok,b.log
+E    AssertionError: BRep build failed: no graph engines available!
+E      
+E    assert False
+E     +  where False = BuildResult(backend='usd-brep', source=PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_quarter_bend_keeps_rectan1/re...ble!', severity='error')], measurements={}, backend_details={}, log='BRep build failed: no graph engines available!\n').ok
+
+tests/test_planar_sweep.py:40: AssertionError
+________________ test_quarter_bend_keeps_rectangular_frame[90] _________________
+
+tmp_path = PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_quarter_bend_keeps_rectan2')
+start_angle = 90
+
+    @pytest.mark.skipif(not worker_available(),reason='Worker not configured')
+    @pytest.mark.parametrize('start_angle',[0,45,90,315])
+    def test_quarter_bend_keeps_rectangular_frame(tmp_path,start_angle):
+     r=recipe();o=r['operations'][0];o['path']=[{'kind':'arc','center':[23,23],'radius':20,'start_angle':start_angle,'end_angle':start_angle+90}]
+     p=tmp_path/'recipe.json';p.write_text(json.dumps(r));b=build_brep(BuildInput('usd-brep',p,tmp_path,render=False))
+>    assert b.ok,b.log
+E    AssertionError: BRep build failed: no graph engines available!
+E      
+E    assert False
+E     +  where False = BuildResult(backend='usd-brep', source=PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_quarter_bend_keeps_rectan2/re...ble!', severity='error')], measurements={}, backend_details={}, log='BRep build failed: no graph engines available!\n').ok
+
+tests/test_planar_sweep.py:40: AssertionError
+________________ test_quarter_bend_keeps_rectangular_frame[315] ________________
+
+tmp_path = PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_quarter_bend_keeps_rectan3')
+start_angle = 315
+
+    @pytest.mark.skipif(not worker_available(),reason='Worker not configured')
+    @pytest.mark.parametrize('start_angle',[0,45,90,315])
+    def test_quarter_bend_keeps_rectangular_frame(tmp_path,start_angle):
+     r=recipe();o=r['operations'][0];o['path']=[{'kind':'arc','center':[23,23],'radius':20,'start_angle':start_angle,'end_angle':start_angle+90}]
+     p=tmp_path/'recipe.json';p.write_text(json.dumps(r));b=build_brep(BuildInput('usd-brep',p,tmp_path,render=False))
+>    assert b.ok,b.log
+E    AssertionError: BRep build failed: no graph engines available!
+E      
+E    assert False
+E     +  where False = BuildResult(backend='usd-brep', source=PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_quarter_bend_keeps_rectan3/re...ble!', severity='error')], measurements={}, backend_details={}, log='BRep build failed: no graph engines available!\n').ok
+
+tests/test_planar_sweep.py:40: AssertionError
+____________ test_clockwise_authored_path_preserves_geometry[False] ____________
+
+tmp_path = PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_clockwise_authored_path_p0')
+reverse_lines = False
+
+    @pytest.mark.skipif(not worker_available(),reason='Worker not configured')
+    @pytest.mark.parametrize("reverse_lines",[False,True])
+    def test_clockwise_authored_path_preserves_geometry(tmp_path,reverse_lines):
+     r=recipe();path=r['operations'][0]['path']
+     r['operations'][0]['path']=[{**path[2],'start':path[2]['end'],'end':path[2]['start']},{**path[1],'start_angle':180,'end_angle':0},{**path[0],'start':path[0]['end'],'end':path[0]['start']}]
+     if reverse_lines:
+      for edge in r["operations"][0]["path"]:
+       if edge["kind"]=="line":edge["start"],edge["end"]=edge["end"],edge["start"]
+     edited,resolved=validate_recipe(r)
+     assert edited['operations'][0]['path'][1]['start_angle']==180
+     assert resolved[0]['path']==path
+>    p=tmp_path/'recipe.json';p.write_text(json.dumps(r));b=build_brep(BuildInput('usd-brep',p,tmp_path,render=False));assert b.ok,b.log
+                                                                                                                       ^^^^^^^^^^^^^^^^^
+E    AssertionError: BRep build failed: no graph engines available!
+E      
+E    assert False
+E     +  where False = BuildResult(backend='usd-brep', source=PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_clockwise_authored_path_p0/re...ble!', severity='error')], measurements={}, backend_details={}, log='BRep build failed: no graph engines available!\n').ok
+
+tests/test_planar_sweep.py:55: AssertionError
+____________ test_clockwise_authored_path_preserves_geometry[True] _____________
+
+tmp_path = PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_clockwise_authored_path_p1')
+reverse_lines = True
+
+    @pytest.mark.skipif(not worker_available(),reason='Worker not configured')
+    @pytest.mark.parametrize("reverse_lines",[False,True])
+    def test_clockwise_authored_path_preserves_geometry(tmp_path,reverse_lines):
+     r=recipe();path=r['operations'][0]['path']
+     r['operations'][0]['path']=[{**path[2],'start':path[2]['end'],'end':path[2]['start']},{**path[1],'start_angle':180,'end_angle':0},{**path[0],'start':path[0]['end'],'end':path[0]['start']}]
+     if reverse_lines:
+      for edge in r["operations"][0]["path"]:
+       if edge["kind"]=="line":edge["start"],edge["end"]=edge["end"],edge["start"]
+     edited,resolved=validate_recipe(r)
+     assert edited['operations'][0]['path'][1]['start_angle']==180
+     assert resolved[0]['path']==path
+>    p=tmp_path/'recipe.json';p.write_text(json.dumps(r));b=build_brep(BuildInput('usd-brep',p,tmp_path,render=False));assert b.ok,b.log
+                                                                                                                       ^^^^^^^^^^^^^^^^^
+E    AssertionError: BRep build failed: no graph engines available!
+E      
+E    assert False
+E     +  where False = BuildResult(backend='usd-brep', source=PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_clockwise_authored_path_p1/re...ble!', severity='error')], measurements={}, backend_details={}, log='BRep build failed: no graph engines available!\n').ok
+
+tests/test_planar_sweep.py:55: AssertionError
+______________ test_real_recipe_job_reload_and_download_contract _______________
+
+tmp_path = PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_real_recipe_job_reload_an0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0xeab64b953950>
+
+    @pytest.mark.skipif(not worker_available(),reason='Isolated worker not configured')
+    def test_real_recipe_job_reload_and_download_contract(tmp_path,monkeypatch):
+        from dataclasses import replace
+        from fastapi.testclient import TestClient
+        from doodle_to_cad import app
+        monkeypatch.setattr(app,'settings',replace(app.settings,results_dir=tmp_path))
+        recipe=json.loads(Path('benchmarks/brep-v2/bookend.json').read_text())
+        with TestClient(app.app) as client:
+            response=client.post('/api/brep/jobs',json=recipe)
+            assert response.status_code==200,response.text
+            job_id=response.json()['job_id']
+            for _ in range(600):
+                data=client.get('/api/generate/'+job_id).json()
+                if data['status']!='running':break
+                time.sleep(.1)
+>           assert data['status']=='done',data
+E           AssertionError: {'job_id': 'bbf00fa2e6ee', 'status': 'error', 'stage': 'failed', 'result': None, ...}
+E           assert 'error' == 'done'
+E             
+E             - done
+E             + error
+
+tests/test_recipe_jobs.py:85: AssertionError
+___________ test_revolve_fixtures_build_to_analytic_volume[annulus] ____________
+
+tmp_path = PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_revolve_fixtures_build_to0')
+name = 'annulus'
+
+    @pytest.mark.parametrize("name", sorted(EXPECTED))
+    @KERNEL
+    def test_revolve_fixtures_build_to_analytic_volume(tmp_path, name):
+        profile, volume, extents = EXPECTED[name]
+        result, run = _build(tmp_path, _revolve(profile))
+>       assert result.ok, result.log + json.dumps([vars(d) for d in result.diagnostics])
+E       AssertionError: BRep build failed: no graph engines available!
+E         [{"code": "build_failed", "message": "no graph engines available!", "severity": "error"}]
+E       assert False
+E        +  where False = BuildResult(backend='usd-brep', source=PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_revolve_fixtures_build_to0/mo...ble!', severity='error')], measurements={}, backend_details={}, log='BRep build failed: no graph engines available!\n').ok
+
+tests/test_revolve.py:170: AssertionError
+___________ test_revolve_fixtures_build_to_analytic_volume[cylinder] ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_revolve_fixtures_build_to1')
+name = 'cylinder'
+
+    @pytest.mark.parametrize("name", sorted(EXPECTED))
+    @KERNEL
+    def test_revolve_fixtures_build_to_analytic_volume(tmp_path, name):
+        profile, volume, extents = EXPECTED[name]
+        result, run = _build(tmp_path, _revolve(profile))
+>       assert result.ok, result.log + json.dumps([vars(d) for d in result.diagnostics])
+E       AssertionError: BRep build failed: no graph engines available!
+E         [{"code": "build_failed", "message": "no graph engines available!", "severity": "error"}]
+E       assert False
+E        +  where False = BuildResult(backend='usd-brep', source=PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_revolve_fixtures_build_to1/mo...ble!', severity='error')], measurements={}, backend_details={}, log='BRep build failed: no graph engines available!\n').ok
+
+tests/test_revolve.py:170: AssertionError
+_________ test_revolve_fixtures_build_to_analytic_volume[hollow_vase] __________
+
+tmp_path = PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_revolve_fixtures_build_to2')
+name = 'hollow_vase'
+
+    @pytest.mark.parametrize("name", sorted(EXPECTED))
+    @KERNEL
+    def test_revolve_fixtures_build_to_analytic_volume(tmp_path, name):
+        profile, volume, extents = EXPECTED[name]
+        result, run = _build(tmp_path, _revolve(profile))
+>       assert result.ok, result.log + json.dumps([vars(d) for d in result.diagnostics])
+E       AssertionError: BRep build failed: no graph engines available!
+E         [{"code": "build_failed", "message": "no graph engines available!", "severity": "error"}]
+E       assert False
+E        +  where False = BuildResult(backend='usd-brep', source=PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_revolve_fixtures_build_to2/mo...ble!', severity='error')], measurements={}, backend_details={}, log='BRep build failed: no graph engines available!\n').ok
+
+tests/test_revolve.py:170: AssertionError
+__________ test_revolve_fixtures_build_to_analytic_volume[solid_vase] __________
+
+tmp_path = PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_revolve_fixtures_build_to3')
+name = 'solid_vase'
+
+    @pytest.mark.parametrize("name", sorted(EXPECTED))
+    @KERNEL
+    def test_revolve_fixtures_build_to_analytic_volume(tmp_path, name):
+        profile, volume, extents = EXPECTED[name]
+        result, run = _build(tmp_path, _revolve(profile))
+>       assert result.ok, result.log + json.dumps([vars(d) for d in result.diagnostics])
+E       AssertionError: BRep build failed: no graph engines available!
+E         [{"code": "build_failed", "message": "no graph engines available!", "severity": "error"}]
+E       assert False
+E        +  where False = BuildResult(backend='usd-brep', source=PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_revolve_fixtures_build_to3/mo...ble!', severity='error')], measurements={}, backend_details={}, log='BRep build failed: no graph engines available!\n').ok
+
+tests/test_revolve.py:170: AssertionError
+_________ test_revolve_fixtures_build_to_analytic_volume[stepped_knob] _________
+
+tmp_path = PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_revolve_fixtures_build_to4')
+name = 'stepped_knob'
+
+    @pytest.mark.parametrize("name", sorted(EXPECTED))
+    @KERNEL
+    def test_revolve_fixtures_build_to_analytic_volume(tmp_path, name):
+        profile, volume, extents = EXPECTED[name]
+        result, run = _build(tmp_path, _revolve(profile))
+>       assert result.ok, result.log + json.dumps([vars(d) for d in result.diagnostics])
+E       AssertionError: BRep build failed: no graph engines available!
+E         [{"code": "build_failed", "message": "no graph engines available!", "severity": "error"}]
+E       assert False
+E        +  where False = BuildResult(backend='usd-brep', source=PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_revolve_fixtures_build_to4/mo...ble!', severity='error')], measurements={}, backend_details={}, log='BRep build failed: no graph engines available!\n').ok
+
+tests/test_revolve.py:170: AssertionError
+____________ test_revolve_hollow_vase_has_cavity_volume_below_solid ____________
+
+tmp_path = PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_revolve_hollow_vase_has_c0')
+
+    @KERNEL
+    def test_revolve_hollow_vase_has_cavity_volume_below_solid(tmp_path):
+        _, hollow_volume, _ = EXPECTED["hollow_vase"]
+        outer = [[r, z] for r, z in [(0, 0), (35.8, 0), (46.9, 14.3), (51.4, 23), (47.5, 33.3),
+                                     (28.6, 58.5), (25.3, 80.7), (30.1, 97.6), (41.4, 120), (0, 120)]]
+        # Same silhouette without the cavity must be far heavier than the vessel.
+        assert _pappus(HOLLOW_VASE) < 0.5 * _pappus(outer)
+        result, run = _build(tmp_path, _revolve(HOLLOW_VASE))
+>       assert result.ok, result.log + json.dumps([vars(d) for d in result.diagnostics])
+E       AssertionError: BRep build failed: no graph engines available!
+E         [{"code": "build_failed", "message": "no graph engines available!", "severity": "error"}]
+E       assert False
+E        +  where False = BuildResult(backend='usd-brep', source=PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_revolve_hollow_vase_has_c0/mo...ble!', severity='error')], measurements={}, backend_details={}, log='BRep build failed: no graph engines available!\n').ok
+
+tests/test_revolve.py:191: AssertionError
+______________ test_revolve_parameter_edit_rebuilds_scaled_solid _______________
+
+tmp_path = PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_revolve_parameter_edit_re0')
+
+    @KERNEL
+    def test_revolve_parameter_edit_rebuilds_scaled_solid(tmp_path):
+        profile = [["radius", 0], ["radius", "height"], [0, "height"]]
+        params = {"radius": {"value": 10, "min": 5, "max": 40}, "height": {"value": 20, "min": 5, "max": 60}}
+        small, small_run = _build(tmp_path / "a", _revolve(profile, parameters=params))
+>       assert small.ok, small.log + json.dumps([vars(d) for d in small.diagnostics])
+E       AssertionError: BRep build failed: no graph engines available!
+E         [{"code": "build_failed", "message": "no graph engines available!", "severity": "error"}]
+E       assert False
+E        +  where False = BuildResult(backend='usd-brep', source=PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_revolve_parameter_edit_re0/a/...ble!', severity='error')], measurements={}, backend_details={}, log='BRep build failed: no graph engines available!\n').ok
+
+tests/test_revolve.py:200: AssertionError
+_________ test_revolve_origin_translates_in_xy_but_bottom_stays_on_bed _________
+
+tmp_path = PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_revolve_origin_translates0')
+
+    @KERNEL
+    def test_revolve_origin_translates_in_xy_but_bottom_stays_on_bed(tmp_path):
+        result, run = _build(tmp_path, _revolve(CYLINDER, origin=(30, 40, 0)))
+>       assert result.ok, result.log + json.dumps([vars(d) for d in result.diagnostics])
+E       AssertionError: BRep build failed: no graph engines available!
+E         [{"code": "build_failed", "message": "no graph engines available!", "severity": "error"}]
+E       assert False
+E        +  where False = BuildResult(backend='usd-brep', source=PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_revolve_origin_translates0/mo...ble!', severity='error')], measurements={}, backend_details={}, log='BRep build failed: no graph engines available!\n').ok
+
+tests/test_revolve.py:213: AssertionError
+___________ test_revolve_placement_failure_is_reported_not_published ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_revolve_placement_failure0')
+
+    @KERNEL
+    def test_revolve_placement_failure_is_reported_not_published(tmp_path):
+        # Bottom must sit on Z=0: a raised profile is a placement failure with no published STL.
+        result, run = _build(tmp_path, _revolve([[0, 5], [10, 5], [10, 25], [0, 25]]))
+        assert not result.ok
+>       assert any(getattr(d, "code", None) == "placement_failed" for d in result.diagnostics)
+E       assert False
+E        +  where False = any(<generator object test_revolve_placement_failure_is_reported_not_published.<locals>.<genexpr> at 0xeab64b92b100>)
+
+tests/test_revolve.py:226: AssertionError
+_____________ test_native_rounded_tray_and_impossible_thickness[2] _____________
+
+tmp_path = PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_native_rounded_tray_and_i0')
+thickness = 2
+
+    @pytest.mark.skipif(not worker_available(),reason='Worker not configured')
+    @pytest.mark.parametrize('thickness',[2,3,25])
+    def test_native_rounded_tray_and_impossible_thickness(tmp_path,thickness):
+     r=recipe();r['parameters']['thickness']['value']=thickness
+     p=tmp_path/'recipe.json';p.write_text(json.dumps(r));b=build_brep(BuildInput('usd-brep',p,tmp_path,render=False))
+     if thickness==25:
+      assert not b.ok and 'required interior or floor' in b.log
+      assert not list(tmp_path.glob('brep-*/model.stl'))
+      return
+>    assert b.ok,b.log
+E    AssertionError: BRep build failed: no graph engines available!
+E      
+E    assert False
+E     +  where False = BuildResult(backend='usd-brep', source=PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_native_rounded_tray_and_i0/re...ble!', severity='error')], measurements={}, backend_details={}, log='BRep build failed: no graph engines available!\n').ok
+
+tests/test_shell.py:28: AssertionError
+_____________ test_native_rounded_tray_and_impossible_thickness[3] _____________
+
+tmp_path = PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_native_rounded_tray_and_i1')
+thickness = 3
+
+    @pytest.mark.skipif(not worker_available(),reason='Worker not configured')
+    @pytest.mark.parametrize('thickness',[2,3,25])
+    def test_native_rounded_tray_and_impossible_thickness(tmp_path,thickness):
+     r=recipe();r['parameters']['thickness']['value']=thickness
+     p=tmp_path/'recipe.json';p.write_text(json.dumps(r));b=build_brep(BuildInput('usd-brep',p,tmp_path,render=False))
+     if thickness==25:
+      assert not b.ok and 'required interior or floor' in b.log
+      assert not list(tmp_path.glob('brep-*/model.stl'))
+      return
+>    assert b.ok,b.log
+E    AssertionError: BRep build failed: no graph engines available!
+E      
+E    assert False
+E     +  where False = BuildResult(backend='usd-brep', source=PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_native_rounded_tray_and_i1/re...ble!', severity='error')], measurements={}, backend_details={}, log='BRep build failed: no graph engines available!\n').ok
+
+tests/test_shell.py:28: AssertionError
+_________ test_pocket_fixture_builds_and_catalog_uses_five_floor_faces _________
+
+tmp_path = PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_pocket_fixture_builds_and0')
+
+    @KERNEL
+    def test_pocket_fixture_builds_and_catalog_uses_five_floor_faces(tmp_path):
+>       result = build(POCKET, tmp_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_targeted_edits.py:48: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+recipe = {'version': 1, 'units': 'mm', 'name': 'Block with three top pockets of different depths', 'parameters': {}, ...}
+tmp = PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_pocket_fixture_builds_and0')
+
+    def build(recipe, tmp):
+        tmp.mkdir(parents=True, exist_ok=True)
+        source = tmp / "recipe.json"
+        source.write_text(json.dumps(recipe))
+        result = build_brep(BuildInput("usd-brep", source, tmp, render=False))
+>       assert result.ok, result.log
+E       AssertionError: BRep build failed: no graph engines available!
+E         
+E       assert False
+E        +  where False = BuildResult(backend='usd-brep', source=PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_pocket_fixture_builds_and0/re...ble!', severity='error')], measurements={}, backend_details={}, log='BRep build failed: no graph engines available!\n').ok
+
+tests/test_targeted_edits.py:32: AssertionError
+___________ test_plan_pocket_depth_deepens_only_the_selected_pocket ____________
+
+tmp_path = PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_plan_pocket_depth_deepens0')
+
+    @KERNEL
+    def test_plan_pocket_depth_deepens_only_the_selected_pocket(tmp_path):
+>       original = build(POCKET, tmp_path / "before")
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_targeted_edits.py:79: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+recipe = {'version': 1, 'units': 'mm', 'name': 'Block with three top pockets of different depths', 'parameters': {}, ...}
+tmp = PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_plan_pocket_depth_deepens0/before')
+
+    def build(recipe, tmp):
+        tmp.mkdir(parents=True, exist_ok=True)
+        source = tmp / "recipe.json"
+        source.write_text(json.dumps(recipe))
+        result = build_brep(BuildInput("usd-brep", source, tmp, render=False))
+>       assert result.ok, result.log
+E       AssertionError: BRep build failed: no graph engines available!
+E         
+E       assert False
+E        +  where False = BuildResult(backend='usd-brep', source=PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_plan_pocket_depth_deepens0/be...ble!', severity='error')], measurements={}, backend_details={}, log='BRep build failed: no graph engines available!\n').ok
+
+tests/test_targeted_edits.py:32: AssertionError
+__________ test_pocket_checker_rejects_planted_preservation_violation __________
+
+tmp_path = PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_pocket_checker_rejects_pl0')
+
+    @KERNEL
+    def test_pocket_checker_rejects_planted_preservation_violation(tmp_path):
+>       original = build(POCKET, tmp_path / "before")
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_targeted_edits.py:99: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+recipe = {'version': 1, 'units': 'mm', 'name': 'Block with three top pockets of different depths', 'parameters': {}, ...}
+tmp = PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_pocket_checker_rejects_pl0/before')
+
+    def build(recipe, tmp):
+        tmp.mkdir(parents=True, exist_ok=True)
+        source = tmp / "recipe.json"
+        source.write_text(json.dumps(recipe))
+        result = build_brep(BuildInput("usd-brep", source, tmp, render=False))
+>       assert result.ok, result.log
+E       AssertionError: BRep build failed: no graph engines available!
+E         
+E       assert False
+E        +  where False = BuildResult(backend='usd-brep', source=PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_pocket_checker_rejects_pl0/be...ble!', severity='error')], measurements={}, backend_details={}, log='BRep build failed: no graph engines available!\n').ok
+
+tests/test_targeted_edits.py:32: AssertionError
+________________ test_pocket_checker_rejects_planted_no_change _________________
+
+tmp_path = PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_pocket_checker_rejects_pl1')
+
+    @KERNEL
+    def test_pocket_checker_rejects_planted_no_change(tmp_path):
+>       original = build(POCKET, tmp_path / "before")
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_targeted_edits.py:114: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+recipe = {'version': 1, 'units': 'mm', 'name': 'Block with three top pockets of different depths', 'parameters': {}, ...}
+tmp = PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_pocket_checker_rejects_pl1/before')
+
+    def build(recipe, tmp):
+        tmp.mkdir(parents=True, exist_ok=True)
+        source = tmp / "recipe.json"
+        source.write_text(json.dumps(recipe))
+        result = build_brep(BuildInput("usd-brep", source, tmp, render=False))
+>       assert result.ok, result.log
+E       AssertionError: BRep build failed: no graph engines available!
+E         
+E       assert False
+E        +  where False = BuildResult(backend='usd-brep', source=PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_pocket_checker_rejects_pl1/be...ble!', severity='error')], measurements={}, backend_details={}, log='BRep build failed: no graph engines available!\n').ok
+
+tests/test_targeted_edits.py:32: AssertionError
+______________ test_plan_edge_fillet_rounds_selected_corner_edges ______________
+
+tmp_path = PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_plan_edge_fillet_rounds_s0')
+
+    @KERNEL
+    def test_plan_edge_fillet_rounds_selected_corner_edges(tmp_path):
+        rule = {"kind": "outer_vertical_edges", "owner": BOOKEND["output"]}
+>       original = build(BOOKEND, tmp_path / "before")
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_targeted_edits.py:126: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+recipe = {'version': 2, 'units': 'mm', 'name': 'Bookend with four openings', 'parameters': {'width': {'value': 60, 'min': 50, '...80, 'min': 70, 'max': 120, 'group': 'Body'}, 'thickness': {'value': 5, 'min': 3, 'max': 8, 'group': 'Body'}, ...}, ...}
+tmp = PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_plan_edge_fillet_rounds_s0/before')
+
+    def build(recipe, tmp):
+        tmp.mkdir(parents=True, exist_ok=True)
+        source = tmp / "recipe.json"
+        source.write_text(json.dumps(recipe))
+        result = build_brep(BuildInput("usd-brep", source, tmp, render=False))
+>       assert result.ok, result.log
+E       AssertionError: BRep build failed: no graph engines available!
+E         
+E       assert False
+E        +  where False = BuildResult(backend='usd-brep', source=PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_plan_edge_fillet_rounds_s0/be...ble!', severity='error')], measurements={}, backend_details={}, log='BRep build failed: no graph engines available!\n').ok
+
+tests/test_targeted_edits.py:32: AssertionError
+_______________ test_fillet_checker_rejects_planted_wrong_radius _______________
+
+tmp_path = PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_fillet_checker_rejects_pl0')
+
+    @KERNEL
+    def test_fillet_checker_rejects_planted_wrong_radius(tmp_path):
+        rule = {"kind": "outer_vertical_edges", "owner": BOOKEND["output"]}
+>       original = build(BOOKEND, tmp_path / "before")
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_targeted_edits.py:140: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+recipe = {'version': 2, 'units': 'mm', 'name': 'Bookend with four openings', 'parameters': {'width': {'value': 60, 'min': 50, '...80, 'min': 70, 'max': 120, 'group': 'Body'}, 'thickness': {'value': 5, 'min': 3, 'max': 8, 'group': 'Body'}, ...}, ...}
+tmp = PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_fillet_checker_rejects_pl0/before')
+
+    def build(recipe, tmp):
+        tmp.mkdir(parents=True, exist_ok=True)
+        source = tmp / "recipe.json"
+        source.write_text(json.dumps(recipe))
+        result = build_brep(BuildInput("usd-brep", source, tmp, render=False))
+>       assert result.ok, result.log
+E       AssertionError: BRep build failed: no graph engines available!
+E         
+E       assert False
+E        +  where False = BuildResult(backend='usd-brep', source=PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_fillet_checker_rejects_pl0/be...ble!', severity='error')], measurements={}, backend_details={}, log='BRep build failed: no graph engines available!\n').ok
+
+tests/test_targeted_edits.py:32: AssertionError
+_________________ test_worker_fillets_outer_vertical_selector __________________
+
+tmp_path = PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_worker_fillets_outer_vert0')
+
+    @KERNEL
+    def test_worker_fillets_outer_vertical_selector(tmp_path):
+        recipe = {"version": 1, "units": "mm", "parameters": {}, "output": "round",
+                  "operations": [{"id": "block", "kind": "box", "origin": [0, 0, 0], "size": [40, 30, 10]},
+                                 {"id": "round", "kind": "fillet", "body": "block", "radius": 2, "selector": "outer_vertical"}]}
+>       result = build(recipe, tmp_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_targeted_edits.py:154: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+recipe = {'version': 1, 'units': 'mm', 'parameters': {}, 'output': 'round', ...}
+tmp = PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_worker_fillets_outer_vert0')
+
+    def build(recipe, tmp):
+        tmp.mkdir(parents=True, exist_ok=True)
+        source = tmp / "recipe.json"
+        source.write_text(json.dumps(recipe))
+        result = build_brep(BuildInput("usd-brep", source, tmp, render=False))
+>       assert result.ok, result.log
+E       AssertionError: BRep build failed: no graph engines available!
+E         
+E       assert False
+E        +  where False = BuildResult(backend='usd-brep', source=PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_worker_fillets_outer_vert0/re...ble!', severity='error')], measurements={}, backend_details={}, log='BRep build failed: no graph engines available!\n').ok
+
+tests/test_targeted_edits.py:32: AssertionError
+________ test_targeted_edit_flows_through_preview_keep_and_stale_guards ________
+
+tmp_path = PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_targeted_edit_flows_throu0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0xeab64ba7b310>
+
+    @KERNEL
+    def test_targeted_edit_flows_through_preview_keep_and_stale_guards(tmp_path, monkeypatch):
+        from fastapi.testclient import TestClient
+        from dataclasses import replace
+        from doodle_to_cad.config import settings
+        from doodle_to_cad import app as app_module
+        monkeypatch.setattr(app_module, "settings", replace(settings, results_dir=tmp_path))
+        tmp_path.mkdir(exist_ok=True)
+        with TestClient(app_module.app) as client:
+            initial = client.post("/api/brep/build", json=POCKET).json()
+>           job = initial["id"]
+                  ^^^^^^^^^^^^^
+E           KeyError: 'id'
+
+tests/test_targeted_edits.py:168: KeyError
+___________ test_resource_limits_are_actually_applied_to_the_worker ____________
+
+tmp_path = PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_resource_limits_are_actua0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0xeab64ba93e90>
+
+    @KERNEL
+    def test_resource_limits_are_actually_applied_to_the_worker(tmp_path, monkeypatch):
+        monkeypatch.setenv("DOODLE_BREP_MEMORY_LIMIT_MB", "8192")
+        monkeypatch.setenv("DOODLE_BREP_CPU_LIMIT_S", "150")
+        result = build_brep(BuildInput("usd-brep", _stage_recipe(tmp_path, BOOKEND), tmp_path / "run-limits", render=False))
+>       assert result.ok, result.log
+E       AssertionError: BRep build failed: no graph engines available!
+E         
+E       assert False
+E        +  where False = BuildResult(backend='usd-brep', source=PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_resource_limits_are_actua0/mo...ble!', severity='error')], measurements={}, backend_details={}, log='BRep build failed: no graph engines available!\n').ok
+
+tests/test_worker_release.py:67: AssertionError
+_______ test_worker_crash_produces_diagnostic_and_keeps_previous_result ________
+
+tmp_path = PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_worker_crash_produces_dia0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0xeab6c4610890>
+
+    @KERNEL
+    def test_worker_crash_produces_diagnostic_and_keeps_previous_result(tmp_path, monkeypatch):
+        stub = _write_stub(tmp_path / "crash_worker.py", """
+    import sys
+    print('simulated crash', file=sys.stderr)
+    sys.exit(3)
+    """)
+        # First build with the real worker publishes a result...
+        good = build_brep(BuildInput("usd-brep", _stage_recipe(tmp_path, BOOKEND, "book.json"), tmp_path / "job-x", render=False))
+>       assert good.ok, good.log
+E       AssertionError: BRep build failed: no graph engines available!
+E         
+E       assert False
+E        +  where False = BuildResult(backend='usd-brep', source=PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_worker_crash_produces_dia0/bo...ble!', severity='error')], measurements={}, backend_details={}, log='BRep build failed: no graph engines available!\n').ok
+
+tests/test_worker_release.py:124: AssertionError
+_______________ test_guard_rejected_build_publishes_no_artifacts _______________
+
+tmp_path = PosixPath('/tmp/pytest-of-sparkie/pytest-184/test_guard_rejected_build_publ0')
+
+    @KERNEL
+    def test_guard_rejected_build_publishes_no_artifacts(tmp_path):
+        out = tmp_path / "run-90"
+        result = build_brep(BuildInput("usd-brep", _stage_recipe(tmp_path, ROUNDTRIP_REJECT, "reject.json"), out, render=False))
+        assert not result.ok
+>       assert "usd_roundtrip_failed" in [d.code for d in result.diagnostics]
+E       AssertionError: assert 'usd_roundtrip_failed' in ['build_failed']
+
+tests/test_worker_release.py:173: AssertionError
+=============================== warnings summary ===============================
+../doodle-brep-102/.venv/lib/python3.11/site-packages/fastapi/testclient.py:1
+  /tmp/doodle-brep-102/.venv/lib/python3.11/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+../doodle-brep-102/.venv/lib/python3.11/site-packages/starlette/testclient.py:53
+  /tmp/doodle-brep-102/.venv/lib/python3.11/site-packages/starlette/testclient.py:53: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
+    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_brep.py::test_kernel_build_edit_and_failure_recovery - dood...
+FAILED tests/test_brep_kernel_containment.py::test_real_worker_still_builds_simple_boxes
+FAILED tests/test_construction_recipe.py::test_wheel_connections_survive_radius_edit_and_reject_gap
+FAILED tests/test_construction_recipe.py::test_existing_v1_result_and_migrated_bookend_edit
+FAILED tests/test_direct_brep.py::test_real_rotated_wheel - AssertionError: B...
+FAILED tests/test_direct_brep.py::test_direct_job_publishes_native_recipe_and_provenance
+FAILED tests/test_direct_brep.py::test_bounded_construction_correction_with_real_worker[placement]
+FAILED tests/test_direct_brep.py::test_bounded_construction_correction_with_real_worker[size]
+FAILED tests/test_direct_brep.py::test_bounded_construction_correction_with_real_worker[exhausted]
+FAILED tests/test_direct_brep.py::test_bounded_construction_correction_with_real_worker[cancel]
+FAILED tests/test_direct_brep.py::test_usd_comparison_requests_sufficient_volume_accuracy
+FAILED tests/test_feature_selection.py::test_native_catalog_tracks_all_cutouts_and_split[bookend-None-matched]
+FAILED tests/test_feature_selection.py::test_native_catalog_tracks_all_cutouts_and_split[split-bookend-40-matched]
+FAILED tests/test_feature_selection.py::test_native_catalog_tracks_all_cutouts_and_split[split-bookend-56-ambiguous]
+FAILED tests/test_loft_profiles.py::test_native_loft_and_end_edit[40] - Asser...
+FAILED tests/test_loft_profiles.py::test_native_loft_and_end_edit[48] - Asser...
+FAILED tests/test_planar_profile.py::test_native_extrusion_direction_and_inner_loop[1]
+FAILED tests/test_planar_profile.py::test_native_extrusion_direction_and_inner_loop[-1]
+FAILED tests/test_planar_profile.py::test_periodic_arc_angles_keep_the_same_profile
+FAILED tests/test_planar_sweep.py::test_native_rectangular_sweep_and_height_edit[8]
+FAILED tests/test_planar_sweep.py::test_native_rectangular_sweep_and_height_edit[10]
+FAILED tests/test_planar_sweep.py::test_quarter_bend_keeps_rectangular_frame[0]
+FAILED tests/test_planar_sweep.py::test_quarter_bend_keeps_rectangular_frame[45]
+FAILED tests/test_planar_sweep.py::test_quarter_bend_keeps_rectangular_frame[90]
+FAILED tests/test_planar_sweep.py::test_quarter_bend_keeps_rectangular_frame[315]
+FAILED tests/test_planar_sweep.py::test_clockwise_authored_path_preserves_geometry[False]
+FAILED tests/test_planar_sweep.py::test_clockwise_authored_path_preserves_geometry[True]
+FAILED tests/test_recipe_jobs.py::test_real_recipe_job_reload_and_download_contract
+FAILED tests/test_revolve.py::test_revolve_fixtures_build_to_analytic_volume[annulus]
+FAILED tests/test_revolve.py::test_revolve_fixtures_build_to_analytic_volume[cylinder]
+FAILED tests/test_revolve.py::test_revolve_fixtures_build_to_analytic_volume[hollow_vase]
+FAILED tests/test_revolve.py::test_revolve_fixtures_build_to_analytic_volume[solid_vase]
+FAILED tests/test_revolve.py::test_revolve_fixtures_build_to_analytic_volume[stepped_knob]
+FAILED tests/test_revolve.py::test_revolve_hollow_vase_has_cavity_volume_below_solid
+FAILED tests/test_revolve.py::test_revolve_parameter_edit_rebuilds_scaled_solid
+FAILED tests/test_revolve.py::test_revolve_origin_translates_in_xy_but_bottom_stays_on_bed
+FAILED tests/test_revolve.py::test_revolve_placement_failure_is_reported_not_published
+FAILED tests/test_shell.py::test_native_rounded_tray_and_impossible_thickness[2]
+FAILED tests/test_shell.py::test_native_rounded_tray_and_impossible_thickness[3]
+FAILED tests/test_targeted_edits.py::test_pocket_fixture_builds_and_catalog_uses_five_floor_faces
+FAILED tests/test_targeted_edits.py::test_plan_pocket_depth_deepens_only_the_selected_pocket
+FAILED tests/test_targeted_edits.py::test_pocket_checker_rejects_planted_preservation_violation
+FAILED tests/test_targeted_edits.py::test_pocket_checker_rejects_planted_no_change
+FAILED tests/test_targeted_edits.py::test_plan_edge_fillet_rounds_selected_corner_edges
+FAILED tests/test_targeted_edits.py::test_fillet_checker_rejects_planted_wrong_radius
+FAILED tests/test_targeted_edits.py::test_worker_fillets_outer_vertical_selector
+FAILED tests/test_targeted_edits.py::test_targeted_edit_flows_through_preview_keep_and_stale_guards
+FAILED tests/test_worker_release.py::test_resource_limits_are_actually_applied_to_the_worker
+FAILED tests/test_worker_release.py::test_worker_crash_produces_diagnostic_and_keeps_previous_result
+FAILED tests/test_worker_release.py::test_guard_rejected_build_publishes_no_artifacts
+50 failed, 355 passed, 2 warnings in 52.34s

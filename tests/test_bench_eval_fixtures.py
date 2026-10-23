@@ -4,9 +4,8 @@ Two claims, each proven from retained artifacts or freshly compiled fixtures:
 
 1. The evaluator's checks detect planted defects with known answers, and
    detect them ONLY with the check that was declared (fixtures/*.scad).
-2. Some checks are structurally blind: they pass a wrong part and a correct
-   part with identical scores (EV-4 acceptance insensitivity; opening
-   position insensitivity), and the hidden-requirement fixture (EV-1) shows
+2. Some geometry checks are structurally blind: they pass moved and original
+   openings with identical scores (opening position insensitivity), and the hidden-requirement fixture (EV-1) shows
    a policy-compliant model can never pass a reference-only dimension.
 
 The gate freezes today's verified behaviour. If a product fix changes any of
@@ -140,8 +139,7 @@ def test_ev1_hidden_reference_thickness(built):
 
 def test_d1_geometry_checks_blind_to_opening_position(built):
     """A 20 mm hole move leaves extents/genus/volume byte-identical: the
-    geometry checks alone cannot see opening position; only the projection
-    path can — and there the position fidelity does not react either."""
+    geometry checks alone cannot see opening position; the separate projection-position fixture below detects the move."""
     _, base = built["plate_5mm"]
     _, moved = built["plate_hole_moved"]
     assert base == moved, "geometry verdicts identical: position is invisible to them"
@@ -182,6 +180,35 @@ def test_ev7_fidelity_is_orientation_dependent_on_004():
     topo = ucb["fidelity"]["topology"]
     assert topo["front"]["expected"] == 3 and topo["front"]["actual"] == 0
     assert topo["top"]["expected"] == 0 and topo["top"]["actual"] == 3
+
+
+def test_planted_position_and_stated_thickness_detected(built, eb, tmp_path):
+    """Use canonical projections of trusted geometry, not noisy ink labels.
+
+    The existing move fixture is invisible to genus/extents/volume. A 20 mm
+    move must exceed 0.1 of the normalized view while those checks stay green.
+    Stating the 5 mm thickness makes the 3 mm fixture a real dimension defect,
+    in contrast to the historical drawing where that requirement was hidden.
+    """
+    import numpy as np
+    import trimesh
+    from scripts.bench_orientation import render_mask, normalize_mask, opening_displacement
+    masks = {}
+    for name in ('plate_5mm', 'plate_hole_moved'):
+        d = tmp_path / name; d.mkdir()
+        shutil.copyfile(FIX / f'{name}.scad', d/'f.scad')
+        ok, log = run([settings.openscad_bin, '-o', 'f.stl', 'f.scad'], cwd=d, timeout=240)
+        assert ok, log
+        mesh = trimesh.load_mesh(d/'f.stl')
+        masks[name] = normalize_mask(render_mask(mesh, np.eye(3), 'top'))
+    control = opening_displacement(masks['plate_5mm'], masks['plate_5mm'])
+    defect = opening_displacement(masks['plate_5mm'], masks['plate_hole_moved'])
+    assert control['max_nearest_center_shift'] == 0
+    assert defect['expected_count'] == defect['actual_count'] == 3
+    assert defect['max_nearest_center_shift'] > .1
+    assert built['plate_5mm'][1] == built['plate_hole_moved'][1]
+    assert built['plate_5mm'][1]['extents_pass'] is True
+    assert built['plate_3mm_policy'][1]['extents_pass'] is False
 
 
 # ---- 6. #102 supplied-dimension contract ----------------------------------
@@ -240,10 +267,7 @@ def test_supplied_dimension_na_and_failed_build():
 
 
 def test_run_trial_wires_plan_dimension_and_plan_declares_tolerance():
-    src = (Path(__file__).resolve().parents[1] / "scripts" / "evaluate_brep.py").read_text()
-    assert "supplied_dimension=" in src.split("def reference_checks")[1] or \
-           "supplied_dimension=" in src  # call site passes it
-    assert 'float(item["dimension"])' in src or "float(item.get(\"dimension\")" in src
+    # The async behavioral call-path test is in test_supplied_dimension.py.
     plan = json.loads((ROOT / "docs" / "brep" / "bench-final" / "TRIAL-PLAN.json").read_text())
     assert plan["tolerances"]["supplied_dimension_mm"] == 1.0
     assert plan["pass_criteria"]["supplied_dimension_pass"]

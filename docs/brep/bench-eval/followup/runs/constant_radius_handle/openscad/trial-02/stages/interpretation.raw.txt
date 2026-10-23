@@ -1,0 +1,178 @@
+```json
+{
+  "object": "Curved Handle",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "front",
+      "sheet_region": "view_5",
+      "what_it_constrains": "Defines the overall U-shape profile (arch and legs) and the bend radius (R20) in the XY plane."
+    },
+    {
+      "direction": "top",
+      "sheet_region": "view_3",
+      "what_it_constrains": "Defines the cross-section of the handle as a circle (diameter 8mm) and confirms the uniform thickness."
+    },
+    {
+      "direction": "left",
+      "sheet_region": "view_4",
+      "what_it_constrains": "Confirms the straight legs and the vertical extent (height) of the object."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "handle_body",
+      "description": "Single continuous curved rod forming a U-shape handle."
+    }
+  ],
+  "features": [
+    {
+      "id": "arch",
+      "type": "curved_segment",
+      "description": "Semi-circular bend connecting the two legs."
+    },
+    {
+      "id": "leg_left",
+      "type": "straight_segment",
+      "description": "Vertical straight section on the left."
+    },
+    {
+      "id": "leg_right",
+      "type": "straight_segment",
+      "description": "Vertical straight section on the right."
+    }
+  ],
+  "relations": [
+    {
+      "type": "tangent",
+      "elements": [
+        "arch",
+        "leg_left",
+        "leg_right"
+      ],
+      "description": "The straight legs are tangent to the semi-circular arch."
+    }
+  ],
+  "symmetry": {
+    "type": "bilateral",
+    "axis": "vertical_centerline"
+  },
+  "repetitions": [
+    {
+      "feature": "leg",
+      "count": 2,
+      "description": "Two identical straight legs."
+    }
+  ],
+  "dimensions": [
+    {
+      "name": "bend_centreline_radius",
+      "value": 20,
+      "unit": "mm",
+      "source": "text_annotation"
+    },
+    {
+      "name": "straight_leg_length",
+      "value": 30,
+      "unit": "mm",
+      "source": "text_annotation"
+    },
+    {
+      "name": "diameter",
+      "value": 8,
+      "unit": "mm",
+      "source": "text_annotation"
+    }
+  ],
+  "uncertainties": [
+    "The 'diameter 8 mm' annotation is located near the Top view (view_3) in the sheet layout, but geometrically represents the cross-section of the rod. It is interpreted as the rod diameter."
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "The object is a standard U-handle. The geometry is fully defined by the sweep path (U-shape) and the circular profile. The path consists of two straight segments of length 30mm and a semi-circular arc of radius 20mm (centerline). The cross-section is a circle of diameter 8mm.",
+  "construction_plan": {
+    "family": "sweep",
+    "operations": [
+      {
+        "id": "op_1",
+        "operation": "create_path",
+        "owner": "handle_body",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "parameters": {
+          "path_type": "polyline_arc",
+          "start_point": [
+            -20,
+            0
+          ],
+          "end_point": [
+            20,
+            0
+          ],
+          "segments": [
+            {
+              "type": "line",
+              "to": [
+                -20,
+                30
+              ]
+            },
+            {
+              "type": "arc",
+              "center": [
+                0,
+                30
+              ],
+              "radius": 20,
+              "start_angle": 180,
+              "end_angle": 0
+            },
+            {
+              "type": "line",
+              "to": [
+                20,
+                0
+              ]
+            }
+          ]
+        },
+        "source_views": [
+          "view_5"
+        ]
+      },
+      {
+        "id": "op_2",
+        "operation": "create_profile",
+        "owner": "handle_body",
+        "profile_plane": "YZ",
+        "direction_axis": "X",
+        "parameters": {
+          "shape": "circle",
+          "diameter": 8
+        },
+        "source_views": [
+          "view_3"
+        ]
+      },
+      {
+        "id": "op_3",
+        "operation": "sweep",
+        "owner": "handle_body",
+        "profile_plane": "path_normal",
+        "direction_axis": "path_tangent",
+        "parameters": {
+          "path_id": "op_1",
+          "profile_id": "op_2"
+        },
+        "source_views": [
+          "view_5",
+          "view_3"
+        ]
+      }
+    ],
+    "unresolved_constraints": []
+  }
+}
+```

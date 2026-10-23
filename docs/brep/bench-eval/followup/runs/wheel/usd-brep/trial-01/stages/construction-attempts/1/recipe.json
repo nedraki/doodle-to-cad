@@ -1,0 +1,447 @@
+{
+  "version": 2,
+  "units": "mm",
+  "name": "spoked_wheel",
+  "parameters": {
+    "outer_diameter": {
+      "value": 120,
+      "min": 50,
+      "max": 200,
+      "label": "Outer Diameter",
+      "description": "Overall diameter of the wheel rim."
+    },
+    "thickness": {
+      "value": 8,
+      "min": 2,
+      "max": 20,
+      "label": "Thickness",
+      "description": "Axial thickness of the wheel (along Y)."
+    },
+    "rim_width": {
+      "value": 10,
+      "min": 2,
+      "max": 30,
+      "label": "Rim Width",
+      "description": "Radial thickness of the outer rim."
+    },
+    "hub_radius": {
+      "value": 15,
+      "min": 5,
+      "max": 40,
+      "label": "Hub Radius",
+      "description": "Radius of the central hub."
+    },
+    "spoke_width": {
+      "value": 6,
+      "min": 2,
+      "max": 20,
+      "label": "Spoke Width",
+      "description": "Tangential width of each spoke."
+    }
+  },
+  "operations": [
+    {
+      "id": "rim",
+      "kind": "revolve",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1",
+        "e2"
+      ],
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "axis": "z",
+      "profile": [
+        [
+          "outer_diameter/2 - rim_width",
+          0
+        ],
+        [
+          "outer_diameter/2",
+          0
+        ],
+        [
+          "outer_diameter/2",
+          "thickness"
+        ],
+        [
+          "outer_diameter/2 - rim_width",
+          "thickness"
+        ]
+      ]
+    },
+    {
+      "id": "hub",
+      "kind": "cylinder",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1",
+        "e3"
+      ],
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "radius": "hub_radius",
+      "height": "thickness",
+      "axis": "z"
+    },
+    {
+      "id": "spoke_0",
+      "kind": "box",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1",
+        "e4"
+      ],
+      "origin": [
+        "hub_radius - 1",
+        "-spoke_width/2",
+        0
+      ],
+      "size": [
+        "outer_diameter/2 - rim_width - hub_radius + 2",
+        "spoke_width",
+        "thickness"
+      ]
+    },
+    {
+      "id": "spoke_1",
+      "kind": "rotate",
+      "frame": "world",
+      "depends_on": [
+        "spoke_0"
+      ],
+      "evidence": [
+        "e1",
+        "e4"
+      ],
+      "body": "spoke_0",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "axis": "z",
+      "angle": 45
+    },
+    {
+      "id": "spoke_2",
+      "kind": "rotate",
+      "frame": "world",
+      "depends_on": [
+        "spoke_0"
+      ],
+      "evidence": [
+        "e1",
+        "e4"
+      ],
+      "body": "spoke_0",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "axis": "z",
+      "angle": 90
+    },
+    {
+      "id": "spoke_3",
+      "kind": "rotate",
+      "frame": "world",
+      "depends_on": [
+        "spoke_0"
+      ],
+      "evidence": [
+        "e1",
+        "e4"
+      ],
+      "body": "spoke_0",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "axis": "z",
+      "angle": 135
+    },
+    {
+      "id": "spoke_4",
+      "kind": "rotate",
+      "frame": "world",
+      "depends_on": [
+        "spoke_0"
+      ],
+      "evidence": [
+        "e1",
+        "e4"
+      ],
+      "body": "spoke_0",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "axis": "z",
+      "angle": 180
+    },
+    {
+      "id": "spoke_5",
+      "kind": "rotate",
+      "frame": "world",
+      "depends_on": [
+        "spoke_0"
+      ],
+      "evidence": [
+        "e1",
+        "e4"
+      ],
+      "body": "spoke_0",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "axis": "z",
+      "angle": 225
+    },
+    {
+      "id": "spoke_6",
+      "kind": "rotate",
+      "frame": "world",
+      "depends_on": [
+        "spoke_0"
+      ],
+      "evidence": [
+        "e1",
+        "e4"
+      ],
+      "body": "spoke_0",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "axis": "z",
+      "angle": 270
+    },
+    {
+      "id": "spoke_7",
+      "kind": "rotate",
+      "frame": "world",
+      "depends_on": [
+        "spoke_0"
+      ],
+      "evidence": [
+        "e1",
+        "e4"
+      ],
+      "body": "spoke_0",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "axis": "z",
+      "angle": 315
+    },
+    {
+      "id": "union_rim_hub",
+      "kind": "union",
+      "frame": "world",
+      "depends_on": [
+        "rim",
+        "hub"
+      ],
+      "evidence": [
+        "e1"
+      ],
+      "left": "rim",
+      "right": "hub"
+    },
+    {
+      "id": "union_s0",
+      "kind": "union",
+      "frame": "world",
+      "depends_on": [
+        "union_rim_hub",
+        "spoke_0"
+      ],
+      "evidence": [
+        "e1"
+      ],
+      "left": "union_rim_hub",
+      "right": "spoke_0"
+    },
+    {
+      "id": "union_s1",
+      "kind": "union",
+      "frame": "world",
+      "depends_on": [
+        "union_s0",
+        "spoke_1"
+      ],
+      "evidence": [
+        "e1"
+      ],
+      "left": "union_s0",
+      "right": "spoke_1"
+    },
+    {
+      "id": "union_s2",
+      "kind": "union",
+      "frame": "world",
+      "depends_on": [
+        "union_s1",
+        "spoke_2"
+      ],
+      "evidence": [
+        "e1"
+      ],
+      "left": "union_s1",
+      "right": "spoke_2"
+    },
+    {
+      "id": "union_s3",
+      "kind": "union",
+      "frame": "world",
+      "depends_on": [
+        "union_s2",
+        "spoke_3"
+      ],
+      "evidence": [
+        "e1"
+      ],
+      "left": "union_s2",
+      "right": "spoke_3"
+    },
+    {
+      "id": "union_s4",
+      "kind": "union",
+      "frame": "world",
+      "depends_on": [
+        "union_s3",
+        "spoke_4"
+      ],
+      "evidence": [
+        "e1"
+      ],
+      "left": "union_s3",
+      "right": "spoke_4"
+    },
+    {
+      "id": "union_s5",
+      "kind": "union",
+      "frame": "world",
+      "depends_on": [
+        "union_s4",
+        "spoke_5"
+      ],
+      "evidence": [
+        "e1"
+      ],
+      "left": "union_s4",
+      "right": "spoke_5"
+    },
+    {
+      "id": "union_s6",
+      "kind": "union",
+      "frame": "world",
+      "depends_on": [
+        "union_s5",
+        "spoke_6"
+      ],
+      "evidence": [
+        "e1"
+      ],
+      "left": "union_s5",
+      "right": "spoke_6"
+    },
+    {
+      "id": "wheel",
+      "kind": "union",
+      "frame": "world",
+      "depends_on": [
+        "union_s6",
+        "spoke_7"
+      ],
+      "evidence": [
+        "e1"
+      ],
+      "left": "union_s6",
+      "right": "spoke_7"
+    }
+  ],
+  "output": "wheel",
+  "frames": {
+    "world": {
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    }
+  },
+  "bodies": [
+    {
+      "id": "part",
+      "output": "wheel"
+    }
+  ],
+  "evidence": {
+    "observed": [
+      {
+        "id": "e1",
+        "text": "Front view shows outer circle, inner circle, central hub, and 8 radial spokes."
+      },
+      {
+        "id": "e2",
+        "text": "Label 'OD 120 mm' indicates outer diameter."
+      },
+      {
+        "id": "e3",
+        "text": "Right view shows rectangular profile of height 8 mm, indicating uniform thickness."
+      },
+      {
+        "id": "e4",
+        "text": "Label '8 spokes' confirms spoke count."
+      }
+    ],
+    "inferred": [
+      {
+        "id": "e5",
+        "text": "Spokes connect hub to rim based on visual continuity."
+      }
+    ],
+    "assumptions": [
+      {
+        "id": "e6",
+        "text": "Assumed rim width (radial thickness) is 10 mm."
+      },
+      {
+        "id": "e7",
+        "text": "Assumed hub radius is 15 mm."
+      },
+      {
+        "id": "e8",
+        "text": "Assumed spoke width (tangential thickness) is 6 mm."
+      },
+      {
+        "id": "e9",
+        "text": "Assumed spokes extend 1 mm into hub and rim for robust connection."
+      }
+    ],
+    "unresolved": []
+  },
+  "constraints": []
+}

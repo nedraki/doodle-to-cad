@@ -1,0 +1,14 @@
+{
+  "action": "repair_scad",
+  "problems": [
+    "Front window is circular (cylinder) but drawing requires rectangular cutout.",
+    "Window cutout is a blind pocket (depth limited to wall thickness) instead of through-hole.",
+    "Window dimensions (59.4x25.8) are too large relative to body (120x44), causing edge clipping."
+  ],
+  "preserve": [
+    "Overall bounding box dimensions (120x81.68x43.96).",
+    "Open-top shell structure (hollow interior).",
+    "Symmetry about XZ and YZ planes."
+  ],
+  "instructions": "Replace the cylinder used for the window with a rectangular cube. Ensure the cube's depth extends fully through the front wall (from Y < 0 to Y > wall_thickness) to create a true through-hole. Reduce window_width to approximately 40mm and window_height to approximately 15mm to fit within the front face boundaries without clipping edges, matching the aspect ratio in the drawing."
+}

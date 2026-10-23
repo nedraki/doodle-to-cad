@@ -1,0 +1,86 @@
+{
+  "view_frame": "The drawing presents a front view (XZ plane) of a grille assembly and a separate top view (XY plane) of a horizontal bar. The X-axis represents width, Y-axis represents depth, and Z-axis represents height. The front view shows the grille face, while the top view shows the depth profile of the upper bar.",
+  "features": [
+    {
+      "id": "grille_body",
+      "shape": "extrusion",
+      "section": "closed_xy_profile",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "ASSUMED_thickness_mm"
+      ],
+      "placement": "Centered at X=0, Z=0. The profile is defined in the XZ plane (front view) and extruded along the Y-axis (depth).",
+      "evidence": "The main outline of the grille with rounded corners and angled sides is visible in the front view."
+    },
+    {
+      "id": "grille_slots",
+      "shape": "extrusion",
+      "section": "closed_xy_profile",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "ASSUMED_slot_width_mm",
+        "ASSUMED_slot_height_mm",
+        "ASSUMED_slot_spacing_mm"
+      ],
+      "placement": "Seven vertical slots centered in the grille body. The profile is defined in the XZ plane and extruded through the grille body along the Y-axis.",
+      "evidence": "Seven vertical rectangular slots are visible in the center of the grille body."
+    },
+    {
+      "id": "headlight_left",
+      "shape": "extrusion",
+      "section": "closed_xy_profile",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "ASSUMED_headlight_diameter_mm"
+      ],
+      "placement": "Circular profile centered on the left side of the grille body, extruded through the body along the Y-axis.",
+      "evidence": "A circular shape is visible on the left side of the grille body."
+    },
+    {
+      "id": "headlight_right",
+      "shape": "extrusion",
+      "section": "closed_xy_profile",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "ASSUMED_headlight_diameter_mm"
+      ],
+      "placement": "Circular profile centered on the right side of the grille body, extruded through the body along the Y-axis.",
+      "evidence": "A circular shape is visible on the right side of the grille body."
+    },
+    {
+      "id": "top_bar",
+      "shape": "extrusion",
+      "section": "closed_xy_profile",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "ASSUMED_bar_height_mm",
+        "ASSUMED_bar_depth_mm"
+      ],
+      "placement": "A long horizontal bar positioned above the grille body. The profile is defined in the XY plane (top view) and extruded along the Z-axis.",
+      "evidence": "A long, thin rectangular shape is visible above the grille body in the top view."
+    }
+  ],
+  "connections": [
+    "The grille_slots, headlight_left, and headlight_right are subtractive features within the grille_body.",
+    "The top_bar is a separate component positioned above the grille_body."
+  ],
+  "edit_rules": [
+    "Changing ASSUMED_thickness_mm affects the depth of the grille_body and the through-depth of the slots and headlights.",
+    "Changing ASSUMED_slot_width_mm, ASSUMED_slot_height_mm, or ASSUMED_slot_spacing_mm affects the dimensions and positions of the grille_slots.",
+    "Changing ASSUMED_headlight_diameter_mm affects the size of the headlight_left and headlight_right features.",
+    "Changing ASSUMED_bar_height_mm or ASSUMED_bar_depth_mm affects the dimensions of the top_bar."
+  ],
+  "unresolved": [
+    "The exact dimensions of the grille body, slots, headlights, and top bar are not provided in the drawing.",
+    "The thickness of the grille body is not specified.",
+    "The height and depth of the top bar are not specified.",
+    "The spacing and dimensions of the slots are not specified.",
+    "The diameter of the headlights is not specified."
+  ],
+  "clarification": {
+    "feature_id": "grille_body",
+    "feature_label": "Grille body thickness",
+    "reason": "The drawing does not specify the thickness of the grille body.",
+    "kind": "uniform_thickness"
+  }
+}

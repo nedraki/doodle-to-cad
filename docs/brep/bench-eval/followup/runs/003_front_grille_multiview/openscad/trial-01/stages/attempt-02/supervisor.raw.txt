@@ -1,0 +1,15 @@
+{
+ "action": "repair_scad",
+ "problems": [
+  "Axis swap: Y is 75.7mm (should be ~7.5mm), Z is 7.5mm (should be ~78.8mm).",
+  "Front view renders as a thin strip; profile is extruded along Z instead of Y.",
+  "All 9 required openings (2 headlights, 7 slots) are missing or blind.",
+  "Top view shows the complex profile instead of a thin rectangle."
+ ],
+ "preserve": [
+  "Outer polygon vertex coordinates (normalized to width/height).",
+  "Relative positions of headlights and slots.",
+  "Slot dimensions and count."
+ ],
+ "instructions": "Fix the coordinate system: ensure the main body is extruded along the Y-axis (depth) with thickness ~7.5mm, while the profile lies in the XZ plane (width/height). Re-implement the subtraction operations for the 2 circular headlights and 7 vertical slots as through-cuts along the Y-axis. Verify the front view displays the full grille shape with holes, and the top view displays a thin rectangle."
+}

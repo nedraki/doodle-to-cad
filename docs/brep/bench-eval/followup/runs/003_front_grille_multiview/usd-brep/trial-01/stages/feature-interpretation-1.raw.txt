@@ -1,0 +1,220 @@
+```json
+{
+  "version": 1,
+  "object_hypothesis": "Front fascia assembly with grille and headlights",
+  "features": [
+    {
+      "id": "f_body",
+      "type": "body",
+      "description": "Main outer shell with stepped profile (narrower upper section, wider lower section)",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_0"
+        }
+      ],
+      "reason": "The primary outer boundary in the front view defines the overall shape of the object."
+    },
+    {
+      "id": "f_grille",
+      "type": "opening",
+      "description": "Central array of seven vertical slots",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_18"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_16"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_14"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_12"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_6"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_10"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_8"
+        }
+      ],
+      "reason": "Seven distinct vertical internal contours are visible in the center of the front view."
+    },
+    {
+      "id": "f_light_l",
+      "type": "opening",
+      "description": "Left circular feature",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_4"
+        }
+      ],
+      "reason": "A circular internal contour located on the left side of the front view."
+    },
+    {
+      "id": "f_light_r",
+      "type": "opening",
+      "description": "Right circular feature",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_2"
+        }
+      ],
+      "reason": "A circular internal contour located on the right side of the front view."
+    },
+    {
+      "id": "f_top_bar",
+      "type": "body",
+      "description": "Thin horizontal strip located above the main body",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_20"
+        }
+      ],
+      "reason": "A distinct, thin horizontal contour is visible in the top view, separated from the main body."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "r_grille_repeat",
+      "type": "repeated",
+      "features": [
+        "f_grille"
+      ],
+      "description": "The vertical slots are arranged in a repeated linear pattern",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_18"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_16"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_14"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_12"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_6"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_10"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_8"
+        }
+      ],
+      "reason": "The seven vertical slots share similar dimensions and spacing."
+    },
+    {
+      "id": "r_light_symmetry",
+      "type": "symmetry",
+      "features": [
+        "f_light_l",
+        "f_light_r"
+      ],
+      "description": "The left and right circular features are symmetrically placed",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_4"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_2"
+        }
+      ],
+      "reason": "The two circular features are equidistant from the center and share similar dimensions."
+    },
+    {
+      "id": "r_body_grille",
+      "type": "connected",
+      "features": [
+        "f_body",
+        "f_grille"
+      ],
+      "description": "The grille slots are contained within the main body",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_0"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_18"
+        }
+      ],
+      "reason": "The grille contours are spatially located inside the outer body contour."
+    },
+    {
+      "id": "r_body_lights",
+      "type": "connected",
+      "features": [
+        "f_body",
+        "f_light_l",
+        "f_light_r"
+      ],
+      "description": "The circular features are contained within the main body",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_0"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_4"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_2"
+        }
+      ],
+      "reason": "The circular contours are spatially located inside the outer body contour."
+    }
+  ],
+  "assumptions": [
+    "The top view represents the object viewed from directly above.",
+    "The front view represents the object viewed from directly in front.",
+    "The object is a single assembly or part."
+  ],
+  "unresolved": [
+    "The physical connection between the top bar and the main body is not visible.",
+    "The depth of the grille slots and circular features is unknown.",
+    "The internal structure of the object is not visible."
+  ],
+  "conflicts": [
+    "The top view shows a thin strip separated from the main body, while the front view shows a single continuous object. This may indicate the top view is a separate component or a specific feature not fully captured in the front view."
+  ]
+}
+```

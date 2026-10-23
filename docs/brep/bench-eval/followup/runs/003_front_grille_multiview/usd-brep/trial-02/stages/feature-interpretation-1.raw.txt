@@ -1,0 +1,220 @@
+```json
+{
+  "version": 1,
+  "object_hypothesis": "A front-facing grille assembly featuring a central array of vertical slats and two circular openings, positioned below a separate horizontal linear element.",
+  "features": [
+    {
+      "id": "main_body",
+      "type": "body",
+      "description": "The primary outer boundary of the lower assembly, featuring a stepped profile with a narrower upper section and wider lower section.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_0"
+        }
+      ],
+      "reason": "Identified as the largest outer contour in the front view (view_2), enclosing all internal features."
+    },
+    {
+      "id": "top_bar",
+      "type": "body",
+      "description": "A separate, thin horizontal linear element located above the main body.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_20"
+        }
+      ],
+      "reason": "Isolated as a distinct contour in the top view (view_1), spatially separated from the main body in the drawing."
+    },
+    {
+      "id": "slat_array",
+      "type": "profile",
+      "description": "A group of seven vertical, elongated rectangular shapes arranged in a row within the upper central portion of the main body.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_18"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_16"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_14"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_12"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_6"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_10"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_8"
+        }
+      ],
+      "reason": "Seven distinct internal contours (18, 16, 14, 12, 6, 10, 8) are identified in the front view, sharing similar vertical dimensions and alignment."
+    },
+    {
+      "id": "opening_left",
+      "type": "opening",
+      "description": "A circular or octagonal opening located in the lower left section of the main body.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_4"
+        }
+      ],
+      "reason": "Identified as an internal contour (contour_4) with high circularity (0.888) positioned on the left side of the main body."
+    },
+    {
+      "id": "opening_right",
+      "type": "opening",
+      "description": "A circular or octagonal opening located in the lower right section of the main body.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_2"
+        }
+      ],
+      "reason": "Identified as an internal contour (contour_2) with high circularity (0.889) positioned on the right side of the main body."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "slat_repetition",
+      "type": "repeated",
+      "features": [
+        "slat_array"
+      ],
+      "description": "The vertical slats are arranged in a regular, repeated pattern.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_18"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_16"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_14"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_12"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_6"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_10"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_8"
+        }
+      ],
+      "reason": "The seven internal contours share similar bounding box dimensions and vertical alignment, indicating a repeated structural element."
+    },
+    {
+      "id": "opening_symmetry",
+      "type": "symmetry",
+      "features": [
+        "opening_left",
+        "opening_right"
+      ],
+      "description": "The two circular openings are positioned symmetrically on the left and right sides of the main body.",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_4"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_2"
+        }
+      ],
+      "reason": "The openings have nearly identical circularity and area ratios, and are positioned at mirrored horizontal locations relative to the center of the main body."
+    },
+    {
+      "id": "slat_containment",
+      "type": "position",
+      "features": [
+        "slat_array",
+        "main_body"
+      ],
+      "description": "The array of slats is contained within the upper central region of the main body.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_0"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_18"
+        }
+      ],
+      "reason": "The bounding boxes of the slat contours fall entirely within the bounding box of the main body contour."
+    },
+    {
+      "id": "opening_containment",
+      "type": "position",
+      "features": [
+        "opening_left",
+        "opening_right",
+        "main_body"
+      ],
+      "description": "The circular openings are contained within the lower flared sections of the main body.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_0"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_4"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_2"
+        }
+      ],
+      "reason": "The bounding boxes of the opening contours fall within the lower, wider portions of the main body contour."
+    }
+  ],
+  "assumptions": [
+    "The top view (view_1) represents the object viewed from above, showing the top bar as a separate element.",
+    "The front view (view_2) represents the object viewed from the front, showing the grille face.",
+    "The internal contours in the front view represent openings or recesses rather than raised features."
+  ],
+  "unresolved": [
+    "The physical connection or relationship between the top bar (view_1) and the main body (view_2) is not explicitly shown.",
+    "The depth or thickness of the slats and openings is not defined by the 2D contours.",
+    "Whether the openings are through-holes or blind pockets is unknown."
+  ],
+  "conflicts": [
+    "The top view (view_1) shows only the top bar and does not show the main body or slats, which might imply the main body is significantly lower or obscured, or that the view assignment is incomplete."
+  ]
+}
+```

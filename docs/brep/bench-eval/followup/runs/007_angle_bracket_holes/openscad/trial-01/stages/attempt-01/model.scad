@@ -1,0 +1,38 @@
+/* doodle-meta {"version":1,"parameters":{"width":{"label":"Overall width","description":"Changes the body width","unit":"mm","feature":"body_width"},"depth":{"label":"Overall depth","description":"Changes the body depth","unit":"mm","feature":"body_depth"},"height":{"label":"Overall height","description":"Changes the body height","unit":"mm","feature":"body_height"},"base_thickness":{"label":"Base thickness","description":"Thickness of the horizontal base flange","unit":"mm","feature":"base_thickness"},"wall_thickness":{"label":"Wall thickness","description":"Thickness of the vertical wall","unit":"mm","feature":"wall_thickness"},"hole_diameter":{"label":"Hole diameter","description":"Diameter of the three holes in the wall","unit":"mm","feature":"holes"},"hole_height":{"label":"Hole height","description":"Height of the hole centers from the build plate","unit":"mm","feature":"holes"}},"features":{"body_width":{"kind":"dimension","axis":"x","label":"Overall width"},"body_depth":{"kind":"dimension","axis":"y","label":"Overall depth"},"body_height":{"kind":"dimension","axis":"z","label":"Overall height"},"base_thickness":{"kind":"dimension","axis":"z","label":"Base thickness"},"wall_thickness":{"kind":"dimension","axis":"x","label":"Wall thickness"},"holes":{"kind":"region","label":"Wall holes","min":[{"parameter":"hole_x1","scale":1,"offset":-5},{"parameter":"wall_thickness","scale":1,"offset":-1},{"parameter":"hole_height","scale":1,"offset":-5}],"max":[{"parameter":"hole_x3","scale":1,"offset":5},{"parameter":"wall_thickness","scale":1,"offset":1},{"parameter":"hole_height","scale":1,"offset":5}]}}} */
+
+// Top-level editable parameters (derived sizes from measured ink spans)
+width = 80.0;
+depth = 43.13;
+height = 51.01;
+base_thickness = 6.0;
+wall_thickness = 6.0;
+hole_diameter = 5.0;
+hole_height = 21.2;
+
+// Derived (not user-editable)
+hole_x1 = 21.3;
+hole_x2 = 39.7;
+hole_x3 = 58.3;
+eps = 0.01;
+
+module l_bracket_body() {
+    // Horizontal base plate
+    cube([width, depth, base_thickness]);
+    // Vertical wall at the back (Y = depth - wall_thickness .. depth)
+    translate([0, depth - wall_thickness, 0])
+        cube([width, wall_thickness, height]);
+}
+
+module hole_cutter(x) {
+    // Through-cut along Y (perpendicular to the wall face)
+    translate([x, depth - wall_thickness - eps, hole_height])
+        rotate([90, 0, 0])
+            cylinder(h = wall_thickness + 2 * eps, d = hole_diameter, center = true);
+}
+
+difference() {
+    l_bracket_body();
+    hole_cutter(hole_x1);
+    hole_cutter(hole_x2);
+    hole_cutter(hole_x3);
+}

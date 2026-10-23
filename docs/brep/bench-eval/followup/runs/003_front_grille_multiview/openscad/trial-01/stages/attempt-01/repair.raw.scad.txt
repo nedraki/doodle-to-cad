@@ -1,0 +1,109 @@
+```openscad
+/* doodle-meta {"version":1,"parameters":{"width":{"label":"Overall width","description":"Changes the body width","unit":"mm","feature":"body_width"},"height":{"label":"Overall height","description":"Changes the body height","unit":"mm","feature":"body_height"},"thickness":{"label":"Panel thickness","description":"Changes the panel depth","unit":"mm","feature":"body_thickness"},"slot_count":{"label":"Grille slot count","description":"Number of vertical grille slots","unit":"count","feature":"grille_slots"},"slot_width":{"label":"Grille slot width","description":"Width of each vertical grille slot","unit":"mm","feature":"grille_slots"},"slot_height":{"label":"Grille slot height","description":"Height of each vertical grille slot","unit":"mm","feature":"grille_slots"},"headlight_diameter":{"label":"Headlight diameter","description":"Diameter of the circular headlight cutouts","unit":"mm","feature":"headlights"}},"features":{"body_width":{"kind":"dimension","axis":"x","label":"Overall width"},"body_height":{"kind":"dimension","axis":"z","label":"Overall height"},"body_thickness":{"kind":"dimension","axis":"y","label":"Panel thickness"},"grille_slots":{"kind":"region","label":"Grille slots","min":[{"parameter":"width","scale":0.35},{"parameter":"thickness","scale":-0.1},{"parameter":"height","scale":0.13}],"max":[{"parameter":"width","scale":0.65},{"parameter":"thickness","scale":1.1},{"parameter":"height","scale":0.74}]},"headlights":{"kind":"region","label":"Headlights","min":[{"parameter":"width","scale":0.09},{"parameter":"thickness","scale":-0.1},{"parameter":"height","scale":0.37}],"max":[{"parameter":"width","scale":0.91},{"parameter":"thickness","scale":1.1},{"parameter":"height","scale":0.75}]}}} */
+
+// Parameters
+width = 126.0;
+height = 78.83;
+thickness = 7.52;
+slot_count = 7;
+slot_width = 5.1;
+slot_height = 48.0;
+headlight_diameter = 20.8;
+
+// Derived sizes
+eps = 0.01;
+slot_pitch = width * 0.0625; // Approximate pitch based on measured centers
+slot_start_x = width * 0.31; // Center of first slot
+headlight_x = width * 0.175; // Center of left headlight
+headlight_z = height * 0.563; // Center of headlights (from bottom)
+
+module grille_body() {
+    // Main panel body
+    // The outer profile is roughly rectangular with rounded corners in the front view.
+    // We approximate it with a cube for the main body, as the polygon is complex and 
+    // the intent is a flat panel. The "rounded corners" in the description might refer 
+    // to the overall shape or specific features, but a rectangular panel is the safest 
+    // interpretation of "flat panel" with "complex outer boundary" that is mostly rectangular.
+    // However, looking at the polygon, it has angled sides. 
+    // Let's create a polygon for the front face and extrude it.
+    
+    // Front face polygon points (X, Z) normalized to 0..1 then scaled
+    // Using the measured outer profile from view_2
+    // Note: The polygon is defined in view coordinates (u, v).
+    // u -> X, v -> Z (inverted because v is down, Z is up)
+    
+    polygon_points = [
+        [0.0097 * width, (1 - 0.5785) * height],
+        [0.0521 * width, (1 - 0.9202) * height],
+        [0.2027 * width, (1 - 0.9787) * height],
+        [0.9267 * width, (1 - 0.9417) * height],
+        [0.9865 * width, (1 - 0.7385) * height],
+        [0.9768 * width, (1 - 0.5509) * height],
+        [0.8359 * width, (1 - 0.3478) * height],
+        [0.8243 * width, (1 - 0.0954) * height],
+        [0.6524 * width, (1 - 0.0185) * height],
+        [0.1833 * width, (1 - 0.0954) * height],
+        [0.1622 * width, (1 - 0.3509) * height]
+    ];
+    
+    // Extrude the polygon along Y
+    linear_extrude(height = thickness, center = true) {
+        polygon(polygon_points);
+    }
+}
+
+module headlight_cutout(x_pos) {
+    // Circular cutout through the panel
+    // Axis is Y (front-to-back)
+    translate([x_pos, 0, headlight_z]) {
+        rotate([90, 0, 0]) {
+            cylinder(h = thickness + 2*eps, d = headlight_diameter, center = true);
+        }
+    }
+}
+
+module grille_slot(x_pos) {
+    // Vertical rectangular slot
+    // Axis is Y (front-to-back)
+    // Slot is centered at x_pos, and vertically centered at height/2 roughly?
+    // Measured center v is ~0.437. 
+    // Z_center = (1 - 0.437) * height = 0.563 * height
+    z_center = (1 - 0.437) * height;
+    
+    translate([x_pos, 0, z_center]) {
+        cube([slot_width, thickness + 2*eps, slot_height], center = true);
+    }
+}
+
+// Main design
+difference() {
+    // 1. Positive Body
+    grille_body();
+    
+    // 2. Subtract Headlights
+    headlight_cutout(headlight_x);
+    headlight_cutout(width - headlight_x);
+    
+    // 3. Subtract Grille Slots
+    for (i = [0 : slot_count - 1]) {
+        // Calculate position for each slot
+        // The slots are centered around the middle.
+        // Total width of slots array = (slot_count - 1) * pitch
+        // Start X = Center - TotalWidth/2
+        // Or simply use the measured start and pitch.
+        // Measured centers: 0.3098, 0.3736, 0.4353, 0.499, 0.5628, 0.6264, 0.6891
+        // These are roughly evenly spaced.
+        // Let's use the measured center of the first slot and the pitch.
+        // First slot center u = 0.3098 -> X = 0.3098 * width
+        // Pitch in u = (0.6891 - 0.3098) / 6 = 0.0632
+        // Pitch in mm = 0.0632 * width
+        
+        slot_pitch_mm = (0.6891 - 0.3098) / 6 * width;
+        slot_start_x_mm = 0.3098 * width;
+        
+        current_x = slot_start_x_mm + i * slot_pitch_mm;
+        
+        grille_slot(current_x);
+    }
+}
+```
