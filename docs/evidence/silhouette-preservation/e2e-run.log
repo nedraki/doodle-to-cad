@@ -1,0 +1,17 @@
+STAGE: analyzing
+STAGE: interpreting
+STAGE: generating
+STAGE: compiling (attempt 1)
+STAGE: compiling (attempt 1)
+STAGE: supervising (attempt 1)
+STAGE: compiling (attempt 2)
+STAGE: compiling (attempt 2)
+STAGE: supervising (attempt 2)
+STAGE: compiling (attempt 3)
+STAGE: finalizing
+SUCCESS: False
+SELECTED ATTEMPT: 1
+GATES: {"compiled": true, "topology": true, "dimensions": true, "shape_sanity": true, "features": false, "projections": false, "silhouette": true, "build_envelope": true}
+SILHOUETTE: {"front": 1.0, "top": 1.0}
+SCORE: 85.5
+FAILURES: ['required internal profiles are missing: front view demands 9, best rendered view has 5. Missing at these view-local centres — add cutters there: (u=0.832,v=0.628); (u=0.166,v=0.625); (u=0.564,v=0.421); (u=0.694,v=0.441); (u=0.629,v=0.426); (u=0.499,v=0.43).', 'CAD projections poorly match the drawing: front similarity 0.35 (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly.', "features exist but sit at the wrong positions in front view(s): match each opening's location (u,v within the outer profile) to the drawing; check the cad_mapping signs (front: u->+X v->-Z; top: u->+X v->-Y i.e. sheet-down is the FRONT of the part)"]

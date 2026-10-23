@@ -1,0 +1,15 @@
+STAGE: analyzing
+STAGE: interpreting
+STAGE: generating
+STAGE: compiling (attempt 1)
+STAGE: supervising (attempt 1)
+STAGE: compiling (attempt 2)
+STAGE: supervising (attempt 2)
+STAGE: compiling (attempt 3)
+STAGE: finalizing
+SUCCESS: True
+SELECTED ATTEMPT: 3
+GATES: {"compiled": true, "topology": true, "dimensions": true, "shape_sanity": true, "features": true, "projections": true, "silhouette": true, "build_envelope": true}
+SILHOUETTE: {"front": 1.0, "top": 1.0}
+SCORE: 99.0
+FAILURES: []

@@ -26,8 +26,104 @@ CIRCLE_MIN_CIRC = 0.78 # true circle measures ~0.906 on measured evidence
 CIRCLE_ASPECT = (0.82, 1.22)
 SLOT_ASPECT = (1.22, 3.4)
 SLOT_MIN_CIRC = 0.68
+# Slit/bar regime: drawn louvre slats measure paper aspect 8-10 and
+# circularity ~0.2 — far outside the stadium window, so a dedicated regime
+# with its own (still fit-checked) acceptance recognises them.
+SLOT_BAR_ASPECT_MAX = 12.0
+SLOT_BAR_MIN_CIRC = 0.15
+SLOT_BAR_FIT_MIN = 0.75
 RIGHT_ANGLE_TOL = 12.0 # corner of a "right" angle may drift +/- this many deg
 PARALLEL_TOL = 0.14    # opposite side length disagreement for rectangles
+# A primitive may only REPLACE a measured contour when it reproduces it:
+# fitted-primitive/polygon IoU below this keeps the honest polygon instead.
+PRIMITIVE_FIT_MIN_IOU = 0.85
+RASTER_GRID = 96       # cells per side for the primitive-fit rasterisation
+
+
+def _corrected(poly: list[list[float]], pixel_aspect: float) -> list[list[float]]:
+    """Undo the per-axis view normalization: u scales by the view's pixel
+    aspect so metrics measure the shape as drawn on paper, not squashed into
+    a unit square (regression: an 11-vertex shoulder silhouette in a 1.59:1
+    front view measured aspect 1.01/circularity 0.837 and became a 'circle').
+    """
+    if abs(pixel_aspect - 1.0) < 1e-6 or not poly:
+        return poly
+    return [[p[0] * pixel_aspect, p[1]] for p in poly]
+
+
+def _point_in_polygon(px: float, py: float, poly: list[list[float]]) -> bool:
+    inside = False
+    n = len(poly)
+    for i in range(n):
+        x1, y1 = poly[i]
+        x2, y2 = poly[(i + 1) % n]
+        if (y1 > py) != (y2 > py):
+            t = (py - y1) / (y2 - y1)
+            if px < x1 + t * (x2 - x1):
+                inside = not inside
+    return inside
+
+
+def _polygon_centroid_area(poly: list[list[float]]) -> tuple[tuple[float, float], float]:
+    n = len(poly)
+    twice_area = sum(poly[i][0] * poly[(i + 1) % n][1] - poly[(i + 1) % n][0] * poly[i][1]
+                     for i in range(n))
+    area = abs(twice_area) / 2
+    if area < 1e-12:
+        return (poly[0][0], poly[0][1]), 0.0
+    cx = sum((poly[i][0] + poly[(i + 1) % n][0]) *
+             (poly[i][0] * poly[(i + 1) % n][1] - poly[(i + 1) % n][0] * poly[i][1]) for i in range(n))
+    cy = sum((poly[i][1] + poly[(i + 1) % n][1]) *
+             (poly[i][0] * poly[(i + 1) % n][1] - poly[(i + 1) % n][0] * poly[i][1]) for i in range(n))
+    return (cx / (3 * twice_area), cy / (3 * twice_area)), area
+
+
+def _primitive_fit_iou(poly: list[list[float]], shape: str) -> float:
+    """Rasterised IoU between the polygon and the fitted primitive of `shape`.
+
+    The fitted primitive is derived from the polygon itself (equal-area circle
+    at its centroid, its bounding box, a stadium over its bounding box), so a
+    low IoU means the primitive CANNOT describe the measured contour and the
+    polygon must be preserved instead of being replaced.
+    """
+    if shape == "polygon" or len(poly) < 3:
+        return 0.0
+    xs = [p[0] for p in poly]; ys = [p[1] for p in poly]
+    x0, x1, y0, y1 = min(xs), max(xs), min(ys), max(ys)
+    if x1 - x0 <= 0 or y1 - y0 <= 0:
+        return 0.0
+    (cx, cy), area = _polygon_centroid_area(poly)
+    radius = math.sqrt(area / math.pi)
+    if (x1 - x0) >= (y1 - y0):
+        half_short, sa, sb = (y1 - y0) / 2, (x0 + (y1 - y0) / 2, (y0 + y1) / 2), (x1 - (y1 - y0) / 2, (y0 + y1) / 2)
+    else:
+        half_short, sa, sb = (x1 - x0) / 2, ((x0 + x1) / 2, y0 + (x1 - x0) / 2), ((x0 + x1) / 2, y1 - (x1 - x0) / 2)
+    seg_vx, seg_vy = sb[0] - sa[0], sb[1] - sa[1]
+    seg_len_sq = seg_vx * seg_vx + seg_vy * seg_vy
+    inter = union = 0
+    step_u, step_v = (x1 - x0) / RASTER_GRID, (y1 - y0) / RASTER_GRID
+    for iy in range(RASTER_GRID):
+        py = y0 + (iy + 0.5) * step_v
+        for ix in range(RASTER_GRID):
+            px = x0 + (ix + 0.5) * step_u
+            inside_poly = _point_in_polygon(px, py, poly)
+            if shape == "circle":
+                inside_prim = math.hypot(px - cx, py - cy) <= radius
+            elif shape == "rectangle":
+                inside_prim = True  # the polygon's own bounding box
+            elif shape == "slot":
+                if seg_len_sq <= 1e-12:
+                    t = 0.0
+                else:
+                    t = min(max(((px - sa[0]) * seg_vx + (py - sa[1]) * seg_vy) / seg_len_sq, 0.0), 1.0)
+                inside_prim = math.hypot(px - (sa[0] + seg_vx * t), py - (sa[1] + seg_vy * t)) <= half_short
+            else:
+                inside_prim = inside_poly
+            if inside_poly or inside_prim:
+                union += 1
+            if inside_poly and inside_prim:
+                inter += 1
+    return inter / union if union else 0.0
 
 
 def _poly_metrics(poly: list[list[float]]) -> tuple[float, float]:
@@ -77,22 +173,48 @@ def _is_rectangle(poly: list[list[float]]) -> bool:
     return True
 
 
-def classify_profile(profile: dict[str, Any]) -> tuple[str, float]:
-    """(ideal_shape, confidence) for one closed internal profile."""
+def classify_profile(profile: dict[str, Any], pixel_aspect: float = 1.0,
+                     *, min_fit: float | None = None) -> tuple[str, float]:
+    """(ideal_shape, confidence) for one closed profile polygon.
+
+    `pixel_aspect` is the enclosing view's width/height pixel ratio: metrics
+    are measured after un-squashing the polygon so a shape only becomes a
+    primitive when it looks like that primitive ON PAPER. Every primitive
+    candidate must additionally pass a fitted-primitive IoU check — a complex
+    perimeter is never replaced by a primitive that does not reproduce it.
+    `min_fit` raises that floor for every shape (the outer silhouette keeps
+    the strict PRIMITIVE_FIT_MIN_IOU so e.g. a shouldered grille outline can
+    never smuggle in as a slot at the looser slit/bar threshold).
+    """
     poly = profile.get("polygon_view_normalized") or []
     bbox = profile.get("bbox_view_normalized") or [0, 0, 0, 0]
     w, h = bbox[2], bbox[3]
     if w <= 0 or h <= 0 or len(poly) < 3:
         return "polygon", 0.0
-    aspect = w / h
-    circ = _circularity(poly)
-    if CIRCLE_MIN_CIRC <= circ and CIRCLE_ASPECT[0] <= aspect <= CIRCLE_ASPECT[1]:
-        return "circle", min(1.0, (circ - CIRCLE_MIN_CIRC) / 0.15 + 0.5)
-    if _is_rectangle(poly):
+    aspect = w * pixel_aspect / h
+    cand = _corrected(poly, pixel_aspect)
+    circ = _circularity(cand)
+    # `min_fit` may only RAISE thresholds (outer silhouettes pass 0.85 to keep
+    # the bar regime strict); each regime's own default is the lower bound.
+    norm_floor = max(min_fit, PRIMITIVE_FIT_MIN_IOU) if min_fit is not None else PRIMITIVE_FIT_MIN_IOU
+    bar_floor = max(min_fit, SLOT_BAR_FIT_MIN) if min_fit is not None else SLOT_BAR_FIT_MIN
+    # Rectangle first: a true-circle polygon never passes _is_rectangle
+    # (octagon corners measure ~135 deg), while a square's circularity
+    # (0.785) sits just inside the circle window and must not snap to one.
+    if _is_rectangle(_corrected(poly, pixel_aspect)) and _primitive_fit_iou(cand, "rectangle") >= norm_floor:
         return "rectangle", 0.9
+    if CIRCLE_MIN_CIRC <= circ and CIRCLE_ASPECT[0] <= aspect <= CIRCLE_ASPECT[1]:
+        fit = _primitive_fit_iou(cand, "circle")
+        if fit >= norm_floor:
+            return "circle", min(1.0, (circ - CIRCLE_MIN_CIRC) / 0.15 + 0.5)
     long_ratio = max(aspect, 1 / aspect)
     if SLOT_MIN_CIRC <= circ and SLOT_ASPECT[0] <= long_ratio <= SLOT_ASPECT[1]:
-        return "slot", 0.7
+        if _primitive_fit_iou(cand, "slot") >= norm_floor:
+            return "slot", 0.7
+    if SLOT_BAR_MIN_CIRC <= circ < SLOT_MIN_CIRC and SLOT_ASPECT[1] < long_ratio <= SLOT_BAR_ASPECT_MAX:
+        # Thin drawn slit/bar: the stadium fit check alone decides.
+        if _primitive_fit_iou(cand, "slot") >= bar_floor:
+            return "slot", 0.65
     return "polygon", 0.3
 
 
@@ -108,23 +230,35 @@ def _cluster(values: list[float], tol: float) -> list[list[int]]:
     return groups
 
 
-def _axis_tol(items: list[dict[str, Any]], axis: int) -> float:
-    # Hand wobble scales with feature size: a 0.28-tall slot row drifts ~0.06
-    # in v (real GT centroids), which a fixed 0.025 tol shreds into fragments.
-    # Size-relative tolerance keeps distinct feature rows apart (headlight row
-    # vs slot row stay >tol separated) while absorbing wobble within one row.
-    sizes = sorted(e["size_view_normalized"][axis] for e in items)
-    if not sizes:
-        return ALIGN_TOL
-    return max(ALIGN_TOL, 0.35 * median(sizes))
+def _axis_groups(items: list[dict[str, Any]], axis: int) -> list[list[int]]:
+    # Hand wobble scales with feature size, but the tolerance must be
+    # PAIRWISE: a grille with 0.61-tall slots over 0.13 headlights makes the
+    # global 0.35*median tol (0.213) swallow the real 0.188 gap between the
+    # slot row and the headlight row, snapping headlights onto the wrong axis.
+    # Two items share a row only when their gap is small compared to BOTH of
+    # their sizes; distinct rows stay separated.
+    vals = [e["center_view_normalized"][axis] for e in items]
+    sizes = [e["size_view_normalized"][axis] for e in items]
+    order = sorted(range(len(vals)), key=lambda i: vals[i])
+    groups: list[list[int]] = []
+    for i in order:
+        if groups:
+            last = groups[-1][-1]
+            tol = max(ALIGN_TOL, 0.35 * min(sizes[i], sizes[last]))
+            if vals[i] - vals[last] <= tol:
+                groups[-1].append(i)
+                continue
+        groups.append([i])
+    return groups
 
 
 def refine_view(view: dict[str, Any]) -> dict[str, Any]:
     """Idealized shape/center/size per profile for one view's measured geometry."""
+    pixel_aspect = float(view.get("pixel_aspect_ratio_width_over_height") or 1.0)
     profiles = view.get("internal_profiles") or []
     refined: list[dict[str, Any]] = []
     for profile in profiles:
-        shape, confidence = classify_profile(profile)
+        shape, confidence = classify_profile(profile, pixel_aspect)
         bbox = profile.get("bbox_view_normalized") or [0, 0, 0, 0]
         center = list(profile.get("center_view_normalized") or [0.5, 0.5])
         size = [bbox[2], bbox[3]]
@@ -159,21 +293,19 @@ def refine_view(view: dict[str, Any]) -> dict[str, Any]:
                             "from": current, "to": canon}
                         refined[idx]["size_view_normalized"][axis] = canon
 
-    # Row/column alignment snap on centres. Tolerance is feature-size relative
-    # (see _axis_tol) so genuine hand-wobble inside one row collapses onto the
+    # Row/column alignment snap on centres. Tolerance is pairwise size-relative
+    # (see _axis_groups) so genuine hand-wobble inside one row collapses onto the
     # shared axis while distinct feature rows stay separated.
     us = [e["center_view_normalized"][0] for e in refined]
     vs = [e["center_view_normalized"][1] for e in refined]
-    tol_v = _axis_tol(refined, 1)
-    tol_u = _axis_tol(refined, 0)
-    for group in _cluster(vs, tol_v):        # rows share one v
+    for group in _axis_groups(refined, 1):    # rows share one v
         if len(group) >= 2:
             canon = round(median(vs[i] for i in group), 4)
             for idx in group:
                 if refined[idx]["center_view_normalized"][1] != canon:
                     refined[idx]["snapped"]["center_v"] = {"from": refined[idx]["center_view_normalized"][1], "to": canon}
                     refined[idx]["center_view_normalized"][1] = canon
-    for group in _cluster(us, tol_u):        # columns share one u
+    for group in _axis_groups(refined, 0):    # columns share one u
         if len(group) >= 2:
             canon = round(median(us[i] for i in group), 4)
             for idx in group:
@@ -183,18 +315,34 @@ def refine_view(view: dict[str, Any]) -> dict[str, Any]:
 
     # Regular-grid report: rows x cols of matching pitch -> tell the generator.
     grid = _grid_report(refined)
-    outer_shape, outer_snap = None, {}
+    outer_shape, outer_fit = None, None
     outer = view.get("outer_profile")
-    if outer and (outer.get("polygon_view_normalized") or []):
-        if _is_rectangle(outer["polygon_view_normalized"]):
-            outer_shape = "rectangle"
-        else:
-            outer_shape, conf = classify_profile(outer)
-            if conf < 0.5:
-                outer_shape = "polygon"
+    if outer and (outer.get("polygon_dense_view_normalized") or outer.get("polygon_view_normalized") or []):
+        # The outer silhouette is the body's extrusion profile. Classify it in
+        # paper aspect, on the high-fidelity polygon, and record the primitive
+        # fit so the generator may only replace it when the fit is honest.
+        dense = outer.get("polygon_dense_view_normalized") or outer["polygon_view_normalized"]
+        outer_profile = dict(outer)
+        outer_profile["polygon_view_normalized"] = dense
+        cand_shape, conf = classify_profile(outer_profile, pixel_aspect,
+                                            min_fit=PRIMITIVE_FIT_MIN_IOU)
+        cand = _corrected(dense, pixel_aspect)
+        fit_iou = _primitive_fit_iou(cand, cand_shape) if cand_shape != "polygon" else None
+        outer_fit = {"candidate": cand_shape, "iou": (round(fit_iou, 3) if fit_iou is not None else None),
+                     "accepted": cand_shape != "polygon" and conf >= 0.5}
+        outer_shape = cand_shape if outer_fit["accepted"] else "polygon"
     result: dict[str, Any] = {"view_id": view.get("view_id"), "profiles": refined}
     if outer_shape:
         result["outer_profile_ideal"] = outer_shape
+        result["outer_profile_preservation"] = (
+            "The outer silhouette is an extrusion profile the model must keep. "
+            "Model it from outer_profile (polygon_dense_view_normalized / "
+            "curve_segments); only build the ideal shape when "
+            "outer_profile_fit.accepted is true."
+            if outer_shape == "polygon" else
+            "The outer silhouette matches its ideal shape within the fit check; build that primitive.")
+        if outer_fit:
+            result["outer_profile_fit"] = outer_fit
     if grid:
         result["grid"] = grid
     return result
@@ -207,8 +355,8 @@ def _grid_report(refined: list[dict[str, Any]]) -> dict[str, Any] | None:
     pool = circles if len(circles) >= 3 else rowables
     if len(pool) < 3:
         return None
-    rows = _cluster([e["center_view_normalized"][1] for e in pool], _axis_tol(pool, 1))
-    cols = _cluster([e["center_view_normalized"][0] for e in pool], _axis_tol(pool, 0))
+    rows = _axis_groups(pool, 1)
+    cols = _axis_groups(pool, 0)
     # Single dominant row (or column) of >=3 equal items: the most common
     # doodle pattern of all — report it so the generator loops over the pitch
     # instead of hand-placing each item (hand-placed rows lose end items).
@@ -264,6 +412,9 @@ def refine_evidence(evidence: dict[str, Any], mode: str = "regularize") -> dict[
         "contract": ("The source strokes are hand-drawn and imperfect. ideal_shape, "
                      "snapped centres and sizes are the USER'S DESIGN INTENT: model these "
                      "ideal forms (true circle(), square/rectangle, aligned rows, uniform "
-                     "sizes, grid loops) — never trace the raw wobbly polygon."),
+                     "sizes, grid loops) — never trace the raw wobbly polygon. "
+                     "This applies to internal profiles only: the outer silhouette of a "
+                     "view is an extrusion profile and must be kept unless its "
+                     "outer_profile_fit.accepted is true."),
         "views": [refine_view(view) for view in views],
     }

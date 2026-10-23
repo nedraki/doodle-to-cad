@@ -3,7 +3,7 @@ from pathlib import Path
 import numpy as np
 import networkx as nx
 import trimesh
-from .evaluation import projection_scores
+from .evaluation import projection_scores, SILHOUETTE_MIN_FIDELITY
 
 PROJECTION_MIN = .45  # Existing evaluator threshold; fixed before these trials.
 POSITION_MIN = .5
@@ -29,13 +29,18 @@ def evaluate_drawing(source, evidence, views, health, controls, maximum):
         fidelity=t.get('feature_position_fidelity')
         if fidelity is not None:
             record(direction+' opening positions','passed' if fidelity>=POSITION_MIN else 'failed',{'fidelity':fidelity,'minimum':POSITION_MIN,'missing':t.get('missing_opening_centroids',[])})
+        silhouette=t.get('silhouette_fidelity')
+        if silhouette is not None:
+            record(direction+' outer silhouette','passed' if silhouette>=SILHOUETTE_MIN_FIDELITY else 'failed',
+                   {'fidelity':silhouette,'minimum':SILHOUETTE_MIN_FIDELITY,
+                    'note':'coverage of the drawn outline by the CAD silhouette, tolanced at 3 px on 96x96'})
     if not scores:record('view registration','unverified','No usable drawing-to-render view pair.')
     record('dimensions and detailed features','unverified',
            'Projection checks cannot prove radii, bevel angles, hidden depth or section shape. Review measured features and view assignments.')
     failed=[c['name'] for c in checks if c['status']=='failed']
     return {'version':1,'accepted':False,'status':'failed' if failed else 'unverified',
             'build_status':'passed','geometry_status':'passed' if valid else 'failed',
-            'projection_status':'failed' if any(c['status']=='failed' for c in checks if 'projection' in c['name'] or 'opening' in c['name']) else ('passed' if scores else 'unverified'),
+            'projection_status':'failed' if any(c['status']=='failed' for c in checks if 'projection' in c['name'] or 'opening' in c['name'] or 'silhouette' in c['name']) else ('passed' if scores else 'unverified'),
             'checks':checks,'projection_similarity':scores,'profile_topology':topology,
             'failures':failed+['Detailed drawing features and view assignments require review.'],
             'scope':'Partial automatic checks. No drawing acceptance from solid validity alone.'}

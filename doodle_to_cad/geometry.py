@@ -1,9 +1,123 @@
 from __future__ import annotations
 
+import math
 from typing import Any
 
 import cv2
 import numpy as np
+
+
+def _resample_closed(points: list[list[float]], count: int) -> list[list[float]]:
+    """Evenly resample a closed polyline to `count` vertices."""
+    n = len(points)
+    if n < 3:
+        return points
+    total = 0.0
+    gaps = []
+    for i in range(n):
+        d = math.dist(points[i], points[(i + 1) % n])
+        gaps.append(d)
+        total += d
+    if total <= 0:
+        return points
+    step = total / count
+    out: list[list[float]] = [list(points[0])]
+    travelled, segment_start, index, used = 0.0, points[0], 0, 0.0
+    for k in range(1, count):
+        target = k * step
+        while index < n - 1 and used + gaps[index] < target:
+            used += gaps[index]
+            index += 1
+            segment_start = points[index]
+        span = max(gaps[index], 1e-9)
+        t = min(max((target - used) / span, 0.0), 1.0)
+        nxt = points[(index + 1) % n]
+        out.append([segment_start[0] + (nxt[0] - segment_start[0]) * t,
+                    segment_start[1] + (nxt[1] - segment_start[1]) * t])
+    return out
+
+
+def _chord_deviation(pts: list[list[float]]) -> tuple[int, float]:
+    """Index and distance of the point furthest from the chord of an open run."""
+    a, b = pts[0], pts[-1]
+    vx, vy = b[0] - a[0], b[1] - a[1]
+    length_sq = vx * vx + vy * vy
+    worst_i, worst_d = 0, 0.0
+    for i in range(1, len(pts) - 1):
+        if length_sq <= 1e-12:
+            d = math.dist(pts[i], a)
+        else:
+            t = ((pts[i][0] - a[0]) * vx + (pts[i][1] - a[1]) * vy) / length_sq
+            t = min(max(t, 0.0), 1.0)
+            d = math.hypot(pts[i][0] - (a[0] + vx * t), pts[i][1] - (a[1] + vy * t))
+        if d > worst_d:
+            worst_i, worst_d = i, d
+    return worst_i, worst_d
+
+
+def _circle_from_three(a: list[float], b: list[float], c: list[float]) -> tuple[float, float, float] | None:
+    """(cx, cy, r) through three points, or None when they are collinear."""
+    ax, ay = a; bx, by = b; cx, cy = c
+    d = 2 * (ax * (by - cy) + bx * (cy - ay) + cx * (ay - by))
+    if abs(d) < 1e-9:
+        return None
+    ux = ((ax**2 + ay**2) * (by - cy) + (bx**2 + by**2) * (cy - ay) + (cx**2 + cy**2) * (ay - by)) / d
+    uy = ((ax**2 + ay**2) * (cx - bx) + (bx**2 + by**2) * (ax - cx) + (cx**2 + cy**2) * (bx - ax)) / d
+    return ux, uy, math.hypot(ax - ux, ay - uy)
+
+
+def fit_curve_segments(points: list[list[float]], *, tolerance: float = 0.015,
+                       min_chord: float = 0.03, max_segments: int = 24) -> dict[str, Any]:
+    """Split a closed normalized polygon into line and arc runs, with fit errors.
+
+    Greedy recursive chord splitting: a run whose interior points deviate from
+    its chord by more than `tolerance` is split at the worst point; short low-
+    deviation runs become lines, curved runs are fitted as circular arcs
+    through (start, worst-deviation point, end). Every emitted segment carries
+    its max fit error so downstream stages (and tests) can reject a "regularized"
+    curve that no longer matches the ink.
+    """
+    pts = _resample_closed(points, 72)
+    n = len(pts)
+    intervals: list[tuple[int, int]] = []
+    # Seed with two arc-length-opposed intervals: a single (0, n) interval has
+    # a zero-length chord (start == end on a closed loop) and never splits.
+    stack = [(0, n // 2), (n // 2, n)] if n >= 4 else [(0, n)]
+    while stack:
+        i, j = stack.pop()
+        run = pts[i:j] if j <= n else pts[i:] + pts[:j - n]
+        k, dev = _chord_deviation(run)
+        chord = math.dist(pts[i], pts[j % n])
+        if dev > tolerance and (j - i) > 6 and chord > 2 * min_chord and len(intervals) + len(stack) < max_segments:
+            mid = i + k
+            stack.append((i, mid)); stack.append((mid, j))
+            continue
+        intervals.append((i, j))
+    segments: list[dict[str, Any]] = []
+    worst_error = 0.0
+    for i, j in intervals:
+        run = pts[i:j] if j <= n else pts[i:] + pts[:j - n]
+        k, dev = _chord_deviation(run)
+        a, b = list(pts[i]), list(pts[j % n])
+        worst_error = max(worst_error, dev)
+        if dev <= max(tolerance * 0.4, 1e-4):
+            segments.append({"type": "line", "from": a, "to": b, "max_error": round(dev, 4)})
+            continue
+        mid_pt = list(pts[(i + k) % n])
+        circle = _circle_from_three(a, mid_pt, b)
+        if circle is None:
+            segments.append({"type": "line", "from": a, "to": b, "max_error": round(dev, 4)})
+            continue
+        cx, cy, r = circle
+        arc_error = max(abs(math.hypot(p[0] - cx, p[1] - cy) - r) for p in run) if len(run) else dev
+        worst_error = max(worst_error, arc_error)
+        segments.append({"type": "arc", "from": a, "to": b, "mid": mid_pt,
+                         "radius": round(r, 4), "max_error": round(min(arc_error, dev), 4)})
+    return {"segments": [{**s, "from": [round(v, 4) for v in s["from"]],
+                          "to": [round(v, 4) for v in s["to"]],
+                          **({"mid": [round(v, 4) for v in s["mid"]]} if "mid" in s else {})}
+                         for s in segments],
+            "fit_error": round(worst_error, 4)}
 
 
 def _point_in_group(point: list[float], group: dict[str, Any]) -> bool:
@@ -11,13 +125,13 @@ def _point_in_group(point: list[float], group: dict[str, Any]) -> bool:
     return x <= point[0] <= x + width and y <= point[1] <= y + height
 
 
-def _view_local_shape(shape: dict[str, Any], group: dict[str, Any]) -> dict[str, Any]:
+def _view_local_shape(shape: dict[str, Any], group: dict[str, Any], *, outer: bool = False) -> dict[str, Any]:
     gx, gy, gw, gh = group["bbox_normalized"]
     x, y, width, height = shape["bbox_normalized"]
     local_bbox = [(x-gx)/gw, (y-gy)/gh, width/gw, height/gh]
     local_center = [(shape["center_normalized"][0]-gx)/gw, (shape["center_normalized"][1]-gy)/gh]
     local_polygon = [[(px-gx)/gw, (py-gy)/gh] for px,py in shape.get("polygon_sheet_normalized",[])]
-    return {
+    result = {
         "profile_id": shape["contour_id"],
         "bbox_view_normalized": [round(value,4) for value in local_bbox],
         "center_view_normalized": [round(value,4) for value in local_center],
@@ -26,6 +140,17 @@ def _view_local_shape(shape: dict[str, Any], group: dict[str, Any]) -> dict[str,
         "circularity": shape["circularity"],
         "area_ratio_of_sheet": shape["area_ratio"],
     }
+    if outer:
+        # The outer silhouette is an extrusion profile the generator must keep:
+        # give it a high-fidelity polygon (1/4 the simplification epsilon of
+        # the display polygon) plus a line/arc decomposition with per-segment
+        # fit errors, so "regularized" never silently means "flattened".
+        dense = shape.get("dense_polygon_sheet_normalized") or shape.get("polygon_sheet_normalized") or []
+        local_dense = [[(px-gx)/gw, (py-gy)/gh] for px,py in dense]
+        result["polygon_dense_view_normalized"] = [[round(px,4),round(py,4)] for px,py in local_dense]
+        if len(local_dense) >= 3:
+            result.update(fit_curve_segments(local_dense))
+    return result
 
 
 def _geometry_by_view(groups: list[dict[str, Any]], shapes: list[dict[str, Any]], image_width: int, image_height: int) -> list[dict[str, Any]]:
@@ -50,7 +175,7 @@ def _geometry_by_view(groups: list[dict[str, Any]], shapes: list[dict[str, Any]]
                 "v_axis":"down",
                 "range":"u and v are normalized from 0 to 1 within this view",
             },
-            "outer_profile":_view_local_shape(outer,group) if outer else None,
+            "outer_profile":_view_local_shape(outer,group,outer=True) if outer else None,
             "internal_profiles":[_view_local_shape(shape,group) for shape in sorted(internal,key=lambda shape:(shape["center_normalized"][1],shape["center_normalized"][0]))],
         })
     return result
@@ -173,6 +298,10 @@ def analyze_image(data: bytes) -> tuple[dict[str, Any], bytes]:
             continue
         perimeter = float(cv2.arcLength(contour, True))
         approx = cv2.approxPolyDP(contour, 0.015 * perimeter, True)
+        dense_approx = cv2.approxPolyDP(contour, 0.004 * perimeter, True)
+        if len(dense_approx) > 96:  # bound the evidence payload; keep shape by uniform thinning
+            stride = -(-len(dense_approx) // 96)
+            dense_approx = dense_approx[::stride]
         x, y, cw, ch = cv2.boundingRect(contour)
         circularity = 4 * np.pi * area / (perimeter * perimeter) if perimeter else 0
         depth, parent = 0, int(tree[contour_index][3]) if len(tree) else -1
@@ -181,6 +310,7 @@ def analyze_image(data: bytes) -> tuple[dict[str, Any], bytes]:
             depth += 1
             cursor = int(tree[cursor][3])
         polygon=[[round(float(point[0][0])/w,4),round(float(point[0][1])/h,4)] for point in approx]
+        dense_polygon=[[round(float(point[0][0])/w,4),round(float(point[0][1])/h,4)] for point in dense_approx]
         enclosed_profile = bool(depth >= 2 and area < w*h*0.08)
         orphan_ring = (not enclosed_profile) and depth % 2 == 0 and _orphan_ring_in_view(contour_index)
         shapes.append({
@@ -194,6 +324,7 @@ def analyze_image(data: bytes) -> tuple[dict[str, Any], bytes]:
             "closed_internal_profile": bool(enclosed_profile or orphan_ring),
             "orphan_opening_ring": bool(orphan_ring),
             "polygon_sheet_normalized":polygon,
+            "dense_polygon_sheet_normalized":dense_polygon,
         })
     lines = cv2.HoughLinesP(binary, 1, np.pi/180, threshold=max(25, min(w,h)//12), minLineLength=min(w,h)//12, maxLineGap=12)
     line_count = 0 if lines is None else min(len(lines), 200)
@@ -203,6 +334,8 @@ def analyze_image(data: bytes) -> tuple[dict[str, Any], bytes]:
     # hierarchy depths identify the physical enclosed profiles without counting
     # both borders of the same stroke.
     logical_internal_profiles = [shape for shape in internal_profiles if shape["hierarchy_depth"] % 2 == 0]
+    def _slim(shape: dict[str, Any]) -> dict[str, Any]:  # dense polygons live in view_geometry only
+        return {key: value for key, value in shape.items() if key != "dense_polygon_sheet_normalized"}
     evidence = {
         "image_size_px": [w, h],
         "ink_fraction": round(float(np.count_nonzero(binary))/(w*h), 4),
@@ -210,8 +343,8 @@ def analyze_image(data: bytes) -> tuple[dict[str, Any], bytes]:
         "drawing_sheet_contract": "All spatial groups are projections or isometric depictions of ONE physical object.",
         "view_group_count": len(view_groups), "view_groups": view_groups,
         "closed_internal_profile_count": len(logical_internal_profiles),
-        "closed_internal_profiles": logical_internal_profiles[:24],
-        "largest_regions": shapes[:20],
+        "closed_internal_profiles": [_slim(shape) for shape in logical_internal_profiles[:24]],
+        "largest_regions": [_slim(shape) for shape in shapes[:20]],
         "view_geometry":_geometry_by_view(view_groups,shapes,w,h),
     }
     overlay = image.copy()

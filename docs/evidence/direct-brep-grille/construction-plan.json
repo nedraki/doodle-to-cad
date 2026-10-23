@@ -1,0 +1,38 @@
+{
+  "view_frame": "The drawing presents two views in third-angle projection. The primary view (bottom) is the Front view, showing the X (width) and Z (height) axes. The secondary view (top) is the Top view, showing the X (width) and Y (depth) axes. The part is a flat grille plate lying in the XZ plane with thickness along the Y axis.",
+  "features": [
+    {
+      "id": "grille_body",
+      "shape": "Closed XY profile extruded along Z",
+      "section": "Uniform thickness",
+      "axis_or_plane": "XY plane (Top view), extruded along Z",
+      "dimensions": [
+        "6.0 mm (thickness, from user answer)",
+        "ASSUMED: 100 mm (overall width)",
+        "ASSUMED: 60 mm (overall height)",
+        "ASSUMED: 15 mm (headlight diameter)",
+        "ASSUMED: 4 mm (slat width)",
+        "ASSUMED: 4 mm (slat spacing)"
+      ],
+      "placement": "Centered at (0,0,0). The profile is defined in the XY plane (X=width, Y=height in the drawing context, mapped to XZ in world frame for vertical orientation). The extrusion is along the Z axis (depth) from Z=0 to Z=6.0.",
+      "evidence": "The bottom view shows the outer contour of the grille with two circular openings and seven vertical slots. The top view shows the thin profile of the plate. User answers specify uniform thickness of 6.0mm and through openings."
+    }
+  ],
+  "connections": [
+    "The outer boundary defines the solid body.",
+    "The two circular openings and seven vertical slots are subtractive features (through-holes) within the outer boundary.",
+    "The top view confirms the constant thickness of the entire assembly."
+  ],
+  "edit_rules": [
+    "Changing the overall width (X) scales the horizontal positions of the headlights and slats proportionally.",
+    "Changing the overall height (Z) scales the vertical dimensions of the slats and the vertical position of the headlights.",
+    "Changing the thickness (Y) extrudes the entire profile along the Z axis.",
+    "Changing the headlight diameter adjusts the radius of the circular cutouts.",
+    "Changing the slat width adjusts the width of the vertical rectangular cutouts."
+  ],
+  "unresolved": [
+    "Exact dimensions for the outer contour (width, height, corner radii) are not provided in the drawing and are assumed based on visual proportions.",
+    "Exact dimensions for the internal features (headlight diameter, slat width, slat spacing, vertical position) are not provided and are assumed based on visual proportions."
+  ],
+  "clarification": null
+}

@@ -94,6 +94,44 @@ def build(source, output):
                         curves.append(arc_curve(sm,(*edge['center'],0),edge['radius'],edge['start_angle'],edge['end_angle']))
             body=sm.linear_sweep(curves,(0,0,op['direction']),op['depth'],cap_ends=True)
             sm.translate(body,tuple(op['origin']))
+        elif kind == "drafted_extrude":
+            curves=[]
+            for loop in op['loops']:
+                for edge in loop:
+                    if edge['kind']=='line':
+                        curves.append(sm.create_line_segment((*edge['start'],0),(*edge['end'],0)))
+                    else:
+                        curves.append(arc_curve(sm,(*edge['center'],0),edge['radius'],edge['start_angle'],edge['end_angle']))
+            body=sm.taper_extrude(curves, op['depth'], op['draft_angle'])
+            sm.translate(body,tuple(op['origin']))
+        elif kind == "sphere":
+            body = sm.create_sphere(tuple(op["origin"]), op["radius"])
+        elif kind in ("cone", "torus", "wedge"):
+            if kind == "cone":
+                if op["angle"] >= 360:
+                    body = sm.create_cone((0, 0, 0), op["radius_base"], op["radius_top"], op["height"])
+                else:
+                    body = sm.create_partial_cone((0, 0, 0), op["radius_base"], op["radius_top"], op["height"], 0, op["angle"])
+            elif kind == "torus":
+                if op["angle"] >= 360:
+                    body = sm.create_torus((0, 0, 0), op["bend_radius"], op["radius"])
+                else:
+                    body = sm.create_partial_torus((0, 0, 0), op["bend_radius"], op["radius"], 0, op["angle"])
+            else:
+                body = sm.create_partial_cylinder((0, 0, 0), op["radius"], op["height"], op["start_angle"], op["end_angle"])
+            if op["axis"] == "x":
+                sm.rotate(body, (0, 0, 0), (0, 1, 0), 90)
+            elif op["axis"] == "y":
+                sm.rotate(body, (0, 0, 0), (1, 0, 0), -90)
+            sm.translate(body, tuple(op["origin"]))
+        elif kind == "pyramid":
+            body = sm.create_pyramid(tuple(op["origin"]), op["base"], op["height"])
+        elif kind == "arc_block":
+            body = sm.create_cylindrical_box(tuple(op["origin"]), op["length"], op["inside_radius"], op["outside_radius"], op["start_angle"], op["end_angle"])
+        elif kind == "helix":
+            curve = sm.create_helix((0, 0, 0), op["height"], op["radius_start"], op["radius_end"], op["turns"])
+            body = sm.pipe_sweep(curve, radius=op["tube_radius"], cap_ends=True)
+            sm.translate(body, tuple(op["origin"]))
         elif kind == "box":
             body = sm.create_box(tuple(op["origin"]), *op["size"])
         elif kind == "cylinder":

@@ -5,6 +5,9 @@ import cv2
 import numpy as np
 
 BUILD_CUBE_MM=256.0  # BambuLab X1C/P1S build volume
+SILHOUETTE_MIN_FIDELITY=0.93  # min(drawn-coverage, CAD-inside-drawing) per view
+SILHOUETTE_TOL_PX=3           # distance tolerance in the 96x96 comparison frame
+SILHOUETTE_MIN_AREA=92        # skip views whose silhouette is a speck (<1% of 96^2)
 
 def _decode(data: bytes) -> np.ndarray | None:
     return cv2.imdecode(np.frombuffer(data,np.uint8),cv2.IMREAD_COLOR) if data else None
@@ -59,6 +62,45 @@ def _normalized_profile(image:np.ndarray,*,render:bool)->tuple[np.ndarray,int]:
     target=np.zeros((96,96),np.uint8);oy,ox=(96-resized.shape[0])//2,(96-resized.shape[1])//2
     target[oy:oy+resized.shape[0],ox:ox+resized.shape[1]]=resized
     return target,_render_internal_profile_count(image) if render else len(holes)
+
+def _normalized_silhouette(image:np.ndarray,*,render:bool)->np.ndarray:
+    """Bbox-normalized FILLED outer contour mask (holes NOT subtracted), 96x96.
+
+    The projections gate accepts max(area IoU, edge similarity) at 0.45 — a
+    rounded-rectangle substitution for a shoulder silhouette still clears it.
+    Silhouette preservation therefore gets its own dedicated comparison.
+    """
+    if render:
+        border=np.concatenate((image[0],image[-1],image[:,0],image[:,-1])); bg=np.median(border,axis=0)
+        ink=(np.linalg.norm(image.astype(float)-bg,axis=2)>18).astype(np.uint8)*255
+    else: ink=cv2.threshold(cv2.cvtColor(image,cv2.COLOR_BGR2GRAY),190,255,cv2.THRESH_BINARY_INV)[1]
+    ink=cv2.morphologyEx(ink,cv2.MORPH_CLOSE,np.ones((3,3),np.uint8))
+    contours,_=cv2.findContours(ink,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
+    if not contours:return np.zeros((96,96),np.uint8)
+    outer=max(contours,key=cv2.contourArea)
+    mask=np.zeros_like(ink);cv2.drawContours(mask,[outer],-1,255,cv2.FILLED)
+    points=cv2.findNonZero(mask)
+    if points is None:return np.zeros((96,96),np.uint8)
+    x,y,w,h=cv2.boundingRect(points);scale=min(88/max(w,1),88/max(h,1))
+    resized=cv2.resize(mask[y:y+h,x:x+w],(max(1,round(w*scale)),max(1,round(h*scale))),interpolation=cv2.INTER_NEAREST)
+    target=np.zeros((96,96),np.uint8);oy,ox=(96-resized.shape[0])//2,(96-resized.shape[1])//2
+    target[oy:oy+resized.shape[0],ox:ox+resized.shape[1]]=resized
+    return target
+
+def _silhouette_fidelity(source_sil:np.ndarray,render_sil:np.ndarray,*,tol:int=SILHOUETTE_TOL_PX)->float|None:
+    """min(drawn-area covered by CAD, CAD area inside drawing) with a stroke-width tolerance.
+
+    Both masks are bbox-normalized. The min() punishes BOTH losing drawn
+    material (shoulders cut off -> coverage falls) AND inventing material the
+    drawing never showed (rounded corners bulging past the contour -> inside
+    falls). The distance tolerance absorbs the drawn ink's stroke half-width.
+    """
+    if np.count_nonzero(source_sil)<SILHOUETTE_MIN_AREA or not np.any(render_sil):return None
+    d_render=cv2.distanceTransform(cv2.bitwise_not(render_sil),cv2.DIST_L2,3)
+    d_source=cv2.distanceTransform(cv2.bitwise_not(source_sil),cv2.DIST_L2,3)
+    coverage=float(np.mean(d_render[source_sil>0]<=tol))
+    inside=float(np.mean(d_source[render_sil>0]<=tol))
+    return round(min(coverage,inside),3)
 
 def _normalized_edges(image:np.ndarray,*,render:bool)->np.ndarray:
     if render:
@@ -309,6 +351,8 @@ def projection_scores(source:bytes,evidence:dict[str,Any],views:dict[str,Path],p
         crop=image[y0:y1,x0:x1];original,source_holes=_normalized_profile(crop,render=False);rendered_image=_decode(path.read_bytes())
         if rendered_image is None:continue
         rendered,render_holes=_normalized_profile(rendered_image,render=True)
+        silhouette_fidelity=_silhouette_fidelity(_normalized_silhouette(crop,render=False),
+                                                 _normalized_silhouette(rendered_image,render=True))
         union=np.count_nonzero(cv2.bitwise_or(original,rendered));intersection=np.count_nonzero(cv2.bitwise_and(original,rendered))
         iou=intersection/union if union else 0
         edge_score=_edge_similarity(_normalized_edges(crop,render=False),_normalized_edges(rendered_image,render=True))
@@ -321,6 +365,7 @@ def projection_scores(source:bytes,evidence:dict[str,Any],views:dict[str,Path],p
                              "crop_internal_profiles":crop_profiles,
                              "source_aspect":round((x1-x0)/max(y1-y0,1),3),
                              "rendered_aspect":round(_render_aspect(rendered_image),3),
+                             **({"silhouette_fidelity":silhouette_fidelity} if silhouette_fidelity is not None else {}),
                              "source_opening_centroids":[[round(a,3),round(b,3)] for a,b in source_centroids],
                              "rendered_opening_centroids":[[round(a,3),round(b,3)] for a,b in render_centroids],
                              **({"missing_opening_centroids":[[round(a,3),round(b,3)] for a,b in missing_centroids]} if missing_centroids else {}),
@@ -364,7 +409,7 @@ def openings_through_check(health: dict[str, Any] | None, expected: int,
 
 
 def evaluate_candidate(*,stl:Path|None,health:dict[str,Any]|None,scad:str,views:dict[str,Path],source:bytes,evidence:dict[str,Any],spec:dict[str,Any],target_dimension:str,strict:bool,primary_view:str="front",projection_standard:str="third-angle",dimension_tolerance:float=.05)->dict[str,Any]:
-    failures=[];gates={"compiled":bool(stl and health),"topology":False,"dimensions":True,"shape_sanity":True,"features":True,"openings_through":True,"projections":True,"build_envelope":True};topology_score=0.0
+    failures=[];gates={"compiled":bool(stl and health),"topology":False,"dimensions":True,"shape_sanity":True,"features":True,"openings_through":True,"projections":True,"silhouette":True,"build_envelope":True};topology_score=0.0
     if health:
         gates["topology"]=bool(health["watertight"] and (health["components"]==1 or not strict));topology_score=(22 if health["watertight"] else 0)+(18 if health["components"]==1 else 0)+(5 if health["triangles"]>=12 else 0)
         # BambuLab-class FDM build volume (X1C/P1S: 256 mm cube). A part that
@@ -385,7 +430,7 @@ def evaluate_candidate(*,stl:Path|None,health:dict[str,Any]|None,scad:str,views:
     dimensions=spec.get("dimensions") if isinstance(spec,dict) else None
     if health and isinstance(dimensions,dict):
         aliases=(("max_width","width","estimated_width"),("max_depth","depth","estimated_depth"),("max_height","height","estimated_height"))
-        mismatches=[]
+        mismatches=[];collapsed_any=False
         for axis,(actual,keys) in enumerate(zip(health["extents_mm"],aliases)):
             expected=next((dimensions.get(key) for key in keys if dimensions.get(key) not in (None,"")),None)
             try: expected=float(expected)
@@ -403,9 +448,14 @@ def evaluate_candidate(*,stl:Path|None,health:dict[str,Any]|None,scad:str,views:
             # punishing good meshes over noisy LLM size estimates: reg4/101's
             # mesh matched GT exactly (Y=60) yet spec estimated 30 (ratio 2.0).
             if ratio < .22 or ratio > 2.6:mismatches.append(f"{'XYZ'[axis]}={actual:g} mm vs expected {expected:g} mm")
+            if ratio < .22:collapsed_any=True
         if mismatches:
-            gates["shape_sanity"]=False
-            failures.append("degenerate or implausible axis dimensions: "+", ".join(mismatches))
+            gates["shape_sanity"] = False
+            hint = (" If this is a flat plate extruded from a drawn outline, the outline must lie IN its "
+                    "defining view's plane (front-view outline -> XZ plane, thickness along Y; top-view "
+                    "outline -> XY plane, thickness along Z) and the solid must sit on the Z=0 build plate."
+                    if collapsed_any else "")
+            failures.append("degenerate or implausible axis dimensions: " + ", ".join(mismatches) + hint)
     projections,profile_topology=projection_scores(source,evidence,views,primary_view,projection_standard)
     # Issue #67: each registered view demands ITS OWN openings from the product;
     # the solid must satisfy every view at once, so the demanded total is the
@@ -468,5 +518,18 @@ def evaluate_candidate(*,stl:Path|None,health:dict[str,Any]|None,scad:str,views:
             failures.append("features exist but sit at the wrong positions in "+", ".join(misplaced)+
                             " view(s): match each opening's location (u,v within the outer profile) to the drawing; "+
                             "check the cad_mapping signs (front: u->+X v->-Z; top: u->+X v->-Y i.e. sheet-down is the FRONT of the part)")
+        # The outer silhouette is a mandatory, separate check: the projections
+        # score above takes max(area IoU, edge similarity) at 0.45, which a
+        # rounded-rectangle substitution for a complex contour still clears.
+        silhouette_lost=[(d,t["silhouette_fidelity"]) for d,t in profile_topology.items()
+                         if t.get("silhouette_fidelity") is not None
+                         and t["silhouette_fidelity"]<SILHOUETTE_MIN_FIDELITY]
+        if silhouette_lost:
+            gates["silhouette"]=False
+            detail=", ".join(f"{name} view keeps only {value:.0%} of the drawn outline" for name,value in sorted(silhouette_lost))
+            failures.append(f"outer silhouette lost: {detail} (need >= {SILHOUETTE_MIN_FIDELITY:.0%}). "
+                            "Rebuild the body as an extrusion of that view's measured outer_profile polygon "
+                            "(use its curve_segments for the arcs); do not substitute a rounded rectangle, "
+                            "ellipse or plain box, and do not add fillets to recover the shape.")
     visual_score=15*(sum(projections.values())/len(projections)) if projections else 0;total=round(topology_score+dimension_score+feature_score+visual_score,1)
     return {"score":total,"valid_mesh":gates["topology"],"accepted":all(gates.values()),"mandatory_gates":gates,"scores":{"topology":round(topology_score,1),"dimensions":round(dimension_score,1),"features":round(feature_score,1),"projections":round(visual_score,1)},"projection_similarity":projections,"profile_topology":profile_topology,"demanded_openings":{"total":expected,"per_view":demanded,"sheet_total":sheet_expected,"registration_gap":registration_gap},"failures":failures}
