@@ -77,3 +77,35 @@ individual unfavorable results.
 
 The final baseline and user review are reported separately in `RESULTS.md` and
 `review.html`. User acceptance is pending; automatic scores do not supply it.
+
+## Final recorded outcome
+
+All 24 planned verified-environment trials completed as recorded outcomes:
+22 jobs reached `done`, two ended with explicit errors. OpenSCAD produced
+11 valid solids out of 12 submissions and BRep 10/12. The supplied-maximum
+track passes 9/12 OpenSCAD and 8/12 BRep submissions. These are separate
+measurements, not drawing-fidelity acceptance. Both earlier interrupted
+submissions remain in the package (26 total submissions across attempts).
+
+The historical dimension sidecar covers all 92 archived rows: 39/46 OpenSCAD
+and 18/46 BRep submissions meet the supplied maximum. Among measurable meshes,
+5 OpenSCAD and 13 BRep outputs miss it. There are 17 rows without a measurable
+mesh; they are not silently excluded from submission counts.
+
+See [failure attribution](ATTRIBUTION.md) for the controlled frame replay and
+[issue #104](https://github.com/nedraki/doodle-to-cad/issues/104) for the separately
+tracked deterministic refinement defect. Production recognition behavior is
+unchanged. The follow-up builds on PR #103 and adds fail-closed validation,
+behavioral trial-path coverage and evidence reporting.
+
+Reproduce from the repository root using the application Python environment:
+
+```bash
+python docs/brep/bench-eval/followup/audit.py
+python docs/brep/bench-eval/followup/report.py
+python docs/brep/bench-eval/followup/replay.py
+python docs/brep/bench-eval/followup/score_dimensions.py
+```
+
+The broader check is `python docs/brep/bench-eval/eval_status.py`, with OpenSCAD
+and the isolated BRep worker configured as described in `docs/brep/README.md`.
