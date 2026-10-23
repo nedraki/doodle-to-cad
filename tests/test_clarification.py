@@ -132,7 +132,11 @@ def test_same_feature_can_answer_wall_and_floor_separately(tmp_path,monkeypatch)
     monkeypatch.setattr(app,'settings',replace(app.settings,results_dir=tmp_path))
     async def worker():pass
     async def discover():return type('Model',(),{'selected':'fixture-model'})()
-    async def interpret(*args,**kwargs):return {}
+    async def interpret(image,mime,controls,*,out):
+        (out/'input.png').write_bytes(image)
+        (out/'feature-evidence.json').write_text('{}')
+        (out/'geometry.json').write_text('{"view_geometry":[]}')
+        return {}
     async def model(messages,out,label,**kw):
         if label.startswith('construction-plan'):
             payload=json.loads(messages[1]['content'][0]['text']);answers=payload.get('clarification_answers',[])
