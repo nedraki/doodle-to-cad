@@ -1,0 +1,209 @@
+{
+  "version": 1,
+  "accepted": false,
+  "status": "unverified",
+  "build_status": "passed",
+  "geometry_status": "passed",
+  "projection_status": "passed",
+  "checks": [
+    {
+      "name": "connected solid",
+      "status": "passed",
+      "detail": {
+        "watertight": true,
+        "components": 1
+      }
+    },
+    {
+      "name": "requested maximum",
+      "status": "passed",
+      "detail": {
+        "actual_mm": 117.22,
+        "limit_mm": 120.0,
+        "tolerance_mm": 0.5
+      }
+    },
+    {
+      "name": "front projection",
+      "status": "passed",
+      "detail": {
+        "similarity": 0.998,
+        "minimum": 0.45
+      }
+    },
+    {
+      "name": "front openings",
+      "status": "passed",
+      "detail": {
+        "expected_at_least": 9,
+        "actual": 9
+      }
+    },
+    {
+      "name": "front opening positions",
+      "status": "passed",
+      "detail": {
+        "fidelity": 1.0,
+        "minimum": 0.5,
+        "missing": []
+      }
+    },
+    {
+      "name": "front outer silhouette",
+      "status": "passed",
+      "detail": {
+        "fidelity": 1.0,
+        "minimum": 0.93,
+        "note": "coverage of the drawn outline by the CAD silhouette, tolanced at 3 px on 96x96"
+      }
+    },
+    {
+      "name": "top projection",
+      "status": "passed",
+      "detail": {
+        "similarity": 0.963,
+        "minimum": 0.45
+      }
+    },
+    {
+      "name": "top outer silhouette",
+      "status": "passed",
+      "detail": {
+        "fidelity": 1.0,
+        "minimum": 0.93,
+        "note": "coverage of the drawn outline by the CAD silhouette, tolanced at 3 px on 96x96"
+      }
+    },
+    {
+      "name": "dimensions and detailed features",
+      "status": "unverified",
+      "detail": "Projection checks cannot prove radii, bevel angles, hidden depth or section shape. Review measured features and view assignments."
+    }
+  ],
+  "projection_similarity": {
+    "front": 0.998,
+    "top": 0.963
+  },
+  "profile_topology": {
+    "front": {
+      "source_internal_profiles": 9,
+      "rendered_internal_profiles": 9,
+      "crop_internal_profiles": 9,
+      "source_aspect": 1.594,
+      "rendered_aspect": 1.619,
+      "silhouette_fidelity": 1.0,
+      "source_opening_centroids": [
+        [
+          0.832,
+          0.628
+        ],
+        [
+          0.166,
+          0.625
+        ],
+        [
+          0.564,
+          0.421
+        ],
+        [
+          0.694,
+          0.441
+        ],
+        [
+          0.629,
+          0.426
+        ],
+        [
+          0.499,
+          0.43
+        ],
+        [
+          0.434,
+          0.425
+        ],
+        [
+          0.369,
+          0.423
+        ],
+        [
+          0.304,
+          0.42
+        ]
+      ],
+      "rendered_opening_centroids": [
+        [
+          0.306,
+          0.432
+        ],
+        [
+          0.371,
+          0.435
+        ],
+        [
+          0.434,
+          0.432
+        ],
+        [
+          0.5,
+          0.435
+        ],
+        [
+          0.566,
+          0.432
+        ],
+        [
+          0.631,
+          0.435
+        ],
+        [
+          0.696,
+          0.439
+        ],
+        [
+          0.167,
+          0.626
+        ],
+        [
+          0.834,
+          0.631
+        ]
+      ],
+      "feature_position_fidelity": 1.0
+    },
+    "top": {
+      "source_internal_profiles": 0,
+      "rendered_internal_profiles": 5,
+      "crop_internal_profiles": 0,
+      "source_aspect": 16.806,
+      "rendered_aspect": 18.75,
+      "silhouette_fidelity": 1.0,
+      "source_opening_centroids": [],
+      "rendered_opening_centroids": [
+        [
+          0.917,
+          0.459
+        ],
+        [
+          0.745,
+          0.459
+        ],
+        [
+          0.507,
+          0.459
+        ],
+        [
+          0.267,
+          0.459
+        ],
+        [
+          0.092,
+          0.459
+        ]
+      ]
+    }
+  },
+  "failures": [
+    "Detailed drawing features and view assignments require review."
+  ],
+  "scope": "Partial automatic checks. No drawing acceptance from solid validity alone."
+}

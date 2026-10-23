@@ -1,0 +1,614 @@
+{
+  "version": 2,
+  "units": "mm",
+  "name": "grille_assembly",
+  "parameters": {
+    "thickness": {
+      "value": 6.0,
+      "min": 1.0,
+      "max": 20.0,
+      "label": "Grille Thickness",
+      "description": "Uniform thickness of the grille plate"
+    },
+    "slat_width": {
+      "value": 4.86,
+      "min": 1.0,
+      "max": 10.0,
+      "label": "Slat Width",
+      "description": "Width of the vertical slat openings"
+    },
+    "slat_height": {
+      "value": 45.51,
+      "min": 10.0,
+      "max": 60.0,
+      "label": "Slat Height",
+      "description": "Height of the vertical slat openings"
+    },
+    "headlight_radius": {
+      "value": 9.845,
+      "min": 5.0,
+      "max": 15.0,
+      "label": "Headlight Radius",
+      "description": "Radius of the circular headlight openings"
+    }
+  },
+  "operations": [
+    {
+      "id": "body",
+      "kind": "extrude",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1"
+      ],
+      "origin": [
+        0,
+        0,
+        -1.6
+      ],
+      "plane": "xy",
+      "direction": -1,
+      "depth": "thickness",
+      "loops": [
+        [
+          {
+            "kind": "line",
+            "start": [
+              1.16,
+              31.64
+            ],
+            "end": [
+              1.62,
+              18.24
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              1.62,
+              18.24
+            ],
+            "end": [
+              6.25,
+              5.99
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              6.25,
+              5.99
+            ],
+            "end": [
+              24.32,
+              1.6
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              24.32,
+              1.6
+            ],
+            "end": [
+              97.52,
+              2.3
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              97.52,
+              2.3
+            ],
+            "end": [
+              111.2,
+              4.38
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              111.2,
+              4.38
+            ],
+            "end": [
+              114.9,
+              8.54
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              114.9,
+              8.54
+            ],
+            "end": [
+              118.38,
+              19.63
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              118.38,
+              19.63
+            ],
+            "end": [
+              117.22,
+              33.71
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              117.22,
+              33.71
+            ],
+            "end": [
+              100.31,
+              48.96
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              100.31,
+              48.96
+            ],
+            "end": [
+              98.92,
+              67.91
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              98.92,
+              67.91
+            ],
+            "end": [
+              78.29,
+              73.68
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              78.29,
+              73.68
+            ],
+            "end": [
+              43.31,
+              73.68
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              43.31,
+              73.68
+            ],
+            "end": [
+              22.0,
+              67.91
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              22.0,
+              67.91
+            ],
+            "end": [
+              19.21,
+              63.06
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              19.21,
+              63.06
+            ],
+            "end": [
+              19.46,
+              48.73
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              19.46,
+              48.73
+            ],
+            "end": [
+              2.56,
+              34.88
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              2.56,
+              34.88
+            ],
+            "end": [
+              1.16,
+              31.64
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "id": "stand",
+      "kind": "rotate",
+      "frame": "world",
+      "depends_on": [
+        "body"
+      ],
+      "evidence": [
+        "e1"
+      ],
+      "body": "body",
+      "origin": [
+        0,
+        0,
+        -1.6
+      ],
+      "axis": "x",
+      "angle": 90
+    },
+    {
+      "id": "slat1",
+      "kind": "box",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e2"
+      ],
+      "origin": [
+        34.75,
+        -0.1,
+        18.025
+      ],
+      "size": [
+        "slat_width",
+        "thickness+0.2",
+        "slat_height"
+      ]
+    },
+    {
+      "id": "slat2",
+      "kind": "box",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e2"
+      ],
+      "origin": [
+        42.4,
+        -0.1,
+        17.79
+      ],
+      "size": [
+        "slat_width",
+        "thickness+0.2",
+        "slat_height"
+      ]
+    },
+    {
+      "id": "slat3",
+      "kind": "box",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e2"
+      ],
+      "origin": [
+        49.81,
+        -0.1,
+        18.025
+      ],
+      "size": [
+        "slat_width",
+        "thickness+0.2",
+        "slat_height"
+      ]
+    },
+    {
+      "id": "slat4",
+      "kind": "box",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e2"
+      ],
+      "origin": [
+        57.45,
+        -0.1,
+        17.79
+      ],
+      "size": [
+        "slat_width",
+        "thickness+0.2",
+        "slat_height"
+      ]
+    },
+    {
+      "id": "slat5",
+      "kind": "box",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e2"
+      ],
+      "origin": [
+        65.11,
+        -0.1,
+        18.025
+      ],
+      "size": [
+        "slat_width",
+        "thickness+0.2",
+        "slat_height"
+      ]
+    },
+    {
+      "id": "slat6",
+      "kind": "box",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e2"
+      ],
+      "origin": [
+        72.76,
+        -0.1,
+        17.79
+      ],
+      "size": [
+        "slat_width",
+        "thickness+0.2",
+        "slat_height"
+      ]
+    },
+    {
+      "id": "slat7",
+      "kind": "box",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e2"
+      ],
+      "origin": [
+        80.4,
+        -0.1,
+        17.575
+      ],
+      "size": [
+        "slat_width",
+        "thickness+0.2",
+        "slat_height"
+      ]
+    },
+    {
+      "id": "headlight_left",
+      "kind": "cylinder",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e3"
+      ],
+      "origin": [
+        20.96,
+        -0.1,
+        26.8
+      ],
+      "radius": "headlight_radius",
+      "height": "thickness+0.2",
+      "axis": "y"
+    },
+    {
+      "id": "headlight_right",
+      "kind": "cylinder",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e3"
+      ],
+      "origin": [
+        99.04,
+        -0.1,
+        26.45
+      ],
+      "radius": "headlight_radius",
+      "height": "thickness+0.2",
+      "axis": "y"
+    },
+    {
+      "id": "cut_slat1",
+      "kind": "difference",
+      "frame": "world",
+      "depends_on": [
+        "stand",
+        "slat1"
+      ],
+      "evidence": [
+        "e2"
+      ],
+      "left": "stand",
+      "right": "slat1"
+    },
+    {
+      "id": "cut_slat2",
+      "kind": "difference",
+      "frame": "world",
+      "depends_on": [
+        "cut_slat1",
+        "slat2"
+      ],
+      "evidence": [
+        "e2"
+      ],
+      "left": "cut_slat1",
+      "right": "slat2"
+    },
+    {
+      "id": "cut_slat3",
+      "kind": "difference",
+      "frame": "world",
+      "depends_on": [
+        "cut_slat2",
+        "slat3"
+      ],
+      "evidence": [
+        "e2"
+      ],
+      "left": "cut_slat2",
+      "right": "slat3"
+    },
+    {
+      "id": "cut_slat4",
+      "kind": "difference",
+      "frame": "world",
+      "depends_on": [
+        "cut_slat3",
+        "slat4"
+      ],
+      "evidence": [
+        "e2"
+      ],
+      "left": "cut_slat3",
+      "right": "slat4"
+    },
+    {
+      "id": "cut_slat5",
+      "kind": "difference",
+      "frame": "world",
+      "depends_on": [
+        "cut_slat4",
+        "slat5"
+      ],
+      "evidence": [
+        "e2"
+      ],
+      "left": "cut_slat4",
+      "right": "slat5"
+    },
+    {
+      "id": "cut_slat6",
+      "kind": "difference",
+      "frame": "world",
+      "depends_on": [
+        "cut_slat5",
+        "slat6"
+      ],
+      "evidence": [
+        "e2"
+      ],
+      "left": "cut_slat5",
+      "right": "slat6"
+    },
+    {
+      "id": "cut_slat7",
+      "kind": "difference",
+      "frame": "world",
+      "depends_on": [
+        "cut_slat6",
+        "slat7"
+      ],
+      "evidence": [
+        "e2"
+      ],
+      "left": "cut_slat6",
+      "right": "slat7"
+    },
+    {
+      "id": "cut_headlight_left",
+      "kind": "difference",
+      "frame": "world",
+      "depends_on": [
+        "cut_slat7",
+        "headlight_left"
+      ],
+      "evidence": [
+        "e3"
+      ],
+      "left": "cut_slat7",
+      "right": "headlight_left"
+    },
+    {
+      "id": "final_grille",
+      "kind": "difference",
+      "frame": "world",
+      "depends_on": [
+        "cut_headlight_left",
+        "headlight_right"
+      ],
+      "evidence": [
+        "e3"
+      ],
+      "left": "cut_headlight_left",
+      "right": "headlight_right"
+    }
+  ],
+  "output": "final_grille",
+  "frames": {
+    "world": {
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    }
+  },
+  "bodies": [
+    {
+      "id": "part",
+      "output": "final_grille"
+    }
+  ],
+  "evidence": {
+    "observed": [
+      {
+        "id": "e1",
+        "text": "Outer contour of the grille plate from the front view."
+      },
+      {
+        "id": "e2",
+        "text": "Seven vertical slat openings from the front view."
+      },
+      {
+        "id": "e3",
+        "text": "Two circular headlight openings from the front view."
+      }
+    ],
+    "inferred": [
+      {
+        "id": "e4",
+        "text": "Uniform thickness of 6.0mm from clarification answer."
+      },
+      {
+        "id": "e5",
+        "text": "Through openings from clarification answer."
+      }
+    ],
+    "assumptions": [
+      {
+        "id": "e6",
+        "text": "Slat dimensions and positions are based on the provided feature_placements_mm."
+      },
+      {
+        "id": "e7",
+        "text": "Headlight radius is half the average of the provided size_mm dimensions."
+      }
+    ],
+    "unresolved": []
+  },
+  "constraints": []
+}
