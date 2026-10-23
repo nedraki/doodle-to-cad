@@ -1,0 +1,162 @@
+{
+ "bodies": [
+  {
+   "id": "part",
+   "output": "bev"
+  }
+ ],
+ "constraints": [],
+ "evidence": {
+  "assumptions": [],
+  "inferred": [],
+  "observed": [
+   {
+    "id": "e1",
+    "text": "trusted human-authored recipe (issue #82)"
+   }
+  ],
+  "unresolved": []
+ },
+ "frames": {
+  "world": {
+   "origin": [
+    0,
+    0,
+    0
+   ],
+   "x": "width",
+   "y": "depth",
+   "z": "height"
+  }
+ },
+ "name": "c7_chamfer_stress",
+ "operations": [
+  {
+   "depends_on": [],
+   "evidence": [
+    "e1"
+   ],
+   "frame": "world",
+   "id": "slab",
+   "kind": "box",
+   "origin": [
+    0,
+    0,
+    0
+   ],
+   "size": [
+    "side",
+    "side",
+    "thick"
+   ]
+  },
+  {
+   "axis": "z",
+   "depends_on": [],
+   "evidence": [
+    "e1"
+   ],
+   "frame": "world",
+   "height": "thick",
+   "id": "h1",
+   "kind": "cylinder",
+   "origin": [
+    "side/4",
+    "side/4",
+    0
+   ],
+   "radius": "hole_d/2"
+  },
+  {
+   "axis": "z",
+   "depends_on": [],
+   "evidence": [
+    "e1"
+   ],
+   "frame": "world",
+   "height": "thick",
+   "id": "h2",
+   "kind": "cylinder",
+   "origin": [
+    "side*3/4",
+    "side*3/4",
+    0
+   ],
+   "radius": "hole_d/2"
+  },
+  {
+   "depends_on": [
+    "slab",
+    "h1"
+   ],
+   "evidence": [
+    "e1"
+   ],
+   "frame": "world",
+   "id": "d1",
+   "kind": "difference",
+   "left": "slab",
+   "right": "h1"
+  },
+  {
+   "depends_on": [
+    "d1",
+    "h2"
+   ],
+   "evidence": [
+    "e1"
+   ],
+   "frame": "world",
+   "id": "d2",
+   "kind": "difference",
+   "left": "d1",
+   "right": "h2"
+  },
+  {
+   "body": "d2",
+   "depends_on": [
+    "d2"
+   ],
+   "evidence": [
+    "e1"
+   ],
+   "frame": "world",
+   "id": "bev",
+   "kind": "chamfer",
+   "radius": "chamfer_c"
+  }
+ ],
+ "output": "bev",
+ "parameters": {
+  "chamfer_c": {
+   "label": "chamfer c",
+   "max": 3,
+   "min": 0.5,
+   "unit": "mm",
+   "value": 1.0
+  },
+  "hole_d": {
+   "label": "hole d",
+   "max": 12,
+   "min": 2,
+   "unit": "mm",
+   "value": 6
+  },
+  "side": {
+   "label": "side",
+   "max": 80,
+   "min": 20,
+   "unit": "mm",
+   "value": 40
+  },
+  "thick": {
+   "label": "thick",
+   "max": 20,
+   "min": 5,
+   "unit": "mm",
+   "value": 10
+  }
+ },
+ "units": "mm",
+ "version": 2
+}

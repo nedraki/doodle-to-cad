@@ -1,0 +1,93 @@
+{
+ "bodies": [
+  {
+   "id": "part",
+   "output": "skin"
+  }
+ ],
+ "constraints": [],
+ "evidence": {
+  "assumptions": [],
+  "inferred": [],
+  "observed": [
+   {
+    "id": "e1",
+    "text": "trusted human-authored recipe (issue #82)"
+   }
+  ],
+  "unresolved": []
+ },
+ "frames": {
+  "world": {
+   "origin": [
+    0,
+    0,
+    0
+   ],
+   "x": "width",
+   "y": "depth",
+   "z": "height"
+  }
+ },
+ "name": "c4_loft_transition",
+ "operations": [
+  {
+   "correspondence": "rectangle_corners_to_circle_diagonals",
+   "depends_on": [],
+   "evidence": [
+    "e1"
+   ],
+   "frame": "world",
+   "id": "skin",
+   "kind": "loft",
+   "plane": "xy",
+   "profiles": [
+    {
+     "center": [
+      0,
+      0,
+      0
+     ],
+     "height": "rect",
+     "shape": "rectangle",
+     "width": "rect"
+    },
+    {
+     "center": [
+      0,
+      0,
+      "span"
+     ],
+     "radius": "circ_r",
+     "shape": "circle"
+    }
+   ]
+  }
+ ],
+ "output": "skin",
+ "parameters": {
+  "circ_r": {
+   "label": "circ r",
+   "max": 60,
+   "min": 10,
+   "unit": "mm",
+   "value": 30
+  },
+  "rect": {
+   "label": "rect",
+   "max": 100,
+   "min": 10,
+   "unit": "mm",
+   "value": 40
+  },
+  "span": {
+   "label": "span",
+   "max": 80,
+   "min": 5,
+   "unit": "mm",
+   "value": 30
+  }
+ },
+ "units": "mm",
+ "version": 2
+}
