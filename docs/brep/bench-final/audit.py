@@ -173,8 +173,14 @@ _acc = plan.get("pass_criteria", {}).get("product_acceptance", "")
 check("acceptance definition matches the frozen plan text",
       "score >= 70" in _acc and "status != 'failed'" in _acc
       and "usd-brep never auto-accepts" not in _acc, _acc[:80])
-check("plan revision logged (dimension fix, 12 cells)",
-      len(plan.get("plan_revisions", [])) >= 1 and "12 cells" in plan["plan_revisions"][0]["cells"])
+# N-revision-tolerant: was len(...) == 1, which turns false by construction
+  # the moment a second legitimate revision is logged (#102 supplied-dimension
+  # contract). Still fail-closed: the dimension-fix entry must be present and
+  # every revision carries the full governance schema.
+_revs = plan.get("plan_revisions", [])
+check("plan revisions logged (dimension fix, 12 cells)",
+      any("12 cells" in r.get("cells", "") for r in _revs)
+      and all({"at", "cells", "change", "affected_rows"} <= set(r) for r in _revs))
 
 refs = load_json(HERE / "references" / "reference-measurements.json", "reference measurements")
 prov = load_json(HERE / "images" / "provenance.json", "montage provenance")

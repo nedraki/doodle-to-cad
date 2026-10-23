@@ -209,3 +209,67 @@ def test_planted_position_and_stated_thickness_detected(built, eb, tmp_path):
     assert built['plate_5mm'][1] == built['plate_hole_moved'][1]
     assert built['plate_5mm'][1]['extents_pass'] is True
     assert built['plate_3mm_policy'][1]['extents_pass'] is False
+
+
+# ---- 6. #102 supplied-dimension contract ----------------------------------
+# A dimension the user actually gave must be honoured in the mesh within
+# +/-1 mm. Reference-only dimensions are NOT part of this contract; they stay
+# on the 2% extents check. Reported as a separate track from overall_pass.
+
+def _meas(extents, watertight=True, components=1):
+    return {"watertight": watertight, "components": components,
+            "extents_mm": extents, "volume_mm3": 1000.0}
+
+NO_GT = {"kind": "no_ground_truth"}
+
+
+def _eb():
+    import importlib.util
+    from pathlib import Path as _P
+    spec = importlib.util.spec_from_file_location(
+        "evaluate_brep_102", _P(__file__).resolve().parents[1] / "scripts" / "evaluate_brep.py")
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+def test_supplied_dimension_honoured_within_1mm():
+    eb = _eb()
+    checks, na = eb.reference_checks(_meas([119.5, 60.0, 120.0]), NO_GT, supplied_dimension=120.0)
+    assert checks["supplied_dimension_pass"] is True
+    assert "supplied_dimension" not in na
+    # boundary inclusive: exactly 1.0 mm off passes, 1.1 mm off fails (both sides)
+    assert eb.reference_checks(_meas([119.0, 50.0, 100.0]), NO_GT, supplied_dimension=120.0)[0]["supplied_dimension_pass"] is True
+    assert eb.reference_checks(_meas([118.9, 50.0, 100.0]), NO_GT, supplied_dimension=120.0)[0]["supplied_dimension_pass"] is False
+    assert eb.reference_checks(_meas([121.0, 50.0, 100.0]), NO_GT, supplied_dimension=120.0)[0]["supplied_dimension_pass"] is True
+    assert eb.reference_checks(_meas([121.1, 50.0, 100.0]), NO_GT, supplied_dimension=120.0)[0]["supplied_dimension_pass"] is False
+
+
+def test_supplied_dimension_contract_is_independent_of_reference_checks():
+    """A mesh that fails the reference-only extents check can still honour the
+    supplied contract (and vice versa) - the two tracks never gate each other."""
+    eb = _eb()
+    ref = {"kind": "measured", "genus": 0, "extents_mm": [200.0, 200.0, 200.0], "volume_mm3": 1.0e6}
+    checks, na = eb.reference_checks(_meas([119.9, 119.9, 120.0]), ref, supplied_dimension=120.0)
+    assert checks["extents_pass"] is False       # reference-only expectation missed
+    assert checks["supplied_dimension_pass"] is True  # user's number honoured
+
+
+def test_supplied_dimension_na_and_failed_build():
+    eb = _eb()
+    # no dimension supplied -> not applicable (key absent, never a false failure)
+    checks, na = eb.reference_checks(_meas([119.0, 60.0, 120.0]), NO_GT)
+    assert "supplied_dimension_pass" not in checks
+    assert "supplied_dimension" in na
+    # build never happened -> contract cannot be honoured
+    checks, _ = eb.reference_checks(None, NO_GT, supplied_dimension=120.0)
+    assert checks["supplied_dimension_pass"] is False
+
+
+def test_run_trial_wires_plan_dimension_and_plan_declares_tolerance():
+    # The async behavioral call-path test is in test_supplied_dimension.py.
+    plan = json.loads((ROOT / "docs" / "brep" / "bench-final" / "TRIAL-PLAN.json").read_text())
+    assert plan["tolerances"]["supplied_dimension_mm"] == 1.0
+    assert plan["pass_criteria"]["supplied_dimension_pass"]
+    revisions = json.dumps(plan["plan_revisions"])
+    assert "supplied_dimension" in revisions  # governance: declared via revision entry
