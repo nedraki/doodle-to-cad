@@ -376,3 +376,31 @@ def test_unsupported_clarification_is_demoted_not_fatal():
     assert _plan_or_demote(validate_plan, good)['clarification']['kind']=='uniform_thickness'
     with pytest.raises(ValueError):
         _plan_or_demote(validate_plan, {'view_frame':'broken'})
+
+
+def test_recipe_boilerplate_is_filled_not_rejected():
+    from doodle_to_cad.direct_brep import _normalize_recipe_boilerplate
+    from doodle_to_cad.construction_recipe import FRAME
+    raw = {'version':2,'output':'car_final',
+           'frames':{'world':{'origin':[0,0,0],'x':'length','y':'width','z':'height'}},
+           'bodies':[{'id':'part','output':'wrong_name'}],
+           'units':'mm','name':'car','parameters':{},'operations':[],
+           'evidence':{'observed':[{'id':'e1','text':'x'}],'inferred':[],'assumptions':[],'unresolved':[]},
+           'constraints':[]}
+    _normalize_recipe_boilerplate(raw)
+    assert raw['frames'] == {'world':FRAME}
+    assert raw['bodies'] == [{'id':'part','output':'car_final'}]
+    kept = {'version':2,'output':'part_out','frames':None,
+            'bodies':[{'id':'chassis','output':'part_out'}]}
+    _normalize_recipe_boilerplate(kept)
+    assert kept['bodies'] == [{'id':'chassis','output':'part_out'}]  # valid model bodies preserved
+    with pytest.raises(ValueError):
+        _normalize_recipe_boilerplate(['not','an','object'])
+
+
+def test_recipe_dependencies_are_derived_from_body_refs():
+    from doodle_to_cad.direct_brep import _normalize_recipe_boilerplate
+    raw = {'version':2,'output':'out','operations':[
+        {'id':'joint','kind':'union','left':'a','right':'b','depends_on':['a','b','c']}]}
+    _normalize_recipe_boilerplate(raw)
+    assert raw['operations'][0]['depends_on'] == ['a','b']

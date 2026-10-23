@@ -171,6 +171,30 @@ def _plan_or_demote(validate_plan, raw_plan):
             raise exc
 
 
+def _normalize_recipe_boilerplate(raw):
+    """The canonical world frame and the single output body are pipeline
+    contract, not model choices: fill them instead of grading the model's
+    handwriting on fields with zero degrees of freedom. Live run
+    a4b87426de3f died over "x":"length" wording while its geometry was
+    sound."""
+    from .construction_recipe import FRAME
+    if not isinstance(raw, dict):
+        raise ValueError('Direct recipe must be an object')
+    raw['frames'] = {'world': FRAME}
+    output = raw.get('output')
+    bodies = raw.get('bodies')
+    valid = (isinstance(bodies, list) and len(bodies) == 1 and isinstance(bodies[0], dict)
+             and set(bodies[0]) == {'id', 'output'} and bodies[0].get('output') == output)
+    if isinstance(output, str) and not valid:
+        raw['bodies'] = [{'id': 'part', 'output': output}]
+    for op in raw.get('operations') or []:
+        if isinstance(op, dict):
+            refs = [op[k] for k in ('left', 'right', 'body') if k in op]
+            if all(isinstance(ref, str) for ref in refs):
+                op['depends_on'] = refs
+    return raw
+
+
 async def correct_construction(pipeline, out, recipe, failure, attempt, maximum):
     if failure['code'] not in CORRECTABLE:
         raise BuildError(failure['code'], failure['message'])
@@ -268,6 +292,7 @@ async def submit_direct_job(image, mime, notes, dimension, extra, controls,
             try:
                 if raw.get('version') != 2:
                     raise ValueError('Direct generation requires recipe version 2')
+                _normalize_recipe_boilerplate(raw)
                 validate_recipe(raw)
                 _check_standing_body(raw, payload.get('feature_placements_mm'))
                 provenance['attempts'].append({'attempt':attempt+1,'schema_valid':True})
