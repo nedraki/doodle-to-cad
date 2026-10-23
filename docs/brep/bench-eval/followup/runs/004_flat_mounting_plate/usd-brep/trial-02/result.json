@@ -1,0 +1,641 @@
+{
+  "id": "ede8e9e76b86",
+  "backend": "usd-brep",
+  "success": false,
+  "spec": {
+    "object": "mounting_plate"
+  },
+  "model": "local-inference-lab/Qwen3.8-Flash-Next-NVFP4",
+  "duration_seconds": 138.58,
+  "evaluation": {
+    "version": 1,
+    "accepted": false,
+    "status": "failed",
+    "build_status": "passed",
+    "geometry_status": "passed",
+    "projection_status": "failed",
+    "checks": [
+      {
+        "name": "connected solid",
+        "status": "passed",
+        "detail": {
+          "watertight": true,
+          "components": 1
+        }
+      },
+      {
+        "name": "requested maximum",
+        "status": "passed",
+        "detail": {
+          "actual_mm": 100.0,
+          "limit_mm": 100.0,
+          "tolerance_mm": 0.5
+        }
+      },
+      {
+        "name": "front projection",
+        "status": "failed",
+        "detail": {
+          "similarity": 0.33,
+          "minimum": 0.45
+        }
+      },
+      {
+        "name": "front openings",
+        "status": "failed",
+        "detail": {
+          "expected_at_least": 3,
+          "actual": 0
+        }
+      },
+      {
+        "name": "front opening positions",
+        "status": "failed",
+        "detail": {
+          "fidelity": 0.0,
+          "minimum": 0.5,
+          "missing": [
+            [
+              0.839,
+              0.74
+            ]
+          ]
+        }
+      },
+      {
+        "name": "top projection",
+        "status": "failed",
+        "detail": {
+          "similarity": 0.103,
+          "minimum": 0.45
+        }
+      },
+      {
+        "name": "dimensions and detailed features",
+        "status": "unverified",
+        "detail": "Projection checks cannot prove radii, bevel angles, hidden depth or section shape. Review measured features and view assignments."
+      }
+    ],
+    "projection_similarity": {
+      "front": 0.33,
+      "top": 0.103
+    },
+    "profile_topology": {
+      "front": {
+        "source_internal_profiles": 3,
+        "rendered_internal_profiles": 0,
+        "crop_internal_profiles": 3,
+        "source_aspect": 1.617,
+        "rendered_aspect": 32.429,
+        "source_opening_centroids": [
+          [
+            0.839,
+            0.74
+          ]
+        ],
+        "rendered_opening_centroids": [],
+        "missing_opening_centroids": [
+          [
+            0.839,
+            0.74
+          ]
+        ],
+        "feature_position_fidelity": 0.0
+      },
+      "top": {
+        "source_internal_profiles": 0,
+        "rendered_internal_profiles": 0,
+        "crop_internal_profiles": 0,
+        "source_aspect": 10.333,
+        "rendered_aspect": 1.669,
+        "source_opening_centroids": [],
+        "rendered_opening_centroids": []
+      }
+    },
+    "failures": [
+      "front projection",
+      "front openings",
+      "front opening positions",
+      "top projection",
+      "Detailed drawing features and view assignments require review."
+    ],
+    "scope": "Partial automatic checks. No drawing acceptance from solid validity alone."
+  },
+  "diagnostics": {
+    "selection_catalog": {
+      "version": 1,
+      "status": "available",
+      "unresolved": [
+        {
+          "rule": {
+            "kind": "box_cutout",
+            "owner": "part",
+            "cutter": "slot",
+            "expected_faces": 5
+          },
+          "status": "lost",
+          "reason": "No matching face remains. Select again."
+        }
+      ],
+      "output_owner": "part",
+      "targets": [
+        {
+          "id": "06bb5013f3fb5664",
+          "label": "Outside X min face",
+          "rule": {
+            "kind": "extreme_face",
+            "owner": "part",
+            "axis": 0,
+            "side": "min"
+          },
+          "match_count": 1,
+          "geometry": {
+            "triangles": [
+              [
+                0.0,
+                0.0,
+                3.0
+              ],
+              [
+                0.0,
+                60.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                60.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                3.0
+              ],
+              [
+                0.0,
+                60.0,
+                3.0
+              ]
+            ]
+          }
+        },
+        {
+          "id": "45a3b1859cf51d07",
+          "label": "Outside X max face",
+          "rule": {
+            "kind": "extreme_face",
+            "owner": "part",
+            "axis": 0,
+            "side": "max"
+          },
+          "match_count": 1,
+          "geometry": {
+            "triangles": [
+              [
+                100.0,
+                0.0,
+                0.0
+              ],
+              [
+                100.0,
+                60.0,
+                3.0
+              ],
+              [
+                100.0,
+                0.0,
+                3.0
+              ],
+              [
+                100.0,
+                60.0,
+                3.0
+              ],
+              [
+                100.0,
+                0.0,
+                0.0
+              ],
+              [
+                100.0,
+                60.0,
+                0.0
+              ]
+            ]
+          }
+        },
+        {
+          "id": "a2c2e4ef081019df",
+          "label": "Outside Y min face",
+          "rule": {
+            "kind": "extreme_face",
+            "owner": "part",
+            "axis": 1,
+            "side": "min"
+          },
+          "match_count": 1,
+          "geometry": {
+            "triangles": [
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                100.0,
+                0.0,
+                3.0
+              ],
+              [
+                0.0,
+                0.0,
+                3.0
+              ],
+              [
+                100.0,
+                0.0,
+                3.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                100.0,
+                0.0,
+                0.0
+              ]
+            ]
+          }
+        },
+        {
+          "id": "db444a4d623cdcb4",
+          "label": "Outside Y max face",
+          "rule": {
+            "kind": "extreme_face",
+            "owner": "part",
+            "axis": 1,
+            "side": "max"
+          },
+          "match_count": 1,
+          "geometry": {
+            "triangles": [
+              [
+                0.0,
+                60.0,
+                3.0
+              ],
+              [
+                100.0,
+                60.0,
+                0.0
+              ],
+              [
+                0.0,
+                60.0,
+                0.0
+              ],
+              [
+                100.0,
+                60.0,
+                0.0
+              ],
+              [
+                0.0,
+                60.0,
+                3.0
+              ],
+              [
+                100.0,
+                60.0,
+                3.0
+              ]
+            ]
+          }
+        },
+        {
+          "id": "8f219d6c696b0f22",
+          "label": "Outside Z min face",
+          "rule": {
+            "kind": "extreme_face",
+            "owner": "part",
+            "axis": 2,
+            "side": "min"
+          },
+          "match_count": 1,
+          "geometry": {
+            "triangles": [
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                100.0,
+                60.0,
+                0.0
+              ],
+              [
+                100.0,
+                0.0,
+                0.0
+              ],
+              [
+                100.0,
+                60.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                60.0,
+                0.0
+              ]
+            ]
+          }
+        },
+        {
+          "id": "d0b652229c3c5889",
+          "label": "Outside Z max face",
+          "rule": {
+            "kind": "extreme_face",
+            "owner": "part",
+            "axis": 2,
+            "side": "max"
+          },
+          "match_count": 1,
+          "geometry": {
+            "triangles": [
+              [
+                0.0,
+                0.0,
+                3.0
+              ],
+              [
+                100.0,
+                60.0,
+                3.0
+              ],
+              [
+                0.0,
+                60.0,
+                3.0
+              ],
+              [
+                100.0,
+                60.0,
+                3.0
+              ],
+              [
+                0.0,
+                0.0,
+                3.0
+              ],
+              [
+                100.0,
+                0.0,
+                3.0
+              ]
+            ]
+          }
+        },
+        {
+          "id": "9aa72dad147406b7",
+          "label": "Outer vertical edges",
+          "rule": {
+            "kind": "outer_vertical_edges",
+            "owner": "part",
+            "expected_edges": 4
+          },
+          "match_count": 4,
+          "geometry": {
+            "lines": [
+              [
+                [
+                  100.0,
+                  60.0,
+                  0.0
+                ],
+                [
+                  100.0,
+                  60.0,
+                  3.0
+                ]
+              ],
+              [
+                [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  3.0
+                ]
+              ],
+              [
+                [
+                  100.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  100.0,
+                  0.0,
+                  3.0
+                ]
+              ],
+              [
+                [
+                  0.0,
+                  60.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  60.0,
+                  3.0
+                ]
+              ]
+            ]
+          }
+        }
+      ],
+      "supported": "Axis-aligned extreme planar faces, four-wall box cutouts and straight outer vertical edges. Recheck after every rebuild."
+    },
+    "backend": "usd-brep",
+    "version": "1.0.0",
+    "recipe_version": 2,
+    "solid_volume_mm3": 18000.0,
+    "mesh_volume_mm3": 18000.0,
+    "extents_mm": [
+      100.0,
+      60.0,
+      3.0
+    ],
+    "bounds_mm": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        100.0,
+        60.0,
+        3.0
+      ]
+    ],
+    "watertight": true,
+    "winding_consistent": true,
+    "euler_number": 2,
+    "triangles": 12,
+    "usd_roundtrip": true,
+    "volume_relative_accuracy": 1e-08,
+    "usd_volume_mm3": 18000.0,
+    "operations": [
+      {
+        "id": "plate",
+        "kind": "box",
+        "faces": 6
+      },
+      {
+        "id": "hole1",
+        "kind": "cylinder",
+        "faces": 3
+      },
+      {
+        "id": "hole2",
+        "kind": "cylinder",
+        "faces": 3
+      },
+      {
+        "id": "slot",
+        "kind": "box",
+        "faces": 6
+      },
+      {
+        "id": "cut1",
+        "kind": "difference",
+        "faces": 6
+      },
+      {
+        "id": "cut2",
+        "kind": "difference",
+        "faces": 6
+      },
+      {
+        "id": "part",
+        "kind": "difference",
+        "faces": 6
+      }
+    ],
+    "connections": [],
+    "resource_limits": {
+      "memory_bytes": 17179869184,
+      "cpu_seconds": 150,
+      "file_size_bytes": 536870912
+    },
+    "build_seconds": 0.179
+  },
+  "controls": {
+    "object_type_hint": "",
+    "method": "3D print",
+    "primary_view": "front",
+    "projection_standard": "third-angle",
+    "strict_watertight": true,
+    "refine_mode": "regularize"
+  },
+  "files": {
+    "source": "/results/ede8e9e76b86/brep-a6c3c679c3a94fe8aa9ac23fb91237a6/model.recipe.json",
+    "stl": "/results/ede8e9e76b86/brep-a6c3c679c3a94fe8aa9ac23fb91237a6/model.stl",
+    "usd": "/results/ede8e9e76b86/brep-a6c3c679c3a94fe8aa9ac23fb91237a6/model.usda",
+    "views": {
+      "isometric": "/results/ede8e9e76b86/brep-a6c3c679c3a94fe8aa9ac23fb91237a6/view-isometric.png",
+      "front": "/results/ede8e9e76b86/brep-a6c3c679c3a94fe8aa9ac23fb91237a6/view-front.png",
+      "top": "/results/ede8e9e76b86/brep-a6c3c679c3a94fe8aa9ac23fb91237a6/view-top.png",
+      "right": "/results/ede8e9e76b86/brep-a6c3c679c3a94fe8aa9ac23fb91237a6/view-right.png"
+    },
+    "drawing_checks": "/results/ede8e9e76b86/drawing-checks.json",
+    "clarifications": "/results/ede8e9e76b86/clarifications.json",
+    "construction_plan": "/results/ede8e9e76b86/construction-plan.json",
+    "evidence": "/results/ede8e9e76b86/feature-evidence.json",
+    "generation": "/results/ede8e9e76b86/generation.json"
+  },
+  "build": {
+    "version": 1,
+    "backend": "usd-brep",
+    "source_format": "brep-recipe-v2",
+    "ok": true,
+    "units": "mm",
+    "axes": {
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    },
+    "views": [
+      "isometric",
+      "front",
+      "top",
+      "right"
+    ],
+    "measurements": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 12,
+      "through_holes": 0,
+      "extents_mm": [
+        100.0,
+        60.0,
+        3.0
+      ],
+      "volume_mm3": 18000.0
+    },
+    "diagnostics": [],
+    "drawing_evaluated": false
+  },
+  "original_run_id": null,
+  "generation": {
+    "path": "drawing-to-brep",
+    "backend": "usd-brep",
+    "prompt_version": "drawing-brep-19",
+    "correction_prompt_version": "construction-numeric-fields-3",
+    "max_construction_corrections": 2,
+    "construction_plan_version": "construction-intent-12",
+    "model": "local-inference-lab/Qwen3.8-Flash-Next-NVFP4",
+    "notes": "Flat mounting plate with two holes and a center slot",
+    "maximum_dimension_mm": 100.0,
+    "controls": {
+      "object_type_hint": "",
+      "method": "3D print",
+      "primary_view": "front",
+      "projection_standard": "third-angle",
+      "strict_watertight": true,
+      "refine_mode": "regularize"
+    },
+    "generated_scad": false,
+    "drawing_fidelity_verified": false,
+    "attempts": [
+      {
+        "attempt": 1,
+        "schema_valid": true
+      }
+    ],
+    "construction_attempts": [
+      {
+        "attempt": 1,
+        "status": "built"
+      }
+    ]
+  }
+}

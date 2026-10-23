@@ -1,0 +1,177 @@
+{
+  "attempt": 1,
+  "action": "generate",
+  "preflight": {
+    "passed": true,
+    "errors": [],
+    "warnings": [],
+    "expected_subtractive_feature_groups": 0
+  },
+  "compiler_repairs": [
+    {
+      "repair": 1,
+      "preflight": {
+        "passed": true,
+        "errors": [],
+        "warnings": [],
+        "expected_subtractive_feature_groups": 0
+      },
+      "compile_log": "ERROR: Parser error: syntax error in file model.scad, line 514\nCan't parse file '/work/model.scad'!",
+      "failed_scad": "compiler-repair-01.failed.scad"
+    }
+  ],
+  "uniform_scale": null,
+  "evaluation": {
+    "score": 100.0,
+    "valid_mesh": true,
+    "accepted": false,
+    "mandatory_gates": {
+      "compiled": true,
+      "topology": true,
+      "dimensions": true,
+      "shape_sanity": false,
+      "features": true,
+      "openings_through": true,
+      "projections": true,
+      "build_envelope": true
+    },
+    "scores": {
+      "topology": 45,
+      "dimensions": 20.0,
+      "features": 20,
+      "projections": 15.0
+    },
+    "projection_similarity": {
+      "front": 0.997
+    },
+    "profile_topology": {
+      "front": {
+        "source_internal_profiles": 0,
+        "rendered_internal_profiles": 9,
+        "crop_internal_profiles": 0,
+        "source_aspect": 3.45,
+        "rendered_aspect": 12.467,
+        "source_opening_centroids": [],
+        "rendered_opening_centroids": [
+          [
+            0.929,
+            0.468
+          ],
+          [
+            0.868,
+            0.468
+          ],
+          [
+            0.79,
+            0.467
+          ],
+          [
+            0.701,
+            0.467
+          ],
+          [
+            0.602,
+            0.467
+          ],
+          [
+            0.497,
+            0.467
+          ],
+          [
+            0.393,
+            0.467
+          ],
+          [
+            0.294,
+            0.467
+          ],
+          [
+            0.143,
+            0.468
+          ]
+        ]
+      }
+    },
+    "demanded_openings": {
+      "total": 0,
+      "per_view": {
+        "front": 0
+      },
+      "sheet_total": 0,
+      "registration_gap": 0
+    },
+    "failures": [
+      "degenerate or implausible axis dimensions: X=120 mm vs expected 27.8 mm"
+    ]
+  },
+  "mesh_health": {
+    "watertight": true,
+    "components": 1,
+    "triangles": 404,
+    "through_holes": 8,
+    "extents_mm": [
+      120.0,
+      119.343,
+      9.5
+    ],
+    "volume_mm3": 48013.452
+  },
+  "build": {
+    "version": 1,
+    "backend": "openscad",
+    "source_format": "openscad",
+    "ok": true,
+    "units": "mm",
+    "axes": {
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    },
+    "views": [
+      "isometric",
+      "front",
+      "top",
+      "right"
+    ],
+    "measurements": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 404,
+      "through_holes": 8,
+      "extents_mm": [
+        120.0,
+        119.343,
+        9.5
+      ],
+      "volume_mm3": 48013.452
+    },
+    "diagnostics": [],
+    "drawing_evaluated": false
+  },
+  "compile_log": "Geometries in cache: 13\nGeometry cache size in bytes: 20696\nCGAL Polyhedrons in cache: 3\nCGAL cache size in bytes: 506368\nTotal rendering time: 0:00:00.593\n   Top level object is a 3D object:\n   Simple:        yes\n   Vertices:      188\n   Halfedges:     564\n   Edges:         282\n   Halffacets:    192\n   Facets:         96\n   Volumes:         2",
+  "files": {
+    "scad": "attempt-01/model.scad",
+    "stl": "attempt-01/model.stl",
+    "views": {
+      "isometric": "attempt-01/view-isometric.png",
+      "front": "attempt-01/view-front.png",
+      "top": "attempt-01/view-top.png",
+      "right": "attempt-01/view-right.png"
+    }
+  },
+  "supervisor": {
+    "action": "repair_scad",
+    "problems": [
+      "Geometry orientation is incorrect: wheel axis is Z, but spec requires Y axis.",
+      "Front view projection is a thin strip (aspect 12.5) instead of a circle (aspect ~1.0).",
+      "Dimensions mismatch: X=120mm (should be ~27.8mm), Y=119mm (should be 120mm)."
+    ],
+    "preserve": [
+      "Rim, hub, and spoke dimensions (OD 120, thickness 9.5, hub 30, spokes 8).",
+      "Radial symmetry and spoke distribution logic.",
+      "Overall topology (watertight union)."
+    ],
+    "instructions": "Rotate the entire wheel geometry so the central axis aligns with the Y-axis. Ensure the wheel lies flat in the XZ plane (width along X, thickness along Y, height along Z). Verify the front view (XZ projection) renders as a circle with spokes, and the right view (YZ projection) renders as a thin rectangle.",
+    "confidence": 1.0
+  }
+}

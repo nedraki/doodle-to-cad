@@ -1,0 +1,255 @@
+```json
+{
+  "object": "Flat mounting plate",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "front",
+      "sheet_region": "view_2",
+      "constrains": "Primary geometry: Outer rectangular profile (X/Z plane), two circular holes, and one central slot."
+    },
+    {
+      "direction": "top",
+      "sheet_region": "view_1",
+      "constrains": "Thickness (Y-axis) and planar flatness of the plate."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "plate_body",
+      "name": "Mounting Plate",
+      "material": "generic_plastic",
+      "bounding_box": {
+        "x": 100.0,
+        "y": 10.0,
+        "z": 61.7
+      }
+    }
+  ],
+  "features": [
+    {
+      "id": "outer_profile",
+      "type": "extrusion_base",
+      "owner": "plate_body",
+      "geometry": "Rectangle",
+      "dimensions": {
+        "width": 100.0,
+        "height": 61.7,
+        "thickness": 10.0
+      },
+      "source_views": [
+        "view_2",
+        "view_1"
+      ]
+    },
+    {
+      "id": "hole_left",
+      "type": "through_cutout",
+      "owner": "plate_body",
+      "geometry": "Circle",
+      "position": {
+        "x": 16.5,
+        "z": 44.9
+      },
+      "dimensions": {
+        "diameter": 8.3
+      },
+      "source_views": [
+        "view_2"
+      ]
+    },
+    {
+      "id": "hole_right",
+      "type": "through_cutout",
+      "owner": "plate_body",
+      "geometry": "Circle",
+      "position": {
+        "x": 83.0,
+        "z": 16.7
+      },
+      "dimensions": {
+        "diameter": 8.6
+      },
+      "source_views": [
+        "view_2"
+      ]
+    },
+    {
+      "id": "center_slot",
+      "type": "through_cutout",
+      "owner": "plate_body",
+      "geometry": "Slot",
+      "position": {
+        "x": 49.1,
+        "z": 30.4
+      },
+      "dimensions": {
+        "length": 30.0,
+        "width": 10.4
+      },
+      "source_views": [
+        "view_2"
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "type": "contained_in",
+      "subject": "hole_left",
+      "object": "outer_profile"
+    },
+    {
+      "type": "contained_in",
+      "subject": "hole_right",
+      "object": "outer_profile"
+    },
+    {
+      "type": "contained_in",
+      "subject": "center_slot",
+      "object": "outer_profile"
+    }
+  ],
+  "symmetry": {
+    "type": "none",
+    "axis": null,
+    "evidence": "Holes are placed diagonally (top-left and bottom-right), breaking symmetry."
+  },
+  "repetitions": [
+    {
+      "feature_id": "hole_left",
+      "count": 1,
+      "pattern": "single"
+    },
+    {
+      "feature_id": "hole_right",
+      "count": 1,
+      "pattern": "single"
+    }
+  ],
+  "dimensions": [
+    {
+      "feature_id": "outer_profile",
+      "dimension": "width",
+      "value": 100.0,
+      "unit": "mm",
+      "source": "authoritative_max_dimension"
+    },
+    {
+      "feature_id": "outer_profile",
+      "dimension": "height",
+      "value": 61.7,
+      "unit": "mm",
+      "source": "derived_from_aspect_ratio"
+    },
+    {
+      "feature_id": "outer_profile",
+      "dimension": "thickness",
+      "value": 10.0,
+      "unit": "mm",
+      "source": "inferred_standard"
+    }
+  ],
+  "uncertainties": [
+    "Exact plate thickness is not explicitly dimensioned; inferred as 10mm based on standard mounting plate proportions.",
+    "Slot geometry is interpreted as a rounded slot (obround) based on design intent, though the sketch is irregular."
+  ],
+  "interpretation_conflicts": [
+    "The top view (view_1) is extremely thin and lacks internal detail, which is consistent with a flat plate viewed from the edge, but limits depth verification."
+  ],
+  "generation_notes": "Generated a flat rectangular plate with a 100mm width. Two circular holes and one central slot were subtracted from the front face profile. The holes are positioned diagonally relative to the center.",
+  "construction_plan": {
+    "family": "extrude",
+    "operations": [
+      {
+        "id": "op_1",
+        "operation": "create_profile",
+        "owner": "plate_body",
+        "profile_plane": "XZ",
+        "direction_axis": "Y",
+        "parameters": {
+          "shape": "rectangle",
+          "width": 100.0,
+          "height": 61.7
+        },
+        "source_views": [
+          "view_2"
+        ]
+      },
+      {
+        "id": "op_2",
+        "operation": "extrude",
+        "owner": "plate_body",
+        "profile_plane": "XZ",
+        "direction_axis": "Y",
+        "parameters": {
+          "depth": 10.0
+        },
+        "source_views": [
+          "view_1"
+        ]
+      },
+      {
+        "id": "op_3",
+        "operation": "subtract",
+        "owner": "plate_body",
+        "profile_plane": "XZ",
+        "direction_axis": "Y",
+        "parameters": {
+          "tool_shape": "circle",
+          "diameter": 8.3,
+          "position": {
+            "x": 16.5,
+            "z": 44.9
+          }
+        },
+        "source_views": [
+          "view_2"
+        ]
+      },
+      {
+        "id": "op_4",
+        "operation": "subtract",
+        "owner": "plate_body",
+        "profile_plane": "XZ",
+        "direction_axis": "Y",
+        "parameters": {
+          "tool_shape": "circle",
+          "diameter": 8.6,
+          "position": {
+            "x": 83.0,
+            "z": 16.7
+          }
+        },
+        "source_views": [
+          "view_2"
+        ]
+      },
+      {
+        "id": "op_5",
+        "operation": "subtract",
+        "owner": "plate_body",
+        "profile_plane": "XZ",
+        "direction_axis": "Y",
+        "parameters": {
+          "tool_shape": "slot",
+          "length": 30.0,
+          "width": 10.4,
+          "position": {
+            "x": 49.1,
+            "z": 30.4
+          }
+        },
+        "source_views": [
+          "view_2"
+        ]
+      }
+    ],
+    "unresolved_constraints": [
+      "Thickness"
+    ]
+  }
+}
+```

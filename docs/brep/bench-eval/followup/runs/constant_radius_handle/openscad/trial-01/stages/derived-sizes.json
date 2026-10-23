@@ -1,0 +1,24 @@
+{
+  "width_mm": 28.6,
+  "depth_mm": 54.0,
+  "height_mm": 46.24,
+  "anchor": {
+    "authoritative_max_dimension_mm": 54.0
+  },
+  "per_view": {
+    "top": {
+      "u_px": 100,
+      "v_px": 93
+    },
+    "front": {
+      "u_px": 88,
+      "v_px": 20
+    },
+    "left": {
+      "u_px": 262,
+      "v_px": 284
+    }
+  },
+  "method": "median measured ink span per CAD axis x authoritative scale",
+  "unconstrained_axes": []
+}

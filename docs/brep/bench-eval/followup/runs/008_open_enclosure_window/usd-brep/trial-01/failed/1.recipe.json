@@ -1,0 +1,166 @@
+{
+  "version": 2,
+  "units": "mm",
+  "name": "enclosure",
+  "parameters": {
+    "width": {
+      "value": 120,
+      "min": 60,
+      "max": 200,
+      "label": "Width",
+      "description": "Overall width of the enclosure (X)"
+    },
+    "depth": {
+      "value": 80,
+      "min": 40,
+      "max": 150,
+      "label": "Depth",
+      "description": "Overall depth of the enclosure (Y)"
+    },
+    "height": {
+      "value": 40,
+      "min": 20,
+      "max": 100,
+      "label": "Height",
+      "description": "Overall height of the enclosure (Z)"
+    },
+    "wall_thickness": {
+      "value": 3,
+      "min": 1,
+      "max": 10,
+      "label": "Wall and floor thickness",
+      "description": "Uniform wall and floor thickness"
+    },
+    "window_width": {
+      "value": 60,
+      "min": 10,
+      "max": 100,
+      "label": "Window Width",
+      "description": "Width of the front window opening"
+    },
+    "window_height": {
+      "value": 20,
+      "min": 5,
+      "max": 30,
+      "label": "Window Height",
+      "description": "Height of the front window opening"
+    }
+  },
+  "operations": [
+    {
+      "id": "outer_box",
+      "kind": "box",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "size": [
+        "width",
+        "depth",
+        "height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "hollow_body",
+      "kind": "shell",
+      "body": "outer_box",
+      "thickness": "wall_thickness",
+      "opening": "top",
+      "preserve": "outer",
+      "frame": "world",
+      "depends_on": [
+        "outer_box"
+      ],
+      "evidence": [
+        "e1",
+        "e2"
+      ]
+    },
+    {
+      "id": "window_cutter",
+      "kind": "box",
+      "origin": [
+        "(width - window_width) / 2",
+        "-1",
+        "(height - window_height) / 2"
+      ],
+      "size": [
+        "window_width",
+        "wall_thickness + 2",
+        "window_height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "final_part",
+      "kind": "difference",
+      "left": "hollow_body",
+      "right": "window_cutter",
+      "frame": "world",
+      "depends_on": [
+        "hollow_body",
+        "window_cutter"
+      ],
+      "evidence": [
+        "e1",
+        "e2",
+        "e3"
+      ]
+    }
+  ],
+  "output": "final_part",
+  "frames": {
+    "world": {
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    }
+  },
+  "bodies": [
+    {
+      "id": "part",
+      "output": "final_part"
+    }
+  ],
+  "evidence": {
+    "observed": [
+      {
+        "id": "e1",
+        "text": "Outer rectangular boundaries in top and front views define the envelope."
+      },
+      {
+        "id": "e3",
+        "text": "Inner rectangular contour in the front view indicates a window opening."
+      }
+    ],
+    "inferred": [
+      {
+        "id": "e2",
+        "text": "Double-line border in the top view indicates wall thickness and an open-top hollow structure."
+      }
+    ],
+    "assumptions": [
+      {
+        "id": "e4",
+        "text": "Assumed overall dimensions (120x80x40 mm) and window size (60x20 mm) based on visual proportions and maximum dimension constraint."
+      }
+    ],
+    "unresolved": []
+  },
+  "constraints": []
+}

@@ -1,0 +1,486 @@
+{
+  "version": 2,
+  "units": "mm",
+  "name": "spoked_wheel",
+  "parameters": {
+    "od": {
+      "value": 120,
+      "min": 40,
+      "max": 200,
+      "label": "Outer Diameter",
+      "unit": "mm"
+    },
+    "width": {
+      "value": 8,
+      "min": 2,
+      "max": 20,
+      "label": "Axial Width",
+      "unit": "mm"
+    },
+    "rim_thickness": {
+      "value": 3,
+      "min": 1,
+      "max": 10,
+      "label": "Rim Radial Thickness",
+      "unit": "mm"
+    },
+    "hub_diameter": {
+      "value": 30,
+      "min": 10,
+      "max": 60,
+      "label": "Hub Diameter",
+      "unit": "mm"
+    },
+    "spoke_width": {
+      "value": 6,
+      "min": 2,
+      "max": 15,
+      "label": "Spoke Width",
+      "unit": "mm"
+    }
+  },
+  "operations": [
+    {
+      "id": "rim",
+      "kind": "revolve",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1",
+        "e2"
+      ],
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "axis": "z",
+      "profile": [
+        [
+          "od/2 - rim_thickness",
+          0
+        ],
+        [
+          "od/2",
+          0
+        ],
+        [
+          "od/2",
+          "width"
+        ],
+        [
+          "od/2 - rim_thickness",
+          "width"
+        ]
+      ]
+    },
+    {
+      "id": "hub",
+      "kind": "revolve",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e3"
+      ],
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "axis": "z",
+      "profile": [
+        [
+          0,
+          0
+        ],
+        [
+          "hub_diameter/2",
+          0
+        ],
+        [
+          "hub_diameter/2",
+          "width"
+        ],
+        [
+          0,
+          "width"
+        ]
+      ]
+    },
+    {
+      "id": "spoke_0",
+      "kind": "box",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e4"
+      ],
+      "origin": [
+        "hub_diameter/2 - 1",
+        "-spoke_width/2",
+        0
+      ],
+      "size": [
+        "od/2 - rim_thickness - hub_diameter/2 + 2",
+        "spoke_width",
+        "width"
+      ]
+    },
+    {
+      "id": "spoke_1",
+      "kind": "rotate",
+      "frame": "world",
+      "depends_on": [
+        "spoke_0"
+      ],
+      "evidence": [
+        "e4"
+      ],
+      "body": "spoke_0",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "axis": "z",
+      "angle": 45
+    },
+    {
+      "id": "spoke_2",
+      "kind": "rotate",
+      "frame": "world",
+      "depends_on": [
+        "spoke_0"
+      ],
+      "evidence": [
+        "e4"
+      ],
+      "body": "spoke_0",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "axis": "z",
+      "angle": 90
+    },
+    {
+      "id": "spoke_3",
+      "kind": "rotate",
+      "frame": "world",
+      "depends_on": [
+        "spoke_0"
+      ],
+      "evidence": [
+        "e4"
+      ],
+      "body": "spoke_0",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "axis": "z",
+      "angle": 135
+    },
+    {
+      "id": "spoke_4",
+      "kind": "rotate",
+      "frame": "world",
+      "depends_on": [
+        "spoke_0"
+      ],
+      "evidence": [
+        "e4"
+      ],
+      "body": "spoke_0",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "axis": "z",
+      "angle": 180
+    },
+    {
+      "id": "spoke_5",
+      "kind": "rotate",
+      "frame": "world",
+      "depends_on": [
+        "spoke_0"
+      ],
+      "evidence": [
+        "e4"
+      ],
+      "body": "spoke_0",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "axis": "z",
+      "angle": 225
+    },
+    {
+      "id": "spoke_6",
+      "kind": "rotate",
+      "frame": "world",
+      "depends_on": [
+        "spoke_0"
+      ],
+      "evidence": [
+        "e4"
+      ],
+      "body": "spoke_0",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "axis": "z",
+      "angle": 270
+    },
+    {
+      "id": "spoke_7",
+      "kind": "rotate",
+      "frame": "world",
+      "depends_on": [
+        "spoke_0"
+      ],
+      "evidence": [
+        "e4"
+      ],
+      "body": "spoke_0",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "axis": "z",
+      "angle": 315
+    },
+    {
+      "id": "union_1",
+      "kind": "union",
+      "frame": "world",
+      "depends_on": [
+        "rim",
+        "hub"
+      ],
+      "evidence": [
+        "e1",
+        "e3"
+      ],
+      "left": "rim",
+      "right": "hub"
+    },
+    {
+      "id": "union_2",
+      "kind": "union",
+      "frame": "world",
+      "depends_on": [
+        "union_1",
+        "spoke_0"
+      ],
+      "evidence": [
+        "e1",
+        "e3",
+        "e4"
+      ],
+      "left": "union_1",
+      "right": "spoke_0"
+    },
+    {
+      "id": "union_3",
+      "kind": "union",
+      "frame": "world",
+      "depends_on": [
+        "union_2",
+        "spoke_1"
+      ],
+      "evidence": [
+        "e1",
+        "e3",
+        "e4"
+      ],
+      "left": "union_2",
+      "right": "spoke_1"
+    },
+    {
+      "id": "union_4",
+      "kind": "union",
+      "frame": "world",
+      "depends_on": [
+        "union_3",
+        "spoke_2"
+      ],
+      "evidence": [
+        "e1",
+        "e3",
+        "e4"
+      ],
+      "left": "union_3",
+      "right": "spoke_2"
+    },
+    {
+      "id": "union_5",
+      "kind": "union",
+      "frame": "world",
+      "depends_on": [
+        "union_4",
+        "spoke_3"
+      ],
+      "evidence": [
+        "e1",
+        "e3",
+        "e4"
+      ],
+      "left": "union_4",
+      "right": "spoke_3"
+    },
+    {
+      "id": "union_6",
+      "kind": "union",
+      "frame": "world",
+      "depends_on": [
+        "union_5",
+        "spoke_4"
+      ],
+      "evidence": [
+        "e1",
+        "e3",
+        "e4"
+      ],
+      "left": "union_5",
+      "right": "spoke_4"
+    },
+    {
+      "id": "union_7",
+      "kind": "union",
+      "frame": "world",
+      "depends_on": [
+        "union_6",
+        "spoke_5"
+      ],
+      "evidence": [
+        "e1",
+        "e3",
+        "e4"
+      ],
+      "left": "union_6",
+      "right": "spoke_5"
+    },
+    {
+      "id": "union_8",
+      "kind": "union",
+      "frame": "world",
+      "depends_on": [
+        "union_7",
+        "spoke_6"
+      ],
+      "evidence": [
+        "e1",
+        "e3",
+        "e4"
+      ],
+      "left": "union_7",
+      "right": "spoke_6"
+    },
+    {
+      "id": "wheel",
+      "kind": "union",
+      "frame": "world",
+      "depends_on": [
+        "union_8",
+        "spoke_7"
+      ],
+      "evidence": [
+        "e1",
+        "e3",
+        "e4"
+      ],
+      "left": "union_8",
+      "right": "spoke_7"
+    }
+  ],
+  "output": "wheel",
+  "frames": {
+    "world": {
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    }
+  },
+  "bodies": [
+    {
+      "id": "part",
+      "output": "wheel"
+    }
+  ],
+  "evidence": {
+    "observed": [
+      {
+        "id": "e1",
+        "text": "Front view shows outer circle (OD 120 mm) and inner circle defining rim."
+      },
+      {
+        "id": "e2",
+        "text": "Right view shows rectangular profile with width 8 mm."
+      },
+      {
+        "id": "e3",
+        "text": "Front view shows central hub circle."
+      },
+      {
+        "id": "e4",
+        "text": "Front view shows 8 radial spokes connecting hub to rim."
+      }
+    ],
+    "inferred": [
+      {
+        "id": "e5",
+        "text": "Hub diameter estimated as 30 mm (1/4 of OD) based on visual proportion."
+      },
+      {
+        "id": "e6",
+        "text": "Spoke width estimated as 6 mm based on visual proportion."
+      }
+    ],
+    "assumptions": [
+      {
+        "id": "e7",
+        "text": "Rim radial thickness is 3 mm as per clarification."
+      },
+      {
+        "id": "e8",
+        "text": "Spokes are rectangular boxes with width 6 mm and axial width 8 mm."
+      },
+      {
+        "id": "e9",
+        "text": "Spokes extend 1 mm into hub and rim for solid connection."
+      }
+    ],
+    "unresolved": []
+  },
+  "constraints": [
+    {
+      "id": "joint_hub_spoke",
+      "kind": "connected",
+      "left": "hub",
+      "right": "spoke_0",
+      "min_volume_mm3": 0.01
+    },
+    {
+      "id": "joint_rim_spoke",
+      "kind": "connected",
+      "left": "rim",
+      "right": "spoke_0",
+      "min_volume_mm3": 0.01
+    }
+  ]
+}

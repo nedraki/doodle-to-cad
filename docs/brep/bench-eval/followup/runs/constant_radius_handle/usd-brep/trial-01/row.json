@@ -1,0 +1,800 @@
+{
+  "drawing": "constant_radius_handle",
+  "backend": "usd-brep",
+  "trial": 1,
+  "submitted_at": "2026-10-23T00:12:20.778475+00:00",
+  "finished_at": "2026-10-23T00:14:11.120804+00:00",
+  "checks": {
+    "build_success": true,
+    "extents_pass": false,
+    "genus_pass": true,
+    "volume_pass": false,
+    "supplied_dimension_pass": false,
+    "fidelity_pass": false,
+    "overall_pass": false,
+    "not_applicable": []
+  },
+  "run_id": "823c8b85c530",
+  "wall_seconds": 110.3,
+  "job_status": "done",
+  "error": null,
+  "questions_asked": 0,
+  "question_kinds": [],
+  "build": {
+    "watertight": true,
+    "components": 1,
+    "genus": 0,
+    "extents_mm": [
+      48.0,
+      30.0,
+      8.0
+    ],
+    "volume_mm3": 5010.8,
+    "sha256": "d9be8484a5a8ca986aadf39fcd76e2a2201152584d831d5ae86b62f6aeafc1b1",
+    "bytes": 103384
+  },
+  "fidelity": {
+    "scores": {
+      "front": 0.609,
+      "top": 0.347,
+      "right": 0.329
+    },
+    "pass": false,
+    "reason": null,
+    "topology": {
+      "front": {
+        "expected": 0,
+        "actual": 1,
+        "position_fidelity": null
+      },
+      "top": {
+        "expected": 0,
+        "actual": 4,
+        "position_fidelity": null
+      },
+      "right": {
+        "expected": 0,
+        "actual": 2,
+        "position_fidelity": null
+      }
+    }
+  },
+  "orientation_diagnostic": {
+    "metric": "silhouette_iou_joint_cube_rotation_v1",
+    "status": "diagnostic_only",
+    "identity": {
+      "rotation": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "scores": {
+        "front": 0.6093385214007782,
+        "top": 0.2765602667937113,
+        "right": 0.3425986842105263
+      },
+      "minimum_iou": 0.2765602667937113,
+      "mean_iou": 0.40949915746833865
+    },
+    "registered": {
+      "rotation": [
+        [
+          -1,
+          0,
+          0
+        ],
+        [
+          0,
+          -1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "scores": {
+        "front": 0.6093385214007782,
+        "top": 0.28035372848948376,
+        "right": 0.3425986842105263
+      },
+      "minimum_iou": 0.28035372848948376,
+      "mean_iou": 0.4107636447002627
+    },
+    "candidates": [
+      {
+        "rotation": [
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ],
+        "scores": {
+          "front": 0.6093385214007782,
+          "top": 0.2765602667937113,
+          "right": 0.3425986842105263
+        },
+        "minimum_iou": 0.2765602667937113,
+        "mean_iou": 0.40949915746833865
+      },
+      {
+        "rotation": [
+          [
+            -1,
+            0,
+            0
+          ],
+          [
+            0,
+            -1,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ],
+        "scores": {
+          "front": 0.6093385214007782,
+          "top": 0.28035372848948376,
+          "right": 0.3425986842105263
+        },
+        "minimum_iou": 0.28035372848948376,
+        "mean_iou": 0.4107636447002627
+      },
+      {
+        "rotation": [
+          [
+            -1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            -1
+          ],
+          [
+            0,
+            -1,
+            0
+          ]
+        ],
+        "scores": {
+          "front": 0.24773304316285819,
+          "top": 0.1085293284216492,
+          "right": 0.3425986842105263
+        },
+        "minimum_iou": 0.1085293284216492,
+        "mean_iou": 0.23295368526501123
+      },
+      {
+        "rotation": [
+          [
+            -1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            0
+          ]
+        ],
+        "scores": {
+          "front": 0.199442119944212,
+          "top": 0.11343950824252584,
+          "right": 0.3302057613168724
+        },
+        "minimum_iou": 0.11343950824252584,
+        "mean_iou": 0.21436246316787008
+      },
+      {
+        "rotation": [
+          [
+            -1,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            -1
+          ]
+        ],
+        "scores": {
+          "front": 0.6460396039603961,
+          "top": 0.27669208770257386,
+          "right": 0.33053497942386834
+        },
+        "minimum_iou": 0.27669208770257386,
+        "mean_iou": 0.4177555570289461
+      },
+      {
+        "rotation": [
+          [
+            0,
+            -1,
+            0
+          ],
+          [
+            -1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            -1
+          ]
+        ],
+        "scores": {
+          "front": 0.3927165354330709,
+          "top": 0.1435580204778157,
+          "right": 0.19781854238968766
+        },
+        "minimum_iou": 0.1435580204778157,
+        "mean_iou": 0.24469769943352473
+      },
+      {
+        "rotation": [
+          [
+            0,
+            -1,
+            0
+          ],
+          [
+            0,
+            0,
+            -1
+          ],
+          [
+            1,
+            0,
+            0
+          ]
+        ],
+        "scores": {
+          "front": 0.04335961188599151,
+          "top": 0.15498783454987836,
+          "right": 0.2100479259626508
+        },
+        "minimum_iou": 0.04335961188599151,
+        "mean_iou": 0.13613179079950688
+      },
+      {
+        "rotation": [
+          [
+            0,
+            -1,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ],
+          [
+            -1,
+            0,
+            0
+          ]
+        ],
+        "scores": {
+          "front": 0.04268846503178928,
+          "top": 0.15810940499040307,
+          "right": 0.19765328044951247
+        },
+        "minimum_iou": 0.04268846503178928,
+        "mean_iou": 0.13281705015723494
+      },
+      {
+        "rotation": [
+          [
+            0,
+            -1,
+            0
+          ],
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ],
+        "scores": {
+          "front": 0.3778409090909091,
+          "top": 0.14364994663820704,
+          "right": 0.20988266402247563
+        },
+        "minimum_iou": 0.14364994663820704,
+        "mean_iou": 0.2437911732505306
+      },
+      {
+        "rotation": [
+          [
+            0,
+            0,
+            -1
+          ],
+          [
+            -1,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0
+          ]
+        ],
+        "scores": {
+          "front": 0.08582089552238806,
+          "top": 0.05005268703898841,
+          "right": 0.35722092115534737
+        },
+        "minimum_iou": 0.05005268703898841,
+        "mean_iou": 0.16436483457224127
+      },
+      {
+        "rotation": [
+          [
+            0,
+            0,
+            -1
+          ],
+          [
+            0,
+            -1,
+            0
+          ],
+          [
+            -1,
+            0,
+            0
+          ]
+        ],
+        "scores": {
+          "front": 0.07536382536382537,
+          "top": 0.07625418060200669,
+          "right": 0.3578454332552693
+        },
+        "minimum_iou": 0.07536382536382537,
+        "mean_iou": 0.1698211464070338
+      },
+      {
+        "rotation": [
+          [
+            0,
+            0,
+            -1
+          ],
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            1,
+            0,
+            0
+          ]
+        ],
+        "scores": {
+          "front": 0.07536382536382537,
+          "top": 0.07625418060200669,
+          "right": 0.35737704918032787
+        },
+        "minimum_iou": 0.07536382536382537,
+        "mean_iou": 0.1696650183820533
+      },
+      {
+        "rotation": [
+          [
+            0,
+            0,
+            -1
+          ],
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            -1,
+            0
+          ]
+        ],
+        "scores": {
+          "front": 0.08582089552238806,
+          "top": 0.05005268703898841,
+          "right": 0.35753317720530836
+        },
+        "minimum_iou": 0.05005268703898841,
+        "mean_iou": 0.16446891992222826
+      },
+      {
+        "rotation": [
+          [
+            0,
+            0,
+            1
+          ],
+          [
+            -1,
+            0,
+            0
+          ],
+          [
+            0,
+            -1,
+            0
+          ]
+        ],
+        "scores": {
+          "front": 0.0843558282208589,
+          "top": 0.04880665057656208,
+          "right": 0.35722092115534737
+        },
+        "minimum_iou": 0.04880665057656208,
+        "mean_iou": 0.16346113331758946
+      },
+      {
+        "rotation": [
+          [
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            -1,
+            0
+          ],
+          [
+            1,
+            0,
+            0
+          ]
+        ],
+        "scores": {
+          "front": 0.07258064516129033,
+          "top": 0.07547597461468722,
+          "right": 0.35737704918032787
+        },
+        "minimum_iou": 0.07258064516129033,
+        "mean_iou": 0.16847788965210184
+      },
+      {
+        "rotation": [
+          [
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            -1,
+            0,
+            0
+          ]
+        ],
+        "scores": {
+          "front": 0.07261968800430339,
+          "top": 0.0740153915799004,
+          "right": 0.3578454332552693
+        },
+        "minimum_iou": 0.07261968800430339,
+        "mean_iou": 0.16816017094649105
+      },
+      {
+        "rotation": [
+          [
+            0,
+            0,
+            1
+          ],
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0
+          ]
+        ],
+        "scores": {
+          "front": 0.0843558282208589,
+          "top": 0.04907481898632341,
+          "right": 0.35753317720530836
+        },
+        "minimum_iou": 0.04907481898632341,
+        "mean_iou": 0.16365460813749688
+      },
+      {
+        "rotation": [
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            -1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ],
+        "scores": {
+          "front": 0.3778409090909091,
+          "top": 0.1435580204778157,
+          "right": 0.20988266402247563
+        },
+        "minimum_iou": 0.1435580204778157,
+        "mean_iou": 0.24376053119706684
+      },
+      {
+        "rotation": [
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            -1
+          ],
+          [
+            -1,
+            0,
+            0
+          ]
+        ],
+        "scores": {
+          "front": 0.0423728813559322,
+          "top": 0.15498783454987836,
+          "right": 0.2100479259626508
+        },
+        "minimum_iou": 0.0423728813559322,
+        "mean_iou": 0.13580288062282045
+      },
+      {
+        "rotation": [
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ],
+          [
+            1,
+            0,
+            0
+          ]
+        ],
+        "scores": {
+          "front": 0.04241139048773099,
+          "top": 0.15810940499040307,
+          "right": 0.19781854238968766
+        },
+        "minimum_iou": 0.04241139048773099,
+        "mean_iou": 0.1327797792892739
+      },
+      {
+        "rotation": [
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            -1
+          ]
+        ],
+        "scores": {
+          "front": 0.3927165354330709,
+          "top": 0.14364994663820704,
+          "right": 0.19798380432986284
+        },
+        "minimum_iou": 0.14364994663820704,
+        "mean_iou": 0.24478342880038026
+      },
+      {
+        "rotation": [
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            -1,
+            0
+          ],
+          [
+            0,
+            0,
+            -1
+          ]
+        ],
+        "scores": {
+          "front": 0.6455070074196207,
+          "top": 0.27991401958442796,
+          "right": 0.33053497942386834
+        },
+        "minimum_iou": 0.27991401958442796,
+        "mean_iou": 0.41865200214263903
+      },
+      {
+        "rotation": [
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            -1
+          ],
+          [
+            0,
+            1,
+            0
+          ]
+        ],
+        "scores": {
+          "front": 0.19930313588850174,
+          "top": 0.10881269481439501,
+          "right": 0.3425986842105263
+        },
+        "minimum_iou": 0.10881269481439501,
+        "mean_iou": 0.21690483830447435
+      },
+      {
+        "rotation": [
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            -1,
+            0
+          ]
+        ],
+        "scores": {
+          "front": 0.24710144927536232,
+          "top": 0.11343950824252584,
+          "right": 0.3302057613168724
+        },
+        "minimum_iou": 0.11343950824252584,
+        "mean_iou": 0.23024890627825353
+      }
+    ]
+  },
+  "product": {
+    "success": false,
+    "accepted": false,
+    "status": "failed",
+    "score": null,
+    "projection_status": "failed",
+    "geometry_status": "passed",
+    "failures": [
+      "top projection",
+      "right projection",
+      "Detailed drawing features and view assignments require review."
+    ]
+  },
+  "attempts": {
+    "count": 1,
+    "recovered": false,
+    "corrections": 1
+  },
+  "unsupported": {
+    "flag": false,
+    "code": null
+  },
+  "brep_only": {
+    "operations": [
+      "arc_pipe",
+      "cylinder",
+      "union"
+    ],
+    "loft": false,
+    "shell": false,
+    "arc_pipe": true,
+    "sweep": false,
+    "extrude": false,
+    "parameter_names": [
+      "bend_radius",
+      "leg_length",
+      "section_diameter"
+    ]
+  },
+  "edit": {
+    "available": true,
+    "ok": true,
+    "seconds": 18.18,
+    "param": "bend_radius",
+    "old": 20,
+    "new": 24.0,
+    "message": null
+  },
+  "targeted": {
+    "available": false,
+    "ok": false,
+    "seconds": null,
+    "operation": null,
+    "value": null,
+    "message": "not_applicable: no selectable targeted geometry in this build"
+  }
+}

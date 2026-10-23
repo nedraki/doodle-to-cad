@@ -1,0 +1,125 @@
+{
+  "object": "Open-top enclosure with front window",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "top",
+      "sheet_region": "upper",
+      "what_it_constrains": "Defines the rectangular footprint (width and depth) of the enclosure. The double-line border indicates wall thickness."
+    },
+    {
+      "direction": "front",
+      "sheet_region": "lower",
+      "what_it_constrains": "Defines the height and width of the front face. The central rectangular profile defines the window opening."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "main_enclosure",
+      "description": "Rectangular box with open top and a rectangular cutout on the front face."
+    }
+  ],
+  "features": [
+    {
+      "id": "main_body",
+      "type": "shell",
+      "description": "Rectangular base with four vertical walls."
+    },
+    {
+      "id": "front_window",
+      "type": "through_cutout",
+      "description": "Rectangular opening in the center of the front wall."
+    }
+  ],
+  "relations": [
+    {
+      "type": "containment",
+      "parent": "main_body",
+      "child": "front_window"
+    }
+  ],
+  "symmetry": "Bilateral symmetry along the vertical centerline of the front face.",
+  "repetitions": [],
+  "dimensions": [
+    {
+      "feature_id": "main_body",
+      "dimension_type": "width",
+      "value": 120,
+      "unit": "mm",
+      "source": "authoritative_max_dimension"
+    },
+    {
+      "feature_id": "main_body",
+      "dimension_type": "depth",
+      "value": 81.6,
+      "unit": "mm",
+      "source": "derived_from_top_view_aspect_ratio"
+    },
+    {
+      "feature_id": "main_body",
+      "dimension_type": "height",
+      "value": 44,
+      "unit": "mm",
+      "source": "derived_from_front_view_aspect_ratio"
+    },
+    {
+      "feature_id": "front_window",
+      "dimension_type": "width",
+      "value": 60,
+      "unit": "mm",
+      "source": "derived_from_front_view_internal_profile"
+    },
+    {
+      "feature_id": "front_window",
+      "dimension_type": "height",
+      "value": 26,
+      "unit": "mm",
+      "source": "derived_from_front_view_internal_profile"
+    }
+  ],
+  "uncertainties": [
+    "Wall thickness is inferred from the double lines in the top view; exact value is estimated.",
+    "Bottom thickness is not explicitly drawn but is assumed to match wall thickness for structural integrity."
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "The object is modeled as a rectangular shell. The top view provides the XY footprint. The front view provides the Z height and the location/size of the window cutout. The window is treated as a through-cutout on the front face.",
+  "construction_plan": {
+    "family": "shell",
+    "operations": [
+      {
+        "id": "op1",
+        "operation": "extrude",
+        "owner": "main_body",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "parameters": {
+          "profile": "outer_rectangle",
+          "height": 44,
+          "wall_thickness": 3
+        },
+        "source_views": [
+          "view_1"
+        ]
+      },
+      {
+        "id": "op2",
+        "operation": "boolean_subtract",
+        "owner": "main_body",
+        "profile_plane": "XZ",
+        "direction_axis": "Y",
+        "parameters": {
+          "tool_profile": "window_rectangle",
+          "position": "centered_horizontal",
+          "vertical_position": "centered_vertical"
+        },
+        "source_views": [
+          "view_2"
+        ]
+      }
+    ],
+    "unresolved_constraints": []
+  }
+}

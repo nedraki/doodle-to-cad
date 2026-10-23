@@ -1,0 +1,754 @@
+{
+  "drawing": "003_front_grille_multiview",
+  "backend": "openscad",
+  "trial": 1,
+  "submitted_at": "2026-10-22T23:41:41.343140+00:00",
+  "finished_at": "2026-10-22T23:46:16.219615+00:00",
+  "checks": {
+    "build_success": true,
+    "extents_pass": false,
+    "genus_pass": false,
+    "volume_pass": false,
+    "supplied_dimension_pass": false,
+    "fidelity_pass": false,
+    "overall_pass": false,
+    "not_applicable": []
+  },
+  "run_id": "d4b44ee63315",
+  "wall_seconds": 274.9,
+  "job_status": "done",
+  "error": null,
+  "questions_asked": 0,
+  "question_kinds": [],
+  "build": {
+    "watertight": true,
+    "components": 1,
+    "genus": 0,
+    "extents_mm": [
+      123.077,
+      75.693,
+      7.52
+    ],
+    "volume_mm3": 54971.4,
+    "sha256": "394df7bcd7a205acfd3615270705c1c7586fff0dd60d7cb30596050a05ab9a8b",
+    "bytes": 6977
+  },
+  "fidelity": {
+    "scores": {
+      "front": 0.422,
+      "top": 0.249
+    },
+    "pass": false,
+    "reason": null,
+    "topology": {
+      "front": {
+        "expected": 9,
+        "actual": 3,
+        "position_fidelity": 0.111
+      },
+      "top": {
+        "expected": 0,
+        "actual": 0,
+        "position_fidelity": null
+      }
+    }
+  },
+  "orientation_diagnostic": {
+    "metric": "silhouette_iou_joint_cube_rotation_v1",
+    "status": "diagnostic_only",
+    "identity": {
+      "rotation": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "scores": {
+        "front": 0.08650742414460942,
+        "top": 0.04969439277172469
+      },
+      "minimum_iou": 0.04969439277172469,
+      "mean_iou": 0.06810090845816705
+    },
+    "registered": {
+      "rotation": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          -1
+        ],
+        [
+          0,
+          1,
+          0
+        ]
+      ],
+      "scores": {
+        "front": 0.6825878190548396,
+        "top": 0.4954545454545455
+      },
+      "minimum_iou": 0.4954545454545455,
+      "mean_iou": 0.5890211822546925
+    },
+    "candidates": [
+      {
+        "rotation": [
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ],
+        "scores": {
+          "front": 0.08650742414460942,
+          "top": 0.04969439277172469
+        },
+        "minimum_iou": 0.04969439277172469,
+        "mean_iou": 0.06810090845816705
+      },
+      {
+        "rotation": [
+          [
+            -1,
+            0,
+            0
+          ],
+          [
+            0,
+            -1,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ],
+        "scores": {
+          "front": 0.08650742414460942,
+          "top": 0.054090061284305886
+        },
+        "minimum_iou": 0.054090061284305886,
+        "mean_iou": 0.07029874271445766
+      },
+      {
+        "rotation": [
+          [
+            -1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            -1
+          ],
+          [
+            0,
+            -1,
+            0
+          ]
+        ],
+        "scores": {
+          "front": 0.5124829777576033,
+          "top": 0.4954545454545455
+        },
+        "minimum_iou": 0.4954545454545455,
+        "mean_iou": 0.5039687616060744
+      },
+      {
+        "rotation": [
+          [
+            -1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            0
+          ]
+        ],
+        "scores": {
+          "front": 0.681910055583628,
+          "top": 0.4954545454545455
+        },
+        "minimum_iou": 0.4954545454545455,
+        "mean_iou": 0.5886823005190868
+      },
+      {
+        "rotation": [
+          [
+            -1,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            -1
+          ]
+        ],
+        "scores": {
+          "front": 0.08650742414460942,
+          "top": 0.04942864735583311
+        },
+        "minimum_iou": 0.04942864735583311,
+        "mean_iou": 0.06796803575022127
+      },
+      {
+        "rotation": [
+          [
+            0,
+            -1,
+            0
+          ],
+          [
+            -1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            -1
+          ]
+        ],
+        "scores": {
+          "front": 0.1394422310756972,
+          "top": 0.02943474863245637
+        },
+        "minimum_iou": 0.02943474863245637,
+        "mean_iou": 0.08443848985407679
+      },
+      {
+        "rotation": [
+          [
+            0,
+            -1,
+            0
+          ],
+          [
+            0,
+            0,
+            -1
+          ],
+          [
+            1,
+            0,
+            0
+          ]
+        ],
+        "scores": {
+          "front": 0.42698072805139187,
+          "top": 0.27525252525252525
+        },
+        "minimum_iou": 0.27525252525252525,
+        "mean_iou": 0.35111662665195853
+      },
+      {
+        "rotation": [
+          [
+            0,
+            -1,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ],
+          [
+            -1,
+            0,
+            0
+          ]
+        ],
+        "scores": {
+          "front": 0.4230769230769231,
+          "top": 0.27525252525252525
+        },
+        "minimum_iou": 0.27525252525252525,
+        "mean_iou": 0.34916472416472416
+      },
+      {
+        "rotation": [
+          [
+            0,
+            -1,
+            0
+          ],
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ],
+        "scores": {
+          "front": 0.1394422310756972,
+          "top": 0.029404111371324485
+        },
+        "minimum_iou": 0.029404111371324485,
+        "mean_iou": 0.08442317122351084
+      },
+      {
+        "rotation": [
+          [
+            0,
+            0,
+            -1
+          ],
+          [
+            -1,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0
+          ]
+        ],
+        "scores": {
+          "front": 0.1058893515764426,
+          "top": 0.015432098765432098
+        },
+        "minimum_iou": 0.015432098765432098,
+        "mean_iou": 0.060660725170937346
+      },
+      {
+        "rotation": [
+          [
+            0,
+            0,
+            -1
+          ],
+          [
+            0,
+            -1,
+            0
+          ],
+          [
+            -1,
+            0,
+            0
+          ]
+        ],
+        "scores": {
+          "front": 0.05385097056981841,
+          "top": 0.018145161290322582
+        },
+        "minimum_iou": 0.018145161290322582,
+        "mean_iou": 0.035998065930070496
+      },
+      {
+        "rotation": [
+          [
+            0,
+            0,
+            -1
+          ],
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            1,
+            0,
+            0
+          ]
+        ],
+        "scores": {
+          "front": 0.05385097056981841,
+          "top": 0.018145161290322582
+        },
+        "minimum_iou": 0.018145161290322582,
+        "mean_iou": 0.035998065930070496
+      },
+      {
+        "rotation": [
+          [
+            0,
+            0,
+            -1
+          ],
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            -1,
+            0
+          ]
+        ],
+        "scores": {
+          "front": 0.1058893515764426,
+          "top": 0.015432098765432098
+        },
+        "minimum_iou": 0.015432098765432098,
+        "mean_iou": 0.060660725170937346
+      },
+      {
+        "rotation": [
+          [
+            0,
+            0,
+            1
+          ],
+          [
+            -1,
+            0,
+            0
+          ],
+          [
+            0,
+            -1,
+            0
+          ]
+        ],
+        "scores": {
+          "front": 0.1058893515764426,
+          "top": 0.015432098765432098
+        },
+        "minimum_iou": 0.015432098765432098,
+        "mean_iou": 0.060660725170937346
+      },
+      {
+        "rotation": [
+          [
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            -1,
+            0
+          ],
+          [
+            1,
+            0,
+            0
+          ]
+        ],
+        "scores": {
+          "front": 0.05385097056981841,
+          "top": 0.018145161290322582
+        },
+        "minimum_iou": 0.018145161290322582,
+        "mean_iou": 0.035998065930070496
+      },
+      {
+        "rotation": [
+          [
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            -1,
+            0,
+            0
+          ]
+        ],
+        "scores": {
+          "front": 0.05385097056981841,
+          "top": 0.018145161290322582
+        },
+        "minimum_iou": 0.018145161290322582,
+        "mean_iou": 0.035998065930070496
+      },
+      {
+        "rotation": [
+          [
+            0,
+            0,
+            1
+          ],
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0
+          ]
+        ],
+        "scores": {
+          "front": 0.1058893515764426,
+          "top": 0.015432098765432098
+        },
+        "minimum_iou": 0.015432098765432098,
+        "mean_iou": 0.060660725170937346
+      },
+      {
+        "rotation": [
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            -1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ],
+        "scores": {
+          "front": 0.1394422310756972,
+          "top": 0.029411764705882353
+        },
+        "minimum_iou": 0.029411764705882353,
+        "mean_iou": 0.08442699789078978
+      },
+      {
+        "rotation": [
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            -1
+          ],
+          [
+            -1,
+            0,
+            0
+          ]
+        ],
+        "scores": {
+          "front": 0.4215916364412204,
+          "top": 0.27525252525252525
+        },
+        "minimum_iou": 0.27525252525252525,
+        "mean_iou": 0.3484220808468728
+      },
+      {
+        "rotation": [
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ],
+          [
+            1,
+            0,
+            0
+          ]
+        ],
+        "scores": {
+          "front": 0.4264013692768507,
+          "top": 0.27525252525252525
+        },
+        "minimum_iou": 0.27525252525252525,
+        "mean_iou": 0.350826947264688
+      },
+      {
+        "rotation": [
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            -1
+          ]
+        ],
+        "scores": {
+          "front": 0.1394422310756972,
+          "top": 0.02938117524700988
+        },
+        "minimum_iou": 0.02938117524700988,
+        "mean_iou": 0.08441170316135355
+      },
+      {
+        "rotation": [
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            -1,
+            0
+          ],
+          [
+            0,
+            0,
+            -1
+          ]
+        ],
+        "scores": {
+          "front": 0.08650742414460942,
+          "top": 0.05324813631522897
+        },
+        "minimum_iou": 0.05324813631522897,
+        "mean_iou": 0.0698777802299192
+      },
+      {
+        "rotation": [
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            -1
+          ],
+          [
+            0,
+            1,
+            0
+          ]
+        ],
+        "scores": {
+          "front": 0.6825878190548396,
+          "top": 0.4954545454545455
+        },
+        "minimum_iou": 0.4954545454545455,
+        "mean_iou": 0.5890211822546925
+      },
+      {
+        "rotation": [
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            -1,
+            0
+          ]
+        ],
+        "scores": {
+          "front": 0.5114538444091631,
+          "top": 0.4954545454545455
+        },
+        "minimum_iou": 0.4954545454545455,
+        "mean_iou": 0.5034541949318543
+      }
+    ]
+  },
+  "product": {
+    "success": false,
+    "accepted": false,
+    "status": null,
+    "score": 76.2,
+    "projection_status": null,
+    "geometry_status": null,
+    "failures": [
+      "degenerate or implausible axis dimensions: Y=75.693 mm vs expected 7.52 mm, Z=7.52 mm vs expected 78.83 mm",
+      "required internal profiles are missing: front demands 9, renders 3; best rendered view has 3. Missing at these view-local centres \u2014 add cutters there: (u=0.304,v=0.42); (u=0.369,v=0.423); (u=0.434,v=0.425); (u=0.629,v=0.426); (u=0.499,v=0.43); (u=0.694,v=0.441).",
+      "openings do not go through the solid: the drawing demands 9 openings across the registered views (strongest: front) but the mesh has 0 true through-holes \u2014 the rendered openings are blind pockets or edge notches; cut all the way through the wall",
+      "CAD projections poorly match the drawing: front similarity 0.42, top similarity 0.25 (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly.",
+      "features exist but sit at the wrong positions in front view(s): match each opening's location (u,v within the outer profile) to the drawing; check the cad_mapping signs (front: u->+X v->-Z; top: u->+X v->-Y i.e. sheet-down is the FRONT of the part)"
+    ]
+  },
+  "attempts": {
+    "count": 3,
+    "recovered": false,
+    "corrections": null,
+    "selected": 1
+  },
+  "unsupported": {
+    "flag": false,
+    "code": null
+  },
+  "edit": {
+    "available": true,
+    "ok": true,
+    "seconds": 0.54,
+    "param": "width",
+    "old": 126.0,
+    "new": 151.2,
+    "message": null
+  },
+  "targeted": {
+    "available": false,
+    "ok": false,
+    "seconds": null,
+    "operation": null,
+    "value": null,
+    "message": "not_applicable: the product requires a BRep result for targeted edits"
+  }
+}

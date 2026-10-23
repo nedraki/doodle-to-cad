@@ -1,0 +1,15 @@
+{
+  "action": "repair_scad",
+  "problems": [
+    "Geometry orientation is incorrect: wheel axis is Z, but spec requires Y axis.",
+    "Front view projection is a thin strip (aspect 12.5) instead of a circle (aspect ~1.0).",
+    "Dimensions mismatch: X=120mm (should be ~27.8mm), Y=119mm (should be 120mm)."
+  ],
+  "preserve": [
+    "Rim, hub, and spoke dimensions (OD 120, thickness 9.5, hub 30, spokes 8).",
+    "Radial symmetry and spoke distribution logic.",
+    "Overall topology (watertight union)."
+  ],
+  "instructions": "Rotate the entire wheel geometry so the central axis aligns with the Y-axis. Ensure the wheel lies flat in the XZ plane (width along X, thickness along Y, height along Z). Verify the front view (XZ projection) renders as a circle with spokes, and the right view (YZ projection) renders as a thin rectangle.",
+  "confidence": 1.0
+}

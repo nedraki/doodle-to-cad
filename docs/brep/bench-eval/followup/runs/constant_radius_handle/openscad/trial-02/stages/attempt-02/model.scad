@@ -1,0 +1,56 @@
+/* doodle-meta {"version":1,"parameters":{"rod_diameter":{"label":"Rod Diameter","description":"Diameter of the circular cross-section of the handle","unit":"mm","feature":"rod_profile"},"arch_radius":{"label":"Arch Radius","description":"Radius of the semi-circular bend (centerline)","unit":"mm","feature":"arch"},"leg_length":{"label":"Leg Length","description":"Length of the straight vertical legs","unit":"mm","feature":"legs"}},"features":{"rod_profile":{"kind":"region","label":"Rod Cross-section","min":[0,0,0],"max":[0,0,0]},"arch":{"kind":"region","label":"Arch","min":[0,0,0],"max":[0,0,0]},"legs":{"kind":"region","label":"Legs","min":[0,0,0],"max":[0,0,0]}}} */
+
+// Parameters
+rod_diameter = 8;
+arch_radius = 20;
+leg_length = 30;
+
+// Derived dimensions
+r = rod_diameter / 2;
+R = arch_radius;
+L = leg_length;
+
+// The handle is oriented with the U-shape in the XZ plane.
+// Legs are vertical (along Z).
+// Rod extends along Y.
+// Bottom of legs at Z=0.
+
+module handle() {
+    // Left Leg
+    // Cylinder axis is Z. Centered at Z=L/2 to span 0 to L.
+    translate([-R, 0, L/2])
+    cylinder(h=L, r=r, center=true);
+
+    // Right Leg
+    translate([R, 0, L/2])
+    cylinder(h=L, r=r, center=true);
+
+    // Arch (Upper half of torus)
+    // Torus centered at (0,0,L)
+    // Rotate 90 deg around X to put ring in XZ plane (axis Y)
+    difference() {
+        translate([0, 0, L])
+        rotate([90, 0, 0])
+        torus(R, r);
+        
+        // Cut off the bottom half (Z < L)
+        // The torus is centered at Z=L.
+        // We remove everything below Z=L.
+        translate([-100, -100, L - 100])
+        cube([200, 200, 100]);
+    }
+}
+
+// Instantiate
+handle();
+
+// Helper module for Torus
+module torus(R, r) {
+    // Create a circle in the XZ plane (relative to local origin)
+    // and revolve it around the Z axis.
+    // The circle is centered at (R, 0, 0) in the XZ plane.
+    // rotate_extrude revolves around Z.
+    translate([R, 0, 0])
+    rotate_extrude()
+    circle(r=r);
+}

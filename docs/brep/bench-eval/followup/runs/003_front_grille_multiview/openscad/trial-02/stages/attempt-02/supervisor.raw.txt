@@ -1,0 +1,14 @@
+{
+  "action": "repair_scad",
+  "problems": [
+    "Outer profile is a simple rounded rectangle, missing the stepped 'shoulders' (narrower top section) seen in the drawing.",
+    "Headlight cutouts are positioned too low, overlapping with the vertical slots instead of being in the lower wide section.",
+    "Vertical slots are too tall, extending into the headlight region; they should be confined to the upper narrow section."
+  ],
+  "preserve": [
+    "Overall dimensions (126x78.83x7.52).",
+    "Slot count (7) and general spacing.",
+    "Headlight diameter and general lateral placement."
+  ],
+  "instructions": "Modify the `grille_body` module to create a stepped profile: a wide lower section (approx. 40% height) and a narrower upper section (approx. 60% height) with rounded corners. Adjust `headlight_z_offset` to center the circles in the lower section (approx. Z=20). Adjust `slot_height` and `slot_z` to center the slots in the upper section (approx. Z=50), ensuring they do not overlap the headlights."
+}

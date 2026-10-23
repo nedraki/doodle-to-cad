@@ -1,0 +1,165 @@
+{
+  "attempt": 1,
+  "action": "generate",
+  "preflight": {
+    "passed": true,
+    "errors": [],
+    "warnings": [],
+    "expected_subtractive_feature_groups": 0
+  },
+  "compiler_repairs": [],
+  "uniform_scale": {
+    "factor": 1.1277,
+    "before_max_mm": 47.884,
+    "after_max_mm": 48.923,
+    "params": [
+      "leg_length",
+      "bar_diameter"
+    ]
+  },
+  "evaluation": {
+    "score": 74.0,
+    "valid_mesh": false,
+    "accepted": false,
+    "mandatory_gates": {
+      "compiled": true,
+      "topology": false,
+      "dimensions": false,
+      "shape_sanity": false,
+      "features": true,
+      "openings_through": true,
+      "projections": false,
+      "build_envelope": true
+    },
+    "scores": {
+      "topology": 27,
+      "dimensions": 18.1,
+      "features": 20,
+      "projections": 8.9
+    },
+    "projection_similarity": {
+      "front": 0.19,
+      "top": 1.0
+    },
+    "profile_topology": {
+      "front": {
+        "source_internal_profiles": 0,
+        "rendered_internal_profiles": 3,
+        "crop_internal_profiles": 0,
+        "source_aspect": 4.35,
+        "rendered_aspect": 1.443,
+        "source_opening_centroids": [],
+        "rendered_opening_centroids": [
+          [
+            0.731,
+            0.497
+          ],
+          [
+            0.538,
+            0.497
+          ],
+          [
+            0.333,
+            0.497
+          ]
+        ]
+      },
+      "top": {
+        "source_internal_profiles": 0,
+        "rendered_internal_profiles": 0,
+        "crop_internal_profiles": 0,
+        "source_aspect": 1.075,
+        "rendered_aspect": 5.513,
+        "source_opening_centroids": [],
+        "rendered_opening_centroids": []
+      }
+    },
+    "demanded_openings": {
+      "total": 0,
+      "per_view": {
+        "front": 0,
+        "top": 0
+      },
+      "sheet_total": 0,
+      "registration_gap": 0
+    },
+    "failures": [
+      "mesh has 2 disconnected components",
+      "maximum dimension is 48.923 mm; target is 54 mm (tolerance 5%)",
+      "degenerate or implausible axis dimensions: Y=8.972 mm vs expected 54 mm",
+      "CAD projections poorly match the drawing: front similarity 0.19 (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly."
+    ]
+  },
+  "mesh_health": {
+    "watertight": true,
+    "components": 2,
+    "triangles": 112,
+    "through_holes": 0,
+    "extents_mm": [
+      48.923,
+      8.972,
+      33.832
+    ],
+    "volume_mm3": 4200.062
+  },
+  "build": {
+    "version": 1,
+    "backend": "openscad",
+    "source_format": "openscad",
+    "ok": true,
+    "units": "mm",
+    "axes": {
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    },
+    "views": [
+      "isometric",
+      "front",
+      "top",
+      "right"
+    ],
+    "measurements": {
+      "watertight": true,
+      "components": 2,
+      "triangles": 112,
+      "through_holes": 0,
+      "extents_mm": [
+        48.923,
+        8.972,
+        33.832
+      ],
+      "volume_mm3": 4200.062
+    },
+    "diagnostics": [],
+    "drawing_evaluated": false
+  },
+  "compile_log": "WARNING: Ignoring unknown module 'torus' in file model.scad, line 415\nGeometries in cache: 7\nGeometry cache size in bytes: 8392\nCGAL Polyhedrons in cache: 1\nCGAL cache size in bytes: 81728\nTotal rendering time: 0:00:00.024\n   Top level object is a 3D object:\n   Simple:        yes\n   Vertices:       60\n   Halfedges:     180\n   Edges:          90\n   Halffacets:     68\n   Facets:         34\n   Volumes:         3",
+  "files": {
+    "scad": "attempt-01/model.scad",
+    "stl": "attempt-01/uniform-scaled/model.stl",
+    "views": {
+      "isometric": "attempt-01/uniform-scaled/view-isometric.png",
+      "front": "attempt-01/uniform-scaled/view-front.png",
+      "top": "attempt-01/uniform-scaled/view-top.png",
+      "right": "attempt-01/uniform-scaled/view-right.png"
+    }
+  },
+  "supervisor": {
+    "action": "repair_scad",
+    "problems": [
+      "Mesh has 2 disconnected components (legs only, bend missing)",
+      "Unknown module 'torus' caused bend to fail silently",
+      "Front view shows two separate bars instead of U-shape",
+      "Dimensions incorrect due to missing bend geometry"
+    ],
+    "preserve": [
+      "Leg positions at X = +/- 20",
+      "Leg length 30mm",
+      "Bar diameter 8mm",
+      "Overall orientation (U-shape in XZ plane)"
+    ],
+    "instructions": "Replace the invalid 'torus' module with a valid construction for the bend. Use 'rotate_extrude' on a circle profile offset by the bend radius, or construct the bend using difference of cylinders/torus primitives if available. Ensure the bend connects the tops of the two legs to form a single continuous U-shape. Verify the total height matches the spec (approx 54mm) and the mesh is watertight with 1 component.",
+    "confidence": 1.0
+  }
+}

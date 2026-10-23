@@ -1,0 +1,70 @@
+{
+  "view_frame": "The drawing presents a flat mounting plate. The primary view is the Front view (XZ plane), showing the rectangular outline, two circular holes, and a central slot. A secondary view at the top (likely Top or Bottom) shows the plate's thickness profile. The world axes are defined as X (width, horizontal), Y (depth/thickness, perpendicular to the face), and Z (height, vertical).",
+  "features": [
+    {
+      "id": "plate_body",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "ASSUMED_WIDTH",
+        "ASSUMED_HEIGHT",
+        "3"
+      ],
+      "placement": "Centered at (0, 0, 0). Extends from -ASSUMED_WIDTH/2 to +ASSUMED_WIDTH/2 in X, -ASSUMED_HEIGHT/2 to +ASSUMED_HEIGHT/2 in Z, and 0 to 3 in Y.",
+      "evidence": "The main rectangular outline in the front view and the thin strip in the top view define the plate body. The thickness is established by the user answer as 3mm."
+    },
+    {
+      "id": "hole_left",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "Y",
+      "dimensions": [
+        "ASSUMED_HOLE_RADIUS"
+      ],
+      "placement": "Centered at (-ASSUMED_WIDTH/4, 1.5, ASSUMED_HEIGHT/4). Axis is along Y. Extends from Y=0 to Y=3.",
+      "evidence": "A circular mark in the upper-left quadrant of the front view indicates a hole."
+    },
+    {
+      "id": "hole_right",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "Y",
+      "dimensions": [
+        "ASSUMED_HOLE_RADIUS"
+      ],
+      "placement": "Centered at (ASSUMED_WIDTH/4, 1.5, -ASSUMED_HEIGHT/4). Axis is along Y. Extends from Y=0 to Y=3.",
+      "evidence": "A circular mark in the lower-right quadrant of the front view indicates a hole."
+    },
+    {
+      "id": "center_slot",
+      "shape": "slot",
+      "section": "stadium",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "ASSUMED_SLOT_WIDTH",
+        "ASSUMED_SLOT_LENGTH"
+      ],
+      "placement": "Centered at (0, 1.5, 0). Extends from -ASSUMED_SLOT_LENGTH/2 to +ASSUMED_SLOT_LENGTH/2 in X, and -ASSUMED_SLOT_WIDTH/2 to +ASSUMED_SLOT_WIDTH/2 in Z. Extends from Y=0 to Y=3.",
+      "evidence": "A rounded rectangular shape in the center of the front view indicates a slot."
+    }
+  ],
+  "connections": [
+    "hole_left is subtracted from plate_body",
+    "hole_right is subtracted from plate_body",
+    "center_slot is subtracted from plate_body"
+  ],
+  "edit_rules": [
+    "Changing ASSUMED_WIDTH or ASSUMED_HEIGHT scales the plate outline.",
+    "Changing ASSUMED_HOLE_RADIUS scales the holes.",
+    "Changing ASSUMED_SLOT_WIDTH or ASSUMED_SLOT_LENGTH scales the slot.",
+    "Changing the plate thickness (3mm) updates the Y-extent of all features."
+  ],
+  "unresolved": [
+    "ASSUMED_WIDTH: The overall width of the plate is not dimensioned.",
+    "ASSUMED_HEIGHT: The overall height of the plate is not dimensioned.",
+    "ASSUMED_HOLE_RADIUS: The diameter of the holes is not dimensioned.",
+    "ASSUMED_SLOT_WIDTH: The width of the slot is not dimensioned.",
+    "ASSUMED_SLOT_LENGTH: The length of the slot is not dimensioned."
+  ]
+}

@@ -1,0 +1,87 @@
+```json
+{
+  "view_frame": "The drawing presents two views of an L-angle bracket. The top view (upper rectangle) represents the horizontal leg, showing its planar extent in the XY plane. The bottom view (lower rectangle with holes) represents the vertical leg, showing its face in the XZ plane. The world origin is at the bottom-left corner of the vertical leg. X is width (left to right), Y is depth (front to back), and Z is height (bottom to top).",
+  "features": [
+    {
+      "id": "vertical_leg",
+      "shape": "box",
+      "section": "rectangle",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "width: ASSUMED 40mm",
+        "height: ASSUMED 40mm",
+        "thickness: ASSUMED 5mm"
+      ],
+      "placement": "Starts at (0,0,0) and extends to (40, 5, 40).",
+      "evidence": "Lower rectangle in the drawing representing the vertical face of the bracket."
+    },
+    {
+      "id": "horizontal_leg",
+      "shape": "box",
+      "section": "rectangle",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "width: ASSUMED 40mm",
+        "depth: ASSUMED 40mm",
+        "thickness: ASSUMED 5mm"
+      ],
+      "placement": "Starts at (0,0,35) and extends to (40, 40, 40).",
+      "evidence": "Upper rectangle in the drawing representing the horizontal face of the bracket."
+    },
+    {
+      "id": "hole_1",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "Y",
+      "dimensions": [
+        "diameter: ASSUMED 5mm"
+      ],
+      "placement": "Centered at (10, 0, 20), axis along Y.",
+      "evidence": "Leftmost circular mark in the lower view."
+    },
+    {
+      "id": "hole_2",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "Y",
+      "dimensions": [
+        "diameter: ASSUMED 5mm"
+      ],
+      "placement": "Centered at (20, 0, 20), axis along Y.",
+      "evidence": "Middle circular mark in the lower view."
+    },
+    {
+      "id": "hole_3",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "Y",
+      "dimensions": [
+        "diameter: ASSUMED 5mm"
+      ],
+      "placement": "Centered at (30, 0, 20), axis along Y.",
+      "evidence": "Rightmost circular mark in the lower view."
+    }
+  ],
+  "connections": [
+    "vertical_leg and horizontal_leg share the top edge of the vertical leg (Z=35 to 40) and the back edge of the horizontal leg (Y=0 to 5).",
+    "holes 1, 2, and 3 are subtracted from the vertical_leg."
+  ],
+  "edit_rules": [
+    "Changing the width of the bracket must update the width of both legs and the X-spacing of the holes.",
+    "Changing the height of the bracket must update the height of the vertical leg and the Z-position of the holes.",
+    "Changing the depth of the bracket must update the depth of the horizontal leg.",
+    "Changing the thickness of the bracket must update the thickness of both legs.",
+    "Changing the hole diameter must update the diameter of all three holes."
+  ],
+  "unresolved": [
+    "The drawing lacks explicit dimensions for width, height, depth, thickness, and hole diameter. All dimensions are currently assumed based on visual proportions.",
+    "The drawing does not specify if the holes are through-holes or recesses. They are assumed to be through-holes."
+  ],
+  "clarification": {
+    "feature_id": "hole_1",
+    "feature_label": "Leftmost hole in the vertical leg",
+    "reason": "The drawing does not specify if the holes are through-holes or recesses.",
+    "kind": "opening_extent"
+  }
+}
+```

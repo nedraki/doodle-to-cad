@@ -1,0 +1,48 @@
+[
+  {
+    "question": {
+      "feature_id": "enclosure_body",
+      "feature_label": "Open-top enclosure walls and floor",
+      "reason": "The drawing shows the outer envelope and the window but does not specify the thickness of the walls or the floor.",
+      "kind": "uniform_thickness",
+      "id": "37b10c45d62b4d459fd7cf5479cd320c",
+      "text": "Wall and floor thickness (mm)?",
+      "maximum_thickness_mm": 120.0
+    },
+    "status": "answered",
+    "answer": {
+      "question_id": "37b10c45d62b4d459fd7cf5479cd320c",
+      "feature_id": "enclosure_body",
+      "kind": "uniform_thickness",
+      "thickness_mm": 3
+    }
+  },
+  {
+    "question": {
+      "feature_id": "enclosure_body",
+      "feature_label": "Enclosure Body",
+      "reason": "The drawing does not specify the outer dimensions (width, depth, height) of the enclosure.",
+      "kind": "opening_extent",
+      "id": "94f5531393db405aa110ba97c11219dc",
+      "text": "Should this hole go all the way through the part?",
+      "maximum_depth_mm": 120.0,
+      "choices": [
+        {
+          "id": "through",
+          "label": "Yes \u2014 make a through-hole"
+        },
+        {
+          "id": "recess",
+          "label": "No \u2014 leave a bottom"
+        }
+      ]
+    },
+    "status": "answered",
+    "answer": {
+      "question_id": "94f5531393db405aa110ba97c11219dc",
+      "feature_id": "enclosure_body",
+      "kind": "opening_extent",
+      "choice": "through"
+    }
+  }
+]

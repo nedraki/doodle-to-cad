@@ -1,0 +1,102 @@
+```json
+{
+  "version": 1,
+  "object_hypothesis": "Rectangular frame or block with a central rectangular opening",
+  "features": [
+    {
+      "id": "f_outer_top",
+      "type": "body",
+      "description": "Outer rectangular boundary in the top view",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_4"
+        }
+      ],
+      "reason": "Closed polygon detected in the top view (view_1) representing the object's footprint."
+    },
+    {
+      "id": "f_outer_front",
+      "type": "body",
+      "description": "Outer rectangular boundary in the front view",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_0"
+        }
+      ],
+      "reason": "Closed polygon detected in the front view (view_2) representing the object's elevation."
+    },
+    {
+      "id": "f_inner_front",
+      "type": "opening",
+      "description": "Internal rectangular contour in the front view",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_2"
+        }
+      ],
+      "reason": "Closed polygon detected inside the front view outer boundary, indicating a hole, pocket, or recess."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "r_align_x",
+      "type": "position",
+      "features": [
+        "f_outer_top",
+        "f_outer_front"
+      ],
+      "description": "Top and front views share horizontal alignment",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_4"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_0"
+        }
+      ],
+      "reason": "Both views map the horizontal axis to +X, suggesting they represent the same width of the object."
+    },
+    {
+      "id": "r_hollow",
+      "type": "hollow",
+      "features": [
+        "f_outer_front",
+        "f_inner_front"
+      ],
+      "description": "Front view shows an internal void within the outer boundary",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_0"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_2"
+        }
+      ],
+      "reason": "The internal contour (contour_2) is spatially contained within the outer contour (contour_0) in the front view."
+    }
+  ],
+  "assumptions": [
+    "The two views represent orthogonal projections (Top and Front) of a single object.",
+    "The internal contour in the front view represents a through-hole or a pocket."
+  ],
+  "unresolved": [
+    "The top view (view_1) lacks an internal contour corresponding to the front view's opening; it is unclear if the opening is hidden or if the views are inconsistent.",
+    "The depth of the internal feature in the front view is unknown (through-hole vs. blind pocket)."
+  ],
+  "conflicts": [
+    "The front view (view_2) displays a distinct internal rectangular contour, but the top view (view_1) shows only a single outer boundary without corresponding internal lines."
+  ]
+}
+```

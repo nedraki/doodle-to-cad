@@ -1,0 +1,33 @@
+{
+  "path": "drawing-to-brep",
+  "backend": "usd-brep",
+  "prompt_version": "drawing-brep-19",
+  "correction_prompt_version": "construction-numeric-fields-3",
+  "max_construction_corrections": 2,
+  "construction_plan_version": "construction-intent-12",
+  "model": "local-inference-lab/Qwen3.8-Flash-Next-NVFP4",
+  "notes": "Open-top enclosure with front window",
+  "maximum_dimension_mm": 120.0,
+  "controls": {
+    "object_type_hint": "",
+    "method": "3D print",
+    "primary_view": "front",
+    "projection_standard": "third-angle",
+    "strict_watertight": true,
+    "refine_mode": "regularize"
+  },
+  "generated_scad": false,
+  "drawing_fidelity_verified": false,
+  "attempts": [
+    {
+      "attempt": 1,
+      "schema_valid": true
+    }
+  ],
+  "construction_attempts": [
+    {
+      "attempt": 1,
+      "status": "built"
+    }
+  ]
+}

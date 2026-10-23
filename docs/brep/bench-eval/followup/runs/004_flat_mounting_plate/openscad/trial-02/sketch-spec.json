@@ -1,0 +1,423 @@
+{
+  "object": "Flat mounting plate with two holes and a center slot",
+  "object_count": 1,
+  "dimensionality": "flat",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "front",
+      "sheet_region": "view_2 (lower)",
+      "constrains": "Primary geometry: outer rectangular profile (X/Z plane), two circular holes, and central slot."
+    },
+    {
+      "direction": "top",
+      "sheet_region": "view_1 (upper)",
+      "constrains": "Thickness (Y-axis) and planar extent (X-axis). Confirms the object is a flat plate."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "plate_body",
+      "description": "Rectangular plate with subtractive features",
+      "material": "generic_plastic"
+    }
+  ],
+  "features": [
+    {
+      "id": "outer_profile",
+      "type": "base_profile",
+      "shape": "rectangle",
+      "source_view": "view_2",
+      "view_local_bbox": [
+        0.0135,
+        0.0164,
+        0.9713,
+        0.9672
+      ],
+      "view_local_center": [
+        0.4992,
+        0.5
+      ],
+      "polygon_view_normalized": [
+        [
+          0.9747,
+          0.0328
+        ],
+        [
+          0.0236,
+          0.0219
+        ],
+        [
+          0.0253,
+          0.9564
+        ],
+        [
+          0.9713,
+          0.9701
+        ]
+      ],
+      "cad_mapping": {
+        "plane": "XZ",
+        "view_axis": "Y",
+        "u_maps_to": "+X",
+        "v_maps_to": "-Z"
+      }
+    },
+    {
+      "id": "hole_left",
+      "type": "through_hole",
+      "shape": "circle",
+      "source_view": "view_2",
+      "view_local_bbox": [
+        0.1233,
+        0.2105,
+        0.0828,
+        0.1338
+      ],
+      "view_local_center": [
+        0.1647,
+        0.2775
+      ],
+      "polygon_view_normalized": [
+        [
+          0.1588,
+          0.2105
+        ],
+        [
+          0.1571,
+          0.235
+        ],
+        [
+          0.1233,
+          0.2734
+        ],
+        [
+          0.1554,
+          0.3088
+        ],
+        [
+          0.1622,
+          0.3416
+        ],
+        [
+          0.1976,
+          0.3061
+        ],
+        [
+          0.2044,
+          0.276
+        ],
+        [
+          0.1689,
+          0.3088
+        ],
+        [
+          0.1368,
+          0.2734
+        ],
+        [
+          0.1672,
+          0.2406
+        ],
+        [
+          0.1807,
+          0.2459
+        ],
+        [
+          0.1807,
+          0.2734
+        ],
+        [
+          0.1976,
+          0.2541
+        ],
+        [
+          0.1959,
+          0.2324
+        ]
+      ],
+      "cad_mapping": {
+        "plane": "XZ",
+        "view_axis": "Y",
+        "u_maps_to": "+X",
+        "v_maps_to": "-Z"
+      }
+    },
+    {
+      "id": "hole_right",
+      "type": "through_hole",
+      "shape": "circle",
+      "source_view": "view_2",
+      "view_local_bbox": [
+        0.7872,
+        0.6639,
+        0.0861,
+        0.1311
+      ],
+      "view_local_center": [
+        0.8302,
+        0.7295
+      ],
+      "polygon_view_normalized": [
+        [
+          0.8497,
+          0.6639
+        ],
+        [
+          0.8412,
+          0.6777
+        ],
+        [
+          0.8142,
+          0.6803
+        ],
+        [
+          0.7872,
+          0.7268
+        ],
+        [
+          0.7956,
+          0.7432
+        ],
+        [
+          0.7905,
+          0.757
+        ],
+        [
+          0.8041,
+          0.757
+        ],
+        [
+          0.8125,
+          0.7924
+        ],
+        [
+          0.8226,
+          0.7787
+        ],
+        [
+          0.8378,
+          0.7898
+        ],
+        [
+          0.8716,
+          0.7488
+        ],
+        [
+          0.848,
+          0.7242
+        ],
+        [
+          0.8581,
+          0.7049
+        ],
+        [
+          0.8497,
+          0.6914
+        ]
+      ],
+      "cad_mapping": {
+        "plane": "XZ",
+        "view_axis": "Y",
+        "u_maps_to": "+X",
+        "v_maps_to": "-Z"
+      }
+    },
+    {
+      "id": "center_slot",
+      "type": "through_slot",
+      "shape": "rounded_rectangle",
+      "source_view": "view_2",
+      "view_local_bbox": [
+        0.3412,
+        0.4209,
+        0.299,
+        0.1695
+      ],
+      "view_local_center": [
+        0.4907,
+        0.5055
+      ],
+      "polygon_view_normalized": [
+        [
+          0.6385,
+          0.4918
+        ],
+        [
+          0.5997,
+          0.4262
+        ],
+        [
+          0.6301,
+          0.4973
+        ],
+        [
+          0.6115,
+          0.552
+        ],
+        [
+          0.3936,
+          0.5629
+        ],
+        [
+          0.3547,
+          0.5111
+        ],
+        [
+          0.3682,
+          0.4455
+        ],
+        [
+          0.5997,
+          0.4537
+        ],
+        [
+          0.3412,
+          0.459
+        ],
+        [
+          0.3936,
+          0.5766
+        ],
+        [
+          0.6233,
+          0.5711
+        ]
+      ],
+      "cad_mapping": {
+        "plane": "XZ",
+        "view_axis": "Y",
+        "u_maps_to": "+X",
+        "v_maps_to": "-Z"
+      }
+    }
+  ],
+  "relations": [
+    {
+      "type": "containment",
+      "parent": "outer_profile",
+      "children": [
+        "hole_left",
+        "hole_right",
+        "center_slot"
+      ]
+    },
+    {
+      "type": "symmetry",
+      "description": "Holes are roughly symmetric about the center vertical axis of the plate."
+    }
+  ],
+  "symmetry": "approximate_bilateral",
+  "repetitions": [
+    {
+      "feature_id": "hole_left",
+      "count": 2,
+      "pattern": "symmetric_pair",
+      "partner": "hole_right"
+    }
+  ],
+  "dimensions": {
+    "max_dimension": 100,
+    "estimated_thickness": "derived_from_top_view_aspect_ratio",
+    "estimated_width": 100,
+    "estimated_height": "derived_from_aspect_ratio",
+    "max_width": 100.0,
+    "max_depth": 9.65,
+    "max_height": 61.98,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "Exact thickness is inferred from the top view aspect ratio (approx 10:1 width to height) relative to the front view width.",
+    "Hole positions are approximate based on normalized view coordinates."
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "The object is a flat plate. The front view (view_2) defines the X/Z profile. The top view (view_1) defines the Y thickness. The holes and slot are treated as through-cuts (subtractive) as per standard mounting plate design.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "extrude",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_1",
+        "operation": "extrude",
+        "profile_plane": "XZ",
+        "direction_axis": "Y",
+        "owner": "plate_body",
+        "parameters": {
+          "profile_source": "outer_profile",
+          "depth": "inferred_thickness",
+          "subtractive_features": [
+            "hole_left",
+            "hole_right",
+            "center_slot"
+          ]
+        },
+        "source_views": [
+          "view_2",
+          "view_1"
+        ]
+      },
+      {
+        "id": "hole_left",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": null
+        },
+        "source_views": []
+      },
+      {
+        "id": "hole_right",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": null
+        },
+        "source_views": []
+      },
+      {
+        "id": "center_slot",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": null
+        },
+        "source_views": []
+      }
+    ],
+    "unresolved_constraints": [
+      "Exact thickness value requires scaling from the top view aspect ratio."
+    ]
+  },
+  "user_intent": {
+    "description": "Flat mounting plate with two holes and a center slot",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "100"
+  },
+  "source_view_group_count": 2,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

@@ -1,0 +1,210 @@
+```json
+{
+  "object": "spoked wheel",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "front",
+      "sheet_region": "view_4",
+      "constrains": "Outer diameter (OD), hub diameter, spoke count, spoke angular distribution, rim thickness"
+    },
+    {
+      "direction": "right",
+      "sheet_region": "view_5",
+      "constrains": "Wheel thickness (width), rim profile depth"
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "wheel_body",
+      "description": "Single watertight solid comprising the outer rim, central hub, and connecting spokes.",
+      "material": "generic_plastic"
+    }
+  ],
+  "features": [
+    {
+      "id": "outer_rim",
+      "type": "cylinder",
+      "parameters": {
+        "diameter": 120,
+        "height": 8,
+        "axis": "Y"
+      },
+      "source_views": [
+        "view_4",
+        "view_5"
+      ]
+    },
+    {
+      "id": "central_hub",
+      "type": "cylinder",
+      "parameters": {
+        "diameter": 30,
+        "height": 8,
+        "axis": "Y"
+      },
+      "source_views": [
+        "view_4"
+      ]
+    },
+    {
+      "id": "spokes",
+      "type": "array",
+      "parameters": {
+        "count": 8,
+        "geometry": "rectangular_prism",
+        "width": 8,
+        "length": "radial",
+        "height": 8
+      },
+      "source_views": [
+        "view_4"
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "type": "concentric",
+      "targets": [
+        "outer_rim",
+        "central_hub"
+      ]
+    },
+    {
+      "type": "connects",
+      "source": "spokes",
+      "target": "outer_rim",
+      "target_2": "central_hub"
+    }
+  ],
+  "symmetry": {
+    "type": "radial",
+    "axis": "Y",
+    "order": 8
+  },
+  "repetitions": [
+    {
+      "feature_id": "spokes",
+      "count": 8,
+      "pattern": "radial_array",
+      "angle_step": 45
+    }
+  ],
+  "dimensions": [
+    {
+      "label": "OD",
+      "value": 120,
+      "unit": "mm",
+      "feature": "outer_rim"
+    },
+    {
+      "label": "Thickness",
+      "value": 8,
+      "unit": "mm",
+      "feature": "wheel_body"
+    },
+    {
+      "label": "Spoke_Count",
+      "value": 8,
+      "unit": "count",
+      "feature": "spokes"
+    }
+  ],
+  "uncertainties": [
+    "Hub diameter is estimated from visual proportion (approx 25% of OD) as no explicit dimension was provided.",
+    "Spoke width is estimated from visual proportion (approx 6-7% of OD) as no explicit dimension was provided."
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "The object is a flat wheel. The front view (view_4) defines the XY profile (spokes, hub, rim). The right view (view_5) defines the thickness (Z-axis in CAD, Y-axis in view mapping). The construction will use a boolean union of the rim, hub, and spokes.",
+  "construction_plan": {
+    "family": "multi_face_union",
+    "operations": [
+      {
+        "id": "op_1",
+        "operation": "create_cylinder",
+        "owner": "outer_rim",
+        "profile_plane": "XZ",
+        "direction_axis": "Y",
+        "parameters": {
+          "radius": 60,
+          "height": 8
+        },
+        "source_views": [
+          "view_4",
+          "view_5"
+        ]
+      },
+      {
+        "id": "op_2",
+        "operation": "create_cylinder",
+        "owner": "central_hub",
+        "profile_plane": "XZ",
+        "direction_axis": "Y",
+        "parameters": {
+          "radius": 15,
+          "height": 8
+        },
+        "source_views": [
+          "view_4"
+        ]
+      },
+      {
+        "id": "op_3",
+        "operation": "create_box",
+        "owner": "spoke_template",
+        "profile_plane": "XZ",
+        "direction_axis": "Y",
+        "parameters": {
+          "length": 45,
+          "width": 8,
+          "height": 8,
+          "position": "radial"
+        },
+        "source_views": [
+          "view_4"
+        ]
+      },
+      {
+        "id": "op_4",
+        "operation": "array_polar",
+        "owner": "spokes",
+        "profile_plane": "XZ",
+        "direction_axis": "Y",
+        "parameters": {
+          "count": 8,
+          "angle": 360,
+          "base_feature": "spoke_template"
+        },
+        "source_views": [
+          "view_4"
+        ]
+      },
+      {
+        "id": "op_5",
+        "operation": "boolean_union",
+        "owner": "wheel_body",
+        "profile_plane": "XZ",
+        "direction_axis": "Y",
+        "parameters": {
+          "targets": [
+            "outer_rim",
+            "central_hub",
+            "spokes"
+          ]
+        },
+        "source_views": [
+          "view_4",
+          "view_5"
+        ]
+      }
+    ],
+    "unresolved_constraints": [
+      "Hub diameter",
+      "Spoke width"
+    ]
+  }
+}
+```

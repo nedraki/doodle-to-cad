@@ -1,0 +1,16 @@
+{
+  "action": "repair_scad",
+  "problems": [
+    "Axis swap: Y is 75.7mm (should be ~7.5mm), Z is 7.5mm (should be ~78.8mm).",
+    "Front view shows a thin strip instead of the grille face; geometry is rotated 90 degrees.",
+    "Openings are not visible in the front projection due to incorrect orientation.",
+    "Top view shows the complex profile instead of a thin rectangle."
+  ],
+  "preserve": [
+    "Outer polygon shape definition.",
+    "Slot and headlight relative positioning logic.",
+    "Overall width dimension (126mm)."
+  ],
+  "instructions": "Fix the coordinate system mapping. The front view must be on the XZ plane (width along X, height along Z) and extruded along Y (thickness). Currently, the code likely extrudes along Z or defines the polygon in XY. Ensure the polygon is defined in XZ, extruded along Y with thickness ~7.5mm. Verify that the cutouts (headlights/slots) are cylinders/cubes aligned along the Y axis to create through-holes visible in the front view.",
+  "confidence": 1.0
+}

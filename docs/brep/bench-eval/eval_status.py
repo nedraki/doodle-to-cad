@@ -52,15 +52,17 @@ def main() -> int:
                   label="2 adversarial selftest (quick)")
     results.append(("selftest", ok))
 
-    ok, out = run(["uv", "run", "pytest", "-q",
-                   str(ROOT / "tests" / "test_bench_eval_fixtures.py")],
+    ok, out = run([py, "-m", "pytest", "-q",
+                   str(ROOT / "tests" / "test_bench_eval_fixtures.py"),
+                   str(ROOT / "tests" / "test_bench_orientation.py"),
+                   str(ROOT / "tests" / "test_supplied_dimension.py")],
                   label="3 evaluator fixture gate")
     results.append(("fixtures", ok))
 
     ok, out = run([py, str(HERE / "reclassify.py")], label="4 reclassify regenerate")
     results.append(("reclassify", ok))
 
-    ok, out = run(["uv", "run", "python", str(HERE / "probes" / "probe_ev7_orientation.py")],
+    ok, out = run([py, str(HERE / "probes" / "probe_ev7_orientation.py")],
                   label="5 EV-7 probe (published numbers)")
     # published probe table (EV7_PROBE.md): guard against silent drift
     for needle in ("best=0.76", "best=0.77", "best=0.78", "best=0.27", "best=0.70"):
@@ -68,6 +70,11 @@ def main() -> int:
             print(f"    DRIFT: probe output missing '{needle}' vs EV7_PROBE.md")
             ok = False
     results.append(("ev7_probe", ok))
+
+    if (HERE / "followup" / "MANIFEST.json").exists():
+        ok, out = run([py, str(HERE / "followup" / "audit.py")],
+                      label="6 follow-up evidence and independent dimensions")
+        results.append(("followup", ok))
 
     # audit re-derived the official check count from bytes — assert parity
     # with the published figure (step 1 prints its own PASS/FAIL lines).

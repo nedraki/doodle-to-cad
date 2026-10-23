@@ -8,13 +8,13 @@ import json, sys
 from pathlib import Path
 import numpy as np
 from PIL import Image, ImageDraw
-sys.path.insert(0, "/tmp/doodle-brep-81")
+ROOT = Path(__file__).resolve().parents[4]
+sys.path.insert(0, str(ROOT))
 from doodle_to_cad.evaluation import _decode, _normalized_profile, assign_view_groups
 from doodle_to_cad.feature_evidence import view_assignment_evidence
 import trimesh
 
-RUNS = Path("/tmp/doodle-brep-81/docs/brep/bench-final/runs")
-ROOT = Path("/tmp/doodle-brep-81")
+RUNS = ROOT / "docs/brep/bench-final/runs"
 VIEW_AXES = {  # direction -> (u_axis, v_axis, depth_axis)
     "front": (0, 2, 1), "back": (0, 2, 1),
     "top": (0, 1, 2), "bottom": (0, 1, 2),

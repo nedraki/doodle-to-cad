@@ -1,0 +1,50 @@
+{
+  "view_frame": "The drawing presents two views in third-angle projection. The top view (upper sheet) shows the XY plane (width X, depth Y). The front view (lower sheet) shows the XZ plane (width X, height Z). The world origin is at the bottom-left-front corner of the enclosure.",
+  "features": [
+    {
+      "id": "enclosure_body",
+      "shape": "rectangular_prism",
+      "section": "rectangular",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "ASSUMED_WIDTH",
+        "ASSUMED_DEPTH",
+        "ASSUMED_HEIGHT",
+        "3"
+      ],
+      "placement": "Centered at (ASSUMED_WIDTH/2, ASSUMED_DEPTH/2, ASSUMED_HEIGHT/2). Extents: X[0, ASSUMED_WIDTH], Y[0, ASSUMED_DEPTH], Z[0, ASSUMED_HEIGHT].",
+      "evidence": "Outer rectangular outlines in both top and front views define the envelope. The double-line border in the top view indicates wall thickness."
+    },
+    {
+      "id": "front_window",
+      "shape": "rectangular_prism",
+      "section": "rectangular",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "ASSUMED_WINDOW_WIDTH",
+        "ASSUMED_WINDOW_HEIGHT",
+        "3"
+      ],
+      "placement": "Centered on the front face (Y=0). Extents: X[(ASSUMED_WIDTH-ASSUMED_WINDOW_WIDTH)/2, (ASSUMED_WIDTH+ASSUMED_WINDOW_WIDTH)/2], Y[0, 3], Z[(ASSUMED_HEIGHT-ASSUMED_WINDOW_HEIGHT)/2, (ASSUMED_HEIGHT+ASSUMED_WINDOW_HEIGHT)/2].",
+      "evidence": "Inner rectangle in the front view (lower sheet) indicates a window opening on the front face."
+    }
+  ],
+  "connections": [
+    "The front_window is subtracted from the enclosure_body.",
+    "The enclosure_body is hollowed by subtracting an inner volume defined by the wall thickness (3mm) and open top."
+  ],
+  "edit_rules": [
+    "Changing ASSUMED_WIDTH or ASSUMED_DEPTH must update the outer profile and the position of the front_window.",
+    "Changing ASSUMED_HEIGHT must update the vertical position of the front_window.",
+    "Changing ASSUMED_WINDOW_WIDTH or ASSUMED_WINDOW_HEIGHT must update the window cutout dimensions.",
+    "Wall thickness is fixed at 3mm per clarification."
+  ],
+  "unresolved": [
+    "ASSUMED_WIDTH: The absolute width of the enclosure is not dimensioned.",
+    "ASSUMED_DEPTH: The absolute depth of the enclosure is not dimensioned.",
+    "ASSUMED_HEIGHT: The absolute height of the enclosure is not dimensioned.",
+    "ASSUMED_WINDOW_WIDTH: The absolute width of the front window is not dimensioned.",
+    "ASSUMED_WINDOW_HEIGHT: The absolute height of the front window is not dimensioned."
+  ],
+  "clarification": null
+}

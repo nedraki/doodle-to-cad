@@ -1,0 +1,445 @@
+{
+  "version": 2,
+  "units": "mm",
+  "name": "grille_assembly",
+  "parameters": {
+    "width": {
+      "value": 126,
+      "min": 50,
+      "max": 200,
+      "label": "Overall Width",
+      "unit": "mm"
+    },
+    "height": {
+      "value": 80,
+      "min": 30,
+      "max": 150,
+      "label": "Overall Height",
+      "unit": "mm"
+    },
+    "thickness": {
+      "value": 10,
+      "min": 2,
+      "max": 50,
+      "label": "Thickness",
+      "unit": "mm"
+    },
+    "slot_width": {
+      "value": 4,
+      "min": 1,
+      "max": 10,
+      "label": "Slot Width",
+      "unit": "mm"
+    },
+    "slot_height": {
+      "value": 48,
+      "min": 10,
+      "max": 70,
+      "label": "Slot Height",
+      "unit": "mm"
+    },
+    "slot_spacing": {
+      "value": 10,
+      "min": 5,
+      "max": 20,
+      "label": "Slot Spacing",
+      "unit": "mm"
+    },
+    "headlight_radius": {
+      "value": 10,
+      "min": 5,
+      "max": 20,
+      "label": "Headlight Radius",
+      "unit": "mm"
+    },
+    "headlight_x": {
+      "value": 22,
+      "min": 10,
+      "max": 40,
+      "label": "Headlight X Offset",
+      "unit": "mm"
+    },
+    "headlight_z": {
+      "value": 30,
+      "min": 10,
+      "max": 50,
+      "label": "Headlight Z Height",
+      "unit": "mm"
+    }
+  },
+  "operations": [
+    {
+      "id": "base_plate",
+      "kind": "box",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "size": [
+        "width",
+        "thickness",
+        "height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "slot_1",
+      "kind": "box",
+      "origin": [
+        "width/2 - 3*slot_spacing - slot_width/2",
+        "-1",
+        "height/2 - slot_height/2"
+      ],
+      "size": [
+        "slot_width",
+        "thickness+2",
+        "slot_height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "slot_2",
+      "kind": "box",
+      "origin": [
+        "width/2 - 2*slot_spacing - slot_width/2",
+        "-1",
+        "height/2 - slot_height/2"
+      ],
+      "size": [
+        "slot_width",
+        "thickness+2",
+        "slot_height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "slot_3",
+      "kind": "box",
+      "origin": [
+        "width/2 - 1*slot_spacing - slot_width/2",
+        "-1",
+        "height/2 - slot_height/2"
+      ],
+      "size": [
+        "slot_width",
+        "thickness+2",
+        "slot_height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "slot_4",
+      "kind": "box",
+      "origin": [
+        "width/2 - slot_width/2",
+        "-1",
+        "height/2 - slot_height/2"
+      ],
+      "size": [
+        "slot_width",
+        "thickness+2",
+        "slot_height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "slot_5",
+      "kind": "box",
+      "origin": [
+        "width/2 + 1*slot_spacing - slot_width/2",
+        "-1",
+        "height/2 - slot_height/2"
+      ],
+      "size": [
+        "slot_width",
+        "thickness+2",
+        "slot_height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "slot_6",
+      "kind": "box",
+      "origin": [
+        "width/2 + 2*slot_spacing - slot_width/2",
+        "-1",
+        "height/2 - slot_height/2"
+      ],
+      "size": [
+        "slot_width",
+        "thickness+2",
+        "slot_height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "slot_7",
+      "kind": "box",
+      "origin": [
+        "width/2 + 3*slot_spacing - slot_width/2",
+        "-1",
+        "height/2 - slot_height/2"
+      ],
+      "size": [
+        "slot_width",
+        "thickness+2",
+        "slot_height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "headlight_l",
+      "kind": "cylinder",
+      "origin": [
+        "headlight_x",
+        "-1",
+        "headlight_z"
+      ],
+      "radius": "headlight_radius",
+      "height": "thickness+2",
+      "axis": "y",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "headlight_r",
+      "kind": "cylinder",
+      "origin": [
+        "width - headlight_x",
+        "-1",
+        "headlight_z"
+      ],
+      "radius": "headlight_radius",
+      "height": "thickness+2",
+      "axis": "y",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "cut_slot_1",
+      "kind": "difference",
+      "left": "base_plate",
+      "right": "slot_1",
+      "frame": "world",
+      "depends_on": [
+        "base_plate",
+        "slot_1"
+      ],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "cut_slot_2",
+      "kind": "difference",
+      "left": "cut_slot_1",
+      "right": "slot_2",
+      "frame": "world",
+      "depends_on": [
+        "cut_slot_1",
+        "slot_2"
+      ],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "cut_slot_3",
+      "kind": "difference",
+      "left": "cut_slot_2",
+      "right": "slot_3",
+      "frame": "world",
+      "depends_on": [
+        "cut_slot_2",
+        "slot_3"
+      ],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "cut_slot_4",
+      "kind": "difference",
+      "left": "cut_slot_3",
+      "right": "slot_4",
+      "frame": "world",
+      "depends_on": [
+        "cut_slot_3",
+        "slot_4"
+      ],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "cut_slot_5",
+      "kind": "difference",
+      "left": "cut_slot_4",
+      "right": "slot_5",
+      "frame": "world",
+      "depends_on": [
+        "cut_slot_4",
+        "slot_5"
+      ],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "cut_slot_6",
+      "kind": "difference",
+      "left": "cut_slot_5",
+      "right": "slot_6",
+      "frame": "world",
+      "depends_on": [
+        "cut_slot_5",
+        "slot_6"
+      ],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "cut_slot_7",
+      "kind": "difference",
+      "left": "cut_slot_6",
+      "right": "slot_7",
+      "frame": "world",
+      "depends_on": [
+        "cut_slot_6",
+        "slot_7"
+      ],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "cut_headlight_l",
+      "kind": "difference",
+      "left": "cut_slot_7",
+      "right": "headlight_l",
+      "frame": "world",
+      "depends_on": [
+        "cut_slot_7",
+        "headlight_l"
+      ],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "final_part",
+      "kind": "difference",
+      "left": "cut_headlight_l",
+      "right": "headlight_r",
+      "frame": "world",
+      "depends_on": [
+        "cut_headlight_l",
+        "headlight_r"
+      ],
+      "evidence": [
+        "e3"
+      ]
+    }
+  ],
+  "output": "final_part",
+  "frames": {
+    "world": {
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    }
+  },
+  "bodies": [
+    {
+      "id": "part",
+      "output": "final_part"
+    }
+  ],
+  "evidence": {
+    "observed": [
+      {
+        "id": "e1",
+        "text": "Front view shows a rectangular body with a stepped top profile."
+      },
+      {
+        "id": "e2",
+        "text": "Front view shows 7 vertical slots in the center."
+      },
+      {
+        "id": "e3",
+        "text": "Front view shows 2 circular features (headlights) on the sides."
+      }
+    ],
+    "inferred": [
+      {
+        "id": "e4",
+        "text": "Top view shows a thin rectangular profile, indicating uniform thickness."
+      }
+    ],
+    "assumptions": [
+      {
+        "id": "e5",
+        "text": "Assumed overall dimensions (126x80x10mm) based on typical proportions and maximum dimension constraint."
+      },
+      {
+        "id": "e6",
+        "text": "Assumed slot dimensions (4x48mm) and spacing (10mm) to fit 7 slots in the central area."
+      },
+      {
+        "id": "e7",
+        "text": "Assumed headlight radius (10mm) and position (22mm from edge, 30mm from bottom)."
+      },
+      {
+        "id": "e8",
+        "text": "Assumed the stepped profile in the front view is simplified to a rectangular block for this construction."
+      }
+    ],
+    "unresolved": []
+  },
+  "constraints": []
+}

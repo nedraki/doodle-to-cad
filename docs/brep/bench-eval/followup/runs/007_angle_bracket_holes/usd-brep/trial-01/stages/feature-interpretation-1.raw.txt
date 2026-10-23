@@ -1,0 +1,106 @@
+```json
+{
+  "version": 1,
+  "object_hypothesis": "Rectangular plate with three internal features",
+  "features": [
+    {
+      "id": "plate_body",
+      "type": "body",
+      "description": "Rectangular planar body defined by outer contours in both views",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_8"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_0"
+        }
+      ],
+      "reason": "Outer boundaries in both top and front views form rectangular silhouettes, indicating a block or plate geometry."
+    },
+    {
+      "id": "feature_left",
+      "type": "opening",
+      "description": "Internal irregular contour located on the left side of the front view",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_2"
+        }
+      ],
+      "reason": "Closed internal loop detected within the front view boundary. Could be a hole, pocket, or surface marking."
+    },
+    {
+      "id": "feature_center",
+      "type": "opening",
+      "description": "Internal irregular contour located in the center of the front view",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_4"
+        }
+      ],
+      "reason": "Closed internal loop detected within the front view boundary. Could be a hole, pocket, or surface marking."
+    },
+    {
+      "id": "feature_right",
+      "type": "opening",
+      "description": "Internal irregular contour located on the right side of the front view",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_6"
+        }
+      ],
+      "reason": "Closed internal loop detected within the front view boundary. Could be a hole, pocket, or surface marking."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "internal_arrangement",
+      "type": "position",
+      "features": [
+        "feature_left",
+        "feature_center",
+        "feature_right",
+        "plate_body"
+      ],
+      "description": "Three internal features are positioned horizontally within the main body",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_2"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_4"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_6"
+        }
+      ],
+      "reason": "The three internal contours are located inside the outer boundary of the front view, arranged side-by-side."
+    }
+  ],
+  "assumptions": [
+    "The top view (view_1) corresponds to the XY plane projection of the object.",
+    "The front view (view_2) corresponds to the XZ plane projection of the object.",
+    "The internal contours in the front view represent through-holes or pockets, though depth is not explicitly defined."
+  ],
+  "unresolved": [
+    "Depth of the internal features (holes vs pockets).",
+    "Exact shape of the internal features (circularity is low due to sketching).",
+    "Alignment of internal features relative to the top view (no internal features visible in top view)."
+  ],
+  "conflicts": [
+    "The top view shows a clean rectangle with no internal features, while the front view shows three internal features. This implies the features are either not visible from the top (e.g., side holes) or the top view is incomplete."
+  ]
+}
+```

@@ -1,0 +1,149 @@
+```json
+{
+  "version": 1,
+  "object_hypothesis": "A rectangular plate or flange with a central slot and three peripheral mounting holes.",
+  "features": [
+    {
+      "id": "plate_body",
+      "type": "body",
+      "description": "The main rectangular body of the object.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_0"
+        },
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_7"
+        }
+      ],
+      "reason": "View 2 shows a large rectangular outline. View 1 shows a thin rectangular strip, consistent with the top-down projection of a flat plate."
+    },
+    {
+      "id": "central_slot",
+      "type": "opening",
+      "description": "A horizontal slot located in the center of the plate.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_4"
+        }
+      ],
+      "reason": "View 2 displays a distinct internal contour in the center with an elongated shape, characteristic of a slot."
+    },
+    {
+      "id": "hole_top_left",
+      "type": "opening",
+      "description": "A small circular hole in the upper-left quadrant.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_6"
+        }
+      ],
+      "reason": "View 2 shows a small internal contour in the upper-left area."
+    },
+    {
+      "id": "hole_bottom_right",
+      "type": "opening",
+      "description": "A small circular hole in the lower-right quadrant.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_2"
+        }
+      ],
+      "reason": "View 2 shows a small internal contour in the lower-right area."
+    },
+    {
+      "id": "hole_bottom_left",
+      "type": "opening",
+      "description": "A small circular hole in the lower-left quadrant.",
+      "status": "unresolved",
+      "evidence": [],
+      "reason": "A hole is clearly visible in the bottom-left corner of the drawing, but no corresponding measured region was supplied in the catalog for this location."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "holes_in_plate",
+      "type": "position",
+      "features": [
+        "hole_top_left",
+        "hole_bottom_right",
+        "hole_bottom_left",
+        "plate_body"
+      ],
+      "description": "The holes are positioned within the boundaries of the plate body.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_0"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_6"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_2"
+        }
+      ],
+      "reason": "The internal contours (holes) are spatially contained within the outer contour (plate) in the front view."
+    },
+    {
+      "id": "slot_in_plate",
+      "type": "position",
+      "features": [
+        "central_slot",
+        "plate_body"
+      ],
+      "description": "The slot is positioned centrally within the plate body.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_0"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_4"
+        }
+      ],
+      "reason": "The slot contour is located in the center of the plate contour in the front view."
+    },
+    {
+      "id": "plate_thickness",
+      "type": "other",
+      "features": [
+        "plate_body"
+      ],
+      "description": "The plate has a uniform thickness.",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_7"
+        }
+      ],
+      "reason": "View 1 (top view) shows a thin rectangular strip, implying the object is a flat plate with a small dimension in the Z-axis."
+    }
+  ],
+  "assumptions": [
+    "View 1 represents the top view (thickness) and View 2 represents the front view (face).",
+    "The object is a single solid piece with through-holes."
+  ],
+  "unresolved": [
+    "The hole in the bottom-left corner is visible in the drawing but missing from the measured region catalog.",
+    "The exact shape of the central slot (e.g., rounded vs. square ends) is ambiguous due to low circularity scores."
+  ],
+  "conflicts": [
+    "The drawing shows four internal features (slot + 3 holes), but the catalog only provides three internal contours."
+  ]
+}
+```

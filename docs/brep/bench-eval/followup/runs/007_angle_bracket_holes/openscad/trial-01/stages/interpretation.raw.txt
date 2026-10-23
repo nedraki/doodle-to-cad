@@ -1,0 +1,195 @@
+```json
+{
+  "object": "L angle bracket",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "view_id": "view_1",
+      "direction": "top",
+      "sheet_region": "upper",
+      "constrains": "Plan view (XY plane). Defines the object's footprint (width and depth). The rectangular outline represents the bounding box of the L-bracket's base and vertical wall."
+    },
+    {
+      "view_id": "view_2",
+      "direction": "front",
+      "sheet_region": "lower",
+      "constrains": "Front elevation (XZ plane). Defines the object's width and height. Contains the three holes on the vertical wall."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "part_1",
+      "name": "L_Bracket",
+      "material": "generic_plastic",
+      "description": "Single L-shaped bracket with a base flange and a vertical wall containing three holes."
+    }
+  ],
+  "features": [
+    {
+      "id": "feat_base",
+      "type": "extrusion",
+      "owner": "part_1",
+      "description": "Horizontal base plate of the L-bracket."
+    },
+    {
+      "id": "feat_wall",
+      "type": "extrusion",
+      "owner": "part_1",
+      "description": "Vertical wall of the L-bracket."
+    },
+    {
+      "id": "feat_hole_1",
+      "type": "hole",
+      "owner": "part_1",
+      "description": "Leftmost circular hole on the vertical wall."
+    },
+    {
+      "id": "feat_hole_2",
+      "type": "hole",
+      "owner": "part_1",
+      "description": "Center circular hole on the vertical wall."
+    },
+    {
+      "id": "feat_hole_3",
+      "type": "hole",
+      "owner": "part_1",
+      "description": "Rightmost circular hole on the vertical wall."
+    }
+  ],
+  "relations": [
+    {
+      "type": "perpendicular",
+      "target_a": "feat_base",
+      "target_b": "feat_wall",
+      "description": "The base and wall meet at a 90-degree angle."
+    },
+    {
+      "type": "contained_in",
+      "target_a": "feat_hole_1",
+      "target_b": "feat_wall"
+    },
+    {
+      "type": "contained_in",
+      "target_a": "feat_hole_2",
+      "target_b": "feat_wall"
+    },
+    {
+      "type": "contained_in",
+      "target_a": "feat_hole_3",
+      "target_b": "feat_wall"
+    }
+  ],
+  "symmetry": {
+    "type": "none",
+    "axis": null,
+    "description": "The object is asymmetric due to the L-shape and the specific placement of holes."
+  },
+  "repetitions": [
+    {
+      "feature_id": "feat_hole_2",
+      "pattern": "linear",
+      "count": 3,
+      "spacing": "approx 15mm",
+      "description": "Three holes arranged horizontally along the vertical wall."
+    }
+  ],
+  "dimensions": [
+    {
+      "feature_id": "part_1",
+      "dimension_type": "max_dimension",
+      "value": 80,
+      "unit": "mm",
+      "source": "user"
+    },
+    {
+      "feature_id": "feat_hole_1",
+      "dimension_type": "diameter",
+      "value": 5,
+      "unit": "mm",
+      "source": "estimate"
+    },
+    {
+      "feature_id": "feat_hole_2",
+      "dimension_type": "diameter",
+      "value": 5,
+      "unit": "mm",
+      "source": "estimate"
+    },
+    {
+      "feature_id": "feat_hole_3",
+      "dimension_type": "diameter",
+      "value": 5,
+      "unit": "mm",
+      "source": "estimate"
+    }
+  ],
+  "uncertainties": [
+    "Exact thickness of the base and wall is not explicitly dimensioned, inferred from standard bracket proportions.",
+    "Exact height of the wall relative to the base is inferred from the aspect ratio of the front view."
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "The object is interpreted as a standard L-angle bracket. The top view shows the rectangular footprint (base + wall thickness). The front view shows the vertical wall with three holes. The holes are treated as through-cuts in the wall.",
+  "construction_plan": {
+    "family": "extrude",
+    "operations": [
+      {
+        "id": "op_1",
+        "operation": "create_profile",
+        "owner": "part_1",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "parameters": {
+          "shape": "L_shape",
+          "width": 80,
+          "depth": 40,
+          "thickness": 5
+        },
+        "source_views": [
+          "view_1"
+        ]
+      },
+      {
+        "id": "op_2",
+        "operation": "extrude",
+        "owner": "part_1",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "parameters": {
+          "height": 40
+        },
+        "source_views": [
+          "view_1",
+          "view_2"
+        ]
+      },
+      {
+        "id": "op_3",
+        "operation": "subtract",
+        "owner": "part_1",
+        "profile_plane": "XZ",
+        "direction_axis": "Y",
+        "parameters": {
+          "shape": "cylinder",
+          "count": 3,
+          "diameter": 5,
+          "positions": [
+            "left",
+            "center",
+            "right"
+          ]
+        },
+        "source_views": [
+          "view_2"
+        ]
+      }
+    ],
+    "unresolved_constraints": [
+      "Exact wall thickness",
+      "Exact base thickness"
+    ]
+  }
+}
+```

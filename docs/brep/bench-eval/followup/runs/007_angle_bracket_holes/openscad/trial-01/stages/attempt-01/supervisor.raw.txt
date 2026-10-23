@@ -1,0 +1,14 @@
+{
+  "action": "repair_scad",
+  "problems": [
+    "Holes are blind pockets (depth < wall thickness) instead of through-holes",
+    "Front view hole vertical position (v=0.58) mismatches drawing (v=0.40)",
+    "Front view similarity low (0.35) due to incorrect hole placement"
+  ],
+  "preserve": [
+    "L-bracket topology and overall dimensions (80x43.13x51.01)",
+    "Hole diameter (5mm) and horizontal spacing",
+    "Base and wall thickness parameters"
+  ],
+  "instructions": "Modify the `hole_cutter` module to ensure the cylinder cuts completely through the wall thickness (increase height or adjust Y-position to span the full wall). Adjust the `hole_height` parameter to lower the holes vertically so their centers align with the drawing's front view (approx 40% from the top of the wall, or ~20mm from the base). Ensure the cut direction is strictly along the Y-axis to create true through-holes."
+}

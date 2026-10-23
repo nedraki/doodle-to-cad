@@ -1,0 +1,14 @@
+{
+  "action": "repair_scad",
+  "problems": [
+    "Front view projection is a thin strip (aspect 12.5) instead of a circle (aspect 1.0).",
+    "Geometry is oriented with the wheel face in the XY plane, but the Front view requires the wheel face in the XZ plane.",
+    "Evaluation reports X=120mm vs expected 27.8mm due to incorrect axis alignment."
+  ],
+  "preserve": [
+    "Wheel geometry (rim, hub, 8 spokes) is correct.",
+    "Dimensions (OD 120, Thickness 9.5) are correct.",
+    "Mesh topology is valid."
+  ],
+  "instructions": "Rotate the entire wheel assembly by 90 degrees around the X-axis. This will orient the wheel face into the XZ plane (Front view) and the thickness along the Y-axis (Right view), matching the drawing projections and coordinate frame."
+}

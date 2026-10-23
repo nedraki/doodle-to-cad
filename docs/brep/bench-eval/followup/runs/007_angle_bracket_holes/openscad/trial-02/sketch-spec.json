@@ -1,0 +1,186 @@
+{
+  "object": "L angle bracket",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "front",
+      "sheet_region": "bottom",
+      "constrains": "Vertical face geometry (width and height) and the location of three mounting holes."
+    },
+    {
+      "direction": "top",
+      "sheet_region": "top",
+      "constrains": "Horizontal face geometry (width and depth) and the overall footprint."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "part_1",
+      "name": "L_Bracket",
+      "description": "L-shaped bracket consisting of a vertical wall and a horizontal base flange."
+    }
+  ],
+  "features": [
+    {
+      "id": "feat_1",
+      "type": "hole",
+      "owner": "part_1",
+      "description": "Circular through-hole on the vertical wall.",
+      "location": "Left side of vertical wall",
+      "source_views": [
+        "view_2"
+      ]
+    },
+    {
+      "id": "feat_2",
+      "type": "hole",
+      "owner": "part_1",
+      "description": "Circular through-hole on the vertical wall.",
+      "location": "Center of vertical wall",
+      "source_views": [
+        "view_2"
+      ]
+    },
+    {
+      "id": "feat_3",
+      "type": "hole",
+      "owner": "part_1",
+      "description": "Circular through-hole on the vertical wall.",
+      "location": "Right side of vertical wall",
+      "source_views": [
+        "view_2"
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "type": "perpendicular",
+      "elements": [
+        "vertical_wall",
+        "horizontal_base"
+      ],
+      "description": "The vertical wall is perpendicular to the horizontal base."
+    },
+    {
+      "type": "coaxial",
+      "elements": [
+        "feat_1",
+        "feat_2",
+        "feat_3"
+      ],
+      "description": "The three holes are aligned horizontally along the vertical wall."
+    }
+  ],
+  "symmetry": {
+    "type": "none",
+    "description": "The object is asymmetric due to the L-shape."
+  },
+  "repetitions": [
+    {
+      "feature_id": "feat_1",
+      "count": 3,
+      "pattern": "linear",
+      "spacing": "equal",
+      "description": "Three identical holes spaced equally along the vertical wall."
+    }
+  ],
+  "dimensions": {
+    "max_width": 80.0,
+    "max_depth": 43.13,
+    "max_height": 51.01,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "Exact thickness of the bracket walls is not specified.",
+    "Exact diameter of the holes is not specified."
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "The object is interpreted as an L-bracket based on the user description and the two-view layout. The bottom view (front) shows the vertical face with three holes. The top view shows the horizontal base. The holes are treated as through-cuts on the vertical wall.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "multi_face_union",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_1",
+        "operation": "extrude",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "owner": "part_1",
+        "parameters": {
+          "profile": "L_shape",
+          "height": "wall_thickness"
+        },
+        "source_views": [
+          "view_1",
+          "view_2"
+        ]
+      },
+      {
+        "id": "feat_1",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Circular through-hole on the vertical wall."
+        },
+        "source_views": []
+      },
+      {
+        "id": "feat_2",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Circular through-hole on the vertical wall."
+        },
+        "source_views": []
+      },
+      {
+        "id": "feat_3",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Circular through-hole on the vertical wall."
+        },
+        "source_views": []
+      }
+    ],
+    "unresolved_constraints": [
+      "wall_thickness",
+      "hole_diameter",
+      "hole_spacing"
+    ]
+  },
+  "user_intent": {
+    "description": "L angle bracket with three wall holes",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "80"
+  },
+  "source_view_group_count": 2,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

@@ -1,0 +1,112 @@
+```openscad
+/* doodle-meta {"version":1,"parameters":{"width":{"label":"Overall width","description":"Changes the body width","unit":"mm","feature":"body_width"},"height":{"label":"Overall height","description":"Changes the body height","unit":"mm","feature":"body_height"},"thickness":{"label":"Plate thickness","description":"Changes the plate thickness","unit":"mm","feature":"body_thickness"},"hole_diameter":{"label":"Hole diameter","description":"Changes the diameter of the mounting holes","unit":"mm","feature":"holes"},"slot_width":{"label":"Slot width","description":"Changes the width of the center slot","unit":"mm","feature":"slot"},"slot_height":{"label":"Slot height","description":"Changes the height of the center slot","unit":"mm","feature":"slot"}},"features":{"body_width":{"kind":"dimension","axis":"x","label":"Overall width"},"body_height":{"kind":"dimension","axis":"z","label":"Overall height"},"body_thickness":{"kind":"dimension","axis":"y","label":"Plate thickness"},"holes":{"kind":"region","label":"Mounting Holes","min":[{"parameter":"hole_x_left","scale":1,"offset":-10},{"parameter":"thickness","scale":0,"offset":-1},{"parameter":"hole_z","scale":1,"offset":-10}],"max":[{"parameter":"hole_x_right","scale":1,"offset":10},{"parameter":"thickness","scale":1,"offset":1},{"parameter":"hole_z","scale":1,"offset":10}]},"slot":{"kind":"region","label":"Center Slot","min":[{"parameter":"width","scale":0.5,"offset":-15},{"parameter":"thickness","scale":0,"offset":-1},{"parameter":"height","scale":0.5,"offset":-5}],"max":[{"parameter":"width","scale":0.5,"offset":15},{"parameter":"thickness","scale":1,"offset":1},{"parameter":"height","scale":0.5,"offset":5}]}}} */
+
+// Parameters
+width = 100.0;
+height = 61.98;
+thickness = 9.65;
+hole_diameter = 8.0;
+slot_width = 30.0;
+slot_height = 10.0;
+
+// Derived positions based on measured view geometry
+// Front view mapping: X = u * width, Z = (1-v) * height
+// Hole Left: center u=0.1647, v=0.2775
+hole_x_left = 0.1647 * width;
+hole_z = (1.0 - 0.2775) * height;
+
+// Hole Right: center u=0.8302, v=0.7295
+// Note: The prompt states holes are roughly symmetric. 
+// Measured right hole v=0.7295 -> Z = (1-0.7295)*height = 0.2705*height.
+// Measured left hole v=0.2775 -> Z = (1-0.2775)*height = 0.7225*height.
+// These are not symmetric in Z. However, the "symmetry" relation says "roughly symmetric about the center vertical axis".
+// Let's look at the X positions: Left u=0.1647, Right u=0.8302.
+// Center X is 0.5. Distance left: 0.5 - 0.1647 = 0.3353. Distance right: 0.8302 - 0.5 = 0.3302.
+// They are symmetric in X.
+// The Z positions are different in the raw measurement (0.72 vs 0.27). 
+// Usually mounting plates have holes at the same height. 
+// The "symmetry" relation description says "Holes are roughly symmetric about the center vertical axis of the plate."
+// This implies X-symmetry. It does not explicitly enforce Z-symmetry between the two holes, but standard design implies it.
+// However, looking at the slot: center u=0.4907 (approx 0.5), v=0.5055 (approx 0.5).
+// The slot is centered.
+// If I strictly follow measured coordinates:
+// Hole 1: X=16.47, Z=44.78
+// Hole 2: X=83.02, Z=16.77
+// This looks like a diagonal arrangement.
+// But the "symmetry" tag and "mounting plate" intent strongly suggest a standard rectangular pattern.
+// Let's re-read carefully: "Holes are roughly symmetric about the center vertical axis".
+// This usually means Left/Right symmetry.
+// If the drawing shows them at different heights, I should probably respect the drawing unless it's clearly a wobble.
+// The confidence for the holes is low (0.3). The intent refinement says "regularize".
+// Regularizing a mounting plate usually means aligning holes.
+// Let's assume the holes are at the same Z height, likely centered vertically or aligned with the slot.
+// The slot is at v=0.5055 (Z ~ 30.6).
+// The left hole is at v=0.2775 (Z ~ 44.8).
+// The right hole is at v=0.7295 (Z ~ 16.8).
+// Average Z of holes = (44.8 + 16.8) / 2 = 30.8. This is very close to the slot center Z (30.6).
+// It is highly probable the intent is that both holes are at the same Z height as the slot, or symmetrically placed around it.
+// Given "regularize" mode, I will place both holes at the same Z height, aligned with the slot center.
+// Slot center Z = (1 - 0.5055) * height = 0.4945 * height.
+// Let's use the slot center Z for the holes as well, as it's the most stable central feature.
+
+hole_z_aligned = (1.0 - 0.5055) * height;
+hole_x_right = 0.8302 * width;
+
+// Slot dimensions from view:
+// bbox width 0.299 * width = 29.9mm -> ~30mm
+// bbox height 0.1695 * height = 10.5mm -> ~10mm
+// Center u=0.4907 -> X = 49.07mm (approx center)
+// Center v=0.5055 -> Z = 30.64mm
+
+// Epsilon for CSG
+eps = 0.01;
+
+module plate_body() {
+    difference() {
+        // Main Plate
+        cube([width, thickness, height], center=true);
+        
+        // Left Hole
+        translate([hole_x_left - width/2, 0, hole_z_aligned - height/2]) {
+            rotate([90, 0, 0]) {
+                cylinder(d=hole_diameter, h=thickness + 2*eps, center=true);
+            }
+        }
+        
+        // Right Hole
+        translate([hole_x_right - width/2, 0, hole_z_aligned - height/2]) {
+            rotate([90, 0, 0]) {
+                cylinder(d=hole_diameter, h=thickness + 2*eps, center=true);
+            }
+        }
+        
+        // Center Slot
+        // Slot is a rounded rectangle (stadium) in XZ plane, cut along Y
+        // Width (X) = slot_width, Height (Z) = slot_height
+        // Radius = slot_height / 2
+        translate([0, 0, hole_z_aligned - height/2]) {
+            // Create a stadium shape cutter
+            // Two cylinders and a cube connecting them
+            // Or use a hull of two cylinders
+            hull() {
+                translate([-slot_width/2 + slot_height/2, 0, 0]) {
+                    rotate([90, 0, 0]) {
+                        cylinder(d=slot_height, h=thickness + 2*eps, center=true);
+                    }
+                }
+                translate([slot_width/2 - slot_height/2, 0, 0]) {
+                    rotate([90, 0, 0]) {
+                        cylinder(d=slot_height, h=thickness + 2*eps, center=true);
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Position the plate so it sits on the build plate (Z=0 is bottom)
+// The cube was centered, so we need to shift it up by height/2
+translate([0, 0, height/2]) {
+    plate_body();
+}
+```

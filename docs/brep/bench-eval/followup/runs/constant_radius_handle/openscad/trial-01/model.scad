@@ -1,0 +1,58 @@
+/* doodle-meta {"version":1,"parameters":{"bend_radius":{"label":"Bend Radius","description":"Radius of the 180-degree arc bend","unit":"mm","feature":"bend"},"leg_length":{"label":"Leg Length","description":"Length of the straight vertical legs","unit":"mm","feature":"legs"},"bar_diameter":{"label":"Bar Diameter","description":"Diameter of the circular cross-section of the handle bar","unit":"mm","feature":"cross_section"}},"features":{"bend":{"kind":"region","label":"Arc Bend","min":[0,0,30],"max":[28.6,8,54]},"legs":{"kind":"region","label":"Straight Legs","min":[0,0,0],"max":[28.6,8,30]},"cross_section":{"kind":"region","label":"Cross Section","min":[0,0,0],"max":[8,8,8]}}} */
+
+// Parameters
+bend_radius = 20;
+leg_length = 31.385978640244247;
+bar_diameter = 8.369594304065133;
+
+// Derived dimensions
+// The handle is symmetric about the Z axis (vertical centerline).
+// The bend is a 180-degree arc. The legs extend downwards from the ends of the arc.
+// The arc lies in the XZ plane (front view).
+// The legs are parallel to the Z axis.
+// The cross-section is circular with diameter bar_diameter.
+
+// The center of the arc is at (0, 0, leg_length) relative to the bottom of the legs.
+// The legs go from Z=0 to Z=leg_length.
+// The arc connects the tops of the legs.
+// The arc goes from X = -bend_radius to X = +bend_radius.
+// The top of the arc is at Z = leg_length + bend_radius.
+// The total height is leg_length + bend_radius + bar_diameter/2.
+
+// To build this in OpenSCAD, we use rotate_extrude for the bend and cylinders for the legs.
+// rotate_extrude rotates around the Z axis.
+// We define the profile in the XZ plane (which is the plane of the U-shape).
+// The profile is a circle of radius bar_diameter/2 centered at (bend_radius, 0) in the XZ plane?
+// No, rotate_extrude takes a 2D polygon in the XY plane and rotates it around Z.
+// So we define the profile in the XY plane.
+// The profile is a circle of radius bar_diameter/2 centered at (bend_radius, 0).
+// rotate_extrude(angle=180) creates a half-torus.
+// This half-torus lies in the XY plane (flat).
+// We need to rotate it 90 degrees around X to make it stand up in the XZ plane.
+// rotate([90, 0, 0])
+
+module handle_body() {
+    // The bend (torus segment)
+    // Create a half-torus using rotate_extrude
+    // Profile: circle in XY plane, centered at (bend_radius, 0), radius bar_diameter/2
+    // Rotate 180 degrees around Z
+    // Then rotate 90 degrees around X to align with XZ plane
+    // Then translate up by leg_length
+    
+    translate([0, 0, leg_length])
+        rotate([90, 0, 0])
+            rotate_extrude(angle=180)
+                translate([bend_radius, 0])
+                    circle(r=bar_diameter/2);
+    
+    // The legs
+    // Left leg at X = -bend_radius
+    translate([-bend_radius, 0, 0])
+        cylinder(h=leg_length, r=bar_diameter/2);
+        
+    // Right leg at X = +bend_radius
+    translate([bend_radius, 0, 0])
+        cylinder(h=leg_length, r=bar_diameter/2);
+}
+
+handle_body();

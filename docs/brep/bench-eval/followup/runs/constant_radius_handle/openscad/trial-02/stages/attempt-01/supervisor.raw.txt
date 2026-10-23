@@ -1,0 +1,16 @@
+{
+  "action": "repair_scad",
+  "problems": [
+    "Mesh has 2 disconnected components (arch is missing)",
+    "Unknown module 'torus' used in code, causing arch to fail generation",
+    "Leg length parameter is incorrect (33.8mm vs spec 30mm)",
+    "Rod diameter parameter is incorrect (9.02mm vs spec 8mm)",
+    "Total height is ~49mm, target is 54mm"
+  ],
+  "preserve": [
+    "U-shape orientation in XZ plane",
+    "Bilateral symmetry",
+    "Circular cross-section profile"
+  ],
+  "instructions": "Replace the invalid 'torus' module with a valid OpenSCAD torus definition (e.g., rotate_extrude of a circle). Correct 'leg_length' to 30 and 'rod_diameter' to 8. Ensure the arch connects the legs at Z=30 to achieve the total height of 54mm. Verify the mesh is a single connected component."
+}

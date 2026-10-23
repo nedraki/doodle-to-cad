@@ -1,0 +1,27 @@
+{
+  "view_frame": "The drawing presents a TOP (XY) view and an END SECTION view. The TOP view shows the handle's path in the XY plane, with X as width and Y as depth. The END SECTION shows the cross-section perpendicular to the path, implying the section thickness is along Z (height). The handle lies flat on the XY plane.",
+  "features": [
+    {
+      "id": "handle_path",
+      "shape": "sweep",
+      "section": "circular",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "centreline_radius: 20 mm",
+        "straight_length: 30 mm",
+        "section_diameter: 8 mm"
+      ],
+      "placement": "The path consists of two straight segments and one 180-degree arc. The arc centre is at (0, 30). The arc spans from (20, 30) to (-20, 30) in the +Y direction (counterclockwise). The straight segments extend from the arc endpoints in the -Y direction for 30 mm. The section centreline is at Z=4 mm (radius of the 8 mm section).",
+      "evidence": "TOP view shows a U-shaped path. Label 'Bend centreline R20; straight legs 30 mm' defines the path geometry. END SECTION shows a circle with 'diameter 8 mm'."
+    }
+  ],
+  "connections": [
+    "The straight segments are tangent to the 180-degree arc at (20, 30) and (-20, 30)."
+  ],
+  "edit_rules": [
+    "Changing the centreline radius moves the arc endpoints and the start of the straight segments.",
+    "Changing the straight length moves the free ends of the handle.",
+    "Changing the section diameter changes the Z-height of the centreline (Z = diameter/2) and the visual width of the path in the TOP view, but does not change the centreline path coordinates."
+  ],
+  "unresolved": []
+}

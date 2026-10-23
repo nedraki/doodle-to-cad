@@ -1,0 +1,36 @@
+{
+  "before": {
+    "health": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 40,
+      "through_holes": 0,
+      "extents_mm": [
+        123.077,
+        75.693,
+        7.52
+      ],
+      "volume_mm3": 54971.359
+    },
+    "source_sha256": "29cfc14c933c19b00373c8c56a853ad2e2f3841cc2d82bd492a74e094452f4ef",
+    "mesh_sha256": "394df7bcd7a205acfd3615270705c1c7586fff0dd60d7cb30596050a05ab9a8b"
+  },
+  "after": {
+    "health": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 372,
+      "through_holes": 7,
+      "extents_mm": [
+        123.077,
+        7.52,
+        75.693
+      ],
+      "volume_mm3": 37677.661
+    },
+    "source_sha256": "0fbdf9dcd502c6565f3779e602051b5b6c7dffac10357bfc5a0840f47288bc2c",
+    "mesh_sha256": "df91ef7fd028a829233313cc51064cd802e09ab25172506efea424e2c325f37d"
+  },
+  "intervention": "Manually add rotate([90,0,0]) around the body linear_extrude only. No production change or model regeneration. This tests whether generated body/cutter frames explain the missing openings.",
+  "source_run": "d4b44ee63315/attempt-01"
+}

@@ -1,0 +1,128 @@
+{
+  "attempt": 2,
+  "action": "repair_scad",
+  "preflight": {
+    "passed": true,
+    "errors": [],
+    "warnings": [],
+    "expected_subtractive_feature_groups": 0
+  },
+  "compiler_repairs": [],
+  "uniform_scale": null,
+  "evaluation": {
+    "score": 88.2,
+    "valid_mesh": true,
+    "accepted": false,
+    "mandatory_gates": {
+      "compiled": true,
+      "topology": true,
+      "dimensions": true,
+      "shape_sanity": false,
+      "features": true,
+      "openings_through": true,
+      "projections": false,
+      "build_envelope": true
+    },
+    "scores": {
+      "topology": 45,
+      "dimensions": 20.0,
+      "features": 20,
+      "projections": 3.2
+    },
+    "projection_similarity": {
+      "front": 0.211
+    },
+    "profile_topology": {
+      "front": {
+        "source_internal_profiles": 0,
+        "rendered_internal_profiles": 0,
+        "crop_internal_profiles": 0,
+        "source_aspect": 3.45,
+        "rendered_aspect": 1.005,
+        "source_opening_centroids": [],
+        "rendered_opening_centroids": []
+      }
+    },
+    "demanded_openings": {
+      "total": 0,
+      "per_view": {
+        "front": 0
+      },
+      "sheet_total": 0,
+      "registration_gap": 0
+    },
+    "failures": [
+      "degenerate or implausible axis dimensions: X=120 mm vs expected 27.8 mm, Y=9.5 mm vs expected 120 mm, Z=119.343 mm vs expected 9.5 mm",
+      "CAD projections poorly match the drawing: front similarity 0.21 (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly."
+    ]
+  },
+  "mesh_health": {
+    "watertight": true,
+    "components": 1,
+    "triangles": 404,
+    "through_holes": 8,
+    "extents_mm": [
+      120.0,
+      9.5,
+      119.343
+    ],
+    "volume_mm3": 48013.445
+  },
+  "build": {
+    "version": 1,
+    "backend": "openscad",
+    "source_format": "openscad",
+    "ok": true,
+    "units": "mm",
+    "axes": {
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    },
+    "views": [
+      "isometric",
+      "front",
+      "top",
+      "right"
+    ],
+    "measurements": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 404,
+      "through_holes": 8,
+      "extents_mm": [
+        120.0,
+        9.5,
+        119.343
+      ],
+      "volume_mm3": 48013.445
+    },
+    "diagnostics": [],
+    "drawing_evaluated": false
+  },
+  "compile_log": "Geometries in cache: 13\nGeometry cache size in bytes: 20696\nCGAL Polyhedrons in cache: 5\nCGAL cache size in bytes: 1014944\nTotal rendering time: 0:00:00.633\n   Top level object is a 3D object:\n   Simple:        yes\n   Vertices:      188\n   Halfedges:     564\n   Edges:         282\n   Halffacets:    192\n   Facets:         96\n   Volumes:         2",
+  "files": {
+    "scad": "attempt-02/model.scad",
+    "stl": "attempt-02/model.stl",
+    "views": {
+      "isometric": "attempt-02/view-isometric.png",
+      "front": "attempt-02/view-front.png",
+      "top": "attempt-02/view-top.png",
+      "right": "attempt-02/view-right.png"
+    }
+  },
+  "supervisor": {
+    "action": "repair_scad",
+    "problems": [
+      "Front view is a solid disk; spokes and hub are not visible (likely due to coplanar faces or rendering artifacts).",
+      "Axis dimensions are swapped: X=120 (should be 27.8), Y=9.5 (should be 120), Z=119 (should be 9.5).",
+      "Spoke geometry is not distinct from the rim/hub in the projection."
+    ],
+    "preserve": [
+      "Overall wheel topology (rim, hub, spokes).",
+      "Parameter values (OD 120, thickness 9.5, 8 spokes)."
+    ],
+    "instructions": "Fix the coordinate system to match the spec: X=width(27.8), Y=depth(120), Z=height(9.5). Ensure the wheel face lies in the XY plane (normal Z) or adjust rotation so the front view (XZ) shows the spokes clearly. Verify that the boolean union creates distinct edges for spokes and hub so they are visible in the front projection.",
+    "confidence": 0.95
+  }
+}

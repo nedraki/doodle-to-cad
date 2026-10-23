@@ -1,0 +1,161 @@
+{
+  "object": "Open-top enclosure with front window",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "front",
+      "sheet_region": "bottom",
+      "constrains": "Front face geometry (XZ plane), defining the outer rectangular profile and the central rectangular window cutout."
+    },
+    {
+      "direction": "top",
+      "sheet_region": "top",
+      "constrains": "Top-down footprint (XY plane), defining the overall width and depth of the enclosure."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "enclosure_body",
+      "description": "Rectangular open-top box with a window cutout on the front face."
+    }
+  ],
+  "features": [
+    {
+      "id": "outer_box",
+      "type": "solid",
+      "description": "Rectangular prism base."
+    },
+    {
+      "id": "open_top",
+      "type": "void",
+      "description": "Top face is open (no lid)."
+    },
+    {
+      "id": "front_window",
+      "type": "void",
+      "description": "Rectangular cutout centered on the front face."
+    }
+  ],
+  "relations": [
+    {
+      "type": "contains",
+      "parent": "outer_box",
+      "child": "open_top"
+    },
+    {
+      "type": "contains",
+      "parent": "outer_box",
+      "child": "front_window"
+    }
+  ],
+  "symmetry": {
+    "planes": [
+      "XZ",
+      "YZ"
+    ],
+    "axes": [
+      "Z"
+    ]
+  },
+  "repetitions": [],
+  "dimensions": [
+    {
+      "feature_id": "outer_box",
+      "dimension_type": "width",
+      "value": 120,
+      "unit": "mm",
+      "source": "authoritative_max_dimension"
+    },
+    {
+      "feature_id": "outer_box",
+      "dimension_type": "depth",
+      "value": 81.6,
+      "unit": "mm",
+      "source": "derived_from_top_view_aspect_ratio"
+    },
+    {
+      "feature_id": "outer_box",
+      "dimension_type": "height",
+      "value": 44.0,
+      "unit": "mm",
+      "source": "derived_from_front_view_aspect_ratio"
+    },
+    {
+      "feature_id": "front_window",
+      "dimension_type": "width",
+      "value": 59.4,
+      "unit": "mm",
+      "source": "derived_from_front_view_internal_profile"
+    },
+    {
+      "feature_id": "front_window",
+      "dimension_type": "height",
+      "value": 25.8,
+      "unit": "mm",
+      "source": "derived_from_front_view_internal_profile"
+    }
+  ],
+  "uncertainties": [
+    "Wall thickness is not explicitly defined in the drawing; assumed to be a standard 3D print wall thickness (e.g., 2-3mm) or solid block subtracted by a large internal cavity.",
+    "Exact vertical position of the window is inferred from the drawing but not dimensioned."
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "The object is interpreted as a rectangular box. The top view shows the footprint (width x depth). The front view shows the front face (width x height) with a window. The 'open-top' description implies the top face is a void. The window is a through-cutout on the front face.",
+  "construction_plan": {
+    "family": "multi_face_union",
+    "operations": [
+      {
+        "id": "op1",
+        "operation": "extrude",
+        "owner": "enclosure_body",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "parameters": {
+          "profile": "outer_box_footprint",
+          "height": 44.0
+        },
+        "source_views": [
+          "view_1"
+        ]
+      },
+      {
+        "id": "op2",
+        "operation": "shell",
+        "owner": "enclosure_body",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "parameters": {
+          "faces_to_remove": [
+            "top"
+          ],
+          "thickness": 3.0
+        },
+        "source_views": [
+          "user_description"
+        ]
+      },
+      {
+        "id": "op3",
+        "operation": "extrude",
+        "owner": "front_window",
+        "profile_plane": "XZ",
+        "direction_axis": "Y",
+        "parameters": {
+          "profile": "window_cutout",
+          "depth": 10.0,
+          "operation_type": "subtract"
+        },
+        "source_views": [
+          "view_2"
+        ]
+      }
+    ],
+    "unresolved_constraints": [
+      "Wall thickness value",
+      "Window cutout depth (assumed through)"
+    ]
+  }
+}

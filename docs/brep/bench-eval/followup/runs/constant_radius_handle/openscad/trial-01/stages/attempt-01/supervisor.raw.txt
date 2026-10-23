@@ -1,0 +1,17 @@
+{
+  "action": "repair_scad",
+  "problems": [
+    "Mesh has 2 disconnected components (legs only, bend missing)",
+    "Unknown module 'torus' caused bend to fail silently",
+    "Front view shows two separate bars instead of U-shape",
+    "Dimensions incorrect due to missing bend geometry"
+  ],
+  "preserve": [
+    "Leg positions at X = +/- 20",
+    "Leg length 30mm",
+    "Bar diameter 8mm",
+    "Overall orientation (U-shape in XZ plane)"
+  ],
+  "instructions": "Replace the invalid 'torus' module with a valid construction for the bend. Use 'rotate_extrude' on a circle profile offset by the bend radius, or construct the bend using difference of cylinders/torus primitives if available. Ensure the bend connects the tops of the two legs to form a single continuous U-shape. Verify the total height matches the spec (approx 54mm) and the mesh is watertight with 1 component.",
+  "confidence": 1.0
+}

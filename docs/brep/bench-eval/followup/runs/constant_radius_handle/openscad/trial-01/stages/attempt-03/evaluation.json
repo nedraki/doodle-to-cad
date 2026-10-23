@@ -1,0 +1,171 @@
+{
+  "attempt": 3,
+  "action": "repair_scad",
+  "preflight": {
+    "passed": true,
+    "errors": [],
+    "warnings": [],
+    "expected_subtractive_feature_groups": 0
+  },
+  "compiler_repairs": [],
+  "uniform_scale": {
+    "factor": 1.1164,
+    "before_max_mm": 48.37,
+    "after_max_mm": 49.344,
+    "params": [
+      "leg_length",
+      "bar_diameter"
+    ]
+  },
+  "evaluation": {
+    "score": 87.3,
+    "valid_mesh": true,
+    "accepted": false,
+    "mandatory_gates": {
+      "compiled": true,
+      "topology": true,
+      "dimensions": false,
+      "shape_sanity": true,
+      "features": true,
+      "openings_through": true,
+      "projections": false,
+      "build_envelope": true
+    },
+    "scores": {
+      "topology": 45,
+      "dimensions": 18.3,
+      "features": 20,
+      "projections": 4.0
+    },
+    "projection_similarity": {
+      "front": 0.211,
+      "top": 0.325
+    },
+    "profile_topology": {
+      "front": {
+        "source_internal_profiles": 0,
+        "rendered_internal_profiles": 8,
+        "crop_internal_profiles": 0,
+        "source_aspect": 4.35,
+        "rendered_aspect": 1.238,
+        "source_opening_centroids": [],
+        "rendered_opening_centroids": [
+          [
+            0.637,
+            0.161
+          ],
+          [
+            0.874,
+            0.556
+          ],
+          [
+            0.062,
+            0.556
+          ],
+          [
+            0.719,
+            0.114
+          ],
+          [
+            0.681,
+            0.051
+          ]
+        ]
+      },
+      "top": {
+        "source_internal_profiles": 0,
+        "rendered_internal_profiles": 11,
+        "crop_internal_profiles": 0,
+        "source_aspect": 1.075,
+        "rendered_aspect": 1.685,
+        "source_opening_centroids": [],
+        "rendered_opening_centroids": [
+          [
+            0.092,
+            0.904
+          ],
+          [
+            0.847,
+            0.719
+          ],
+          [
+            0.594,
+            0.075
+          ],
+          [
+            0.498,
+            0.057
+          ]
+        ]
+      }
+    },
+    "demanded_openings": {
+      "total": 0,
+      "per_view": {
+        "front": 0,
+        "top": 0
+      },
+      "sheet_total": 0,
+      "registration_gap": 0
+    },
+    "failures": [
+      "maximum dimension is 49.344 mm; target is 54 mm (tolerance 5%)",
+      "CAD projections poorly match the drawing: front similarity 0.21, top similarity 0.33 (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly."
+    ]
+  },
+  "mesh_health": {
+    "watertight": true,
+    "components": 1,
+    "triangles": 626,
+    "through_holes": 0,
+    "extents_mm": [
+      49.344,
+      29.183,
+      39.685
+    ],
+    "volume_mm3": 8559.535
+  },
+  "build": {
+    "version": 1,
+    "backend": "openscad",
+    "source_format": "openscad",
+    "ok": true,
+    "units": "mm",
+    "axes": {
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    },
+    "views": [
+      "isometric",
+      "front",
+      "top",
+      "right"
+    ],
+    "measurements": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 626,
+      "through_holes": 0,
+      "extents_mm": [
+        49.344,
+        29.183,
+        39.685
+      ],
+      "volume_mm3": 8559.535
+    },
+    "diagnostics": [],
+    "drawing_evaluated": false
+  },
+  "compile_log": "Geometries in cache: 7\nGeometry cache size in bytes: 76424\nCGAL Polyhedrons in cache: 1\nCGAL cache size in bytes: 662056\nTotal rendering time: 0:00:00.110\n   Top level object is a 3D object:\n   Simple:        yes\n   Vertices:      317\n   Halfedges:    1528\n   Edges:         764\n   Halffacets:    898\n   Facets:        449\n   Volumes:         2",
+  "files": {
+    "scad": "attempt-03/model.scad",
+    "stl": "attempt-03/uniform-scaled/model.stl",
+    "views": {
+      "isometric": "attempt-03/uniform-scaled/view-isometric.png",
+      "front": "attempt-03/uniform-scaled/view-front.png",
+      "top": "attempt-03/uniform-scaled/view-top.png",
+      "right": "attempt-03/uniform-scaled/view-right.png"
+    }
+  }
+}
