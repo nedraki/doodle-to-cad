@@ -357,3 +357,22 @@ def test_standing_body_check_catches_lying_slabs():
     _check_standing_body(stood, tall)            # rotate present: legal
     with pytest.raises(ValueError, match='STANDING-PLATE WORKED EXAMPLE'):
         _check_standing_body(extrude, tall)      # tall front outline, no rotate: reject
+
+
+def test_unsupported_clarification_is_demoted_not_fatal():
+    from doodle_to_cad.construction_intent import validate_plan
+    from doodle_to_cad.direct_brep import _plan_or_demote
+    base = {'view_frame':'Front XZ','connections':[],'edit_rules':[],'unresolved':[],
+            'features':[{'id':'plate_body','shape':'extrusion','section':'closed_xy_profile',
+                         'axis_or_plane':'XY','dimensions':['6.0'],'placement':'stand in XZ',
+                         'evidence':'front outline'}]}
+    bogus = dict(base, clarification={'feature_id':'plate_body','feature_label':'Plate',
+                'reason':'overall width missing','kind':'missing_dimension'})
+    plan = _plan_or_demote(validate_plan, bogus)
+    assert 'clarification' not in plan
+    assert any('Plate' in u for u in plan['unresolved'])
+    good = dict(base, clarification={'feature_id':'plate_body','feature_label':'Plate',
+                'reason':'thickness missing','kind':'uniform_thickness'})
+    assert _plan_or_demote(validate_plan, good)['clarification']['kind']=='uniform_thickness'
+    with pytest.raises(ValueError):
+        _plan_or_demote(validate_plan, {'view_frame':'broken'})

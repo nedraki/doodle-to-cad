@@ -150,6 +150,27 @@ def _check_standing_body(raw, placements):
             'a rotate operation (angle 90, axis x, origin [0,0,0]) depending on it — before cutting internal features.')
 
 
+def _plan_or_demote(validate_plan, raw_plan):
+    # An answered round sometimes invents a clarification kind outside the
+    # four supported ones. Failing the whole job wastes the user's answer:
+    # demote an unsupported clarification to unresolved and keep planning.
+    try:
+        return validate_plan(raw_plan)
+    except ValueError as exc:
+        if not isinstance(raw_plan, dict) or not isinstance(raw_plan.get('clarification'), dict):
+            raise
+        question = raw_plan['clarification']
+        stripped = {k: v for k, v in raw_plan.items() if k != 'clarification'}
+        label = question.get('feature_label') or question.get('feature_id') or 'a feature'
+        reason = question.get('reason') or 'a construction detail is missing'
+        if isinstance(stripped.get('unresolved'), list):
+            stripped['unresolved'] = stripped['unresolved'] + [f'Clarification left unresolved: {label}: {reason}']
+        try:
+            return validate_plan(stripped)
+        except ValueError:
+            raise exc
+
+
 async def correct_construction(pipeline, out, recipe, failure, attempt, maximum):
     if failure['code'] not in CORRECTABLE:
         raise BuildError(failure['code'], failure['message'])
@@ -214,7 +235,7 @@ async def submit_direct_job(image, mime, notes, dimension, extra, controls,
             label='construction-plan' if not round_number else f'construction-plan-answer-{round_number}'
             raw_plan = await pipeline._json_call(intent_messages,out,label,temperature=0)
             try:
-                plan = validate_plan(raw_plan)
+                plan = _plan_or_demote(validate_plan, raw_plan)
             except ValueError as exc:
                 raise BuildError('invalid_recipe', 'Construction plan rejected: '+str(exc)) from exc
             (out/(label+'.json')).write_text(json.dumps(plan,indent=2))
