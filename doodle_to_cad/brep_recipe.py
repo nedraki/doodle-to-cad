@@ -12,8 +12,16 @@ FIELDS = {
     "loft": {"profiles", "plane", "correspondence"},
     "sweep": {"origin", "plane", "frame_rule", "section_width", "section_height", "path"},
     "extrude": {"origin", "plane", "direction", "depth", "loops"},
+    "drafted_extrude": {"origin", "plane", "direction", "depth", "draft_angle", "loops"},
     "box": {"origin", "size"},
     "cylinder": {"origin", "radius", "height", "axis"},
+    "sphere": {"origin", "radius"},
+    "cone": {"origin", "radius_base", "radius_top", "height", "angle", "axis"},
+    "torus": {"origin", "bend_radius", "radius", "angle", "axis"},
+    "wedge": {"origin", "radius", "height", "start_angle", "end_angle", "axis"},
+    "pyramid": {"origin", "base", "height"},
+    "arc_block": {"origin", "length", "inside_radius", "outside_radius", "start_angle", "end_angle"},
+    "helix": {"origin", "height", "radius_start", "radius_end", "turns", "tube_radius"},
     "union": {"left", "right"},
     "difference": {"left", "right"},
     "fillet": {"body", "radius", "selector"},
@@ -121,9 +129,55 @@ def validate_recipe(recipe, updates=None):
                 item[field] = scalar(op[field], values)
                 if item[field] <= 0:
                     raise ValueError(f"{field} must be positive")
+        for field in ("radius_base", "radius_top", "base", "length", "inside_radius", "outside_radius",
+                      "tube_radius", "start_angle", "end_angle", "turns", "draft_angle"):
+            if field in op:
+                item[field] = scalar(op[field], values)
+        def _span(op_id, start_field, end_field):
+            if not (0 <= item[start_field] < item[end_field] <= 360) or item[end_field] - item[start_field] < 1:
+                raise ValueError(f"{op_id}: {start_field} must be 0–359 and {end_field} at least 1 degree later, up to 360")
+        def _size(op_id, field, low=0.01, high=256.0):
+            if not low <= item[field] <= high:
+                raise ValueError(f"{op_id}: {field} must be {low:g}–{high:g}")
+        if kind == "sphere":
+            _size(op["id"], "radius")
+        if kind == "cone":
+            _size(op["id"], "radius_base"); _size(op["id"], "radius_top", 0.0); _size(op["id"], "height")
+            if item["radius_top"] > item["radius_base"]:
+                raise ValueError(f"{op['id']}: cone radius_top must not exceed radius_base")
+            if not 1 <= item["angle"] <= 360:
+                raise ValueError(f"{op['id']}: cone angle must be 1–360 degrees")
+        if kind == "torus":
+            _size(op["id"], "radius"); _size(op["id"], "bend_radius")
+            if item["radius"] >= item["bend_radius"]:
+                raise ValueError(f"{op['id']}: torus requires radius < bend_radius")
+            if not 1 <= item["angle"] <= 360:
+                raise ValueError(f"{op['id']}: torus angle must be 1–360 degrees")
+        if kind == "wedge":
+            _size(op["id"], "radius"); _size(op["id"], "height"); _span(op["id"], "start_angle", "end_angle")
+        if kind == "pyramid":
+            _size(op["id"], "base"); _size(op["id"], "height")
+        if kind == "arc_block":
+            _size(op["id"], "length"); _size(op["id"], "inside_radius", 0.0); _size(op["id"], "outside_radius")
+            if item["outside_radius"] <= item["inside_radius"]:
+                raise ValueError(f"{op['id']}: arc_block outside_radius must exceed inside_radius")
+            _span(op["id"], "start_angle", "end_angle")
+        if kind == "helix":
+            _size(op["id"], "height", 0.1); _size(op["id"], "radius_start"); _size(op["id"], "radius_end")
+            _size(op["id"], "tube_radius", 2.0)
+            if not 0.5 <= item["turns"] <= 64:
+                raise ValueError(f"{op['id']}: helix turns must be 0.5–64")
+        if kind == "drafted_extrude":
+            if op["plane"] != "xy" or op["direction"] != 1:
+                raise ValueError(f"{op['id']}: drafted extrusion supports plane xy and direction 1 only")
+            _size(op["id"], "depth")
+            if not 0 <= item["draft_angle"] <= 45:
+                raise ValueError(f"{op['id']}: draft_angle must be 0–45 degrees")
+            from .planar_profile import resolve_profile
+            item["loops"] = resolve_profile(op["loops"], values, scalar)
         if "size" in item and min(item["size"]) <= 0:
             raise ValueError("Box sizes must be positive")
-        if kind in ("cylinder", "rotate") and op["axis"] not in ("x", "y", "z"):
+        if kind in ("cylinder", "rotate", "cone", "torus", "wedge") and op["axis"] not in ("x", "y", "z"):
             raise ValueError("Axis must be x, y or z")
         if kind == "rotate" and item["angle"] > 360:
             raise ValueError("Rotation angle must be positive and at most 360 degrees")

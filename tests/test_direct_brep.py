@@ -283,3 +283,58 @@ def test_numeric_correction_preserves_recipe_context(change):
         changed['name']='replacement name'
     with pytest.raises(ValueError,match='metadata, body identity and evidence'):
         direct_brep.validate_correction(recipe,changed)
+
+
+def test_direct_payload_carries_placements_refinements_and_new_kinds(tmp_path,monkeypatch):
+    monkeypatch.setattr(app,'settings',replace(app.settings,results_dir=tmp_path))
+    recipe=json.loads(Path('benchmarks/brep-v2/bookend.json').read_text())
+    async def interpret(image,mime,controls,*,out):
+        evidence={'interpretation':{'object_hypothesis':'test bookend'},'view_geometry':[]}
+        (out/'feature-evidence.json').write_text(json.dumps(evidence))
+        return evidence
+    async def model(messages,out,label,**kwargs):
+        if label=='construction-plan':return PLAN
+        (out/(label+'.raw.txt')).write_text(json.dumps(recipe))
+        return recipe
+    async def discover():return type('Model',(),{'selected':'fixture-model'})()
+    async def forbidden(*a,**kw):pytest.fail('Direct BRep must never generate SCAD')
+    monkeypatch.setattr(app.pipeline,'interpret_features',interpret)
+    monkeypatch.setattr(app.pipeline,'_json_call',model)
+    monkeypatch.setattr(app.pipeline.client,'discover',discover)
+    monkeypatch.setattr(app.pipeline,'generate',forbidden)
+    with TestClient(app.app) as client:
+        response=client.post('/api/generate',files={'image':('drawing.png',IMAGE,'image/png')},data={'backend':'usd-brep'})
+        assert response.status_code==200,response.text
+        job=response.json()['job_id']
+        for _ in range(600):
+            state=client.get('/api/generate/'+job).json()
+            if state['status']!='running':break
+            time.sleep(.1)
+        assert state['status']=='done',state
+        app.JOBS.pop(job)
+    payload=json.loads((tmp_path/job/'recipe-request.json').read_text())
+    assert 'feature_placements_mm' in payload and 'intent_refinements' in payload
+    prompt=(tmp_path/job/'recipe-prompt.txt').read_text()
+    for token in ('sphere:','cone:','torus:','wedge:','pyramid:','arc_block:','helix:','drafted_extrude:',
+                  'OUTER SILHOUETTE IS A HARD CONSTRAINT','polygon_mm'):
+        assert token in prompt, token
+
+
+def test_brep_checker_records_silhouette_gate(monkeypatch):
+    from doodle_to_cad import brep_checks
+    state={'silhouette':0.99}
+    def fake_scores(source,evidence,views,primary,standard):
+        return {'front':.99},{'front':{'crop_internal_profiles':2,'rendered_internal_profiles':2,
+                                        'feature_position_fidelity':1.0,
+                                        'silhouette_fidelity':state['silhouette']}}
+    monkeypatch.setattr(brep_checks,'projection_scores',fake_scores)
+    monkeypatch.setattr(brep_checks,'SILHOUETTE_MIN_FIDELITY',0.93)
+    health={'watertight':True,'components':1,'extents_mm':[60,40,10]}
+    result=brep_checks.evaluate_drawing(b'',{},{},health,{'primary_view':'front'},120)
+    record={c['name']:c for c in result['checks']}
+    assert record['front outer silhouette']['status']=='passed'
+    assert result['projection_status']=='passed'
+    state['silhouette']=0.876  # the saved rounded-rectangle substitution score
+    result=brep_checks.evaluate_drawing(b'',{},{},health,{'primary_view':'front'},120)
+    assert 'front outer silhouette' in result['failures']
+    assert result['projection_status']=='failed'

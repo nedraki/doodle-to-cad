@@ -41,14 +41,23 @@ fillet: body,radius,selector (all/parallel_x/parallel_y/parallel_z).
 chamfer: body,radius (straight-line width ACROSS the bevel face, applied to all edges). For a 45-degree bevel with setback C along each adjoining face, radius = C * 1.4142135623730951. Expose C as a parameter and use a quoted expression for radius.
 arc_pipe: origin (arc centre),bend_radius,radius,angle (0<angle<=270). Circular solid profile swept along an XY arc from +X anticlockwise. radius < bend_radius.
 revolve: origin (world XYZ translation),axis (exactly "z"),profile (one closed ordered list of 3–128 numeric [r,z] pairs; r = radius from the axis, z = height. The last pair joins back to the first; never repeat the first pair. r must be 0 or positive; the profile never crosses the axis. No crossing, touching, repeated or zero-area edges. Full 360 degrees about +Z; partial angles and spline profiles are unsupported. Numeric fields allow quoted parameter expressions.). This makes ONE axisymmetric solid from its radius-height silhouette: vase, bottle, cup, ring or stepped shaft. Prefer it over stacked cylinders for smooth stepped circular profiles. Keep each vertex an honest straight-line approximation of the drawn curve and disclose that in evidence. Build a HOLLOW vessel with ONE closed profile: base from the axis outward, outer wall up to the rim, rim inward by the wall thickness, inner wall down, inner floor across, back to the axis. Derive every inner radius and floor height from the declared wall and floor thickness values; never invent them. Keep the lowest z at 0 before origin translation. Expose overall height, maximum radius and, for vessels, wall and floor thickness as parameters; an edit to the maximum radius must move every dependent radius by the same amount.
+sphere: origin (CENTER),radius (0.01–256). To sit on the Z=0 plate the origin z must equal the radius.
+cone: origin (bottom-face centre),radius_base,radius_top (0–256, never above radius_base; 0 gives an apex),height,angle (1–360 revolution),axis (x/y/z). The solid extends from origin in the POSITIVE axis direction. A 1/4 cone is angle 90.
+torus: origin (ring centre),bend_radius (ring centre to tube centre),radius (tube; radius < bend_radius),angle (1–360; 360 is a full ring),axis (torus normal). To sit on the plate the origin z must equal radius. A ring, washer rim or handle.
+wedge: origin (base centre),radius,height,start_angle (0–359),end_angle (up to 360, at least 1 degree after start),axis. Absolute angular slice of a cylinder, degrees CCW from +X; height extends along the POSITIVE axis.
+pyramid: origin (BASE-CENTRE of the bottom face),base (square side length),height. The apex sits above the base centre.
+arc_block: origin (annulus centre at the bottom face),length (Z height),inside_radius (0 allowed),outside_radius,start_angle (0–359),end_angle. An annular sector CCW from +X, like a curved bracket segment.
+helix: origin (bottom of the axis),height,radius_start,radius_end,turns (0.5–64),tube_radius (at least 2 mm — thinner tubes fail the build guards). A solid round tube wound right-handed about +Z climbing from origin. The capped end dips about tube_radius below origin: put origin z at least tube_radius. A spring or coil.
+drafted_extrude: plane (only "xy"),direction (exactly 1),depth (0.01–256),draft_angle (0–45),loops (same closed line/arc loops as extrude, outer first). A positive draft_angle SHRINKS the section going up by depth*tan(angle) per side — mould draft. Check the top section does not collapse before using an angle.
 - Each evidence category contains entries with only id,text. Keep observed, inferred, assumptions and unresolved separate. Unresolved construction values prevent building.
 - constraints contains ONLY intentionally overlapping volumetric material joints. Do not add these constraints to tangential pipe/leg joints with matching end faces; those have zero intersection volume even when their union is one connected solid. Full-face fused joints are checked through the final connected solid, not an invented positive overlap requirement. Each volumetric joint has the form: {"id":"joint1","kind":"connected","left":"feature1","right":"feature2","min_volume_mm3":0.01}. Both features must occur in final construction. Do not confuse containment with material connection.
 
 GEOMETRY:
 The whole drawing sheet depicts ONE object. X=width, Y=depth, Z=height. Front projection is XZ, top is XY, right is YZ. A circular feature seen in front has its cylinder axis along Y, not Z. Lowest Z must be zero, including rotated bodies.
 Preserve measured proportions, feature counts, unequal sizes and the declared maximum dimension. Keep one connected final solid. Expose useful dimension parameters.
+OUTER SILHOUETTE IS A HARD CONSTRAINT: each view's outer_profile polygon is the truth of the body outline for that view. When feature_placements_mm is present, build the body by extruding or revolving the outer_silhouette polygon_mm VERBATIM — those coordinates are already CAD-world millimetres with the (1-v) vertical flip applied; never re-derive, mirror, rotate or "symmetrize" them. Use the evidence curve_segments to regularize honestly: lines stay lines, arcs are rebuilt through their from/mid/to points, every shoulder and curved transition survives. Never replace the outline with a rounded rectangle, ellipse, box or circle, and never recover a lost silhouette with fillets or chamfers. Only when intent_refinements reports outer_profile_fit.accepted true may a primitive replace that outline.
 Box origin is its minimum corner and its endpoint equals origin + size. Compute joint endpoints explicitly. For a volumetric joint, extend joined material into both owners by a positive overlap. Full matching end faces can instead be fused by union into one solid; do not claim positive overlap volume for that face-to-face joint. Gaps and edge-only contact are invalid. Never subtract away required joint overlap. Cutters must cross the wall they cut.
-Use rotation for diagonal features and radial patterns. Closed XY line/arc profile extrusion and the bounded rectangular sweep described above are supported. The rectangular-to-round loft described above is supported. The bounded revolve described above is supported for axisymmetric silhouettes. Other lofts, spline profiles, extrusions in other planes and other sweeps are unsupported. Do not replace them silently with another construction.
+Use rotation for diagonal features and radial patterns. Closed XY line/arc profile extrusion, the drafted extrusion, the bounded rectangular sweep described above are supported. The rectangular-to-round loft described above is supported. The bounded revolve described above is supported for axisymmetric silhouettes. sphere, cone, torus, wedge, pyramid, arc_block and helix primitives are supported. Other lofts, spline profiles, extrusions in other planes and other sweeps are unsupported. Do not replace them silently with another construction.
 For missing depth or dimensions, choose explicit conservative assumptions and expose parameters. Do not silently discard unresolved drawing details. Return unsupported if uncertainty prevents a supported construction.
 Check placement and dimensions with numeric arithmetic before returning the recipe:
 - A cylinder along X or Y extends one radius below its centre in Z. Put its centre at least that radius above Z=0.
@@ -81,7 +90,8 @@ def validate_correction(before, after):
         raise ValueError('Do not remove, change or weaken required connection constraints')
     if not set(before['parameters']).issubset(after['parameters']):
         raise ValueError('Keep existing editable parameter names')
-    allowed = {'origin','size','radius','height','bend_radius'}
+    allowed = {'origin','size','radius','height','bend_radius','radius_base','radius_top','base','length',
+               'inside_radius','outside_radius','tube_radius','start_angle','end_angle','draft_angle','depth'}
     original_ops = {op['id']:op for op in before['operations']}
     for op in after['operations']:
         original = original_ops[op['id']]
@@ -193,6 +203,10 @@ async def submit_direct_job(image, mime, notes, dimension, extra, controls,
         (out/'construction-plan.json').write_text(json.dumps(plan,indent=2))
         job['stage'] = 'planning BRep recipe'
         payload = {'clarification_answers':answers,'evidence':evidence,'construction_plan':plan,'notes':notes,'maximum_dimension_mm':maximum,'controls':controls}
+        from .sizes import derive_physical_sizes
+        from .refine import refine_evidence
+        payload['feature_placements_mm'] = pipeline.feature_placements_mm(evidence, derive_physical_sizes(evidence, maximum))
+        payload['intent_refinements'] = refine_evidence(evidence, controls.get('refine_mode', 'regularize'))
         (out/'recipe-request.json').write_text(json.dumps(payload,indent=2))
         messages = [{'role':'system','content':PROMPT},{'role':'user','content':[
             {'type':'text','text':json.dumps(payload)},

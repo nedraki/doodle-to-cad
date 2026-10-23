@@ -259,6 +259,14 @@ extrude: id,kind,origin (world XYZ translation),plane (only "xy"),direction (int
 arc_pipe: id,kind,origin (arc centre),bend_radius,radius,angle (0<angle<=270).
 arc_pipe is a solid circular profile swept along an XY arc from +X anticlockwise.
 revolve: id,kind,origin (world XYZ translation),axis (exactly "z"),profile (one closed ordered list of 3-128 numeric [r,z] pairs; r = radius from the axis, z = height; the last pair joins back to the first; r never negative; no crossing, touching or zero-area edges; full 360 degrees about +Z only). One axisymmetric solid from its radius-height silhouette. A hollow vessel uses ONE closed profile: base, outer wall, rim inward by the wall thickness, inner wall, floor. Numeric fields allow quoted parameter expressions.
+sphere: id,kind,origin (CENTER; origin z = radius to rest on the plate),radius.
+cone: id,kind,origin (bottom-face centre),radius_base,radius_top (0 to radius_base; 0 is an apex),height,angle (1-360 revolution),axis (x/y/z). Extends from origin in the POSITIVE axis direction.
+torus: id,kind,origin (ring centre; origin z = radius to rest),bend_radius,radius (< bend_radius),angle (1-360),axis (torus normal).
+wedge: id,kind,origin (base centre),radius,height,start_angle (0-359),end_angle (up to 360, at least 1 degree later),axis. Angular slice CCW from +X.
+pyramid: id,kind,origin (base-centre of the bottom face),base (square side length),height.
+arc_block: id,kind,origin (annulus centre at the bottom face),length (Z height),inside_radius (0 allowed),outside_radius,start_angle (0-359),end_angle. Annular sector CCW from +X.
+helix: id,kind,origin (bottom of the axis; origin z at least tube_radius),height,radius_start,radius_end,turns (0.5-64),tube_radius (at least 2). Right-handed round tube about +Z.
+drafted_extrude: like extrude plus draft_angle (0-45; a positive angle SHRINKS the section going up). plane only "xy", direction exactly 1.
 Use booleans for pockets/enclosures. Cutters must cross the owning wall.
 Fillet selectors are geometric and are recomputed on each rebuild. No edge indices.
 Maximum 64 parameters, 128 operations; output names the final operation.
