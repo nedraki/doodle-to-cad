@@ -55,7 +55,7 @@ drafted_extrude: plane (only "xy"),direction (exactly 1),depth (0.01–256),draf
 GEOMETRY:
 The whole drawing sheet depicts ONE object. X=width, Y=depth, Z=height. Front projection is XZ, top is XY, right is YZ. A circular feature seen in front has its cylinder axis along Y, not Z. Lowest Z must be zero, including rotated bodies.
 Preserve measured proportions, feature counts, unequal sizes and the declared maximum dimension. Keep one connected final solid. Expose useful dimension parameters.
-OUTER SILHOUETTE IS A HARD CONSTRAINT: each view's outer_profile polygon is the truth of the body outline for that view. When feature_placements_mm is present, build the body by extruding or revolving the outer_silhouette polygon_mm VERBATIM — those coordinates are already CAD-world millimetres with the (1-v) vertical flip applied; never re-derive, mirror, rotate or "symmetrize" them. Use the evidence curve_segments to regularize honestly: lines stay lines, arcs are rebuilt through their from/mid/to points, every shoulder and curved transition survives. Never replace the outline with a rounded rectangle, ellipse, box or circle, and never recover a lost silhouette with fillets or chamfers. Only when intent_refinements reports outer_profile_fit.accepted true may a primitive replace that outline.
+OUTER SILHOUETTE IS A HARD CONSTRAINT: each view's outer_profile polygon is the truth of the body outline for that view. When feature_placements_mm is present, build the body by extruding or revolving the outer_silhouette polygon_mm VERBATIM — copy its coordinates; to keep editability, wrap them in quoted width/height expressions that evaluate to exactly those numbers. Never re-derive, simplify, mirror, rotate or "symmetrize" the outline from the image. Use the evidence curve_segments to regularize honestly: lines stay lines, arcs are rebuilt through their from/mid/to points, every shoulder and curved transition survives. A front-view outline stands upright: extrude() builds sections in local XY extruded along +Z, so extrude (u,v) = polygon_mm, then rotate angle 90 axis x origin [0,0,0] to map (u,v,t) -> (u,-t,v), then translate so the thickness spans the depth. Cut internal features after that rotation using world coordinates from center_mm: a slit = box origin [X-w/2,-0.1,Z-h/2] size [w,depth+0.2,h]; a hole = cylinder axis y origin [X,-0.1,Z] radius r height depth+0.2. Never replace the outline with a rounded rectangle, ellipse, box or circle, and never recover a lost silhouette with fillets or chamfers. Only when intent_refinements reports outer_profile_fit.accepted true may a primitive replace that outline.
 Box origin is its minimum corner and its endpoint equals origin + size. Compute joint endpoints explicitly. For a volumetric joint, extend joined material into both owners by a positive overlap. Full matching end faces can instead be fused by union into one solid; do not claim positive overlap volume for that face-to-face joint. Gaps and edge-only contact are invalid. Never subtract away required joint overlap. Cutters must cross the wall they cut.
 Use rotation for diagonal features and radial patterns. Closed XY line/arc profile extrusion, the drafted extrusion, the bounded rectangular sweep described above are supported. The rectangular-to-round loft described above is supported. The bounded revolve described above is supported for axisymmetric silhouettes. sphere, cone, torus, wedge, pyramid, arc_block and helix primitives are supported. Other lofts, spline profiles, extrusions in other planes and other sweeps are unsupported. Do not replace them silently with another construction.
 For missing depth or dimensions, choose explicit conservative assumptions and expose parameters. Do not silently discard unresolved drawing details. Return unsupported if uncertainty prevents a supported construction.
@@ -109,13 +109,14 @@ def validate_correction(before, after):
         raise ValueError('Construction correction made no change')
 
 
-CORRECTION_PROMPT_VERSION = 'construction-numeric-fields-3'
+CORRECTION_PROMPT_VERSION = 'construction-numeric-fields-4'
 CORRECTION_PROMPT = """Correct a measured BRep construction failure. Return the complete version 2 recipe as JSON only.
 Preserve every feature ID, operation kind, dependency, cylinder axis, rotation angle, output and connection constraint exactly.
 Keep recipe metadata, body declarations, frames and evidence text unchanged.
-Change only operation origin, size, radius, height or bend_radius fields and existing parameter values within their ranges. Keep every other operation field unchanged.
+Change only operation origin, size, radius, height, bend_radius, radius_base, radius_top, base, length, inside_radius, outside_radius, tube_radius, start_angle, end_angle, draft_angle or depth fields and existing parameter values within their ranges. Keep every other operation field unchanged.
 A cylinder uses height, not size. A box uses size, not height. Use quoted arithmetic expressions for dimensions. Never use null placeholders.
 For negative minimum Z, raise primitive Z coordinates AND rotation pivot Z coordinates consistently. A cylinder along X or Y extends one radius below its centre in Z. Changing a diameter alone does not put the part on Z=0.
+For a positive minimum Z (floating part), lower the same Z coordinates. For an extruded plate standing upright through a rotate operation, its height above the plate is controlled by the extrude origin Z and the rotate pivot origin Z — change those; NEVER edit loops, path or profile fields, which carry the protected silhouette.
 For oversize connectors, compute endpoint = origin + length. Shorten the connector to stay inside its outer owner while retaining positive overlap. Do not shrink the whole design to hide protrusions.
 For stacked zero-overlap joints, extend the internal member into BOTH owners while keeping the outer envelope unchanged. Lower its origin AND increase its height to overlap both ends. Meet the declared minimum volume; never weaken that requirement.
 Return actual changes that resolve the diagnostic. Do not repeat the unchanged recipe. Preserve intended shape and feature count. This is a construction correction, not a drawing-fidelity judgment.
@@ -205,8 +206,9 @@ async def submit_direct_job(image, mime, notes, dimension, extra, controls,
         payload = {'clarification_answers':answers,'evidence':evidence,'construction_plan':plan,'notes':notes,'maximum_dimension_mm':maximum,'controls':controls}
         from .sizes import derive_physical_sizes
         from .refine import refine_evidence
-        payload['feature_placements_mm'] = pipeline.feature_placements_mm(evidence, derive_physical_sizes(evidence, maximum))
-        payload['intent_refinements'] = refine_evidence(evidence, controls.get('refine_mode', 'regularize'))
+        labeled = json.loads((out/'geometry.json').read_text())
+        payload['feature_placements_mm'] = pipeline.feature_placements_mm(labeled, derive_physical_sizes(labeled, maximum))
+        payload['intent_refinements'] = refine_evidence(labeled, controls.get('refine_mode', 'regularize'))
         (out/'recipe-request.json').write_text(json.dumps(payload,indent=2))
         messages = [{'role':'system','content':PROMPT},{'role':'user','content':[
             {'type':'text','text':json.dumps(payload)},

@@ -59,6 +59,7 @@ def test_failure_is_saved_without_result_or_fallback(tmp_path,monkeypatch,mode):
     monkeypatch.setattr(direct_brep,'check_worker',worker)
     async def interpret(image,mime,controls,*,out):
         (out/'input.png').write_bytes(image)
+        (out/'geometry.json').write_text('{}')
         if mode=='cancel':await asyncio.sleep(60)
         return {'interpretation':{'unresolved':['depth']}}
     async def model(*args,**kwargs):
@@ -139,6 +140,7 @@ def test_direct_job_publishes_native_recipe_and_provenance(tmp_path,monkeypatch)
     async def interpret(image,mime,controls,*,out):
         evidence={'interpretation':{'object_hypothesis':'test bookend'}}
         (out/'feature-evidence.json').write_text(json.dumps(evidence))
+        (out/'geometry.json').write_text(json.dumps({'view_geometry':[]}))
         return evidence
     async def model(messages,out,label,**kwargs):
         if label=='construction-plan':return PLAN
@@ -201,6 +203,7 @@ def test_bounded_construction_correction_with_real_worker(tmp_path,monkeypatch,m
     calls=[]
     async def interpret(image,mime,controls,*,out):
         (out/'feature-evidence.json').write_text('{}')
+        (out/'geometry.json').write_text('{}')
         return {}
     async def model(messages,out,label,**kwargs):
         if label=='construction-plan':return PLAN
@@ -291,6 +294,7 @@ def test_direct_payload_carries_placements_refinements_and_new_kinds(tmp_path,mo
     async def interpret(image,mime,controls,*,out):
         evidence={'interpretation':{'object_hypothesis':'test bookend'},'view_geometry':[]}
         (out/'feature-evidence.json').write_text(json.dumps(evidence))
+        (out/'geometry.json').write_text(json.dumps({'view_geometry':[]}))
         return evidence
     async def model(messages,out,label,**kwargs):
         if label=='construction-plan':return PLAN
