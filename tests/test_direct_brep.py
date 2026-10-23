@@ -342,3 +342,18 @@ def test_brep_checker_records_silhouette_gate(monkeypatch):
     result=brep_checks.evaluate_drawing(b'',{},{},health,{'primary_view':'front'},120)
     assert 'front outer silhouette' in result['failures']
     assert result['projection_status']=='failed'
+
+
+def test_standing_body_check_catches_lying_slabs():
+    from doodle_to_cad.direct_brep import _check_standing_body
+    tall = {'views':[{'view':'front','profiles':[{'role':'outer_silhouette',
+            'polygon_mm':[[0,0],[100,0],[100,60],[0,60]]}]}]}
+    flat = {'views':[{'view':'front','profiles':[{'role':'outer_silhouette',
+            'polygon_mm':[[0,0],[100,0],[100,8],[0,8]]}]}]}
+    extrude = {'operations':[{'kind':'extrude'}]}
+    stood = {'operations':[{'kind':'extrude'},{'kind':'rotate'}]}
+    _check_standing_body(extrude, None)          # no placements: nothing to enforce
+    _check_standing_body(extrude, flat)          # low relief: lying slab may be correct
+    _check_standing_body(stood, tall)            # rotate present: legal
+    with pytest.raises(ValueError, match='STANDING-PLATE WORKED EXAMPLE'):
+        _check_standing_body(extrude, tall)      # tall front outline, no rotate: reject

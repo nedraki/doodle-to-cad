@@ -58,6 +58,10 @@ Preserve measured proportions, feature counts, unequal sizes and the declared ma
 OUTER SILHOUETTE IS A HARD CONSTRAINT: each view's outer_profile polygon is the truth of the body outline for that view. When feature_placements_mm is present, build the body by extruding or revolving the outer_silhouette polygon_mm VERBATIM — copy its coordinates; to keep editability, wrap them in quoted width/height expressions that evaluate to exactly those numbers. Never re-derive, simplify, mirror, rotate or "symmetrize" the outline from the image. Use the evidence curve_segments to regularize honestly: lines stay lines, arcs are rebuilt through their from/mid/to points, every shoulder and curved transition survives. A front-view outline stands upright: extrude() builds sections in local XY extruded along +Z, so extrude (u,v) = polygon_mm, then rotate angle 90 axis x origin [0,0,0] to map (u,v,t) -> (u,-t,v), then translate so the thickness spans the depth. Cut internal features after that rotation using world coordinates from center_mm: a slit = box origin [X-w/2,-0.1,Z-h/2] size [w,depth+0.2,h]; a hole = cylinder axis y origin [X,-0.1,Z] radius r height depth+0.2. Never replace the outline with a rounded rectangle, ellipse, box or circle, and never recover a lost silhouette with fillets or chamfers. Only when intent_refinements reports outer_profile_fit.accepted true may a primitive replace that outline.
 Box origin is its minimum corner and its endpoint equals origin + size. Compute joint endpoints explicitly. For a volumetric joint, extend joined material into both owners by a positive overlap. Full matching end faces can instead be fused by union into one solid; do not claim positive overlap volume for that face-to-face joint. Gaps and edge-only contact are invalid. Never subtract away required joint overlap. Cutters must cross the wall they cut.
 Use rotation for diagonal features and radial patterns. Closed XY line/arc profile extrusion, the drafted extrusion, the bounded rectangular sweep described above are supported. The rectangular-to-round loft described above is supported. The bounded revolve described above is supported for axisymmetric silhouettes. sphere, cone, torus, wedge, pyramid, arc_block and helix primitives are supported. Other lofts, spline profiles, extrusions in other planes and other sweeps are unsupported. Do not replace them silently with another construction.
+STANDING-PLATE WORKED EXAMPLE: a front-view outline must stand in XZ with thickness along Y — it must never lie flat in the XY plane, which fails the front projection check. Emit exactly this pair (numbers taken from feature_placements_mm outer_silhouette polygon_mm), then cut internal features against the rotated body in world coordinates:
+{"id":"body","kind":"extrude","frame":"world","depends_on":[],"evidence":["e1"],"origin":[0,0,0],"plane":"xy","direction":1,"depth":"thickness","loops":[[{"kind":"line","start":[X1,Z1],"end":[X2,Z2]}]]}
+{"id":"stand","kind":"rotate","frame":"world","depends_on":["body"],"evidence":["e1"],"body":"body","origin":[0,0,0],"axis":"x","angle":90}
+The rotate maps (u,v,t) -> (u,-t,v): X = polygon X, Z = polygon Z (the flip is already in polygon_mm), thickness along -Y. A body without this rotate is a lying slab and is always wrong for a front-view plate.
 For missing depth or dimensions, choose explicit conservative assumptions and expose parameters. Do not silently discard unresolved drawing details. Return unsupported if uncertainty prevents a supported construction.
 Check placement and dimensions with numeric arithmetic before returning the recipe:
 - A cylinder along X or Y extends one radius below its centre in Z. Put its centre at least that radius above Z=0.
@@ -121,6 +125,29 @@ For oversize connectors, compute endpoint = origin + length. Shorten the connect
 For stacked zero-overlap joints, extend the internal member into BOTH owners while keeping the outer envelope unchanged. Lower its origin AND increase its height to overlap both ends. Meet the declared minimum volume; never weaken that requirement.
 Return actual changes that resolve the diagnostic. Do not repeat the unchanged recipe. Preserve intended shape and feature count. This is a construction correction, not a drawing-fidelity judgment.
 """
+
+
+def _check_standing_body(raw, placements):
+    """Front-view drawings whose outline is tall cannot be built by a flat
+    extrusion: catch the lying-slab failure in validation, where the retry
+    loop can tell the model exactly what to add."""
+    if not placements:
+        return
+    front = next((v for v in placements.get('views') or [] if v['view'] == 'front'), None)
+    outer = next((p for p in (front or {}).get('profiles', []) if p.get('role') == 'outer_silhouette'), None)
+    if not outer or not outer.get('polygon_mm'):
+        return
+    points = outer['polygon_mm']
+    spread_z = max(p[1] for p in points) - min(p[1] for p in points)
+    spread_x = max(p[0] for p in points) - min(p[0] for p in points)
+    if spread_x <= 0 or spread_z < 0.4 * spread_x:
+        return
+    kinds = {op.get('kind') for op in raw.get('operations') or []}
+    if 'extrude' in kinds and 'rotate' not in kinds:
+        raise ValueError(
+            f'The front view outline is {round(spread_z)} mm tall on {round(spread_x)} mm wide, so the body must stand in XZ. '
+            'An extrude() builds its section flat in XY: add the STANDING-PLATE WORKED EXAMPLE pair — the same extrude plus '
+            'a rotate operation (angle 90, axis x, origin [0,0,0]) depending on it — before cutting internal features.')
 
 
 async def correct_construction(pipeline, out, recipe, failure, attempt, maximum):
@@ -221,6 +248,7 @@ async def submit_direct_job(image, mime, notes, dimension, extra, controls,
                 if raw.get('version') != 2:
                     raise ValueError('Direct generation requires recipe version 2')
                 validate_recipe(raw)
+                _check_standing_body(raw, payload.get('feature_placements_mm'))
                 provenance['attempts'].append({'attempt':attempt+1,'schema_valid':True})
                 (out/'generation.json').write_text(json.dumps(provenance,indent=2))
                 return raw
