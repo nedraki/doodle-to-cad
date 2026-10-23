@@ -1,0 +1,97 @@
+{
+  "view_frame": "The drawing presents two views. The top view (bottom of image) is the XY plane, showing the circular flange outline and hole pattern. The front view (top of image) is the XZ plane, showing the flange thickness and the central bore as a through-hole.",
+  "features": [
+    {
+      "id": "flange_body",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "Z",
+      "dimensions": [
+        "ASSUMED: outer_diameter",
+        "ASSUMED: thickness"
+      ],
+      "placement": "Centered at (0,0) in XY, extruded from Z=0 to Z=thickness",
+      "evidence": "Outer circle in top view; rectangular profile in front view"
+    },
+    {
+      "id": "center_bore",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "Z",
+      "dimensions": [
+        "ASSUMED: bore_diameter"
+      ],
+      "placement": "Centered at (0,0) in XY, through-hole from Z=0 to Z=thickness",
+      "evidence": "Inner circle in top view; vertical lines in front view indicating through-hole"
+    },
+    {
+      "id": "bolt_hole_1",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "Z",
+      "dimensions": [
+        "ASSUMED: bolt_hole_diameter",
+        "ASSUMED: bolt_circle_radius"
+      ],
+      "placement": "Centered at (bolt_circle_radius, 0) in XY, through-hole from Z=0 to Z=thickness",
+      "evidence": "Top-right circle in top view"
+    },
+    {
+      "id": "bolt_hole_2",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "Z",
+      "dimensions": [
+        "ASSUMED: bolt_hole_diameter",
+        "ASSUMED: bolt_circle_radius"
+      ],
+      "placement": "Centered at (0, bolt_circle_radius) in XY, through-hole from Z=0 to Z=thickness",
+      "evidence": "Top-left circle in top view"
+    },
+    {
+      "id": "bolt_hole_3",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "Z",
+      "dimensions": [
+        "ASSUMED: bolt_hole_diameter",
+        "ASSUMED: bolt_circle_radius"
+      ],
+      "placement": "Centered at (-bolt_circle_radius, 0) in XY, through-hole from Z=0 to Z=thickness",
+      "evidence": "Bottom-left circle in top view"
+    },
+    {
+      "id": "bolt_hole_4",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "Z",
+      "dimensions": [
+        "ASSUMED: bolt_hole_diameter",
+        "ASSUMED: bolt_circle_radius"
+      ],
+      "placement": "Centered at (0, -bolt_circle_radius) in XY, through-hole from Z=0 to Z=thickness",
+      "evidence": "Bottom-right circle in top view"
+    }
+  ],
+  "connections": [
+    "center_bore is subtracted from flange_body",
+    "bolt_hole_1 is subtracted from flange_body",
+    "bolt_hole_2 is subtracted from flange_body",
+    "bolt_hole_3 is subtracted from flange_body",
+    "bolt_hole_4 is subtracted from flange_body"
+  ],
+  "edit_rules": [
+    "Changing outer_diameter scales the flange_body radius",
+    "Changing thickness scales the Z-height of all features",
+    "Changing bore_diameter scales the center_bore radius",
+    "Changing bolt_hole_diameter scales all bolt_hole radii",
+    "Changing bolt_circle_radius moves all bolt_hole centers radially"
+  ],
+  "unresolved": [
+    "outer_diameter is not dimensioned",
+    "thickness is not dimensioned",
+    "bore_diameter is not dimensioned",
+    "bolt_hole_diameter is not dimensioned",
+    "bolt_circle_radius is not dimensioned"
+  ]
+}

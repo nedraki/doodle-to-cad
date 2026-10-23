@@ -1,0 +1,208 @@
+curve_sweep curve_sweep(profile_curves: List[usd_brep._omni_solid.Curve], path_curve: usd_brep._omni_solid.BSplineCurve, scale_reference: usd_brep._omni_solid.BSplineCurve = None, scale_curve: usd_brep._omni_solid.BSplineCurve = None, *, cap_ends: bool = True) -> usd_brep._omni_solid.Brep
+
+Pure: returns new Brep; inputs unchanged.
+
+Sweep a profile along a path curve, with optional variable scaling.
+
+Args:
+    profile_curves: Profile curves to sweep.
+    path_curve: B-spline path curve.
+    scale_reference: Optional B-spline reference curve defining the
+        baseline scale at each point along the path. ``None`` for no
+        scaling.
+    scale_curve: Optional B-spline curve whose distance from
+        ``scale_reference`` defines the scale factor at each point.
+        ``None`` for no scaling. Must be supplied together with
+        ``scale_reference``.
+    cap_ends: If True (default), cap both ends so a closed profile
+        produces a manifold solid. If False, return the open swept
+        shell. Capping requires a closed profile.
+
+Returns:
+    Brep: swept body, with cross-sections scaled per the optional
+    scale curves.
+
+See Also:
+    pipe_sweep: Constant-radius circular cross-section along a path.
+    curve_sweep_from_faces: Same operation taking face edge loops.
+    curve_sweep_from_edges: Same operation taking edges.
+
+Wraps: SmApiCreateCurveSweep
+
+sweep_along_planar_path sweep_along_planar_path(profile_curves: List[usd_brep._omni_solid.Curve], path_curves: List[usd_brep._omni_solid.Curve], *, move_profile: bool = True, cap_ends: usd_brep._omni_solid.CapEnds = <CapEnds.BOTH: 3>) -> usd_brep._omni_solid.Brep
+
+Pure: returns new Brep; inputs unchanged.
+
+Sweep profile boundary curves along a planar path.
+
+Args:
+    profile_curves: Coplanar profile boundary curves. Simple closed
+        loops define planar regions using even/odd nesting; open
+        profile wires sweep to sheet geometry.
+    path_curves: Ordered, connected, coplanar path curves forming an
+        open chain or closed loop.
+    move_profile: If ``True`` (default), anchor the profile bounding-
+        box center to the path start. If ``False``, anchor the first
+        point of the first profile curve there instead. Keyword-only.
+    cap_ends: ``CapEnds`` selector. ``START`` caps the profile end;
+        ``END`` caps the far (path) end; ``BOTH`` (default) caps both;
+        ``NONE`` leaves the result open. Closed paths have no
+        endpoints, so the selector has no effect. Keyword-only.
+
+Returns:
+    Brep: Swept sheet, open shell, or nested solid according to the
+        profile topology, path closure, and requested endpoint caps.
+
+Notes:
+    For an open path, ``BOTH`` caps plus closed profile loops request
+    a nested solid. ``NONE``, ``START``, or ``END`` leave a sheet or
+    open shell. A closed path has no endpoint caps and requests a
+    nested solid when its swept boundary closes. Nested bounded
+    regions alternate between material and void from the outside in.
+    A manifold boundary with no material region is rejected.
+    Tangent-discontinuous path joins use sharp, mitered transitions;
+    rounded corners are not inserted. Author the rounded motion as
+    tangent-connected arc or spline path curves when needed.
+
+See Also:
+    pipe_sweep: Specialized circular cross-section along a path.
+    curve_sweep: Sweep with optional scale curves.
+
+Wraps: SmApiCreateSweepAlongPlanarPath
+
+create_rectangle create_rectangle(center: tuple, length: float, width: float) -> List[usd_brep._omni_solid.Curve]
+
+Create a rectangle as four B-spline line segments.
+
+Args:
+    center: Center of the rectangle as ``(x, y, z)``. The rectangle
+        lies in the plane Z = ``center.z``.
+    length: Total length along the X axis. Must be positive and finite.
+    width: Total width along the Y axis. Must be positive and finite.
+
+Returns:
+    list[Curve]: four line segments forming a closed loop, ordered
+    head to tail.
+
+See Also:
+    create_regular_polygon: N-sided regular polygon as line segments.
+
+Wraps: SmApiCreateRectangle
+
+create_arc create_arc(center: tuple, radius: float, start_angle_deg: float, end_angle_deg: float) -> usd_brep._omni_solid.Curve
+
+Create a B-spline circular arc in the XY plane.
+
+Args:
+    center: Center of the arc as ``(x, y, z)``. The arc lies in the
+        plane Z = ``center.z``.
+    radius: Radius of the arc. Must be positive.
+    start_angle_deg: Start angle measured counter-clockwise from the
+        +X axis, in degrees.
+    end_angle_deg: End angle measured counter-clockwise from the +X
+        axis, in degrees. Must differ from ``start_angle_deg``.
+
+Returns:
+    Curve: open B-spline arc swept counter-clockwise from start to
+    end.
+
+See Also:
+    create_circle: Full closed circle.
+
+Wraps: SmApiCreateArc
+
+curve_sweep_from_faces curve_sweep_from_faces(faces: List[usd_brep._omni_solid.Face], path_curve: usd_brep._omni_solid.BSplineCurve, scale_reference: usd_brep._omni_solid.BSplineCurve = None, scale_curve: usd_brep._omni_solid.BSplineCurve = None, *, cap_ends: bool = True) -> usd_brep._omni_solid.Brep
+
+Pure: returns new Brep; inputs unchanged.
+
+Sweep face edge loops along a path curve, with optional scaling.
+
+Args:
+    faces: Faces whose outer-edge loops define the swept profiles.
+    path_curve: B-spline path curve.
+    scale_reference: Optional B-spline scale reference; see
+        ``curve_sweep`` for details. ``None`` for no scaling.
+    scale_curve: Optional B-spline scale curve. Must be supplied
+        together with ``scale_reference``.
+    cap_ends: If True (default), cap both ends so a closed profile
+        produces a manifold solid. If False, return the open swept
+        shell.
+
+Returns:
+    Brep: swept body.
+
+See Also:
+    curve_sweep: Same operation taking standalone profile curves.
+    curve_sweep_from_edges: Same operation taking edges.
+
+Wraps: SmApiCreateCurveSweepFromFaces
+
+rotational_sweep rotational_sweep(curves: List[usd_brep._omni_solid.Curve], base_point: tuple, axis: tuple, angle_deg: float, *, cap_ends: bool = True) -> usd_brep._omni_solid.Brep
+
+Pure: returns new Brep; inputs unchanged.
+
+Revolve a profile about an axis to create a Brep.
+
+Args:
+    curves: Profile curves. Must lie entirely on one side of the
+        rotation axis (no crossings) to avoid self-intersection.
+    base_point: A point on the rotation axis as ``(x, y, z)``.
+    axis: Direction of the rotation axis as ``(dx, dy, dz)``.
+    angle_deg: Sweep angle, in degrees. Use ``360`` for a closed
+        solid of revolution; less than 360 produces a wedge.
+    cap_ends: If ``True`` (default), close the start/end of partial
+        sweeps with cap faces; ignored when ``angle_deg == 360``.
+        Keyword-only.
+
+Returns:
+    Brep: revolved body.
+
+See Also:
+    linear_sweep: Straight extrusion along a direction.
+    rotational_sweep_with_repetitions: Multiple end-to-end revolutions.
+    create_surface_revolution: Surface-only revolution (no caps).
+
+Wraps: SmApiCreateRotationalSweep
+
+pipe_sweep pipe_sweep(path: usd_brep._omni_solid.Curve, *, radius: float, cap_ends: bool = True) -> usd_brep._omni_solid.Brep
+
+Pure: returns new Brep; inputs unchanged.
+
+Sweep a circular cross-section along a path curve to create a pipe.
+
+Args:
+    path: Sweep-path B-spline curve. ``TypeError`` is raised if a
+        non-B-spline curve is passed.
+    radius: Pipe radius. Must be positive and smaller than the path
+        curve's minimum radius of curvature to avoid self-intersection.
+        Keyword-only.
+    cap_ends: If ``True`` (default), close the ends of the pipe with
+        planar cap faces (manifold solid). Keyword-only.
+
+Returns:
+    Brep: pipe body.
+
+See Also:
+    curve_sweep: Variable-radius sweep with an arbitrary profile and
+        optional scale curves.
+    sweep_along_planar_path: Sweep along a planar polyline.
+
+Wraps: SmApiCreatePipeSweep
+
+create_line_segment create_line_segment(start: tuple, end: tuple) -> usd_brep._omni_solid.Curve
+
+Create a straight line segment between two points.
+
+Args:
+    start: Start point of the segment as ``(x, y, z)``.
+    end: End point of the segment as ``(x, y, z)``. Must be distinct
+        from ``start``.
+
+Returns:
+    Curve: analytical line segment.
+
+See Also:
+    create_line: Infinite line through a point in a direction.
+
+Wraps: SmApiCreateLineSegment
+

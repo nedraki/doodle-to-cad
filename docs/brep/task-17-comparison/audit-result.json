@@ -1,0 +1,42 @@
+[
+  {
+    "check": "sha256sums",
+    "status": "passed",
+    "detail": "1312 files, bad: []"
+  },
+  {
+    "check": "plan_frozen_before_trials",
+    "status": "passed",
+    "detail": "frozen_at=2026-10-19T00:57:51+02:00, late=[]"
+  },
+  {
+    "check": "index_matches_rows",
+    "status": "passed",
+    "detail": "index=80 rows=80"
+  },
+  {
+    "check": "matrix_complete",
+    "status": "passed",
+    "detail": "planned 5/cell; short: []"
+  },
+  {
+    "check": "readme_counts_match_rows",
+    "status": "passed",
+    "detail": ""
+  },
+  {
+    "check": "every_trial_has_evidence",
+    "status": "passed",
+    "detail": ""
+  },
+  {
+    "check": "fidelity_separate_from_build",
+    "status": "passed",
+    "detail": "36 runs built a valid solid yet failed fidelity; counted separately"
+  },
+  {
+    "check": "environment_fingerprint",
+    "status": "passed",
+    "detail": "c518cf27a68b"
+  }
+]

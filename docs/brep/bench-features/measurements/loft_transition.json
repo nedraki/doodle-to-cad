@@ -1,0 +1,157 @@
+{
+  "job": "loft_transition",
+  "category": "feature",
+  "build_ok": true,
+  "expected_fail": false,
+  "verdict": {
+    "ok": true,
+    "checks": {
+      "bottom profile at 0 deg": {
+        "status": "passed",
+        "measured_mm": 19.996,
+        "expected_mm": 20.0,
+        "tolerance_mm": 0.15
+      },
+      "bottom profile at 90 deg": {
+        "status": "passed",
+        "measured_mm": 15.0,
+        "expected_mm": 15.0,
+        "tolerance_mm": 0.15
+      },
+      "bottom profile at 180 deg": {
+        "status": "passed",
+        "measured_mm": 19.996,
+        "expected_mm": 20.0,
+        "tolerance_mm": 0.15
+      },
+      "bottom profile at 270 deg": {
+        "status": "passed",
+        "measured_mm": 15.002,
+        "expected_mm": 15.0,
+        "tolerance_mm": 0.15
+      },
+      "bottom profile at 45 deg": {
+        "status": "passed",
+        "measured_mm": 21.21,
+        "expected_mm": 21.2132,
+        "tolerance_mm": 0.15
+      },
+      "top circle profile": {
+        "status": "passed",
+        "measured_radius_mm": 14.9993,
+        "expected_radius_mm": 15,
+        "max_deviation_mm": 0.012,
+        "tolerance_mm": 0.15
+      },
+      "edge midpoint at 0 deg moves linearly to the circle": {
+        "status": "passed",
+        "measured_slope_mm_per_mm": -0.1,
+        "expected_slope": -0.1,
+        "measured_start_mm": 20.0004,
+        "measured_end_mm": 15.0004,
+        "tolerance_slope": 0.004,
+        "tolerance_mm": 0.15,
+        "samples": [
+          [
+            0.05,
+            19.996
+          ],
+          [
+            12.5,
+            18.75
+          ],
+          [
+            25.0,
+            17.5
+          ],
+          [
+            37.5,
+            16.25
+          ],
+          [
+            49.95,
+            15.006
+          ]
+        ]
+      },
+      "edge midpoint at 90 deg moves linearly to the circle": {
+        "status": "passed",
+        "measured_slope_mm_per_mm": -0.0,
+        "expected_slope": 0.0,
+        "measured_start_mm": 15.0,
+        "measured_end_mm": 15.0,
+        "tolerance_slope": 0.004,
+        "tolerance_mm": 0.15,
+        "samples": [
+          [
+            0.05,
+            15.0
+          ],
+          [
+            12.5,
+            15.0
+          ],
+          [
+            25.0,
+            15.0
+          ],
+          [
+            37.5,
+            15.0
+          ],
+          [
+            49.95,
+            15.0
+          ]
+        ]
+      },
+      "footprint shrinks monotonically from rectangle to circle": {
+        "status": "passed",
+        "areas_mm2": [
+          1200.0,
+          1069.0,
+          949.0,
+          823.0,
+          707.0
+        ],
+        "bottom_ideal_mm2": 1200,
+        "top_ideal_mm2": 706.86
+      },
+      "sections are symmetric about both axes": {
+        "status": "passed",
+        "method": "vertex band symmetry (|max+min| per axis, band \u00b10.5 mm)",
+        "max_asymmetry_mm": 0.0,
+        "tolerance_mm": 0.15
+      }
+    }
+  },
+  "mesh_summary": {
+    "watertight": true,
+    "winding_consistent": true,
+    "volume_mm3": 47439.962,
+    "extents_mm": [
+      40.0,
+      30.0,
+      50.0
+    ],
+    "bounds_mm": [
+      [
+        -20.0,
+        -15.0,
+        0.0
+      ],
+      [
+        20.0,
+        15.0,
+        50.0
+      ]
+    ],
+    "triangles": 5620,
+    "euler_number": 2,
+    "components": 1
+  },
+  "face_count_change": null,
+  "note": null,
+  "captured_utc": "2026-10-19T05:32:03Z",
+  "status": "passed"
+}

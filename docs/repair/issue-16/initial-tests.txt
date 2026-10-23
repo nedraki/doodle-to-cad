@@ -1,0 +1,125 @@
+# ENV: Python 3.11.16 | worker venv: Python 3.12.3 | usd-brep unknown | base commit 01de9dd | 2026-10-18T23:24:14+02:00
+# Suite run on the state left by the previous agent (tests/test_repair.py 4 failures).
+
+........................................................................ [ 30%]
+........................................................................ [ 61%]
+....................................................FF.................. [ 92%]
+.FF...............                                                       [100%]
+=================================== FAILURES ===================================
+______ test_repair_creates_separate_candidate_without_touching_selection _______
+
+tmp_path = PosixPath('/home/sparkie/.hermes/profiles/doodle-to-cad/cache/scratch/pytest-of-sparkie/pytest-48/test_repair_creates_separate_c0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0xfeee5fc93b10>
+
+    def test_repair_creates_separate_candidate_without_touching_selection(tmp_path, monkeypatch):
+        out, result = run_repair(tmp_path, monkeypatch=monkeypatch, build=stub_build())
+        assert result["revision"]["kind"] == "repair"
+        assert result["revision"]["parent_id"] == "original"
+        assert result["revision"]["candidate"] is True
+        assert result["repair"]["started_from"] == "parent-revision"
+        assert result["repair"]["instruction"].startswith("Connect every spoke")
+        assert result["repair"]["model"] == "stub-model"
+        assert result["repair"]["score_carried_from_generation"] is False
+        assert result["evaluation"] == {"status": "unverified", "accepted": False, "score": None,
+                                        "failures": ["The original generation acceptance score was not rerun for this repair candidate."]}
+        by_name = {c["name"]: c for c in result["repair"]["checks"]}
+        assert by_name["compiles"]["status"] == "passed"
+>       assert by_name["connected_components"] == {**by_name["connected_components"], "before": 2, "after": 1, "status": "passed"}
+E       AssertionError: assert {'name': 'con...fter': 1, ...} == {'name': 'con...fter': 1, ...}
+E         
+E         Omitting 4 identical items, use -vv to show
+E         Differing items:
+E         {'before': 1} != {'before': 2}
+E         Use -v to get more diff
+
+tests/test_repair.py:112: AssertionError
+________ test_repair_starts_from_displayed_parameter_edit_not_original _________
+
+tmp_path = PosixPath('/home/sparkie/.hermes/profiles/doodle-to-cad/cache/scratch/pytest-of-sparkie/pytest-48/test_repair_starts_from_displa0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0xfeee5fbb0fd0>
+
+    def test_repair_starts_from_displayed_parameter_edit_not_original(tmp_path, monkeypatch):
+        edited = ORIGINAL_SCAD.replace("hub_diameter = 32;", "hub_diameter = 40;")
+        out = setup_openscad_run(tmp_path)
+        (out / "edited-abc123.scad").write_text(edited)
+        (out / "edited-abc123.stl").write_bytes(b"edited-stl")
+        pipeline = StubPipeline(scad=REPAIRED_SCAD)
+        monkeypatch.setattr(repair, "build_candidate", stub_build())
+        monkeypatch.setattr(repair, "mesh_diagnostics", stub_mesh({"edited": BEFORE_MESH, "repair": AFTER_MESH}))
+        result = asyncio.run(repair.repair_preview(pipeline, SimpleNamespace(openscad_bin="openscad"), out, {
+            "parent_id": "original", "selection_version": 0,
+            "instruction": "Connect every spoke to the rim.",
+            "displayed": {"source": f"/results/{out.name}/edited-abc123.scad", "stl": f"/results/{out.name}/edited-abc123.stl"}}))
+        assert result["repair"]["started_from"] == "displayed-parameter-edit"
+        scad_messages = [m for kind, m in pipeline.calls if kind == "scad"][0]
+        user_payload = scad_messages[1]["content"][0]["text"]
+>       assert "hub_diameter = 40" in user_payload          # the displayed edit, not the 32 original
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       assert 'hub_diameter = 40' in '{\n  "correction_contract": {\n    "requested_change": "Connect every spoke to the rim.",\n    "model_interpretation"...itable_parameter_values": "exact; any change is listed for review",\n    "volume_relative_informational": 0.25\n  }\n}'
+
+tests/test_repair.py:145: AssertionError
+_________________ test_endpoint_keep_params_and_stale_requests _________________
+
+tmp_path = PosixPath('/home/sparkie/.hermes/profiles/doodle-to-cad/cache/scratch/pytest-of-sparkie/pytest-48/test_endpoint_keep_params_and_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0xfeee5fa377d0>
+
+    def test_endpoint_keep_params_and_stale_requests(tmp_path, monkeypatch):
+        from fastapi.testclient import TestClient
+        import doodle_to_cad.app as api
+        from dataclasses import replace
+        out = setup_openscad_run(tmp_path)
+        monkeypatch.setattr(api, "settings", replace(api.settings, results_dir=tmp_path))
+        monkeypatch.setattr(repair, "build_candidate", stub_build())
+        monkeypatch.setattr(repair, "mesh_diagnostics", stub_mesh({"repair": AFTER_MESH, "model.stl": BEFORE_MESH}))
+        client = TestClient(api.app)
+        response = client.post(f"/api/results/{out.name}/revisions/repair",
+                               json={"parent_id": "original", "selection_version": 0, "instruction": "join the spokes"})
+>       assert response.status_code == 200
+E       assert 422 == 200
+E        +  where 422 = <Response [422 Unprocessable Entity]>.status_code
+
+tests/test_repair.py:331: AssertionError
+_________________ test_parametrize_follows_displayed_revision __________________
+
+tmp_path = PosixPath('/home/sparkie/.hermes/profiles/doodle-to-cad/cache/scratch/pytest-of-sparkie/pytest-48/test_parametrize_follows_displ0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0xfeee5fcba250>
+
+    def test_parametrize_follows_displayed_revision(tmp_path, monkeypatch):
+        from fastapi.testclient import TestClient
+        import doodle_to_cad.app as api
+        import doodle_to_cad.openscad as openscad_module
+        from dataclasses import replace
+        out = setup_openscad_run(tmp_path)
+        monkeypatch.setattr(api, "settings", replace(api.settings, results_dir=tmp_path))
+        monkeypatch.setattr(repair, "build_candidate", stub_build())
+        monkeypatch.setattr(repair, "mesh_diagnostics", stub_mesh({"repair": AFTER_MESH, "model.stl": BEFORE_MESH}))
+        captured = {}
+        def fake_compile(output_dir, scad_text, tag, binary="openscad"):
+            captured["scad_text"] = scad_text
+            return f"/results/{output_dir.name}/{tag}.stl", ""
+        monkeypatch.setattr(openscad_module, "compile_stl_only", fake_compile)
+        client = TestClient(api.app)
+        candidate = client.post(f"/api/results/{out.name}/revisions/repair",
+                                json={"parent_id": "original", "selection_version": 0, "instruction": "join"}).json()
+        client.post(f"/api/results/{out.name}/revisions/keep",
+>                   json={"revision_id": candidate["revision"]["id"], "selection_version": 0})
+                                         ^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'revision'
+
+tests/test_repair.py:378: KeyError
+=============================== warnings summary ===============================
+.venv/lib/python3.11/site-packages/fastapi/testclient.py:1
+  /tmp/doodle-brep-16/.venv/lib/python3.11/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+.venv/lib/python3.11/site-packages/starlette/testclient.py:53
+  /tmp/doodle-brep-16/.venv/lib/python3.11/site-packages/starlette/testclient.py:53: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
+    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_repair.py::test_repair_creates_separate_candidate_without_touching_selection
+FAILED tests/test_repair.py::test_repair_starts_from_displayed_parameter_edit_not_original
+FAILED tests/test_repair.py::test_endpoint_keep_params_and_stale_requests - a...
+FAILED tests/test_repair.py::test_parametrize_follows_displayed_revision - Ke...
+4 failed, 230 passed, 2 warnings in 50.14s

@@ -1,0 +1,17 @@
+{
+  "requested_change": "Increase the hub diameter of the eight-spoke wheel.",
+  "preserve": [
+    "outer_diameter",
+    "spoke_width",
+    "spoke_count",
+    "watertight",
+    "components"
+  ],
+  "expected_evidence": [
+    "hub_diameter > 32.0",
+    "outer_diameter == 120.0",
+    "spoke_width == 8.0",
+    "watertight == true",
+    "components == 1"
+  ]
+}

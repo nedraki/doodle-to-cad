@@ -1,0 +1,278 @@
+[
+  {
+    "attempt": 1,
+    "action": "generate",
+    "preflight": {
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "expected_subtractive_feature_groups": 0
+    },
+    "compiler_repairs": [],
+    "uniform_scale": {
+      "factor": 0.5746,
+      "before_max_mm": 208.824,
+      "after_max_mm": 120.0,
+      "params": [
+        "height",
+        "max_width"
+      ]
+    },
+    "evaluation": {
+      "score": 91.0,
+      "valid_mesh": true,
+      "accepted": false,
+      "mandatory_gates": {
+        "compiled": true,
+        "topology": true,
+        "dimensions": true,
+        "shape_sanity": true,
+        "features": true,
+        "openings_through": true,
+        "projections": false,
+        "build_envelope": true
+      },
+      "scores": {
+        "topology": 45,
+        "dimensions": 20.0,
+        "features": 20,
+        "projections": 6.0
+      },
+      "projection_similarity": {
+        "front": 0.399
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 5,
+          "crop_internal_profiles": 0,
+          "source_aspect": 0.896,
+          "rendered_aspect": 1.862,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": [
+            [
+              0.69,
+              0.833
+            ],
+            [
+              0.618,
+              0.833
+            ],
+            [
+              0.558,
+              0.833
+            ],
+            [
+              0.662,
+              0.125
+            ],
+            [
+              0.337,
+              0.125
+            ]
+          ]
+        }
+      },
+      "demanded_openings": {
+        "total": 0,
+        "per_view": {
+          "front": 0
+        },
+        "sheet_total": 0,
+        "registration_gap": 0
+      },
+      "failures": [
+        "CAD projections poorly match the drawing: front similarity 0.40 (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly."
+      ]
+    },
+    "mesh_health": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 800,
+      "through_holes": 0,
+      "extents_mm": [
+        120.0,
+        120.0,
+        64.655
+      ],
+      "volume_mm3": 514724.188
+    },
+    "build": {
+      "version": 1,
+      "backend": "openscad",
+      "source_format": "openscad",
+      "ok": true,
+      "units": "mm",
+      "axes": {
+        "x": "width",
+        "y": "depth",
+        "z": "height"
+      },
+      "views": [
+        "isometric",
+        "front",
+        "top",
+        "right"
+      ],
+      "measurements": {
+        "watertight": true,
+        "components": 1,
+        "triangles": 800,
+        "through_holes": 0,
+        "extents_mm": [
+          120.0,
+          120.0,
+          64.655
+        ],
+        "volume_mm3": 514724.188
+      },
+      "diagnostics": [],
+      "drawing_evaluated": false
+    },
+    "compile_log": "Geometries in cache: 2\nGeometry cache size in bytes: 86728\nCGAL Polyhedrons in cache: 0\nCGAL cache size in bytes: 0\nTotal rendering time: 0:00:00.000\n   Top level object is a 3D object:\n   Facets:       1200",
+    "files": {
+      "scad": "attempt-01/model.scad",
+      "stl": "attempt-01/uniform-scaled/model.stl",
+      "views": {
+        "isometric": "attempt-01/uniform-scaled/view-isometric.png",
+        "front": "attempt-01/uniform-scaled/view-front.png",
+        "top": "attempt-01/uniform-scaled/view-top.png",
+        "right": "attempt-01/uniform-scaled/view-right.png"
+      }
+    },
+    "supervisor": {
+      "action": "repair_scad",
+      "problems": [
+        "Rendered aspect ratio (1.86) is inverted compared to source (0.896); vase is too wide and short.",
+        "Profile points are incorrectly mapped from normalized coordinates, causing severe distortion.",
+        "Shoulder is too low and base is too wide, failing to match the silhouette's neck and foot."
+      ],
+      "preserve": [
+        "Revolve strategy (rotate_extrude) is correct for this geometry.",
+        "Overall height parameter (120mm) is correct.",
+        "Solid geometry approach is acceptable for 3D printing."
+      ],
+      "instructions": "Rewrite the profile points to accurately reflect the source silhouette. Ensure the height is 120mm and max width is ~107mm. Define the profile in XZ coordinates (X=radius, Z=height) starting from the axis at the top rim, moving outward to the rim edge, down the neck, out to the shoulder (widest point), down to the base, and closing at the bottom center. The rendered aspect ratio must be approximately 0.9 (taller than wide)."
+    }
+  },
+  {
+    "attempt": 2,
+    "action": "repair_scad",
+    "preflight": {
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "expected_subtractive_feature_groups": 0
+    },
+    "compiler_repairs": [],
+    "uniform_scale": null,
+    "evaluation": {
+      "score": 94.2,
+      "valid_mesh": true,
+      "accepted": true,
+      "mandatory_gates": {
+        "compiled": true,
+        "topology": true,
+        "dimensions": true,
+        "shape_sanity": true,
+        "features": true,
+        "openings_through": true,
+        "projections": true,
+        "build_envelope": true
+      },
+      "scores": {
+        "topology": 45,
+        "dimensions": 20.0,
+        "features": 20,
+        "projections": 9.2
+      },
+      "projection_similarity": {
+        "front": 0.611
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 2,
+          "crop_internal_profiles": 0,
+          "source_aspect": 0.896,
+          "rendered_aspect": 0.896,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": [
+            [
+              0.41,
+              0.923
+            ],
+            [
+              0.405,
+              0.617
+            ]
+          ]
+        }
+      },
+      "demanded_openings": {
+        "total": 0,
+        "per_view": {
+          "front": 0
+        },
+        "sheet_total": 0,
+        "registration_gap": 0
+      },
+      "failures": []
+    },
+    "mesh_health": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 1000,
+      "through_holes": 0,
+      "extents_mm": [
+        107.53,
+        107.53,
+        120.0
+      ],
+      "volume_mm3": 363376.881
+    },
+    "build": {
+      "version": 1,
+      "backend": "openscad",
+      "source_format": "openscad",
+      "ok": true,
+      "units": "mm",
+      "axes": {
+        "x": "width",
+        "y": "depth",
+        "z": "height"
+      },
+      "views": [
+        "isometric",
+        "front",
+        "top",
+        "right"
+      ],
+      "measurements": {
+        "watertight": true,
+        "components": 1,
+        "triangles": 1000,
+        "through_holes": 0,
+        "extents_mm": [
+          107.53,
+          107.53,
+          120.0
+        ],
+        "volume_mm3": 363376.881
+      },
+      "diagnostics": [],
+      "drawing_evaluated": false
+    },
+    "compile_log": "Geometries in cache: 2\nGeometry cache size in bytes: 101144\nCGAL Polyhedrons in cache: 0\nCGAL cache size in bytes: 0\nTotal rendering time: 0:00:00.000\n   Top level object is a 3D object:\n   Facets:       1400",
+    "files": {
+      "scad": "attempt-02/model.scad",
+      "stl": "attempt-02/model.stl",
+      "views": {
+        "isometric": "attempt-02/view-isometric.png",
+        "front": "attempt-02/view-front.png",
+        "top": "attempt-02/view-top.png",
+        "right": "attempt-02/view-right.png"
+      }
+    }
+  }
+]

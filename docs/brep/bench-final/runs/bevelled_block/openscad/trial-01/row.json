@@ -1,0 +1,95 @@
+{
+  "drawing": "bevelled_block",
+  "backend": "openscad",
+  "trial": 1,
+  "submitted_at": "2026-10-19T16:42:35.228636+00:00",
+  "finished_at": "2026-10-19T16:44:07.479884+00:00",
+  "run_id": "647c8ddf92f7",
+  "wall_seconds": 92.3,
+  "job_status": "done",
+  "error": null,
+  "questions_asked": 0,
+  "question_kinds": [],
+  "build": {
+    "watertight": true,
+    "components": 1,
+    "genus": 0,
+    "extents_mm": [
+      80.0,
+      43.09,
+      5.69
+    ],
+    "volume_mm3": 19113.4,
+    "sha256": "4698c08d2f62eef0c309f9d0e7db654a6a12cb6605e27080f44839e849fc2946",
+    "bytes": 13938
+  },
+  "checks": {
+    "build_success": true,
+    "extents_pass": null,
+    "genus_pass": null,
+    "volume_pass": null,
+    "fidelity_pass": true,
+    "overall_pass": true,
+    "not_applicable": [
+      "extents",
+      "genus",
+      "volume"
+    ]
+  },
+  "fidelity": {
+    "scores": {
+      "front": 1.0,
+      "right": 0.964
+    },
+    "pass": true,
+    "reason": null,
+    "topology": {
+      "front": {
+        "expected": 0,
+        "actual": 0,
+        "position_fidelity": null
+      },
+      "right": {
+        "expected": 0,
+        "actual": 3,
+        "position_fidelity": null
+      }
+    }
+  },
+  "product": {
+    "success": true,
+    "accepted": true,
+    "status": null,
+    "score": 99.7,
+    "projection_status": null,
+    "geometry_status": null,
+    "failures": []
+  },
+  "attempts": {
+    "count": 1,
+    "recovered": false,
+    "corrections": null,
+    "selected": 1
+  },
+  "unsupported": {
+    "flag": false,
+    "code": null
+  },
+  "edit": {
+    "available": true,
+    "ok": true,
+    "seconds": 0.59,
+    "param": "width",
+    "old": 80.0,
+    "new": 96.0,
+    "message": null
+  },
+  "targeted": {
+    "available": false,
+    "ok": false,
+    "seconds": null,
+    "operation": null,
+    "value": null,
+    "message": "not_applicable: the product requires a BRep result for targeted edits"
+  }
+}

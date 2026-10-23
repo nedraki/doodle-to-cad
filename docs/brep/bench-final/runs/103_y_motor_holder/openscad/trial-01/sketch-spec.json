@@ -1,0 +1,189 @@
+{
+  "object": "Y motor holder",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "front",
+      "sheet_region": "bottom-left",
+      "constrains": "XZ profile (width and height), defining the L-shape and the angled support rib"
+    },
+    {
+      "direction": "top",
+      "sheet_region": "top-center",
+      "constrains": "XY profile (width and depth), defining the mounting footprint and motor cutout"
+    },
+    {
+      "direction": "right",
+      "sheet_region": "bottom-right",
+      "constrains": "YZ profile (depth and height), defining the side view and motor mounting holes"
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "part_1",
+      "name": "Motor Holder Body",
+      "description": "A single L-shaped bracket with a vertical mounting plate and a horizontal base. Includes a large central cutout for the motor and an angled support rib."
+    }
+  ],
+  "features": [
+    {
+      "id": "feat_1",
+      "name": "Vertical Mounting Plate",
+      "type": "extrusion",
+      "source_views": [
+        "view_1",
+        "view_3"
+      ],
+      "description": "The tall vertical section of the L-shape."
+    },
+    {
+      "id": "feat_2",
+      "name": "Horizontal Base",
+      "type": "extrusion",
+      "source_views": [
+        "view_1",
+        "view_3"
+      ],
+      "description": "The flat bottom section extending from the vertical plate."
+    },
+    {
+      "id": "feat_3",
+      "name": "Motor Cutout",
+      "type": "cutout",
+      "source_views": [
+        "view_1"
+      ],
+      "description": "Large irregular opening in the vertical plate to accommodate the motor body."
+    },
+    {
+      "id": "feat_4",
+      "name": "Motor Mounting Holes",
+      "type": "hole",
+      "source_views": [
+        "view_1",
+        "view_2"
+      ],
+      "description": "Two circular holes for mounting the motor to the holder."
+    },
+    {
+      "id": "feat_5",
+      "name": "Support Rib",
+      "type": "extrusion",
+      "source_views": [
+        "view_3"
+      ],
+      "description": "Triangular rib connecting the vertical plate to the base for structural support."
+    }
+  ],
+  "relations": [
+    {
+      "type": "perpendicular",
+      "elements": [
+        "feat_1",
+        "feat_2"
+      ]
+    },
+    {
+      "type": "attached",
+      "elements": [
+        "feat_5",
+        "feat_1",
+        "feat_2"
+      ]
+    }
+  ],
+  "symmetry": "none",
+  "repetitions": [
+    {
+      "feature": "feat_4",
+      "count": 2,
+      "pattern": "linear"
+    }
+  ],
+  "dimensions": {
+    "max_width": 55.55,
+    "max_depth": 60.0,
+    "max_height": 27.5,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "Exact thickness of the vertical plate and base is inferred from the side view aspect ratio.",
+    "Exact diameter of motor mounting holes is estimated from relative size in the top view."
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "The object is interpreted as a standard 3D-printed motor mount. The front view defines the L-profile. The top view shows the footprint and the motor cutout. The right view confirms the thickness and the angled rib.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "extrude",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_1",
+        "operation": "extrude",
+        "profile_plane": "XZ",
+        "direction_axis": "Y",
+        "owner": "part_1",
+        "parameters": {
+          "profile_source": "view_3",
+          "depth": "inferred from view_1 aspect ratio"
+        },
+        "source_views": [
+          "view_3"
+        ]
+      },
+      {
+        "id": "feat_3",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Large irregular opening in the vertical plate to accommodate the motor body."
+        },
+        "source_views": []
+      },
+      {
+        "id": "feat_4",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Two circular holes for mounting the motor to the holder."
+        },
+        "source_views": []
+      }
+    ],
+    "unresolved_constraints": [
+      "Exact wall thickness",
+      "Exact hole diameters"
+    ]
+  },
+  "user_intent": {
+    "description": "y motor holder",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "60.0"
+  },
+  "source_view_group_count": 3,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

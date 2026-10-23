@@ -1,0 +1,240 @@
+{
+  "id": "ca0b0967df41",
+  "interpretation": {
+    "version": 1,
+    "object_hypothesis": "A 2D profile resembling a vase or bottle silhouette with a flared base, narrow neck, and flared rim.",
+    "features": [
+      {
+        "id": "f_profile",
+        "type": "profile",
+        "description": "Closed 2D contour with 9 vertices defining the outer boundary.",
+        "status": "observed",
+        "evidence": [
+          {
+            "view_id": "view_1",
+            "region_id": "profile_contour_0"
+          }
+        ],
+        "reason": "OpenCV isolated a single outer contour with specific polygon points."
+      },
+      {
+        "id": "f_base",
+        "type": "body",
+        "description": "Lower section of the profile, characterized by a wider, curved bottom.",
+        "status": "observed",
+        "evidence": [
+          {
+            "view_id": "view_1",
+            "region_id": "profile_contour_0"
+          }
+        ],
+        "reason": "Visible geometry in the lower half of the view."
+      },
+      {
+        "id": "f_neck",
+        "type": "neck",
+        "description": "Central section of the profile, characterized by a narrower waist.",
+        "status": "observed",
+        "evidence": [
+          {
+            "view_id": "view_1",
+            "region_id": "profile_contour_0"
+          }
+        ],
+        "reason": "Visible geometry in the middle section of the view."
+      },
+      {
+        "id": "f_rim",
+        "type": "flange",
+        "description": "Upper section of the profile, characterized by a flared top edge.",
+        "status": "observed",
+        "evidence": [
+          {
+            "view_id": "view_1",
+            "region_id": "profile_contour_0"
+          }
+        ],
+        "reason": "Visible geometry in the upper section of the view."
+      }
+    ],
+    "relationships": [
+      {
+        "id": "r_continuity",
+        "type": "connected",
+        "features": [
+          "f_base",
+          "f_neck",
+          "f_rim"
+        ],
+        "description": "The base, neck, and rim sections form a continuous outer boundary.",
+        "status": "inferred",
+        "evidence": [
+          {
+            "view_id": "view_1",
+            "region_id": "profile_contour_0"
+          }
+        ],
+        "reason": "The regions are part of a single closed polygon.",
+        "model_status": "observed",
+        "review_note": "Visible projected continuity does not prove a connected 3D solid."
+      },
+      {
+        "id": "r_symmetry",
+        "type": "symmetry",
+        "features": [
+          "f_profile"
+        ],
+        "description": "The profile appears roughly symmetrical about a vertical axis.",
+        "status": "inferred",
+        "evidence": [
+          {
+            "view_id": "view_1",
+            "region_id": "profile_contour_0"
+          }
+        ],
+        "reason": "Visual inspection of the polygon points suggests approximate left-right balance, though not perfectly symmetrical."
+      }
+    ],
+    "assumptions": [
+      "The object is a solid of revolution or a prismatic shape based on the single profile view.",
+      "The view represents the front elevation (XZ plane)."
+    ],
+    "unresolved": [
+      "Internal geometry (hollow vs. solid).",
+      "Depth dimension (Y-axis) and cross-sectional shape.",
+      "Exact symmetry (is it perfectly round or irregular?)."
+    ],
+    "conflicts": [],
+    "review": {
+      "reference_integrity_checked": true,
+      "drawing_fidelity_verified": false,
+      "policy_warnings": [
+        "r_continuity: Visible projected continuity does not prove a connected 3D solid."
+      ],
+      "executable": false
+    }
+  },
+  "regions": [
+    {
+      "view_id": "view_1",
+      "direction": "front",
+      "sheet_bbox_normalized": [
+        0.1895,
+        0.127,
+        0.5684,
+        0.7639
+      ],
+      "cad_mapping": {
+        "plane": "XZ",
+        "view_axis": "Y",
+        "u_maps_to": "+X",
+        "v_maps_to": "-Z"
+      },
+      "view_assignment": "spatial heuristic",
+      "region_id": "view",
+      "kind": "view",
+      "bbox_view_normalized": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "measured_span_pixels": {
+        "horizontal_axis_u": 345,
+        "vertical_axis_v": 385
+      }
+    },
+    {
+      "view_id": "view_1",
+      "direction": "front",
+      "sheet_bbox_normalized": [
+        0.1895,
+        0.127,
+        0.5684,
+        0.7639
+      ],
+      "cad_mapping": {
+        "plane": "XZ",
+        "view_axis": "Y",
+        "u_maps_to": "+X",
+        "v_maps_to": "-Z"
+      },
+      "view_assignment": "spatial heuristic",
+      "region_id": "profile_contour_0",
+      "kind": "outer",
+      "profile_id": "contour_0",
+      "bbox_view_normalized": [
+        0.0144,
+        0.0103,
+        0.971,
+        0.9792
+      ],
+      "center_view_normalized": [
+        0.4998,
+        0.4999
+      ],
+      "polygon_view_normalized": [
+        [
+          0.168,
+          0.013
+        ],
+        [
+          0.2723,
+          0.4442
+        ],
+        [
+          0.0144,
+          0.6649
+        ],
+        [
+          0.1622,
+          0.8883
+        ],
+        [
+          0.4984,
+          0.987
+        ],
+        [
+          0.9157,
+          0.9039
+        ],
+        [
+          0.971,
+          0.7636
+        ],
+        [
+          0.6985,
+          0.3012
+        ],
+        [
+          0.8404,
+          0.0494
+        ]
+      ],
+      "vertices": 9,
+      "circularity": 0.562,
+      "area_ratio_of_sheet": 0.26741
+    }
+  ],
+  "shared_axis_evidence": [],
+  "view_assignment_review": {
+    "excluded_from_direction_assignment": [],
+    "rule": "Groups below 5% of the largest group box area remain unassigned; they may be text or detail views.",
+    "regions_retained": true
+  },
+  "controls": {
+    "object_type_hint": "",
+    "method": "3D print",
+    "primary_view": "front",
+    "projection_standard": "third-angle",
+    "strict_watertight": true,
+    "refine_mode": "regularize"
+  },
+  "notes": "",
+  "default_generation_changed": false,
+  "files": {
+    "input": "/results/ca0b0967df41/input.png",
+    "overlay": "/results/ca0b0967df41/geometry-overlay.png",
+    "interpretation": "/results/ca0b0967df41/feature-evidence.json"
+  }
+}

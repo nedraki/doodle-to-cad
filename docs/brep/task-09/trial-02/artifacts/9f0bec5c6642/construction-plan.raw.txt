@@ -1,0 +1,51 @@
+```json
+{
+  "view_frame": "The drawing uses a third-angle projection. The TOP view (XY) defines the part's footprint in the X (width) and Y (depth) plane. The FRONT view (XZ) defines the thickness in the Z (height) plane. The origin (0,0,0) is at the bottom-left corner of the part's footprint on the bottom face.",
+  "features": [
+    {
+      "id": "plate_body",
+      "shape": "Extruded Profile",
+      "section": "Closed XY profile",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "60",
+        "40",
+        "6",
+        "R6",
+        "20",
+        "10"
+      ],
+      "placement": "Extrude the closed profile defined by the outer boundary and notch from Z=0 to Z=6. The profile vertices are: (0,0) -> (60,0) -> (60,34) -> Arc to (54,40) -> (40,40) -> (40,30) -> (20,30) -> (20,40) -> (0,40) -> (0,0).",
+      "evidence": "TOP view shows the outline with dimensions 60 (width) and 40 (height). FRONT view shows thickness 6. Annotations specify 'Top-right corner R6 only', 'Notch: 20 wide x 10 deep', and 'Notch centred on top edge'."
+    },
+    {
+      "id": "through_hole",
+      "shape": "Cylinder",
+      "section": "Circle",
+      "axis_or_plane": "Z",
+      "dimensions": [
+        "Ø8",
+        "12",
+        "15"
+      ],
+      "placement": "Cylinder centered at (X=12, Y=15) with radius 4. Extrude from Z=0 to Z=6 (through the full thickness).",
+      "evidence": "TOP view shows a circle labeled 'Ø8 THROUGH'. Annotations specify 'Hole centre: 12 from left edge, 15 from bottom edge'."
+    }
+  ],
+  "connections": [
+    "The through_hole is subtracted from the plate_body.",
+    "The notch is part of the plate_body profile boundary."
+  ],
+  "edit_rules": [
+    "Changing the '6' thickness dimension updates the extrusion height of the plate_body and the depth of the through_hole.",
+    "Changing the '60' width dimension moves the right edge and the center of the R6 fillet.",
+    "Changing the '40' height dimension moves the top edge and the notch floor.",
+    "Changing the '20' notch width adjusts the X-coordinates of the notch vertical walls symmetrically around X=30.",
+    "Changing the '10' notch depth adjusts the Y-coordinate of the notch floor.",
+    "Changing the 'R6' radius adjusts the arc endpoints on the top and right edges.",
+    "Changing the hole position dimensions (12, 15) moves the center of the through_hole."
+  ],
+  "unresolved": [],
+  "clarification": null
+}
+```

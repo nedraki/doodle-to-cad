@@ -1,0 +1,151 @@
+{
+  "version": 1,
+  "object_hypothesis": "Spoked wheel",
+  "features": [
+    {
+      "id": "f_outer_rim",
+      "type": "rim",
+      "description": "Outer circular boundary of the wheel",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "High circularity (0.898) in the front view defines the primary outer envelope."
+    },
+    {
+      "id": "f_inner_rim",
+      "type": "rim",
+      "description": "Inner circular boundary of the rim",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "Visible as the inner concentric circle in the front view, defining the rim thickness."
+    },
+    {
+      "id": "f_hub",
+      "type": "hub",
+      "description": "Central circular hub",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "Central circular feature visible in the front view."
+    },
+    {
+      "id": "f_spokes",
+      "type": "spoke",
+      "description": "Radial spokes connecting hub to rim",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "Linear features radiating from the center to the rim in the front view."
+    },
+    {
+      "id": "f_thickness",
+      "type": "body",
+      "description": "Axial thickness of the wheel",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_14"
+        }
+      ],
+      "reason": "Rectangular profile in the right view indicates uniform thickness."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "r_spoke_hub",
+      "type": "connected",
+      "features": [
+        "f_spokes",
+        "f_hub"
+      ],
+      "description": "Spokes connect to the hub",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "Visible junctions between spoke lines and the central hub circle."
+    },
+    {
+      "id": "r_spoke_rim",
+      "type": "connected",
+      "features": [
+        "f_spokes",
+        "f_inner_rim"
+      ],
+      "description": "Spokes connect to the inner rim",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "Visible junctions between spoke lines and the inner rim circle."
+    },
+    {
+      "id": "r_symmetry",
+      "type": "symmetry",
+      "features": [
+        "f_spokes"
+      ],
+      "description": "Radial symmetry of spokes",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "Visual arrangement suggests equal angular spacing, though exact angles are not measured."
+    },
+    {
+      "id": "r_thickness_consistency",
+      "type": "shared_dimension",
+      "features": [
+        "f_outer_rim",
+        "f_inner_rim",
+        "f_hub",
+        "f_spokes"
+      ],
+      "description": "Uniform thickness across components",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_14"
+        }
+      ],
+      "reason": "The right view shows a single rectangular profile, implying all front-view features share the same depth."
+    }
+  ],
+  "assumptions": [
+    "The object is a single planar component (wheel) based on the rectangular side profile.",
+    "The 'unassigned' views (1, 2, 3, 6) are likely noise or artifacts and are excluded from the primary model."
+  ],
+  "unresolved": [
+    "Exact angular spacing of spokes.",
+    "Presence of a central hole in the hub (not visible in provided contours)."
+  ],
+  "conflicts": []
+}

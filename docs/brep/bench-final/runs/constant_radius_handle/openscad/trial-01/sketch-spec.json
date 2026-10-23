@@ -1,0 +1,118 @@
+{
+  "object": "curved handle",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "front",
+      "sheet_region": "view_5",
+      "constrains": "Primary profile shape (inverted U), leg lengths, and overall width."
+    },
+    {
+      "direction": "top",
+      "sheet_region": "view_3",
+      "constrains": "Cross-section diameter (circular profile)."
+    },
+    {
+      "direction": "left",
+      "sheet_region": "view_4",
+      "constrains": "Side profile (depth/thickness of the handle)."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "handle_body",
+      "description": "Single continuous curved handle with circular cross-section."
+    }
+  ],
+  "features": [
+    {
+      "id": "arc_bend",
+      "type": "curved_feature",
+      "description": "Constant-radius arc bend (semicircle) connecting two straight legs."
+    },
+    {
+      "id": "straight_legs",
+      "type": "linear_feature",
+      "description": "Two parallel straight legs extending downwards from the arc."
+    }
+  ],
+  "relations": [
+    {
+      "type": "symmetry",
+      "description": "The handle is symmetric about the vertical centerline of the arc."
+    },
+    {
+      "type": "tangent",
+      "description": "The straight legs are tangent to the arc bend."
+    }
+  ],
+  "symmetry": "bilateral",
+  "repetitions": [],
+  "dimensions": {
+    "radius": 20.0,
+    "length": 30.0,
+    "diameter": 8.0,
+    "max_width": 28.6,
+    "max_depth": 54.0,
+    "max_height": 46.24,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "The exact orientation of the handle relative to the CAD origin (e.g., whether the arc is in the XY or XZ plane) is inferred from the 'TOP (XY)' label and standard conventions."
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "The object is a simple sweep of a circular profile along a path defined by two straight lines and a semicircular arc. The path is defined in the XY plane (based on the 'TOP (XY)' label). The legs extend in the Y direction, and the arc connects them in the XY plane. The cross-section is a circle of diameter 8mm.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "sweep",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "sweep_profile",
+        "operation": "sweep",
+        "profile_plane": "XZ",
+        "direction_axis": "Y",
+        "owner": "handle_body",
+        "parameters": {
+          "path_id": "create_path",
+          "profile_id": "create_profile",
+          "orientation": "normal"
+        },
+        "source_views": [
+          "view_5",
+          "view_3"
+        ]
+      }
+    ],
+    "unresolved_constraints": [
+      "The exact orientation of the handle relative to the CAD origin (e.g., whether the arc is in the XY or XZ plane) is inferred from the 'TOP (XY)' label and standard conventions."
+    ]
+  },
+  "user_intent": {
+    "description": "curved handle: constant-radius arc bend",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "54"
+  },
+  "source_view_group_count": 6,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

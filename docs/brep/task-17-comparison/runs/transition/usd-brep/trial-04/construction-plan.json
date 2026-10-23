@@ -1,0 +1,51 @@
+{
+  "view_frame": "The drawing uses third-angle projection with three views: BOTTOM (XY plane), TOP (XY plane), and FRONT (XZ plane). The world coordinate system is defined with X as width (horizontal in Front/Bottom/Top), Y as depth (vertical in Bottom/Top, perpendicular to Front), and Z as height (vertical in Front). The part is a solid transition piece.",
+  "features": [
+    {
+      "id": "bottom_profile",
+      "shape": "rectangle",
+      "section": "solid",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "60 mm",
+        "40 mm"
+      ],
+      "placement": "Centered at (0,0) in XY plane at Z=0. Extends from X=-30 to X=30 and Y=-20 to Y=20.",
+      "evidence": "BOTTOM (XY) view shows a rectangle labeled '60 x 40 mm rectangle'."
+    },
+    {
+      "id": "top_profile",
+      "shape": "circle",
+      "section": "solid",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "30 mm"
+      ],
+      "placement": "Centered at (0,0) in XY plane at Z=60. Radius is 15 mm.",
+      "evidence": "TOP (XY) view shows a circle labeled 'diameter 30 mm'. FRONT (XZ) view shows the top width is narrower than the bottom, consistent with a circular top of diameter 30."
+    },
+    {
+      "id": "transition_body",
+      "shape": "loft",
+      "section": "solid",
+      "axis_or_plane": "Z",
+      "dimensions": [
+        "60 mm"
+      ],
+      "placement": "Loft connecting bottom_profile (at Z=0) to top_profile (at Z=60). The profiles are parallel XY planes sharing the same XY center (0,0).",
+      "evidence": "FRONT (XZ) view shows a trapezoid with straight sides connecting the bottom width to the top width, labeled 'height 60 mm; solid'. Notes confirm 'Solid transition piece... straight sides'."
+    }
+  ],
+  "connections": [
+    "The transition_body connects the bottom_profile at Z=0 to the top_profile at Z=60.",
+    "The bottom_profile defines the base footprint.",
+    "The top_profile defines the top face."
+  ],
+  "edit_rules": [
+    "Changing the bottom rectangle width (X) or depth (Y) updates the bottom_profile and the base of the transition_body.",
+    "Changing the top circle diameter updates the top_profile and the top of the transition_body.",
+    "Changing the height updates the Z position of the top_profile and the length of the transition_body.",
+    "The transition_body must maintain a linear interpolation between the rectangular and circular profiles (loft)."
+  ],
+  "unresolved": []
+}

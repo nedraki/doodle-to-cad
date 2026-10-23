@@ -1,0 +1,161 @@
+{
+ "bodies": [
+  {
+   "id": "part",
+   "output": "final"
+  }
+ ],
+ "constraints": [],
+ "evidence": {
+  "assumptions": [],
+  "inferred": [],
+  "observed": [
+   {
+    "id": "e1",
+    "text": "trusted human-authored recipe (issue #82)"
+   }
+  ],
+  "unresolved": []
+ },
+ "frames": {
+  "world": {
+   "origin": [
+    0,
+    0,
+    0
+   ],
+   "x": "width",
+   "y": "depth",
+   "z": "height"
+  }
+ },
+ "name": "c6_combined",
+ "operations": [
+  {
+   "depends_on": [],
+   "evidence": [
+    "e1"
+   ],
+   "frame": "world",
+   "id": "slab",
+   "kind": "box",
+   "origin": [
+    0,
+    0,
+    0
+   ],
+   "size": [
+    "length",
+    "depth",
+    "height"
+   ]
+  },
+  {
+   "body": "slab",
+   "depends_on": [
+    "slab"
+   ],
+   "evidence": [
+    "e1"
+   ],
+   "frame": "world",
+   "id": "rounded",
+   "kind": "fillet",
+   "radius": "fillet_r",
+   "selector": "outer_vertical"
+  },
+  {
+   "body": "rounded",
+   "depends_on": [
+    "rounded"
+   ],
+   "evidence": [
+    "e1"
+   ],
+   "frame": "world",
+   "id": "tray",
+   "kind": "shell",
+   "opening": "top",
+   "preserve": "outer",
+   "thickness": "wall"
+  },
+  {
+   "axis": "y",
+   "depends_on": [],
+   "evidence": [
+    "e1"
+   ],
+   "frame": "world",
+   "height": "depth",
+   "id": "win",
+   "kind": "cylinder",
+   "origin": [
+    "length/2",
+    0,
+    "height/2"
+   ],
+   "radius": "win_d/2"
+  },
+  {
+   "depends_on": [
+    "tray",
+    "win"
+   ],
+   "evidence": [
+    "e1"
+   ],
+   "frame": "world",
+   "id": "final",
+   "kind": "difference",
+   "left": "tray",
+   "right": "win"
+  }
+ ],
+ "output": "final",
+ "parameters": {
+  "depth": {
+   "label": "depth",
+   "max": 120,
+   "min": 30,
+   "unit": "mm",
+   "value": 60
+  },
+  "fillet_r": {
+   "label": "fillet r",
+   "max": 12,
+   "min": 1,
+   "unit": "mm",
+   "value": 5
+  },
+  "height": {
+   "label": "height",
+   "max": 60,
+   "min": 15,
+   "unit": "mm",
+   "value": 30
+  },
+  "length": {
+   "label": "length",
+   "max": 200,
+   "min": 50,
+   "unit": "mm",
+   "value": 100
+  },
+  "wall": {
+   "label": "wall",
+   "max": 6,
+   "min": 1,
+   "unit": "mm",
+   "value": 2.5
+  },
+  "win_d": {
+   "label": "win d",
+   "max": 24,
+   "min": 4,
+   "unit": "mm",
+   "value": 10
+  }
+ },
+ "units": "mm",
+ "version": 2
+}

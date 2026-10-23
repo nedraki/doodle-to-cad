@@ -1,0 +1,117 @@
+{
+  "object": "Rounded Housing Blank",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "front",
+      "sheet_region": "view_6",
+      "what_it_constrains": "Primary profile: Width (X) and Height (Z). Defines the rectangular silhouette (80x30) and the vertical fillet lines."
+    },
+    {
+      "direction": "top",
+      "sheet_region": "view_1",
+      "what_it_constrains": "Plan view: Width (X) and Depth (Y). Defines the rounded corners (R6) and overall footprint (80x50)."
+    },
+    {
+      "direction": "right",
+      "sheet_region": "view_5",
+      "what_it_constrains": "Side profile: Depth (Y) and Height (Z). Confirms the solid block nature and height (30)."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "part_1",
+      "name": "Housing Blank",
+      "material": "Generic Polymer",
+      "description": "A solid rectangular block with rounded vertical edges."
+    }
+  ],
+  "features": [
+    {
+      "id": "feat_1",
+      "type": "fillet",
+      "owner": "part_1",
+      "description": "Vertical edges of the block are rounded with a radius of 6mm.",
+      "parameters": {
+        "radius": 6,
+        "axis": "Z"
+      }
+    }
+  ],
+  "relations": [],
+  "symmetry": {
+    "type": "bilateral",
+    "planes": [
+      "XZ",
+      "YZ"
+    ]
+  },
+  "repetitions": [],
+  "dimensions": {
+    "length": 30.0,
+    "radius": 6.0,
+    "max_width": 90.0,
+    "max_depth": 6.62,
+    "max_height": 49.38,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "The 'closed_internal_profile' detected in view_5 (right view) is likely a graphical artifact or dimension line intersection, as the text explicitly states 'Solid blank' and 'No cavity'."
+  ],
+  "interpretation_conflicts": [
+    "OpenCV detected an internal profile in the right view (view_5), but the user description and text annotations ('Solid blank', 'No cavity') explicitly contradict the existence of a hole. The text description is treated as authoritative."
+  ],
+  "generation_notes": "The object is a simple extrusion of a rounded rectangle. The profile is defined in the XY plane (Top view) with dimensions 80x50 and corner radius 6. This profile is extruded along the Z axis by 30mm. The front view (view_6) shows the vertical lines corresponding to the tangent points of the fillets.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "extrude",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_2",
+        "operation": "extrude",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "owner": "part_1",
+        "parameters": {
+          "depth": 30,
+          "solid": true
+        },
+        "source_views": [
+          "view_6",
+          "view_5"
+        ]
+      }
+    ],
+    "unresolved_constraints": [
+      "The 'closed_internal_profile' detected in view_5 (right view) is likely a graphical artifact or dimension line intersection, as the text explicitly states 'Solid blank' and 'No cavity'."
+    ]
+  },
+  "user_intent": {
+    "description": "housing block with rounded (filleted) vertical edges",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "90"
+  },
+  "source_view_group_count": 8,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

@@ -205,6 +205,38 @@ class CadViewer {
     });
   }
 
+  setGeometrySelection(catalog, selection, mode, onPick) {
+    if(!this.selectionOverlay){
+      this.selectionOverlay=new THREE.Group();this.scene.add(this.selectionOverlay);
+      const canvas=this.renderer.domElement;
+      canvas.addEventListener('pointerdown',e=>{this.selectionDown=[e.clientX,e.clientY]});
+      canvas.addEventListener('pointerup',e=>{
+        if(!this.selectionDown||Math.hypot(e.clientX-this.selectionDown[0],e.clientY-this.selectionDown[1])>5)return;
+        const r=canvas.getBoundingClientRect(),ray=new THREE.Raycaster();
+        ray.params.Line.threshold=.6;
+        ray.setFromCamera(new THREE.Vector2((e.clientX-r.left)/r.width*2-1,-(e.clientY-r.top)/r.height*2+1),this.camera);
+        const hits=ray.intersectObjects(this.selectionPickers||[],false);
+        const surface=this.mesh?ray.intersectObject(this.mesh,false)[0]:null;
+        const tolerance=this.selectionMode==='edges'?.6:.05;
+        if(hits.length&&(!surface||hits[0].distance<=surface.distance+tolerance))this.onGeometryPick?.(hits[0].object.userData.targetId);
+      });
+    }
+    for(const obj of this.selectionPickers||[]){obj.geometry.dispose();obj.material.dispose()}
+    this.selectionPickers=[];this.onGeometryPick=onPick;this.selectionMode=mode;
+    for(const child of [...this.selectionOverlay.children]){this.selectionOverlay.remove(child);child.geometry.dispose();child.material.dispose()}
+    const category=t=>t.rule.kind==='box_cutout'?'feature':t.rule.kind==='outer_vertical_edges'?'edges':'face';
+    const make=(t,highlight)=>{
+      const g=new THREE.BufferGeometry(),coords=t.geometry.triangles||t.geometry.lines.flat();
+      g.setAttribute('position',new THREE.Float32BufferAttribute(coords.flat(),3));
+      let obj;
+      if(t.geometry.triangles){g.computeVertexNormals();obj=new THREE.Mesh(g,new THREE.MeshBasicMaterial({color:0xffc32b,transparent:true,opacity:highlight ? 0.65 : 0,side:THREE.DoubleSide,depthTest:!highlight,polygonOffset:true,polygonOffsetFactor:-2}))}
+      else obj=new THREE.LineSegments(g,new THREE.LineBasicMaterial({color:0xffc32b,depthTest:!highlight}));
+      obj.userData.targetId=t.id;obj.renderOrder=12;obj.updateMatrixWorld();return obj;
+    };
+    for(const target of catalog?.targets||[]){if(category(target)===mode)this.selectionPickers.push(make(target,false))}
+    if(selection?.status==='matched')this.selectionOverlay.add(make(selection.target,true));
+  }
+
   setFeatureParams(params) {
     this.featureParams = params;
     this.highlightParameter(this.activeParameter);
@@ -251,6 +283,7 @@ class CadViewer {
 
   dispose() {
     this.highlightParameter(null);
+    this.setGeometrySelection(null,null,null,null);
     cancelAnimationFrame(this._raf);
     this._observer.disconnect();
     this.controls.dispose();

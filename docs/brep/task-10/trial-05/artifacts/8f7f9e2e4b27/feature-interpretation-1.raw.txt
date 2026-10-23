@@ -1,0 +1,165 @@
+{
+  "version": 1,
+  "object_hypothesis": "Bent handle with a 180-degree arch and straight legs, featuring a constant rectangular cross-section.",
+  "features": [
+    {
+      "id": "arch_body",
+      "type": "body",
+      "description": "Curved arch segment forming the top of the handle.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_7",
+          "region_id": "profile_contour_316"
+        }
+      ],
+      "reason": "Visible as the curved portion of the outer contour in the top view."
+    },
+    {
+      "id": "leg_left",
+      "type": "body",
+      "description": "Straight leg segment on the left side.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_7",
+          "region_id": "profile_contour_316"
+        }
+      ],
+      "reason": "Visible as the left vertical extension of the outer contour."
+    },
+    {
+      "id": "leg_right",
+      "type": "body",
+      "description": "Straight leg segment on the right side.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_7",
+          "region_id": "profile_contour_316"
+        }
+      ],
+      "reason": "Visible as the right vertical extension of the outer contour."
+    },
+    {
+      "id": "section_profile",
+      "type": "profile",
+      "description": "Rectangular cross-section of the handle.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_8",
+          "region_id": "profile_contour_208"
+        }
+      ],
+      "reason": "The right view shows a rectangular profile corresponding to the handle's cross-section."
+    },
+    {
+      "id": "flat_end_left",
+      "type": "other",
+      "description": "Termination of the left leg.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_7",
+          "region_id": "profile_contour_316"
+        }
+      ],
+      "reason": "The contour closes with a straight line at the bottom of the left leg."
+    },
+    {
+      "id": "flat_end_right",
+      "type": "other",
+      "description": "Termination of the right leg.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_7",
+          "region_id": "profile_contour_316"
+        }
+      ],
+      "reason": "The contour closes with a straight line at the bottom of the right leg."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "leg_arch_conn_left",
+      "type": "connected",
+      "features": [
+        "leg_left",
+        "arch_body"
+      ],
+      "description": "Left leg connects to the arch.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_7",
+          "region_id": "profile_contour_316"
+        }
+      ],
+      "reason": "Continuous boundary line in the top view."
+    },
+    {
+      "id": "leg_arch_conn_right",
+      "type": "connected",
+      "features": [
+        "leg_right",
+        "arch_body"
+      ],
+      "description": "Right leg connects to the arch.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_7",
+          "region_id": "profile_contour_316"
+        }
+      ],
+      "reason": "Continuous boundary line in the top view."
+    },
+    {
+      "id": "symmetry",
+      "type": "symmetry",
+      "features": [
+        "leg_left",
+        "leg_right"
+      ],
+      "description": "Left and right legs appear symmetrical.",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_7",
+          "region_id": "profile_contour_316"
+        }
+      ],
+      "reason": "Visual balance of the legs in the top view suggests symmetry."
+    },
+    {
+      "id": "section_consistency",
+      "type": "shared_dimension",
+      "features": [
+        "arch_body",
+        "leg_left",
+        "leg_right"
+      ],
+      "description": "Uniform width of the handle throughout.",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_7",
+          "region_id": "profile_contour_316"
+        }
+      ],
+      "reason": "The distance between inner and outer contours appears constant in the top view."
+    }
+  ],
+  "assumptions": [
+    "The object is a single solid part.",
+    "The cross-section is constant along the entire length of the handle.",
+    "The handle lies flat in the XY plane."
+  ],
+  "unresolved": [
+    "Exact thickness of the handle (Z-height) is not directly measured in the top view.",
+    "Exact length of the straight legs is not measured."
+  ],
+  "conflicts": []
+}

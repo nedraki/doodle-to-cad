@@ -1,0 +1,62 @@
+{
+  "view_frame": "Third-angle projection. Front view (bottom-left) shows X (width) and Z (height). Top view (top-center) shows X (width) and Y (depth). Right view (bottom-right) shows Y (depth) and Z (height). The part is a vertical flat plate.",
+  "features": [
+    {
+      "id": "main_body",
+      "shape": "extrusion",
+      "section": "closed_xy_profile",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "ASSUMED_thickness",
+        "ASSUMED_width",
+        "ASSUMED_height"
+      ],
+      "placement": "Extrude the XY profile from Z=0 to Z=ASSUMED_height. The profile is defined in the Top View (XY plane).",
+      "evidence": "Top view shows a rectangular outline with a concave arc on the top edge (+Y) and a convex arc on the bottom edge (-Y). Front and Right views show a uniform rectangular body."
+    },
+    {
+      "id": "central_hole",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "Z",
+      "dimensions": [
+        "ASSUMED_hole_diameter"
+      ],
+      "placement": "Centered at X=0, Y=0 (geometric center of the plate). Extruded through the full thickness (Z=0 to Z=ASSUMED_height).",
+      "evidence": "Top view shows a central circle. Front view shows hidden lines (dashed) indicating a vertical hole."
+    },
+    {
+      "id": "side_holes",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "Y",
+      "dimensions": [
+        "ASSUMED_side_hole_diameter"
+      ],
+      "placement": "5 holes arranged in a staggered pattern along the Z axis. They pass through the thickness (Y direction).",
+      "evidence": "Right view shows 5 distinct rectangular openings (representing holes) arranged vertically. Front view shows hidden lines corresponding to these holes."
+    }
+  ],
+  "connections": [
+    "main_body contains central_hole and side_holes"
+  ],
+  "edit_rules": [
+    "Changing ASSUMED_thickness affects the depth of all holes.",
+    "Changing ASSUMED_width affects the span of the side holes and the central hole position.",
+    "Changing ASSUMED_height affects the vertical spacing of the side holes."
+  ],
+  "unresolved": [
+    "ASSUMED_thickness: The drawing does not specify the thickness of the plate.",
+    "ASSUMED_width: The drawing does not specify the width of the plate.",
+    "ASSUMED_height: The drawing does not specify the height of the plate.",
+    "ASSUMED_hole_diameter: The drawing does not specify the diameter of the central hole.",
+    "ASSUMED_side_hole_diameter: The drawing does not specify the diameter of the side holes.",
+    "side_hole_pattern: The exact vertical spacing and horizontal offset of the 5 side holes are not dimensioned."
+  ],
+  "clarification": {
+    "feature_id": "side_holes",
+    "feature_label": "5 holes on the face",
+    "reason": "The Right view shows 5 holes, but the Front view shows hidden lines that do not clearly align with a simple through-hole pattern in the Y direction (they appear to be in the X-Z plane or have complex geometry). Additionally, the Top view does not show these holes, implying they are on the face (Y-normal) or hidden. However, without dimensions, their exact location and nature (through vs blind) is ambiguous.",
+    "kind": "opening_extent"
+  }
+}

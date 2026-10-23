@@ -1,0 +1,46 @@
+{
+  "wheel": {
+    "job": "9a5f16183fe2",
+    "status": "done",
+    "question_requested": false,
+    "error": null,
+    "drawing_status": "failed"
+  },
+  "bookend": {
+    "job": "113798705b15",
+    "status": "cancelled",
+    "question_requested": true,
+    "error": {
+      "message": "Recipe job cancelled",
+      "code": "cancelled"
+    },
+    "drawing_status": null
+  },
+  "knob": {
+    "job": "1bd657e9fca1",
+    "status": "done",
+    "question_requested": false,
+    "error": null,
+    "drawing_status": "failed"
+  },
+  "cable_holder": {
+    "job": "2fc8a23b8c42",
+    "status": "error",
+    "question_requested": false,
+    "error": {
+      "message": "part_with_slot1: kernel produced an invalid solid",
+      "code": "build_failed"
+    },
+    "drawing_status": null
+  },
+  "random_004_flat_mounting_plate": {
+    "job": "14cdd37ee8c9",
+    "status": "cancelled",
+    "question_requested": true,
+    "error": {
+      "message": "Recipe job cancelled",
+      "code": "cancelled"
+    },
+    "drawing_status": null
+  }
+}

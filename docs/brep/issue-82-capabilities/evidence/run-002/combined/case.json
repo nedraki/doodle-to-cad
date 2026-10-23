@@ -1,0 +1,25 @@
+{
+  "case": "combined",
+  "track": "manually_authored",
+  "user_review": "pending",
+  "measurement_validation": "provisional; awaiting #81",
+  "attempts": [
+    {
+      "role": "initial",
+      "backend": "usd-brep",
+      "updates": {},
+      "attempt": "01-initial",
+      "build_ok": true,
+      "seconds": 1.0065,
+      "diagnostics": [],
+      "stl_sha256": "2b462c9836a87fbb9f04a5efcdea80bf9f7f4686985cbaa1130c8fb1f581bf57",
+      "exception": "TypeError: Object of type bool is not JSON serializable"
+    }
+  ],
+  "outcome": "failed",
+  "error": "TypeError: Object of type bool is not JSON serializable",
+  "openscad": {
+    "status": "not_attempted",
+    "reason": "Combination probe: does global chamfer bevel the opening as well as exterior edges? No selected-hole chamfer claim. OpenSCAD comparator deferred until operation placement is measured."
+  }
+}

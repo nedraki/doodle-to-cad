@@ -1,0 +1,286 @@
+{
+  "version": 2,
+  "units": "mm",
+  "name": "l_bracket_bookend",
+  "parameters": {
+    "width": {
+      "value": 60,
+      "min": 30,
+      "max": 100,
+      "label": "Panel Width",
+      "unit": "mm",
+      "description": "Width of the upright panel (X direction)"
+    },
+    "height": {
+      "value": 80,
+      "min": 40,
+      "max": 150,
+      "label": "Total Height",
+      "unit": "mm",
+      "description": "Total height of the bookend (Z direction)"
+    },
+    "depth": {
+      "value": 40,
+      "min": 20,
+      "max": 80,
+      "label": "Base Depth",
+      "unit": "mm",
+      "description": "Depth of the base (Y direction)"
+    },
+    "thickness": {
+      "value": 5,
+      "min": 2,
+      "max": 10,
+      "label": "Wall Thickness",
+      "unit": "mm",
+      "description": "Thickness of the panel and base"
+    }
+  },
+  "operations": [
+    {
+      "id": "base",
+      "kind": "box",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "size": [
+        "width",
+        "depth",
+        "thickness"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "panel",
+      "kind": "box",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "size": [
+        "width",
+        "thickness",
+        "height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "l_shape",
+      "kind": "union",
+      "left": "base",
+      "right": "panel",
+      "frame": "world",
+      "depends_on": [
+        "base",
+        "panel"
+      ],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "hole_1",
+      "kind": "box",
+      "origin": [
+        "width*0.1",
+        "-1",
+        "height*0.65"
+      ],
+      "size": [
+        "width*0.3",
+        "thickness+2",
+        "height*0.2"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "hole_2",
+      "kind": "box",
+      "origin": [
+        "width*0.35",
+        "-1",
+        "height*0.35"
+      ],
+      "size": [
+        "width*0.15",
+        "thickness+2",
+        "height*0.35"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "hole_3",
+      "kind": "box",
+      "origin": [
+        "width*0.55",
+        "-1",
+        "height*0.15"
+      ],
+      "size": [
+        "width*0.15",
+        "thickness+2",
+        "height*0.4"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "hole_4",
+      "kind": "box",
+      "origin": [
+        "width*0.75",
+        "-1",
+        "height*0.15"
+      ],
+      "size": [
+        "width*0.15",
+        "thickness+2",
+        "height*0.4"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "cut_1",
+      "kind": "difference",
+      "left": "l_shape",
+      "right": "hole_1",
+      "frame": "world",
+      "depends_on": [
+        "l_shape",
+        "hole_1"
+      ],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "cut_2",
+      "kind": "difference",
+      "left": "cut_1",
+      "right": "hole_2",
+      "frame": "world",
+      "depends_on": [
+        "cut_1",
+        "hole_2"
+      ],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "cut_3",
+      "kind": "difference",
+      "left": "cut_2",
+      "right": "hole_3",
+      "frame": "world",
+      "depends_on": [
+        "cut_2",
+        "hole_3"
+      ],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "final_part",
+      "kind": "difference",
+      "left": "cut_3",
+      "right": "hole_4",
+      "frame": "world",
+      "depends_on": [
+        "cut_3",
+        "hole_4"
+      ],
+      "evidence": [
+        "e2"
+      ]
+    }
+  ],
+  "output": "final_part",
+  "frames": {
+    "world": {
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    }
+  },
+  "bodies": [
+    {
+      "id": "part",
+      "output": "final_part"
+    }
+  ],
+  "evidence": {
+    "observed": [
+      {
+        "id": "e1",
+        "text": "L-shaped profile observed in side view (view_2)."
+      },
+      {
+        "id": "e2",
+        "text": "Four rectangular openings observed in front view (view_1)."
+      }
+    ],
+    "inferred": [
+      {
+        "id": "e3",
+        "text": "Openings are through-holes based on the nature of bookends and lack of hidden lines indicating depth."
+      }
+    ],
+    "assumptions": [
+      {
+        "id": "e4",
+        "text": "Assumed uniform thickness of 5mm for both base and panel."
+      },
+      {
+        "id": "e5",
+        "text": "Assumed overall dimensions 60x40x80mm to fit within the 100mm max constraint."
+      },
+      {
+        "id": "e6",
+        "text": "Assumed opening positions and sizes based on visual proportions in the front view."
+      }
+    ],
+    "unresolved": []
+  },
+  "constraints": [
+    {
+      "id": "joint_base_panel",
+      "kind": "connected",
+      "left": "base",
+      "right": "panel",
+      "min_volume_mm3": 0.01
+    }
+  ]
+}

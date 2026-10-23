@@ -1,0 +1,50 @@
+manifold True volume 12899.216788003978 expected 12898.40710525538
+linear_sweep(curves: List[usd_brep._omni_solid.Curve], direction: tuple, distance: float, *, cap_ends: bool = True) -> usd_brep._omni_solid.Brep
+
+Pure: returns new Brep; inputs unchanged.
+
+Extrude a profile along a straight direction to create a Brep.
+
+Args:
+    curves: Profile curves. For a manifold solid the curves must form
+        a closed planar loop; open curves produce a sheet body.
+    direction: Sweep direction as ``(dx, dy, dz)``. Magnitude is
+        ignored - the actual sweep length is ``distance``.
+    distance: Sweep length, in modeling units. Must be non-zero.
+    cap_ends: If ``True`` (default), close both ends with planar cap
+        faces (manifold solid). ``False`` produces an open shell.
+        Keyword-only.
+
+Returns:
+    Brep: extruded body.
+
+See Also:
+    rotational_sweep: Revolve a profile about an axis.
+    draft_sweep: Extrude with a draft angle (taper).
+    linear_sweep_with_repetitions: Multiple end-to-end linear sweeps.
+    create_extrude_surface: Surface-only extrusion (no caps).
+
+Wraps: SmApiCreateLinearSweep
+
+create_arc(center: tuple, radius: float, start_angle_deg: float, end_angle_deg: float) -> usd_brep._omni_solid.Curve
+
+Create a B-spline circular arc in the XY plane.
+
+Args:
+    center: Center of the arc as ``(x, y, z)``. The arc lies in the
+        plane Z = ``center.z``.
+    radius: Radius of the arc. Must be positive.
+    start_angle_deg: Start angle measured counter-clockwise from the
+        +X axis, in degrees.
+    end_angle_deg: End angle measured counter-clockwise from the +X
+        axis, in degrees. Must differ from ``start_angle_deg``.
+
+Returns:
+    Curve: open B-spline arc swept counter-clockwise from start to
+    end.
+
+See Also:
+    create_circle: Full closed circle.
+
+Wraps: SmApiCreateArc
+

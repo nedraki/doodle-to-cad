@@ -1,0 +1,31 @@
+{
+  "view_frame": "The drawing uses third-angle projection with two primary views: TOP (XY) and FRONT (XZ). The world coordinate system is defined as X = width (horizontal in both views), Y = depth (vertical in TOP view), and Z = height (vertical in FRONT view). The origin (0,0,0) is located at the bottom-left-front corner of the bounding box.",
+  "features": [
+    {
+      "id": "housing_blank",
+      "shape": "extruded_prism",
+      "section": "rounded_rectangle",
+      "axis_or_plane": "Z",
+      "dimensions": [
+        "80",
+        "50",
+        "30",
+        "R6"
+      ],
+      "placement": "Base section lies in XY plane at Z=0. Extends to Z=30. Centre of the bounding box is at (40, 25, 15). The section is a rectangle 80mm (X) by 50mm (Y) with 4 corners filleted by radius 6mm.",
+      "evidence": "TOP view shows a rectangle 80x50 with '4 corners: R6' annotation. FRONT view shows height 30. Text notes 'Solid blank. Same corner shape through the full height.'"
+    }
+  ],
+  "connections": [
+    "The vertical edges of the FRONT view correspond to the projected silhouette of the rounded corners from the TOP view.",
+    "The top and bottom faces of the FRONT view correspond to the top and bottom faces of the solid prism."
+  ],
+  "edit_rules": [
+    "Changing the '80' dimension in TOP view must update the width in FRONT view.",
+    "Changing the '50' dimension in TOP view updates the depth (Y) but does not affect the FRONT view width.",
+    "Changing the '30' dimension in FRONT view updates the height (Z) but does not affect the TOP view.",
+    "Changing the 'R6' corner radius updates the corner geometry in the TOP view and the position of the vertical lines in the FRONT view.",
+    "Top and bottom perimeter edges must remain sharp (no fillets on Z-axis edges)."
+  ],
+  "unresolved": []
+}

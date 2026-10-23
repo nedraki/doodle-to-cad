@@ -1,0 +1,14 @@
+[
+  {
+    "attempt": 1,
+    "status": "failed",
+    "error": {
+      "code": "placement_failed",
+      "message": "Expected Z=0 and extents within requested maximum 120 mm; minimum_z_mm=-60, extents_mm=[120.0, 8.000000000000004, 120.0]"
+    }
+  },
+  {
+    "attempt": 2,
+    "status": "built"
+  }
+]

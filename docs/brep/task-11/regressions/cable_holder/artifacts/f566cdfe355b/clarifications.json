@@ -1,0 +1,24 @@
+[
+  {
+    "question": {
+      "feature_id": "side_slots",
+      "feature_label": "Rectangular openings on the face",
+      "reason": "The drawing shows the openings in the Right view but does not show hidden lines in the Front view to confirm if they are through-holes or blind pockets.",
+      "kind": "opening_extent",
+      "id": "b4784553350249c281578b6b936d011f",
+      "text": "Should this hole go all the way through the part?",
+      "maximum_depth_mm": 120.0,
+      "choices": [
+        {
+          "id": "through",
+          "label": "Yes \u2014 make a through-hole"
+        },
+        {
+          "id": "recess",
+          "label": "No \u2014 leave a bottom"
+        }
+      ]
+    },
+    "status": "cancelled"
+  }
+]

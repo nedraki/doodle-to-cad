@@ -1,0 +1,117 @@
+{
+  "drawing": "constant_radius_handle",
+  "backend": "usd-brep",
+  "trial": 2,
+  "submitted_at": "2026-10-19T17:18:49.695345+00:00",
+  "finished_at": "2026-10-19T17:20:30.074485+00:00",
+  "run_id": "7e97cf63db0b",
+  "wall_seconds": 100.4,
+  "job_status": "done",
+  "error": null,
+  "questions_asked": 0,
+  "question_kinds": [],
+  "build": {
+    "watertight": true,
+    "components": 1,
+    "genus": 0,
+    "extents_mm": [
+      48.0,
+      30.0,
+      8.0
+    ],
+    "volume_mm3": 5010.8,
+    "sha256": "d9be8484a5a8ca986aadf39fcd76e2a2201152584d831d5ae86b62f6aeafc1b1",
+    "bytes": 103384
+  },
+  "checks": {
+    "build_success": true,
+    "extents_pass": false,
+    "genus_pass": true,
+    "volume_pass": false,
+    "fidelity_pass": false,
+    "overall_pass": false,
+    "not_applicable": []
+  },
+  "fidelity": {
+    "scores": {
+      "front": 0.609,
+      "top": 0.347,
+      "right": 0.329
+    },
+    "pass": false,
+    "reason": null,
+    "topology": {
+      "front": {
+        "expected": 0,
+        "actual": 1,
+        "position_fidelity": null
+      },
+      "top": {
+        "expected": 0,
+        "actual": 4,
+        "position_fidelity": null
+      },
+      "right": {
+        "expected": 0,
+        "actual": 2,
+        "position_fidelity": null
+      }
+    }
+  },
+  "product": {
+    "success": false,
+    "accepted": false,
+    "status": "failed",
+    "score": null,
+    "projection_status": "failed",
+    "geometry_status": "passed",
+    "failures": [
+      "top projection",
+      "right projection",
+      "Detailed drawing features and view assignments require review."
+    ]
+  },
+  "attempts": {
+    "count": 1,
+    "recovered": false,
+    "corrections": 1
+  },
+  "unsupported": {
+    "flag": false,
+    "code": null
+  },
+  "brep_only": {
+    "operations": [
+      "arc_pipe",
+      "cylinder",
+      "union"
+    ],
+    "loft": false,
+    "shell": false,
+    "arc_pipe": true,
+    "sweep": false,
+    "extrude": false,
+    "parameter_names": [
+      "bend_radius",
+      "diameter",
+      "leg_length"
+    ]
+  },
+  "edit": {
+    "available": true,
+    "ok": true,
+    "seconds": 17.96,
+    "param": "bend_radius",
+    "old": 20,
+    "new": 24.0,
+    "message": null
+  },
+  "targeted": {
+    "available": false,
+    "ok": false,
+    "seconds": null,
+    "operation": null,
+    "value": null,
+    "message": "not_applicable: no selectable targeted geometry in this build"
+  }
+}

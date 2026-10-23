@@ -4,6 +4,7 @@ import os
 from pathlib import Path
 import sys
 import time
+from doodle_to_cad.brep import worker_available
 
 import pytest
 
@@ -44,6 +45,11 @@ def test_cancellation_stops_process_group_and_never_publishes(tmp_path, monkeypa
     child=int(pid_file.read_text())
     # An orphan may briefly be a zombie until init reaps it; it cannot run.
     stat=Path(f'/proc/{child}/stat')
+    # SIGKILL has been sent to the whole group. The child may need one
+    # scheduler turn after the parent is reaped before /proc shows its exit.
+    deadline=time.monotonic()+1
+    while stat.exists() and stat.read_text().split()[2]!='Z' and time.monotonic()<deadline:
+        time.sleep(.01)
     assert not stat.exists() or stat.read_text().split()[2]=='Z'
     with pytest.raises(ProcessLookupError):os.kill(job['worker_pid'],0)
 
@@ -61,7 +67,7 @@ def test_missing_worker_is_rejected_before_job_creation(monkeypatch):
     assert set(app.JOBS)==before
 
 
-@pytest.mark.skipif(not os.getenv('DOODLE_BREP_PYTHON'),reason='Isolated worker not configured')
+@pytest.mark.skipif(not worker_available(),reason='Isolated worker not configured')
 def test_real_recipe_job_reload_and_download_contract(tmp_path,monkeypatch):
     from dataclasses import replace
     from fastapi.testclient import TestClient

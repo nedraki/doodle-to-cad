@@ -1,0 +1,166 @@
+{
+  "object": "Rounded Open Tray",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "top",
+      "sheet_region": "view_7",
+      "constrains": "Outer footprint (60x40), wall thickness (uniform), inner cavity footprint, corner radii (R6 outer)."
+    },
+    {
+      "direction": "section_xz",
+      "sheet_region": "view_8",
+      "constrains": "Height (20), wall thickness (uniform), floor thickness (uniform), flat rim profile."
+    },
+    {
+      "direction": "bottom",
+      "sheet_region": "view_12",
+      "constrains": "Outer footprint (60x40), flat floor profile."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "tray_body",
+      "name": "Tray Body",
+      "material": "generic_plastic",
+      "bounding_box": [
+        60,
+        40,
+        20
+      ]
+    }
+  ],
+  "features": [
+    {
+      "id": "outer_shell",
+      "type": "extrusion",
+      "profile": "rounded_rectangle",
+      "dimensions": {
+        "width": 60,
+        "depth": 40,
+        "height": 20,
+        "corner_radius": 6
+      },
+      "source_views": [
+        "view_7",
+        "view_8"
+      ]
+    },
+    {
+      "id": "inner_cavity",
+      "type": "cutout",
+      "profile": "rounded_rectangle",
+      "dimensions": {
+        "width": "60 - 2*t",
+        "depth": "40 - 2*t",
+        "height": "20 - t",
+        "corner_radius": "6 - t"
+      },
+      "parameters": {
+        "t": "wall_thickness"
+      },
+      "source_views": [
+        "view_7",
+        "view_8"
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "type": "concentric",
+      "features": [
+        "outer_shell",
+        "inner_cavity"
+      ],
+      "axis": "Z"
+    },
+    {
+      "type": "uniform_thickness",
+      "features": [
+        "wall",
+        "floor"
+      ],
+      "value": "wall_thickness"
+    }
+  ],
+  "symmetry": {
+    "planes": [
+      "XZ",
+      "YZ"
+    ],
+    "rotational": "C2"
+  },
+  "repetitions": [],
+  "dimensions": {
+    "max_width": 46.15,
+    "max_depth": 5.31,
+    "max_height": 60.0,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "Wall and floor thickness value is not given in the drawing. A default value (e.g., 2mm) is required for generation."
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "The object is a simple open tray. The geometry is defined by an outer rounded rectangle extruded to height 20, minus an inner rounded rectangle extruded from the top down to leave a floor. The inner corner radius is derived from the outer radius minus the wall thickness. The 'flat top rim' implies the wall top is horizontal.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "extrude",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_2",
+        "operation": "extrude",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "owner": "outer_shell",
+        "parameters": {
+          "height": 20
+        },
+        "source_views": [
+          "view_8"
+        ]
+      },
+      {
+        "id": "inner_cavity",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": null
+        },
+        "source_views": []
+      }
+    ],
+    "unresolved_constraints": [
+      "wall_thickness value is missing"
+    ]
+  },
+  "user_intent": {
+    "description": "",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "60"
+  },
+  "source_view_group_count": 12,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

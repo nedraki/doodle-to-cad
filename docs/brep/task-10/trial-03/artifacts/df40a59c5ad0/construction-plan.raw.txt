@@ -1,0 +1,34 @@
+```json
+{
+  "view_frame": "The drawing uses a TOP (XY) view for the primary geometry. The X-axis represents the width (left-right), the Y-axis represents the depth (up-down in the view), and the Z-axis represents the height (thickness of the part). The 'END SECTION' view shows the cross-section in the YZ plane (width 6 along Y, height 8 along Z).",
+  "features": [
+    {
+      "id": "handle_body",
+      "shape": "swept_path",
+      "section": "rectangle",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "6",
+        "8",
+        "R20",
+        "15",
+        "180"
+      ],
+      "placement": "The path lies in the XY plane. It consists of two straight segments and one 180-degree arc. The arc is centered at (0, 15) with a radius of 20. The path starts at the bottom of the left leg at (-20, 0), goes straight up to (-20, 15), follows the arc counter-clockwise to (20, 15), and goes straight down to (20, 0). The section is a 6mm (Y-width) by 8mm (Z-height) rectangle, centered on the path.",
+      "evidence": "Top view shows a U-shape. Text specifies '180° bend', 'Centreline radius R20', 'Both straight ends: 15 long', 'Same 6 x 8 section throughout'. End section view shows a rectangle 6 wide and 8 high."
+    }
+  ],
+  "connections": [
+    "The left straight segment connects tangentially to the left end of the arc.",
+    "The right straight segment connects tangentially to the right end of the arc."
+  ],
+  "edit_rules": [
+    "Changing the 'Centreline radius' (R20) will change the overall width of the handle.",
+    "Changing the 'Straight length' (15) will change the total height of the handle in the Y direction.",
+    "Changing the section width (6) will change the thickness of the handle in the Y direction.",
+    "Changing the section height (8) will change the thickness of the handle in the Z direction."
+  ],
+  "unresolved": [],
+  "clarification": null
+}
+```

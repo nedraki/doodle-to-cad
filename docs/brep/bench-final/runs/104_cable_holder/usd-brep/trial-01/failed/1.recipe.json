@@ -1,0 +1,317 @@
+{
+  "version": 2,
+  "units": "mm",
+  "name": "cable_holder",
+  "parameters": {
+    "width": {
+      "value": 10,
+      "min": 5,
+      "max": 20,
+      "label": "Width (X)"
+    },
+    "height": {
+      "value": 40,
+      "min": 20,
+      "max": 60,
+      "label": "Height (Z)"
+    },
+    "thickness": {
+      "value": 2,
+      "min": 1,
+      "max": 5,
+      "label": "Thickness (Y)"
+    },
+    "hole_diameter": {
+      "value": 1.5,
+      "min": 0.5,
+      "max": 3,
+      "label": "Central Hole Diameter"
+    },
+    "slot_width": {
+      "value": 1.5,
+      "min": 0.5,
+      "max": 3,
+      "label": "Side Slot Width"
+    },
+    "slot_height": {
+      "value": 2.5,
+      "min": 1,
+      "max": 5,
+      "label": "Side Slot Height"
+    }
+  },
+  "operations": [
+    {
+      "id": "main_body",
+      "kind": "box",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "size": [
+        "width",
+        "thickness",
+        "height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "central_hole",
+      "kind": "cylinder",
+      "origin": [
+        "width/2",
+        "-thickness/2",
+        "height/2"
+      ],
+      "radius": "hole_diameter/2",
+      "height": "thickness",
+      "axis": "y",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "body_with_hole",
+      "kind": "difference",
+      "left": "main_body",
+      "right": "central_hole",
+      "frame": "world",
+      "depends_on": [
+        "main_body",
+        "central_hole"
+      ],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "slot_1",
+      "kind": "box",
+      "origin": [
+        "width/2 - slot_width/2",
+        "-thickness/2",
+        "height * 0.15"
+      ],
+      "size": [
+        "slot_width",
+        "thickness",
+        "slot_height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "body_with_slot_1",
+      "kind": "difference",
+      "left": "body_with_hole",
+      "right": "slot_1",
+      "frame": "world",
+      "depends_on": [
+        "body_with_hole",
+        "slot_1"
+      ],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "slot_2",
+      "kind": "box",
+      "origin": [
+        "width/2 - slot_width/2",
+        "-thickness/2",
+        "height * 0.32"
+      ],
+      "size": [
+        "slot_width",
+        "thickness",
+        "slot_height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "body_with_slot_2",
+      "kind": "difference",
+      "left": "body_with_slot_1",
+      "right": "slot_2",
+      "frame": "world",
+      "depends_on": [
+        "body_with_slot_1",
+        "slot_2"
+      ],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "slot_3",
+      "kind": "box",
+      "origin": [
+        "width/2 - slot_width/2",
+        "-thickness/2",
+        "height * 0.49"
+      ],
+      "size": [
+        "slot_width",
+        "thickness",
+        "slot_height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "body_with_slot_3",
+      "kind": "difference",
+      "left": "body_with_slot_2",
+      "right": "slot_3",
+      "frame": "world",
+      "depends_on": [
+        "body_with_slot_2",
+        "slot_3"
+      ],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "slot_4",
+      "kind": "box",
+      "origin": [
+        "width/2 - slot_width/2",
+        "-thickness/2",
+        "height * 0.66"
+      ],
+      "size": [
+        "slot_width",
+        "thickness",
+        "slot_height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "body_with_slot_4",
+      "kind": "difference",
+      "left": "body_with_slot_3",
+      "right": "slot_4",
+      "frame": "world",
+      "depends_on": [
+        "body_with_slot_3",
+        "slot_4"
+      ],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "slot_5",
+      "kind": "box",
+      "origin": [
+        "width/2 - slot_width/2",
+        "-thickness/2",
+        "height * 0.83"
+      ],
+      "size": [
+        "slot_width",
+        "thickness",
+        "slot_height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "final_part",
+      "kind": "difference",
+      "left": "body_with_slot_4",
+      "right": "slot_5",
+      "frame": "world",
+      "depends_on": [
+        "body_with_slot_4",
+        "slot_5"
+      ],
+      "evidence": [
+        "e3"
+      ]
+    }
+  ],
+  "output": "final_part",
+  "frames": {
+    "world": {
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    }
+  },
+  "bodies": [
+    {
+      "id": "part",
+      "output": "final_part"
+    }
+  ],
+  "evidence": {
+    "observed": [
+      {
+        "id": "e1",
+        "text": "Main rectangular body observed in all views."
+      },
+      {
+        "id": "e2",
+        "text": "Central circular hole observed in top view."
+      },
+      {
+        "id": "e3",
+        "text": "Five rectangular slots observed in right view."
+      }
+    ],
+    "inferred": [
+      {
+        "id": "e4",
+        "text": "Slots are through-holes based on clarification."
+      }
+    ],
+    "assumptions": [
+      {
+        "id": "e5",
+        "text": "Assumed dimensions: Width=10mm, Height=40mm, Thickness=2mm."
+      },
+      {
+        "id": "e6",
+        "text": "Assumed hole diameter=1.5mm, slot size=1.5x2.5mm."
+      },
+      {
+        "id": "e7",
+        "text": "Assumed slot positions based on visual estimation of staggered pattern."
+      }
+    ],
+    "unresolved": []
+  },
+  "constraints": []
+}

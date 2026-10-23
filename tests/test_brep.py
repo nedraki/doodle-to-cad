@@ -5,6 +5,7 @@ from pathlib import Path
 import subprocess
 
 import pytest
+from doodle_to_cad.brep import worker_available
 
 from doodle_to_cad.brep import build_recipe
 from doodle_to_cad.brep_recipe import scalar, validate_recipe
@@ -51,18 +52,26 @@ def test_forward_reference_and_duplicate_ids_rejected():
 
 def test_timeout_publishes_nothing(tmp_path, monkeypatch):
     monkeypatch.setattr("doodle_to_cad.brep.worker_python", lambda: "/python")
-    def timeout(*args, **kwargs):
-        raise subprocess.TimeoutExpired(args[0], 120)
-    monkeypatch.setattr("doodle_to_cad.brep.subprocess.run", timeout)
+    class HangingPopen:
+        killed = False
+        returncode = None
+        def __init__(self, *args, **kwargs): pass
+        def communicate(self, timeout=None):
+            raise subprocess.TimeoutExpired(["worker"], 0.1)
+        def kill(self):
+            type(self).killed = True
+    monkeypatch.setattr("doodle_to_cad.brep.subprocess.Popen", HangingPopen)
+    monkeypatch.setattr("doodle_to_cad.brep.WORKER_TIMEOUT_SECONDS", 0.1)
     existing = tmp_path / "last-valid.stl"
     existing.write_bytes(b"last valid")
     with pytest.raises(ValueError, match="timed out"):
         build_recipe(tmp_path, recipe())
     assert list(tmp_path.iterdir()) == [existing]
+    assert HangingPopen.killed, "timed-out worker must be killed"
     assert existing.read_bytes() == b"last valid"
 
 
-@pytest.mark.skipif(not os.getenv("DOODLE_BREP_PYTHON"), reason="Isolated BRep worker not configured")
+@pytest.mark.skipif(not worker_available(), reason="Isolated BRep worker not configured")
 def test_kernel_build_edit_and_failure_recovery(tmp_path):
     import trimesh
     source = recipe()

@@ -1,0 +1,180 @@
+{
+  "version": 2,
+  "units": "mm",
+  "name": "greek_vase",
+  "parameters": {
+    "height": {
+      "value": 120,
+      "min": 50,
+      "max": 200,
+      "label": "Overall Height",
+      "unit": "mm",
+      "description": "Total height of the vase from base to rim."
+    },
+    "max_radius": {
+      "value": 40,
+      "min": 20,
+      "max": 80,
+      "label": "Max Radius",
+      "unit": "mm",
+      "description": "Maximum radius of the bulbous body."
+    },
+    "neck_radius": {
+      "value": 15,
+      "min": 5,
+      "max": 30,
+      "label": "Neck Radius",
+      "unit": "mm",
+      "description": "Radius of the narrow neck section."
+    },
+    "rim_radius": {
+      "value": 35,
+      "min": 10,
+      "max": 60,
+      "label": "Rim Radius",
+      "unit": "mm",
+      "description": "Radius of the flared rim opening."
+    },
+    "wall_thickness": {
+      "value": 3,
+      "min": 1,
+      "max": 10,
+      "label": "Wall Thickness",
+      "unit": "mm",
+      "description": "Thickness of the vase walls."
+    },
+    "floor_thickness": {
+      "value": 3,
+      "min": 1,
+      "max": 10,
+      "label": "Floor Thickness",
+      "unit": "mm",
+      "description": "Thickness of the vase base."
+    }
+  },
+  "operations": [
+    {
+      "id": "vase",
+      "kind": "revolve",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "axis": "z",
+      "profile": [
+        [
+          0,
+          0
+        ],
+        [
+          "max_radius",
+          0
+        ],
+        [
+          "max_radius",
+          10
+        ],
+        [
+          "max_radius - 10",
+          30
+        ],
+        [
+          "neck_radius",
+          60
+        ],
+        [
+          "neck_radius",
+          100
+        ],
+        [
+          "rim_radius",
+          120
+        ],
+        [
+          "rim_radius - wall_thickness",
+          120
+        ],
+        [
+          "neck_radius - wall_thickness",
+          100
+        ],
+        [
+          "neck_radius - wall_thickness",
+          60
+        ],
+        [
+          "max_radius - 10 - wall_thickness",
+          30
+        ],
+        [
+          "max_radius - wall_thickness",
+          10
+        ],
+        [
+          "max_radius - wall_thickness",
+          "floor_thickness"
+        ],
+        [
+          0,
+          "floor_thickness"
+        ]
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1",
+        "e2"
+      ]
+    }
+  ],
+  "output": "vase",
+  "frames": {
+    "world": {
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    }
+  },
+  "bodies": [
+    {
+      "id": "part",
+      "output": "vase"
+    }
+  ],
+  "evidence": {
+    "observed": [
+      {
+        "id": "e1",
+        "text": "Single continuous outline showing a vase shape with a flared rim, narrow neck, and bulbous body."
+      }
+    ],
+    "inferred": [
+      {
+        "id": "e2",
+        "text": "Object is axisymmetric about the Z axis."
+      }
+    ],
+    "assumptions": [
+      {
+        "id": "e3",
+        "text": "Wall thickness is 3mm as per clarification."
+      },
+      {
+        "id": "e4",
+        "text": "Floor thickness is 3mm as per clarification."
+      },
+      {
+        "id": "e5",
+        "text": "Profile vertices are approximated from the silhouette."
+      }
+    ],
+    "unresolved": []
+  },
+  "constraints": []
+}

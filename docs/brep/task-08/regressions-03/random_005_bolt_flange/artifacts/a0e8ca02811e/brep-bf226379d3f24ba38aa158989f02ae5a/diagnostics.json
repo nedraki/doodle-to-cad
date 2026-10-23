@@ -1,0 +1,90 @@
+{
+  "backend": "usd-brep",
+  "version": "1.0.0",
+  "recipe_version": 2,
+  "solid_volume_mm3": 70322.33245826833,
+  "mesh_volume_mm3": 70312.95859060004,
+  "extents_mm": [
+    100.0,
+    100.0,
+    10.0
+  ],
+  "bounds_mm": [
+    [
+      -50.0,
+      -50.0,
+      0.0
+    ],
+    [
+      50.0,
+      50.0,
+      10.0
+    ]
+  ],
+  "watertight": true,
+  "winding_consistent": true,
+  "euler_number": 0,
+  "triangles": 1024,
+  "usd_roundtrip": true,
+  "volume_relative_accuracy": 1e-08,
+  "usd_volume_mm3": 70322.33243394125,
+  "operations": [
+    {
+      "id": "flange_base",
+      "kind": "cylinder",
+      "faces": 3
+    },
+    {
+      "id": "central_hole",
+      "kind": "cylinder",
+      "faces": 3
+    },
+    {
+      "id": "diff_central",
+      "kind": "difference",
+      "faces": 4
+    },
+    {
+      "id": "bolt_hole_1",
+      "kind": "cylinder",
+      "faces": 3
+    },
+    {
+      "id": "diff_bolt_1",
+      "kind": "difference",
+      "faces": 6
+    },
+    {
+      "id": "bolt_hole_2",
+      "kind": "cylinder",
+      "faces": 3
+    },
+    {
+      "id": "diff_bolt_2",
+      "kind": "difference",
+      "faces": 9
+    },
+    {
+      "id": "bolt_hole_3",
+      "kind": "cylinder",
+      "faces": 3
+    },
+    {
+      "id": "diff_bolt_3",
+      "kind": "difference",
+      "faces": 12
+    },
+    {
+      "id": "bolt_hole_4",
+      "kind": "cylinder",
+      "faces": 3
+    },
+    {
+      "id": "final_flange",
+      "kind": "difference",
+      "faces": 14
+    }
+  ],
+  "connections": [],
+  "build_seconds": 0.217
+}

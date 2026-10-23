@@ -1,0 +1,223 @@
+{
+  "selection_catalog": {
+    "version": 1,
+    "status": "available",
+    "unresolved": [
+      {
+        "rule": {
+          "kind": "extreme_face",
+          "owner": "handle",
+          "axis": 1,
+          "side": "min"
+        },
+        "status": "ambiguous",
+        "reason": "The target changed or split. Select again."
+      },
+      {
+        "rule": {
+          "kind": "extreme_face",
+          "owner": "handle",
+          "axis": 1,
+          "side": "max"
+        },
+        "status": "lost",
+        "reason": "No matching face remains. Select again."
+      },
+      {
+        "rule": {
+          "kind": "extreme_face",
+          "owner": "handle",
+          "axis": 2,
+          "side": "min"
+        },
+        "status": "ambiguous",
+        "reason": "The target changed or split. Select again."
+      },
+      {
+        "rule": {
+          "kind": "extreme_face",
+          "owner": "handle",
+          "axis": 2,
+          "side": "max"
+        },
+        "status": "ambiguous",
+        "reason": "The target changed or split. Select again."
+      }
+    ],
+    "output_owner": "handle",
+    "targets": [
+      {
+        "id": "7498cf5c561979a8",
+        "label": "Outside X min face",
+        "rule": {
+          "kind": "extreme_face",
+          "owner": "handle",
+          "axis": 0,
+          "side": "min"
+        },
+        "match_count": 1,
+        "geometry": {
+          "triangles": [
+            [
+              0.0,
+              15.0,
+              8.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              8.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              15.0,
+              8.0
+            ],
+            [
+              0.0,
+              15.0,
+              0.0
+            ]
+          ]
+        }
+      },
+      {
+        "id": "b32378245bdc794a",
+        "label": "Outside X max face",
+        "rule": {
+          "kind": "extreme_face",
+          "owner": "handle",
+          "axis": 0,
+          "side": "max"
+        },
+        "match_count": 1,
+        "geometry": {
+          "triangles": [
+            [
+              52.0,
+              -1.8369701465288538e-16,
+              0.0
+            ],
+            [
+              52.0,
+              15.0,
+              8.0
+            ],
+            [
+              52.0,
+              -1.8369701465288538e-16,
+              8.0
+            ],
+            [
+              52.0,
+              15.0,
+              8.0
+            ],
+            [
+              52.0,
+              -1.8369701465288538e-16,
+              0.0
+            ],
+            [
+              52.0,
+              15.0,
+              0.0
+            ]
+          ]
+        }
+      },
+      {
+        "id": "c04658285c65e0dc",
+        "label": "Outer vertical edges",
+        "rule": {
+          "kind": "outer_vertical_edges",
+          "owner": "handle",
+          "expected_edges": 2
+        },
+        "match_count": 2,
+        "geometry": {
+          "lines": [
+            [
+              [
+                0.0,
+                0.0,
+                8.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ]
+            ],
+            [
+              [
+                52.0,
+                -1.8369701987210297e-16,
+                8.0
+              ],
+              [
+                52.0,
+                -1.8369701987210297e-16,
+                0.0
+              ]
+            ]
+          ]
+        }
+      }
+    ],
+    "supported": "Axis-aligned extreme planar faces, four-wall box cutouts and straight outer vertical edges. Recheck after every rebuild."
+  },
+  "backend": "usd-brep",
+  "version": "1.0.0",
+  "recipe_version": 1,
+  "solid_volume_mm3": 4908.318712944434,
+  "mesh_volume_mm3": 4902.747386123737,
+  "extents_mm": [
+    52.0,
+    40.999900817871094,
+    8.000000000000151
+  ],
+  "bounds_mm": [
+    [
+      0.0,
+      -1.8369701465288538e-16,
+      -1.515601473532982e-13
+    ],
+    [
+      52.0,
+      40.999900817871094,
+      8.0
+    ]
+  ],
+  "watertight": true,
+  "winding_consistent": true,
+  "euler_number": 2,
+  "triangles": 276,
+  "usd_roundtrip": true,
+  "volume_relative_accuracy": 1e-08,
+  "usd_volume_mm3": 4908.319251555717,
+  "operations": [
+    {
+      "id": "handle",
+      "kind": "sweep",
+      "faces": 12
+    }
+  ],
+  "connections": [],
+  "resource_limits": {
+    "memory_bytes": 17179869184,
+    "cpu_seconds": 150,
+    "file_size_bytes": 536870912
+  },
+  "build_seconds": 0.78
+}

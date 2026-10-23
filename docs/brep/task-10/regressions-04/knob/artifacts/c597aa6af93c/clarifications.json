@@ -1,0 +1,24 @@
+[
+  {
+    "question": {
+      "feature_id": "main_body",
+      "feature_label": "Main body thickness",
+      "reason": "The drawing does not specify the thickness of the part, which is required for the extrusion operation.",
+      "kind": "opening_extent",
+      "id": "5f2b75feb04f428f8754acbb6cb56f0d",
+      "text": "Should this hole go all the way through the part?",
+      "maximum_depth_mm": 120.0,
+      "choices": [
+        {
+          "id": "through",
+          "label": "Yes \u2014 make a through-hole"
+        },
+        {
+          "id": "recess",
+          "label": "No \u2014 leave a bottom"
+        }
+      ]
+    },
+    "status": "cancelled"
+  }
+]

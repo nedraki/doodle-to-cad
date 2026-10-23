@@ -1,0 +1,154 @@
+```json
+{
+  "version": 1,
+  "object_hypothesis": "A spoked wheel assembly featuring a central hub, an outer rim, and eight radial spokes.",
+  "features": [
+    {
+      "id": "outer_rim",
+      "type": "rim",
+      "description": "The outermost circular boundary of the wheel structure.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "Visible as the primary outer contour in the front view."
+    },
+    {
+      "id": "inner_rim",
+      "type": "rim",
+      "description": "A concentric circular boundary inside the outer rim, defining the rim's thickness.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "Visible in the front view as the inner boundary of the rim band."
+    },
+    {
+      "id": "central_hub",
+      "type": "hub",
+      "description": "A solid circular region at the geometric center of the wheel.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "Visible as the central circular feature in the front view."
+    },
+    {
+      "id": "spoke_group",
+      "type": "spoke",
+      "description": "A set of eight radial bars connecting the central hub to the inner rim.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "Visible as distinct linear segments radiating from the center in the front view."
+    },
+    {
+      "id": "wheel_thickness",
+      "type": "body",
+      "description": "The depth or thickness of the wheel assembly.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_14"
+        }
+      ],
+      "reason": "Visible as the width of the rectangular profile in the right view."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "spoke_connectivity",
+      "type": "connected",
+      "features": [
+        "spoke_group",
+        "central_hub",
+        "inner_rim"
+      ],
+      "description": "The spokes connect the central hub to the inner rim.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "The ends of the spoke lines visually touch the boundaries of the hub and inner rim."
+    },
+    {
+      "id": "spoke_repetition",
+      "type": "repeated",
+      "features": [
+        "spoke_group"
+      ],
+      "description": "The spokes are arranged in a repeated radial pattern.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "Eight distinct spokes are visible, evenly spaced around the center."
+    },
+    {
+      "id": "rim_concentricity",
+      "type": "position",
+      "features": [
+        "outer_rim",
+        "inner_rim",
+        "central_hub"
+      ],
+      "description": "The outer rim, inner rim, and hub are concentric.",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "The circular shapes appear concentric in the front view, implying a shared center axis."
+    },
+    {
+      "id": "thickness_consistency",
+      "type": "shared_dimension",
+      "features": [
+        "outer_rim",
+        "spoke_group",
+        "central_hub"
+      ],
+      "description": "The rim, spokes, and hub share the same thickness.",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_14"
+        }
+      ],
+      "reason": "The right view shows a single uniform rectangular profile, suggesting the components are coplanar and of equal depth."
+    }
+  ],
+  "assumptions": [
+    "The object is a single rigid assembly.",
+    "The 'unassigned' views (1, 2, 3, 6) are likely detail crops or noise and are excluded from the primary structural model."
+  ],
+  "unresolved": [
+    "The specific material of the object.",
+    "The exact dimensions of the hub and rim thickness (only relative proportions are visible)."
+  ],
+  "conflicts": []
+}
+```

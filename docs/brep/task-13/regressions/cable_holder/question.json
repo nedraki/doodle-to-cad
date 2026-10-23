@@ -1,0 +1,19 @@
+{
+  "feature_id": "side_holes",
+  "feature_label": "5 holes on the face",
+  "reason": "The Right view shows 5 holes, but the Front view shows hidden lines that do not clearly align with a simple through-hole pattern in the Y direction (they appear to be in the X-Z plane or have complex geometry). Additionally, the Top view does not show these holes, implying they are on the face (Y-normal) or hidden. However, without dimensions, their exact location and nature (through vs blind) is ambiguous.",
+  "kind": "opening_extent",
+  "id": "b4f90bd3e9ae4e12b4c0ebd332276bfd",
+  "text": "Should this hole go all the way through the part?",
+  "maximum_depth_mm": 120.0,
+  "choices": [
+    {
+      "id": "through",
+      "label": "Yes \u2014 make a through-hole"
+    },
+    {
+      "id": "recess",
+      "label": "No \u2014 leave a bottom"
+    }
+  ]
+}

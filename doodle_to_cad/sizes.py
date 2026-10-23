@@ -63,6 +63,18 @@ def derive_physical_sizes(evidence: dict[str, Any], target_max_mm: Any) -> dict[
             "method": "median measured ink span per CAD axis x authoritative scale"}
 
 
+def plan_unconstrained_axes(derived_sizes: dict[str, Any] | None) -> list[str]:
+    """Axes no registered view constrains, in ask priority order.
+
+    These are the 'thickness lottery' axes (issue #68): the generator invents
+    them from ink gestalt on every run, and no gate can judge an axis the
+    drawing never states. Ask the user instead."""
+    if not derived_sizes:
+        return []
+    return [axis for axis in ("depth", "height", "width")
+            if derived_sizes.get(f"{axis}_mm") is None]
+
+
 def normalize_dimensions(raw: Any) -> dict[str, Any]:
     """Coerce spec.dimensions into the dict shape the evaluator reads.
 

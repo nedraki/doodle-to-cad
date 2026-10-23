@@ -1,0 +1,21 @@
+{
+  "drawing": "002_greek_vase_silhouette",
+  "backend": "usd-brep",
+  "trial": 1,
+  "submitted_at": "2026-10-19T15:18:22.985979+00:00",
+  "finished_at": "2026-10-19T15:19:31.205660+00:00",
+  "run_id": "a24af3ab4fe3",
+  "wall_seconds": 68.2,
+  "job_status": "error",
+  "error": {
+    "message": "The drawing depicts a vase with a complex, organic silhouette (bulbous body, narrow neck, flared rim). The available BRep operations (box, cylinder, extrude, sweep, loft, arc_pipe) cannot construct a solid of revolution with a spline or complex polygonal profile. The 'loft' operation is strictly limited to a single transition between a rectangle and a circle, which cannot approximate the multi-stage curvature of the vase profile.",
+    "code": "unsupported_construction"
+  },
+  "questions_asked": 0,
+  "question_kinds": [],
+  "build": null,
+  "checks": {
+    "build_success": false,
+    "overall_pass": false
+  }
+}

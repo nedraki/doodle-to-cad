@@ -1,0 +1,20 @@
+[
+  {
+    "question": {
+      "feature_id": "box_body",
+      "feature_label": "Box walls",
+      "reason": "The drawing shows a box with uniform walls but does not specify the wall thickness value.",
+      "kind": "uniform_thickness",
+      "id": "e495624a14a6406789922f646177d469",
+      "text": "Wall and floor thickness (mm)?",
+      "maximum_thickness_mm": 120.0
+    },
+    "status": "answered",
+    "answer": {
+      "question_id": "e495624a14a6406789922f646177d469",
+      "feature_id": "box_body",
+      "kind": "uniform_thickness",
+      "thickness_mm": 3
+    }
+  }
+]

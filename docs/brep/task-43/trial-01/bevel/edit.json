@@ -1,0 +1,142 @@
+{
+  "ok": true,
+  "backend": "usd-brep",
+  "applied": {
+    "chamfer_setback": 3
+  },
+  "stl": "/results/b36ec8f1021d/brep-35142d0c36f7460991d1c7e1c9271462/model.stl",
+  "source": "/results/b36ec8f1021d/brep-35142d0c36f7460991d1c7e1c9271462/model.recipe.json",
+  "usd": "/results/b36ec8f1021d/brep-35142d0c36f7460991d1c7e1c9271462/model.usda",
+  "diagnostics": {
+    "backend": "usd-brep",
+    "version": "1.0.0",
+    "recipe_version": 2,
+    "solid_volume_mm3": 46002.00000131689,
+    "mesh_volume_mm3": 46002.0,
+    "extents_mm": [
+      60.0,
+      40.0,
+      20.0
+    ],
+    "bounds_mm": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        60.0,
+        40.0,
+        20.0
+      ]
+    ],
+    "watertight": true,
+    "winding_consistent": true,
+    "euler_number": 2,
+    "triangles": 60,
+    "usd_roundtrip": true,
+    "volume_relative_accuracy": 1e-08,
+    "usd_volume_mm3": 46001.99999816021,
+    "operations": [
+      {
+        "id": "base_block",
+        "kind": "box",
+        "faces": 6
+      },
+      {
+        "id": "bevelled_block",
+        "kind": "chamfer",
+        "faces": 18
+      }
+    ],
+    "connections": [],
+    "build_seconds": 0.242
+  },
+  "views": {
+    "isometric": "/results/b36ec8f1021d/brep-35142d0c36f7460991d1c7e1c9271462/view-isometric.png",
+    "front": "/results/b36ec8f1021d/brep-35142d0c36f7460991d1c7e1c9271462/view-front.png",
+    "top": "/results/b36ec8f1021d/brep-35142d0c36f7460991d1c7e1c9271462/view-top.png",
+    "right": "/results/b36ec8f1021d/brep-35142d0c36f7460991d1c7e1c9271462/view-right.png"
+  },
+  "build": {
+    "version": 1,
+    "backend": "usd-brep",
+    "source_format": "brep-recipe-v2",
+    "ok": true,
+    "units": "mm",
+    "axes": {
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    },
+    "views": [
+      "isometric",
+      "front",
+      "top",
+      "right"
+    ],
+    "measurements": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 60,
+      "extents_mm": [
+        60.0,
+        40.0,
+        20.0
+      ],
+      "volume_mm3": 46002.0
+    },
+    "diagnostics": [],
+    "drawing_evaluated": false
+  },
+  "params": [
+    {
+      "name": "width",
+      "value": 60.0,
+      "low": 10,
+      "high": 1000,
+      "step": 0.01,
+      "label": "Width (X)",
+      "unit": "mm",
+      "description": "Rebuilds the saved construction recipe",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "depth",
+      "value": 40.0,
+      "low": 10,
+      "high": 1000,
+      "step": 0.01,
+      "label": "Depth (Y)",
+      "unit": "mm",
+      "description": "Rebuilds the saved construction recipe",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "height",
+      "value": 20.0,
+      "low": 10,
+      "high": 1000,
+      "step": 0.01,
+      "label": "Height (Z)",
+      "unit": "mm",
+      "description": "Rebuilds the saved construction recipe",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "chamfer_setback",
+      "value": 3.0,
+      "low": 0.1,
+      "high": 10,
+      "step": 0.01,
+      "label": "Chamfer Setback",
+      "unit": "mm",
+      "description": "Rebuilds the saved construction recipe",
+      "group": "Details",
+      "feature": null
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+```json
+{
+  "view_frame": "The drawing uses a TOP (XY) view for the handle's path and an END SECTION view for the profile. The world frame is defined with X as width, Y as depth, and Z as height. The handle path lies in the XY plane, and the section is extruded along the Z axis.",
+  "features": [
+    {
+      "id": "handle_path",
+      "shape": "sweep",
+      "section": "rectangle",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "6",
+        "8",
+        "R20",
+        "R17",
+        "R23",
+        "15",
+        "46"
+      ],
+      "placement": "The path consists of two straight segments and one 180-degree arc. The straight segments are parallel to the Y-axis. The left segment runs from (X=-23, Y=0) to (X=-23, Y=15). The right segment runs from (X=23, Y=0) to (X=23, Y=15). The arc connects the tops of these segments, centered at (0, 15) with a radius of 20. The section is a 6mm (width) x 8mm (height) rectangle, centered on the path and extruded along the Z-axis.",
+      "evidence": "TOP (XY) view shows the U-shaped path. Dimensions 'Overall width: 46', 'Both straight ends: 15 long', '180° bend', 'Centreline radius R20', 'Inner radius R17', 'Outer radius R23' are explicitly labeled. END SECTION view shows a 6x8 rectangle. Text states 'Same 6 x 8 section throughout', 'Bend and straight ends lie in XY', 'Section remains upright along Z'."
+    }
+  ],
+  "connections": [
+    "The left straight segment connects tangentially to the left end of the 180-degree arc.",
+    "The right straight segment connects tangentially to the right end of the 180-degree arc."
+  ],
+  "edit_rules": [
+    "Changing the 'Overall width' (46) must update the X-coordinates of the straight segments and the centerline radius of the arc.",
+    "Changing the 'straight ends' length (15) must update the Y-coordinate of the arc's center and the endpoints of the straight segments.",
+    "Changing the section width (6) must update the inner and outer radii of the arc while keeping the centerline radius fixed.",
+    "Changing the section height (8) must update the Z-extent of the extrusion."
+  ],
+  "unresolved": [],
+  "clarification": null
+}
+```

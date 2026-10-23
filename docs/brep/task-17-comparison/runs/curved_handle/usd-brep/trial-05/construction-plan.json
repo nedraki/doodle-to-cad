@@ -1,0 +1,27 @@
+{
+  "view_frame": "The primary view is TOP (XY plane), showing the planar layout of the handle. The world axes are X (width, horizontal in view), Y (depth, vertical in view), and Z (height, perpendicular to the view). The 'END SECTION' view shows the cross-section of the path, which is circular. The path lies in the XY plane, and the circular cross-section is oriented such that its plane is perpendicular to the path tangent at every point.",
+  "features": [
+    {
+      "id": "handle_path",
+      "shape": "sweep",
+      "section": "circle",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "diameter 8 mm",
+        "Bend centreline R20",
+        "straight legs 30 mm"
+      ],
+      "placement": "The path consists of two straight segments and one semicircular arc. The arc is centered at (0, 30) with radius 20 mm, spanning from angle 0 to 180 degrees (counterclockwise). The right straight leg extends from (20, 30) to (20, 0). The left straight leg extends from (-20, 30) to (-20, 0). The entire path is lifted by the section radius (4 mm) so the bottom of the handle rests on Z=0.",
+      "evidence": "Top view shows a U-shaped path. Text 'Bend centreline R20; straight legs 30 mm' defines the geometry. 'END SECTION' shows a circle with 'diameter 8 mm'."
+    }
+  ],
+  "connections": [
+    "The straight legs are tangent to the semicircular arc at (20, 30) and (-20, 30)."
+  ],
+  "edit_rules": [
+    "Changing the 'diameter' updates the section size and the Z-offset of the path.",
+    "Changing 'Bend centreline R20' updates the arc radius and the X-coordinates of the straight legs.",
+    "Changing 'straight legs 30 mm' updates the Y-length of the straight segments."
+  ],
+  "unresolved": []
+}

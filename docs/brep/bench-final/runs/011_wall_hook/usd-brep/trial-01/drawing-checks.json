@@ -1,0 +1,78 @@
+{
+  "version": 1,
+  "accepted": false,
+  "status": "failed",
+  "build_status": "passed",
+  "geometry_status": "passed",
+  "projection_status": "failed",
+  "checks": [
+    {
+      "name": "connected solid",
+      "status": "passed",
+      "detail": {
+        "watertight": true,
+        "components": 1
+      }
+    },
+    {
+      "name": "requested maximum",
+      "status": "passed",
+      "detail": {
+        "actual_mm": 60.0,
+        "limit_mm": 60.0,
+        "tolerance_mm": 0.5
+      }
+    },
+    {
+      "name": "front projection",
+      "status": "failed",
+      "detail": {
+        "similarity": 0.202,
+        "minimum": 0.45
+      }
+    },
+    {
+      "name": "top projection",
+      "status": "failed",
+      "detail": {
+        "similarity": 0.183,
+        "minimum": 0.45
+      }
+    },
+    {
+      "name": "dimensions and detailed features",
+      "status": "unverified",
+      "detail": "Projection checks cannot prove radii, bevel angles, hidden depth or section shape. Review measured features and view assignments."
+    }
+  ],
+  "projection_similarity": {
+    "front": 0.202,
+    "top": 0.183
+  },
+  "profile_topology": {
+    "front": {
+      "source_internal_profiles": 0,
+      "rendered_internal_profiles": 0,
+      "crop_internal_profiles": 0,
+      "source_aspect": 1.104,
+      "rendered_aspect": 4.042,
+      "source_opening_centroids": [],
+      "rendered_opening_centroids": []
+    },
+    "top": {
+      "source_internal_profiles": 0,
+      "rendered_internal_profiles": 0,
+      "crop_internal_profiles": 0,
+      "source_aspect": 4.396,
+      "rendered_aspect": 0.667,
+      "source_opening_centroids": [],
+      "rendered_opening_centroids": []
+    }
+  },
+  "failures": [
+    "front projection",
+    "top projection",
+    "Detailed drawing features and view assignments require review."
+  ],
+  "scope": "Partial automatic checks. No drawing acceptance from solid validity alone."
+}

@@ -1,0 +1,44 @@
+{
+  "view_frame": "The drawing presents two views in third-angle projection. The upper view is the Front view, showing the XZ plane (width and height). The lower view is the Top view, showing the XY plane (width and depth). The world origin is at the bottom-front-left corner of the box. X is width (left to right), Y is depth (front to back), and Z is height (bottom to top).",
+  "features": [
+    {
+      "id": "box_body",
+      "shape": "Open-top rectangular enclosure",
+      "section": "Rectangular shell",
+      "axis_or_plane": "XY extrusion",
+      "dimensions": [
+        "ASSUMED: Outer Width (X) = 100 mm",
+        "ASSUMED: Outer Depth (Y) = 60 mm",
+        "ASSUMED: Outer Height (Z) = 80 mm",
+        "3 mm (uniform wall thickness)"
+      ],
+      "placement": "Centred on X and Y axes. Base at Z=0. Outer envelope defined by X in [-50, 50], Y in [-30, 30], Z in [0, 80].",
+      "evidence": "Front view shows a rectangular outline. Top view shows a rectangular outline. Notes specify 'Box with an open top' and 'Uniform walls'."
+    },
+    {
+      "id": "front_window",
+      "shape": "Rectangular through-hole",
+      "section": "Rectangular",
+      "axis_or_plane": "XZ plane (Front wall)",
+      "dimensions": [
+        "ASSUMED: Window Width (X) = 60 mm",
+        "ASSUMED: Window Height (Z) = 40 mm"
+      ],
+      "placement": "Centred on X axis. Vertical centre at Z=40 mm (mid-height). Located on the front wall (Y = -30 mm).",
+      "evidence": "Front view shows an inner rectangular outline. Notes specify 'rectangular window through the front wall'."
+    }
+  ],
+  "connections": [
+    "The front_window is a boolean subtraction from the front wall of the box_body.",
+    "The box_body is constructed as a solid block with an open top and uniform wall thickness."
+  ],
+  "edit_rules": [
+    "Changing the outer dimensions (Width, Depth, Height) must preserve the uniform wall thickness of 3 mm.",
+    "Changing the window dimensions must maintain its centred position on the front wall.",
+    "The window must remain a through-hole; its depth is always equal to the wall thickness."
+  ],
+  "unresolved": [
+    "Absolute outer dimensions (Width, Depth, Height) are not dimensioned in the drawing; assumed values are used for construction.",
+    "Absolute window dimensions (Width, Height) are not dimensioned in the drawing; assumed values are used for construction."
+  ]
+}

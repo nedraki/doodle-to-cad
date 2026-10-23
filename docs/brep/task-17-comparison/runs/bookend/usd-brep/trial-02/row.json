@@ -1,0 +1,127 @@
+{
+  "drawing": "bookend",
+  "backend": "usd-brep",
+  "trial": 2,
+  "submitted_at": "2026-10-18T23:15:38.610069+00:00",
+  "finished_at": "2026-10-18T23:18:11.050083+00:00",
+  "run_id": "c2b6c0461a7d",
+  "wall_seconds": 152.4,
+  "job_status": "done",
+  "error": null,
+  "questions_asked": 0,
+  "question_kinds": [],
+  "build": {
+    "watertight": true,
+    "components": 1,
+    "genus": 3,
+    "extents_mm": [
+      80.0,
+      60.0,
+      100.0
+    ],
+    "volume_mm3": 97000.0,
+    "sha256": "19fa81552f86d7b333b205651dc7b8ae9d6cbf14a1f7759b04a97c2f4f12006e",
+    "bytes": 4884
+  },
+  "checks": {
+    "build_success": true,
+    "extents_pass": false,
+    "genus_pass": false,
+    "volume_pass": false,
+    "fidelity_pass": true,
+    "overall_pass": false,
+    "not_applicable": []
+  },
+  "fidelity": {
+    "scores": {
+      "front": 0.81,
+      "right": 0.887
+    },
+    "pass": true,
+    "reason": null,
+    "topology": {
+      "front": {
+        "expected": 4,
+        "actual": 3,
+        "position_fidelity": 0.75
+      },
+      "right": {
+        "expected": 0,
+        "actual": 0,
+        "position_fidelity": null
+      }
+    }
+  },
+  "product": {
+    "success": false,
+    "accepted": false,
+    "status": "failed",
+    "score": null,
+    "projection_status": "failed",
+    "geometry_status": "passed",
+    "failures": [
+      "front openings",
+      "Detailed drawing features and view assignments require review."
+    ]
+  },
+  "attempts": {
+    "count": 1,
+    "recovered": false,
+    "corrections": 1
+  },
+  "unsupported": {
+    "flag": false,
+    "code": null
+  },
+  "brep_only": {
+    "operations": [
+      "box",
+      "difference",
+      "union"
+    ],
+    "loft": false,
+    "shell": false,
+    "arc_pipe": false,
+    "sweep": false,
+    "extrude": false,
+    "parameter_names": [
+      "depth",
+      "height",
+      "o1_h",
+      "o1_w",
+      "o1_x",
+      "o1_z",
+      "o2_h",
+      "o2_w",
+      "o2_x",
+      "o2_z",
+      "o3_h",
+      "o3_w",
+      "o3_x",
+      "o3_z",
+      "o4_h",
+      "o4_w",
+      "o4_x",
+      "o4_z",
+      "thickness",
+      "width"
+    ]
+  },
+  "edit": {
+    "available": true,
+    "ok": true,
+    "seconds": 2.78,
+    "param": "width",
+    "old": 80,
+    "new": 96.0,
+    "message": null
+  },
+  "targeted": {
+    "available": false,
+    "ok": false,
+    "seconds": null,
+    "operation": null,
+    "value": null,
+    "message": "no probe value produced a valid targeted plan"
+  }
+}

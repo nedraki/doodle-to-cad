@@ -1,0 +1,287 @@
+[
+  {
+    "attempt": 1,
+    "action": "generate",
+    "preflight": {
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "expected_subtractive_feature_groups": 0
+    },
+    "compiler_repairs": [],
+    "uniform_scale": null,
+    "evaluation": {
+      "score": 97.5,
+      "valid_mesh": true,
+      "accepted": false,
+      "mandatory_gates": {
+        "compiled": true,
+        "topology": true,
+        "dimensions": false,
+        "shape_sanity": true,
+        "features": true,
+        "openings_through": true,
+        "projections": true,
+        "build_envelope": true
+      },
+      "scores": {
+        "topology": 45,
+        "dimensions": 18.8,
+        "features": 20,
+        "projections": 13.8
+      },
+      "projection_similarity": {
+        "front": 0.919
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 5,
+          "crop_internal_profiles": 0,
+          "source_aspect": 0.896,
+          "rendered_aspect": 0.896,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": [
+            [
+              0.497,
+              0.833
+            ],
+            [
+              0.611,
+              0.12
+            ],
+            [
+              0.497,
+              0.12
+            ],
+            [
+              0.335,
+              0.12
+            ]
+          ]
+        }
+      },
+      "demanded_openings": {
+        "total": 0,
+        "per_view": {
+          "front": 0
+        },
+        "sheet_total": 0,
+        "registration_gap": 0
+      },
+      "failures": [
+        "maximum dimension is 112.51 mm; target is 120 mm (tolerance 5%)"
+      ]
+    },
+    "mesh_health": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 480,
+      "through_holes": 0,
+      "extents_mm": [
+        101.3,
+        100.745,
+        112.51
+      ],
+      "volume_mm3": 74005.607
+    },
+    "build": {
+      "version": 1,
+      "backend": "openscad",
+      "source_format": "openscad",
+      "ok": true,
+      "units": "mm",
+      "axes": {
+        "x": "width",
+        "y": "depth",
+        "z": "height"
+      },
+      "views": [
+        "isometric",
+        "front",
+        "top",
+        "right"
+      ],
+      "measurements": {
+        "watertight": true,
+        "components": 1,
+        "triangles": 480,
+        "through_holes": 0,
+        "extents_mm": [
+          101.3,
+          100.745,
+          112.51
+        ],
+        "volume_mm3": 74005.607
+      },
+      "diagnostics": [],
+      "drawing_evaluated": false
+    },
+    "compile_log": "Geometries in cache: 4\nGeometry cache size in bytes: 52496\nCGAL Polyhedrons in cache: 1\nCGAL cache size in bytes: 558656\nTotal rendering time: 0:00:00.219\n   Top level object is a 3D object:\n   Simple:        yes\n   Vertices:      242\n   Halfedges:    1296\n   Edges:         648\n   Halffacets:    818\n   Facets:        409\n   Volumes:         2",
+    "files": {
+      "scad": "attempt-01/model.scad",
+      "stl": "attempt-01/model.stl",
+      "views": {
+        "isometric": "attempt-01/view-isometric.png",
+        "front": "attempt-01/view-front.png",
+        "top": "attempt-01/view-top.png",
+        "right": "attempt-01/view-right.png"
+      }
+    },
+    "supervisor": {
+      "action": "repair_scad",
+      "problems": [
+        "Maximum height is 112.51mm, failing the 120mm target (tolerance 5%).",
+        "Profile points are hardcoded with incorrect scaling derived from normalized coordinates.",
+        "Geometry is faceted (low resolution) and lacks smooth curvature of the original sketch."
+      ],
+      "preserve": [
+        "Revolve strategy (outer minus inner cavity).",
+        "General amphora silhouette topology (neck, shoulder, belly).",
+        "Hollow shell structure with wall thickness."
+      ],
+      "instructions": "Recalculate profile coordinates to ensure the total height is exactly 120mm. Scale the radius values proportionally to maintain the aspect ratio (max_width ~107.5mm). Increase the resolution of the `rotate_extrude` operation (e.g., `$fn=64`) to smooth the geometry. Ensure the bottom point is at Z=0 and the top rim is at Z=120.",
+      "confidence": 0.95
+    }
+  },
+  {
+    "attempt": 2,
+    "action": "repair_scad",
+    "preflight": {
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "expected_subtractive_feature_groups": 0
+    },
+    "compiler_repairs": [],
+    "uniform_scale": null,
+    "evaluation": {
+      "score": 99.6,
+      "valid_mesh": true,
+      "accepted": true,
+      "mandatory_gates": {
+        "compiled": true,
+        "topology": true,
+        "dimensions": true,
+        "shape_sanity": true,
+        "features": true,
+        "openings_through": true,
+        "projections": true,
+        "build_envelope": true
+      },
+      "scores": {
+        "topology": 45,
+        "dimensions": 20.0,
+        "features": 20,
+        "projections": 14.6
+      },
+      "projection_similarity": {
+        "front": 0.975
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 9,
+          "crop_internal_profiles": 0,
+          "source_aspect": 0.896,
+          "rendered_aspect": 0.841,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": [
+            [
+              0.394,
+              0.866
+            ],
+            [
+              0.667,
+              0.546
+            ],
+            [
+              0.727,
+              0.12
+            ],
+            [
+              0.622,
+              0.12
+            ],
+            [
+              0.54,
+              0.12
+            ],
+            [
+              0.454,
+              0.12
+            ],
+            [
+              0.322,
+              0.12
+            ]
+          ]
+        }
+      },
+      "demanded_openings": {
+        "total": 0,
+        "per_view": {
+          "front": 0
+        },
+        "sheet_total": 0,
+        "registration_gap": 0
+      },
+      "failures": []
+    },
+    "mesh_health": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 1024,
+      "through_holes": 0,
+      "extents_mm": [
+        101.3,
+        101.3,
+        120.0
+      ],
+      "volume_mm3": 79021.783
+    },
+    "build": {
+      "version": 1,
+      "backend": "openscad",
+      "source_format": "openscad",
+      "ok": true,
+      "units": "mm",
+      "axes": {
+        "x": "width",
+        "y": "depth",
+        "z": "height"
+      },
+      "views": [
+        "isometric",
+        "front",
+        "top",
+        "right"
+      ],
+      "measurements": {
+        "watertight": true,
+        "components": 1,
+        "triangles": 1024,
+        "through_holes": 0,
+        "extents_mm": [
+          101.3,
+          101.3,
+          120.0
+        ],
+        "volume_mm3": 79021.783
+      },
+      "diagnostics": [],
+      "drawing_evaluated": false
+    },
+    "compile_log": "Geometries in cache: 4\nGeometry cache size in bytes: 111248\nCGAL Polyhedrons in cache: 1\nCGAL cache size in bytes: 1211456\nTotal rendering time: 0:00:00.528\n   Top level object is a 3D object:\n   Simple:        yes\n   Vertices:      514\n   Halfedges:    2816\n   Edges:        1408\n   Halffacets:   1794\n   Facets:        897\n   Volumes:         2",
+    "files": {
+      "scad": "attempt-02/model.scad",
+      "stl": "attempt-02/model.stl",
+      "views": {
+        "isometric": "attempt-02/view-isometric.png",
+        "front": "attempt-02/view-front.png",
+        "top": "attempt-02/view-top.png",
+        "right": "attempt-02/view-right.png"
+      }
+    }
+  }
+]

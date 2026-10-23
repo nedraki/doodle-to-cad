@@ -1,0 +1,116 @@
+{
+  "backend": "usd-brep",
+  "version": "1.0.0",
+  "recipe_version": 2,
+  "solid_volume_mm3": 10743.001464684707,
+  "mesh_volume_mm3": 10727.15601861445,
+  "extents_mm": [
+    39.59999942779541,
+    45.08883285522461,
+    20.0
+  ],
+  "bounds_mm": [
+    [
+      -24.299999237060547,
+      -22.544416427612305,
+      0.0
+    ],
+    [
+      15.300000190734863,
+      22.544416427612305,
+      20.0
+    ]
+  ],
+  "watertight": true,
+  "winding_consistent": true,
+  "euler_number": 2,
+  "triangles": 508,
+  "usd_roundtrip": true,
+  "volume_relative_accuracy": 1e-08,
+  "usd_volume_mm3": 10743.001417365871,
+  "operations": [
+    {
+      "id": "base",
+      "kind": "cylinder",
+      "faces": 3
+    },
+    {
+      "id": "hub",
+      "kind": "cylinder",
+      "faces": 3
+    },
+    {
+      "id": "arm1",
+      "kind": "box",
+      "faces": 6
+    },
+    {
+      "id": "arm1_rot",
+      "kind": "rotate",
+      "faces": 6
+    },
+    {
+      "id": "arm2",
+      "kind": "box",
+      "faces": 6
+    },
+    {
+      "id": "arm2_rot",
+      "kind": "rotate",
+      "faces": 6
+    },
+    {
+      "id": "arm3",
+      "kind": "box",
+      "faces": 6
+    },
+    {
+      "id": "arm3_rot",
+      "kind": "rotate",
+      "faces": 6
+    },
+    {
+      "id": "part",
+      "kind": "union",
+      "faces": 5
+    },
+    {
+      "id": "part_arm1",
+      "kind": "union",
+      "faces": 11
+    },
+    {
+      "id": "part_arm2",
+      "kind": "union",
+      "faces": 17
+    },
+    {
+      "id": "part_final",
+      "kind": "union",
+      "faces": 23
+    }
+  ],
+  "connections": [
+    {
+      "id": "joint1",
+      "overlap_mm3": 17.675139244518896,
+      "passed": true
+    },
+    {
+      "id": "joint2",
+      "overlap_mm3": 53.54240850978206,
+      "passed": true
+    },
+    {
+      "id": "joint3",
+      "overlap_mm3": 53.5424028408632,
+      "passed": true
+    },
+    {
+      "id": "joint4",
+      "overlap_mm3": 53.542381851817204,
+      "passed": true
+    }
+  ],
+  "build_seconds": 0.253
+}

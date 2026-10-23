@@ -1,0 +1,254 @@
+{
+  "version": 2,
+  "units": "mm",
+  "name": "stepped_plate",
+  "parameters": {
+    "width": {
+      "value": 120.0,
+      "min": 60,
+      "max": 200,
+      "label": "Width",
+      "description": "Overall width of the part"
+    },
+    "height": {
+      "value": 80.0,
+      "min": 40,
+      "max": 150,
+      "label": "Height",
+      "description": "Overall height of the part"
+    },
+    "thickness": {
+      "value": 10.0,
+      "min": 1,
+      "max": 50,
+      "label": "Thickness",
+      "description": "Thickness of the plate"
+    },
+    "neck_width": {
+      "value": 30.0,
+      "min": 10,
+      "max": 100,
+      "label": "Neck Width",
+      "description": "Width of the central neck"
+    },
+    "flange_height": {
+      "value": 15.0,
+      "min": 5,
+      "max": 40,
+      "label": "Flange Height",
+      "description": "Height of the top and bottom flanges"
+    }
+  },
+  "operations": [
+    {
+      "id": "plate",
+      "kind": "extrude",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "plane": "xy",
+      "direction": 1,
+      "depth": "thickness",
+      "loops": [
+        [
+          {
+            "kind": "line",
+            "start": [
+              "width/2",
+              "height/2"
+            ],
+            "end": [
+              "-width/2",
+              "height/2"
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              "-width/2",
+              "height/2"
+            ],
+            "end": [
+              "-width/2",
+              "height/2-flange_height"
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              "-width/2",
+              "height/2-flange_height"
+            ],
+            "end": [
+              "-neck_width/2",
+              "height/2-flange_height"
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              "-neck_width/2",
+              "height/2-flange_height"
+            ],
+            "end": [
+              "-neck_width/2",
+              "-height/2+flange_height"
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              "-neck_width/2",
+              "-height/2+flange_height"
+            ],
+            "end": [
+              "-width/2",
+              "-height/2+flange_height"
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              "-width/2",
+              "-height/2+flange_height"
+            ],
+            "end": [
+              "-width/2",
+              "-height/2"
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              "-width/2",
+              "-height/2"
+            ],
+            "end": [
+              "width/2",
+              "-height/2"
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              "width/2",
+              "-height/2"
+            ],
+            "end": [
+              "width/2",
+              "-height/2+flange_height"
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              "width/2",
+              "-height/2+flange_height"
+            ],
+            "end": [
+              "neck_width/2",
+              "-height/2+flange_height"
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              "neck_width/2",
+              "-height/2+flange_height"
+            ],
+            "end": [
+              "neck_width/2",
+              "height/2-flange_height"
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              "neck_width/2",
+              "height/2-flange_height"
+            ],
+            "end": [
+              "width/2",
+              "height/2-flange_height"
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              "width/2",
+              "height/2-flange_height"
+            ],
+            "end": [
+              "width/2",
+              "height/2"
+            ]
+          }
+        ]
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1",
+        "e2",
+        "e3",
+        "e4",
+        "e5"
+      ]
+    }
+  ],
+  "output": "plate",
+  "frames": {
+    "world": {
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    }
+  },
+  "bodies": [
+    {
+      "id": "part",
+      "output": "plate"
+    }
+  ],
+  "evidence": {
+    "observed": [
+      {
+        "id": "e1",
+        "text": "Front view shows a stepped profile with top and bottom flanges and a central neck."
+      },
+      {
+        "id": "e2",
+        "text": "Right view shows a similar profile, suggesting a prismatic shape."
+      }
+    ],
+    "inferred": [
+      {
+        "id": "e3",
+        "text": "The object is a flat plate with constant thickness."
+      }
+    ],
+    "assumptions": [
+      {
+        "id": "e4",
+        "text": "Assumed thickness is 10 mm."
+      },
+      {
+        "id": "e5",
+        "text": "Assumed flange height is 15 mm."
+      },
+      {
+        "id": "e6",
+        "text": "Assumed neck width is 30 mm."
+      }
+    ],
+    "unresolved": []
+  },
+  "constraints": []
+}

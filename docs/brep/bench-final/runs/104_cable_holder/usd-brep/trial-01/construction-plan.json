@@ -1,0 +1,46 @@
+{
+  "view_frame": "The drawing presents three orthographic views in third-angle projection. The Front view (bottom-left) shows the XZ plane (Width vs Height). The Top view (top-center) shows the XY plane (Width vs Depth). The Right view (bottom-right) shows the YZ plane (Depth vs Height). The part is a flat, vertical plate (thin in Y) with a curved top and bottom.",
+  "features": [
+    {
+      "id": "main_body",
+      "shape": "Extruded Profile",
+      "section": "Closed XY profile",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "ASSUMED: thickness_y = 2.0mm",
+        "ASSUMED: width_x = 10.0mm",
+        "ASSUMED: height_z = 40.0mm",
+        "ASSUMED: top_radius = 4.0mm",
+        "ASSUMED: bottom_radius = 2.0mm"
+      ],
+      "placement": "Centered at X=0, Y=0. Base at Z=0. The profile is defined in the XY plane (viewed from Top) and extruded along Z. The profile consists of straight vertical sides, a concave arc at the top (Z=40), and a convex arc at the bottom (Z=0).",
+      "evidence": "Front view shows a tall rectangle. Top view shows the 'C' shape (concave top) and 'M' shape (convex bottom). Right view shows the thin rectangular profile."
+    },
+    {
+      "id": "side_holes",
+      "shape": "Through Hole",
+      "section": "Circular",
+      "axis_or_plane": "Y",
+      "dimensions": [
+        "ASSUMED: hole_diameter = 1.5mm",
+        "ASSUMED: hole_count = 5",
+        "ASSUMED: hole_spacing = 8.0mm"
+      ],
+      "placement": "Holes are drilled through the thickness (along Y axis). They are arranged in a staggered pattern on the face (XZ plane).",
+      "evidence": "Right view shows 5 distinct rectangular outlines representing the holes. User clarification confirms these are 'through' holes."
+    }
+  ],
+  "connections": [
+    "The main_body is a single solid piece.",
+    "The side_holes penetrate the main_body completely."
+  ],
+  "edit_rules": [
+    "Changing the main_body thickness (Y) must update the hole depth to match.",
+    "Changing the main_body width (X) must maintain the relative position of the holes.",
+    "Changing the hole diameter must not cause the holes to intersect the outer edges."
+  ],
+  "unresolved": [
+    "Exact dimensions for width, height, and thickness are not provided and are assumed based on the 40mm maximum constraint.",
+    "The specific curvature radii for the top and bottom edges are estimated from the drawing proportions."
+  ]
+}

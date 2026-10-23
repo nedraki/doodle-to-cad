@@ -8,6 +8,10 @@ import re
 
 NAME = re.compile(r"^[A-Za-z][A-Za-z0-9_]{0,63}$")
 FIELDS = {
+    "shell": {"body", "thickness", "opening", "preserve"},
+    "loft": {"profiles", "plane", "correspondence"},
+    "sweep": {"origin", "plane", "frame_rule", "section_width", "section_height", "path"},
+    "extrude": {"origin", "plane", "direction", "depth", "loops"},
     "box": {"origin", "size"},
     "cylinder": {"origin", "radius", "height", "axis"},
     "union": {"left", "right"},
@@ -16,6 +20,7 @@ FIELDS = {
     "chamfer": {"body", "radius"},
     "rotate": {"body", "origin", "axis", "angle"},
     "arc_pipe": {"origin", "bend_radius", "radius", "angle"},
+    "revolve": {"origin", "axis", "profile"},
 }
 
 
@@ -124,8 +129,41 @@ def validate_recipe(recipe, updates=None):
             raise ValueError("Rotation angle must be positive and at most 360 degrees")
         if kind == "arc_pipe" and (item["radius"] >= item["bend_radius"] or item["angle"] > 270):
             raise ValueError("Pipe requires radius < bend_radius and angle ≤ 270°")
-        if kind == "fillet" and op["selector"] not in ("all", "parallel_x", "parallel_y", "parallel_z"):
-            raise ValueError("Fillet selector must be all or parallel_x/y/z")
+        if kind == "fillet" and op["selector"] not in ("all", "parallel_x", "parallel_y", "parallel_z", "outer_vertical"):
+            raise ValueError("Fillet selector must be all, parallel_x/y/z or outer_vertical")
+        if kind == 'shell':
+            if op['opening']!='top' or op['preserve']!='outer':
+                raise ValueError(f"{op['id']}: Shell supports an open top and protected outer faces")
+            item['thickness']=scalar(op['thickness'],values)
+            if not .01<=item['thickness']<=128:
+                raise ValueError(f"{op['id']}: Shell thickness must be 0.01–128 mm")
+        if kind == 'loft':
+            from .loft_profiles import resolve_loft
+            try:
+                item['profiles']=resolve_loft(op,values,scalar)
+            except ValueError as exc:
+                raise ValueError(f"{op['id']}: {exc}") from exc
+        if kind == 'sweep':
+            from .planar_sweep import resolve_sweep
+            try:
+                item.update(resolve_sweep(op,values,scalar))
+            except ValueError as exc:
+                raise ValueError(f"{op['id']}: {exc}") from exc
+        if kind == 'revolve':
+            if op['axis'] != 'z':
+                raise ValueError(f"{op['id']}: Revolve supports the +Z axis only")
+            from .revolve_profile import resolve_revolve_profile
+            try:
+                item['profile'] = resolve_revolve_profile(op['profile'], values, scalar)
+            except ValueError as exc:
+                raise ValueError(f"{op['id']}: {exc}") from exc
+        if kind == 'extrude':
+            if op['plane'] != 'xy' or type(op['direction']) is not int or op['direction'] not in (-1,1):
+                raise ValueError('Extrusion currently supports plane xy only and direction 1 or -1')
+            item['depth']=scalar(op['depth'],values)
+            if not .01<=item['depth']<=256:raise ValueError('Extrusion depth must be 0.01–256 mm')
+            from .planar_profile import resolve_profile
+            item['loops']=resolve_profile(op['loops'],values,scalar)
         resolved.append(item)
         seen.add(op["id"])
     if not isinstance(recipe.get("output"), str) or recipe["output"] not in seen:

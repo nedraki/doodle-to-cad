@@ -1,0 +1,8 @@
+base_control           rc=0 code=ok 
+thin_spokes            rc=0 code=ok 
+long_spokes            rc=0 code=ok 
+spokes_out_of_plane    rc=1 code=disconnected_output Expected one connected part; components=6
+rim_cap_crosser        rc=0 code=ok 
+hub_bore_cap           rc=0 code=ok 
+hub_tall_coplanar      rc=0 code=ok 
+spokes_tilted          rc=1 code=placement_failed Expected Z=0 and extents within requested maximum 256 mm; minimum_z_mm

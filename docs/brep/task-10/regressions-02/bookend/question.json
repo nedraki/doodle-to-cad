@@ -1,0 +1,19 @@
+{
+  "feature_id": "opening_1",
+  "feature_label": "Top-left rectangular opening in the backplate",
+  "reason": "The drawing shows the outline of the opening but does not specify if it is a through-hole or a recessed pocket.",
+  "kind": "opening_extent",
+  "id": "58d88c56dc2d4b8bb4e70b107dff5532",
+  "text": "Should this hole go all the way through the part?",
+  "maximum_depth_mm": 120.0,
+  "choices": [
+    {
+      "id": "through",
+      "label": "Yes \u2014 make a through-hole"
+    },
+    {
+      "id": "recess",
+      "label": "No \u2014 leave a bottom"
+    }
+  ]
+}

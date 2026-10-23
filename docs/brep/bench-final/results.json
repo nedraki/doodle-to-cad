@@ -1,0 +1,921 @@
+{
+  "metric_definitions": "metrics.py (single source; embedded verbatim in README.md)",
+  "summary": {
+    "openscad": {
+      "submitted": 46,
+      "done": 44,
+      "excluded": [],
+      "metrics": {
+        "completion": {
+          "numerator": 44,
+          "applicable": 46,
+          "excluded": 0,
+          "conditional_rate": "44/44 (100%)",
+          "e2e_rate": "44/46 (96%)"
+        },
+        "valid_solid": {
+          "numerator": 42,
+          "applicable": 44,
+          "excluded": 0,
+          "conditional_rate": "42/44 (95%)",
+          "e2e_rate": "42/46 (91%)"
+        },
+        "drawing_fidelity": {
+          "numerator": 28,
+          "applicable": 44,
+          "excluded": 0,
+          "conditional_rate": "28/44 (64%)",
+          "e2e_rate": "28/46 (61%)"
+        },
+        "ref_extents": {
+          "numerator": 5,
+          "applicable": 39,
+          "excluded": 5,
+          "conditional_rate": "5/44 (11%)",
+          "e2e_rate": "5/46 (11%)"
+        },
+        "ref_topology": {
+          "numerator": 24,
+          "applicable": 39,
+          "excluded": 5,
+          "conditional_rate": "24/44 (55%)",
+          "e2e_rate": "24/46 (52%)"
+        },
+        "ref_volume": {
+          "numerator": 2,
+          "applicable": 39,
+          "excluded": 5,
+          "conditional_rate": "2/44 (5%)",
+          "e2e_rate": "2/46 (4%)"
+        },
+        "reference_dims_topo_vol": {
+          "numerator": 2,
+          "applicable": 39,
+          "excluded": 5,
+          "conditional_rate": "2/44 (5%)",
+          "e2e_rate": "2/46 (4%)"
+        },
+        "automatic_overall_pass": {
+          "numerator": 2,
+          "applicable": 44,
+          "excluded": 0,
+          "conditional_rate": "2/44 (5%)",
+          "e2e_rate": "2/46 (4%)"
+        },
+        "plan_acceptance": {
+          "numerator": 22,
+          "applicable": 46,
+          "excluded": 0,
+          "conditional_rate": "22/44 (50%)",
+          "e2e_rate": "22/46 (48%)"
+        },
+        "strict_full_acceptance": {
+          "numerator": 0,
+          "applicable": 46,
+          "excluded": 0,
+          "conditional_rate": "0/44 (0%)",
+          "e2e_rate": "0/46 (0%)"
+        },
+        "automatic_checks_unverified": {
+          "numerator": 0,
+          "applicable": 46,
+          "excluded": 0,
+          "conditional_rate": "0/44 (0%)",
+          "e2e_rate": "0/46 (0%)"
+        },
+        "user_acceptance": {
+          "numerator": 0,
+          "applicable": 46,
+          "excluded": 0,
+          "conditional_rate": "0/46 (0%)",
+          "e2e_rate": "0/46 (0%)",
+          "note": "not collected"
+        }
+      },
+      "median_wall_s": 185
+    },
+    "usd-brep": {
+      "submitted": 46,
+      "done": 31,
+      "excluded": [],
+      "metrics": {
+        "completion": {
+          "numerator": 31,
+          "applicable": 46,
+          "excluded": 0,
+          "conditional_rate": "31/31 (100%)",
+          "e2e_rate": "31/46 (67%)"
+        },
+        "valid_solid": {
+          "numerator": 31,
+          "applicable": 31,
+          "excluded": 0,
+          "conditional_rate": "31/31 (100%)",
+          "e2e_rate": "31/46 (67%)"
+        },
+        "drawing_fidelity": {
+          "numerator": 6,
+          "applicable": 31,
+          "excluded": 0,
+          "conditional_rate": "6/31 (19%)",
+          "e2e_rate": "6/46 (13%)"
+        },
+        "ref_extents": {
+          "numerator": 3,
+          "applicable": 27,
+          "excluded": 4,
+          "conditional_rate": "3/31 (10%)",
+          "e2e_rate": "3/46 (7%)"
+        },
+        "ref_topology": {
+          "numerator": 18,
+          "applicable": 27,
+          "excluded": 4,
+          "conditional_rate": "18/31 (58%)",
+          "e2e_rate": "18/46 (39%)"
+        },
+        "ref_volume": {
+          "numerator": 0,
+          "applicable": 27,
+          "excluded": 4,
+          "conditional_rate": "0/31 (0%)",
+          "e2e_rate": "0/46 (0%)"
+        },
+        "reference_dims_topo_vol": {
+          "numerator": 0,
+          "applicable": 27,
+          "excluded": 4,
+          "conditional_rate": "0/31 (0%)",
+          "e2e_rate": "0/46 (0%)"
+        },
+        "automatic_overall_pass": {
+          "numerator": 0,
+          "applicable": 31,
+          "excluded": 0,
+          "conditional_rate": "0/31 (0%)",
+          "e2e_rate": "0/46 (0%)"
+        },
+        "plan_acceptance": {
+          "numerator": 1,
+          "applicable": 46,
+          "excluded": 0,
+          "conditional_rate": "1/31 (3%)",
+          "e2e_rate": "1/46 (2%)"
+        },
+        "strict_full_acceptance": {
+          "numerator": 0,
+          "applicable": 46,
+          "excluded": 0,
+          "conditional_rate": "0/31 (0%)",
+          "e2e_rate": "0/46 (0%)"
+        },
+        "automatic_checks_unverified": {
+          "numerator": 1,
+          "applicable": 46,
+          "excluded": 0,
+          "conditional_rate": "1/31 (3%)",
+          "e2e_rate": "1/46 (2%)"
+        },
+        "user_acceptance": {
+          "numerator": 0,
+          "applicable": 46,
+          "excluded": 0,
+          "conditional_rate": "0/46 (0%)",
+          "e2e_rate": "0/46 (0%)",
+          "note": "not collected"
+        }
+      },
+      "median_wall_s": 122
+    }
+  },
+  "supplementary": {
+    "openscad": {
+      "check_pass_true": {
+        "build_success": 42,
+        "extents_pass": 5,
+        "genus_pass": 24,
+        "volume_pass": 2,
+        "fidelity_pass": 28,
+        "overall_pass": 2
+      },
+      "check_pass_null": {
+        "build_success": 0,
+        "extents_pass": 5,
+        "genus_pass": 5,
+        "volume_pass": 5,
+        "fidelity_pass": 0,
+        "overall_pass": 0
+      },
+      "mean_score": 91.3,
+      "top_failures": [
+        [
+          "openings do not go through the solid: the drawing demands 9 openings across the registered views (strongest: front) but the mesh has 0 true through-holes \u2014 the rendered openings are blind pockets or edge notches; cut all the way through the wall",
+          2
+        ],
+        [
+          "features exist but sit at the wrong positions in front view(s): match each opening's location (u,v within the outer profile) to the drawing; check the cad_mapping signs (front: u->+X v->-Z; top: u->+X v->-Y i.e. sheet-down is the FRONT of the part)",
+          2
+        ],
+        [
+          "features exist but sit at the wrong positions in top, right view(s): match each opening's location (u,v within the outer profile) to the drawing; check the cad_mapping signs (front: u->+X v->-Z; top: u->+X v->-Y i.e. sheet-down is the FRONT of the part)",
+          2
+        ],
+        [
+          "mesh has 2 disconnected components",
+          2
+        ],
+        [
+          "features exist but sit at the wrong positions in top view(s): match each opening's location (u,v within the outer profile) to the drawing; check the cad_mapping signs (front: u->+X v->-Z; top: u->+X v->-Y i.e. sheet-down is the FRONT of the part)",
+          2
+        ],
+        [
+          "maximum dimension is 49 mm; target is 54 mm (tolerance 5%)",
+          2
+        ]
+      ],
+      "unsupported": [
+        [
+          "False",
+          44
+        ]
+      ]
+    },
+    "usd-brep": {
+      "check_pass_true": {
+        "build_success": 31,
+        "extents_pass": 3,
+        "genus_pass": 18,
+        "volume_pass": 0,
+        "fidelity_pass": 6,
+        "overall_pass": 0
+      },
+      "check_pass_null": {
+        "build_success": 0,
+        "extents_pass": 4,
+        "genus_pass": 4,
+        "volume_pass": 4,
+        "fidelity_pass": 0,
+        "overall_pass": 0
+      },
+      "mean_score": null,
+      "top_failures": [
+        [
+          "Detailed drawing features and view assignments require review.",
+          31
+        ],
+        [
+          "top projection",
+          17
+        ],
+        [
+          "front projection",
+          15
+        ],
+        [
+          "front openings",
+          14
+        ],
+        [
+          "front opening positions",
+          10
+        ],
+        [
+          "right projection",
+          9
+        ]
+      ],
+      "unsupported": [
+        [
+          "False",
+          31
+        ]
+      ]
+    }
+  },
+  "per_drawing": {
+    "001_l_bookend_multiview": {
+      "openscad": {
+        "trials": 2,
+        "completed": 2,
+        "accepted_frozen_plan": 2,
+        "overall_pass": 0,
+        "scores": [
+          97.5,
+          97.9
+        ],
+        "best_failure": []
+      },
+      "usd-brep": {
+        "trials": 2,
+        "completed": 2,
+        "accepted_frozen_plan": 0,
+        "overall_pass": 0,
+        "scores": [
+          null,
+          null
+        ],
+        "best_failure": [
+          "Detailed drawing features and view assignments require review.",
+          "front openings"
+        ]
+      }
+    },
+    "002_greek_vase_silhouette": {
+      "openscad": {
+        "trials": 2,
+        "completed": 2,
+        "accepted_frozen_plan": 2,
+        "overall_pass": 0,
+        "scores": [
+          94.2,
+          94.4
+        ],
+        "best_failure": []
+      },
+      "usd-brep": {
+        "trials": 2,
+        "completed": 0,
+        "accepted_frozen_plan": 0,
+        "overall_pass": 0,
+        "scores": [],
+        "best_failure": []
+      }
+    },
+    "003_front_grille_multiview": {
+      "openscad": {
+        "trials": 2,
+        "completed": 2,
+        "accepted_frozen_plan": 0,
+        "overall_pass": 0,
+        "scores": [
+          74.4,
+          78.2
+        ],
+        "best_failure": [
+          "CAD projections poorly match the drawing: front similarity 0.35 (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly.",
+          "CAD projections poorly match the drawing: front similarity 0.42, top similarity 0.22 (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly."
+        ]
+      },
+      "usd-brep": {
+        "trials": 2,
+        "completed": 2,
+        "accepted_frozen_plan": 0,
+        "overall_pass": 0,
+        "scores": [
+          null,
+          null
+        ],
+        "best_failure": [
+          "Detailed drawing features and view assignments require review.",
+          "front opening positions"
+        ]
+      }
+    },
+    "004_flat_mounting_plate": {
+      "openscad": {
+        "trials": 2,
+        "completed": 2,
+        "accepted_frozen_plan": 2,
+        "overall_pass": 0,
+        "scores": [
+          99.9,
+          99.9
+        ],
+        "best_failure": []
+      },
+      "usd-brep": {
+        "trials": 2,
+        "completed": 1,
+        "accepted_frozen_plan": 0,
+        "overall_pass": 0,
+        "scores": [
+          null
+        ],
+        "best_failure": [
+          "Detailed drawing features and view assignments require review.",
+          "front opening positions"
+        ]
+      }
+    },
+    "005_bolt_flange": {
+      "openscad": {
+        "trials": 2,
+        "completed": 2,
+        "accepted_frozen_plan": 0,
+        "overall_pass": 0,
+        "scores": [
+          98.7,
+          100.0
+        ],
+        "best_failure": [
+          "openings do not go through the solid: the drawing demands 6 openings across the registered views (strongest: front) but the mesh has 0 true through-holes \u2014 the rendered openings are blind pockets or edge notches; cut all the way through the wall",
+          "openings do not go through the solid: the drawing demands 6 openings across the registered views (strongest: front) but the mesh has 5 true through-holes \u2014 the rendered openings are blind pockets or edge notches; cut all the way through the wall"
+        ]
+      },
+      "usd-brep": {
+        "trials": 2,
+        "completed": 2,
+        "accepted_frozen_plan": 0,
+        "overall_pass": 0,
+        "scores": [
+          null,
+          null
+        ],
+        "best_failure": [
+          "Detailed drawing features and view assignments require review.",
+          "front opening positions"
+        ]
+      }
+    },
+    "006_stepped_knob": {
+      "openscad": {
+        "trials": 2,
+        "completed": 2,
+        "accepted_frozen_plan": 2,
+        "overall_pass": 0,
+        "scores": [
+          97.2,
+          92.3
+        ],
+        "best_failure": []
+      },
+      "usd-brep": {
+        "trials": 2,
+        "completed": 1,
+        "accepted_frozen_plan": 1,
+        "overall_pass": 0,
+        "scores": [
+          null
+        ],
+        "best_failure": [
+          "Detailed drawing features and view assignments require review."
+        ]
+      }
+    },
+    "007_angle_bracket_holes": {
+      "openscad": {
+        "trials": 2,
+        "completed": 2,
+        "accepted_frozen_plan": 2,
+        "overall_pass": 0,
+        "scores": [
+          100.0,
+          99.7
+        ],
+        "best_failure": []
+      },
+      "usd-brep": {
+        "trials": 2,
+        "completed": 1,
+        "accepted_frozen_plan": 0,
+        "overall_pass": 0,
+        "scores": [
+          null
+        ],
+        "best_failure": [
+          "Detailed drawing features and view assignments require review.",
+          "front opening positions"
+        ]
+      }
+    },
+    "008_open_enclosure_window": {
+      "openscad": {
+        "trials": 2,
+        "completed": 2,
+        "accepted_frozen_plan": 1,
+        "overall_pass": 0,
+        "scores": [
+          98.4,
+          98.4
+        ],
+        "best_failure": [
+          "openings do not go through the solid: the drawing demands 1 opening across the registered views (strongest: front) but the mesh has 0 true through-holes \u2014 the rendered openings are blind pockets or edge notches; cut all the way through the wall"
+        ]
+      },
+      "usd-brep": {
+        "trials": 2,
+        "completed": 2,
+        "accepted_frozen_plan": 0,
+        "overall_pass": 0,
+        "scores": [
+          null,
+          null
+        ],
+        "best_failure": [
+          "Detailed drawing features and view assignments require review.",
+          "front opening positions"
+        ]
+      }
+    },
+    "009_hex_prism_knob": {
+      "openscad": {
+        "trials": 2,
+        "completed": 2,
+        "accepted_frozen_plan": 2,
+        "overall_pass": 0,
+        "scores": [
+          97.9,
+          95.1
+        ],
+        "best_failure": []
+      },
+      "usd-brep": {
+        "trials": 2,
+        "completed": 0,
+        "accepted_frozen_plan": 0,
+        "overall_pass": 0,
+        "scores": [],
+        "best_failure": []
+      }
+    },
+    "010_nameplate_slots_vents": {
+      "openscad": {
+        "trials": 2,
+        "completed": 2,
+        "accepted_frozen_plan": 2,
+        "overall_pass": 0,
+        "scores": [
+          98.6,
+          99.5
+        ],
+        "best_failure": []
+      },
+      "usd-brep": {
+        "trials": 2,
+        "completed": 2,
+        "accepted_frozen_plan": 0,
+        "overall_pass": 0,
+        "scores": [
+          null,
+          null
+        ],
+        "best_failure": [
+          "Detailed drawing features and view assignments require review.",
+          "front opening positions"
+        ]
+      }
+    },
+    "011_wall_hook": {
+      "openscad": {
+        "trials": 2,
+        "completed": 2,
+        "accepted_frozen_plan": 2,
+        "overall_pass": 0,
+        "scores": [
+          96.7,
+          97.8
+        ],
+        "best_failure": []
+      },
+      "usd-brep": {
+        "trials": 2,
+        "completed": 1,
+        "accepted_frozen_plan": 0,
+        "overall_pass": 0,
+        "scores": [
+          null
+        ],
+        "best_failure": [
+          "Detailed drawing features and view assignments require review.",
+          "front projection"
+        ]
+      }
+    },
+    "012_vent_grille_grid": {
+      "openscad": {
+        "trials": 2,
+        "completed": 2,
+        "accepted_frozen_plan": 2,
+        "overall_pass": 0,
+        "scores": [
+          94.6,
+          94.6
+        ],
+        "best_failure": []
+      },
+      "usd-brep": {
+        "trials": 2,
+        "completed": 1,
+        "accepted_frozen_plan": 0,
+        "overall_pass": 0,
+        "scores": [
+          null
+        ],
+        "best_failure": [
+          "Detailed drawing features and view assignments require review.",
+          "front projection"
+        ]
+      }
+    },
+    "013_wedge_ramp": {
+      "openscad": {
+        "trials": 2,
+        "completed": 2,
+        "accepted_frozen_plan": 0,
+        "overall_pass": 0,
+        "scores": [
+          84.0,
+          85.9
+        ],
+        "best_failure": [
+          "CAD projections poorly match the drawing: front similarity 0.25 (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly.",
+          "CAD projections poorly match the drawing: front similarity 0.25, top similarity 0.28 (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly."
+        ]
+      },
+      "usd-brep": {
+        "trials": 2,
+        "completed": 2,
+        "accepted_frozen_plan": 0,
+        "overall_pass": 0,
+        "scores": [
+          null,
+          null
+        ],
+        "best_failure": [
+          "Detailed drawing features and view assignments require review.",
+          "front projection"
+        ]
+      }
+    },
+    "101_bltouch_bracket": {
+      "openscad": {
+        "trials": 2,
+        "completed": 2,
+        "accepted_frozen_plan": 0,
+        "overall_pass": 0,
+        "scores": [
+          72.6,
+          49.8
+        ],
+        "best_failure": [
+          "CAD projections poorly match the drawing: front similarity 0.00, right similarity 0.29, top similarity 0.27 (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly.",
+          "CAD projections poorly match the drawing: right similarity 0.35, top similarity 0.35 (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly."
+        ]
+      },
+      "usd-brep": {
+        "trials": 2,
+        "completed": 2,
+        "accepted_frozen_plan": 0,
+        "overall_pass": 0,
+        "scores": [
+          null,
+          null
+        ],
+        "best_failure": [
+          "Detailed drawing features and view assignments require review.",
+          "front projection"
+        ]
+      }
+    },
+    "102_lcd_knob": {
+      "openscad": {
+        "trials": 2,
+        "completed": 2,
+        "accepted_frozen_plan": 1,
+        "overall_pass": 0,
+        "scores": [
+          96.7,
+          95.9
+        ],
+        "best_failure": [
+          "CAD projections poorly match the drawing: top similarity 0.39 (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly."
+        ]
+      },
+      "usd-brep": {
+        "trials": 2,
+        "completed": 0,
+        "accepted_frozen_plan": 0,
+        "overall_pass": 0,
+        "scores": [],
+        "best_failure": []
+      }
+    },
+    "103_y_motor_holder": {
+      "openscad": {
+        "trials": 2,
+        "completed": 1,
+        "accepted_frozen_plan": 0,
+        "overall_pass": 0,
+        "scores": [
+          69.7
+        ],
+        "best_failure": [
+          "CAD projections poorly match the drawing: front similarity 0.33, right similarity 0.25, top similarity 0.35 (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly.",
+          "features exist but sit at the wrong positions in top view(s): match each opening's location (u,v within the outer profile) to the drawing; check the cad_mapping signs (front: u->+X v->-Z; top: u->+X v->-Y i.e. sheet-down is the FRONT of the part)"
+        ]
+      },
+      "usd-brep": {
+        "trials": 2,
+        "completed": 1,
+        "accepted_frozen_plan": 0,
+        "overall_pass": 0,
+        "scores": [
+          null
+        ],
+        "best_failure": [
+          "Detailed drawing features and view assignments require review.",
+          "front projection"
+        ]
+      }
+    },
+    "104_cable_holder": {
+      "openscad": {
+        "trials": 2,
+        "completed": 2,
+        "accepted_frozen_plan": 0,
+        "overall_pass": 0,
+        "scores": [
+          84.6,
+          76.0
+        ],
+        "best_failure": [
+          "CAD projections poorly match the drawing: top similarity 0.35 (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly.",
+          "features exist but sit at the wrong positions in right view(s): match each opening's location (u,v within the outer profile) to the drawing; check the cad_mapping signs (front: u->+X v->-Z; top: u->+X v->-Y i.e. sheet-down is the FRONT of the part)"
+        ]
+      },
+      "usd-brep": {
+        "trials": 2,
+        "completed": 2,
+        "accepted_frozen_plan": 0,
+        "overall_pass": 0,
+        "scores": [
+          null,
+          null
+        ],
+        "best_failure": [
+          "Detailed drawing features and view assignments require review.",
+          "right opening positions"
+        ]
+      }
+    },
+    "bevelled_block": {
+      "openscad": {
+        "trials": 2,
+        "completed": 2,
+        "accepted_frozen_plan": 2,
+        "overall_pass": 2,
+        "scores": [
+          99.7,
+          99.7
+        ],
+        "best_failure": []
+      },
+      "usd-brep": {
+        "trials": 2,
+        "completed": 2,
+        "accepted_frozen_plan": 0,
+        "overall_pass": 0,
+        "scores": [
+          null,
+          null
+        ],
+        "best_failure": [
+          "Detailed drawing features and view assignments require review.",
+          "right opening positions"
+        ]
+      }
+    },
+    "constant_radius_handle": {
+      "openscad": {
+        "trials": 2,
+        "completed": 2,
+        "accepted_frozen_plan": 0,
+        "overall_pass": 0,
+        "scores": [
+          86.5,
+          74.0
+        ],
+        "best_failure": [
+          "CAD projections poorly match the drawing: front similarity 0.19 (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly.",
+          "CAD projections poorly match the drawing: front similarity 0.19, top similarity 0.25 (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly."
+        ]
+      },
+      "usd-brep": {
+        "trials": 2,
+        "completed": 2,
+        "accepted_frozen_plan": 0,
+        "overall_pass": 0,
+        "scores": [
+          null,
+          null
+        ],
+        "best_failure": [
+          "Detailed drawing features and view assignments require review.",
+          "right projection"
+        ]
+      }
+    },
+    "rectangular_sweep": {
+      "openscad": {
+        "trials": 2,
+        "completed": 1,
+        "accepted_frozen_plan": 0,
+        "overall_pass": 0,
+        "scores": [
+          92.7
+        ],
+        "best_failure": [
+          "CAD projections poorly match the drawing: front similarity 0.38, top similarity 0.32 (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly.",
+          "degenerate or implausible axis dimensions: Y=96.05 mm vs expected 7.72 mm, Z=5.832 mm vs expected 49.58 mm"
+        ]
+      },
+      "usd-brep": {
+        "trials": 2,
+        "completed": 0,
+        "accepted_frozen_plan": 0,
+        "overall_pass": 0,
+        "scores": [],
+        "best_failure": []
+      }
+    },
+    "rounded_housing": {
+      "openscad": {
+        "trials": 2,
+        "completed": 2,
+        "accepted_frozen_plan": 0,
+        "overall_pass": 0,
+        "scores": [
+          72.1,
+          94.6
+        ],
+        "best_failure": [
+          "CAD projections poorly match the drawing: right similarity 0.22 (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly.",
+          "CAD projections poorly match the drawing: top similarity 0.19 (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly."
+        ]
+      },
+      "usd-brep": {
+        "trials": 2,
+        "completed": 2,
+        "accepted_frozen_plan": 0,
+        "overall_pass": 0,
+        "scores": [
+          null,
+          null
+        ],
+        "best_failure": [
+          "Detailed drawing features and view assignments require review.",
+          "front openings"
+        ]
+      }
+    },
+    "solid_transition": {
+      "openscad": {
+        "trials": 2,
+        "completed": 2,
+        "accepted_frozen_plan": 0,
+        "overall_pass": 0,
+        "scores": [
+          94.4,
+          94.4
+        ],
+        "best_failure": [
+          "CAD projections poorly match the drawing: top similarity 0.25 (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly.",
+          "degenerate or implausible axis dimensions: Y=40 mm vs expected 6.8 mm"
+        ]
+      },
+      "usd-brep": {
+        "trials": 2,
+        "completed": 2,
+        "accepted_frozen_plan": 0,
+        "overall_pass": 0,
+        "scores": [
+          null,
+          null
+        ],
+        "best_failure": [
+          "Detailed drawing features and view assignments require review.",
+          "top projection"
+        ]
+      }
+    },
+    "wheel": {
+      "openscad": {
+        "trials": 2,
+        "completed": 2,
+        "accepted_frozen_plan": 0,
+        "overall_pass": 0,
+        "scores": [
+          100.0,
+          100.0
+        ],
+        "best_failure": [
+          "degenerate or implausible axis dimensions: X=120 mm vs expected 27.8 mm"
+        ]
+      },
+      "usd-brep": {
+        "trials": 2,
+        "completed": 1,
+        "accepted_frozen_plan": 0,
+        "overall_pass": 0,
+        "scores": [
+          null
+        ],
+        "best_failure": [
+          "Detailed drawing features and view assignments require review.",
+          "front opening positions"
+        ]
+      }
+    }
+  },
+  "decisions_file_present": false
+}

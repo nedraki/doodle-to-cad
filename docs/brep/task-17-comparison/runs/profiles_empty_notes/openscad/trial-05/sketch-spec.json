@@ -1,0 +1,169 @@
+{
+  "object": "Notched Plate",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "top",
+      "sheet_region": "view_5",
+      "what_it_constrains": "Defines the XY profile: 60x40 rectangle with a top-center notch (20x10) and a \u00d88 through-hole at (12, 15)."
+    },
+    {
+      "direction": "front",
+      "sheet_region": "view_10",
+      "what_it_constrains": "Defines the thickness (Z-axis) as 6mm and confirms the profile is extruded uniformly."
+    },
+    {
+      "direction": "annotation",
+      "sheet_region": "view_1",
+      "what_it_constrains": "Text label '6 thick' confirming the Z-dimension."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "part_1",
+      "name": "Notched Plate",
+      "material": "generic",
+      "bounding_box": {
+        "x": 60,
+        "y": 40,
+        "z": 6
+      }
+    }
+  ],
+  "features": [
+    {
+      "id": "feat_1",
+      "type": "base_profile",
+      "owner": "part_1",
+      "description": "Rectangular base 60mm wide (X) by 40mm deep (Y)."
+    },
+    {
+      "id": "feat_2",
+      "type": "cutout",
+      "owner": "part_1",
+      "description": "Rectangular notch on the top edge (Y=40), centered on X. Width 20mm, Depth 10mm."
+    },
+    {
+      "id": "feat_3",
+      "type": "fillet",
+      "owner": "part_1",
+      "description": "Fillet R6 on the top-right corner (X=60, Y=40)."
+    },
+    {
+      "id": "feat_4",
+      "type": "hole",
+      "owner": "part_1",
+      "description": "\u00d88 through-hole. Center located 12mm from left edge (X=12) and 15mm from bottom edge (Y=15)."
+    }
+  ],
+  "relations": [
+    {
+      "type": "coincident",
+      "targets": [
+        "feat_1",
+        "feat_2",
+        "feat_3",
+        "feat_4"
+      ],
+      "description": "All features are part of the single extruded plate."
+    }
+  ],
+  "symmetry": {
+    "type": "none",
+    "axis": null
+  },
+  "repetitions": [],
+  "dimensions": {
+    "width": 20.0,
+    "depth": 10.0,
+    "thickness": 6.0,
+    "radius": 6.0,
+    "diameter": 8.0,
+    "position_x": 12.0,
+    "position_y": 15.0,
+    "max_width": 15.62,
+    "max_depth": 60.0,
+    "max_height": 14.15,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "The notch is described as 'centred on top edge' in text, but the drawing shows it slightly offset to the left. The text description is treated as authoritative for the centering constraint."
+  ],
+  "interpretation_conflicts": [
+    "Visual placement of notch vs text 'centred on top edge'. Resolved by prioritizing text."
+  ],
+  "generation_notes": "The object is a simple 2D profile extruded to 6mm thickness. The profile consists of a 60x40 rectangle with a central notch on the top edge and a fillet on the top-right corner. A circular hole is subtracted from the plate.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "extrude",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_2",
+        "operation": "extrude",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "owner": "part_1",
+        "parameters": {
+          "depth": 6,
+          "type": "blind"
+        },
+        "source_views": [
+          "view_10"
+        ]
+      },
+      {
+        "id": "feat_2",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Rectangular notch on the top edge (Y=40), centered on X. Width 20mm, Depth 10mm."
+        },
+        "source_views": []
+      },
+      {
+        "id": "feat_4",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "\u00d88 through-hole. Center located 12mm from left edge (X=12) and 15mm from bottom edge (Y=15)."
+        },
+        "source_views": []
+      }
+    ],
+    "unresolved_constraints": [
+      "The notch is described as 'centred on top edge' in text, but the drawing shows it slightly offset to the left. The text description is treated as authoritative for the centering constraint."
+    ]
+  },
+  "user_intent": {
+    "description": "",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "60"
+  },
+  "source_view_group_count": 11,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

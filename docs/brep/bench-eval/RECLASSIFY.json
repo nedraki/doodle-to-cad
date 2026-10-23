@@ -1,0 +1,156 @@
+{
+  "per_backend": {
+    "openscad": {
+      "cells": 46,
+      "pass_orig": 2,
+      "pass_recl": 9,
+      "unjudgeable": 0
+    },
+    "usd-brep": {
+      "cells": 46,
+      "pass_orig": 0,
+      "pass_recl": 2,
+      "unjudgeable": 0
+    }
+  },
+  "changed": [
+    {
+      "drawing": "004_flat_mounting_plate",
+      "backend": "openscad",
+      "trial": 1,
+      "orig_overall": false,
+      "reclassified_overall": true,
+      "unreliable_checks_ignored": [
+        "extents_pass",
+        "volume_pass",
+        "fidelity_pass"
+      ],
+      "evidence": [
+        "EV-1+EV-7"
+      ],
+      "failed_check_names": []
+    },
+    {
+      "drawing": "004_flat_mounting_plate",
+      "backend": "openscad",
+      "trial": 2,
+      "orig_overall": false,
+      "reclassified_overall": true,
+      "unreliable_checks_ignored": [
+        "extents_pass",
+        "volume_pass",
+        "fidelity_pass"
+      ],
+      "evidence": [
+        "EV-1+EV-7"
+      ],
+      "failed_check_names": []
+    },
+    {
+      "drawing": "004_flat_mounting_plate",
+      "backend": "usd-brep",
+      "trial": 1,
+      "orig_overall": false,
+      "reclassified_overall": true,
+      "unreliable_checks_ignored": [
+        "extents_pass",
+        "volume_pass",
+        "fidelity_pass"
+      ],
+      "evidence": [
+        "EV-1+EV-7"
+      ],
+      "failed_check_names": []
+    },
+    {
+      "drawing": "007_angle_bracket_holes",
+      "backend": "openscad",
+      "trial": 1,
+      "orig_overall": false,
+      "reclassified_overall": true,
+      "unreliable_checks_ignored": [
+        "extents_pass",
+        "volume_pass"
+      ],
+      "evidence": [
+        "EV-1"
+      ],
+      "failed_check_names": []
+    },
+    {
+      "drawing": "007_angle_bracket_holes",
+      "backend": "openscad",
+      "trial": 2,
+      "orig_overall": false,
+      "reclassified_overall": true,
+      "unreliable_checks_ignored": [
+        "extents_pass",
+        "volume_pass"
+      ],
+      "evidence": [
+        "EV-1"
+      ],
+      "failed_check_names": []
+    },
+    {
+      "drawing": "008_open_enclosure_window",
+      "backend": "openscad",
+      "trial": 2,
+      "orig_overall": false,
+      "reclassified_overall": true,
+      "unreliable_checks_ignored": [
+        "extents_pass",
+        "volume_pass"
+      ],
+      "evidence": [
+        "EV-1"
+      ],
+      "failed_check_names": []
+    },
+    {
+      "drawing": "wheel",
+      "backend": "openscad",
+      "trial": 1,
+      "orig_overall": false,
+      "reclassified_overall": true,
+      "unreliable_checks_ignored": [
+        "volume_pass",
+        "fidelity_pass"
+      ],
+      "evidence": [
+        "EV-5+EV-2"
+      ],
+      "failed_check_names": []
+    },
+    {
+      "drawing": "wheel",
+      "backend": "openscad",
+      "trial": 2,
+      "orig_overall": false,
+      "reclassified_overall": true,
+      "unreliable_checks_ignored": [
+        "volume_pass",
+        "fidelity_pass"
+      ],
+      "evidence": [
+        "EV-5+EV-2"
+      ],
+      "failed_check_names": []
+    },
+    {
+      "drawing": "wheel",
+      "backend": "usd-brep",
+      "trial": 2,
+      "orig_overall": false,
+      "reclassified_overall": true,
+      "unreliable_checks_ignored": [
+        "volume_pass",
+        "fidelity_pass"
+      ],
+      "evidence": [
+        "EV-5+EV-2"
+      ],
+      "failed_check_names": []
+    }
+  ]
+}

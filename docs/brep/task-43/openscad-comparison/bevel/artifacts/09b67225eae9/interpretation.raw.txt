@@ -1,0 +1,136 @@
+```json
+{
+  "object": "Bevelled Block",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "top",
+      "sheet_region": "view_6",
+      "constrains": "XY profile (60x40) and corner chamfers"
+    },
+    {
+      "direction": "front",
+      "sheet_region": "view_5",
+      "constrains": "XZ profile (60x20) and corner chamfers"
+    },
+    {
+      "direction": "left",
+      "sheet_region": "view_1",
+      "constrains": "YZ profile (40x20) and corner chamfers"
+    },
+    {
+      "direction": "right",
+      "sheet_region": "view_4",
+      "constrains": "YZ profile (40x20) and corner chamfers"
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "part_1",
+      "name": "Bevelled Block",
+      "material": "generic_plastic",
+      "bounding_box": [60, 40, 20]
+    }
+  ],
+  "features": [
+    {
+      "id": "feat_1",
+      "type": "chamfer",
+      "owner": "part_1",
+      "description": "2mm x 45 degree chamfer on all 12 edges of the block",
+      "parameters": {
+        "size": 2,
+        "angle": 45
+      }
+    }
+  ],
+  "relations": [],
+  "symmetry": {
+    "planes": [
+      "XY",
+      "XZ",
+      "YZ"
+    ],
+    "center": [30, 20, 10]
+  },
+  "repetitions": [
+    {
+      "feature_id": "feat_1",
+      "count": 12,
+      "pattern": "edges"
+    }
+  ],
+  "dimensions": [
+    {
+      "label": "Length",
+      "value": 60,
+      "unit": "mm",
+      "axis": "X"
+    },
+    {
+      "label": "Width",
+      "value": 40,
+      "unit": "mm",
+      "axis": "Y"
+    },
+    {
+      "label": "Height",
+      "value": 20,
+      "unit": "mm",
+      "axis": "Z"
+    },
+    {
+      "label": "Chamfer Size",
+      "value": 2,
+      "unit": "mm",
+      "axis": "all"
+    }
+  ],
+  "uncertainties": [],
+  "interpretation_conflicts": [],
+  "generation_notes": "The drawing explicitly defines a solid block with dimensions 60x40x20mm. The text 'All edges: 2 mm x 45 degrees' and the visual representation of chamfered corners in the Top and Front views confirm a block with chamfered edges. The OpenCV hierarchy shows nested contours (outer and inner lines) which represent the chamfer faces in orthographic projection.",
+  "construction_plan": {
+    "family": "freeform",
+    "operations": [
+      {
+        "id": "op_1",
+        "operation": "create_box",
+        "owner": "part_1",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "parameters": {
+          "length": 60,
+          "width": 40,
+          "height": 20
+        },
+        "source_views": [
+          "view_5",
+          "view_6"
+        ]
+      },
+      {
+        "id": "op_2",
+        "operation": "chamfer_edges",
+        "owner": "part_1",
+        "profile_plane": "all",
+        "direction_axis": "all",
+        "parameters": {
+          "distance": 2,
+          "angle": 45,
+          "edges": "all"
+        },
+        "source_views": [
+          "view_1",
+          "view_4",
+          "view_5",
+          "view_6"
+        ]
+      }
+    ],
+    "unresolved_constraints": []
+  }
+}
+```

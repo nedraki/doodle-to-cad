@@ -1,0 +1,172 @@
+{
+  "object": "L angle bracket",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "front",
+      "sheet_region": "bottom",
+      "constrains": "Front face geometry (XZ plane), vertical position of holes, and overall height/width."
+    },
+    {
+      "direction": "top",
+      "sheet_region": "top",
+      "constrains": "Top face geometry (XY plane), depth of the bracket, and horizontal alignment of holes."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "bracket_body",
+      "description": "L-shaped bracket with vertical wall containing three holes."
+    }
+  ],
+  "features": [
+    {
+      "id": "hole_1",
+      "type": "through_hole",
+      "location": "Left side of front face",
+      "source_views": [
+        "view_2"
+      ]
+    },
+    {
+      "id": "hole_2",
+      "type": "through_hole",
+      "location": "Center of front face",
+      "source_views": [
+        "view_2"
+      ]
+    },
+    {
+      "id": "hole_3",
+      "type": "through_hole",
+      "location": "Right side of front face",
+      "source_views": [
+        "view_2"
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "type": "alignment",
+      "elements": [
+        "hole_1",
+        "hole_2",
+        "hole_3"
+      ],
+      "description": "Holes are aligned horizontally along the X-axis."
+    },
+    {
+      "type": "equidistant",
+      "elements": [
+        "hole_1",
+        "hole_2",
+        "hole_3"
+      ],
+      "description": "Holes appear equally spaced."
+    }
+  ],
+  "symmetry": "None (L-shape is asymmetric).",
+  "repetitions": [
+    {
+      "feature": "hole",
+      "count": 3,
+      "pattern": "linear"
+    }
+  ],
+  "dimensions": {
+    "max_width": 80.0,
+    "max_depth": 43.13,
+    "max_height": 51.01,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "The exact thickness of the bracket walls is not explicitly dimensioned but is inferred from the difference between outer and inner contours in the views.",
+    "The specific depth of the L-bracket (Y-axis) is derived from the aspect ratio of the top view relative to the front view."
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "The object is interpreted as a standard L-bracket. The front view shows the vertical face with three holes. The top view shows the horizontal face (base) and the top edge of the vertical face. The holes are modeled as circular cutouts through the vertical wall.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "extrude",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_2",
+        "operation": "extrude",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "owner": "bracket_body",
+        "parameters": {
+          "height": 51
+        },
+        "source_views": [
+          "view_2"
+        ]
+      },
+      {
+        "id": "hole_1",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": null
+        },
+        "source_views": []
+      },
+      {
+        "id": "hole_2",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": null
+        },
+        "source_views": []
+      },
+      {
+        "id": "hole_3",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": null
+        },
+        "source_views": []
+      }
+    ],
+    "unresolved_constraints": [
+      "Exact wall thickness",
+      "Exact hole diameter"
+    ]
+  },
+  "user_intent": {
+    "description": "L angle bracket with three wall holes",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "80"
+  },
+  "source_view_group_count": 2,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

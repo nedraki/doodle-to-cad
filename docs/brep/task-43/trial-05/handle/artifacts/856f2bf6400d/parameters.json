@@ -1,0 +1,41 @@
+{
+  "run_id": "856f2bf6400d",
+  "params": [
+    {
+      "name": "diameter",
+      "value": 8,
+      "low": 4,
+      "high": 20,
+      "step": 0.01,
+      "label": "Handle Diameter",
+      "unit": "mm",
+      "description": "Diameter of the circular cross-section",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "bend_radius",
+      "value": 20,
+      "low": 10,
+      "high": 50,
+      "step": 0.01,
+      "label": "Bend Centreline Radius",
+      "unit": "mm",
+      "description": "Radius of the U-bend centreline",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "leg_length",
+      "value": 30,
+      "low": 10,
+      "high": 100,
+      "step": 0.01,
+      "label": "Straight Leg Length",
+      "unit": "mm",
+      "description": "Length of the straight legs extending from the bend",
+      "group": "Details",
+      "feature": null
+    }
+  ]
+}

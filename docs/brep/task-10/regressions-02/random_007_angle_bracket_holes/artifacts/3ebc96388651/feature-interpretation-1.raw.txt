@@ -1,0 +1,132 @@
+```json
+{
+  "version": 1,
+  "object_hypothesis": "Rectangular plate with three internal features",
+  "features": [
+    {
+      "id": "plate_body",
+      "type": "body",
+      "description": "Rectangular planar object defined by outer contours in both views",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_8"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_0"
+        }
+      ],
+      "reason": "View 1 shows a rectangular outline (top view). View 2 shows a rectangular outline (front view). Together they define a rectangular prism or plate."
+    },
+    {
+      "id": "internal_feature_1",
+      "type": "opening",
+      "description": "Irregular internal shape located on the left side of the front view",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_2"
+        }
+      ],
+      "reason": "A distinct closed contour is visible inside the main body in View 2. It is classified as an opening or internal feature."
+    },
+    {
+      "id": "internal_feature_2",
+      "type": "opening",
+      "description": "Irregular internal shape located in the center of the front view",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_4"
+        }
+      ],
+      "reason": "A distinct closed contour is visible inside the main body in View 2, positioned centrally."
+    },
+    {
+      "id": "internal_feature_3",
+      "type": "opening",
+      "description": "Irregular internal shape located on the right side of the front view",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_6"
+        }
+      ],
+      "reason": "A distinct closed contour is visible inside the main body in View 2, positioned to the right."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "internal_to_body",
+      "type": "other",
+      "features": [
+        "internal_feature_1",
+        "internal_feature_2",
+        "internal_feature_3",
+        "plate_body"
+      ],
+      "description": "Three internal features are contained within the main body",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_0"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_2"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_4"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_6"
+        }
+      ],
+      "reason": "In View 2, the three smaller contours are spatially located inside the boundary of the large outer contour."
+    },
+    {
+      "id": "feature_alignment",
+      "type": "repeated",
+      "features": [
+        "internal_feature_1",
+        "internal_feature_2",
+        "internal_feature_3"
+      ],
+      "description": "Three similar features arranged horizontally",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_2"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_4"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_6"
+        }
+      ],
+      "reason": "The three internal features appear to be of similar size and are aligned along a horizontal axis in the front view."
+    }
+  ],
+  "assumptions": [
+    "View 1 represents the top view (XY plane) and View 2 represents the front view (XZ plane) based on the provided spatial heuristic.",
+    "The internal features in View 2 represent through-holes or pockets, though depth is not explicitly defined by the 2D contours."
+  ],
+  "unresolved": [
+    "The depth of the internal features (whether they are through-holes or blind pockets) is not determined by the provided views.",
+    "The exact shape of the internal features in the top view (View 1) is not explicitly isolated by OpenCV, though they are implied by the front view."
+  ],
+  "conflicts": []
+}
+```

@@ -1,0 +1,56 @@
+{
+  "handle": {
+    "id": "f94e16e9796c",
+    "status": "error",
+    "error": {
+      "message": "BRep worker crashed",
+      "code": "build_failed"
+    },
+    "source": "benchmarks/brep-baseline/curved_handle/drawing.png"
+  },
+  "rounded": {
+    "id": "710295b8f6e1",
+    "status": "done",
+    "error": null,
+    "source": "benchmarks/brep-features/rounded_housing/drawing.png"
+  },
+  "bevel": {
+    "id": "0e9954eecef0",
+    "status": "done",
+    "error": null,
+    "source": "benchmarks/brep-features/bevelled_block/drawing.png"
+  },
+  "wheel": {
+    "id": "cd79d4bc586e",
+    "status": "done",
+    "error": null,
+    "source": "benchmarks/brep-baseline/wheel/drawing.png"
+  },
+  "bookend": {
+    "id": "08f7fa3a3d77",
+    "status": "done",
+    "error": null,
+    "source": "benchmarks/cases/001_l_bookend_multiview/source/drawing.png"
+  },
+  "knob": {
+    "id": "96e522a7a7ed",
+    "status": "done",
+    "error": null,
+    "source": "benchmarks/cases/006_stepped_knob/source/drawing.png"
+  },
+  "cable_holder": {
+    "id": "2bcf17c897d7",
+    "status": "done",
+    "error": null,
+    "source": "benchmarks/cases/104_cable_holder/source/drawing.png"
+  },
+  "random_lcd_knob": {
+    "id": "fabda095b201",
+    "status": "error",
+    "error": {
+      "message": "SmApiChamferFillet failed: SM_ERR (1001) at SmPyFillets.cpp:18",
+      "code": "build_failed"
+    },
+    "source": "benchmarks/cases/102_lcd_knob/source/drawing.png"
+  }
+}

@@ -1,0 +1,115 @@
+{
+  "attempt": 3,
+  "action": "repair_scad",
+  "preflight": {
+    "passed": true,
+    "errors": [],
+    "warnings": [
+      "multiple top-level geometry expressions detected (7); ensure they intentionally form one connected design"
+    ],
+    "expected_subtractive_feature_groups": 0
+  },
+  "compiler_repairs": [],
+  "uniform_scale": {
+    "factor": 1.1277,
+    "before_max_mm": 47.884,
+    "after_max_mm": 48.923,
+    "params": [
+      "leg_length",
+      "rod_diameter"
+    ]
+  },
+  "evaluation": {
+    "score": 67.2,
+    "valid_mesh": false,
+    "accepted": false,
+    "mandatory_gates": {
+      "compiled": true,
+      "topology": false,
+      "dimensions": false,
+      "shape_sanity": false,
+      "features": true,
+      "projections": false,
+      "build_envelope": true
+    },
+    "scores": {
+      "topology": 27,
+      "dimensions": 18.1,
+      "features": 20,
+      "projections": 2.1
+    },
+    "projection_similarity": {
+      "top": 0.139
+    },
+    "profile_topology": {
+      "top": {
+        "source_internal_profiles": 0,
+        "rendered_internal_profiles": 0,
+        "crop_internal_profiles": 0,
+        "source_aspect": 4.35,
+        "rendered_aspect": 5.513,
+        "source_opening_centroids": [],
+        "rendered_opening_centroids": []
+      }
+    },
+    "failures": [
+      "mesh has 2 disconnected components",
+      "maximum dimension is 48.923 mm; target is 54 mm (tolerance 5%)",
+      "degenerate or implausible axis dimensions: X=48.923 mm vs expected 16.73 mm",
+      "CAD projections poorly match the drawing: top similarity 0.14 (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly."
+    ]
+  },
+  "mesh_health": {
+    "watertight": true,
+    "components": 2,
+    "triangles": 112,
+    "extents_mm": [
+      48.923,
+      8.972,
+      33.832
+    ],
+    "volume_mm3": 4200.062
+  },
+  "build": {
+    "version": 1,
+    "backend": "openscad",
+    "source_format": "openscad",
+    "ok": true,
+    "units": "mm",
+    "axes": {
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    },
+    "views": [
+      "isometric",
+      "front",
+      "top",
+      "right"
+    ],
+    "measurements": {
+      "watertight": true,
+      "components": 2,
+      "triangles": 112,
+      "extents_mm": [
+        48.923,
+        8.972,
+        33.832
+      ],
+      "volume_mm3": 4200.062
+    },
+    "diagnostics": [],
+    "drawing_evaluated": false
+  },
+  "compile_log": "Geometries in cache: 8\nGeometry cache size in bytes: 73984\nCGAL Polyhedrons in cache: 4\nCGAL cache size in bytes: 81728\nTotal rendering time: 0:00:00.151\n   Top level object is a 3D object:\n   Simple:        yes\n   Vertices:       60\n   Halfedges:     180\n   Edges:          90\n   Halffacets:     68\n   Facets:         34\n   Volumes:         3",
+  "files": {
+    "scad": "attempt-03/model.scad",
+    "stl": "attempt-03/uniform-scaled/model.stl",
+    "views": {
+      "isometric": "attempt-03/uniform-scaled/view-isometric.png",
+      "front": "attempt-03/uniform-scaled/view-front.png",
+      "top": "attempt-03/uniform-scaled/view-top.png",
+      "right": "attempt-03/uniform-scaled/view-right.png"
+    }
+  }
+}

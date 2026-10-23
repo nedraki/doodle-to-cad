@@ -1,0 +1,63 @@
+{
+  "version": 1,
+  "units": "mm",
+  "name": "Rectangular handle with two tangent straight ends",
+  "parameters": {
+    "radius": {
+      "value": 20,
+      "min": 8,
+      "max": 40,
+      "unit": "mm"
+    }
+  },
+  "operations": [
+    {
+      "id": "handle",
+      "kind": "sweep",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "plane": "xy",
+      "frame_rule": "normal_to_path_z_up",
+      "section_width": 6,
+      "section_height": 8,
+      "path": [
+        {
+          "kind": "line",
+          "start": [
+            "2*radius+3",
+            0
+          ],
+          "end": [
+            "2*radius+3",
+            15
+          ]
+        },
+        {
+          "kind": "arc",
+          "center": [
+            "radius+3",
+            15
+          ],
+          "radius": "radius",
+          "start_angle": 0,
+          "end_angle": 180
+        },
+        {
+          "kind": "line",
+          "start": [
+            3,
+            15
+          ],
+          "end": [
+            3,
+            0
+          ]
+        }
+      ]
+    }
+  ],
+  "output": "handle"
+}

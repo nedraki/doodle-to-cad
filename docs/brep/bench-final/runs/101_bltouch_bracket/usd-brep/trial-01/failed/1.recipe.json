@@ -1,0 +1,182 @@
+{
+  "version": 2,
+  "units": "mm",
+  "name": "bltouch_bracket",
+  "parameters": {
+    "width": {
+      "value": 40,
+      "min": 20,
+      "max": 60,
+      "label": "Width",
+      "description": "Overall width of the bracket (X)"
+    },
+    "height": {
+      "value": 50,
+      "min": 25,
+      "max": 60,
+      "label": "Height",
+      "description": "Overall height of the bracket (Z)"
+    },
+    "thickness": {
+      "value": 4,
+      "min": 1,
+      "max": 10,
+      "label": "Thickness",
+      "description": "Thickness of the bracket (Y)"
+    },
+    "hole_dia": {
+      "value": 3,
+      "min": 1,
+      "max": 10,
+      "label": "Hole Diameter",
+      "description": "Diameter of mounting holes"
+    },
+    "hole_x": {
+      "value": 30,
+      "min": 10,
+      "max": 40,
+      "label": "Hole X Position",
+      "description": "X position of mounting holes"
+    },
+    "hole_top_y": {
+      "value": 40,
+      "min": 25,
+      "max": 50,
+      "label": "Top Hole Y Position",
+      "description": "Y position of top mounting hole"
+    },
+    "hole_bot_y": {
+      "value": 10,
+      "min": 0,
+      "max": 25,
+      "label": "Bottom Hole Y Position",
+      "description": "Y position of bottom mounting hole"
+    },
+    "slot_w": {
+      "value": 8,
+      "min": 2,
+      "max": 20,
+      "label": "Slot Width",
+      "description": "Width of the central slot"
+    },
+    "slot_h": {
+      "value": 12,
+      "min": 4,
+      "max": 30,
+      "label": "Slot Height",
+      "description": "Height of the central slot"
+    },
+    "slot_x": {
+      "value": 10,
+      "min": 0,
+      "max": 20,
+      "label": "Slot X Position",
+      "description": "X position of the central slot"
+    },
+    "slot_y": {
+      "value": 19,
+      "min": 10,
+      "max": 30,
+      "label": "Slot Y Position",
+      "description": "Y position of the central slot (bottom edge)"
+    }
+  },
+  "operations": [
+    {
+      "id": "plate",
+      "kind": "extrude",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "plane": "xy",
+      "direction": 1,
+      "depth": "thickness",
+      "loops": [
+        [
+          {
+            "kind": "line",
+            "start": [
+              0,
+              0
+            ],
+            "end": [
+              "width",
+              0
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              "width",
+              0
+            ],
+            "end": [
+              "width",
+              "height"
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              "width",
+              "height"
+            ],
+            "end": [
+              0,
+              "height"
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              0,
+              "height"
+            ],
+            "end": [
+              0,
+              0
+            ]
+          }
+        ]
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1"
+      ]
+    }
+  ],
+  "output": "plate",
+  "frames": {
+    "world": {
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    }
+  },
+  "bodies": [
+    {
+      "id": "part",
+      "output": "plate"
+    }
+  ],
+  "evidence": {
+    "observed": [],
+    "inferred": [],
+    "assumptions": [
+      {
+        "id": "e1",
+        "text": "Assumed plate thickness 4 mm."
+      }
+    ],
+    "unresolved": []
+  },
+  "constraints": []
+}

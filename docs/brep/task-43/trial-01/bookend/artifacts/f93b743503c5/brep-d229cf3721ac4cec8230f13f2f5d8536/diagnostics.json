@@ -1,0 +1,90 @@
+{
+  "backend": "usd-brep",
+  "version": "1.0.0",
+  "recipe_version": 2,
+  "solid_volume_mm3": 67250.00000000003,
+  "mesh_volume_mm3": 67250.00009536743,
+  "extents_mm": [
+    102.0,
+    40.0,
+    120.0
+  ],
+  "bounds_mm": [
+    [
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      102.0,
+      40.0,
+      120.0
+    ]
+  ],
+  "watertight": true,
+  "winding_consistent": true,
+  "euler_number": -6,
+  "triangles": 100,
+  "usd_roundtrip": true,
+  "volume_relative_accuracy": 1e-08,
+  "usd_volume_mm3": 67250.00000000003,
+  "operations": [
+    {
+      "id": "base_plate",
+      "kind": "box",
+      "faces": 6
+    },
+    {
+      "id": "cutout_flange",
+      "kind": "box",
+      "faces": 6
+    },
+    {
+      "id": "l_profile",
+      "kind": "difference",
+      "faces": 8
+    },
+    {
+      "id": "hole_1",
+      "kind": "box",
+      "faces": 6
+    },
+    {
+      "id": "hole_2",
+      "kind": "box",
+      "faces": 6
+    },
+    {
+      "id": "hole_3",
+      "kind": "box",
+      "faces": 6
+    },
+    {
+      "id": "hole_4",
+      "kind": "box",
+      "faces": 6
+    },
+    {
+      "id": "cut_h1",
+      "kind": "difference",
+      "faces": 12
+    },
+    {
+      "id": "cut_h2",
+      "kind": "difference",
+      "faces": 16
+    },
+    {
+      "id": "cut_h3",
+      "kind": "difference",
+      "faces": 20
+    },
+    {
+      "id": "final_part",
+      "kind": "difference",
+      "faces": 24
+    }
+  ],
+  "connections": [],
+  "build_seconds": 0.212
+}

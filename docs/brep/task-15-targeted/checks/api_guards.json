@@ -1,0 +1,20 @@
+{
+ "stale_selection": {
+  "status": 409,
+  "body": {
+   "detail": "The saved version changed. Reload it before keeping another edit."
+  }
+ },
+ "unsupported_operation": {
+  "status": 422,
+  "body": {
+   "detail": "The selected target does not support the requested change. Requested \"warp\"; this target supports \"edge_fillet\"."
+  }
+ },
+ "wrong_target_operation": {
+  "status": 422,
+  "body": {
+   "detail": "This pocket cutter uses named parameters. Use the parameter controls for it."
+  }
+ }
+}

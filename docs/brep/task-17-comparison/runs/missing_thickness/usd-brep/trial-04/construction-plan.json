@@ -1,0 +1,42 @@
+{
+  "view_frame": "The drawing presents a TOP view in the XY plane (X width, Y depth) and a SECTION view in the XZ plane (X width, Z height). The world origin is at the bottom-center of the tray. X is the width (60mm), Y is the depth (40mm), and Z is the height (20mm).",
+  "features": [
+    {
+      "id": "tray_outer",
+      "shape": "Extruded Profile",
+      "section": "Rounded Rectangle",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "60",
+        "40",
+        "20",
+        "R6"
+      ],
+      "placement": "Centered at (0,0) in XY. Extruded from Z=0 to Z=20. The profile is a rectangle 60mm (X) by 40mm (Y) with vertical corners filleted by R6.",
+      "evidence": "Top view shows outer boundary with dimensions 60 and 40. Text notes 'Outside: 60 x 40 x 20' and 'Outer vertical corners: R6'. Section view shows height 20."
+    },
+    {
+      "id": "tray_inner",
+      "shape": "Extruded Profile (Subtractive)",
+      "section": "Rounded Rectangle",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "54",
+        "34",
+        "17",
+        "R3",
+        "3 (ASSUMED)"
+      ],
+      "placement": "Centered at (0,0) in XY. Extruded from Z=3 to Z=20. The profile is a rectangle 54mm (X) by 34mm (Y) with vertical corners filleted by R3. This is derived from the outer dimensions minus 2 * thickness (3mm).",
+      "evidence": "Top view shows inner boundary. Section view shows the cavity floor at a height corresponding to the thickness. Text notes 'Same wall and floor thickness' and 'Thickness value is not given' (resolved by user answer 3mm)."
+    }
+  ],
+  "connections": [
+    "tray_inner is subtracted from tray_outer to form the final solid."
+  ],
+  "edit_rules": [
+    "Changing the 'thickness' parameter (currently 3mm) must update the inner profile dimensions (60-2t, 40-2t), inner corner radius (6-t), and inner floor height (t).",
+    "Changing the outer height (Z) must update the extrusion height of both the outer and inner profiles, maintaining the floor thickness."
+  ],
+  "unresolved": []
+}

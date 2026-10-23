@@ -1,0 +1,144 @@
+{
+  "object": "Open-top enclosure with front window",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "top",
+      "sheet_region": "upper",
+      "constrains": "Planar footprint (X/Y dimensions) and wall thickness. The double-line border indicates the thickness of the enclosure walls."
+    },
+    {
+      "direction": "front",
+      "sheet_region": "lower",
+      "constrains": "Elevation (X/Z dimensions), height, and the geometry of the front window cutout."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "part_1",
+      "name": "Enclosure Body",
+      "description": "A rectangular box with an open top and a rectangular window cutout on the front face."
+    }
+  ],
+  "features": [
+    {
+      "id": "feat_1",
+      "type": "wall",
+      "description": "Vertical walls forming the perimeter of the enclosure.",
+      "source_views": [
+        "view_1",
+        "view_2"
+      ]
+    },
+    {
+      "id": "feat_2",
+      "type": "base",
+      "description": "Solid bottom plate of the enclosure.",
+      "source_views": [
+        "view_1",
+        "view_2"
+      ]
+    },
+    {
+      "id": "feat_3",
+      "type": "window",
+      "description": "Rectangular through-cutout on the front face.",
+      "source_views": [
+        "view_2"
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "type": "alignment",
+      "description": "The window is horizontally centered on the front face (inferred from symmetry in view_2)."
+    },
+    {
+      "type": "containment",
+      "description": "The window is contained within the front wall boundaries."
+    }
+  ],
+  "symmetry": "Bilateral symmetry along the vertical axis of the front face.",
+  "repetitions": [],
+  "dimensions": {
+    "max_width": 120.0,
+    "max_depth": 81.68,
+    "max_height": 43.96,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "Exact wall thickness is estimated from the double-line stroke width in the top view.",
+    "Window vertical position is estimated from the front view; it appears roughly centered vertically."
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "The object is interpreted as a simple box. The top view defines the footprint and wall thickness. The front view defines the height and the window cutout. The 'open-top' description dictates that the top face is removed.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "shell",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_1",
+        "operation": "extrude",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "owner": "part_1",
+        "parameters": {
+          "profile": "outer_rectangle",
+          "height": 44
+        },
+        "source_views": [
+          "view_1",
+          "view_2"
+        ]
+      },
+      {
+        "id": "op_2",
+        "operation": "shell",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "owner": "part_1",
+        "parameters": {
+          "thickness": 4,
+          "remove_faces": [
+            "top"
+          ]
+        },
+        "source_views": [
+          "view_1"
+        ]
+      }
+    ],
+    "unresolved_constraints": [
+      "Exact wall thickness is estimated from the double-line stroke width in the top view.",
+      "Window vertical position is estimated from the front view; it appears roughly centered vertically."
+    ]
+  },
+  "user_intent": {
+    "description": "Open-top enclosure with front window",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "120"
+  },
+  "source_view_group_count": 2,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

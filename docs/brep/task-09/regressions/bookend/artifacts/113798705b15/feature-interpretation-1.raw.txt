@@ -1,0 +1,155 @@
+```json
+{
+  "version": 1,
+  "object_hypothesis": "L-shaped bracket with rectangular cutouts",
+  "features": [
+    {
+      "id": "body_front",
+      "type": "body",
+      "description": "Rectangular planar face containing internal features",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_0"
+        }
+      ],
+      "reason": "Outer boundary of view_1 defines the extent of the front face."
+    },
+    {
+      "id": "body_side",
+      "type": "body",
+      "description": "L-shaped profile indicating a bent or stepped structure",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_10"
+        }
+      ],
+      "reason": "View_2 shows a distinct L-shape, suggesting a vertical wall and a horizontal base."
+    },
+    {
+      "id": "opening_top_left",
+      "type": "opening",
+      "description": "Rectangular cutout located in the upper-left quadrant",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_8"
+        }
+      ],
+      "reason": "Closed internal contour in the upper-left region of the front face."
+    },
+    {
+      "id": "opening_center",
+      "type": "opening",
+      "description": "Vertical rectangular cutout located centrally",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_6"
+        }
+      ],
+      "reason": "Closed internal contour in the central region of the front face."
+    },
+    {
+      "id": "opening_bottom_left",
+      "type": "opening",
+      "description": "Vertical rectangular cutout located in the lower-left quadrant",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_4"
+        }
+      ],
+      "reason": "Closed internal contour in the lower-left region of the front face."
+    },
+    {
+      "id": "opening_bottom_right",
+      "type": "opening",
+      "description": "Vertical rectangular cutout located in the lower-right quadrant",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_2"
+        }
+      ],
+      "reason": "Closed internal contour in the lower-right region of the front face."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "rel_openings_in_face",
+      "type": "position",
+      "features": [
+        "opening_top_left",
+        "opening_center",
+        "opening_bottom_left",
+        "opening_bottom_right",
+        "body_front"
+      ],
+      "description": "Four openings are positioned within the boundaries of the front face",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_0"
+        },
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_8"
+        },
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_6"
+        },
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_4"
+        },
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_2"
+        }
+      ],
+      "reason": "Internal contours are spatially contained within the outer contour in view_1."
+    },
+    {
+      "id": "rel_front_to_side",
+      "type": "connected",
+      "features": [
+        "body_front",
+        "body_side"
+      ],
+      "description": "The front face connects to the L-shaped side profile",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_0"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_10"
+        }
+      ],
+      "reason": "Standard orthographic projection implies the front face is the vertical leg of the L-shape seen in the side view."
+    }
+  ],
+  "assumptions": [
+    "View 1 represents the front elevation (XZ plane).",
+    "View 2 represents the right side elevation (YZ plane).",
+    "The object is a single solid piece with through-holes or pockets."
+  ],
+  "unresolved": [
+    "Depth of the openings (through-holes vs. blind pockets).",
+    "Exact thickness of the material (inferred from side view but not explicitly dimensioned)."
+  ],
+  "conflicts": []
+}
+```

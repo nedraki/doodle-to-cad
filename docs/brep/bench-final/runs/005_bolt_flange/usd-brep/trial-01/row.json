@@ -1,0 +1,114 @@
+{
+  "drawing": "005_bolt_flange",
+  "backend": "usd-brep",
+  "trial": 1,
+  "submitted_at": "2026-10-19T15:45:48.103418+00:00",
+  "finished_at": "2026-10-19T15:48:30.564764+00:00",
+  "run_id": "c3ffb6d8caf6",
+  "wall_seconds": 162.5,
+  "job_status": "done",
+  "error": null,
+  "questions_asked": 0,
+  "question_kinds": [],
+  "build": {
+    "watertight": true,
+    "components": 1,
+    "genus": 5,
+    "extents_mm": [
+      100.0,
+      100.0,
+      10.0
+    ],
+    "volume_mm3": 69453.3,
+    "sha256": "7cd3809d0255f9556ed087d75c8cbde7feee98e49a8cded25c399e772f48cb38",
+    "bytes": 64884
+  },
+  "checks": {
+    "build_success": true,
+    "extents_pass": false,
+    "genus_pass": true,
+    "volume_pass": false,
+    "fidelity_pass": false,
+    "overall_pass": false,
+    "not_applicable": []
+  },
+  "fidelity": {
+    "scores": {
+      "front": 0.251,
+      "top": 0.262
+    },
+    "pass": false,
+    "reason": null,
+    "topology": {
+      "front": {
+        "expected": 5,
+        "actual": 2,
+        "position_fidelity": 0.2
+      },
+      "top": {
+        "expected": 1,
+        "actual": 5,
+        "position_fidelity": null
+      }
+    }
+  },
+  "product": {
+    "success": false,
+    "accepted": false,
+    "status": "failed",
+    "score": null,
+    "projection_status": "failed",
+    "geometry_status": "passed",
+    "failures": [
+      "front projection",
+      "front openings",
+      "front opening positions",
+      "top projection",
+      "Detailed drawing features and view assignments require review."
+    ]
+  },
+  "attempts": {
+    "count": 1,
+    "recovered": false,
+    "corrections": 1
+  },
+  "unsupported": {
+    "flag": false,
+    "code": null
+  },
+  "brep_only": {
+    "operations": [
+      "cylinder",
+      "difference"
+    ],
+    "loft": false,
+    "shell": false,
+    "arc_pipe": false,
+    "sweep": false,
+    "extrude": false,
+    "parameter_names": [
+      "bolt_circle_diameter",
+      "bolt_hole_diameter",
+      "bore_diameter",
+      "outer_diameter",
+      "thickness"
+    ]
+  },
+  "edit": {
+    "available": true,
+    "ok": true,
+    "seconds": 2.97,
+    "param": "outer_diameter",
+    "old": 100,
+    "new": 120.0,
+    "message": null
+  },
+  "targeted": {
+    "available": false,
+    "ok": false,
+    "seconds": null,
+    "operation": null,
+    "value": null,
+    "message": "no probe value produced a valid targeted plan"
+  }
+}

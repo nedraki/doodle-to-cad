@@ -1,0 +1,429 @@
+{
+  "selection_catalog": {
+    "version": 1,
+    "status": "available",
+    "unresolved": [],
+    "output_owner": "l_profile",
+    "targets": [
+      {
+        "id": "47f102ff5e5b8b3c",
+        "label": "Outside X min face",
+        "rule": {
+          "kind": "extreme_face",
+          "owner": "l_profile",
+          "axis": 0,
+          "side": "min"
+        },
+        "match_count": 1,
+        "geometry": {
+          "triangles": [
+            [
+              0.0,
+              120.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              20.0
+            ],
+            [
+              0.0,
+              120.0,
+              20.0
+            ],
+            [
+              0.0,
+              0.0,
+              20.0
+            ],
+            [
+              0.0,
+              120.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ]
+        }
+      },
+      {
+        "id": "179002162499d80e",
+        "label": "Outside X max face",
+        "rule": {
+          "kind": "extreme_face",
+          "owner": "l_profile",
+          "axis": 0,
+          "side": "max"
+        },
+        "match_count": 1,
+        "geometry": {
+          "triangles": [
+            [
+              120.0,
+              0.0,
+              0.0
+            ],
+            [
+              120.0,
+              10.0,
+              20.0
+            ],
+            [
+              120.0,
+              0.0,
+              20.0
+            ],
+            [
+              120.0,
+              10.0,
+              20.0
+            ],
+            [
+              120.0,
+              0.0,
+              0.0
+            ],
+            [
+              120.0,
+              10.0,
+              0.0
+            ]
+          ]
+        }
+      },
+      {
+        "id": "c6ff1133b08cb6cd",
+        "label": "Outside Y min face",
+        "rule": {
+          "kind": "extreme_face",
+          "owner": "l_profile",
+          "axis": 1,
+          "side": "min"
+        },
+        "match_count": 1,
+        "geometry": {
+          "triangles": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              120.0,
+              0.0,
+              20.0
+            ],
+            [
+              0.0,
+              0.0,
+              20.0
+            ],
+            [
+              120.0,
+              0.0,
+              20.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              120.0,
+              0.0,
+              0.0
+            ]
+          ]
+        }
+      },
+      {
+        "id": "409d69b67c24574b",
+        "label": "Outside Y max face",
+        "rule": {
+          "kind": "extreme_face",
+          "owner": "l_profile",
+          "axis": 1,
+          "side": "max"
+        },
+        "match_count": 1,
+        "geometry": {
+          "triangles": [
+            [
+              10.0,
+              120.0,
+              0.0
+            ],
+            [
+              0.0,
+              120.0,
+              20.0
+            ],
+            [
+              10.0,
+              120.0,
+              20.0
+            ],
+            [
+              0.0,
+              120.0,
+              20.0
+            ],
+            [
+              10.0,
+              120.0,
+              0.0
+            ],
+            [
+              0.0,
+              120.0,
+              0.0
+            ]
+          ]
+        }
+      },
+      {
+        "id": "7829fdc7118a9295",
+        "label": "Outside Z min face",
+        "rule": {
+          "kind": "extreme_face",
+          "owner": "l_profile",
+          "axis": 2,
+          "side": "min"
+        },
+        "match_count": 1,
+        "geometry": {
+          "triangles": [
+            [
+              120.0,
+              0.0,
+              0.0
+            ],
+            [
+              10.0,
+              10.0,
+              0.0
+            ],
+            [
+              120.0,
+              10.0,
+              0.0
+            ],
+            [
+              10.0,
+              10.0,
+              0.0
+            ],
+            [
+              0.0,
+              120.0,
+              0.0
+            ],
+            [
+              10.0,
+              120.0,
+              0.0
+            ],
+            [
+              10.0,
+              10.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              120.0,
+              0.0
+            ],
+            [
+              10.0,
+              10.0,
+              0.0
+            ],
+            [
+              120.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ]
+        }
+      },
+      {
+        "id": "5bbd98b05e9bcf01",
+        "label": "Outside Z max face",
+        "rule": {
+          "kind": "extreme_face",
+          "owner": "l_profile",
+          "axis": 2,
+          "side": "max"
+        },
+        "match_count": 1,
+        "geometry": {
+          "triangles": [
+            [
+              10.0,
+              10.0,
+              20.0
+            ],
+            [
+              120.0,
+              0.0,
+              20.0
+            ],
+            [
+              120.0,
+              10.0,
+              20.0
+            ],
+            [
+              0.0,
+              120.0,
+              20.0
+            ],
+            [
+              10.0,
+              10.0,
+              20.0
+            ],
+            [
+              10.0,
+              120.0,
+              20.0
+            ],
+            [
+              0.0,
+              0.0,
+              20.0
+            ],
+            [
+              10.0,
+              10.0,
+              20.0
+            ],
+            [
+              0.0,
+              120.0,
+              20.0
+            ],
+            [
+              120.0,
+              0.0,
+              20.0
+            ],
+            [
+              10.0,
+              10.0,
+              20.0
+            ],
+            [
+              0.0,
+              0.0,
+              20.0
+            ]
+          ]
+        }
+      },
+      {
+        "id": "9afdb812ba95fb06",
+        "label": "Outer vertical edges",
+        "rule": {
+          "kind": "outer_vertical_edges",
+          "owner": "l_profile",
+          "expected_edges": 3
+        },
+        "match_count": 3,
+        "geometry": {
+          "lines": [
+            [
+              [
+                120.0,
+                0.0,
+                0.0
+              ],
+              [
+                120.0,
+                0.0,
+                20.0
+              ]
+            ],
+            [
+              [
+                0.0,
+                120.0,
+                0.0
+              ],
+              [
+                0.0,
+                120.0,
+                20.0
+              ]
+            ],
+            [
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                20.0
+              ]
+            ]
+          ]
+        }
+      }
+    ],
+    "supported": "Axis-aligned extreme planar faces, four-wall box cutouts and straight outer vertical edges. Recheck after every rebuild."
+  },
+  "backend": "usd-brep",
+  "version": "1.0.0",
+  "recipe_version": 2,
+  "solid_volume_mm3": 45999.99999999996,
+  "mesh_volume_mm3": 46000.0,
+  "extents_mm": [
+    120.0,
+    120.0,
+    20.0
+  ],
+  "bounds_mm": [
+    [
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      120.0,
+      120.0,
+      20.0
+    ]
+  ],
+  "watertight": true,
+  "winding_consistent": true,
+  "euler_number": 2,
+  "triangles": 20,
+  "usd_roundtrip": true,
+  "volume_relative_accuracy": 1e-08,
+  "usd_volume_mm3": 46000.0,
+  "operations": [
+    {
+      "id": "l_profile",
+      "kind": "extrude",
+      "faces": 8
+    }
+  ],
+  "connections": [],
+  "build_seconds": 0.191
+}

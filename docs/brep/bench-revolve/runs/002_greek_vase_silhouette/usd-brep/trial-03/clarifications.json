@@ -1,0 +1,20 @@
+[
+  {
+    "question": {
+      "feature_id": "vase_body",
+      "feature_label": "Vase wall thickness",
+      "reason": "The drawing shows a single silhouette line. It does not specify if the vase is solid or hollow, nor the wall thickness if hollow. For 3D printing, a hollow vessel is standard to save material, but the thickness is unknown.",
+      "kind": "wall_thickness",
+      "id": "10d44a5b0e284b0e89ec13dc83e6b80f",
+      "text": "Wall thickness (mm)?",
+      "maximum_thickness_mm": 120.0
+    },
+    "status": "answered",
+    "answer": {
+      "question_id": "10d44a5b0e284b0e89ec13dc83e6b80f",
+      "feature_id": "vase_body",
+      "kind": "wall_thickness",
+      "thickness_mm": 3
+    }
+  }
+]

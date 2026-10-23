@@ -1,0 +1,77 @@
+{
+  "view_frame": "The drawing presents two views of a flat plate. The lower view is the primary FRONT view (XZ plane), showing the rectangular outline and three circular holes. The upper view is the TOP view (XY plane), showing the rectangular outline from above. The world axes are X (width, left-right), Y (depth, front-back), and Z (height, up-down).",
+  "features": [
+    {
+      "id": "plate_body",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "ASSUMED_WIDTH",
+        "ASSUMED_HEIGHT",
+        "ASSUMED_THICKNESS"
+      ],
+      "placement": "Centered at (0, 0, 0). Extends from -ASSUMED_WIDTH/2 to +ASSUMED_WIDTH/2 in X, -ASSUMED_THICKNESS/2 to +ASSUMED_THICKNESS/2 in Y, and -ASSUMED_HEIGHT/2 to +ASSUMED_HEIGHT/2 in Z.",
+      "evidence": "Two rectangular outlines are visible. The lower view (Front) shows the width and height. The upper view (Top) shows the width and depth (thickness)."
+    },
+    {
+      "id": "hole_1",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "Y",
+      "dimensions": [
+        "ASSUMED_HOLE_RADIUS",
+        "ASSUMED_THICKNESS"
+      ],
+      "placement": "Centered at (X1, 0, Z1). Axis is parallel to Y. Extends from -ASSUMED_THICKNESS/2 to +ASSUMED_THICKNESS/2 in Y.",
+      "evidence": "Leftmost circular shape in the lower (Front) view."
+    },
+    {
+      "id": "hole_2",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "Y",
+      "dimensions": [
+        "ASSUMED_HOLE_RADIUS",
+        "ASSUMED_THICKNESS"
+      ],
+      "placement": "Centered at (0, 0, Z1). Axis is parallel to Y. Extends from -ASSUMED_THICKNESS/2 to +ASSUMED_THICKNESS/2 in Y.",
+      "evidence": "Middle circular shape in the lower (Front) view."
+    },
+    {
+      "id": "hole_3",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "Y",
+      "dimensions": [
+        "ASSUMED_HOLE_RADIUS",
+        "ASSUMED_THICKNESS"
+      ],
+      "placement": "Centered at (X1, 0, Z1). Axis is parallel to Y. Extends from -ASSUMED_THICKNESS/2 to +ASSUMED_THICKNESS/2 in Y.",
+      "evidence": "Rightmost circular shape in the lower (Front) view."
+    }
+  ],
+  "connections": [
+    "hole_1, hole_2, and hole_3 are subtracted from plate_body."
+  ],
+  "edit_rules": [
+    "Changing ASSUMED_WIDTH or ASSUMED_HEIGHT scales the plate_body outline.",
+    "Changing ASSUMED_THICKNESS scales the plate_body depth and the length of all holes.",
+    "Changing ASSUMED_HOLE_RADIUS scales the diameter of all three holes.",
+    "Hole positions (X1, Z1) are relative to the plate center."
+  ],
+  "unresolved": [
+    "ASSUMED_WIDTH: The width of the plate is not dimensioned.",
+    "ASSUMED_HEIGHT: The height of the plate is not dimensioned.",
+    "ASSUMED_THICKNESS: The thickness (depth) of the plate is not dimensioned.",
+    "ASSUMED_HOLE_RADIUS: The radius of the holes is not dimensioned.",
+    "Hole positions (X1, Z1): The exact coordinates of the holes are not dimensioned.",
+    "Hole extent: It is not explicitly stated if the holes are through-holes or recesses, though through-holes are standard for this representation."
+  ],
+  "clarification": {
+    "feature_id": "hole_1",
+    "feature_label": "Leftmost circular feature in the front view",
+    "reason": "The drawing does not specify if the circular features are through-holes or blind recesses.",
+    "kind": "opening_extent"
+  }
+}

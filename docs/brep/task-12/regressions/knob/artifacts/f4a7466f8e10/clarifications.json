@@ -1,0 +1,14 @@
+[
+  {
+    "question": {
+      "feature_id": "part_body",
+      "feature_label": "Main body of the part",
+      "reason": "The drawing does not specify the thickness (depth) of the part, which is required to construct the 3D solid from the 2D profile.",
+      "kind": "uniform_thickness",
+      "id": "84260c35090245f28e1dde51f75a1a66",
+      "text": "Wall and floor thickness (mm)?",
+      "maximum_thickness_mm": 120.0
+    },
+    "status": "cancelled"
+  }
+]

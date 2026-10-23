@@ -1,0 +1,67 @@
+{
+  "view_frame": "The drawing presents two views in third-angle projection. The primary view (bottom) is the Front view, showing the XZ plane (Width vs Height). The secondary view (top) is the Top view, showing the XY plane (Width vs Depth). The object is a flat plate oriented vertically in the Front view, with its thickness extending along the Y-axis (Depth).",
+  "features": [
+    {
+      "id": "grille_body",
+      "shape": "Extruded Profile",
+      "section": "Closed XY profile",
+      "axis_or_plane": "XY plane (Top view)",
+      "dimensions": [
+        "126.0 (Max Width)",
+        "3 (Thickness - User Answer)"
+      ],
+      "placement": "Centered at X=0, Y=0. Extruded along Z-axis from Z=0 to Z=3. The profile shape is defined by the outline in the Front view (XZ), projected to XY.",
+      "evidence": "The main outline in the Front view defines the shape. The Top view shows a thin rectangle, confirming the uniform thickness. User answer specifies thickness is 3mm."
+    },
+    {
+      "id": "headlight_left",
+      "shape": "Through Hole",
+      "section": "Circle",
+      "axis_or_plane": "XY plane (Top view)",
+      "dimensions": [
+        "ASSUMED: Diameter ~15mm (proportional to width)"
+      ],
+      "placement": "Centered at X=-45, Z=15 (relative to bottom-left of grille body). Cut through the full thickness (Y=0 to Y=3).",
+      "evidence": "Circular feature on the left side of the Front view."
+    },
+    {
+      "id": "headlight_right",
+      "shape": "Through Hole",
+      "section": "Circle",
+      "axis_or_plane": "XY plane (Top view)",
+      "dimensions": [
+        "ASSUMED: Diameter ~15mm (proportional to width)"
+      ],
+      "placement": "Centered at X=45, Z=15 (relative to bottom-left of grille body). Cut through the full thickness (Y=0 to Y=3).",
+      "evidence": "Circular feature on the right side of the Front view."
+    },
+    {
+      "id": "grille_slots",
+      "shape": "Through Slots",
+      "section": "Rounded Rectangle",
+      "axis_or_plane": "XY plane (Top view)",
+      "dimensions": [
+        "ASSUMED: Slot Width ~4mm",
+        "ASSUMED: Slot Height ~40mm",
+        "ASSUMED: Slot Spacing ~8mm"
+      ],
+      "placement": "7 slots centered horizontally. The group is centered at X=0. Slots extend from Z=10 to Z=50. Cut through the full thickness (Y=0 to Y=3).",
+      "evidence": "Seven vertical rectangular shapes with rounded ends in the center of the Front view."
+    }
+  ],
+  "connections": [
+    "The grille_body is the base solid.",
+    "headlight_left, headlight_right, and grille_slots are subtractive features (cuts) applied to the grille_body."
+  ],
+  "edit_rules": [
+    "Changing the grille_body thickness (Y-axis) updates the depth of all cuts.",
+    "Changing the grille_body width (X-axis) requires scaling the positions of headlights and slots proportionally.",
+    "Changing the grille_body height (Z-axis) requires adjusting the vertical placement of headlights and slots."
+  ],
+  "unresolved": [
+    "Exact dimensions for headlights (diameter, position) are estimated from proportions.",
+    "Exact dimensions for slots (width, height, spacing, count) are estimated from proportions.",
+    "Exact height of the grille body is estimated from proportions."
+  ],
+  "clarification": null
+}

@@ -1,0 +1,31 @@
+{
+  "view_frame": "The drawing presents a TOP view in the XY plane and an END SECTION view. The world frame is defined with X as width (horizontal in TOP view), Y as depth (vertical in TOP view), and Z as height (vertical in END SECTION view). The part lies flat in the XY plane with its section height along Z.",
+  "features": [
+    {
+      "id": "handle_body",
+      "shape": "swept_path",
+      "section": "rectangle",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "6",
+        "8",
+        "R20",
+        "15",
+        "180"
+      ],
+      "placement": "The path consists of two straight segments and one 180-degree arc. The arc centre is at (0, 15). The arc spans from angle 180 degrees to 0 degrees (clockwise traversal relative to the centre, or counter-clockwise from 180 to 360/0). The left straight segment runs from (-20, 15) to (-20, 0). The right straight segment runs from (20, 15) to (20, 0). The section is a 6mm (width) x 8mm (height) rectangle. The section centre is lifted to Z=4 (half of 8mm) to sit on the bed.",
+      "evidence": "TOP view shows a U-shaped path. Text specifies '180° bend', 'Centreline radius R20', 'Both straight ends: 15 long', 'Same 6 x 8 section throughout'. END SECTION shows a rectangle 6 wide and 8 high. 'Section remains upright along Z'."
+    }
+  ],
+  "connections": [
+    "The left straight segment connects tangentially to the left end of the 180-degree arc.",
+    "The right straight segment connects tangentially to the right end of the 180-degree arc."
+  ],
+  "edit_rules": [
+    "Changing the section width (6) or height (8) updates the sweep profile but maintains the centreline path.",
+    "Changing the centreline radius (R20) moves the arc endpoints and the start of the straight segments.",
+    "Changing the straight length (15) moves the free ends of the straight segments along Y.",
+    "The overall width (46) is derived from 2 * (Centreline Radius + Section Width / 2) = 2 * (20 + 3) = 46. If Centreline Radius or Section Width changes, Overall Width must be recalculated."
+  ],
+  "unresolved": []
+}

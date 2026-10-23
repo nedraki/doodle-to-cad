@@ -1,0 +1,29 @@
+{
+  "view_frame": "The drawing presents a TOP (XY) view and an END SECTION view. The TOP view shows the path of the handle in the XY plane. The END SECTION shows the cross-section of the path. The path is a U-shape consisting of two straight legs and a semicircular bend. The bend is in the XY plane. The section is circular, implying the handle is a tube of constant diameter.",
+  "features": [
+    {
+      "id": "handle_path",
+      "shape": "path",
+      "section": "circular",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "R20",
+        "30",
+        "8"
+      ],
+      "placement": "The path consists of three segments: 1. Left straight leg: Vertical line segment along Y from (0,0) to (0,30). 2. Semicircular bend: Arc centered at (0,30) with radius 20, starting at (0,30) and ending at (40,30), traversing counter-clockwise from 180 to 0 degrees (or clockwise from 180 to 360/0 depending on coordinate system definition, here assuming standard math convention where 0 is +X, 90 is +Y). Wait, looking at the image, the legs go 'up' in the drawing. Let's align with the image. The legs are vertical in the image. The bend is at the top. Let's place the bottom of the left leg at (0,0). The left leg goes from (0,0) to (0,30). The bend is a semicircle centered at (20,30) with radius 20. It starts at (0,30) and ends at (40,30). The right leg goes from (40,30) to (40,0). The section is a circle of diameter 8mm.",
+      "evidence": "Top view shows a U-shaped path. Text 'Bend centreline R20; straight legs 30 mm'. End section shows a circle with 'diameter 8 mm'."
+    }
+  ],
+  "connections": [
+    "The left straight leg connects tangentially to the left end of the semicircular bend.",
+    "The right straight leg connects tangentially to the right end of the semicircular bend."
+  ],
+  "edit_rules": [
+    "Changing the bend radius (R20) moves the right leg and the center of the arc.",
+    "Changing the straight leg length (30) moves the start/end points of the legs along the Y axis.",
+    "Changing the diameter (8) changes the thickness of the entire path uniformly."
+  ],
+  "unresolved": [],
+  "clarification": null
+}

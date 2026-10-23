@@ -1,0 +1,21 @@
+{
+  "drawing": "wheel",
+  "backend": "usd-brep",
+  "trial": 5,
+  "submitted_at": "2026-10-18T23:27:21.133452+00:00",
+  "finished_at": "2026-10-18T23:29:41.671089+00:00",
+  "run_id": "b143183645a0",
+  "wall_seconds": 140.5,
+  "job_status": "error",
+  "error": {
+    "message": "wheel_1: kernel produced an invalid solid",
+    "code": "build_failed"
+  },
+  "questions_asked": 0,
+  "question_kinds": [],
+  "build": null,
+  "checks": {
+    "build_success": false,
+    "overall_pass": false
+  }
+}

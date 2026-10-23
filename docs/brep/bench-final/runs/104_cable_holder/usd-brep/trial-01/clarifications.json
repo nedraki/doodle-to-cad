@@ -1,0 +1,30 @@
+[
+  {
+    "question": {
+      "feature_id": "side_holes",
+      "feature_label": "side holes",
+      "reason": "The drawing does not establish whether the side holes are through-holes or recesses.",
+      "kind": "opening_extent",
+      "id": "59582e0336eb47b3bc6b3a9be71c293f",
+      "text": "Should this hole go all the way through the part?",
+      "maximum_depth_mm": 40.0,
+      "choices": [
+        {
+          "id": "through",
+          "label": "Yes \u2014 make a through-hole"
+        },
+        {
+          "id": "recess",
+          "label": "No \u2014 leave a bottom"
+        }
+      ]
+    },
+    "status": "answered",
+    "answer": {
+      "question_id": "59582e0336eb47b3bc6b3a9be71c293f",
+      "feature_id": "side_holes",
+      "kind": "opening_extent",
+      "choice": "through"
+    }
+  }
+]

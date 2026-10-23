@@ -1,0 +1,137 @@
+```json
+{
+  "version": 1,
+  "object_hypothesis": "A mechanical bracket or mounting plate featuring a planar body with two distinct mounting holes and a tapered or stepped profile.",
+  "features": [
+    {
+      "id": "body_main",
+      "type": "body",
+      "description": "The primary planar structure of the object, appearing as a large polygonal shape in the top view and a thin profile in side views.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_7"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_6"
+        },
+        {
+          "view_id": "view_3",
+          "region_id": "profile_contour_4"
+        }
+      ],
+      "reason": "Visible as the dominant outer contour in all three views, defining the overall extent of the object."
+    },
+    {
+      "id": "hole_upper",
+      "type": "opening",
+      "description": "A circular hole located in the upper-right quadrant of the object.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_11"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_6"
+        }
+      ],
+      "reason": "Clearly defined as a small internal contour in the top view (view_1) and visible as a feature on the face in the right view (view_2)."
+    },
+    {
+      "id": "hole_lower",
+      "type": "opening",
+      "description": "A circular hole located in the lower-left quadrant of the object.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_9"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_6"
+        }
+      ],
+      "reason": "Clearly defined as a small internal contour in the top view (view_1) and visible as a feature on the face in the right view (view_2)."
+    },
+    {
+      "id": "profile_taper",
+      "type": "profile",
+      "description": "A sloped or tapered surface visible on the left side of the object in the front view.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_3",
+          "region_id": "profile_contour_4"
+        }
+      ],
+      "reason": "The front view (view_3) shows a distinct diagonal edge on the left side, indicating a change in height or a chamfered edge."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "holes_in_body",
+      "type": "connected",
+      "features": [
+        "hole_upper",
+        "hole_lower",
+        "body_main"
+      ],
+      "description": "The two holes are located within the boundaries of the main body.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_7"
+        },
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_11"
+        },
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_9"
+        }
+      ],
+      "reason": "In the top view, the hole contours are spatially contained within the outer body contour."
+    },
+    {
+      "id": "hole_alignment",
+      "type": "other",
+      "features": [
+        "hole_upper",
+        "hole_lower"
+      ],
+      "description": "The holes are positioned diagonally relative to each other.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_11"
+        },
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_9"
+        }
+      ],
+      "reason": "The top view shows one hole in the upper-right and the other in the lower-left, indicating a diagonal arrangement."
+    }
+  ],
+  "assumptions": [
+    "The object is a single solid piece of material.",
+    "The holes are through-holes (piercing the entire thickness), as is typical for mounting brackets, though hidden depth is not explicitly proven."
+  ],
+  "unresolved": [
+    "The exact thickness of the object is not measured.",
+    "The internal geometry of the holes (e.g., threaded vs. smooth) is unknown.",
+    "The specific function of the tapered edge in the front view (e.g., chamfer vs. wedge) is ambiguous."
+  ],
+  "conflicts": [
+    "The right view (view_2) shows a complex profile with a step on the right side, while the front view (view_3) shows a taper on the left. Without a clear 3D reconstruction, the exact spatial relationship between these two distinct profile features is difficult to confirm."
+  ]
+}
+```

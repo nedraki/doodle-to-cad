@@ -1,0 +1,14 @@
+{
+  "action": "repair_scad",
+  "problems": [
+    "Mesh has 2 disconnected components (spokes/hub separated from rim)",
+    "Spokes are too short to reach the outer rim (gap exists)",
+    "Front view projection is incorrect (rendered as a line, not a circle)"
+  ],
+  "preserve": [
+    "Overall dimensions (OD 120mm, Thickness 9.5mm)",
+    "Spoke count (8) and hub diameter (30mm)",
+    "General wheel topology (rim, hub, spokes)"
+  ],
+  "instructions": "Fix the spoke geometry to ensure connectivity with the rim. The current spoke length calculation is insufficient. Change the spoke cube length to `outer_diameter` (120mm) and keep it centered at the origin. This ensures the spokes span from -60mm to +60mm, overlapping the rim (inner radius 55mm) and the hub. This will merge the disconnected components into a single watertight mesh and correct the front view projection."
+}

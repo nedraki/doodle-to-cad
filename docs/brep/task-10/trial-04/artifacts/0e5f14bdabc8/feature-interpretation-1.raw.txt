@@ -1,0 +1,105 @@
+{
+  "version": 1,
+  "object_hypothesis": "Bent handle with 180-degree arch and straight legs",
+  "features": [
+    {
+      "id": "arch_body",
+      "type": "body",
+      "description": "Curved 180-degree arch section of the handle",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_7",
+          "region_id": "profile_contour_316"
+        }
+      ],
+      "reason": "Visible as the primary curved component in the top view."
+    },
+    {
+      "id": "leg_left",
+      "type": "body",
+      "description": "Left straight leg of the handle",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_7",
+          "region_id": "profile_contour_316"
+        }
+      ],
+      "reason": "Visible as the left vertical extension in the top view."
+    },
+    {
+      "id": "leg_right",
+      "type": "body",
+      "description": "Right straight leg of the handle",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_7",
+          "region_id": "profile_contour_316"
+        }
+      ],
+      "reason": "Visible as the right vertical extension in the top view."
+    },
+    {
+      "id": "section_profile",
+      "type": "profile",
+      "description": "Rectangular cross-section of the handle",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_8",
+          "region_id": "profile_contour_208"
+        }
+      ],
+      "reason": "Visible as a small rectangular shape in the right view."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "arch_legs_conn",
+      "type": "connected",
+      "features": [
+        "arch_body",
+        "leg_left",
+        "leg_right"
+      ],
+      "description": "The arch connects the two straight legs",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_7",
+          "region_id": "profile_contour_316"
+        }
+      ],
+      "reason": "The top view shows a continuous outline connecting the legs and arch."
+    },
+    {
+      "id": "section_consistency",
+      "type": "shared_dimension",
+      "features": [
+        "arch_body",
+        "leg_left",
+        "leg_right"
+      ],
+      "description": "The rectangular section is consistent throughout the part",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_8",
+          "region_id": "profile_contour_208"
+        }
+      ],
+      "reason": "The right view shows a single section profile, implying uniformity along the length."
+    }
+  ],
+  "assumptions": [
+    "The object is a single solid piece.",
+    "The section remains upright along the Z-axis."
+  ],
+  "unresolved": [
+    "Exact internal geometry of the bend (hidden lines not visible).",
+    "Specific material properties."
+  ],
+  "conflicts": []
+}

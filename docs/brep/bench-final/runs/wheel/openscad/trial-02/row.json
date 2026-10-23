@@ -1,0 +1,87 @@
+{
+  "drawing": "wheel",
+  "backend": "openscad",
+  "trial": 2,
+  "submitted_at": "2026-10-19T17:27:49.722542+00:00",
+  "finished_at": "2026-10-19T17:30:52.348902+00:00",
+  "run_id": "425e843af24c",
+  "wall_seconds": 182.6,
+  "job_status": "done",
+  "error": null,
+  "questions_asked": 0,
+  "question_kinds": [],
+  "build": {
+    "watertight": true,
+    "components": 1,
+    "genus": 8,
+    "extents_mm": [
+      120.0,
+      119.343,
+      8.0
+    ],
+    "volume_mm3": 50977.3,
+    "sha256": "7ff068dbcae0a2a51416e5b0cac94b6799ed3942970eb7ddb664a3f7bad870b5",
+    "bytes": 63820
+  },
+  "checks": {
+    "build_success": true,
+    "extents_pass": true,
+    "genus_pass": true,
+    "volume_pass": false,
+    "fidelity_pass": true,
+    "overall_pass": false,
+    "not_applicable": []
+  },
+  "fidelity": {
+    "scores": {
+      "front": 0.997
+    },
+    "pass": true,
+    "reason": null,
+    "topology": {
+      "front": {
+        "expected": 0,
+        "actual": 9,
+        "position_fidelity": null
+      }
+    }
+  },
+  "product": {
+    "success": false,
+    "accepted": false,
+    "status": null,
+    "score": 100.0,
+    "projection_status": null,
+    "geometry_status": null,
+    "failures": [
+      "degenerate or implausible axis dimensions: X=120 mm vs expected 27.8 mm"
+    ]
+  },
+  "attempts": {
+    "count": 3,
+    "recovered": false,
+    "corrections": null,
+    "selected": 2
+  },
+  "unsupported": {
+    "flag": false,
+    "code": null
+  },
+  "edit": {
+    "available": true,
+    "ok": true,
+    "seconds": 0.98,
+    "param": "outer_diameter",
+    "old": 120.0,
+    "new": 144.0,
+    "message": null
+  },
+  "targeted": {
+    "available": false,
+    "ok": false,
+    "seconds": null,
+    "operation": null,
+    "value": null,
+    "message": "not_applicable: the product requires a BRep result for targeted edits"
+  }
+}

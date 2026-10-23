@@ -1,0 +1,40 @@
+{
+  "view_frame": "The drawing uses third-angle projection with two primary views: TOP (XY) and FRONT (XZ). The world coordinate system is defined as X = width (horizontal in Front, horizontal in Top), Y = depth (vertical in Top), and Z = height (vertical in Front). The origin (0,0,0) is located at the bottom-front-left corner of the block.",
+  "features": [
+    {
+      "id": "block_body",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "60",
+        "40",
+        "20"
+      ],
+      "placement": "Extrude a 60x40 rectangle in the XY plane along the Z axis from Z=0 to Z=20. The block occupies the volume [0, 60] x [0, 40] x [0, 20].",
+      "evidence": "Front view shows a rectangle 60 wide and 20 high. Top view shows a rectangle 60 wide and 40 deep. Text notes 'Outer dimensions: 60 x 40 x 20' and 'Solid block'."
+    },
+    {
+      "id": "chamfer_top_edges",
+      "shape": "chamfer",
+      "section": "triangle",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "2 mm x 45 degrees"
+      ],
+      "placement": "Apply a 2mm chamfer to the four top edges of the block (the edges bounding the top face at Z=20). The chamfer cuts 2mm from the top surface and 2mm from the side surfaces.",
+      "evidence": "Front view shows chamfered top corners. Top view shows chamfered corners. Text notes 'All edges: 2 mm x 45 degrees' and 'block with chamfered top edges'."
+    }
+  ],
+  "connections": [
+    "The chamfered edges are modifications to the top edges of the block_body."
+  ],
+  "edit_rules": [
+    "Changing the block height (Z) moves the chamfered edges vertically but maintains their relative position at the top.",
+    "Changing the chamfer size updates the cut depth on the top and side faces of the block.",
+    "Changing the block width (X) or depth (Y) scales the chamfered edges along the respective axes."
+  ],
+  "unresolved": [
+    "The text note 'All edges: 2 mm x 45 degrees' conflicts with the visual representation which shows chamfers only on the top edges (visible in Front and Top views). The bottom edges appear sharp in the Front view. The plan assumes the user note 'block with chamfered top edges' and the visual evidence take precedence over the 'All edges' text."
+  ]
+}

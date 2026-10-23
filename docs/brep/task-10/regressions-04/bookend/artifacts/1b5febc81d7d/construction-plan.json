@@ -1,0 +1,104 @@
+{
+  "view_frame": "The drawing presents two views. The left view is the Front view (XZ plane), showing the part's width (X) and height (Z). The right view is the Right Side view (YZ plane), showing the part's depth (Y) and height (Z). The world origin is at the bottom-left corner of the Front view. X increases to the right, Y increases into the page (depth), and Z increases upwards.",
+  "features": [
+    {
+      "id": "base_plate",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "ASSUMED_WIDTH",
+        "ASSUMED_DEPTH",
+        "ASSUMED_THICKNESS"
+      ],
+      "placement": "Centred at (ASSUMED_WIDTH/2, ASSUMED_DEPTH/2, ASSUMED_THICKNESS/2). Extends from (0,0,0) to (ASSUMED_WIDTH, ASSUMED_DEPTH, ASSUMED_THICKNESS).",
+      "evidence": "The right view shows a horizontal base segment. The left view shows the overall rectangular footprint."
+    },
+    {
+      "id": "vertical_wall",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "ASSUMED_WIDTH",
+        "ASSUMED_DEPTH",
+        "ASSUMED_HEIGHT"
+      ],
+      "placement": "Centred at (ASSUMED_WIDTH/2, ASSUMED_DEPTH/2, ASSUMED_THICKNESS + ASSUMED_HEIGHT/2). Extends from (0,0,ASSUMED_THICKNESS) to (ASSUMED_WIDTH, ASSUMED_DEPTH, ASSUMED_THICKNESS + ASSUMED_HEIGHT).",
+      "evidence": "The right view shows a vertical segment rising from the base. The left view shows the tall rectangular outline."
+    },
+    {
+      "id": "opening_top_left",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "ASSUMED_OPENING_WIDTH",
+        "ASSUMED_OPENING_HEIGHT",
+        "ASSUMED_DEPTH"
+      ],
+      "placement": "Centred at (ASSUMED_OPENING_X, ASSUMED_DEPTH/2, ASSUMED_OPENING_Z). Extends from (ASSUMED_OPENING_X - ASSUMED_OPENING_WIDTH/2, 0, ASSUMED_OPENING_Z - ASSUMED_OPENING_HEIGHT/2) to (ASSUMED_OPENING_X + ASSUMED_OPENING_WIDTH/2, ASSUMED_DEPTH, ASSUMED_OPENING_Z + ASSUMED_OPENING_HEIGHT/2).",
+      "evidence": "A rectangular outline is visible in the upper-left quadrant of the Front view."
+    },
+    {
+      "id": "opening_mid_right",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "ASSUMED_OPENING_WIDTH",
+        "ASSUMED_OPENING_HEIGHT",
+        "ASSUMED_DEPTH"
+      ],
+      "placement": "Centred at (ASSUMED_OPENING_X, ASSUMED_DEPTH/2, ASSUMED_OPENING_Z). Extends from (ASSUMED_OPENING_X - ASSUMED_OPENING_WIDTH/2, 0, ASSUMED_OPENING_Z - ASSUMED_OPENING_HEIGHT/2) to (ASSUMED_OPENING_X + ASSUMED_OPENING_WIDTH/2, ASSUMED_DEPTH, ASSUMED_OPENING_Z + ASSUMED_OPENING_HEIGHT/2).",
+      "evidence": "A vertical rectangular outline is visible in the middle-right area of the Front view."
+    },
+    {
+      "id": "opening_bottom_left",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "ASSUMED_OPENING_WIDTH",
+        "ASSUMED_OPENING_HEIGHT",
+        "ASSUMED_DEPTH"
+      ],
+      "placement": "Centred at (ASSUMED_OPENING_X, ASSUMED_DEPTH/2, ASSUMED_OPENING_Z). Extends from (ASSUMED_OPENING_X - ASSUMED_OPENING_WIDTH/2, 0, ASSUMED_OPENING_Z - ASSUMED_OPENING_HEIGHT/2) to (ASSUMED_OPENING_X + ASSUMED_OPENING_WIDTH/2, ASSUMED_DEPTH, ASSUMED_OPENING_Z + ASSUMED_OPENING_HEIGHT/2).",
+      "evidence": "A vertical rectangular outline is visible in the lower-left area of the Front view."
+    },
+    {
+      "id": "opening_bottom_right",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "ASSUMED_OPENING_WIDTH",
+        "ASSUMED_OPENING_HEIGHT",
+        "ASSUMED_DEPTH"
+      ],
+      "placement": "Centred at (ASSUMED_OPENING_X, ASSUMED_DEPTH/2, ASSUMED_OPENING_Z). Extends from (ASSUMED_OPENING_X - ASSUMED_OPENING_WIDTH/2, 0, ASSUMED_OPENING_Z - ASSUMED_OPENING_HEIGHT/2) to (ASSUMED_OPENING_X + ASSUMED_OPENING_WIDTH/2, ASSUMED_DEPTH, ASSUMED_OPENING_Z + ASSUMED_OPENING_HEIGHT/2).",
+      "evidence": "A vertical rectangular outline is visible in the lower-right area of the Front view."
+    }
+  ],
+  "connections": [
+    "The vertical_wall is fused to the top surface of the base_plate.",
+    "The four openings are subtracted from the vertical_wall, penetrating through its depth (Y-axis)."
+  ],
+  "edit_rules": [
+    "Changing ASSUMED_WIDTH scales the X dimension of the base_plate, vertical_wall, and the X positions of all openings.",
+    "Changing ASSUMED_HEIGHT scales the Z dimension of the vertical_wall and the Z positions of all openings.",
+    "Changing ASSUMED_THICKNESS scales the Z dimension of the base_plate and shifts the Z origin of the vertical_wall and openings.",
+    "Changing ASSUMED_DEPTH scales the Y dimension of the base_plate, vertical_wall, and the depth of all openings.",
+    "Changing opening dimensions scales the respective opening prisms."
+  ],
+  "unresolved": [
+    "The drawing lacks all numerical dimensions. Specific values for width, height, depth, thickness, and opening positions/sizes are required to construct the part.",
+    "The nature of the rectangular outlines in the Front view is ambiguous. They could be through-holes (openings) or surface recesses. The current plan assumes they are through-holes based on the '3D print' hint and typical bracket designs, but this is not explicitly confirmed by a 'THRU' label or section view."
+  ],
+  "clarification": {
+    "feature_id": "opening_top_left",
+    "feature_label": "Top-left rectangular outline on the vertical face",
+    "reason": "The drawing shows a rectangular outline on the front face but does not indicate if it is a through-hole or a blind recess. The side view does not show internal lines that would clarify the depth.",
+    "kind": "opening_extent"
+  }
+}

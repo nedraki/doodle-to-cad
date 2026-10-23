@@ -1,0 +1,40 @@
+{
+  "view_frame": "The drawing provides a single TOP (XY) view. The world coordinate system is defined as: X is width (horizontal in view), Y is depth (vertical in view), and Z is height/thickness (perpendicular to the view). The origin (0,0,0) is assumed at the bottom-left corner of the block's footprint on the bottom face (Z=0). The block extends from X=0 to 40, Y=0 to 30, and Z=0 to 12.",
+  "features": [
+    {
+      "id": "block_body",
+      "shape": "rectangular_prism",
+      "section": "rectangular",
+      "axis_or_plane": "XY plane footprint, extruded along Z",
+      "dimensions": [
+        "40",
+        "30",
+        "12"
+      ],
+      "placement": "Centroid at (20, 15, 6). Extents: X[0, 40], Y[0, 30], Z[0, 12].",
+      "evidence": "Text 'Body: 40 wide x 30 deep x 12 thick' and the rectangular outline in the TOP view with dimensions 40 and 30."
+    },
+    {
+      "id": "opening_centre",
+      "shape": "cylinder",
+      "section": "circular",
+      "axis_or_plane": "Z axis (vertical)",
+      "dimensions": [
+        "\u00d88"
+      ],
+      "placement": "Centre axis at (X=20, Y=15). Extents: Z[0, 12] (through-hole).",
+      "evidence": "Circle in the TOP view labelled '\u00d88'. Text 'Opening centred in top face'. Clarification answer confirms 'through'."
+    }
+  ],
+  "connections": [
+    "The opening_centre is a subtractive feature from the block_body.",
+    "The opening_centre axis is coincident with the geometric centre of the block_body in the XY plane."
+  ],
+  "edit_rules": [
+    "If block_body width (X) changes, the opening_centre X coordinate must update to width/2 to maintain centring.",
+    "If block_body depth (Y) changes, the opening_centre Y coordinate must update to depth/2 to maintain centring.",
+    "If block_body thickness (Z) changes, the opening_centre Z extents must update to [0, new_thickness] to maintain the through-hole status.",
+    "If opening_centre diameter changes, the circle radius in the top view updates, but the centre coordinates remain fixed relative to the block centre."
+  ],
+  "unresolved": []
+}

@@ -1,0 +1,146 @@
+{
+  "object": "Wheel Disc",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "front",
+      "sheet_region": "view_4",
+      "what_it_constrains": "Primary geometry: Outer diameter (OD), hub diameter, spoke count (8), spoke width, and angular spacing. Defines the XY profile."
+    },
+    {
+      "direction": "right",
+      "sheet_region": "view_5",
+      "what_it_constrains": "Thickness (Z-axis depth) and flatness. Confirms uniform thickness of the entire assembly."
+    },
+    {
+      "direction": "top",
+      "sheet_region": "view_2",
+      "what_it_constrains": "Confirms thickness and flatness from the top projection."
+    },
+    {
+      "direction": "left",
+      "sheet_region": "view_3",
+      "what_it_constrains": "Confirms thickness and flatness from the left projection."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "wheel_disc",
+      "name": "Wheel Disc",
+      "material": "plastic",
+      "description": "Single connected solid consisting of an outer rim, central hub, and 8 straight spokes."
+    }
+  ],
+  "features": [
+    {
+      "id": "outer_rim",
+      "type": "ring",
+      "owner": "wheel_disc",
+      "description": "Outer circular boundary of the wheel."
+    },
+    {
+      "id": "central_hub",
+      "type": "cylinder",
+      "owner": "wheel_disc",
+      "description": "Central solid disk connecting the spokes."
+    },
+    {
+      "id": "spokes",
+      "type": "array",
+      "owner": "wheel_disc",
+      "description": "8 straight radial bars connecting the hub to the rim."
+    }
+  ],
+  "relations": [
+    {
+      "type": "connects",
+      "from": "spokes",
+      "to": "central_hub",
+      "description": "Spokes are attached to the hub."
+    },
+    {
+      "type": "connects",
+      "from": "spokes",
+      "to": "outer_rim",
+      "description": "Spokes are attached to the inner face of the rim."
+    }
+  ],
+  "symmetry": {
+    "type": "rotational",
+    "axis": "Z",
+    "order": 8
+  },
+  "repetitions": [
+    {
+      "feature_id": "spokes",
+      "count": 8,
+      "pattern": "radial",
+      "spacing": "45 degrees"
+    }
+  ],
+  "dimensions": {
+    "diameter": 120.0,
+    "thickness": 8.0,
+    "max_width": 27.8,
+    "max_depth": 120.0,
+    "max_height": 9.5,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "Exact width of the spokes is not explicitly dimensioned but appears uniform in the drawing.",
+    "Exact diameter of the central hub is not explicitly dimensioned."
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "The object is a flat wheel disc. The primary view (view_4) shows the XY profile. The side views (view_2, view_3, view_5) confirm a uniform thickness (Z-axis). The geometry is constructed by extruding the 2D profile defined by the rim, hub, and spokes.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "extrude",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_2",
+        "operation": "extrude",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "owner": "wheel_disc",
+        "parameters": {
+          "depth": 8
+        },
+        "source_views": [
+          "view_5"
+        ]
+      }
+    ],
+    "unresolved_constraints": [
+      "Hub diameter estimated from visual proportion.",
+      "Spoke width estimated from visual proportion."
+    ]
+  },
+  "user_intent": {
+    "description": "Wheel disc: outer rim, eight evenly spaced straight spokes, central hub. One connected solid of uniform thickness.",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "120"
+  },
+  "source_view_group_count": 6,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

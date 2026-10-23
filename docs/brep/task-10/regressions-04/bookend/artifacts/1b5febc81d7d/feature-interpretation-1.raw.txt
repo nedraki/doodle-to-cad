@@ -1,0 +1,156 @@
+```json
+{
+  "version": 1,
+  "object_hypothesis": "L-shaped bracket with a vertical face containing multiple rectangular openings",
+  "features": [
+    {
+      "id": "body_main",
+      "type": "body",
+      "description": "Main structural body defined by the outer contours in both views",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_0"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_10"
+        }
+      ],
+      "reason": "View 1 shows a large rectangular boundary; View 2 shows an L-shaped boundary. Together they define the extent of the object."
+    },
+    {
+      "id": "opening_1",
+      "type": "opening",
+      "description": "Rectangular opening located in the upper-left quadrant of the front face",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_8"
+        }
+      ],
+      "reason": "Closed internal contour detected in the upper-left region of the front view."
+    },
+    {
+      "id": "opening_2",
+      "type": "opening",
+      "description": "Vertical rectangular opening located in the lower-left quadrant",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_4"
+        }
+      ],
+      "reason": "Closed internal contour detected in the lower-left region of the front view."
+    },
+    {
+      "id": "opening_3",
+      "type": "opening",
+      "description": "Vertical rectangular opening located in the central region",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_6"
+        }
+      ],
+      "reason": "Closed internal contour detected in the central region of the front view."
+    },
+    {
+      "id": "opening_4",
+      "type": "opening",
+      "description": "Vertical rectangular opening located in the lower-right quadrant",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_2"
+        }
+      ],
+      "reason": "Closed internal contour detected in the lower-right region of the front view."
+    },
+    {
+      "id": "flange_base",
+      "type": "flange",
+      "description": "Horizontal extension at the bottom of the object",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_10"
+        }
+      ],
+      "reason": "View 2 shows a horizontal leg extending from the vertical body. View 1 does not show a distinct boundary for this leg, implying it is coplanar with the front face or hidden behind it."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "rel_openings_in_body",
+      "type": "connected",
+      "features": [
+        "opening_1",
+        "opening_2",
+        "opening_3",
+        "opening_4",
+        "body_main"
+      ],
+      "description": "Openings are contained within the main body",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_0"
+        },
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_8"
+        },
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_4"
+        },
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_6"
+        },
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_2"
+        }
+      ],
+      "reason": "Internal contours are spatially located inside the outer contour in the front view."
+    },
+    {
+      "id": "rel_l_shape",
+      "type": "other",
+      "features": [
+        "body_main",
+        "flange_base"
+      ],
+      "description": "Body and flange form an L-shaped profile",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_10"
+        }
+      ],
+      "reason": "The side view (View 2) clearly depicts an L-shaped cross-section, implying the object consists of a vertical wall and a horizontal base."
+    }
+  ],
+  "assumptions": [
+    "View 1 represents the front face (XZ plane) and View 2 represents the side profile (YZ plane).",
+    "The internal contours in View 1 represent through-holes or pockets, as they are closed loops within the outer boundary."
+  ],
+  "unresolved": [
+    "Depth of the openings (through-holes vs. blind pockets).",
+    "Exact thickness of the vertical wall and horizontal flange (View 2 is a sketch and lacks precise scale relative to View 1)."
+  ],
+  "conflicts": [
+    "View 1 shows a continuous rectangular outer boundary, while View 2 shows an L-shape. This implies the horizontal flange in View 2 is either flush with the front face (making it invisible as a separate line in View 1) or the drawing is a schematic where the front view simplifies the geometry."
+  ]
+}
+```

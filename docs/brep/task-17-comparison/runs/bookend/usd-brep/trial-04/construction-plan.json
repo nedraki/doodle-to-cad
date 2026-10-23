@@ -1,0 +1,94 @@
+{
+  "view_frame": "The drawing presents two views of an L-shaped bookend. The left view is the Front view (XZ plane), showing the upright panel with four rectangular openings. The right view is the Right view (YZ plane), showing the L-profile of the base and panel. The world frame is defined as X (width, left-right in Front view), Y (depth, left-right in Right view), and Z (height, up-down in Front view).",
+  "features": [
+    {
+      "id": "base_plate",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "ASSUMED: base_width_x = 80mm",
+        "ASSUMED: base_depth_y = 60mm",
+        "ASSUMED: base_thickness_z = 10mm"
+      ],
+      "placement": "Centered at (0, 0, 5). Extends from Z=0 to Z=10. Extends from X=-40 to X=40. Extends from Y=-30 to Y=30.",
+      "evidence": "The horizontal leg of the L-shape in the Right view (YZ plane) and the bottom edge of the Front view (XZ plane)."
+    },
+    {
+      "id": "upright_panel",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "ASSUMED: panel_width_x = 80mm",
+        "ASSUMED: panel_thickness_y = 10mm",
+        "ASSUMED: panel_height_z = 100mm"
+      ],
+      "placement": "Centered at (0, -25, 55). Extends from Z=0 to Z=100. Extends from X=-40 to X=40. Extends from Y=-30 to Y=-20.",
+      "evidence": "The vertical leg of the L-shape in the Right view (YZ plane) and the main body of the Front view (XZ plane)."
+    },
+    {
+      "id": "opening_1",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "ASSUMED: width_x = 30mm",
+        "ASSUMED: height_z = 20mm"
+      ],
+      "placement": "Centered at (-20, -25, 80). Extends from Z=70 to Z=90. Extends from X=-35 to X=-5. Extends from Y=-30 to Y=-20 (through panel).",
+      "evidence": "Top-left rectangular opening in the Front view."
+    },
+    {
+      "id": "opening_2",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "ASSUMED: width_x = 10mm",
+        "ASSUMED: height_z = 40mm"
+      ],
+      "placement": "Centered at (0, -25, 60). Extends from Z=40 to Z=80. Extends from X=-5 to X=5. Extends from Y=-30 to Y=-20 (through panel).",
+      "evidence": "Central vertical rectangular opening in the Front view."
+    },
+    {
+      "id": "opening_3",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "ASSUMED: width_x = 15mm",
+        "ASSUMED: height_z = 40mm"
+      ],
+      "placement": "Centered at (-20, -25, 30). Extends from Z=10 to Z=50. Extends from X=-27.5 to X=-12.5. Extends from Y=-30 to Y=-20 (through panel).",
+      "evidence": "Bottom-left vertical rectangular opening in the Front view."
+    },
+    {
+      "id": "opening_4",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "ASSUMED: width_x = 15mm",
+        "ASSUMED: height_z = 40mm"
+      ],
+      "placement": "Centered at (20, -25, 30). Extends from Z=10 to Z=50. Extends from X=12.5 to X=27.5. Extends from Y=-30 to Y=-20 (through panel).",
+      "evidence": "Bottom-right vertical rectangular opening in the Front view."
+    }
+  ],
+  "connections": [
+    "The upright_panel is attached to the base_plate at the interface Y=-30 to Y=-20, Z=0 to Z=10.",
+    "The four openings (opening_1, opening_2, opening_3, opening_4) are subtractive features that penetrate the entire thickness of the upright_panel."
+  ],
+  "edit_rules": [
+    "Changing base_thickness_z moves the bottom of the upright_panel and the Z-positions of all openings relative to the base.",
+    "Changing panel_thickness_y moves the Y-positions of the openings.",
+    "Changing panel_width_x scales the X-positions of the openings proportionally.",
+    "Changing panel_height_z scales the Z-positions of the openings proportionally.",
+    "Changing the dimensions of an opening moves its center to maintain relative spacing if constrained, or simply resizes it if unconstrained."
+  ],
+  "unresolved": [
+    "All dimensions are assumed based on visual proportions as no numerical values are provided in the drawing.",
+    "The exact alignment of the openings relative to the panel edges is assumed to be symmetric or evenly spaced based on the sketch."
+  ]
+}

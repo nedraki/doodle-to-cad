@@ -1,0 +1,63 @@
+{
+  "cutout": {
+    "job": "f4fae85b6cc6",
+    "checks": [
+      {
+        "parameter": "width",
+        "value": 70,
+        "selection": "matched",
+        "camera_preserved": true
+      },
+      {
+        "parameter": "hole4_x",
+        "value": 90,
+        "selection": "lost",
+        "camera_preserved": true
+      },
+      {
+        "discard_restores_selection": true
+      }
+    ],
+    "reload_selection": true
+  },
+  "enclosure_face": {
+    "job": "a39c8079061d",
+    "checks": [
+      {
+        "parameter": "thickness",
+        "value": 3,
+        "selection": "matched",
+        "camera_preserved": true
+      }
+    ],
+    "reload_selection": true
+  },
+  "outer_edges": {
+    "job": "a41d61533267",
+    "checks": [
+      {
+        "parameter": "width",
+        "value": 70,
+        "selection": "matched",
+        "camera_preserved": true
+      }
+    ],
+    "reload_selection": true
+  },
+  "split_cutout": {
+    "job": "67ca4a28e555",
+    "checks": [
+      {
+        "parameter": "bridge_z",
+        "value": 56,
+        "selection": "ambiguous",
+        "camera_preserved": true
+      },
+      {
+        "discard_restores_selection": true
+      }
+    ],
+    "reload_selection": true
+  },
+  "browser_errors": []
+}

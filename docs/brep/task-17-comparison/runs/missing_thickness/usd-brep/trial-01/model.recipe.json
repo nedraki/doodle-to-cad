@@ -1,0 +1,131 @@
+{
+  "version": 2,
+  "units": "mm",
+  "name": "rounded_open_tray",
+  "parameters": {
+    "width": {
+      "value": 60,
+      "min": 30,
+      "max": 100,
+      "label": "Outer Width",
+      "description": "Outer width of the tray along X"
+    },
+    "depth": {
+      "value": 40,
+      "min": 20,
+      "max": 80,
+      "label": "Outer Depth",
+      "description": "Outer depth of the tray along Y"
+    },
+    "height": {
+      "value": 20,
+      "min": 10,
+      "max": 50,
+      "label": "Outer Height",
+      "description": "Outer height of the tray along Z"
+    },
+    "outer_radius": {
+      "value": 6,
+      "min": 1,
+      "max": 20,
+      "label": "Outer Corner Radius",
+      "description": "Radius of the outer vertical corners"
+    },
+    "thickness": {
+      "value": 3,
+      "min": 1,
+      "max": 10,
+      "label": "Wall and floor thickness",
+      "description": "Uniform thickness for walls and floor"
+    }
+  },
+  "operations": [
+    {
+      "id": "outer_box",
+      "kind": "box",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "size": [
+        "width",
+        "depth",
+        "height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "rounded_box",
+      "kind": "fillet",
+      "body": "outer_box",
+      "radius": "outer_radius",
+      "selector": "parallel_z",
+      "frame": "world",
+      "depends_on": [
+        "outer_box"
+      ],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "tray",
+      "kind": "shell",
+      "body": "rounded_box",
+      "thickness": "thickness",
+      "opening": "top",
+      "preserve": "outer",
+      "frame": "world",
+      "depends_on": [
+        "rounded_box"
+      ],
+      "evidence": [
+        "e3"
+      ]
+    }
+  ],
+  "output": "tray",
+  "frames": {
+    "world": {
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    }
+  },
+  "bodies": [
+    {
+      "id": "part",
+      "output": "tray"
+    }
+  ],
+  "evidence": {
+    "observed": [],
+    "inferred": [],
+    "assumptions": [
+      {
+        "id": "e1",
+        "text": "Outer dimensions 60x40x20 mm from drawing text."
+      },
+      {
+        "id": "e2",
+        "text": "Outer vertical corner radius R6 from drawing text."
+      },
+      {
+        "id": "e3",
+        "text": "Uniform wall and floor thickness of 3 mm from clarification answer."
+      }
+    ],
+    "unresolved": []
+  },
+  "constraints": []
+}

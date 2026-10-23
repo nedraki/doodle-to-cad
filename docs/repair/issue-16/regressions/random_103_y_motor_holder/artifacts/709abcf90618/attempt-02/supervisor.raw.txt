@@ -1,0 +1,15 @@
+{
+  "action": "repair_scad",
+  "problems": [
+    "Missing hole in vertical wall (Top view shows 2 holes, model has 1).",
+    "Wall hole cutter axis is likely misaligned or positioned incorrectly relative to the wall face.",
+    "Top view projection similarity is low (0.618) due to missing feature."
+  ],
+  "preserve": [
+    "Overall L-shape dimensions and proportions.",
+    "Base plate hole position and geometry.",
+    "Rib geometry and placement.",
+    "Mesh validity and watertightness."
+  ],
+  "instructions": "Fix the vertical wall hole (hole_wall). Ensure the cylinder is rotated to align with the X-axis (perpendicular to the wall face) and positioned correctly within the wall's Y and Z bounds. Verify the hole passes completely through the wall thickness. The Top view must show two distinct circular openings: one in the base and one in the wall."
+}

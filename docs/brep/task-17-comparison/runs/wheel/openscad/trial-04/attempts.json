@@ -1,0 +1,469 @@
+[
+  {
+    "attempt": 1,
+    "action": "generate",
+    "preflight": {
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "expected_subtractive_feature_groups": 0
+    },
+    "compiler_repairs": [],
+    "uniform_scale": null,
+    "evaluation": {
+      "score": 82.0,
+      "valid_mesh": false,
+      "accepted": false,
+      "mandatory_gates": {
+        "compiled": true,
+        "topology": false,
+        "dimensions": true,
+        "shape_sanity": false,
+        "features": true,
+        "projections": true,
+        "build_envelope": true
+      },
+      "scores": {
+        "topology": 27,
+        "dimensions": 20.0,
+        "features": 20,
+        "projections": 15.0
+      },
+      "projection_similarity": {
+        "front": 0.997
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 9,
+          "crop_internal_profiles": 0,
+          "source_aspect": 3.45,
+          "rendered_aspect": 12.467,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": [
+            [
+              0.929,
+              0.468
+            ],
+            [
+              0.868,
+              0.468
+            ],
+            [
+              0.79,
+              0.467
+            ],
+            [
+              0.701,
+              0.467
+            ],
+            [
+              0.602,
+              0.467
+            ],
+            [
+              0.497,
+              0.467
+            ],
+            [
+              0.393,
+              0.467
+            ],
+            [
+              0.294,
+              0.467
+            ],
+            [
+              0.143,
+              0.468
+            ]
+          ]
+        }
+      },
+      "failures": [
+        "mesh has 2 disconnected components",
+        "degenerate or implausible axis dimensions: X=120 mm vs expected 27.8 mm"
+      ]
+    },
+    "mesh_health": {
+      "watertight": true,
+      "components": 2,
+      "triangles": 396,
+      "extents_mm": [
+        120.0,
+        119.343,
+        9.5
+      ],
+      "volume_mm3": 34236.209
+    },
+    "build": {
+      "version": 1,
+      "backend": "openscad",
+      "source_format": "openscad",
+      "ok": true,
+      "units": "mm",
+      "axes": {
+        "x": "width",
+        "y": "depth",
+        "z": "height"
+      },
+      "views": [
+        "isometric",
+        "front",
+        "top",
+        "right"
+      ],
+      "measurements": {
+        "watertight": true,
+        "components": 2,
+        "triangles": 396,
+        "extents_mm": [
+          120.0,
+          119.343,
+          9.5
+        ],
+        "volume_mm3": 34236.209
+      },
+      "diagnostics": [],
+      "drawing_evaluated": false
+    },
+    "compile_log": "Geometries in cache: 13\nGeometry cache size in bytes: 20696\nCGAL Polyhedrons in cache: 4\nCGAL cache size in bytes: 767136\nTotal rendering time: 0:00:00.671\n   Top level object is a 3D object:\n   Simple:        yes\n   Vertices:      200\n   Halfedges:     600\n   Edges:         300\n   Halffacets:    208\n   Facets:        104\n   Volumes:         3",
+    "files": {
+      "scad": "attempt-01/model.scad",
+      "stl": "attempt-01/model.stl",
+      "views": {
+        "isometric": "attempt-01/view-isometric.png",
+        "front": "attempt-01/view-front.png",
+        "top": "attempt-01/view-top.png",
+        "right": "attempt-01/view-right.png"
+      }
+    },
+    "supervisor": {
+      "action": "repair_scad",
+      "problems": [
+        "Mesh has 2 disconnected components (rim separated from hub/spokes)",
+        "Spokes do not connect to the outer rim due to incorrect length calculation",
+        "Front view projection is a thin line, indicating incorrect orientation or view axis mapping"
+      ],
+      "preserve": [
+        "Overall dimensions (OD 120mm, Thickness 9.5mm)",
+        "Feature definitions (8 spokes, central hub, outer rim)",
+        "General construction strategy (extrusion of 2D profile)"
+      ],
+      "instructions": "Fix spoke connectivity by extending spoke length to overlap the inner rim boundary (e.g., set spoke_length = outer_radius - hub_radius + rim_thickness). Ensure the union operation creates a single connected solid. Verify the model orientation aligns with the coordinate frame so the front view displays the wheel face, not the edge."
+    }
+  },
+  {
+    "attempt": 2,
+    "action": "repair_scad",
+    "preflight": {
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "expected_subtractive_feature_groups": 0
+    },
+    "compiler_repairs": [
+      {
+        "repair": 1,
+        "preflight": {
+          "passed": true,
+          "errors": [],
+          "warnings": [],
+          "expected_subtractive_feature_groups": 0
+        },
+        "compile_log": "ERROR: Parser error: syntax error in file model.scad, line 1\nCan't parse file '/work/model.scad'!",
+        "failed_scad": "compiler-repair-01.failed.scad"
+      }
+    ],
+    "uniform_scale": null,
+    "evaluation": {
+      "score": 82.0,
+      "valid_mesh": false,
+      "accepted": false,
+      "mandatory_gates": {
+        "compiled": true,
+        "topology": false,
+        "dimensions": true,
+        "shape_sanity": false,
+        "features": true,
+        "projections": true,
+        "build_envelope": true
+      },
+      "scores": {
+        "topology": 27,
+        "dimensions": 20.0,
+        "features": 20,
+        "projections": 15.0
+      },
+      "projection_similarity": {
+        "front": 0.997
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 9,
+          "crop_internal_profiles": 0,
+          "source_aspect": 3.45,
+          "rendered_aspect": 12.467,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": [
+            [
+              0.929,
+              0.468
+            ],
+            [
+              0.868,
+              0.468
+            ],
+            [
+              0.79,
+              0.467
+            ],
+            [
+              0.701,
+              0.467
+            ],
+            [
+              0.602,
+              0.467
+            ],
+            [
+              0.497,
+              0.467
+            ],
+            [
+              0.393,
+              0.467
+            ],
+            [
+              0.294,
+              0.467
+            ],
+            [
+              0.143,
+              0.468
+            ]
+          ]
+        }
+      },
+      "failures": [
+        "mesh has 2 disconnected components",
+        "degenerate or implausible axis dimensions: X=120 mm vs expected 27.8 mm"
+      ]
+    },
+    "mesh_health": {
+      "watertight": true,
+      "components": 2,
+      "triangles": 396,
+      "extents_mm": [
+        120.0,
+        119.343,
+        9.5
+      ],
+      "volume_mm3": 35452.202
+    },
+    "build": {
+      "version": 1,
+      "backend": "openscad",
+      "source_format": "openscad",
+      "ok": true,
+      "units": "mm",
+      "axes": {
+        "x": "width",
+        "y": "depth",
+        "z": "height"
+      },
+      "views": [
+        "isometric",
+        "front",
+        "top",
+        "right"
+      ],
+      "measurements": {
+        "watertight": true,
+        "components": 2,
+        "triangles": 396,
+        "extents_mm": [
+          120.0,
+          119.343,
+          9.5
+        ],
+        "volume_mm3": 35452.202
+      },
+      "diagnostics": [],
+      "drawing_evaluated": false
+    },
+    "compile_log": "Geometries in cache: 13\nGeometry cache size in bytes: 20696\nCGAL Polyhedrons in cache: 3\nCGAL cache size in bytes: 497120\nTotal rendering time: 0:00:00.647\n   Top level object is a 3D object:\n   Simple:        yes\n   Vertices:      200\n   Halfedges:     600\n   Edges:         300\n   Halffacets:    208\n   Facets:        104\n   Volumes:         3",
+    "files": {
+      "scad": "attempt-02/model.scad",
+      "stl": "attempt-02/model.stl",
+      "views": {
+        "isometric": "attempt-02/view-isometric.png",
+        "front": "attempt-02/view-front.png",
+        "top": "attempt-02/view-top.png",
+        "right": "attempt-02/view-right.png"
+      }
+    },
+    "supervisor": {
+      "action": "regenerate_scad",
+      "problems": [
+        "Mesh has 2 disconnected components (spokes detached from rim)",
+        "Spoke length calculation is insufficient to bridge hub and rim",
+        "Front view projection is incorrect (shows side profile instead of face)"
+      ],
+      "preserve": [
+        "Overall dimensions (OD 120mm, Thickness 9.5mm)",
+        "Feature topology (Rim, Hub, 8 Spokes)",
+        "Coordinate system (XY plane for face, Z for thickness)"
+      ],
+      "instructions": "Previous repair made no measurable progress. Regenerate cleanly from the specification and mandatory gate failures using a different construction strategy."
+    }
+  },
+  {
+    "attempt": 3,
+    "action": "regenerate_scad",
+    "preflight": {
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "expected_subtractive_feature_groups": 0
+    },
+    "compiler_repairs": [],
+    "uniform_scale": null,
+    "evaluation": {
+      "score": 100.0,
+      "valid_mesh": true,
+      "accepted": false,
+      "mandatory_gates": {
+        "compiled": true,
+        "topology": true,
+        "dimensions": true,
+        "shape_sanity": false,
+        "features": true,
+        "projections": true,
+        "build_envelope": true
+      },
+      "scores": {
+        "topology": 45,
+        "dimensions": 20.0,
+        "features": 20,
+        "projections": 15.0
+      },
+      "projection_similarity": {
+        "front": 0.997
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 11,
+          "crop_internal_profiles": 0,
+          "source_aspect": 3.45,
+          "rendered_aspect": 12.467,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": [
+            [
+              0.85,
+              0.468
+            ],
+            [
+              0.796,
+              0.468
+            ],
+            [
+              0.754,
+              0.468
+            ],
+            [
+              0.711,
+              0.468
+            ],
+            [
+              0.666,
+              0.468
+            ],
+            [
+              0.618,
+              0.468
+            ],
+            [
+              0.57,
+              0.468
+            ],
+            [
+              0.497,
+              0.469
+            ],
+            [
+              0.425,
+              0.468
+            ],
+            [
+              0.377,
+              0.468
+            ],
+            [
+              0.186,
+              0.469
+            ]
+          ]
+        }
+      },
+      "failures": [
+        "degenerate or implausible axis dimensions: X=120 mm vs expected 27.8 mm"
+      ]
+    },
+    "mesh_health": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 844,
+      "extents_mm": [
+        120.0,
+        120.0,
+        9.5
+      ],
+      "volume_mm3": 59685.025
+    },
+    "build": {
+      "version": 1,
+      "backend": "openscad",
+      "source_format": "openscad",
+      "ok": true,
+      "units": "mm",
+      "axes": {
+        "x": "width",
+        "y": "depth",
+        "z": "height"
+      },
+      "views": [
+        "isometric",
+        "front",
+        "top",
+        "right"
+      ],
+      "measurements": {
+        "watertight": true,
+        "components": 1,
+        "triangles": 844,
+        "extents_mm": [
+          120.0,
+          120.0,
+          9.5
+        ],
+        "volume_mm3": 59685.025
+      },
+      "diagnostics": [],
+      "drawing_evaluated": false
+    },
+    "compile_log": "Geometries in cache: 15\nGeometry cache size in bytes: 54120\nCGAL Polyhedrons in cache: 3\nCGAL cache size in bytes: 981360\nTotal rendering time: 0:00:00.797\n   Top level object is a 3D object:\n   Simple:        yes\n   Vertices:      424\n   Halfedges:    1272\n   Edges:         636\n   Halffacets:    428\n   Facets:        214\n   Volumes:         2",
+    "files": {
+      "scad": "attempt-03/model.scad",
+      "stl": "attempt-03/model.stl",
+      "views": {
+        "isometric": "attempt-03/view-isometric.png",
+        "front": "attempt-03/view-front.png",
+        "top": "attempt-03/view-top.png",
+        "right": "attempt-03/view-right.png"
+      }
+    }
+  }
+]

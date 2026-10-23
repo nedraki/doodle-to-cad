@@ -1,0 +1,359 @@
+{
+  "image_size_px": [
+    1000,
+    750
+  ],
+  "ink_fraction": 0.0219,
+  "contour_count": 3,
+  "line_count": 72,
+  "drawing_sheet_contract": "All spatial groups are projections or isometric depictions of ONE physical object.",
+  "view_group_count": 2,
+  "view_groups": [
+    {
+      "bbox_normalized": [
+        0.192,
+        0.0173,
+        0.466,
+        0.1413
+      ],
+      "center_normalized": [
+        0.425,
+        0.088
+      ],
+      "relative_size": 0.0659,
+      "meaning": "view_of_same_object",
+      "view_id": "view_1"
+    },
+    {
+      "bbox_normalized": [
+        0.187,
+        0.3213,
+        0.469,
+        0.5653
+      ],
+      "center_normalized": [
+        0.4215,
+        0.604
+      ],
+      "relative_size": 0.2651,
+      "meaning": "view_of_same_object",
+      "view_id": "view_2"
+    }
+  ],
+  "closed_internal_profile_count": 0,
+  "closed_internal_profiles": [],
+  "largest_regions": [
+    {
+      "contour_id": "contour_0",
+      "parent_contour_id": null,
+      "area_ratio": 0.09757,
+      "bbox_normalized": [
+        0.195,
+        0.3293,
+        0.452,
+        0.5493
+      ],
+      "center_normalized": [
+        0.421,
+        0.604
+      ],
+      "vertices": 6,
+      "circularity": 0.304,
+      "hierarchy_depth": 0,
+      "closed_internal_profile": false,
+      "orphan_opening_ring": false,
+      "polygon_sheet_normalized": [
+        [
+          0.204,
+          0.3413
+        ],
+        [
+          0.195,
+          0.8747
+        ],
+        [
+          0.646,
+          0.8613
+        ],
+        [
+          0.641,
+          0.7587
+        ],
+        [
+          0.311,
+          0.74
+        ],
+        [
+          0.307,
+          0.3333
+        ]
+      ]
+    },
+    {
+      "contour_id": "contour_1",
+      "parent_contour_id": "contour_0",
+      "area_ratio": 0.08614,
+      "bbox_normalized": [
+        0.201,
+        0.336,
+        0.44,
+        0.536
+      ],
+      "center_normalized": [
+        0.421,
+        0.604
+      ],
+      "vertices": 6,
+      "circularity": 0.289,
+      "hierarchy_depth": 1,
+      "closed_internal_profile": false,
+      "orphan_opening_ring": false,
+      "polygon_sheet_normalized": [
+        [
+          0.209,
+          0.3453
+        ],
+        [
+          0.302,
+          0.3387
+        ],
+        [
+          0.307,
+          0.7467
+        ],
+        [
+          0.636,
+          0.764
+        ],
+        [
+          0.64,
+          0.856
+        ],
+        [
+          0.214,
+          0.8707
+        ]
+      ]
+    },
+    {
+      "contour_id": "contour_3",
+      "parent_contour_id": null,
+      "area_ratio": 0.00689,
+      "bbox_normalized": [
+        0.2,
+        0.0253,
+        0.449,
+        0.1253
+      ],
+      "center_normalized": [
+        0.4245,
+        0.088
+      ],
+      "vertices": 8,
+      "circularity": 0.014,
+      "hierarchy_depth": 0,
+      "closed_internal_profile": false,
+      "orphan_opening_ring": false,
+      "polygon_sheet_normalized": [
+        [
+          0.648,
+          0.0507
+        ],
+        [
+          0.207,
+          0.0347
+        ],
+        [
+          0.643,
+          0.0613
+        ],
+        [
+          0.636,
+          0.1427
+        ],
+        [
+          0.207,
+          0.1227
+        ],
+        [
+          0.202,
+          0.0467
+        ],
+        [
+          0.202,
+          0.128
+        ],
+        [
+          0.641,
+          0.1493
+        ]
+      ]
+    }
+  ],
+  "view_geometry": [
+    {
+      "view_id": "view_1",
+      "sheet_bbox_normalized": [
+        0.192,
+        0.0173,
+        0.466,
+        0.1413
+      ],
+      "pixel_aspect_ratio_width_over_height": 4.3973,
+      "measured_span_pixels": {
+        "horizontal_axis_u": 466,
+        "vertical_axis_v": 106
+      },
+      "coordinate_system": {
+        "origin": "top-left of this view crop",
+        "u_axis": "right",
+        "v_axis": "down",
+        "range": "u and v are normalized from 0 to 1 within this view"
+      },
+      "outer_profile": {
+        "profile_id": "contour_3",
+        "bbox_view_normalized": [
+          0.0172,
+          0.0566,
+          0.9635,
+          0.8868
+        ],
+        "center_view_normalized": [
+          0.4989,
+          0.5004
+        ],
+        "polygon_view_normalized": [
+          [
+            0.9785,
+            0.2364
+          ],
+          [
+            0.0322,
+            0.1231
+          ],
+          [
+            0.9678,
+            0.3114
+          ],
+          [
+            0.9528,
+            0.8875
+          ],
+          [
+            0.0322,
+            0.7459
+          ],
+          [
+            0.0215,
+            0.2081
+          ],
+          [
+            0.0215,
+            0.7834
+          ],
+          [
+            0.9635,
+            0.9342
+          ]
+        ],
+        "vertices": 8,
+        "circularity": 0.014,
+        "area_ratio_of_sheet": 0.00689
+      },
+      "internal_profiles": [],
+      "direction": "top",
+      "cad_mapping": {
+        "plane": "XY",
+        "view_axis": "Z",
+        "u_maps_to": "+X",
+        "v_maps_to": "-Y"
+      }
+    },
+    {
+      "view_id": "view_2",
+      "sheet_bbox_normalized": [
+        0.187,
+        0.3213,
+        0.469,
+        0.5653
+      ],
+      "pixel_aspect_ratio_width_over_height": 1.1062,
+      "measured_span_pixels": {
+        "horizontal_axis_u": 469,
+        "vertical_axis_v": 424
+      },
+      "coordinate_system": {
+        "origin": "top-left of this view crop",
+        "u_axis": "right",
+        "v_axis": "down",
+        "range": "u and v are normalized from 0 to 1 within this view"
+      },
+      "outer_profile": {
+        "profile_id": "contour_0",
+        "bbox_view_normalized": [
+          0.0171,
+          0.0142,
+          0.9638,
+          0.9717
+        ],
+        "center_view_normalized": [
+          0.4989,
+          0.5001
+        ],
+        "polygon_view_normalized": [
+          [
+            0.0362,
+            0.0354
+          ],
+          [
+            0.0171,
+            0.9789
+          ],
+          [
+            0.9787,
+            0.9552
+          ],
+          [
+            0.968,
+            0.7737
+          ],
+          [
+            0.2644,
+            0.7407
+          ],
+          [
+            0.2559,
+            0.0212
+          ]
+        ],
+        "vertices": 6,
+        "circularity": 0.304,
+        "area_ratio_of_sheet": 0.09757
+      },
+      "internal_profiles": [],
+      "direction": "front",
+      "cad_mapping": {
+        "plane": "XZ",
+        "view_axis": "Y",
+        "u_maps_to": "+X",
+        "v_maps_to": "-Z"
+      }
+    }
+  ],
+  "coordinate_contract": {
+    "sheet": {
+      "origin": "top-left",
+      "x_axis": "right",
+      "y_axis": "down",
+      "units": "normalized image fraction"
+    },
+    "cad": {
+      "origin": "shared object origin",
+      "x_axis": "width",
+      "y_axis": "front-to-back depth",
+      "z_axis": "height",
+      "units": "millimetres"
+    },
+    "rule": "Use view-local profile coordinates and cad_mapping; sheet placement separates views and is never physical geometry."
+  }
+}

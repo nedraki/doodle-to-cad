@@ -1,0 +1,123 @@
+{
+  "object": "Bevelled Block",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "top",
+      "sheet_region": "view_6",
+      "constrains": "XY profile (60x40) and corner chamfers"
+    },
+    {
+      "direction": "front",
+      "sheet_region": "view_5",
+      "constrains": "XZ profile (60x20) and corner chamfers"
+    },
+    {
+      "direction": "left",
+      "sheet_region": "view_1",
+      "constrains": "YZ profile (40x20) and corner chamfers"
+    },
+    {
+      "direction": "right",
+      "sheet_region": "view_4",
+      "constrains": "YZ profile (40x20) and corner chamfers"
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "part_1",
+      "name": "Bevelled Block",
+      "material": "generic_plastic",
+      "bounding_box": [
+        60,
+        40,
+        20
+      ]
+    }
+  ],
+  "features": [
+    {
+      "id": "feat_1",
+      "type": "chamfer",
+      "owner": "part_1",
+      "description": "2mm x 45 degree chamfer on all 12 edges of the block",
+      "parameters": {
+        "size": 2,
+        "angle": 45
+      }
+    }
+  ],
+  "relations": [],
+  "symmetry": {
+    "planes": [
+      "XY",
+      "XZ",
+      "YZ"
+    ],
+    "center": [
+      30,
+      20,
+      10
+    ]
+  },
+  "repetitions": [
+    {
+      "feature_id": "feat_1",
+      "count": 12,
+      "pattern": "edges"
+    }
+  ],
+  "dimensions": {
+    "max_width": 60.0,
+    "max_depth": 25.18,
+    "max_height": 4.27,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [],
+  "interpretation_conflicts": [],
+  "generation_notes": "The drawing explicitly defines a solid block with dimensions 60x40x20mm. The text 'All edges: 2 mm x 45 degrees' and the visual representation of chamfered corners in the Top and Front views confirm a block with chamfered edges. The OpenCV hierarchy shows nested contours (outer and inner lines) which represent the chamfer faces in orthographic projection.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "freeform",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "body",
+        "operation": "base_feature",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {},
+        "source_views": []
+      }
+    ],
+    "unresolved_constraints": []
+  },
+  "user_intent": {
+    "description": "",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "60"
+  },
+  "source_view_group_count": 8,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

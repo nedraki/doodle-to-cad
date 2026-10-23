@@ -1,0 +1,138 @@
+{
+  "object": "Rectangular Block with Central Through Hole",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "top",
+      "sheet_region": "view_4",
+      "what_it_constrains": "Defines the XY footprint (40mm x 30mm) and the position of the central \u00d88mm hole. The view is centered on the object."
+    },
+    {
+      "direction": "front",
+      "sheet_region": "view_2",
+      "what_it_constrains": "Defines the XZ profile (40mm width x 12mm height). The hole is hidden in this view."
+    },
+    {
+      "direction": "left",
+      "sheet_region": "view_3",
+      "what_it_constrains": "Defines the YZ profile (30mm depth x 12mm height). The hole is hidden in this view."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "block_body",
+      "name": "Main Block",
+      "material": "generic_plastic",
+      "bounding_box": {
+        "x": 40,
+        "y": 30,
+        "z": 12
+      }
+    }
+  ],
+  "features": [
+    {
+      "id": "central_hole",
+      "type": "through_hole",
+      "owner": "block_body",
+      "diameter": 8,
+      "depth": 12,
+      "position": {
+        "x": 20,
+        "y": 15,
+        "z": 0
+      },
+      "source_views": [
+        "view_4"
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "type": "concentric",
+      "feature_a": "central_hole",
+      "feature_b": "block_body",
+      "axis": "Z"
+    }
+  ],
+  "symmetry": {
+    "planes": [
+      "XZ",
+      "YZ"
+    ],
+    "axis": "Z"
+  },
+  "repetitions": [],
+  "dimensions": {
+    "max_width": 40.0,
+    "max_depth": 4.34,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "The hole is assumed to be a through-hole based on the 'opening' description and standard block design, though depth is not explicitly dimensioned as 12mm in the text, it is implied by the block thickness."
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "The drawing explicitly labels the object as a 'BLOCK' with dimensions 40x30x12. The top view shows a central circle labeled \u00d88. The text 'Opening centred in top face' confirms the feature is a hole centered on the top surface. The geometry is a simple extruded rectangle with a subtractive cylindrical cut.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "extrude",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_1",
+        "operation": "extrude",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "owner": "block_body",
+        "parameters": {
+          "profile": "rectangle_40x30",
+          "height": 12
+        },
+        "source_views": [
+          "view_4"
+        ]
+      },
+      {
+        "id": "central_hole",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": null
+        },
+        "source_views": []
+      }
+    ],
+    "unresolved_constraints": [
+      "The hole is assumed to be a through-hole based on the 'opening' description and standard block design, though depth is not explicitly dimensioned as 12mm in the text, it is implied by the block thickness."
+    ]
+  },
+  "user_intent": {
+    "description": "",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "40"
+  },
+  "source_view_group_count": 5,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

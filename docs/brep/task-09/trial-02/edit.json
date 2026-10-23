@@ -1,0 +1,197 @@
+{
+  "ok": true,
+  "backend": "usd-brep",
+  "applied": {
+    "thickness": 10
+  },
+  "stl": "/results/9f0bec5c6642/brep-034d8008ff024ea5b6b252afbfbe2fef/model.stl",
+  "source": "/results/9f0bec5c6642/brep-034d8008ff024ea5b6b252afbfbe2fef/model.recipe.json",
+  "usd": "/results/9f0bec5c6642/brep-034d8008ff024ea5b6b252afbfbe2fef/model.usda",
+  "diagnostics": {
+    "backend": "usd-brep",
+    "version": "1.0.0",
+    "recipe_version": 2,
+    "solid_volume_mm3": 21420.088503236526,
+    "mesh_volume_mm3": 21421.507521786134,
+    "extents_mm": [
+      60.0,
+      40.0,
+      10.0
+    ],
+    "bounds_mm": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        60.0,
+        40.0,
+        10.0
+      ]
+    ],
+    "watertight": true,
+    "winding_consistent": true,
+    "euler_number": 0,
+    "triangles": 192,
+    "usd_roundtrip": true,
+    "volume_relative_accuracy": 1e-08,
+    "usd_volume_mm3": 21420.08851442027,
+    "operations": [
+      {
+        "id": "plate",
+        "kind": "extrude",
+        "faces": 12
+      }
+    ],
+    "connections": [],
+    "build_seconds": 0.244
+  },
+  "views": {
+    "isometric": "/results/9f0bec5c6642/brep-034d8008ff024ea5b6b252afbfbe2fef/view-isometric.png",
+    "front": "/results/9f0bec5c6642/brep-034d8008ff024ea5b6b252afbfbe2fef/view-front.png",
+    "top": "/results/9f0bec5c6642/brep-034d8008ff024ea5b6b252afbfbe2fef/view-top.png",
+    "right": "/results/9f0bec5c6642/brep-034d8008ff024ea5b6b252afbfbe2fef/view-right.png"
+  },
+  "build": {
+    "version": 1,
+    "backend": "usd-brep",
+    "source_format": "brep-recipe-v2",
+    "ok": true,
+    "units": "mm",
+    "axes": {
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    },
+    "views": [
+      "isometric",
+      "front",
+      "top",
+      "right"
+    ],
+    "measurements": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 192,
+      "extents_mm": [
+        60.0,
+        40.0,
+        10.0
+      ],
+      "volume_mm3": 21421.508
+    },
+    "diagnostics": [],
+    "drawing_evaluated": false
+  },
+  "params": [
+    {
+      "name": "width",
+      "value": 60.0,
+      "low": 30,
+      "high": 100,
+      "step": 0.01,
+      "label": "Width",
+      "unit": "mm",
+      "description": "Overall width of the plate (X)",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "depth",
+      "value": 40.0,
+      "low": 20,
+      "high": 80,
+      "step": 0.01,
+      "label": "Depth",
+      "unit": "mm",
+      "description": "Overall depth of the plate (Y)",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "thickness",
+      "value": 10.0,
+      "low": 1,
+      "high": 20,
+      "step": 0.01,
+      "label": "Thickness",
+      "unit": "mm",
+      "description": "Thickness of the plate (Z)",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "notch_width",
+      "value": 20.0,
+      "low": 5,
+      "high": 50,
+      "step": 0.01,
+      "label": "Notch Width",
+      "unit": "mm",
+      "description": "Width of the top notch",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "notch_depth",
+      "value": 10.0,
+      "low": 1,
+      "high": 30,
+      "step": 0.01,
+      "label": "Notch Depth",
+      "unit": "mm",
+      "description": "Depth of the top notch",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "corner_radius",
+      "value": 6.0,
+      "low": 1,
+      "high": 20,
+      "step": 0.01,
+      "label": "Corner Radius",
+      "unit": "mm",
+      "description": "Radius of the top-right rounded corner",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "hole_diameter",
+      "value": 8.0,
+      "low": 2,
+      "high": 20,
+      "step": 0.01,
+      "label": "Hole Diameter",
+      "unit": "mm",
+      "description": "Diameter of the through hole",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "hole_x",
+      "value": 12.0,
+      "low": 0,
+      "high": 60,
+      "step": 0.01,
+      "label": "Hole X",
+      "unit": "mm",
+      "description": "X position of the hole center",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "hole_y",
+      "value": 15.0,
+      "low": 0,
+      "high": 40,
+      "step": 0.01,
+      "label": "Hole Y",
+      "unit": "mm",
+      "description": "Y position of the hole center",
+      "group": "Details",
+      "feature": null
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "view_frame": "The drawing uses a third-angle projection. The primary view is TOP (XY), showing the planar outline of the tray. The SECTION view is XZ, showing the vertical profile (width and height) through the middle. The world axes are X (width, 60mm), Y (depth, 40mm), and Z (height, 20mm).",
+  "features": [
+    {
+      "id": "tray_outer",
+      "shape": "Extruded Profile",
+      "section": "Closed loop: Rectangle 60x40 with R6 fillets at all four corners.",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "60",
+        "40",
+        "20",
+        "R6"
+      ],
+      "placement": "Centered at (0,0) in XY. Extruded from Z=0 to Z=20.",
+      "evidence": "Top view shows outer boundary with dimensions 60 and 40. Text notes 'Outside: 60 x 40 x 20' and 'Outer vertical corners: R6'. Section view shows height 20."
+    },
+    {
+      "id": "tray_inner",
+      "shape": "Extruded Profile (Subtractive)",
+      "section": "Closed loop: Rectangle (60-2t)x(40-2t) with R(6-t) fillets at all four corners.",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "3",
+        "17"
+      ],
+      "placement": "Centered at (0,0) in XY. Extruded from Z=3 to Z=20. This creates a 3mm floor and 3mm walls.",
+      "evidence": "Top view shows inner boundary concentric to outer. Section view shows 'EMPTY' interior with uniform wall thickness. User answer specifies uniform_thickness = 3mm."
+    }
+  ],
+  "connections": [
+    "tray_inner is subtracted from tray_outer to form the final solid."
+  ],
+  "edit_rules": [
+    "Changing the uniform thickness parameter updates both the wall width and the floor height simultaneously.",
+    "Changing the outer dimensions (60, 40, 20) updates the outer envelope; the inner cavity adjusts to maintain the specified uniform thickness.",
+    "Changing the corner radius (R6) updates both outer and inner corner radii to maintain concentricity."
+  ],
+  "unresolved": [],
+  "clarification": null
+}

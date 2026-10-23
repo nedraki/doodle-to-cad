@@ -1,0 +1,52 @@
+{
+  "wheel": {
+    "job": "22c90f0687e2",
+    "status": "error",
+    "question_requested": false,
+    "error": {
+      "message": "More drawing information is needed: Rim width is not dimensioned; assumed 10 mm.; Hub diameter is not dimensioned; assumed 30 mm.; Spoke width is not dimensioned; assumed 10 mm.",
+      "code": "unresolved_design"
+    },
+    "drawing_status": null
+  },
+  "bookend": {
+    "job": "7f2ce974844a",
+    "status": "cancelled",
+    "question_requested": true,
+    "error": {
+      "message": "Recipe job cancelled",
+      "code": "cancelled"
+    },
+    "drawing_status": null
+  },
+  "knob": {
+    "job": "f34247a817cf",
+    "status": "error",
+    "question_requested": false,
+    "error": {
+      "message": "More drawing information is needed: The thickness (Y-axis dimension) is not specified in the drawing. An assumption of 10mm is used for the plan.; The specific proportions of the flanges vs. the web (e.g., flange height vs. web height) are estimated from the visual aspect ratio.",
+      "code": "unresolved_design"
+    },
+    "drawing_status": null
+  },
+  "cable_holder": {
+    "job": "93ca3eebcd31",
+    "status": "error",
+    "question_requested": false,
+    "error": {
+      "message": "More drawing information is needed: Exact dimensions of the main body (width, height, depth) are not provided.; Exact dimensions and positions of the side holes are not provided.; Exact dimensions of the notches and central hole are not provided.",
+      "code": "unresolved_design"
+    },
+    "drawing_status": null
+  },
+  "random_005_bolt_flange": {
+    "job": "76f603c3322e",
+    "status": "error",
+    "question_requested": false,
+    "error": {
+      "message": "More drawing information is needed: Exact dimensions for all features are assumed based on visual proportions; Front view aspect ratio is assumed to represent actual thickness",
+      "code": "unresolved_design"
+    },
+    "drawing_status": null
+  }
+}

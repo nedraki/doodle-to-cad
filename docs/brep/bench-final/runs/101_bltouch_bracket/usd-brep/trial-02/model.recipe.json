@@ -1,0 +1,254 @@
+{
+  "version": 2,
+  "units": "mm",
+  "name": "bltouch_bracket",
+  "parameters": {
+    "width": {
+      "value": 40,
+      "min": 20,
+      "max": 60,
+      "label": "Width",
+      "description": "Overall width of the bracket"
+    },
+    "height": {
+      "value": 50,
+      "min": 30,
+      "max": 80,
+      "label": "Height",
+      "description": "Overall height of the bracket"
+    },
+    "thickness": {
+      "value": 3,
+      "min": 1,
+      "max": 10,
+      "label": "Thickness",
+      "description": "Thickness of the plate"
+    },
+    "hole_diameter": {
+      "value": 6,
+      "min": 2,
+      "max": 12,
+      "label": "Hole Diameter",
+      "description": "Diameter of the circular holes"
+    },
+    "slot_width": {
+      "value": 8,
+      "min": 4,
+      "max": 15,
+      "label": "Slot Width",
+      "description": "Width of the central slot"
+    },
+    "slot_height": {
+      "value": 12,
+      "min": 6,
+      "max": 25,
+      "label": "Slot Height",
+      "description": "Height of the central slot"
+    }
+  },
+  "operations": [
+    {
+      "id": "plate",
+      "kind": "extrude",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "plane": "xy",
+      "direction": 1,
+      "depth": "thickness",
+      "loops": [
+        [
+          {
+            "kind": "line",
+            "start": [
+              0,
+              0
+            ],
+            "end": [
+              "width",
+              0
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              "width",
+              0
+            ],
+            "end": [
+              "width",
+              "height"
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              "width",
+              "height"
+            ],
+            "end": [
+              0,
+              "height"
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              0,
+              "height"
+            ],
+            "end": [
+              0,
+              0
+            ]
+          }
+        ]
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "hole_top",
+      "kind": "cylinder",
+      "origin": [
+        "width - 10",
+        "height - 10",
+        -1
+      ],
+      "radius": "hole_diameter / 2",
+      "height": "thickness + 2",
+      "axis": "z",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "hole_bottom",
+      "kind": "cylinder",
+      "origin": [
+        "width - 10",
+        10,
+        -1
+      ],
+      "radius": "hole_diameter / 2",
+      "height": "thickness + 2",
+      "axis": "z",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "slot",
+      "kind": "box",
+      "origin": [
+        "width - 10 - slot_width/2",
+        "height/2 - slot_height/2",
+        -1
+      ],
+      "size": [
+        "slot_width",
+        "slot_height",
+        "thickness + 2"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e4"
+      ]
+    },
+    {
+      "id": "cut_hole_top",
+      "kind": "difference",
+      "left": "plate",
+      "right": "hole_top",
+      "frame": "world",
+      "depends_on": [
+        "plate",
+        "hole_top"
+      ],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "cut_hole_bottom",
+      "kind": "difference",
+      "left": "cut_hole_top",
+      "right": "hole_bottom",
+      "frame": "world",
+      "depends_on": [
+        "cut_hole_top",
+        "hole_bottom"
+      ],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "cut_slot",
+      "kind": "difference",
+      "left": "cut_hole_bottom",
+      "right": "slot",
+      "frame": "world",
+      "depends_on": [
+        "cut_hole_bottom",
+        "slot"
+      ],
+      "evidence": [
+        "e4"
+      ]
+    }
+  ],
+  "output": "cut_slot",
+  "frames": {
+    "world": {
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    }
+  },
+  "bodies": [
+    {
+      "id": "part",
+      "output": "cut_slot"
+    }
+  ],
+  "evidence": {
+    "observed": [],
+    "inferred": [],
+    "assumptions": [
+      {
+        "id": "e1",
+        "text": "Assumed rectangular plate profile based on simplified interpretation of the curved outline."
+      },
+      {
+        "id": "e2",
+        "text": "Assumed top hole position and diameter."
+      },
+      {
+        "id": "e3",
+        "text": "Assumed bottom hole position and diameter."
+      },
+      {
+        "id": "e4",
+        "text": "Assumed central slot position and dimensions."
+      }
+    ],
+    "unresolved": []
+  },
+  "constraints": []
+}

@@ -6,13 +6,74 @@ import os
 from pathlib import Path
 import subprocess
 import tempfile
+import threading
+import time
 import uuid
 
 from .brep_recipe import recipe_params, validate_recipe
-from .build_contract import BuildInput, BuildResult, BuildError, Diagnostic
+from .build_contract import BuildInput, BuildResult, BuildError, Diagnostic, classify_kernel_crash
 from .openscad import render_views, mesh_health
 
 WORKER = Path(__file__).resolve().parents[1] / "workers" / "brep" / "build.py"
+WORKER_TIMEOUT_SECONDS = 120
+WORKER_MEMORY_LIMIT_MB = int(os.getenv("DOODLE_BREP_MEMORY_LIMIT_MB", "16384"))
+WORKER_CPU_LIMIT_S = int(os.getenv("DOODLE_BREP_CPU_LIMIT_S", "150"))
+WORKER_FILE_SIZE_LIMIT_MB = 512
+
+# One cancellation event per running job, keyed by run id. build_brep polls the
+# event while the worker runs and kills the process when it is set.
+_CANCEL_EVENTS: dict[str, threading.Event] = {}
+
+
+def register_cancellation(run_id: str) -> threading.Event:
+    event = threading.Event()
+    _CANCEL_EVENTS[run_id] = event
+    return event
+
+
+def unregister_cancellation(run_id: str) -> None:
+    _CANCEL_EVENTS.pop(run_id, None)
+
+
+def cancel_registered_jobs(runs) -> None:
+    for run_id in runs:
+        event = _CANCEL_EVENTS.get(run_id)
+        if event is not None:
+            event.set()
+
+
+_HEALTH_CACHE: dict[str, dict] = {}
+
+
+def worker_health() -> dict:
+    """Fast capability probe with an actionable reason. Cached per interpreter path.
+
+    The worker enforces these same requirements at build time; running the probe
+    early turns a mid-generation failure into a startup message."""
+    try:
+        python = worker_python()
+    except (BuildError, ValueError) as exc:
+        return {"available": False, "reason": str(exc)}
+    if python in _HEALTH_CACHE:
+        return _HEALTH_CACHE[python]
+    probe = (
+        "import sys, importlib.metadata as m;"
+        "assert sys.version_info[:2] == (3, 12),"
+        " f'worker needs Python 3.12, found {sys.version.split()[0]};"
+        " create it with: uv venv --python 3.12 workers/brep/.venv';"
+        "import usd_brep;"
+        'v = m.version("usd-brep");'
+        'assert v == "1.0.0", f"worker needs usd-brep==1.0.0, found {v};'
+        ' install with: uv pip install --python workers/brep/.venv/bin/python -r workers/brep/requirements.txt"')
+    try:
+        proc = subprocess.run([python, "-c", probe], capture_output=True, text=True, timeout=20)
+        reason = None if proc.returncode == 0 else ((proc.stderr or proc.stdout).strip()[-300:]
+                                                     or "worker capability probe failed")
+        health = {"available": proc.returncode == 0, "reason": reason}
+    except (OSError, subprocess.TimeoutExpired) as exc:
+        health = {"available": False, "reason": f"worker capability probe could not run: {exc}"}
+    _HEALTH_CACHE[python] = health
+    return health
 
 
 def worker_python():
@@ -20,6 +81,15 @@ def worker_python():
     if not configured or not Path(configured).is_file():
         raise BuildError("backend_unavailable", "Set DOODLE_BREP_PYTHON to an isolated Python 3.12 worker; see docs/brep/README.md")
     return configured
+
+
+def worker_available():
+    """True when the isolated worker is configured or auto-detected, as the app does."""
+    try:
+        worker_python()
+        return True
+    except BuildError:
+        return False
 
 
 def build_brep(request: BuildInput, binary: str = "openscad", on_stage=lambda _: None) -> BuildResult:
@@ -43,22 +113,72 @@ def build_brep(request: BuildInput, binary: str = "openscad", on_stage=lambda _:
         source = staging / "model.recipe.json"
         source.write_text(json.dumps(edited, indent=2))
         on_stage("building solid")
+        cancel = _CANCEL_EVENTS.get(out.name)
+        memory_mb = int(os.getenv("DOODLE_BREP_MEMORY_LIMIT_MB", str(WORKER_MEMORY_LIMIT_MB)))
+        cpu_s = int(os.getenv("DOODLE_BREP_CPU_LIMIT_S", str(WORKER_CPU_LIMIT_S)))
+
+        def _apply_limits():  # runs between fork and exec in the child only
+            import resource
+            for res, value in ((resource.RLIMIT_AS, memory_mb * 1024 * 1024),
+                               (resource.RLIMIT_CPU, cpu_s),
+                               (resource.RLIMIT_FSIZE, WORKER_FILE_SIZE_LIMIT_MB * 1024 * 1024)):
+                soft, hard = resource.getrlimit(res)
+                capped = value if hard == resource.RLIM_INFINITY else min(value, hard)
+                resource.setrlimit(res, (capped, hard))
+
         try:
-            process = subprocess.run([python, str(WORKER), str(source), str(staging)],
-                                     capture_output=True, text=True, timeout=120,
-                                     env={k: v for k, v in os.environ.items() if k not in {"PYTHONPATH", "PYTHONHOME"}})
+            process = subprocess.Popen([python, str(WORKER), str(source), str(staging)],
+                                       stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True,
+                                       env={k: v for k, v in os.environ.items() if k not in {"PYTHONPATH", "PYTHONHOME"}},
+                                       preexec_fn=_apply_limits)
         except OSError:
             result.diagnostics.append(Diagnostic("backend_unavailable", "Could not launch the configured BRep worker"))
             return result
-        except subprocess.TimeoutExpired:
-            result.diagnostics.append(Diagnostic("timeout", "BRep build timed out; last successful geometry retained"))
+        deadline = time.monotonic() + WORKER_TIMEOUT_SECONDS
+
+        def _reap(process):
+            # Never block the web process reaping a killed worker.
+            try:
+                process.communicate(timeout=5)
+            except subprocess.TimeoutExpired:
+                pass
+
+        while True:
+            try:
+                stdout, stderr = process.communicate(timeout=0.2)
+                break
+            except subprocess.TimeoutExpired:
+                if cancel is not None and cancel.is_set():
+                    process.kill()
+                    _reap(process)
+                    result.diagnostics.append(Diagnostic(
+                        "cancelled", "BRep worker stopped because the job was cancelled; the last successful result is retained"))
+                    return result
+                if time.monotonic() > deadline:
+                    process.kill()
+                    _reap(process)
+                    result.diagnostics.append(Diagnostic("timeout", "BRep build timed out; last successful geometry retained"))
+                    return result
+        result.log = stdout + stderr
+        if process.returncode == -9:
+            result.diagnostics.append(Diagnostic(
+                "worker_killed", f"BRep worker was killed (signal 9). It likely hit the memory limit "
+                                 f"({memory_mb} MB); raise DOODLE_BREP_MEMORY_LIMIT_MB if this part legitimately needs more."))
             return result
-        result.log = process.stdout + process.stderr
         if process.returncode:
             failure_path = staging / "construction-error.json"
             failure = json.loads(failure_path.read_text()) if failure_path.exists() else {}
-            result.diagnostics.append(Diagnostic(failure.get("code", "build_failed"),
-                                                 failure.get("message", (result.log or "BRep worker crashed")[-2500:])))
+            code = failure.get("code", "build_failed")
+            message = failure.get("message", (result.log or "BRep worker crashed")[-2500:])
+            if code == "build_failed":
+                # Contain the known usd_brep 1.0.0 tessellation crash (issue #61)
+                # even when the worker predated the classifier or died before
+                # writing construction-error.json: the signature in the message
+                # or in the captured log earns the structured kernel_unavailable code.
+                kernel = classify_kernel_crash(message) or classify_kernel_crash(result.log)
+                if kernel:
+                    code, message = kernel
+            result.diagnostics.append(Diagnostic(code, message))
             return result
         try:
             result.backend_details = json.loads((staging / "diagnostics.json").read_text())
@@ -132,8 +252,13 @@ cylinder: id,kind,origin (base centre),radius,height,axis (x/y/z).
 union/difference: id,kind,left,right (earlier operation IDs).
 fillet: id,kind,body,radius,selector (all/parallel_x/parallel_y/parallel_z).
 chamfer: id,kind,body,radius (all edges; radius is width across chamfer).
+shell: body (earlier solid),thickness (positive inward uniform wall AND floor thickness),opening (exactly "top"),preserve (exactly "outer"). Removes the single highest planar face and hollows inward, preserving outside bounds. Tested for boxes and boxes with rounded vertical corners. Keep outer width, depth, height and outside corner radius independent of thickness. For a rounded tray, make the outer box, fillet ONLY parallel_z edges to the drawn outside radius, then shell that rounded body. Flat top and floor faces remain flat. Expose thickness with label "Wall and floor thickness". If wall and floor need DIFFERENT dimensions, use an explicit difference with separate wall/floor parameters instead of pretending shell supports them. Reject missing or conflicting cavity details; never assume a missing wall/floor thickness.
+loft: plane (only "xy"),correspondence (exactly "rectangle_corners_to_circle_diagonals"),profiles (exactly two ordered objects). First: {"shape":"rectangle","center":[x,y,z],"width":X_length,"height":Y_length}. Second: {"shape":"circle","center":[same_x,same_y,higher_z],"radius":R}. This is a SOLID rectangular-to-round transition with flat caps, not a hollow duct. Profiles are parallel XY planes with equal XY centres. The circle must be 0.01–256 mm above the rectangle. Profile dimensions must be 0.01–128 mm. The worker matches rectangle corners NE/NW/SW/SE to circle points at 45/135/225/315 degrees in CCW order and makes a degree-1 loft. No twist, rotated/offset profiles, intermediate profiles, splines or holes. Numeric fields allow quoted parameter expressions. Expose rectangle width as a parameter; changing it must keep the circle radius, centre and separation fixed. Use the two end profiles and labelled side-view separation, not a straight extrusion or cone approximation.
+sweep: origin (world translation, normally [0,0,0]),plane (only "xy"),frame_rule (exactly "normal_to_path_z_up"),section_width (in-plane width),section_height (Z height),path (ordered open list containing one circular arc, optionally preceded/followed by one tangent line). This makes a solid RECTANGULAR section, with flat caps. Path points are local XY centreline coordinates. The section centre follows the path at local Z=section_height/2; its bottom stays at Z=0 before origin translation. Line: {"kind":"line","start":[x,y],"end":[x,y]}. Arc: {"kind":"arc","center":[x,y],"radius":R,"start_angle":degrees,"end_angle":degrees}. Angles are measured from +X. Positive sweep is CCW; negative sweep is clockwise. The absolute difference must be 1–180 degrees. Radius > section_width/2 + 0.01 mm. Lines must meet the arc endpoints exactly and follow its tangent. Line endpoint order is normalized to join the arc; coordinates are never moved. For CCW arcs, tangent directions at angles 0/90/180/270 degrees are +Y/-X/-Y/+X. The arc 0 to 180 passes above its centre; 180 to 360 passes below. Clockwise tangents are the opposite directions. Clockwise 180 to 0 passes above its centre. The worker reverses clockwise traversal to the equivalent CCW chain before kernel construction. Check endpoint coordinates AND tangent direction at both joins. Preserve the upright rectangular section through the bend. No spline, multiple bends, sharp joints or other planes. Numeric fields allow quoted parameter expressions. Expose section_height or section_width as a parameter; height edits must keep the XY path and width fixed. Use this for a rectangular-section bend with optional straight ends, not arc_pipe (which is circular).
+extrude: id,kind,origin (world XYZ translation),plane (only "xy"),direction (integer 1 or -1 along Z),depth (positive 0.01–256 mm),loops (outer loop first, followed by through-opening loops). Each loop is an ordered list of line/arc objects, joined end-to-start and closed. Line: {"kind":"line","start":[u,v],"end":[u,v]}. Arc: {"kind":"arc","center":[u,v],"radius":positive,"start_angle":degrees,"end_angle":degrees}; CCW from +X, 0 < end-start <=360. A circle is one 0-to-360 arc. Do not split a circle across multiple same-circle arcs. Local u,v are X,Y; origin translates the profile into the world. Numeric profile fields may use quoted parameter expressions. At most 128 edges and 16 loops. No crossing, touching, nested holes, open outlines or splines. Use the exact line/arc outline, not a bounding rectangle. Expose thickness via depth; changing depth must not change the profile. Other extrusion planes are unsupported because their USD round trip is not verified. Do not rotate an extruded profile to evade that restriction.
 arc_pipe: id,kind,origin (arc centre),bend_radius,radius,angle (0<angle<=270).
 arc_pipe is a solid circular profile swept along an XY arc from +X anticlockwise.
+revolve: id,kind,origin (world XYZ translation),axis (exactly "z"),profile (one closed ordered list of 3-128 numeric [r,z] pairs; r = radius from the axis, z = height; the last pair joins back to the first; r never negative; no crossing, touching or zero-area edges; full 360 degrees about +Z only). One axisymmetric solid from its radius-height silhouette. A hollow vessel uses ONE closed profile: base, outer wall, rim inward by the wall thickness, inner wall, floor. Numeric fields allow quoted parameter expressions.
 Use booleans for pockets/enclosures. Cutters must cross the owning wall.
 Fillet selectors are geometric and are recomputed on each rebuild. No edge indices.
 Maximum 64 parameters, 128 operations; output names the final operation.

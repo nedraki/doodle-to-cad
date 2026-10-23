@@ -16,9 +16,11 @@ from .model_client import CompatibleModelClient
 from .openscad import available
 from .params import extract_params, rewrite_params, validate_updates
 from .pipeline import Pipeline
-from .brep import build_recipe, worker_python, RECIPE_PROMPT
+from .brep import build_recipe, worker_python, worker_health, register_cancellation, unregister_cancellation, cancel_registered_jobs, RECIPE_PROMPT
 from .brep_recipe import recipe_params, validate_recipe
 from .build_contract import CAPABILITIES
+from . import revisions
+from . import repair as targeted_repair
 from .recipe_jobs import check_worker, run_recipe_job
 
 RUN_ID_RE = re.compile(r"^[0-9a-f]{6,32}$")
@@ -40,7 +42,7 @@ JOB_ID_RE = re.compile(r"^[0-9a-f]{12}$")
 def _prune_jobs() -> None:
     stale = sorted(JOBS, key=lambda key: JOBS[key]["created"])[:-MAX_TRACKED_JOBS]
     for key in stale:
-        if JOBS[key]["status"] not in {"running", "cancelling"}:
+        if JOBS[key]["status"] not in {"running", "cancelling", "waiting_for_answer"}:
             del JOBS[key]
 
 
@@ -51,7 +53,8 @@ def index(): return FileResponse(ROOT / "web" / "index.html")
 @app.get("/api/health")
 async def health(refresh: bool = False):
     model = await client.discover(refresh)
-    return {"status":"ok" if model.selected and available(settings.openscad_bin) else "degraded","agentic":{"backend":"bounded-cad-supervisor","max_attempts":settings.agent_max_attempts,"accept_score":settings.agent_accept_score,"base_url":settings.base_url,"requested_model":settings.requested_model or None,"selected_model":model.selected,"model_source":model.source,"thinking_enabled":settings.enable_thinking,"thinking_budget":settings.thinking_budget,"structured_thinking_enabled":settings.structured_enable_thinking,"code_thinking_enabled":settings.code_enable_thinking,"available_models":model.available,"model_error":model.error},"openscad":{"binary":settings.openscad_bin,"available":available(settings.openscad_bin)}}
+    worker = await asyncio.to_thread(worker_health)
+    return {"status":"ok" if model.selected and available(settings.openscad_bin) else "degraded","agentic":{"backend":"bounded-cad-supervisor","max_attempts":settings.agent_max_attempts,"accept_score":settings.agent_accept_score,"base_url":settings.base_url,"requested_model":settings.requested_model or None,"selected_model":model.selected,"model_source":model.source,"thinking_enabled":settings.enable_thinking,"thinking_budget":settings.thinking_budget,"structured_thinking_enabled":settings.structured_enable_thinking,"code_thinking_enabled":settings.code_enable_thinking,"available_models":model.available,"model_error":model.error},"openscad":{"binary":settings.openscad_bin,"available":available(settings.openscad_bin)},"brep_worker":worker}
 
 
 @app.get("/api/results/latest")
@@ -59,7 +62,7 @@ def latest_result():
     completed = sorted(settings.results_dir.glob("*/result.json"), key=lambda path: path.stat().st_mtime, reverse=True)
     if not completed:
         raise HTTPException(404, "No completed generation exists")
-    return json.loads(completed[0].read_text())
+    return revisions.selected_result(completed[0].parent)
 
 
 def _run_dir(run_id: str):
@@ -77,13 +80,67 @@ def get_result(run_id: str):
     out, _ = _run_dir(run_id)
     if not (out / "result.json").exists():
         raise HTTPException(404, "Run has no completed result")
-    return json.loads((out / "result.json").read_text())
+    return revisions.selected_result(out)
+
+
+@app.post("/api/results/{run_id}/selection")
+def select_geometry(run_id: str, payload: dict):
+    from .feature_selection import choose
+    out, _ = _run_dir(run_id)
+    return choose(out, payload)
+
+
+@app.post("/api/results/{run_id}/revisions/preview")
+def preview_revision(run_id: str, payload: dict):
+    out, _ = _run_dir(run_id)
+    try:
+        return revisions.preview(out, payload, build_recipe)
+    except ValueError as exc:
+        raise HTTPException(422, {"message": str(exc), "code": getattr(exc, "code", "invalid_input")}) from exc
+
+
+@app.post("/api/results/{run_id}/revisions/targeted")
+def targeted_revision(run_id: str, payload: dict):
+    from .targeted_edits import verify_edit
+    out, _ = _run_dir(run_id)
+    try:
+        return revisions.targeted_preview(out, payload, build_recipe, verify_edit)
+    except ValueError as exc:
+        raise HTTPException(422, {"message": str(exc), "code": getattr(exc, "code", "invalid_input")}) from exc
+
+
+@app.post("/api/results/{run_id}/revisions/keep")
+def keep_revision(run_id: str, payload: dict):
+    out, _ = _run_dir(run_id)
+    return revisions.keep(out, payload)
+
+
+@app.post("/api/results/{run_id}/revisions/repair")
+async def repair_revision(run_id: str, payload: dict):
+    """Targeted 'change only what I describe' candidate from the displayed version."""
+    out, _ = _run_dir(run_id)
+    return await targeted_repair.repair_preview(pipeline, settings, out, payload)
 
 
 @app.get("/api/results/{run_id}/params")
-def get_params(run_id: str):
+def get_params(run_id: str, revision_id: str | None = None):
     """Numeric top-level parameters the accepted model exposes for live editing."""
     out, scad = _run_dir(run_id)
+    if scad.suffix == ".json" and (out / "result.json").exists():
+        with revisions.locked(out):
+            store = revisions.read_store(out)
+            item = revisions.record(store, revision_id or store['selected'])
+            return {"run_id": run_id, "revision_id": item['id'],
+                    "params": recipe_params(json.loads(item['source_text']))}
+    if revision_id and (out / "result.json").exists():
+        # OpenSCAD parameter controls must follow the displayed revision
+        # (kept repairs and parameter-edit revisions carry their own source).
+        with revisions.locked(out):
+            store = revisions.read_store(out)
+            item = revisions.record(store, revision_id)
+        if item.get('source_text'):
+            return {"run_id": run_id, "revision_id": item['id'],
+                    "params": [p.to_dict() for p in extract_params(item['source_text'])]}
     cached = out / "parameters.json"
     params = recipe_params(json.loads(scad.read_text())) if scad.suffix == ".json" else [p.to_dict() for p in extract_params(scad.read_text())]
     payload = {"run_id": run_id, "params": params}
@@ -92,11 +149,12 @@ def get_params(run_id: str):
 
 
 @app.post("/api/results/{run_id}/parametrize")
-def parametrize(run_id: str, updates: dict):
+def parametrize(run_id: str, updates: dict, revision_id: str | None = None):
     """Rewrite top-level parameters, recompile, return a cache-busted STL URL.
 
     The accepted model.scad stays untouched; edits receive unique SCAD/STL filenames
-    so a reset is always one click away.
+    so a reset is always one click away. With revision_id the edit starts from the
+    source of that saved revision (e.g. a kept repair), not the original generation.
     """
     out, scad = _run_dir(run_id)
     if scad.suffix == ".json":
@@ -105,6 +163,13 @@ def parametrize(run_id: str, updates: dict):
         except ValueError as exc:
             raise HTTPException(422, {"message": str(exc), "code": getattr(exc, "code", "invalid_input")}) from exc
     base = scad.read_text()
+    if revision_id and (out / "result.json").exists():
+        with revisions.locked(out):
+            store = revisions.read_store(out)
+            item = revisions.record(store, revision_id)
+        if not item.get('source_text'):
+            raise HTTPException(422, {"message": "That revision has no source to edit", "code": "invalid_input"})
+        base = item['source_text']
     try:
         validate_updates(base, updates)
     except ValueError as exc:
@@ -119,6 +184,9 @@ def parametrize(run_id: str, updates: dict):
     if not stl_url:
         return {"ok": False, "applied": applied,
                 "message": error or "Recompile produced no mesh — last successful geometry retained."}
+    with (out / "parametrize-history.jsonl").open("a") as history:
+        history.write(json.dumps({"time": time.time(), "revision_id": revision_id, "applied": applied,
+                                  "stl": stl_url, "scad": f"/results/{run_id}/{tag}.scad"}) + "\n")
     return {"ok": True, "applied": applied, "stl": stl_url, "scad": f"/results/{run_id}/{tag}.scad", "params": [p.to_dict() for p in extract_params(edited)]}
 
 
@@ -170,7 +238,7 @@ def brep_build(recipe: dict):
         raise HTTPException(422, {"message": str(exc), "code": getattr(exc, "code", "invalid_input")}) from exc
 
 
-def _save_brep_result(out, recipe, built, original=None, controls=None):
+def _save_brep_result(out, recipe, built, original=None, controls=None, routing=None):
     (out / "model.recipe.json").write_text(json.dumps(recipe, indent=2))
     result = {"id": out.name, "backend": "usd-brep", "success": False,
               "spec": {"object": recipe.get("name", "BRep part")},
@@ -180,6 +248,9 @@ def _save_brep_result(out, recipe, built, original=None, controls=None):
               "files": {"source": built["source"], "stl": built["stl"], "usd": built["usd"], "views": built.get("views", {})},
               "build": built.get("build"),
               "original_run_id": original}
+    if routing is not None:
+        result["routing"] = routing
+        (out / "routing.json").write_text(json.dumps(routing, indent=2))
     temporary = out / "result.pending.json"
     temporary.write_text(json.dumps(result, indent=2))
     temporary.replace(out / "result.json")
@@ -234,7 +305,7 @@ async def generate(
     image: UploadFile = File(...), notes: str = Form(""), dimension: str = Form(""),
     object_type: str = Form(""), method: str = Form("3D print"), primary_view: str = Form("front"),
     projection_standard: str = Form("third-angle"),
-    strict_watertight: bool = Form(True), view_directions: str = Form("[]"),
+    strict_watertight: bool = Form(True), ask_missing_dimensions: bool = Form(True), view_directions: str = Form("[]"),
     refine_mode: str = Form("regularize"), backend: str = Form("openscad"),
     additional_views: list[UploadFile] = File(default=[]),
 ):
@@ -250,25 +321,57 @@ async def generate(
     except json.JSONDecodeError as exc:
         raise HTTPException(422, {"message": f"view_directions is not valid JSON: {exc}", "error_type": type(exc).__name__, "stage": "request"}) from exc
 
-    if backend not in {"openscad", "usd-brep"}:
+    if backend not in {"openscad", "usd-brep", "auto"}:
         raise HTTPException(422, "Unknown generation backend")
-    if backend == "usd-brep":
+    routing = None
+    if backend == "auto":
+        from .backend_router import image_sha256, route, scan_kernel_history
+        from .geometry import analyze_image
+        try:
+            evidence, _overlay = analyze_image(data)
+        except ValueError as exc:
+            raise HTTPException(422, str(exc)) from exc
+        routing = route(evidence, notes, dimension,
+                        scan_kernel_history(settings.results_dir, image_sha256(data)))
+    chosen = routing["backend"] if routing else backend
+    if chosen == "usd-brep":
         from .direct_brep import submit_direct_job
+        import functools
         return await submit_direct_job(data, image.content_type, notes, dimension, extra, controls,
-                                       pipeline, settings.results_dir, JOBS, _prune_jobs, _save_brep_result)
+                                       pipeline, settings.results_dir, JOBS, _prune_jobs,
+                                       functools.partial(_save_brep_result, routing=routing),
+                                       routing=routing)
 
     run_id = uuid.uuid4().hex[:12]
     job = {"job_id": run_id, "status": "running", "stage": "queued", "created": time.monotonic(),
            "result": None, "error": None, "task": None}
+    if routing is not None:
+        job["routing"] = routing
     JOBS[run_id] = job
     _prune_jobs()
+    register_cancellation(run_id)
 
     async def run_job():
         try:
+            from .clarification import ask_clarification
+
+            async def ask_user(request):
+                try:
+                    maximum = max(1.0, float(dimension)) * 4
+                except (TypeError, ValueError):
+                    maximum = 1024.0
+                return await ask_clarification(job, settings.results_dir / run_id, request, maximum, [], timeout_s=120)
+
             result = await pipeline.generate(
                 data, image.content_type, notes, dimension, extra, controls,
                 run_id=run_id, on_stage=lambda name: job.update(stage=name),
+                ask_user=ask_user if ask_missing_dimensions else None,
             )
+            if routing is not None:
+                result["routing"] = routing
+                out_dir = settings.results_dir / run_id
+                if out_dir.is_dir():
+                    (out_dir / "routing.json").write_text(json.dumps(routing, indent=2))
             job["result"] = result
             job["status"] = "done"
             job["stage"] = "done"
@@ -281,6 +384,8 @@ async def generate(
             job["status"] = "error"
             job["stage"] = "failed"
             job["error"] = {"message": str(exc), "error_type": type(exc).__name__, "stage": "generation"}
+        finally:
+            unregister_cancellation(run_id)
 
     job["task"] = asyncio.create_task(run_job())
     return {"job_id": run_id, "status": "running"}
@@ -296,6 +401,9 @@ def job_status(job_id: str):
                     "result": json.loads((settings.results_dir / job_id / "result.json").read_text())}
         raise HTTPException(404, "Unknown job")
     payload = {key: job[key] for key in ("job_id", "status", "stage", "result", "error")}
+    if "routing" in job:
+        payload["routing"] = job["routing"]
+    if job.get("question"): payload["question"] = job["question"]
     payload["elapsed_seconds"] = round(time.monotonic() - job["created"], 1)
     return payload
 
@@ -304,7 +412,8 @@ def job_status(job_id: str):
 async def job_cancel(job_id: str):
     job = JOBS.get(job_id)
     if not job: raise HTTPException(404, "Unknown job")
-    if job["status"] == "running" and job["task"]:
+    if job["status"] in {"running", "waiting_for_answer"} and job["task"]:
+        cancel_registered_jobs([job_id])  # kills any in-flight BRep worker process
         job["task"].cancel()
         if job.get("kind") == "recipe":
             try:
@@ -316,3 +425,11 @@ async def job_cancel(job_id: str):
             await asyncio.sleep(0)  # let the cancellation settle into the job record
         return {"job_id": job_id, "status": job["status"]}
     return {"job_id": job_id, "status": job["status"]}
+
+
+@app.post("/api/generate/{job_id}/answer")
+async def answer_question(job_id: str, payload: dict):
+    from .clarification import accept_answer
+    job=JOBS.get(job_id)
+    if not job:raise HTTPException(404, "Unknown job")
+    return accept_answer(job,payload)

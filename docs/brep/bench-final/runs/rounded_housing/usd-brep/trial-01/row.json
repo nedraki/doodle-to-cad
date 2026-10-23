@@ -1,0 +1,121 @@
+{
+  "drawing": "rounded_housing",
+  "backend": "usd-brep",
+  "trial": 1,
+  "submitted_at": "2026-10-19T16:40:56.901120+00:00",
+  "finished_at": "2026-10-19T16:42:35.226943+00:00",
+  "run_id": "b731f555aad8",
+  "wall_seconds": 98.3,
+  "job_status": "done",
+  "error": null,
+  "questions_asked": 0,
+  "question_kinds": [],
+  "build": {
+    "watertight": true,
+    "components": 1,
+    "genus": 0,
+    "extents_mm": [
+      80.0,
+      50.0,
+      30.0
+    ],
+    "volume_mm3": 119051.0,
+    "sha256": "e6ca617a56a4db45f69aff526f064a3b7a625af444abf9efc276f9ebadb1e199",
+    "bytes": 7084
+  },
+  "checks": {
+    "build_success": true,
+    "extents_pass": null,
+    "genus_pass": null,
+    "volume_pass": null,
+    "fidelity_pass": false,
+    "overall_pass": false,
+    "not_applicable": [
+      "extents",
+      "genus",
+      "volume"
+    ]
+  },
+  "fidelity": {
+    "scores": {
+      "front": 0.6,
+      "top": 0.195,
+      "right": 0.623
+    },
+    "pass": false,
+    "reason": null,
+    "topology": {
+      "front": {
+        "expected": 2,
+        "actual": 0,
+        "position_fidelity": null
+      },
+      "top": {
+        "expected": 0,
+        "actual": 0,
+        "position_fidelity": null
+      },
+      "right": {
+        "expected": 1,
+        "actual": 2,
+        "position_fidelity": null
+      }
+    }
+  },
+  "product": {
+    "success": false,
+    "accepted": false,
+    "status": "failed",
+    "score": null,
+    "projection_status": "failed",
+    "geometry_status": "passed",
+    "failures": [
+      "front openings",
+      "top projection",
+      "Detailed drawing features and view assignments require review."
+    ]
+  },
+  "attempts": {
+    "count": 1,
+    "recovered": false,
+    "corrections": 1
+  },
+  "unsupported": {
+    "flag": false,
+    "code": null
+  },
+  "brep_only": {
+    "operations": [
+      "box",
+      "fillet"
+    ],
+    "loft": false,
+    "shell": false,
+    "arc_pipe": false,
+    "sweep": false,
+    "extrude": false,
+    "parameter_names": [
+      "corner_radius",
+      "depth",
+      "height",
+      "width"
+    ]
+  },
+  "edit": {
+    "available": true,
+    "ok": true,
+    "seconds": 2.71,
+    "param": "width",
+    "old": 80,
+    "new": 96.0,
+    "message": null
+  },
+  "targeted": {
+    "available": false,
+    "ok": false,
+    "seconds": null,
+    "operation": null,
+    "value": null,
+    "message": "no probe value produced a valid targeted plan"
+  }
+}

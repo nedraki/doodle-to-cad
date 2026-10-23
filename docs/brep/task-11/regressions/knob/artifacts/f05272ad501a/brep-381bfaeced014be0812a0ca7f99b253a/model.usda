@@ -1,0 +1,55 @@
+#usda 1.0
+(
+    metersPerUnit = 0.001
+    upAxis = "Z"
+)
+
+def Xform "World"
+{
+    def BrepArray "Brep0" (
+        prepend apiSchemas = ["BrepPointAPI:vertexPoint", "BrepCurve3dNurbAPI:edge3dNurb", "BrepSurfacePlaneAPI"]
+        customData = {
+            string source = ""
+        }
+    )
+    {
+        uniform point3d[] brep:edge3dNurb:curve3d:nurb:controlVertices = [(60, -40, 80), (60, 40, 80), (-60, 40, 80), (60, 40, 80), (-60, -40, 65), (-60, 40, 65), (-60, -40, 80), (-60, 40, 80), (60, -40, 65), (60, 40, 65), (60, 40, 65), (60, 40, 80), (-60, -40, 65), (-60, -40, 80), (-60, -40, 65), (-20.000000000000004, -40, 65), (60, -40, 65), (60, -40, 80), (-60, -40, 80), (60, -40, 80), (-60, 40, 65), (-60, 40, 80), (-60, 40, 65), (-20.000000000000004, 40, 65), (-60, -40, 0), (-60, 40, 0), (-60, 40, 0), (60, 40, 0), (60, -40, 0), (60, 40, 0), (-60, -40, 0), (60, -40, 0), (-60, -40, 0), (-60, -40, 15), (60, -40, 0), (60, -40, 15), (-60, -40, 15), (-20.000000000000004, -40, 15), (-60, -40, 15), (-60, 40, 15), (60, -40, 15), (60, 40, 15), (-60, 40, 15), (-20.000000000000004, 40, 15), (60, 40, 0), (60, 40, 15), (-60, 40, 0), (-60, 40, 15), (20.000000000000007, 40, 65), (60, 40, 65), (20.000000000000007, -40, 65), (60, -40, 65), (20.000000000000007, -40, 15), (60, -40, 15), (20.000000000000007, 40, 15), (60, 40, 15), (-20, -40, 65), (-20, 40, 65), (20, -40, 65), (20, 40, 65), (-20, -40, 15), (-20, 40, 15), (20, -40, 15), (20, 40, 15), (-20, 40, 15), (-20, 40, 65), (20, 40, 15), (20, 40, 65), (20, -40, 15), (20, -40, 65), (-20, -40, 15), (-20, -40, 65)]
+        uniform double[] brep:edge3dNurb:curve3d:nurb:knots = [0, 0, 80, 80, 0, 0, 120, 120, 0, 0, 80, 80, 0, 0, 80, 80, 0, 0, 80, 80, 0, 0, 15, 15, 0, 0, 15, 15, 0, 0, 40, 40, 0, 0, 15, 15, 0, 0, 120, 120, 0, 0, 15, 15, 0, 0, 40, 40, 0, 0, 80, 80, 0, 0, 120, 120, 0, 0, 80, 80, 0, 0, 120, 120, 0, 0, 15, 15, 0, 0, 15, 15, 0, 0, 40, 40, 0, 0, 80, 80, 0, 0, 80, 80, 0, 0, 40, 40, 0, 0, 15, 15, 0, 0, 15, 15, 80, 80, 120, 120, 80, 80, 120, 120, 80, 80, 120, 120, 80, 80, 120, 120, 0, 0, 80, 80, 0, 0, 80, 80, 0, 0, 80, 80, 0, 0, 80, 80, 0, 0, 50, 50, 0, 0, 50, 50, 0, 0, 50, 50, 0, 0, 50, 50]
+        uniform uint[] brep:edge3dNurb:curve3d:nurb:order = [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]
+        uniform uint[] brep:edge3dNurb:curve3d:nurb:vertexCount = [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]
+        uniform double[] brep:edge3dNurb:curve3d:nurb:weights = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+        uniform double3[] brep:extent = [(-60.00001, -40.00001, -0.00001), (60.00001, 40.00001, 80.00001)]
+        uniform double[] brep:intersectTol3d = [0.00002]
+        uniform uint[] brep:regionCount = [2]
+        uniform vector3d[] brep:surface:plane:axis = [(0, 0, -1), (0, 0, 1), (-1, 0, 0), (1, 0, 0), (0, 1, 0), (0, 0, -1), (0, -1, 0), (0, 0, 1), (1, 0, 0), (-1, 0, 0), (0, 0, -1), (0, 0, 1), (1, 0, 0), (-1, 0, 0)]
+        uniform point3d[] brep:surface:plane:origin = [(-60, -40, 65), (-60, -40, 80), (-60, -40, 65), (60, -40, 65), (-60, 40, 65), (-60, -40, 0), (-60, -40, 0), (-60, -40, 15), (60, -40, 0), (-60, -40, 0), (-60, -40, 65), (-60, -40, 15), (20, -40, 15), (-20, -40, 15)]
+        uniform vector3d[] brep:surface:plane:refDirection = [(0, 1, 0), (1, 0, 0), (0, 0, 1), (0, 1, 0), (0, 0, 1), (0, 1, 0), (1, 0, 0), (1, 0, 0), (0, 1, 0), (0, 0, 1), (0, 1, 0), (1, 0, 0), (0, 1, 0), (0, 0, 1)]
+        uniform point3d[] brep:vertexPoint:point:position = [(60, 40, 80), (-60, -40, 80), (-60, -40, 65), (60, -40, 65), (60, -40, 80), (-60, 40, 80), (-60, 40, 65), (60, 40, 65), (-60, -40, 0), (-60, 40, 0), (60, 40, 0), (60, -40, 0), (-60, -40, 15), (60, -40, 15), (-60, 40, 15), (60, 40, 15), (-20, 40, 65), (20.000000000000014, 40, 65), (-20, -40, 65), (20.000000000000014, -40, 65), (-20, -40, 15), (20.000000000000014, -40, 15), (-20, 40, 15), (20.000000000000014, 40, 15)]
+        uniform token[] edge:curveType = ["BrepCurve3dNurbAPI", "BrepCurve3dNurbAPI", "BrepCurve3dNurbAPI", "BrepCurve3dNurbAPI", "BrepCurve3dNurbAPI", "BrepCurve3dNurbAPI", "BrepCurve3dNurbAPI", "BrepCurve3dNurbAPI", "BrepCurve3dNurbAPI", "BrepCurve3dNurbAPI", "BrepCurve3dNurbAPI", "BrepCurve3dNurbAPI", "BrepCurve3dNurbAPI", "BrepCurve3dNurbAPI", "BrepCurve3dNurbAPI", "BrepCurve3dNurbAPI", "BrepCurve3dNurbAPI", "BrepCurve3dNurbAPI", "BrepCurve3dNurbAPI", "BrepCurve3dNurbAPI", "BrepCurve3dNurbAPI", "BrepCurve3dNurbAPI", "BrepCurve3dNurbAPI", "BrepCurve3dNurbAPI", "BrepCurve3dNurbAPI", "BrepCurve3dNurbAPI", "BrepCurve3dNurbAPI", "BrepCurve3dNurbAPI", "BrepCurve3dNurbAPI", "BrepCurve3dNurbAPI", "BrepCurve3dNurbAPI", "BrepCurve3dNurbAPI", "BrepCurve3dNurbAPI", "BrepCurve3dNurbAPI", "BrepCurve3dNurbAPI", "BrepCurve3dNurbAPI"]
+        uniform double[] edge:range = [0, 80, 0, 120, 0, 80, 0, 80, 0, 80, 0, 15, 0, 15, 0, 40, 0, 15, 0, 120, 0, 15, 0, 40, 0, 80, 0, 120, 0, 80, 0, 120, 0, 15, 0, 15, 0, 40, 0, 80, 0, 80, 0, 40, 0, 15, 0, 15, 80, 120, 80, 120, 80, 120, 80, 120, 0, 80, 0, 80, 0, 80, 0, 80, 0, 50, 0, 50, 0, 50, 0, 50]
+        uniform int2[] edge:vertexIndices = [(4, 0), (5, 0), (2, 6), (1, 5), (3, 7), (7, 0), (2, 1), (2, 18), (3, 4), (1, 4), (6, 5), (6, 16), (8, 9), (9, 10), (11, 10), (8, 11), (8, 12), (11, 13), (12, 20), (12, 14), (13, 15), (14, 22), (10, 15), (9, 14), (17, 7), (19, 3), (21, 13), (23, 15), (18, 16), (19, 17), (20, 22), (21, 23), (22, 16), (23, 17), (21, 19), (20, 18)]
+        uniform uint[] edgeuse:edgeIndex = [29, 24, 4, 25, 3, 9, 0, 1, 6, 3, 10, 2, 8, 4, 5, 0, 24, 33, 27, 22, 13, 23, 21, 32, 11, 10, 1, 5, 12, 13, 14, 15, 26, 34, 25, 8, 9, 6, 7, 35, 18, 16, 15, 17, 30, 21, 19, 18, 17, 14, 22, 20, 16, 19, 23, 12, 28, 7, 2, 11, 31, 26, 20, 27, 34, 31, 33, 29, 35, 28, 32, 30]
+        uniform uint[] edgeuse:nextRadialEUIndex = [67, 16, 13, 34, 9, 36, 15, 26, 37, 4, 25, 58, 35, 2, 27, 6, 1, 66, 63, 50, 29, 54, 45, 70, 59, 10, 7, 14, 55, 20, 49, 42, 61, 64, 3, 12, 5, 8, 57, 68, 47, 52, 31, 48, 71, 22, 53, 40, 43, 30, 19, 62, 41, 46, 21, 28, 69, 38, 11, 24, 65, 32, 51, 18, 33, 60, 17, 0, 39, 56, 23, 44]
+        uniform token[] edgeuse:orientationType = ["same", "same", "opposite", "opposite", "opposite", "same", "same", "opposite", "same", "same", "opposite", "opposite", "opposite", "same", "same", "opposite", "opposite", "opposite", "same", "opposite", "opposite", "same", "same", "same", "opposite", "same", "same", "opposite", "same", "same", "opposite", "opposite", "opposite", "same", "same", "same", "opposite", "opposite", "same", "opposite", "opposite", "opposite", "same", "same", "same", "opposite", "opposite", "same", "opposite", "same", "same", "opposite", "same", "same", "opposite", "opposite", "opposite", "opposite", "same", "same", "opposite", "same", "same", "opposite", "opposite", "same", "same", "opposite", "same", "same", "opposite", "opposite"]
+        uniform token[] edgeuse:thisRadialEntryType = ["topEntry", "topEntry", "bottomEntry", "bottomEntry", "topEntry", "bottomEntry", "topEntry", "topEntry", "bottomEntry", "bottomEntry", "topEntry", "bottomEntry", "bottomEntry", "topEntry", "topEntry", "bottomEntry", "bottomEntry", "bottomEntry", "topEntry", "bottomEntry", "bottomEntry", "topEntry", "topEntry", "topEntry", "bottomEntry", "bottomEntry", "bottomEntry", "bottomEntry", "topEntry", "topEntry", "bottomEntry", "bottomEntry", "bottomEntry", "topEntry", "topEntry", "topEntry", "topEntry", "topEntry", "topEntry", "bottomEntry", "bottomEntry", "bottomEntry", "topEntry", "topEntry", "topEntry", "bottomEntry", "bottomEntry", "topEntry", "bottomEntry", "topEntry", "topEntry", "bottomEntry", "topEntry", "topEntry", "bottomEntry", "bottomEntry", "bottomEntry", "bottomEntry", "topEntry", "topEntry", "bottomEntry", "topEntry", "topEntry", "bottomEntry", "bottomEntry", "topEntry", "topEntry", "bottomEntry", "topEntry", "topEntry", "bottomEntry", "bottomEntry"]
+        uniform float3[] extent = [(-60.00001, -40.00001, -0.00001), (60.00001, 40.00001, 80.00001)]
+        uniform uint[] face:loopCount = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+        uniform double2[] face:range = [(0, 0), (80, 120), (0, 0), (120, 80), (0, 0), (15, 80), (0, 0), (80, 15), (-65, 0), (15, 120), (0, 0), (80, 120), (0, 0), (120, 80), (0, 0), (120, 80), (0, 0), (80, 15), (0, 0), (15, 80), (0, 0), (80, 120), (0, 0), (120, 80), (0, 0), (80, 50), (0, 0), (50, 80)]
+        uniform token[] face:surfaceType = ["BrepSurfacePlaneAPI", "BrepSurfacePlaneAPI", "BrepSurfacePlaneAPI", "BrepSurfacePlaneAPI", "BrepSurfacePlaneAPI", "BrepSurfacePlaneAPI", "BrepSurfacePlaneAPI", "BrepSurfacePlaneAPI", "BrepSurfacePlaneAPI", "BrepSurfacePlaneAPI", "BrepSurfacePlaneAPI", "BrepSurfacePlaneAPI", "BrepSurfacePlaneAPI", "BrepSurfacePlaneAPI"]
+        uniform token[] face:trimType = ["general", "general", "general", "general", "general", "general", "general", "general", "general", "general", "general", "general", "general", "general"]
+        uniform uint[] faceuse:faceIndex = [5, 6, 7, 8, 9, 11, 4, 2, 0, 1, 3, 10, 12, 13, 13, 12, 4, 1, 0, 3, 2, 10, 9, 7, 6, 5, 8, 11]
+        uniform token[] faceuse:orientationType = ["same", "same", "same", "same", "same", "same", "same", "same", "same", "same", "same", "same", "same", "same", "opposite", "opposite", "opposite", "opposite", "opposite", "opposite", "opposite", "opposite", "opposite", "opposite", "opposite", "opposite", "opposite", "opposite"]
+        uniform uint[] loop:edgeuseCount = [4, 4, 4, 4, 12, 4, 12, 4, 4, 4, 4, 4, 4, 4]
+        uniform uint[] loop:vertexIndex = [9999999, 9999999, 9999999, 9999999, 9999999, 9999999, 9999999, 9999999, 9999999, 9999999, 9999999, 9999999, 9999999, 9999999]
+        uniform uint[] region:shellCount = [1, 1]
+        uniform token[] region:type = ["voidRegion", "solidRegion"]
+        uniform uint[] shell:faceuseCount = [14, 14]
+        uniform token[] shell:pointType = ["none", "none"]
+        uniform uint[] shell:wireEdgeCount = [0, 0]
+        uniform token[] vertex:pointType = ["BrepPointAPI", "BrepPointAPI", "BrepPointAPI", "BrepPointAPI", "BrepPointAPI", "BrepPointAPI", "BrepPointAPI", "BrepPointAPI", "BrepPointAPI", "BrepPointAPI", "BrepPointAPI", "BrepPointAPI", "BrepPointAPI", "BrepPointAPI", "BrepPointAPI", "BrepPointAPI", "BrepPointAPI", "BrepPointAPI", "BrepPointAPI", "BrepPointAPI", "BrepPointAPI", "BrepPointAPI", "BrepPointAPI", "BrepPointAPI"]
+        uniform token[] wireEdge:curveType = []
+        uniform double[] wireEdge:range = []
+        uniform int2[] wireEdge:vertexIndices = []
+    }
+}
+

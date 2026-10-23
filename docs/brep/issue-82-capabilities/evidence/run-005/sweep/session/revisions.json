@@ -1,0 +1,838 @@
+{
+  "version": 1,
+  "selected": "6cea7b9fadf140afa3f32c0e737fe9ab",
+  "selection_version": 2,
+  "revisions": {
+    "original": {
+      "id": "original",
+      "parent_id": null,
+      "result": {
+        "backend": "usd-brep",
+        "success": false,
+        "files": {
+          "source": "/results/session/brep-6a22b4c56d764f5f8b8c1e7d81905339/model.recipe.json",
+          "stl": "/results/session/brep-6a22b4c56d764f5f8b8c1e7d81905339/model.stl",
+          "usd": "/results/session/brep-6a22b4c56d764f5f8b8c1e7d81905339/model.usda",
+          "views": {}
+        },
+        "diagnostics": {
+          "selection_catalog": {
+            "version": 1,
+            "status": "available",
+            "unresolved": [
+              {
+                "rule": {
+                  "kind": "extreme_face",
+                  "owner": "handle",
+                  "axis": 1,
+                  "side": "min"
+                },
+                "status": "ambiguous",
+                "reason": "The target changed or split. Select again."
+              },
+              {
+                "rule": {
+                  "kind": "extreme_face",
+                  "owner": "handle",
+                  "axis": 1,
+                  "side": "max"
+                },
+                "status": "lost",
+                "reason": "No matching face remains. Select again."
+              },
+              {
+                "rule": {
+                  "kind": "extreme_face",
+                  "owner": "handle",
+                  "axis": 2,
+                  "side": "min"
+                },
+                "status": "ambiguous",
+                "reason": "The target changed or split. Select again."
+              },
+              {
+                "rule": {
+                  "kind": "extreme_face",
+                  "owner": "handle",
+                  "axis": 2,
+                  "side": "max"
+                },
+                "status": "ambiguous",
+                "reason": "The target changed or split. Select again."
+              }
+            ],
+            "output_owner": "handle",
+            "targets": [
+              {
+                "id": "7498cf5c561979a8",
+                "label": "Outside X min face",
+                "rule": {
+                  "kind": "extreme_face",
+                  "owner": "handle",
+                  "axis": 0,
+                  "side": "min"
+                },
+                "match_count": 1,
+                "geometry": {
+                  "triangles": [
+                    [
+                      0.0,
+                      15.0,
+                      8.0
+                    ],
+                    [
+                      0.0,
+                      0.0,
+                      0.0
+                    ],
+                    [
+                      0.0,
+                      0.0,
+                      8.0
+                    ],
+                    [
+                      0.0,
+                      0.0,
+                      0.0
+                    ],
+                    [
+                      0.0,
+                      15.0,
+                      8.0
+                    ],
+                    [
+                      0.0,
+                      15.0,
+                      0.0
+                    ]
+                  ]
+                }
+              },
+              {
+                "id": "b32378245bdc794a",
+                "label": "Outside X max face",
+                "rule": {
+                  "kind": "extreme_face",
+                  "owner": "handle",
+                  "axis": 0,
+                  "side": "max"
+                },
+                "match_count": 1,
+                "geometry": {
+                  "triangles": [
+                    [
+                      46.0,
+                      -1.8369701465288538e-16,
+                      0.0
+                    ],
+                    [
+                      46.0,
+                      15.0,
+                      8.0
+                    ],
+                    [
+                      46.0,
+                      -1.8369701465288538e-16,
+                      8.0
+                    ],
+                    [
+                      46.0,
+                      15.0,
+                      8.0
+                    ],
+                    [
+                      46.0,
+                      -1.8369701465288538e-16,
+                      0.0
+                    ],
+                    [
+                      46.0,
+                      15.0,
+                      0.0
+                    ]
+                  ]
+                }
+              },
+              {
+                "id": "c04658285c65e0dc",
+                "label": "Outer vertical edges",
+                "rule": {
+                  "kind": "outer_vertical_edges",
+                  "owner": "handle",
+                  "expected_edges": 2
+                },
+                "match_count": 2,
+                "geometry": {
+                  "lines": [
+                    [
+                      [
+                        0.0,
+                        0.0,
+                        8.0
+                      ],
+                      [
+                        0.0,
+                        0.0,
+                        0.0
+                      ]
+                    ],
+                    [
+                      [
+                        46.0,
+                        -1.8369701987210297e-16,
+                        8.0
+                      ],
+                      [
+                        46.0,
+                        -1.8369701987210297e-16,
+                        0.0
+                      ]
+                    ]
+                  ]
+                }
+              }
+            ],
+            "supported": "Axis-aligned extreme planar faces, four-wall box cutouts and straight outer vertical edges. Recheck after every rebuild."
+          },
+          "backend": "usd-brep",
+          "version": "1.0.0",
+          "recipe_version": 1,
+          "solid_volume_mm3": 4455.92842676693,
+          "mesh_volume_mm3": 4451.085064521443,
+          "extents_mm": [
+            46.0,
+            37.99991226196289,
+            8.000000000693417
+          ],
+          "bounds_mm": [
+            [
+              0.0,
+              -1.8369701465288538e-16,
+              -6.934176011164084e-10
+            ],
+            [
+              46.0,
+              37.99991226196289,
+              8.0
+            ]
+          ],
+          "watertight": true,
+          "winding_consistent": true,
+          "euler_number": 2,
+          "triangles": 276,
+          "usd_roundtrip": true,
+          "volume_relative_accuracy": 1e-08,
+          "usd_volume_mm3": 4455.930248734059,
+          "operations": [
+            {
+              "id": "handle",
+              "kind": "sweep",
+              "faces": 12
+            }
+          ],
+          "connections": [],
+          "resource_limits": {
+            "memory_bytes": 17179869184,
+            "cpu_seconds": 150,
+            "file_size_bytes": 536870912
+          },
+          "build_seconds": 0.705
+        },
+        "evaluation": {
+          "status": "unverified",
+          "accepted": false
+        }
+      },
+      "source_text": "{\n  \"version\": 1,\n  \"units\": \"mm\",\n  \"name\": \"Rectangular handle with two tangent straight ends\",\n  \"parameters\": {\n    \"radius\": {\n      \"value\": 20.0,\n      \"min\": 8,\n      \"max\": 40,\n      \"unit\": \"mm\"\n    }\n  },\n  \"operations\": [\n    {\n      \"id\": \"handle\",\n      \"kind\": \"sweep\",\n      \"origin\": [\n        0,\n        0,\n        0\n      ],\n      \"plane\": \"xy\",\n      \"frame_rule\": \"normal_to_path_z_up\",\n      \"section_width\": 6,\n      \"section_height\": 8,\n      \"path\": [\n        {\n          \"kind\": \"line\",\n          \"start\": [\n            \"2*radius+3\",\n            0\n          ],\n          \"end\": [\n            \"2*radius+3\",\n            15\n          ]\n        },\n        {\n          \"kind\": \"arc\",\n          \"center\": [\n            \"radius+3\",\n            15\n          ],\n          \"radius\": \"radius\",\n          \"start_angle\": 0,\n          \"end_angle\": 180\n        },\n        {\n          \"kind\": \"line\",\n          \"start\": [\n            3,\n            15\n          ],\n          \"end\": [\n            3,\n            0\n          ]\n        }\n      ]\n    }\n  ],\n  \"output\": \"handle\"\n}",
+      "parameters": [
+        {
+          "name": "radius",
+          "value": 20.0,
+          "low": 8,
+          "high": 40,
+          "step": 0.01,
+          "label": "radius",
+          "unit": "mm",
+          "description": "Rebuilds the saved construction recipe",
+          "group": "Details",
+          "feature": null
+        }
+      ],
+      "kind": "generation"
+    },
+    "e5e3a23cfdb649278da70f6d781520a5": {
+      "id": "e5e3a23cfdb649278da70f6d781520a5",
+      "parent_id": "original",
+      "kind": "parameter_edit",
+      "result": {
+        "backend": "usd-brep",
+        "success": false,
+        "files": {
+          "source": "/results/session/brep-f1844f757092442f8adb2d4d066eed19/model.recipe.json",
+          "stl": "/results/session/brep-f1844f757092442f8adb2d4d066eed19/model.stl",
+          "usd": "/results/session/brep-f1844f757092442f8adb2d4d066eed19/model.usda",
+          "views": {}
+        },
+        "diagnostics": {
+          "selection_catalog": {
+            "version": 1,
+            "status": "available",
+            "unresolved": [
+              {
+                "rule": {
+                  "kind": "extreme_face",
+                  "owner": "handle",
+                  "axis": 1,
+                  "side": "min"
+                },
+                "status": "ambiguous",
+                "reason": "The target changed or split. Select again."
+              },
+              {
+                "rule": {
+                  "kind": "extreme_face",
+                  "owner": "handle",
+                  "axis": 1,
+                  "side": "max"
+                },
+                "status": "lost",
+                "reason": "No matching face remains. Select again."
+              },
+              {
+                "rule": {
+                  "kind": "extreme_face",
+                  "owner": "handle",
+                  "axis": 2,
+                  "side": "min"
+                },
+                "status": "ambiguous",
+                "reason": "The target changed or split. Select again."
+              },
+              {
+                "rule": {
+                  "kind": "extreme_face",
+                  "owner": "handle",
+                  "axis": 2,
+                  "side": "max"
+                },
+                "status": "ambiguous",
+                "reason": "The target changed or split. Select again."
+              }
+            ],
+            "output_owner": "handle",
+            "targets": [
+              {
+                "id": "7498cf5c561979a8",
+                "label": "Outside X min face",
+                "rule": {
+                  "kind": "extreme_face",
+                  "owner": "handle",
+                  "axis": 0,
+                  "side": "min"
+                },
+                "match_count": 1,
+                "geometry": {
+                  "triangles": [
+                    [
+                      0.0,
+                      15.0,
+                      8.0
+                    ],
+                    [
+                      0.0,
+                      0.0,
+                      0.0
+                    ],
+                    [
+                      0.0,
+                      0.0,
+                      8.0
+                    ],
+                    [
+                      0.0,
+                      0.0,
+                      0.0
+                    ],
+                    [
+                      0.0,
+                      15.0,
+                      8.0
+                    ],
+                    [
+                      0.0,
+                      15.0,
+                      0.0
+                    ]
+                  ]
+                }
+              },
+              {
+                "id": "b32378245bdc794a",
+                "label": "Outside X max face",
+                "rule": {
+                  "kind": "extreme_face",
+                  "owner": "handle",
+                  "axis": 0,
+                  "side": "max"
+                },
+                "match_count": 1,
+                "geometry": {
+                  "triangles": [
+                    [
+                      56.0,
+                      -1.8369701465288538e-16,
+                      0.0
+                    ],
+                    [
+                      56.0,
+                      15.0,
+                      8.0
+                    ],
+                    [
+                      56.0,
+                      -1.8369701465288538e-16,
+                      8.0
+                    ],
+                    [
+                      56.0,
+                      15.0,
+                      8.0
+                    ],
+                    [
+                      56.0,
+                      -1.8369701465288538e-16,
+                      0.0
+                    ],
+                    [
+                      56.0,
+                      15.0,
+                      0.0
+                    ]
+                  ]
+                }
+              },
+              {
+                "id": "c04658285c65e0dc",
+                "label": "Outer vertical edges",
+                "rule": {
+                  "kind": "outer_vertical_edges",
+                  "owner": "handle",
+                  "expected_edges": 2
+                },
+                "match_count": 2,
+                "geometry": {
+                  "lines": [
+                    [
+                      [
+                        0.0,
+                        0.0,
+                        8.0
+                      ],
+                      [
+                        0.0,
+                        0.0,
+                        0.0
+                      ]
+                    ],
+                    [
+                      [
+                        56.0,
+                        -1.8369701987210297e-16,
+                        8.0
+                      ],
+                      [
+                        56.0,
+                        -1.8369701987210297e-16,
+                        0.0
+                      ]
+                    ]
+                  ]
+                }
+              }
+            ],
+            "supported": "Axis-aligned extreme planar faces, four-wall box cutouts and straight outer vertical edges. Recheck after every rebuild."
+          },
+          "backend": "usd-brep",
+          "version": "1.0.0",
+          "recipe_version": 1,
+          "solid_volume_mm3": 5209.910075961839,
+          "mesh_volume_mm3": 5203.856228309026,
+          "extents_mm": [
+            56.0,
+            42.99989318847656,
+            8.000000000000153
+          ],
+          "bounds_mm": [
+            [
+              0.0,
+              -1.8369701465288538e-16,
+              -1.5195756165962276e-13
+            ],
+            [
+              56.0,
+              42.99989318847656,
+              8.0
+            ]
+          ],
+          "watertight": true,
+          "winding_consistent": true,
+          "euler_number": 2,
+          "triangles": 276,
+          "usd_roundtrip": true,
+          "volume_relative_accuracy": 1e-08,
+          "usd_volume_mm3": 5209.910357005746,
+          "operations": [
+            {
+              "id": "handle",
+              "kind": "sweep",
+              "faces": 12
+            }
+          ],
+          "connections": [],
+          "resource_limits": {
+            "memory_bytes": 17179869184,
+            "cpu_seconds": 150,
+            "file_size_bytes": 536870912
+          },
+          "build_seconds": 0.67
+        },
+        "evaluation": {
+          "status": "unverified",
+          "accepted": false,
+          "failures": [
+            "Drawing checks have not been rerun for this edit."
+          ]
+        },
+        "build": {
+          "version": 1,
+          "backend": "usd-brep",
+          "source_format": "brep-recipe-v1",
+          "ok": true,
+          "units": "mm",
+          "axes": {
+            "x": "width",
+            "y": "depth",
+            "z": "height"
+          },
+          "views": [],
+          "measurements": {
+            "watertight": true,
+            "components": 1,
+            "triangles": 276,
+            "through_holes": 0,
+            "extents_mm": [
+              56.0,
+              43.0,
+              8.0
+            ],
+            "volume_mm3": 5203.856
+          },
+          "diagnostics": [],
+          "drawing_evaluated": false
+        }
+      },
+      "source_text": "{\n  \"version\": 1,\n  \"units\": \"mm\",\n  \"name\": \"Rectangular handle with two tangent straight ends\",\n  \"parameters\": {\n    \"radius\": {\n      \"value\": 25.0,\n      \"min\": 8,\n      \"max\": 40,\n      \"unit\": \"mm\"\n    }\n  },\n  \"operations\": [\n    {\n      \"id\": \"handle\",\n      \"kind\": \"sweep\",\n      \"origin\": [\n        0,\n        0,\n        0\n      ],\n      \"plane\": \"xy\",\n      \"frame_rule\": \"normal_to_path_z_up\",\n      \"section_width\": 6,\n      \"section_height\": 8,\n      \"path\": [\n        {\n          \"kind\": \"line\",\n          \"start\": [\n            \"2*radius+3\",\n            0\n          ],\n          \"end\": [\n            \"2*radius+3\",\n            15\n          ]\n        },\n        {\n          \"kind\": \"arc\",\n          \"center\": [\n            \"radius+3\",\n            15\n          ],\n          \"radius\": \"radius\",\n          \"start_angle\": 0,\n          \"end_angle\": 180\n        },\n        {\n          \"kind\": \"line\",\n          \"start\": [\n            3,\n            15\n          ],\n          \"end\": [\n            3,\n            0\n          ]\n        }\n      ]\n    }\n  ],\n  \"output\": \"handle\"\n}",
+      "parameters": [
+        {
+          "name": "radius",
+          "value": 25.0,
+          "low": 8,
+          "high": 40,
+          "step": 0.01,
+          "label": "radius",
+          "unit": "mm",
+          "description": "Rebuilds the saved construction recipe",
+          "group": "Details",
+          "feature": null
+        }
+      ]
+    },
+    "6cea7b9fadf140afa3f32c0e737fe9ab": {
+      "id": "6cea7b9fadf140afa3f32c0e737fe9ab",
+      "parent_id": "e5e3a23cfdb649278da70f6d781520a5",
+      "kind": "parameter_edit",
+      "result": {
+        "backend": "usd-brep",
+        "success": false,
+        "files": {
+          "source": "/results/session/brep-9d8c2aaba8b749378a745d200cc19ec5/model.recipe.json",
+          "stl": "/results/session/brep-9d8c2aaba8b749378a745d200cc19ec5/model.stl",
+          "usd": "/results/session/brep-9d8c2aaba8b749378a745d200cc19ec5/model.usda",
+          "views": {}
+        },
+        "diagnostics": {
+          "selection_catalog": {
+            "version": 1,
+            "status": "available",
+            "unresolved": [
+              {
+                "rule": {
+                  "kind": "extreme_face",
+                  "owner": "handle",
+                  "axis": 1,
+                  "side": "min"
+                },
+                "status": "ambiguous",
+                "reason": "The target changed or split. Select again."
+              },
+              {
+                "rule": {
+                  "kind": "extreme_face",
+                  "owner": "handle",
+                  "axis": 1,
+                  "side": "max"
+                },
+                "status": "lost",
+                "reason": "No matching face remains. Select again."
+              },
+              {
+                "rule": {
+                  "kind": "extreme_face",
+                  "owner": "handle",
+                  "axis": 2,
+                  "side": "min"
+                },
+                "status": "ambiguous",
+                "reason": "The target changed or split. Select again."
+              },
+              {
+                "rule": {
+                  "kind": "extreme_face",
+                  "owner": "handle",
+                  "axis": 2,
+                  "side": "max"
+                },
+                "status": "ambiguous",
+                "reason": "The target changed or split. Select again."
+              }
+            ],
+            "output_owner": "handle",
+            "targets": [
+              {
+                "id": "7498cf5c561979a8",
+                "label": "Outside X min face",
+                "rule": {
+                  "kind": "extreme_face",
+                  "owner": "handle",
+                  "axis": 0,
+                  "side": "min"
+                },
+                "match_count": 1,
+                "geometry": {
+                  "triangles": [
+                    [
+                      0.0,
+                      15.0,
+                      8.0
+                    ],
+                    [
+                      0.0,
+                      0.0,
+                      0.0
+                    ],
+                    [
+                      0.0,
+                      0.0,
+                      8.0
+                    ],
+                    [
+                      0.0,
+                      0.0,
+                      0.0
+                    ],
+                    [
+                      0.0,
+                      15.0,
+                      8.0
+                    ],
+                    [
+                      0.0,
+                      15.0,
+                      0.0
+                    ]
+                  ]
+                }
+              },
+              {
+                "id": "b32378245bdc794a",
+                "label": "Outside X max face",
+                "rule": {
+                  "kind": "extreme_face",
+                  "owner": "handle",
+                  "axis": 0,
+                  "side": "max"
+                },
+                "match_count": 1,
+                "geometry": {
+                  "triangles": [
+                    [
+                      52.0,
+                      -1.8369701465288538e-16,
+                      0.0
+                    ],
+                    [
+                      52.0,
+                      15.0,
+                      8.0
+                    ],
+                    [
+                      52.0,
+                      -1.8369701465288538e-16,
+                      8.0
+                    ],
+                    [
+                      52.0,
+                      15.0,
+                      8.0
+                    ],
+                    [
+                      52.0,
+                      -1.8369701465288538e-16,
+                      0.0
+                    ],
+                    [
+                      52.0,
+                      15.0,
+                      0.0
+                    ]
+                  ]
+                }
+              },
+              {
+                "id": "c04658285c65e0dc",
+                "label": "Outer vertical edges",
+                "rule": {
+                  "kind": "outer_vertical_edges",
+                  "owner": "handle",
+                  "expected_edges": 2
+                },
+                "match_count": 2,
+                "geometry": {
+                  "lines": [
+                    [
+                      [
+                        0.0,
+                        0.0,
+                        8.0
+                      ],
+                      [
+                        0.0,
+                        0.0,
+                        0.0
+                      ]
+                    ],
+                    [
+                      [
+                        52.0,
+                        -1.8369701987210297e-16,
+                        8.0
+                      ],
+                      [
+                        52.0,
+                        -1.8369701987210297e-16,
+                        0.0
+                      ]
+                    ]
+                  ]
+                }
+              }
+            ],
+            "supported": "Axis-aligned extreme planar faces, four-wall box cutouts and straight outer vertical edges. Recheck after every rebuild."
+          },
+          "backend": "usd-brep",
+          "version": "1.0.0",
+          "recipe_version": 1,
+          "solid_volume_mm3": 4908.318712944434,
+          "mesh_volume_mm3": 4902.747386123737,
+          "extents_mm": [
+            52.0,
+            40.999900817871094,
+            8.000000000000151
+          ],
+          "bounds_mm": [
+            [
+              0.0,
+              -1.8369701465288538e-16,
+              -1.515601473532982e-13
+            ],
+            [
+              52.0,
+              40.999900817871094,
+              8.0
+            ]
+          ],
+          "watertight": true,
+          "winding_consistent": true,
+          "euler_number": 2,
+          "triangles": 276,
+          "usd_roundtrip": true,
+          "volume_relative_accuracy": 1e-08,
+          "usd_volume_mm3": 4908.319251555717,
+          "operations": [
+            {
+              "id": "handle",
+              "kind": "sweep",
+              "faces": 12
+            }
+          ],
+          "connections": [],
+          "resource_limits": {
+            "memory_bytes": 17179869184,
+            "cpu_seconds": 150,
+            "file_size_bytes": 536870912
+          },
+          "build_seconds": 0.719
+        },
+        "evaluation": {
+          "status": "unverified",
+          "accepted": false,
+          "failures": [
+            "Drawing checks have not been rerun for this edit."
+          ]
+        },
+        "build": {
+          "version": 1,
+          "backend": "usd-brep",
+          "source_format": "brep-recipe-v1",
+          "ok": true,
+          "units": "mm",
+          "axes": {
+            "x": "width",
+            "y": "depth",
+            "z": "height"
+          },
+          "views": [],
+          "measurements": {
+            "watertight": true,
+            "components": 1,
+            "triangles": 276,
+            "through_holes": 0,
+            "extents_mm": [
+              52.0,
+              41.0,
+              8.0
+            ],
+            "volume_mm3": 4902.747
+          },
+          "diagnostics": [],
+          "drawing_evaluated": false
+        }
+      },
+      "source_text": "{\n  \"version\": 1,\n  \"units\": \"mm\",\n  \"name\": \"Rectangular handle with two tangent straight ends\",\n  \"parameters\": {\n    \"radius\": {\n      \"value\": 23.0,\n      \"min\": 8,\n      \"max\": 40,\n      \"unit\": \"mm\"\n    }\n  },\n  \"operations\": [\n    {\n      \"id\": \"handle\",\n      \"kind\": \"sweep\",\n      \"origin\": [\n        0,\n        0,\n        0\n      ],\n      \"plane\": \"xy\",\n      \"frame_rule\": \"normal_to_path_z_up\",\n      \"section_width\": 6,\n      \"section_height\": 8,\n      \"path\": [\n        {\n          \"kind\": \"line\",\n          \"start\": [\n            \"2*radius+3\",\n            0\n          ],\n          \"end\": [\n            \"2*radius+3\",\n            15\n          ]\n        },\n        {\n          \"kind\": \"arc\",\n          \"center\": [\n            \"radius+3\",\n            15\n          ],\n          \"radius\": \"radius\",\n          \"start_angle\": 0,\n          \"end_angle\": 180\n        },\n        {\n          \"kind\": \"line\",\n          \"start\": [\n            3,\n            15\n          ],\n          \"end\": [\n            3,\n            0\n          ]\n        }\n      ]\n    }\n  ],\n  \"output\": \"handle\"\n}",
+      "parameters": [
+        {
+          "name": "radius",
+          "value": 23.0,
+          "low": 8,
+          "high": 40,
+          "step": 0.01,
+          "label": "radius",
+          "unit": "mm",
+          "description": "Rebuilds the saved construction recipe",
+          "group": "Details",
+          "feature": null
+        }
+      ]
+    }
+  }
+}

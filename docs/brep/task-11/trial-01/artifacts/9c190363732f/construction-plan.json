@@ -1,0 +1,40 @@
+{
+  "view_frame": "The drawing uses a third-angle projection layout. The primary view is 'top', which corresponds to the XY plane (X width, Y depth). The 'FRONT (XZ)' view shows the elevation (X width, Z height). The Z-axis represents the vertical height of the part, with the base at Z=0 and the top at Z=50.",
+  "features": [
+    {
+      "id": "base_profile",
+      "shape": "rectangle",
+      "section": "XY plane",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "40",
+        "30"
+      ],
+      "placement": "Centered at (0,0) on the Z=0 plane. Extends from X=-20 to X=20 and Y=-15 to Y=15.",
+      "evidence": "Labelled 'END A \u2014 rectangle, XY at Z=0'. Dimensions 40 (width) and 30 (height/depth) are explicitly marked."
+    },
+    {
+      "id": "top_profile",
+      "shape": "circle",
+      "section": "XY plane",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "\u00d820"
+      ],
+      "placement": "Centered at (0,0) on the Z=50 plane. Radius is 10.",
+      "evidence": "Labelled 'END B \u2014 circle, XY at Z=50'. Dimension \u00d820 is explicitly marked."
+    }
+  ],
+  "connections": [
+    "The base_profile (rectangle) and top_profile (circle) are connected by a solid loft transition.",
+    "The transition is smooth and untwisted, as indicated by the text 'Smooth transition; no twist' and the straight side lines in the FRONT (XZ) view."
+  ],
+  "edit_rules": [
+    "Changing the base rectangle width (40) or depth (30) updates the bottom profile of the loft.",
+    "Changing the top circle diameter (\u00d820) updates the top profile of the loft.",
+    "Changing the total height (50) updates the Z-position of the top profile and the loft length.",
+    "The XY center of both profiles must remain aligned at (0,0)."
+  ],
+  "unresolved": [],
+  "clarification": null
+}

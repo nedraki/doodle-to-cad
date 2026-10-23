@@ -1,0 +1,104 @@
+{
+  "view_frame": "The drawing presents two views. The left view is the Front view (XZ plane), showing the width (X) and height (Z) of the part. The right view is the Right view (YZ plane), showing the depth (Y) and height (Z). The part is an L-shaped bracket with a vertical backplate and a horizontal base.",
+  "features": [
+    {
+      "id": "backplate",
+      "shape": "rectangular_prism",
+      "section": "rectangular",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "width: ASSUMED 100mm",
+        "height: ASSUMED 100mm",
+        "thickness: ASSUMED 10mm"
+      ],
+      "placement": "Centred on X axis, resting on Z=0 plane. Extends from Y=0 to Y=10mm.",
+      "evidence": "The large rectangular outline in the Front view and the vertical leg of the L-shape in the Right view."
+    },
+    {
+      "id": "base",
+      "shape": "rectangular_prism",
+      "section": "rectangular",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "width: ASSUMED 100mm",
+        "depth: ASSUMED 50mm",
+        "thickness: ASSUMED 10mm"
+      ],
+      "placement": "Extends from Y=0 to Y=50mm. Rests on Z=0 plane. Attached to the bottom of the backplate.",
+      "evidence": "The horizontal leg of the L-shape in the Right view."
+    },
+    {
+      "id": "opening_1",
+      "shape": "rectangular_prism",
+      "section": "rectangular",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "width: ASSUMED 40mm",
+        "height: ASSUMED 30mm",
+        "depth: UNKNOWN"
+      ],
+      "placement": "Located in the upper-left quadrant of the backplate. Centre approx at X=-25mm, Z=70mm.",
+      "evidence": "Rectangular outline in the upper-left of the Front view."
+    },
+    {
+      "id": "opening_2",
+      "shape": "rectangular_prism",
+      "section": "rectangular",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "width: ASSUMED 15mm",
+        "height: ASSUMED 40mm",
+        "depth: UNKNOWN"
+      ],
+      "placement": "Located in the upper-middle of the backplate. Centre approx at X=0mm, Z=60mm.",
+      "evidence": "Vertical rectangular outline in the upper-middle of the Front view."
+    },
+    {
+      "id": "opening_3",
+      "shape": "rectangular_prism",
+      "section": "rectangular",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "width: ASSUMED 15mm",
+        "height: ASSUMED 40mm",
+        "depth: UNKNOWN"
+      ],
+      "placement": "Located in the lower-left quadrant of the backplate. Centre approx at X=-20mm, Z=30mm.",
+      "evidence": "Vertical rectangular outline in the lower-left of the Front view."
+    },
+    {
+      "id": "opening_4",
+      "shape": "rectangular_prism",
+      "section": "rectangular",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "width: ASSUMED 15mm",
+        "height: ASSUMED 40mm",
+        "depth: UNKNOWN"
+      ],
+      "placement": "Located in the lower-right quadrant of the backplate. Centre approx at X=20mm, Z=30mm.",
+      "evidence": "Vertical rectangular outline in the lower-right of the Front view."
+    }
+  ],
+  "connections": [
+    "The base is attached to the bottom face of the backplate, forming an L-shape.",
+    "Openings 1, 2, 3, and 4 are located on the front face of the backplate."
+  ],
+  "edit_rules": [
+    "Changing the backplate width must update the width of the base and the X-positions of all openings.",
+    "Changing the backplate height must update the Z-positions of all openings.",
+    "Changing the base depth must update the Y-extent of the base.",
+    "Changing the thickness of the backplate must update the Y-extent of the backplate and the depth of all openings if they are through-holes."
+  ],
+  "unresolved": [
+    "The exact dimensions of the backplate and base are not provided.",
+    "The exact dimensions and positions of the four openings are not provided.",
+    "The depth of the openings is not specified (through-hole vs. recess)."
+  ],
+  "clarification": {
+    "feature_id": "opening_1",
+    "feature_label": "Upper-left rectangular opening on the backplate",
+    "reason": "The drawing shows a rectangular outline but does not indicate if it is a through-hole or a recess, nor does it specify the depth.",
+    "kind": "opening_extent"
+  }
+}

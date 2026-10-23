@@ -1,0 +1,168 @@
+```json
+{
+  "version": 1,
+  "object_hypothesis": "L-shaped bracket with a vertical plate containing multiple rectangular cutouts",
+  "features": [
+    {
+      "id": "plate_face",
+      "type": "body",
+      "description": "Large rectangular face containing internal features",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_0"
+        }
+      ],
+      "reason": "Outer boundary in view_1 defines the extent of the main plate."
+    },
+    {
+      "id": "cutout_top",
+      "type": "opening",
+      "description": "Rectangular opening located in the upper-left quadrant of the plate",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_8"
+        }
+      ],
+      "reason": "Closed internal contour in view_1."
+    },
+    {
+      "id": "cutout_center",
+      "type": "opening",
+      "description": "Vertical rectangular opening located in the center of the plate",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_6"
+        }
+      ],
+      "reason": "Closed internal contour in view_1."
+    },
+    {
+      "id": "cutout_bottom_left",
+      "type": "opening",
+      "description": "Vertical rectangular opening located in the lower-left quadrant",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_4"
+        }
+      ],
+      "reason": "Closed internal contour in view_1."
+    },
+    {
+      "id": "cutout_bottom_right",
+      "type": "opening",
+      "description": "Vertical rectangular opening located in the lower-right quadrant",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_2"
+        }
+      ],
+      "reason": "Closed internal contour in view_1."
+    },
+    {
+      "id": "l_profile",
+      "type": "profile",
+      "description": "L-shaped cross-section profile",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_10"
+        }
+      ],
+      "reason": "View_2 shows a distinct L-shape with a vertical leg and a horizontal base."
+    },
+    {
+      "id": "base_flange",
+      "type": "flange",
+      "description": "Horizontal extension at the bottom of the L-profile",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_10"
+        }
+      ],
+      "reason": "The bottom section of the L-profile in view_2 extends horizontally."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "plate_to_profile",
+      "type": "connected",
+      "features": [
+        "plate_face",
+        "l_profile"
+      ],
+      "description": "The plate face corresponds to the vertical leg of the L-profile",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_0"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_10"
+        }
+      ],
+      "reason": "View_1 shows the face of the plate, and view_2 shows the side profile of the vertical leg."
+    },
+    {
+      "id": "cutouts_in_plate",
+      "type": "position",
+      "features": [
+        "cutout_top",
+        "cutout_center",
+        "cutout_bottom_left",
+        "cutout_bottom_right",
+        "plate_face"
+      ],
+      "description": "Four openings are positioned within the plate face",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_8"
+        },
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_6"
+        },
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_4"
+        },
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_2"
+        },
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_0"
+        }
+      ],
+      "reason": "Internal contours are spatially contained within the outer boundary in view_1."
+    }
+  ],
+  "assumptions": [
+    "View_1 represents the front face of the vertical leg of the bracket.",
+    "View_2 represents the side profile of the bracket.",
+    "The internal contours in view_1 represent through-holes or pockets."
+  ],
+  "unresolved": [
+    "The specific depth of the cutouts (through vs. blind) is not defined by the 2D views.",
+    "The thickness of the base flange is not explicitly dimensioned."
+  ],
+  "conflicts": []
+}
+```

@@ -1,0 +1,227 @@
+{
+  "object": "L-shaped bookend",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "front",
+      "sheet_region": "left",
+      "constrains": "The upright panel's face geometry (width and height) and the layout of the four through-openings."
+    },
+    {
+      "direction": "right",
+      "sheet_region": "right",
+      "constrains": "The L-shaped cross-section profile (base depth and panel height) and the uniform thickness of the material."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "part_1",
+      "name": "Bookend",
+      "material": "plastic",
+      "description": "A single L-shaped solid with four rectangular cutouts in the vertical panel."
+    }
+  ],
+  "features": [
+    {
+      "id": "feat_base",
+      "name": "Base",
+      "type": "extrusion",
+      "owner": "part_1",
+      "description": "The horizontal bottom section of the L-profile."
+    },
+    {
+      "id": "feat_panel",
+      "name": "Upright Panel",
+      "type": "extrusion",
+      "owner": "part_1",
+      "description": "The vertical back section of the L-profile."
+    },
+    {
+      "id": "feat_hole_1",
+      "name": "Top Left Opening",
+      "type": "through_cutout",
+      "owner": "part_1",
+      "description": "Rectangular hole in the upper left of the panel."
+    },
+    {
+      "id": "feat_hole_2",
+      "name": "Center Vertical Opening",
+      "type": "through_cutout",
+      "owner": "part_1",
+      "description": "Vertical rectangular hole in the center of the panel."
+    },
+    {
+      "id": "feat_hole_3",
+      "name": "Bottom Left Opening",
+      "type": "through_cutout",
+      "owner": "part_1",
+      "description": "Vertical rectangular hole in the lower left of the panel."
+    },
+    {
+      "id": "feat_hole_4",
+      "name": "Bottom Right Opening",
+      "type": "through_cutout",
+      "owner": "part_1",
+      "description": "Vertical rectangular hole in the lower right of the panel."
+    }
+  ],
+  "relations": [
+    {
+      "type": "perpendicular",
+      "target_a": "feat_base",
+      "target_b": "feat_panel",
+      "description": "The base and panel meet at a 90-degree angle."
+    },
+    {
+      "type": "through",
+      "target_a": "feat_hole_1",
+      "target_b": "feat_panel",
+      "description": "Hole 1 passes completely through the panel thickness."
+    },
+    {
+      "type": "through",
+      "target_a": "feat_hole_2",
+      "target_b": "feat_panel",
+      "description": "Hole 2 passes completely through the panel thickness."
+    },
+    {
+      "type": "through",
+      "target_a": "feat_hole_3",
+      "target_b": "feat_panel",
+      "description": "Hole 3 passes completely through the panel thickness."
+    },
+    {
+      "type": "through",
+      "target_a": "feat_hole_4",
+      "target_b": "feat_panel",
+      "description": "Hole 4 passes completely through the panel thickness."
+    }
+  ],
+  "symmetry": "none",
+  "repetitions": [
+    {
+      "feature_id": "feat_hole_2",
+      "count": 1,
+      "description": "Central vertical slot"
+    },
+    {
+      "feature_id": "feat_hole_3",
+      "count": 1,
+      "description": "Left vertical slot"
+    },
+    {
+      "feature_id": "feat_hole_4",
+      "count": 1,
+      "description": "Right vertical slot"
+    }
+  ],
+  "dimensions": {
+    "max_dimension": 100.0,
+    "max_width": 80.18,
+    "max_depth": 71.67,
+    "max_height": 100.0,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "Exact thickness of the bookend is not dimensioned, inferred from the stroke width of the right view.",
+    "Exact dimensions of the four holes are estimated from the front view proportions."
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "The object is modeled as a single L-shaped extrusion. The four holes are treated as subtractive boolean operations on the vertical panel face. The geometry is regularized to ensure sharp corners and straight edges consistent with a CAD model.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "extrude",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_2",
+        "operation": "extrude",
+        "profile_plane": "YZ",
+        "direction_axis": "X",
+        "owner": "part_1",
+        "parameters": {
+          "depth": 100,
+          "sketch_id": "op_1"
+        },
+        "source_views": [
+          "view_1",
+          "view_2"
+        ]
+      },
+      {
+        "id": "feat_hole_1",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Rectangular hole in the upper left of the panel."
+        },
+        "source_views": []
+      },
+      {
+        "id": "feat_hole_2",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Vertical rectangular hole in the center of the panel."
+        },
+        "source_views": []
+      },
+      {
+        "id": "feat_hole_3",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Vertical rectangular hole in the lower left of the panel."
+        },
+        "source_views": []
+      },
+      {
+        "id": "feat_hole_4",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Vertical rectangular hole in the lower right of the panel."
+        },
+        "source_views": []
+      }
+    ],
+    "unresolved_constraints": [
+      "Thickness of the L-profile is estimated as 10mm."
+    ]
+  },
+  "user_intent": {
+    "description": "L-shaped bookend: a flat base and an upright panel. The panel has four through openings cut all the way through its wall.",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "100"
+  },
+  "source_view_group_count": 2,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

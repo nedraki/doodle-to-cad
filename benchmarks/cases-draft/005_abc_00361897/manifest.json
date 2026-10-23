@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "id": "005_abc_00361897",
+  "title": "ABC 00361897 (draft, pre-wired from open dataset)",
+  "split": "draft_unreviewed",
+  "status": "draft",
+  "source": {
+    "dataset": "ABC",
+    "model_id": "00361897",
+    "urls": {
+      "stl2": "https://archive.nyu.edu/rest/bitstreams/88772/retrieve",
+      "meta": "https://archive.nyu.edu/rest/bitstreams/88769/retrieve",
+      "stl2_entry_in_chunk": "00361897_eee08caaa529ebdd996cf569_trimesh_003.stl",
+      "chunk": "abc_0036"
+    },
+    "sha256_stl": "bbbd439c26e44911a704a73403b3333603374bdd5f60a1d1087797298279ec93",
+    "unit_original": "meter_inferred_by_scale",
+    "max_extent_mm_after_unit": 38.09999953955412,
+    "scale_to_mm": 3149.606337276201,
+    "note_units": "ABC released files carry no unit key in meta/stats; meshes treated as nominal mm; every GT STL is scaled so max extent = 120 mm (scale_to_mm = 120/max_extent of the downloaded mesh). The watertight mesh STL is shipped only inside the archive.nyu.edu chunk archives (abc_<chunk>_stl2_v00.7z holds <id>_<guid>_trimesh_000.stl); per-file gh-pages URLs exist only for a few demo models.",
+    "coordinate_transform": "xy-centred at origin, bbox min z translated to 0"
+  },
+  "reference": {
+    "kind": "no_ground_truth",
+    "authority": "candidate_from_open_dataset",
+    "measurements": {
+      "volume_mm3": 781976.0872604436,
+      "extents_mm": [
+        80.0,
+        120.0,
+        100.00000762939453
+      ],
+      "euler_number": 2,
+      "genus": 0,
+      "watertight": true,
+      "components": 1
+    },
+    "status": "measured_from_candidate_stl_informational_only"
+  },
+  "doodle_status": "placeholder_re_inked_from_gt_awaiting_user_doodle",
+  "doodle_generation": {
+    "tool": "benchmarks/tools/gen_doodle_from_stl.py",
+    "seed": 20261027,
+    "info": {
+      "stl": "/tmp/doodle-brep-95/benchmarks/cases-draft/005_abc_00361897/ground_truth/model.stl",
+      "stl_sha256": "cf5b8b822e42f82c7b361d6b065571240b2cef54da8112f370e98dba464ea38f",
+      "scale_px_per_mm": 4.0,
+      "outer_loops": 1,
+      "inner_loops": 0,
+      "sheet": [
+        706,
+        619
+      ],
+      "seed": 20261027,
+      "through_openings_in_front_view": 0,
+      "top_strip_px": [
+        320,
+        400
+      ]
+    }
+  },
+  "axisymmetric_flag": false,
+  "selection": {
+    "seed_utc_date": 20261022,
+    "selection_order": 5,
+    "selection_note": "first 8 passers in list order",
+    "filters": "watertight, 1 component, <50000 tri, volume>0, winding consistent, extent in [20,400] nominal mm"
+  },
+  "citation": "ABC: A Big CAD Model Dataset For Geometric Deep Learning (Koch et al. 2019); copyright owned by the creators; Onshape Terms of Use 1.g.i.",
+  "notes": "Reference measurements are informational only until the user draws a real doodle; the ink in source/drawing.png is a placeholder derived FROM the GT STL and must never be used for fidelity scoring."
+}

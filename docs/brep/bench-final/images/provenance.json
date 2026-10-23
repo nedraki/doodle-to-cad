@@ -1,0 +1,134 @@
+{
+  "003_front_grille_multiview_t1.png": {
+    "row": "runs/003_front_grille_multiview/usd-brep/trial-01/row.json",
+    "row_sha256": "a255e408e60b3b2437c7ab05c5bbe1fdfad011e8ba94ec1fe5c202a626fa370d",
+    "image_sha256": "b97d5d27c5ef61532b02c62c6a6a3013a8f1e9040fa80798c016e8cee4d34da0",
+    "verdict": "failed",
+    "measured": "measured: genus=8 extents=[126.0, 80.0, 3.0] volume=24368.9mm3",
+    "failures": "front projection; front openings; front opening positions; top projection; Detailed drawing features and view assignments require review.",
+    "panels": {
+      "input": {
+        "path": "runs/003_front_grille_multiview/usd-brep/trial-01/input.png",
+        "sha256": "2f80a0079a110b0fa8ae6341ad256962453d0e8a193c02701c1f1f6589adfa12"
+      },
+      "brep_mesh": {
+        "path": "runs/003_front_grille_multiview/usd-brep/trial-01/stl/model.stl",
+        "sha256": "0d915a1bc605332c64064c0727da861788ba51fce61ea2e5471ae9fee7a99705"
+      },
+      "gt": {
+        "path": "repo:benchmarks/cases/003_front_grille_multiview/derived/view-isometric.png",
+        "sha256": "8a4462b161f493a6599f65775de787e4d390c2fd77c069286e8feb4b573059ac"
+      }
+    }
+  },
+  "101_bltouch_bracket_t1.png": {
+    "row": "runs/101_bltouch_bracket/usd-brep/trial-01/row.json",
+    "row_sha256": "6e9d023e821f604f9ba2c95ec00018ec51020a071388ad885a54ee47b6ce8590",
+    "image_sha256": "b08473b822355f66d79125a4fb4d7d6aed125a31c698c7b8badc334460025df7",
+    "verdict": "failed",
+    "measured": "measured: genus=0 extents=[40.0, 50.0, 4.0] volume=8000.0mm3",
+    "failures": "front projection; top projection; top openings; top opening positions; right projection; right openings; right opening positions; Detailed drawing features and view assignments require review.",
+    "panels": {
+      "input": {
+        "path": "runs/101_bltouch_bracket/usd-brep/trial-01/input.png",
+        "sha256": "742838394287d3857f72360df1e3e21bf9f637e882edea8464b07ffacc4d9366"
+      },
+      "brep_mesh": {
+        "path": "runs/101_bltouch_bracket/usd-brep/trial-01/stl/model.stl",
+        "sha256": "e640b96ed0365514b56984bc175ba21a5c8554e4d6796c6d767a3f2a8826da65"
+      },
+      "gt": {
+        "path": "repo:benchmarks/cases/101_bltouch_bracket/derived/view-isometric.png",
+        "sha256": "2ce75e9790cac5fc141623c7a18b3e6696ee441805f74f6a1bc49ffcfb417b82"
+      }
+    }
+  },
+  "007_angle_bracket_holes_t1.png": {
+    "row": "runs/007_angle_bracket_holes/usd-brep/trial-01/row.json",
+    "row_sha256": "c4572c6a16e01e0fd0e227d8a43965e315b43691d779fe4e2f67e85a0b315688",
+    "image_sha256": "5fd3c2dfa57557ace0f9b2e8f43d78383c6733e5ff26e87e6554fb46122be7a5",
+    "verdict": "failed",
+    "measured": "measured: genus=3 extents=[80.0, 40.0, 5.0] volume=15250.9mm3",
+    "failures": "front projection; front openings; front opening positions; Detailed drawing features and view assignments require review.",
+    "panels": {
+      "input": {
+        "path": "runs/007_angle_bracket_holes/usd-brep/trial-01/input.png",
+        "sha256": "b947d120baaa78da56fff5e270b66010d3634cac299afb609b2913bcb2671f57"
+      },
+      "brep_mesh": {
+        "path": "runs/007_angle_bracket_holes/usd-brep/trial-01/stl/model.stl",
+        "sha256": "160039d3850c4d3c805f9b00b992de8b15d90b4ad78361ccc289d7c3484d60bf"
+      },
+      "gt": {
+        "path": "repo:benchmarks/cases/007_angle_bracket_holes/derived/view-isometric.png",
+        "sha256": "d87ffcfd0278d7b2470677297ecb3d63796c4da00afeac20d56e6fa7a750c8ff"
+      }
+    }
+  },
+  "wheel_t2.png": {
+    "row": "runs/wheel/usd-brep/trial-02/row.json",
+    "row_sha256": "879b6c465c8b7aaab27e04105325af60e2d113dd482d723021944661bbc5492a",
+    "image_sha256": "fb2623d24cd5c15bd7d62106fa9db299733f440aafa2a37360dc561d5c57d611",
+    "verdict": "failed",
+    "measured": "measured: genus=8 extents=[120.0, 8.0, 120.0] volume=51266.0mm3",
+    "failures": "front projection; front opening positions; Detailed drawing features and view assignments require review.",
+    "panels": {
+      "input": {
+        "path": "runs/wheel/usd-brep/trial-02/input.png",
+        "sha256": "53ee34e2fb93172393dc27d485822cb03677afc9bcfc3ec36691e3cf174ab80a"
+      },
+      "brep_mesh": {
+        "path": "runs/wheel/usd-brep/trial-02/stl/model.stl",
+        "sha256": "3394385bf8029dd7d17e83d30e4c1a75388376dd8ba0a1b693f6956e59caa1e1"
+      },
+      "gt": {
+        "path": "references/wheel-reference.stl",
+        "sha256": "c1c65d6a6a08ae7db2077a4a569c8c7d09a0f07f185b010f43d47a43f16ea017"
+      }
+    }
+  },
+  "constant_radius_handle_t1.png": {
+    "row": "runs/constant_radius_handle/usd-brep/trial-01/row.json",
+    "row_sha256": "a5780de0547ba6add5d0493ae1324ece391113e2a542283b7f462ad419a2b6f8",
+    "image_sha256": "58ec46619f38dde0b122c6d88acafef6a85d34c882722ccdc98a299dd959e975",
+    "verdict": "failed",
+    "measured": "measured: genus=0 extents=[48.0, 23.994, 8.0] volume=3132.8mm3",
+    "failures": "top projection; right projection; Detailed drawing features and view assignments require review.",
+    "panels": {
+      "input": {
+        "path": "runs/constant_radius_handle/usd-brep/trial-01/input.png",
+        "sha256": "f16bb331607f1e4d5c0115955a63c01e39d51069ba81e1a88cdf219c2509b3dc"
+      },
+      "brep_mesh": {
+        "path": "runs/constant_radius_handle/usd-brep/trial-01/stl/model.stl",
+        "sha256": "2cdf6f5ba19a320642bcb42b60305a92caf277ccde769933494af8140197225f"
+      },
+      "gt": {
+        "path": "references/curved_handle-reference.stl",
+        "sha256": "6ba54094069a7ab9bfb9960bf8963014de9441c2dc7b3dcb0ea1b88cee9e7f6c"
+      }
+    }
+  },
+  "002_greek_vase_silhouette_t1.png": {
+    "row": "runs/002_greek_vase_silhouette/usd-brep/trial-01/row.json",
+    "row_sha256": "9d27b1c9ac1ddecbd4d8eed5bdcd2e3ac8a7c867e23cc17114754cc5a5f3f129",
+    "image_sha256": "59dda36996e1852b04f8696896986ed4532328942081a04229c1e34eab7ee735",
+    "verdict": "error",
+    "measured": "measured: genus=None extents=None volume=Nonemm3",
+    "failures": "The drawing depicts a vase with a complex, organic silhouette (bulbous body, narrow neck, flared rim). The available BRep operations (box, cylinder, extrude, sweep, loft, arc_pipe) cannot construct a solid of revolution with a spline or complex polygonal profile. The 'loft' operation is strictly limited to a single transition between a rectangle and a circle, which cannot approximate the multi-stage curvature of the vase profile.",
+    "panels": {
+      "input": {
+        "path": "runs/002_greek_vase_silhouette/usd-brep/trial-01/input.png",
+        "sha256": "fcd10bfadce5c6d8d331790963fb63691101a71f4c5ad707c974af39ed3145b1"
+      },
+      "brep_mesh": {
+        "path": null,
+        "sha256": null
+      },
+      "gt": {
+        "path": "repo:benchmarks/cases/002_greek_vase_silhouette/derived/view-isometric.png",
+        "sha256": "66a144b8f2f9e5dff7b8ce1cc329dc7958b8c902d57e1ba5a0c806f6a7183891"
+      }
+    }
+  }
+}

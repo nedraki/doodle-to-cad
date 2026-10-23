@@ -1,0 +1,38 @@
+{
+  "view_frame": "The drawing uses a third-angle projection layout. The primary view is TOP (XY), where X represents width (40mm) and Y represents depth (30mm). The Z axis represents thickness (12mm), perpendicular to the XY plane. The 'SECTION THROUGH CENTRE' view confirms the Z-axis extent and the nature of the opening.",
+  "features": [
+    {
+      "id": "block_body",
+      "shape": "rectangular_prism",
+      "section": "rectangular",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "40",
+        "30",
+        "12"
+      ],
+      "placement": "Centered at (0,0,0). Extends from X=-20 to 20, Y=-15 to 15, and Z=-6 to 6.",
+      "evidence": "Top view shows a 40x30 rectangle. Text label 'Body: 40 wide x 30 deep x 12 thick'."
+    },
+    {
+      "id": "center_hole",
+      "shape": "cylinder",
+      "section": "circular",
+      "axis_or_plane": "Z",
+      "dimensions": [
+        "\u00d88"
+      ],
+      "placement": "Centered at (0,0). Axis runs along Z from -6 to 6 (through the entire thickness).",
+      "evidence": "Top view shows a circle labeled '\u00d88' centered in the rectangle. Section view text states '\u00d88 THROUGH' and 'No floor below opening'."
+    }
+  ],
+  "connections": [
+    "The center_hole is subtracted from the block_body."
+  ],
+  "edit_rules": [
+    "Changing the block width (40) or depth (30) maintains the hole's center at (0,0).",
+    "Changing the block thickness (12) automatically adjusts the hole length to remain a through-hole.",
+    "Changing the hole diameter (\u00d88) maintains its center at (0,0)."
+  ],
+  "unresolved": []
+}

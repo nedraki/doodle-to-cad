@@ -1,0 +1,24 @@
+[
+  {
+    "question": {
+      "feature_id": "opening_1",
+      "feature_label": "Upper-left rectangular opening",
+      "reason": "The drawing does not specify if the rectangular outlines on the front face are through-holes or blind recesses.",
+      "kind": "opening_extent",
+      "id": "603d7e1fd6f24f868049ce301aad63d8",
+      "text": "Should this hole go all the way through the part?",
+      "maximum_depth_mm": 120.0,
+      "choices": [
+        {
+          "id": "through",
+          "label": "Yes \u2014 make a through-hole"
+        },
+        {
+          "id": "recess",
+          "label": "No \u2014 leave a bottom"
+        }
+      ]
+    },
+    "status": "cancelled"
+  }
+]

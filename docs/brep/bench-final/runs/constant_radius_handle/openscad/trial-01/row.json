@@ -1,0 +1,95 @@
+{
+  "drawing": "constant_radius_handle",
+  "backend": "openscad",
+  "trial": 1,
+  "submitted_at": "2026-10-19T17:17:01.295437+00:00",
+  "finished_at": "2026-10-19T17:21:32.305856+00:00",
+  "run_id": "481535ce15c8",
+  "wall_seconds": 271.0,
+  "job_status": "done",
+  "error": null,
+  "questions_asked": 0,
+  "question_kinds": [],
+  "build": {
+    "watertight": true,
+    "components": 1,
+    "genus": 1,
+    "extents_mm": [
+      49.0,
+      9.0,
+      48.732
+    ],
+    "volume_mm3": 10928.4,
+    "sha256": "4cda3435d887f9e678c5e7f79489ac440db2a796d181f4ca96439afc67737f32",
+    "bytes": 68440
+  },
+  "checks": {
+    "build_success": true,
+    "extents_pass": false,
+    "genus_pass": false,
+    "volume_pass": false,
+    "fidelity_pass": false,
+    "overall_pass": false,
+    "not_applicable": []
+  },
+  "fidelity": {
+    "scores": {
+      "front": 0.19,
+      "top": 0.253
+    },
+    "pass": false,
+    "reason": null,
+    "topology": {
+      "front": {
+        "expected": 0,
+        "actual": 1,
+        "position_fidelity": null
+      },
+      "top": {
+        "expected": 0,
+        "actual": 9,
+        "position_fidelity": null
+      }
+    }
+  },
+  "product": {
+    "success": false,
+    "accepted": false,
+    "status": null,
+    "score": 86.5,
+    "projection_status": null,
+    "geometry_status": null,
+    "failures": [
+      "maximum dimension is 49 mm; target is 54 mm (tolerance 5%)",
+      "degenerate or implausible axis dimensions: Y=9 mm vs expected 54 mm",
+      "CAD projections poorly match the drawing: front similarity 0.19, top similarity 0.25 (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly."
+    ]
+  },
+  "attempts": {
+    "count": 3,
+    "recovered": false,
+    "corrections": null,
+    "selected": 1
+  },
+  "unsupported": {
+    "flag": false,
+    "code": null
+  },
+  "edit": {
+    "available": true,
+    "ok": true,
+    "seconds": 0.56,
+    "param": "arc_radius",
+    "old": 20.0,
+    "new": 24.0,
+    "message": null
+  },
+  "targeted": {
+    "available": false,
+    "ok": false,
+    "seconds": null,
+    "operation": null,
+    "value": null,
+    "message": "not_applicable: the product requires a BRep result for targeted edits"
+  }
+}

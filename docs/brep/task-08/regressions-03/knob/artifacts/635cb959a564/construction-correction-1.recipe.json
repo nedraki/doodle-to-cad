@@ -1,0 +1,204 @@
+{
+  "version": 2,
+  "units": "mm",
+  "name": "pulley",
+  "parameters": {
+    "width": {
+      "value": 120,
+      "min": 60,
+      "max": 200,
+      "label": "Overall Width",
+      "description": "Diameter of the flanges"
+    },
+    "height": {
+      "value": 120,
+      "min": 60,
+      "max": 200,
+      "label": "Overall Height",
+      "description": "Total height of the pulley"
+    },
+    "thickness": {
+      "value": 10,
+      "min": 5,
+      "max": 50,
+      "label": "Thickness",
+      "description": "Thickness of the pulley (depth along Y)"
+    },
+    "flange_thickness": {
+      "value": 15,
+      "min": 5,
+      "max": 40,
+      "label": "Flange Thickness",
+      "description": "Thickness of the top and bottom flanges"
+    },
+    "web_width": {
+      "value": 40,
+      "min": 10,
+      "max": 100,
+      "label": "Web Width",
+      "description": "Width of the central web"
+    }
+  },
+  "operations": [
+    {
+      "id": "flange_top",
+      "kind": "box",
+      "origin": [
+        "-width/2",
+        "-thickness/2",
+        "height-flange_thickness"
+      ],
+      "size": [
+        "width",
+        "thickness",
+        "flange_thickness"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1",
+        "e2"
+      ]
+    },
+    {
+      "id": "flange_bottom",
+      "kind": "box",
+      "origin": [
+        "-width/2",
+        "-thickness/2",
+        "0"
+      ],
+      "size": [
+        "width",
+        "thickness",
+        "flange_thickness"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1",
+        "e2"
+      ]
+    },
+    {
+      "id": "web",
+      "kind": "box",
+      "origin": [
+        "-web_width/2",
+        "-thickness/2",
+        "flange_thickness-1"
+      ],
+      "size": [
+        "web_width",
+        "thickness",
+        "height-2*flange_thickness+2"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1",
+        "e2"
+      ]
+    },
+    {
+      "id": "pulley",
+      "kind": "union",
+      "left": "flange_top",
+      "right": "flange_bottom",
+      "frame": "world",
+      "depends_on": [
+        "flange_top",
+        "flange_bottom"
+      ],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "pulley_full",
+      "kind": "union",
+      "left": "pulley",
+      "right": "web",
+      "frame": "world",
+      "depends_on": [
+        "pulley",
+        "web"
+      ],
+      "evidence": [
+        "e1"
+      ]
+    }
+  ],
+  "output": "pulley_full",
+  "frames": {
+    "world": {
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    }
+  },
+  "bodies": [
+    {
+      "id": "part",
+      "output": "pulley_full"
+    }
+  ],
+  "evidence": {
+    "observed": [
+      {
+        "id": "e1",
+        "text": "The drawing shows a symmetrical object with two wide flanges and a narrower central web."
+      },
+      {
+        "id": "e2",
+        "text": "The object has a uniform thickness in the side view."
+      }
+    ],
+    "inferred": [
+      {
+        "id": "e3",
+        "text": "The object is a pulley or spool."
+      }
+    ],
+    "assumptions": [
+      {
+        "id": "e4",
+        "text": "Assumed overall width and height are 120mm."
+      },
+      {
+        "id": "e5",
+        "text": "Assumed thickness is 10mm."
+      },
+      {
+        "id": "e6",
+        "text": "Assumed flange thickness is 15mm."
+      },
+      {
+        "id": "e7",
+        "text": "Assumed web width is 40mm."
+      }
+    ],
+    "unresolved": []
+  },
+  "constraints": [
+    {
+      "id": "joint1",
+      "kind": "connected",
+      "left": "flange_top",
+      "right": "web",
+      "min_volume_mm3": 0.01
+    },
+    {
+      "id": "joint2",
+      "kind": "connected",
+      "left": "flange_bottom",
+      "right": "web",
+      "min_volume_mm3": 0.01
+    }
+  ]
+}

@@ -1,0 +1,106 @@
+{
+  "drawing": "009_hex_prism_knob",
+  "backend": "usd-brep",
+  "trial": 3,
+  "submitted_at": "2026-10-22T05:27:53.334286+00:00",
+  "finished_at": "2026-10-22T05:29:05.575198+00:00",
+  "run_id": "cc86e9f3b059",
+  "wall_seconds": 72.2,
+  "job_status": "done",
+  "error": null,
+  "questions_asked": 0,
+  "question_kinds": [],
+  "build": {
+    "watertight": true,
+    "components": 1,
+    "genus": 0,
+    "extents_mm": [
+      28.868,
+      50.0,
+      50.0
+    ],
+    "volume_mm3": 54126.6,
+    "sha256": "3d12292a9d6722be8e3e7d47b323c471bf0fb863c3e32dbcde69b9c23a8b2d4c",
+    "bytes": 1084
+  },
+  "checks": {
+    "build_success": true,
+    "extents_pass": false,
+    "genus_pass": true,
+    "volume_pass": true,
+    "fidelity_pass": true,
+    "overall_pass": false,
+    "not_applicable": []
+  },
+  "fidelity": {
+    "scores": {
+      "front": 0.674,
+      "right": 0.635
+    },
+    "pass": true,
+    "reason": null,
+    "topology": {
+      "front": {
+        "expected": 0,
+        "actual": 3,
+        "position_fidelity": null
+      },
+      "right": {
+        "expected": 0,
+        "actual": 2,
+        "position_fidelity": null
+      }
+    }
+  },
+  "product": {
+    "success": false,
+    "accepted": false,
+    "status": "unverified",
+    "score": null,
+    "projection_status": "passed",
+    "geometry_status": "passed",
+    "failures": [
+      "Detailed drawing features and view assignments require review."
+    ]
+  },
+  "attempts": {
+    "count": 1,
+    "recovered": false,
+    "corrections": 1
+  },
+  "unsupported": {
+    "flag": false,
+    "code": null
+  },
+  "brep_only": {
+    "operations": [
+      "extrude"
+    ],
+    "loft": false,
+    "shell": false,
+    "arc_pipe": false,
+    "sweep": false,
+    "extrude": true,
+    "parameter_names": [
+      "across_flats",
+      "length"
+    ]
+  },
+  "edit": {
+    "available": true,
+    "ok": true,
+    "seconds": 2.82,
+    "param": "across_flats",
+    "old": 50,
+    "new": 60.0,
+    "message": null
+  },
+  "targeted": {
+    "available": false,
+    "ok": false,
+    "seconds": null,
+    "operation": null,
+    "value": null,
+    "message": "no probe value produced a valid targeted plan"
+  }
+}

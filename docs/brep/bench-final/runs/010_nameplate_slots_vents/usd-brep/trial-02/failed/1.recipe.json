@@ -1,0 +1,361 @@
+{
+  "version": 2,
+  "units": "mm",
+  "name": "nameplate",
+  "parameters": {
+    "width": {
+      "value": 140,
+      "min": 100,
+      "max": 200,
+      "label": "Plate Width",
+      "unit": "mm"
+    },
+    "height": {
+      "value": 30,
+      "min": 20,
+      "max": 50,
+      "label": "Plate Height",
+      "unit": "mm"
+    },
+    "thickness": {
+      "value": 5,
+      "min": 1,
+      "max": 20,
+      "label": "Plate Thickness",
+      "unit": "mm"
+    },
+    "slot_width": {
+      "value": 14,
+      "min": 5,
+      "max": 30,
+      "label": "Slot Width",
+      "unit": "mm"
+    },
+    "slot_height": {
+      "value": 9,
+      "min": 5,
+      "max": 20,
+      "label": "Slot Height",
+      "unit": "mm"
+    },
+    "slot_offset": {
+      "value": 55,
+      "min": 40,
+      "max": 65,
+      "label": "Slot Offset from Center",
+      "unit": "mm"
+    },
+    "hole_diameter": {
+      "value": 4,
+      "min": 2,
+      "max": 10,
+      "label": "Vent Hole Diameter",
+      "unit": "mm"
+    },
+    "hole_spacing": {
+      "value": 10,
+      "min": 5,
+      "max": 20,
+      "label": "Vent Hole Spacing",
+      "unit": "mm"
+    }
+  },
+  "operations": [
+    {
+      "id": "plate",
+      "kind": "box",
+      "origin": [
+        "-width/2",
+        0,
+        "-height/2"
+      ],
+      "size": [
+        "width",
+        "thickness",
+        "height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "left_slot",
+      "kind": "box",
+      "origin": [
+        "-slot_offset - slot_width/2",
+        -1,
+        "-slot_height/2"
+      ],
+      "size": [
+        "slot_width",
+        "thickness + 2",
+        "slot_height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "right_slot",
+      "kind": "box",
+      "origin": [
+        "slot_offset - slot_width/2",
+        -1,
+        "-slot_height/2"
+      ],
+      "size": [
+        "slot_width",
+        "thickness + 2",
+        "slot_height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "hole_1",
+      "kind": "cylinder",
+      "origin": [
+        "-2 * hole_spacing",
+        -1,
+        0
+      ],
+      "radius": "hole_diameter/2",
+      "height": "thickness + 2",
+      "axis": "y",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e4"
+      ]
+    },
+    {
+      "id": "hole_2",
+      "kind": "cylinder",
+      "origin": [
+        "-hole_spacing",
+        -1,
+        0
+      ],
+      "radius": "hole_diameter/2",
+      "height": "thickness + 2",
+      "axis": "y",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e4"
+      ]
+    },
+    {
+      "id": "hole_3",
+      "kind": "cylinder",
+      "origin": [
+        0,
+        -1,
+        0
+      ],
+      "radius": "hole_diameter/2",
+      "height": "thickness + 2",
+      "axis": "y",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e4"
+      ]
+    },
+    {
+      "id": "hole_4",
+      "kind": "cylinder",
+      "origin": [
+        "hole_spacing",
+        -1,
+        0
+      ],
+      "radius": "hole_diameter/2",
+      "height": "thickness + 2",
+      "axis": "y",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e4"
+      ]
+    },
+    {
+      "id": "hole_5",
+      "kind": "cylinder",
+      "origin": [
+        "2 * hole_spacing",
+        -1,
+        0
+      ],
+      "radius": "hole_diameter/2",
+      "height": "thickness + 2",
+      "axis": "y",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e4"
+      ]
+    },
+    {
+      "id": "cut_left",
+      "kind": "difference",
+      "left": "plate",
+      "right": "left_slot",
+      "frame": "world",
+      "depends_on": [
+        "plate",
+        "left_slot"
+      ],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "cut_right",
+      "kind": "difference",
+      "left": "cut_left",
+      "right": "right_slot",
+      "frame": "world",
+      "depends_on": [
+        "cut_left",
+        "right_slot"
+      ],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "cut_h1",
+      "kind": "difference",
+      "left": "cut_right",
+      "right": "hole_1",
+      "frame": "world",
+      "depends_on": [
+        "cut_right",
+        "hole_1"
+      ],
+      "evidence": [
+        "e4"
+      ]
+    },
+    {
+      "id": "cut_h2",
+      "kind": "difference",
+      "left": "cut_h1",
+      "right": "hole_2",
+      "frame": "world",
+      "depends_on": [
+        "cut_h1",
+        "hole_2"
+      ],
+      "evidence": [
+        "e4"
+      ]
+    },
+    {
+      "id": "cut_h3",
+      "kind": "difference",
+      "left": "cut_h2",
+      "right": "hole_3",
+      "frame": "world",
+      "depends_on": [
+        "cut_h2",
+        "hole_3"
+      ],
+      "evidence": [
+        "e4"
+      ]
+    },
+    {
+      "id": "cut_h4",
+      "kind": "difference",
+      "left": "cut_h3",
+      "right": "hole_4",
+      "frame": "world",
+      "depends_on": [
+        "cut_h3",
+        "hole_4"
+      ],
+      "evidence": [
+        "e4"
+      ]
+    },
+    {
+      "id": "final_part",
+      "kind": "difference",
+      "left": "cut_h4",
+      "right": "hole_5",
+      "frame": "world",
+      "depends_on": [
+        "cut_h4",
+        "hole_5"
+      ],
+      "evidence": [
+        "e4"
+      ]
+    }
+  ],
+  "output": "final_part",
+  "frames": {
+    "world": {
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    }
+  },
+  "bodies": [
+    {
+      "id": "part",
+      "output": "final_part"
+    }
+  ],
+  "evidence": {
+    "observed": [
+      {
+        "id": "e1",
+        "text": "Rectangular plate outline."
+      },
+      {
+        "id": "e2",
+        "text": "Left rectangular slot."
+      },
+      {
+        "id": "e3",
+        "text": "Right rectangular slot."
+      },
+      {
+        "id": "e4",
+        "text": "Five central circular holes."
+      }
+    ],
+    "inferred": [],
+    "assumptions": [
+      {
+        "id": "a1",
+        "text": "Assumed plate thickness is 5mm."
+      },
+      {
+        "id": "a2",
+        "text": "Assumed slot dimensions are 14mm x 9mm."
+      },
+      {
+        "id": "a3",
+        "text": "Assumed hole diameter is 4mm and spacing is 10mm."
+      }
+    ],
+    "unresolved": []
+  },
+  "constraints": []
+}

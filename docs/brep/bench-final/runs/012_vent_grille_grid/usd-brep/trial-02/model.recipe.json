@@ -1,0 +1,387 @@
+{
+  "version": 2,
+  "units": "mm",
+  "name": "vent_grille_plate",
+  "parameters": {
+    "width": {
+      "value": 100,
+      "min": 50,
+      "max": 200,
+      "label": "Plate Width",
+      "unit": "mm"
+    },
+    "depth": {
+      "value": 60,
+      "min": 30,
+      "max": 120,
+      "label": "Plate Depth",
+      "unit": "mm"
+    },
+    "thickness": {
+      "value": 3,
+      "min": 1,
+      "max": 10,
+      "label": "Plate Thickness",
+      "unit": "mm"
+    },
+    "hole_radius": {
+      "value": 6,
+      "min": 2,
+      "max": 15,
+      "label": "Hole Radius",
+      "unit": "mm"
+    },
+    "grid_spacing": {
+      "value": 20,
+      "min": 10,
+      "max": 40,
+      "label": "Grid Spacing",
+      "unit": "mm"
+    }
+  },
+  "operations": [
+    {
+      "id": "plate_base",
+      "kind": "box",
+      "origin": [
+        "-width/2",
+        "-depth/2",
+        0
+      ],
+      "size": [
+        "width",
+        "depth",
+        "thickness"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1",
+        "e2"
+      ]
+    },
+    {
+      "id": "hole_00",
+      "kind": "cylinder",
+      "origin": [
+        "-grid_spacing",
+        "-grid_spacing",
+        -1
+      ],
+      "radius": "hole_radius",
+      "height": "thickness + 2",
+      "axis": "z",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "hole_01",
+      "kind": "cylinder",
+      "origin": [
+        0,
+        "-grid_spacing",
+        -1
+      ],
+      "radius": "hole_radius",
+      "height": "thickness + 2",
+      "axis": "z",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "hole_02",
+      "kind": "cylinder",
+      "origin": [
+        "grid_spacing",
+        "-grid_spacing",
+        -1
+      ],
+      "radius": "hole_radius",
+      "height": "thickness + 2",
+      "axis": "z",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "hole_10",
+      "kind": "cylinder",
+      "origin": [
+        "-grid_spacing",
+        0,
+        -1
+      ],
+      "radius": "hole_radius",
+      "height": "thickness + 2",
+      "axis": "z",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "hole_11",
+      "kind": "cylinder",
+      "origin": [
+        0,
+        0,
+        -1
+      ],
+      "radius": "hole_radius",
+      "height": "thickness + 2",
+      "axis": "z",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "hole_12",
+      "kind": "cylinder",
+      "origin": [
+        "grid_spacing",
+        0,
+        -1
+      ],
+      "radius": "hole_radius",
+      "height": "thickness + 2",
+      "axis": "z",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "hole_20",
+      "kind": "cylinder",
+      "origin": [
+        "-grid_spacing",
+        "grid_spacing",
+        -1
+      ],
+      "radius": "hole_radius",
+      "height": "thickness + 2",
+      "axis": "z",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "hole_21",
+      "kind": "cylinder",
+      "origin": [
+        0,
+        "grid_spacing",
+        -1
+      ],
+      "radius": "hole_radius",
+      "height": "thickness + 2",
+      "axis": "z",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "hole_22",
+      "kind": "cylinder",
+      "origin": [
+        "grid_spacing",
+        "grid_spacing",
+        -1
+      ],
+      "radius": "hole_radius",
+      "height": "thickness + 2",
+      "axis": "z",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "cut_00",
+      "kind": "difference",
+      "left": "plate_base",
+      "right": "hole_00",
+      "frame": "world",
+      "depends_on": [
+        "plate_base",
+        "hole_00"
+      ],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "cut_01",
+      "kind": "difference",
+      "left": "cut_00",
+      "right": "hole_01",
+      "frame": "world",
+      "depends_on": [
+        "cut_00",
+        "hole_01"
+      ],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "cut_02",
+      "kind": "difference",
+      "left": "cut_01",
+      "right": "hole_02",
+      "frame": "world",
+      "depends_on": [
+        "cut_01",
+        "hole_02"
+      ],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "cut_10",
+      "kind": "difference",
+      "left": "cut_02",
+      "right": "hole_10",
+      "frame": "world",
+      "depends_on": [
+        "cut_02",
+        "hole_10"
+      ],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "cut_11",
+      "kind": "difference",
+      "left": "cut_10",
+      "right": "hole_11",
+      "frame": "world",
+      "depends_on": [
+        "cut_10",
+        "hole_11"
+      ],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "cut_12",
+      "kind": "difference",
+      "left": "cut_11",
+      "right": "hole_12",
+      "frame": "world",
+      "depends_on": [
+        "cut_11",
+        "hole_12"
+      ],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "cut_20",
+      "kind": "difference",
+      "left": "cut_12",
+      "right": "hole_20",
+      "frame": "world",
+      "depends_on": [
+        "cut_12",
+        "hole_20"
+      ],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "cut_21",
+      "kind": "difference",
+      "left": "cut_20",
+      "right": "hole_21",
+      "frame": "world",
+      "depends_on": [
+        "cut_20",
+        "hole_21"
+      ],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "final_plate",
+      "kind": "difference",
+      "left": "cut_21",
+      "right": "hole_22",
+      "frame": "world",
+      "depends_on": [
+        "cut_21",
+        "hole_22"
+      ],
+      "evidence": [
+        "e3"
+      ]
+    }
+  ],
+  "output": "final_plate",
+  "frames": {
+    "world": {
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    }
+  },
+  "bodies": [
+    {
+      "id": "part",
+      "output": "final_plate"
+    }
+  ],
+  "evidence": {
+    "observed": [
+      {
+        "id": "e1",
+        "text": "Rectangular outer boundary observed in front view."
+      },
+      {
+        "id": "e3",
+        "text": "3x3 grid of irregular circular openings observed."
+      }
+    ],
+    "inferred": [],
+    "assumptions": [
+      {
+        "id": "e2",
+        "text": "Assumed plate dimensions 100x60mm based on aspect ratio and max dimension constraint."
+      },
+      {
+        "id": "e4",
+        "text": "Assumed hole radius 6mm and grid spacing 20mm to fit within plate bounds."
+      }
+    ],
+    "unresolved": []
+  },
+  "constraints": []
+}

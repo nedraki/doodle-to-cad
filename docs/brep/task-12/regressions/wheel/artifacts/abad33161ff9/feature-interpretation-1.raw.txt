@@ -1,0 +1,142 @@
+```json
+{
+  "version": 1,
+  "object_hypothesis": "Wheel",
+  "features": [
+    {
+      "id": "rim",
+      "type": "rim",
+      "description": "Outer circular ring structure",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "Visible as the outermost boundary in the front view (view_4) and the vertical extent in the right view (view_5)."
+    },
+    {
+      "id": "hub",
+      "type": "hub",
+      "description": "Central circular body",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "Visible as the central circle in the front view (view_4). OpenCV did not isolate this as a separate region, but it is clearly defined within the view boundary."
+    },
+    {
+      "id": "spokes",
+      "type": "spoke",
+      "description": "Radial connecting bars",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "Visible as 8 distinct radial lines connecting the hub to the rim in the front view (view_4). OpenCV did not isolate these as separate regions, but they are clearly defined within the view boundary."
+    },
+    {
+      "id": "thickness",
+      "type": "body",
+      "description": "Axial depth of the wheel",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_14"
+        }
+      ],
+      "reason": "Visible as the width of the rectangular profile in the right view (view_5)."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "spoke_hub_conn",
+      "type": "connected",
+      "features": [
+        "spokes",
+        "hub"
+      ],
+      "description": "Spokes connect to the hub",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "In the front view, the inner ends of the spokes meet the outer boundary of the hub."
+    },
+    {
+      "id": "spoke_rim_conn",
+      "type": "connected",
+      "features": [
+        "spokes",
+        "rim"
+      ],
+      "description": "Spokes connect to the rim",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "In the front view, the outer ends of the spokes meet the inner boundary of the rim."
+    },
+    {
+      "id": "spoke_symmetry",
+      "type": "symmetry",
+      "features": [
+        "spokes"
+      ],
+      "description": "Radial arrangement of spokes",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "The 8 spokes appear evenly distributed around the center in the front view."
+    },
+    {
+      "id": "rim_thickness",
+      "type": "shared_dimension",
+      "features": [
+        "rim",
+        "thickness"
+      ],
+      "description": "Rim width matches wheel thickness",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        },
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_14"
+        }
+      ],
+      "reason": "The radial width of the rim in the front view appears visually similar to the axial thickness in the right view."
+    }
+  ],
+  "assumptions": [
+    "The object is a single solid piece (monolithic).",
+    "The 'unassigned' views (1, 2, 3, 6) are noise or irrelevant artifacts and are ignored for the primary object definition."
+  ],
+  "unresolved": [
+    "Internal structure of the hub (e.g., is it hollow for an axle?).",
+    "Exact cross-sectional profile of the spokes (rectangular vs circular)."
+  ],
+  "conflicts": []
+}
+```

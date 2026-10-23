@@ -1,0 +1,32 @@
+{
+  "view_frame": "Front view (XZ plane) showing the vase silhouette. X is width, Z is height. The part is axisymmetric about the Z axis. The drawing shows the full profile from the axis of rotation (left) to the outer surface (right).",
+  "features": [
+    {
+      "id": "vase_silhouette",
+      "shape": "revolve",
+      "section": "closed polyline",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "height: 120mm (max dimension)",
+        "max_radius: 45mm (estimated from aspect ratio)",
+        "rim_radius: 35mm (estimated)",
+        "neck_radius: 20mm (estimated)",
+        "wall_thickness: ASSUMED 3mm",
+        "floor_thickness: ASSUMED 3mm"
+      ],
+      "placement": "Revolve 360 degrees about the Z axis (X=0). The profile is defined in the XZ plane. Vertices (X=radius, Z=height): (0,0) -> (45,0) -> (45,10) -> (40,20) -> (20,40) -> (20,80) -> (35,100) -> (35,120) -> (32,120) -> (32,100) -> (17,80) -> (17,40) -> (37,20) -> (42,10) -> (42,0) -> (0,0).",
+      "evidence": "Single continuous outline showing a vase shape with a flared rim, narrow neck, bulbous body, and flat base. The left edge is the axis of symmetry."
+    }
+  ],
+  "connections": [
+    "The profile is a single closed loop representing a hollow vessel with uniform wall and floor thickness."
+  ],
+  "edit_rules": [
+    "Changing the max_radius scales the body width.",
+    "Changing the height scales the vertical dimension.",
+    "Changing wall_thickness or floor_thickness adjusts the inner profile offset.",
+    "The profile must remain closed and watertight."
+  ],
+  "unresolved": [],
+  "clarification": null
+}

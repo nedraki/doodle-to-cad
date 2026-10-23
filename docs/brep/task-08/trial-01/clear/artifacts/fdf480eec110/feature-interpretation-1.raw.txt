@@ -1,0 +1,91 @@
+```json
+{
+  "version": 1,
+  "object_hypothesis": "Rectangular block with a central through-hole",
+  "features": [
+    {
+      "id": "body_block",
+      "type": "body",
+      "description": "Rectangular block body",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_8",
+          "region_id": "profile_contour_97"
+        },
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_95"
+        },
+        {
+          "view_id": "view_6",
+          "region_id": "profile_contour_93"
+        }
+      ],
+      "reason": "Visible as a rectangular outline in the top view (view_8) and rectangular outlines in side views (view_5, view_6)."
+    },
+    {
+      "id": "opening_hole",
+      "type": "opening",
+      "description": "Central circular opening",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_8",
+          "region_id": "profile_contour_102"
+        }
+      ],
+      "reason": "Visible as a circular contour in the center of the top view (view_8)."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "hole_in_block",
+      "type": "position",
+      "features": [
+        "opening_hole",
+        "body_block"
+      ],
+      "description": "Opening is positioned centrally within the block",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_8",
+          "region_id": "profile_contour_102"
+        },
+        {
+          "view_id": "view_8",
+          "region_id": "profile_contour_97"
+        }
+      ],
+      "reason": "The circular contour is located near the geometric center of the rectangular contour in the top view."
+    },
+    {
+      "id": "through_hole",
+      "type": "hollow",
+      "features": [
+        "opening_hole",
+        "body_block"
+      ],
+      "description": "Opening passes through the block",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_8",
+          "region_id": "profile_contour_102"
+        }
+      ],
+      "reason": "Inferred from the text 'THROUGH' and 'No floor below opening' in the drawing, supported by the circular contour in the top view."
+    }
+  ],
+  "assumptions": [
+    "The object is a solid block with a hole, not a hollow shell.",
+    "The hole is cylindrical and perpendicular to the top face."
+  ],
+  "unresolved": [
+    "Exact depth of the hole (assumed through based on text).",
+    "Exact dimensions of the block (assumed from text)."
+  ],
+  "conflicts": []
+}
+```

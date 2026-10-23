@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "issue": "nedraki/doodle-to-cad#34",
+  "title": "BRep 17: compare generation paths and decide the product default",
+  "frozen_at": "2026-10-19T00:57:51+02:00",
+  "frozen_git_rev": "4f05849f532412169144cc6ae0a21962eff6bc08",
+  "honesty_rules": [
+    "Every trial is published, including failures. No cherry-picking.",
+    "Drawing-fidelity results are kept separate from solid-build success.",
+    "Unsupported operations are recorded as outcomes, not silent skips.",
+    "BRep-only capabilities are reported in their own table and are never counted as OpenSCAD failures, or vice versa.",
+    "This plan was committed before any trial ran; audit.py re-checks that frozen_at precedes every trial timestamp."
+  ],
+  "infrastructure": {
+    "server": "in-process uvicorn on 127.0.0.1:8132 (port range 8130-8139 reserved for this task)",
+    "results_dir": "results/task-17-comparison (DOODLE_RESULTS_DIR set before app import)",
+    "harness": "scripts/evaluate_brep.py trials subcommand",
+    "model": "local vLLM at http://127.0.0.1:8000/v1 (never restarted by the harness)",
+    "concurrency": 3,
+    "poll_timeout_seconds": 2400,
+    "trials_per_cell": 5,
+    "matrix": "8 drawings x 2 backends x 5 trials = 80 generations"
+  },
+  "model_settings": {
+    "policy": "App defaults exactly as shipped: OPENAI_MODEL empty, model auto-discovered from GET /v1/models. Both backends use the same settings and run in the same app instance.",
+    "base_url": "http://127.0.0.1:8000/v1",
+    "selected_model": "local-inference-lab/Qwen3.8-Flash-Next-NVFP4",
+    "model_source": "auto-discovery",
+    "enable_thinking": true,
+    "structured_enable_thinking": false,
+    "code_enable_thinking": false,
+    "max_tokens": 8192,
+    "code_max_tokens": 8192,
+    "agent_max_attempts": 3,
+    "agent_accept_score": 70,
+    "code_validation_repairs": 2,
+    "openscad": "openscad/openscad:latest via Docker fallback (OPENSCAD_BIN=openscad + DOODLE_OPENSCAD_DOCKER)"
+  },
+  "tolerances": {
+    "extents": "sorted extents within 2% per axis of the frozen reference (manifest tolerances.generated_dimension_relative = 0.02)",
+    "volume_relative": 0.02,
+    "projection_similarity_min": 0.45,
+    "feature_position_fidelity_min": 0.5,
+    "count_error": 0,
+    "note": "Feature-position and opening counts are carried by the product's projection/opening checks; the harness adds independent genus, extents and volume checks. Tolerances are copied from benchmarks/brep-baseline/*/manifest.json and are fixed before the trial."
+  },
+  "reference_measurements": "references/reference-measurements.json (reference STLs cached under references/, measured deterministically with trimesh during plan preparation, before the trial)",
+  "pass_criteria": {
+    "build_success": "Harness re-measures the run STL independently: watertight AND exactly 1 component. Recorded separately from fidelity.",
+    "extents_pass": "sorted run extents vs sorted reference extents, every axis within 2%.",
+    "genus_pass": "genus == frozen reference genus (where a ground truth exists).",
+    "volume_pass": "abs(volume - reference volume)/reference volume <= 0.02 (where a ground truth exists).",
+    "fidelity_pass": "Harness re-runs doodle_to_cad.evaluation.projection_scores on (source drawing, run geometry evidence, run view renders). Every assigned direction must score >= 0.45. Kept separate from build_success. Product's own acceptance is recorded too but is not the harness pass.",
+    "overall_pass": "build_success AND extents_pass AND genus_pass AND volume_pass AND fidelity_pass. If a required ground truth does not exist for a check, that check is not_applicable and excluded (never counted as failed).",
+    "product_acceptance": "openscad: result.success (agent accepted, score >= 70). usd-brep: evaluation.status != 'failed' (the BRep path never auto-accepts fidelity; evaluation.accepted stays false by design).",
+    "recovery": "openscad: attempts = len(result.attempts); recovered = success AND attempts > 1 (a failing first attempt recovered within the bounded 3-attempt loop). usd-brep: attempts = len(generation.attempts) + construction corrections len(generation.construction_attempts); recovered = built AND any of those > 1.",
+    "edit_time": "Parameter preview round-trip: GET /api/results/{run}/params, pick the first numeric parameter (prefer names matching thick|width|radius|depth|height), set value*1.2 clamped to [min,max], POST /api/results/{run}/parametrize; wall time to response. ok = response ok AND applied non-empty.",
+    "targeted_edit": "usd-brep only (the product rejects targeted edits on OpenSCAD results; recorded as not_applicable, not failed). Requires a non-empty diagnostics.selection_catalog.targets: choose the first target via POST selection, derive the operation name locally with targeted_edits.plan, then POST revisions/targeted with value*1.2. Time and outcome recorded.",
+    "unsupported_operation": "usd-brep jobs ending with error code unsupported_construction, unresolved_design, or a clarification stall are recorded as unsupported_operation outcomes. They stay in the tables."
+  },
+  "clarification_policy": {
+    "answers": {
+      "opening_extent": {"choice": "through"},
+      "wall_thickness": {"thickness_mm": 3},
+      "floor_thickness": {"thickness_mm": 3},
+      "uniform_thickness": {"thickness_mm": 3}
+    },
+    "max_answered_questions": 3,
+    "on_stall": "cancel the job and record status=clarification_stalled"
+  },
+  "corpus": [
+    {
+      "id": "bookend",
+      "role": "rich 4-hole drawing (shared capability)",
+      "drawing": "benchmarks/brep-baseline/bookend/drawing.png",
+      "notes": "L-shaped bookend: a flat base and an upright panel. The panel has four through openings cut all the way through its wall.",
+      "dimension": "100",
+      "primary_view": "front",
+      "reference": "bookend (genus 4, volume 30854.4 mm3, extents 80x50x100)",
+      "checks": {"openscad": "all", "usd_brep": "all"}
+    },
+    {
+      "id": "wheel",
+      "role": "circular features (shared capability)",
+      "drawing": "benchmarks/brep-baseline/wheel/drawing.png",
+      "notes": "Wheel disc: outer rim, eight evenly spaced straight spokes, central hub. One connected solid of uniform thickness.",
+      "dimension": "120",
+      "primary_view": "front",
+      "reference": "wheel (genus 8, volume 43128.5 mm3, extents 120x8x120)",
+      "checks": {"openscad": "all", "usd_brep": "all"}
+    },
+    {
+      "id": "enclosure",
+      "role": "pockets/open top/window (shared capability)",
+      "drawing": "benchmarks/brep-baseline/enclosure/drawing.png",
+      "notes": "Box with an open top and a rectangular window through the front wall. Uniform walls.",
+      "dimension": "120",
+      "primary_view": "front",
+      "reference": "enclosure (genus 1, volume 67548.0 mm3, extents 120x80x40)",
+      "checks": {"openscad": "all", "usd_brep": "all"}
+    },
+    {
+      "id": "curved_handle",
+      "role": "arc / curved path (shared capability)",
+      "drawing": "benchmarks/brep-baseline/curved_handle/drawing.png",
+      "notes": "Handle with two straight legs and one curved bend. The cross-section is circular throughout.",
+      "dimension": "54",
+      "primary_view": "top",
+      "reference": "curved_handle (genus 0, volume 6170.5 mm3, extents 48x54x8)",
+      "checks": {"openscad": "all", "usd_brep": "all"}
+    },
+    {
+      "id": "transition",
+      "role": "rectangular-to-round transition (BRep-only capability: first-class editable loft operation)",
+      "drawing": "benchmarks/brep-baseline/transition/drawing.png",
+      "notes": "Solid transition piece: rectangular bottom, circular top, flat caps, straight sides. Not a duct, not hollow.",
+      "dimension": "60",
+      "primary_view": "front",
+      "reference": "transition (genus 0, volume 92140.1 mm3, extents 60x40x60)",
+      "checks": {
+        "openscad": "all except editable_loft_operation (not_applicable: OpenSCAD codegen has no loft operation; the drawing's convex-hull reference is not a required intermediate surface per benchmarks/brep-baseline/README.md)",
+        "usd_brep": "all"
+      },
+      "brep_only_reported": "presence of a loft operation in model.recipe.json and its editable parameters"
+    },
+    {
+      "id": "profiles_empty_notes",
+      "role": "profile extrusion with an empty notes field (shared attempt; line/arc profile extrude reported separately as BRep capability)",
+      "drawing": "benchmarks/brep-profiles/drawing.png",
+      "notes": "",
+      "dimension": "60",
+      "primary_view": "top",
+      "reference": "profiles (genus 1, volume 12852.9 mm3, extents 60x40x6)",
+      "checks": {"openscad": "all", "usd_brep": "all"}
+    },
+    {
+      "id": "ambiguous",
+      "role": "deliberately ambiguous drawing (opening floor undefined)",
+      "drawing": "benchmarks/brep-clarification/ambiguous.png",
+      "notes": "",
+      "dimension": "40",
+      "primary_view": "top",
+      "reference": "ambiguous analytic (genus 1 with the frozen through-hole answer, volume 13796.8 mm3, extents 40x30x12)",
+      "checks": {
+        "openscad": "all except clarification_requested (not_applicable: the OpenSCAD supervisor has no clarification mechanism)",
+        "usd_brep": "all; clarification_requested_expected = true (a question for the named opening is correct behavior; the frozen answer makes genus 1 the expectation)"
+      }
+    },
+    {
+      "id": "missing_thickness",
+      "role": "known-failure case (shell fixture with undeclared wall/floor thickness; BRep-only capability: uniform shell operation)",
+      "drawing": "benchmarks/brep-shells/missing-thickness.png",
+      "notes": "",
+      "dimension": "60",
+      "primary_view": "top",
+      "reference": "no ground truth (the fixture has none by design)",
+      "checks": {
+        "openscad": "build_success + fidelity recorded; genus/volume/extents not_applicable (no ground truth; failure must not be inferred)",
+        "usd_brep": "expected behavior: ask the thickness question (frozen answer 3 mm) or report unsupported; a silent built-in assumption without a question or disclosure counts as failed behavior"
+      },
+      "brep_only_reported": "presence of a shell operation with an exposed wall/floor thickness parameter"
+    }
+  ],
+  "evidence_layout": {
+    "runs": "runs/<drawing>/<backend>/trial-<NN>/{result.json, job.json, row.json, input.png, views/*, model.scad|model.recipe.json, failed/ (failed attempt scads/logs)}",
+    "index": "runs/index.jsonl (one raw row per trial; README counts are recomputed from it by audit.py)",
+    "stl_policy": "every run STL is sha256-pinned in the row; STL bytes are archived in the evidence folder only for failed-build runs and any run whose STL is under 1.5 MB",
+    "environment": "environment.json (git rev, python versions, usd-brep version, model, dates) written at trial end; SHA256SUMS sealed last"
+  },
+  "commit_sequence": ["plan (this file, before any trial)", "harness", "results", "decision"]
+}

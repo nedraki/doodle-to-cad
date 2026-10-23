@@ -1,0 +1,431 @@
+{
+  "job_id": "fa3bc11584b0",
+  "status": "done",
+  "stage": "done",
+  "result": {
+    "id": "fa3bc11584b0",
+    "backend": "usd-brep",
+    "success": false,
+    "spec": {
+      "object": "handle_bracket"
+    },
+    "model": "local-inference-lab/Qwen3.8-Flash-Next-NVFP4",
+    "duration_seconds": 215.27,
+    "evaluation": {
+      "version": 1,
+      "accepted": false,
+      "status": "failed",
+      "build_status": "passed",
+      "geometry_status": "passed",
+      "projection_status": "failed",
+      "checks": [
+        {
+          "name": "connected solid",
+          "status": "passed",
+          "detail": {
+            "watertight": true,
+            "components": 1
+          }
+        },
+        {
+          "name": "requested maximum",
+          "status": "passed",
+          "detail": {
+            "actual_mm": 120.0,
+            "limit_mm": 120.0,
+            "tolerance_mm": 0.5
+          }
+        },
+        {
+          "name": "front projection",
+          "status": "passed",
+          "detail": {
+            "similarity": 0.589,
+            "minimum": 0.45
+          }
+        },
+        {
+          "name": "top projection",
+          "status": "failed",
+          "detail": {
+            "similarity": 0.287,
+            "minimum": 0.45
+          }
+        },
+        {
+          "name": "top openings",
+          "status": "failed",
+          "detail": {
+            "expected_at_least": 1,
+            "actual": 0
+          }
+        },
+        {
+          "name": "top opening positions",
+          "status": "failed",
+          "detail": {
+            "fidelity": 0.0,
+            "minimum": 0.5,
+            "missing": [
+              [
+                0.492,
+                0.557
+              ]
+            ]
+          }
+        },
+        {
+          "name": "right projection",
+          "status": "failed",
+          "detail": {
+            "similarity": 0.316,
+            "minimum": 0.45
+          }
+        },
+        {
+          "name": "right openings",
+          "status": "failed",
+          "detail": {
+            "expected_at_least": 5,
+            "actual": 0
+          }
+        },
+        {
+          "name": "right opening positions",
+          "status": "failed",
+          "detail": {
+            "fidelity": 0.0,
+            "minimum": 0.5,
+            "missing": [
+              [
+                0.307,
+                0.831
+              ],
+              [
+                0.576,
+                0.68
+              ],
+              [
+                0.31,
+                0.507
+              ],
+              [
+                0.579,
+                0.335
+              ],
+              [
+                0.307,
+                0.159
+              ]
+            ]
+          }
+        },
+        {
+          "name": "dimensions and detailed features",
+          "status": "unverified",
+          "detail": "Projection checks cannot prove radii, bevel angles, hidden depth or section shape. Review measured features and view assignments."
+        }
+      ],
+      "projection_similarity": {
+        "front": 0.589,
+        "top": 0.287,
+        "right": 0.316
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 0,
+          "source_aspect": 0.302,
+          "rendered_aspect": 0.125,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": [
+            [
+              0.492,
+              0.199
+            ]
+          ]
+        },
+        "top": {
+          "source_internal_profiles": 1,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 1,
+          "source_aspect": 0.627,
+          "rendered_aspect": 4.714,
+          "source_opening_centroids": [
+            [
+              0.492,
+              0.557
+            ]
+          ],
+          "rendered_opening_centroids": [],
+          "missing_opening_centroids": [
+            [
+              0.492,
+              0.557
+            ]
+          ],
+          "feature_position_fidelity": 0.0
+        },
+        "right": {
+          "source_internal_profiles": 5,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 5,
+          "source_aspect": 0.489,
+          "rendered_aspect": 0.027,
+          "source_opening_centroids": [
+            [
+              0.307,
+              0.831
+            ],
+            [
+              0.576,
+              0.68
+            ],
+            [
+              0.31,
+              0.507
+            ],
+            [
+              0.579,
+              0.335
+            ],
+            [
+              0.307,
+              0.159
+            ]
+          ],
+          "rendered_opening_centroids": [],
+          "missing_opening_centroids": [
+            [
+              0.307,
+              0.831
+            ],
+            [
+              0.576,
+              0.68
+            ],
+            [
+              0.31,
+              0.507
+            ],
+            [
+              0.579,
+              0.335
+            ],
+            [
+              0.307,
+              0.159
+            ]
+          ],
+          "feature_position_fidelity": 0.0
+        }
+      },
+      "failures": [
+        "top projection",
+        "top openings",
+        "top opening positions",
+        "right projection",
+        "right openings",
+        "right opening positions",
+        "Detailed drawing features and view assignments require review."
+      ],
+      "scope": "Partial automatic checks. No drawing acceptance from solid validity alone."
+    },
+    "diagnostics": {
+      "backend": "usd-brep",
+      "version": "1.0.0",
+      "recipe_version": 2,
+      "solid_volume_mm3": 5242.300899559937,
+      "mesh_volume_mm3": 5242.862429665377,
+      "extents_mm": [
+        15.0,
+        3.0,
+        120.0
+      ],
+      "bounds_mm": [
+        [
+          -7.5,
+          -1.2246468525851679e-16,
+          0.0
+        ],
+        [
+          7.5,
+          3.0,
+          120.0
+        ]
+      ],
+      "watertight": true,
+      "winding_consistent": true,
+      "euler_number": -10,
+      "triangles": 212,
+      "usd_roundtrip": true,
+      "volume_relative_accuracy": 1e-08,
+      "usd_volume_mm3": 5242.300897949829,
+      "operations": [
+        {
+          "id": "main_body",
+          "kind": "box",
+          "faces": 6
+        },
+        {
+          "id": "central_hole",
+          "kind": "cylinder",
+          "faces": 3
+        },
+        {
+          "id": "slot_1",
+          "kind": "box",
+          "faces": 6
+        },
+        {
+          "id": "slot_2",
+          "kind": "box",
+          "faces": 6
+        },
+        {
+          "id": "slot_3",
+          "kind": "box",
+          "faces": 6
+        },
+        {
+          "id": "slot_4",
+          "kind": "box",
+          "faces": 6
+        },
+        {
+          "id": "slot_5",
+          "kind": "box",
+          "faces": 6
+        },
+        {
+          "id": "cut_hole",
+          "kind": "difference",
+          "faces": 7
+        },
+        {
+          "id": "cut_slot_1",
+          "kind": "difference",
+          "faces": 11
+        },
+        {
+          "id": "cut_slot_2",
+          "kind": "difference",
+          "faces": 15
+        },
+        {
+          "id": "cut_slot_3",
+          "kind": "difference",
+          "faces": 19
+        },
+        {
+          "id": "cut_slot_4",
+          "kind": "difference",
+          "faces": 23
+        },
+        {
+          "id": "final_part",
+          "kind": "difference",
+          "faces": 27
+        }
+      ],
+      "connections": [],
+      "build_seconds": 0.188
+    },
+    "controls": {
+      "object_type_hint": "",
+      "method": "3D print",
+      "primary_view": "front",
+      "projection_standard": "third-angle",
+      "strict_watertight": true,
+      "refine_mode": "regularize"
+    },
+    "files": {
+      "source": "/results/fa3bc11584b0/brep-dfdef9a67ae34f1e97ec8786af7cbf72/model.recipe.json",
+      "stl": "/results/fa3bc11584b0/brep-dfdef9a67ae34f1e97ec8786af7cbf72/model.stl",
+      "usd": "/results/fa3bc11584b0/brep-dfdef9a67ae34f1e97ec8786af7cbf72/model.usda",
+      "views": {
+        "isometric": "/results/fa3bc11584b0/brep-dfdef9a67ae34f1e97ec8786af7cbf72/view-isometric.png",
+        "front": "/results/fa3bc11584b0/brep-dfdef9a67ae34f1e97ec8786af7cbf72/view-front.png",
+        "top": "/results/fa3bc11584b0/brep-dfdef9a67ae34f1e97ec8786af7cbf72/view-top.png",
+        "right": "/results/fa3bc11584b0/brep-dfdef9a67ae34f1e97ec8786af7cbf72/view-right.png"
+      },
+      "drawing_checks": "/results/fa3bc11584b0/drawing-checks.json",
+      "construction_plan": "/results/fa3bc11584b0/construction-plan.json",
+      "evidence": "/results/fa3bc11584b0/feature-evidence.json",
+      "generation": "/results/fa3bc11584b0/generation.json"
+    },
+    "build": {
+      "version": 1,
+      "backend": "usd-brep",
+      "source_format": "brep-recipe-v2",
+      "ok": true,
+      "units": "mm",
+      "axes": {
+        "x": "width",
+        "y": "depth",
+        "z": "height"
+      },
+      "views": [
+        "isometric",
+        "front",
+        "top",
+        "right"
+      ],
+      "measurements": {
+        "watertight": true,
+        "components": 1,
+        "triangles": 212,
+        "extents_mm": [
+          15.0,
+          3.0,
+          120.0
+        ],
+        "volume_mm3": 5242.862
+      },
+      "diagnostics": [],
+      "drawing_evaluated": false
+    },
+    "original_run_id": null,
+    "generation": {
+      "path": "drawing-to-brep",
+      "backend": "usd-brep",
+      "prompt_version": "drawing-brep-15",
+      "correction_prompt_version": "construction-numeric-fields-3",
+      "max_construction_corrections": 2,
+      "construction_plan_version": "construction-intent-9",
+      "model": "local-inference-lab/Qwen3.8-Flash-Next-NVFP4",
+      "notes": "",
+      "maximum_dimension_mm": 120.0,
+      "controls": {
+        "object_type_hint": "",
+        "method": "3D print",
+        "primary_view": "front",
+        "projection_standard": "third-angle",
+        "strict_watertight": true,
+        "refine_mode": "regularize"
+      },
+      "generated_scad": false,
+      "drawing_fidelity_verified": false,
+      "attempts": [
+        {
+          "attempt": 1,
+          "schema_valid": false,
+          "error": "central_hole: dependencies must match body references"
+        },
+        {
+          "attempt": 2,
+          "schema_valid": true
+        }
+      ],
+      "construction_attempts": [
+        {
+          "attempt": 1,
+          "status": "built"
+        }
+      ]
+    }
+  },
+  "error": null,
+  "elapsed_seconds": 216.4
+}

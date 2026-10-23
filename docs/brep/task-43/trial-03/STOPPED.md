@@ -1,0 +1,1 @@
+Stopped this trial after the construction-plan dimensions field exposed a schema mismatch. Both submitted jobs are retained. No later cases were submitted. Trial 04 accepts a bounded list of dimension statements.

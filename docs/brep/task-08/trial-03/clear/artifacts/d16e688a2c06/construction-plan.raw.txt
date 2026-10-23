@@ -1,0 +1,39 @@
+{
+ "view_frame": "The drawing uses a third-angle projection layout. The primary view is TOP (XY), showing the 40mm width along X and 30mm depth along Y. The SECTION THROUGH CENTRE view (YZ) shows the 12mm thickness along Z. The world origin is at the bottom-left corner of the top view (X=0, Y=0, Z=0).",
+ "features": [
+  {
+   "id": "body_block",
+   "shape": "box",
+   "section": "rectangular",
+   "axis_or_plane": "XY",
+   "dimensions": [
+    "40",
+    "30",
+    "12"
+   ],
+   "placement": "Starts at (0,0,0) and extends to (40,30,12).",
+   "evidence": "Top view shows a 40x30 rectangle. Section view shows 12 thickness. Text states 'Body: 40 wide x 30 deep x 12 thick'."
+  },
+  {
+   "id": "through_hole",
+   "shape": "cylinder",
+   "section": "circular",
+   "axis_or_plane": "Z",
+   "dimensions": [
+    "Ø8",
+    "12"
+   ],
+   "placement": "Centered at (20,15) in XY. Extends from Z=0 to Z=12.",
+   "evidence": "Top view shows a circle labeled Ø8 centered in the rectangle. Section view shows two separated rectangles indicating a through hole. Text states 'Ø8 THROUGH' and 'No floor below opening'."
+  }
+ ],
+ "connections": [
+  "The through_hole is subtracted from the body_block."
+ ],
+ "edit_rules": [
+  "If body_block width (X) changes, the through_hole center X coordinate must update to width/2.",
+  "If body_block depth (Y) changes, the through_hole center Y coordinate must update to depth/2.",
+  "If body_block thickness (Z) changes, the through_hole height must update to match the new thickness."
+ ],
+ "unresolved": []
+}

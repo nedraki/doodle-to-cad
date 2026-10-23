@@ -1,6 +1,7 @@
 """Backend-neutral build boundary. Geometry success is not drawing approval."""
 from __future__ import annotations
 
+import hashlib
 import json
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -10,7 +11,49 @@ from .brep_recipe import FIELDS
 
 Backend = Literal["openscad", "usd-brep"]
 SourceFormat = Literal["openscad", "brep-recipe-v1", "brep-recipe-v2"]
-FailureCode = Literal["invalid_input", "backend_unavailable", "build_failed", "timeout", "invalid_output", "render_failed", "unsupported_construction", "invalid_recipe", "dimension_exceeded", "placement_failed", "connection_failed", "disconnected_output"]
+FailureCode = Literal["invalid_input", "backend_unavailable", "build_failed", "timeout", "invalid_output", "render_failed", "unsupported_construction", "invalid_recipe", "dimension_exceeded", "placement_failed", "connection_failed", "disconnected_output", "cancelled", "worker_killed", "kernel_unavailable"]
+
+# usd_brep 1.0.0 shipping defect (issue #61): tessellating the result of a
+# boolean union between a 180-degree arc_pipe (torus segment) and a cylinder
+# that crosses its terminal cap dies inside the kernel with
+# ModuleNotFoundError: No module named '_omni_solid'. The private module is
+# missing from the installed wheel for that body class, so the advice is to
+# switch backends, never to retry. Match only this exact message: a generic
+# ModuleNotFoundError must stay a generic build_failed.
+KERNEL_CRASH_SIGNATURE = "No module named '_omni_solid'"
+INVALID_SOLID_SIGNATURE = "kernel produced an invalid solid"
+KERNEL_CRASH_ADVICE = "Retry with the OpenSCAD backend."
+REPRODUCER_SCRIPT = "scripts/repro_omni_solid.py"
+REPRODUCER_FIXTURE = Path(__file__).resolve().parents[1] / "scripts" / "fixtures" / "omni_solid_minimal.recipe.json"
+
+
+def reproducer_hash() -> str:
+    """sha256 of the canonical minimal reproducer recipe (issue #61)."""
+    try:
+        return hashlib.sha256(REPRODUCER_FIXTURE.read_bytes()).hexdigest()
+    except OSError:
+        return "unavailable"
+
+
+def classify_kernel_crash(message: str) -> tuple[FailureCode, str] | None:
+    """Map the known usd_brep tessellation crash to a structured failure.
+
+    Returns (kernel_unavailable, advice message) only for the exact shipped
+    defect signature; anything else returns None and keeps its own code.
+    """
+    if isinstance(message, str) and KERNEL_CRASH_SIGNATURE in message:
+        return ("kernel_unavailable",
+                f"usd_brep 1.0.0 kernel crash during tessellation: {message}. "
+                "The kernel's private '_omni_solid' module is missing from the installed wheel "
+                f"for this body class (known packaging defect, issue #61). {KERNEL_CRASH_ADVICE} "
+                f"Minimal reproducer: {REPRODUCER_SCRIPT} (fixture sha256 {reproducer_hash()}).")
+    if isinstance(message, str) and INVALID_SOLID_SIGNATURE in message:
+        return ("kernel_unavailable",
+                f"usd_brep 1.0.0 kernel returned a non-manifold solid: {message}. "
+                "Observed twice in the frozen comparison on spoke operations "
+                "(docs/brep/task-17-comparison wheel trial-04/05); the triggering recipe was "
+                f"not retained, so no minimal reproducer exists yet (issue #61). {KERNEL_CRASH_ADVICE}")
+    return None
 
 # X=width, Y=depth, Z=height; all distances are millimetres.
 CAMERAS = {"isometric": "0,0,0,55,0,35,0", "front": "0,0,0,90,0,0,0",

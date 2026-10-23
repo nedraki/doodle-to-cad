@@ -1,0 +1,103 @@
+{
+  "view_frame": "The drawing presents two views. The left view is the Front view (XZ plane), showing the part's width (X) and height (Z). The right view is the Right Side view (YZ plane), showing the part's depth (Y) and height (Z). The world origin is at the bottom-left corner of the Front view. X increases to the right, Y increases into the page (depth), and Z increases upwards.",
+  "features": [
+    {
+      "id": "base_plate",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "width: ASSUMED 100mm",
+        "depth: ASSUMED 10mm",
+        "height: ASSUMED 10mm"
+      ],
+      "placement": "Centred at X=50, Y=5, Z=5. Extends from X=0 to 100, Y=0 to 10, Z=0 to 10.",
+      "evidence": "The horizontal leg of the L-shape in the Right Side view and the bottom boundary of the Front view."
+    },
+    {
+      "id": "vertical_wall",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "width: ASSUMED 100mm",
+        "depth: ASSUMED 10mm",
+        "height: ASSUMED 100mm"
+      ],
+      "placement": "Centred at X=50, Y=5, Z=55. Extends from X=0 to 100, Y=0 to 10, Z=10 to 110.",
+      "evidence": "The vertical leg of the L-shape in the Right Side view and the main rectangular outline in the Front view."
+    },
+    {
+      "id": "opening_top_left",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "width: ASSUMED 30mm",
+        "height: ASSUMED 20mm",
+        "depth: 10mm (through)"
+      ],
+      "placement": "Centred at X=30, Y=5, Z=90. Extends from X=15 to 45, Y=0 to 10, Z=80 to 100.",
+      "evidence": "Top-left rectangular outline in the Front view."
+    },
+    {
+      "id": "opening_bottom_left",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "width: ASSUMED 15mm",
+        "height: 40mm",
+        "depth: 10mm (through)"
+      ],
+      "placement": "Centred at X=30, Y=5, Z=40. Extends from X=22.5 to 37.5, Y=0 to 10, Z=20 to 60.",
+      "evidence": "Bottom-left vertical rectangular outline in the Front view."
+    },
+    {
+      "id": "opening_center",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "width: ASSUMED 10mm",
+        "height: 30mm",
+        "depth: 10mm (through)"
+      ],
+      "placement": "Centred at X=50, Y=5, Z=55. Extends from X=45 to 55, Y=0 to 10, Z=40 to 70.",
+      "evidence": "Central vertical rectangular outline in the Front view."
+    },
+    {
+      "id": "opening_bottom_right",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "width: ASSUMED 15mm",
+        "height: 40mm",
+        "depth: 10mm (through)"
+      ],
+      "placement": "Centred at X=70, Y=5, Z=40. Extends from X=62.5 to 77.5, Y=0 to 10, Z=20 to 60.",
+      "evidence": "Bottom-right vertical rectangular outline in the Front view."
+    }
+  ],
+  "connections": [
+    "base_plate and vertical_wall share the interface at Z=10, forming a continuous L-shaped body.",
+    "All opening features are subtractive operations applied to the vertical_wall."
+  ],
+  "edit_rules": [
+    "Changing the base_plate height moves the vertical_wall's Z-start coordinate.",
+    "Changing the vertical_wall height moves the top boundary of the Front view and the top of the Right Side view.",
+    "Changing the wall thickness (depth) updates the Y-extent of both the base_plate and vertical_wall.",
+    "Opening positions are defined relative to the Front view origin; moving the wall origin moves all openings."
+  ],
+  "unresolved": [
+    "The drawing lacks explicit dimensions for all features. All dimensions are currently marked as ASSUMED based on visual proportions and the maximum dimension constraint.",
+    "The exact thickness of the L-bracket is not dimensioned; assumed to be uniform 10mm."
+  ],
+  "clarification": {
+    "feature_id": "opening_top_left",
+    "feature_label": "Top-left rectangular opening in the vertical wall",
+    "reason": "The drawing shows a rectangular outline in the Front view but does not indicate if this is a through-hole or a blind recess. The Right Side view does not show hidden lines for this feature.",
+    "kind": "opening_extent"
+  }
+}

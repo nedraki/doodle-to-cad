@@ -1,0 +1,171 @@
+{
+  "version": 1,
+  "object_hypothesis": "Rounded Housing Blank",
+  "features": [
+    {
+      "id": "body_main",
+      "type": "body",
+      "description": "Rectangular block with rounded corners",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_6",
+          "region_id": "profile_contour_151"
+        },
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_147"
+        }
+      ],
+      "reason": "View 6 (Top) shows a rectangular outline with rounded corners. View 5 (Right) shows a rectangular profile. Together they define a block."
+    },
+    {
+      "id": "corner_rounding",
+      "type": "profile",
+      "description": "Rounded corners (R6)",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_6",
+          "region_id": "profile_contour_151"
+        }
+      ],
+      "reason": "View 6 shows curved transitions at the corners of the rectangular outline. The drawing annotation explicitly labels '4 corners: R6'."
+    },
+    {
+      "id": "front_face",
+      "type": "body",
+      "description": "Front face of the block",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_147"
+        }
+      ],
+      "reason": "View 5 (Right) shows the side profile. The large rectangular area represents the side face. The front face is inferred from the Top view (View 6) and the overall block shape."
+    },
+    {
+      "id": "top_face",
+      "type": "body",
+      "description": "Top face of the block",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_6",
+          "region_id": "profile_contour_151"
+        }
+      ],
+      "reason": "View 6 (Top) shows the outline of the top face."
+    },
+    {
+      "id": "bottom_face",
+      "type": "body",
+      "description": "Bottom face of the block",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_7",
+          "region_id": "profile_contour_119"
+        }
+      ],
+      "reason": "View 7 (Bottom) shows a profile consistent with the bottom of the block."
+    },
+    {
+      "id": "side_wall",
+      "type": "wall",
+      "description": "Side wall of the block",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_147"
+        }
+      ],
+      "reason": "View 5 (Right) shows the vertical extent of the block, representing the side wall."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "rel_top_body",
+      "type": "connected",
+      "features": [
+        "top_face",
+        "body_main"
+      ],
+      "description": "Top face is the upper boundary of the main body",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_6",
+          "region_id": "profile_contour_151"
+        }
+      ],
+      "reason": "View 6 shows the top outline which defines the top face of the body."
+    },
+    {
+      "id": "rel_side_body",
+      "type": "connected",
+      "features": [
+        "side_wall",
+        "body_main"
+      ],
+      "description": "Side wall forms the lateral boundary of the main body",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_147"
+        }
+      ],
+      "reason": "View 5 shows the side profile which defines the side wall of the body."
+    },
+    {
+      "id": "rel_corner_body",
+      "type": "connected",
+      "features": [
+        "corner_rounding",
+        "body_main"
+      ],
+      "description": "Corner rounding modifies the corners of the main body",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_6",
+          "region_id": "profile_contour_151"
+        }
+      ],
+      "reason": "View 6 shows the rounded corners as part of the body's outline."
+    },
+    {
+      "id": "rel_bottom_body",
+      "type": "connected",
+      "features": [
+        "bottom_face",
+        "body_main"
+      ],
+      "description": "Bottom face is the lower boundary of the main body",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_7",
+          "region_id": "profile_contour_119"
+        }
+      ],
+      "reason": "View 7 shows the bottom profile which defines the bottom face of the body."
+    }
+  ],
+  "assumptions": [
+    "The object is a solid block as stated in the drawing notes.",
+    "The corner rounding is uniform across all four corners.",
+    "The top and bottom faces are parallel and flat.",
+    "The side walls are vertical and perpendicular to the top and bottom faces."
+  ],
+  "unresolved": [
+    "Exact dimensions of the block (length, width, height) are not explicitly measured in the provided regions, though visible in the drawing.",
+    "Internal structure is assumed solid based on notes, but not directly verified by cross-sections."
+  ],
+  "conflicts": [
+    "None observed between the provided views and the drawing notes."
+  ]
+}

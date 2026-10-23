@@ -1,0 +1,59 @@
+{
+  "view_frame": "The drawing presents two views of a single object, likely a front view and a rear view (or two identical parts), showing a symmetrical I-beam or spool-like profile. The primary view is Front (XZ plane). The object is symmetric about the vertical centerline (Z axis) and horizontal centerline (X axis).",
+  "features": [
+    {
+      "id": "top_flange",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "width_top",
+        "height_top",
+        "depth_body"
+      ],
+      "placement": "Centered at X=0, Z=height_total/2 - height_top/2. Extends from X=-width_top/2 to X=width_top/2.",
+      "evidence": "The top horizontal bar of the I-shape in both views."
+    },
+    {
+      "id": "bottom_flange",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "width_bottom",
+        "height_bottom",
+        "depth_body"
+      ],
+      "placement": "Centered at X=0, Z=-height_total/2 + height_bottom/2. Extends from X=-width_bottom/2 to X=width_bottom/2.",
+      "evidence": "The bottom horizontal bar of the I-shape in both views."
+    },
+    {
+      "id": "web",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "width_web",
+        "height_web",
+        "depth_body"
+      ],
+      "placement": "Centered at X=0, Z=0. Extends from X=-width_web/2 to X=width_web/2. Connects top and bottom flanges.",
+      "evidence": "The central vertical section connecting the top and bottom flanges."
+    }
+  ],
+  "connections": [
+    "The web connects the inner faces of the top and bottom flanges.",
+    "The top and bottom flanges are parallel to the X axis.",
+    "The web is parallel to the Z axis."
+  ],
+  "edit_rules": [
+    "Changing width_top or width_bottom must maintain symmetry about the Z axis.",
+    "Changing height_top or height_bottom must maintain symmetry about the X axis.",
+    "Changing depth_body affects the extrusion depth in the Y direction for all components.",
+    "The object is symmetric; changes to the left side must be mirrored on the right side."
+  ],
+  "unresolved": [
+    "Exact dimensions (width_top, height_top, width_bottom, height_bottom, width_web, height_web, depth_body) are not provided in the drawing.",
+    "The specific relationship between the two views (whether they are front/back or two separate parts) is assumed to be front/back of a single symmetric object."
+  ]
+}

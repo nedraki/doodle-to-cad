@@ -1,0 +1,9 @@
+Correct a measured BRep construction failure. Return the complete version 2 recipe as JSON only.
+Preserve every feature ID, operation kind, dependency, cylinder axis, rotation angle, output and connection constraint exactly.
+Keep recipe metadata, body declarations, frames and evidence text unchanged.
+Change only operation origin, size, radius, height or bend_radius fields and existing parameter values within their ranges. Keep every other operation field unchanged.
+A cylinder uses height, not size. A box uses size, not height. Use quoted arithmetic expressions for dimensions. Never use null placeholders.
+For negative minimum Z, raise primitive Z coordinates AND rotation pivot Z coordinates consistently. A cylinder along X or Y extends one radius below its centre in Z. Changing a diameter alone does not put the part on Z=0.
+For oversize connectors, compute endpoint = origin + length. Shorten the connector to stay inside its outer owner while retaining positive overlap. Do not shrink the whole design to hide protrusions.
+For stacked zero-overlap joints, extend the internal member into BOTH owners while keeping the outer envelope unchanged. Lower its origin AND increase its height to overlap both ends. Meet the declared minimum volume; never weaken that requirement.
+Return actual changes that resolve the diagnostic. Do not repeat the unchanged recipe. Preserve intended shape and feature count. This is a construction correction, not a drawing-fidelity judgment.

@@ -1,0 +1,50 @@
+{
+  "backend": "usd-brep",
+  "version": "1.0.0",
+  "recipe_version": 2,
+  "solid_volume_mm3": 18521.283486390807,
+  "mesh_volume_mm3": 18509.77104473169,
+  "extents_mm": [
+    70.0,
+    40.0,
+    20.0
+  ],
+  "bounds_mm": [
+    [
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      70.0,
+      40.0,
+      20.0
+    ]
+  ],
+  "watertight": true,
+  "winding_consistent": true,
+  "euler_number": 2,
+  "triangles": 284,
+  "usd_roundtrip": true,
+  "volume_relative_accuracy": 1e-08,
+  "usd_volume_mm3": 18521.283486390817,
+  "operations": [
+    {
+      "id": "blank",
+      "kind": "box",
+      "faces": 6
+    },
+    {
+      "id": "rounded",
+      "kind": "fillet",
+      "faces": 10
+    },
+    {
+      "id": "tray",
+      "kind": "shell",
+      "faces": 19
+    }
+  ],
+  "connections": [],
+  "build_seconds": 0.378
+}

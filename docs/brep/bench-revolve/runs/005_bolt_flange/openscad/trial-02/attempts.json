@@ -1,0 +1,693 @@
+[
+  {
+    "attempt": 1,
+    "action": "generate",
+    "preflight": {
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "expected_subtractive_feature_groups": 5
+    },
+    "compiler_repairs": [],
+    "uniform_scale": null,
+    "evaluation": {
+      "score": 88.9,
+      "valid_mesh": true,
+      "accepted": false,
+      "mandatory_gates": {
+        "compiled": true,
+        "topology": true,
+        "dimensions": true,
+        "shape_sanity": false,
+        "features": false,
+        "openings_through": false,
+        "projections": false,
+        "build_envelope": true
+      },
+      "scores": {
+        "topology": 45,
+        "dimensions": 20.0,
+        "features": 20.0,
+        "projections": 3.9
+      },
+      "projection_similarity": {
+        "front": 0.237,
+        "top": 0.284
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 5,
+          "rendered_internal_profiles": 12,
+          "crop_internal_profiles": 5,
+          "source_aspect": 1.009,
+          "rendered_aspect": 11.688,
+          "source_opening_centroids": [
+            [
+              0.758,
+              0.766
+            ],
+            [
+              0.233,
+              0.766
+            ],
+            [
+              0.496,
+              0.503
+            ],
+            [
+              0.759,
+              0.243
+            ],
+            [
+              0.232,
+              0.24
+            ]
+          ],
+          "rendered_opening_centroids": [
+            [
+              0.798,
+              0.472
+            ],
+            [
+              0.754,
+              0.47
+            ],
+            [
+              0.711,
+              0.47
+            ],
+            [
+              0.666,
+              0.47
+            ],
+            [
+              0.618,
+              0.47
+            ],
+            [
+              0.57,
+              0.47
+            ],
+            [
+              0.521,
+              0.47
+            ],
+            [
+              0.473,
+              0.47
+            ],
+            [
+              0.425,
+              0.47
+            ],
+            [
+              0.377,
+              0.47
+            ],
+            [
+              0.265,
+              0.471
+            ],
+            [
+              0.068,
+              0.473
+            ]
+          ],
+          "missing_opening_centroids": [
+            [
+              0.232,
+              0.24
+            ],
+            [
+              0.759,
+              0.243
+            ],
+            [
+              0.758,
+              0.766
+            ],
+            [
+              0.233,
+              0.766
+            ]
+          ],
+          "feature_position_fidelity": 0.2
+        },
+        "top": {
+          "source_internal_profiles": 1,
+          "rendered_internal_profiles": 1,
+          "crop_internal_profiles": 1,
+          "source_aspect": 6.486,
+          "rendered_aspect": 1.0,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": [
+            [
+              0.499,
+              0.499
+            ]
+          ]
+        }
+      },
+      "demanded_openings": {
+        "total": 6,
+        "per_view": {
+          "front": 5,
+          "top": 1
+        },
+        "sheet_total": 5,
+        "registration_gap": 0
+      },
+      "failures": [
+        "degenerate or implausible axis dimensions: Y=120 mm vs expected 18.75 mm, Z=10 mm vs expected 117.32 mm",
+        "openings do not go through the solid: the drawing demands 6 openings across the registered views (strongest: front) but the mesh has 1 true through-hole \u2014 the rendered openings are blind pockets or edge notches; cut all the way through the wall",
+        "CAD projections poorly match the drawing: front similarity 0.24, top similarity 0.28 (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly.",
+        "features exist but sit at the wrong positions in front view(s): match each opening's location (u,v within the outer profile) to the drawing; check the cad_mapping signs (front: u->+X v->-Z; top: u->+X v->-Y i.e. sheet-down is the FRONT of the part)"
+      ]
+    },
+    "mesh_health": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 1216,
+      "through_holes": 1,
+      "extents_mm": [
+        120.0,
+        120.0,
+        10.0
+      ],
+      "volume_mm3": 96609.514
+    },
+    "build": {
+      "version": 1,
+      "backend": "openscad",
+      "source_format": "openscad",
+      "ok": true,
+      "units": "mm",
+      "axes": {
+        "x": "width",
+        "y": "depth",
+        "z": "height"
+      },
+      "views": [
+        "isometric",
+        "front",
+        "top",
+        "right"
+      ],
+      "measurements": {
+        "watertight": true,
+        "components": 1,
+        "triangles": 1216,
+        "through_holes": 1,
+        "extents_mm": [
+          120.0,
+          120.0,
+          10.0
+        ],
+        "volume_mm3": 96609.514
+      },
+      "diagnostics": [],
+      "drawing_evaluated": false
+    },
+    "compile_log": "Geometries in cache: 8\nGeometry cache size in bytes: 74944\nCGAL Polyhedrons in cache: 4\nCGAL cache size in bytes: 2198384\nTotal rendering time: 0:00:00.452\n   Top level object is a 3D object:\n   Simple:        yes\n   Vertices:      608\n   Halfedges:    1824\n   Edges:         912\n   Halffacets:    612\n   Facets:        306\n   Volumes:         2",
+    "files": {
+      "scad": "attempt-01/model.scad",
+      "stl": "attempt-01/model.stl",
+      "views": {
+        "isometric": "attempt-01/view-isometric.png",
+        "front": "attempt-01/view-front.png",
+        "top": "attempt-01/view-top.png",
+        "right": "attempt-01/view-right.png"
+      }
+    },
+    "supervisor": {
+      "action": "repair_scad",
+      "problems": [
+        "Bolt holes are positioned at radius 40mm (corners of 80x80 square), causing them to intersect the outer edge (radius 60mm) and appear as notches.",
+        "Front view projection fails because the geometry is a flat plate (Z=10) while the drawing implies a vertical orientation or the evaluation expects the circular face in the front view.",
+        "Through-hole detection failed likely due to the holes breaking the outer boundary, making them edge cuts rather than internal through-holes."
+      ],
+      "preserve": [
+        "Overall flange diameter (120mm) and thickness (10mm).",
+        "Center bore diameter (40mm).",
+        "Bolt hole diameter (12mm).",
+        "General intent of 4 symmetric bolt holes."
+      ],
+      "instructions": "Correct the bolt hole positioning to ensure they are fully internal. The specification states 'bolt_circle_diameter: 80', which implies a radius of 40mm. However, with a flange radius of 60mm and hole radius of 6mm, holes at R=40 are too close to the edge (40+6=46 < 60 is safe, but the drawing shows them further out, likely R=50 or R=55). Wait, looking at the drawing, the holes are roughly halfway between center and edge. Let's set bolt_circle_radius to 50mm (diameter 100mm) or keep 80mm diameter (R=40) but ensure the code uses the correct radius. The current code uses `bolt_circle_diameter / 2` which is 40. The drawing shows holes at roughly 2/3 radius. Let's adjust `bolt_circle_diameter` to 100 (R=50) to match visual spacing better, or stick to spec if strict. The main issue is the 'notch' appearance. If R=40, they are internal. Why did they look like notches? Ah, the isometric shows them breaking the edge. This implies the radius used was larger or the diameter was interpreted as radius. The code uses `bolt_circle_diameter = 80`. `bolt_radius = 40`. `cylinder(d=120)` -> `r=60`. Hole at 40 with r=6 extends to 46. It should be internal. The image shows them breaking the edge. This suggests the `bolt_circle_diameter` in the code might have been interpreted differently or the rendering is misleading. Let's force `bolt_circle_diameter` to 100 to match the visual 'mid-radius' look and ensure clearance. Also, ensure the front view matches the drawing's orientation if required, but usually, flanges are modeled flat. The evaluation failure on 'front' similarity suggests the evaluator expects the circular face to be the front view (Z-axis pointing at viewer) or the part is rotated. Given the 'front' view in drawing is the circle, the model should likely be rotated 90 degrees around X so the circle faces the front (Y-axis becomes depth, Z becomes height? No, standard is Z up). If the drawing's 'front' is the circle, the part should be standing up. Let's rotate the entire model 90 degrees around X axis so the circular face is in the XZ plane (Front view).",
+      "confidence": 0.95
+    }
+  },
+  {
+    "attempt": 2,
+    "action": "repair_scad",
+    "preflight": {
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "expected_subtractive_feature_groups": 5
+    },
+    "compiler_repairs": [],
+    "uniform_scale": null,
+    "evaluation": {
+      "score": 88.9,
+      "valid_mesh": true,
+      "accepted": false,
+      "mandatory_gates": {
+        "compiled": true,
+        "topology": true,
+        "dimensions": true,
+        "shape_sanity": false,
+        "features": false,
+        "openings_through": false,
+        "projections": false,
+        "build_envelope": true
+      },
+      "scores": {
+        "topology": 45,
+        "dimensions": 20.0,
+        "features": 20.0,
+        "projections": 3.9
+      },
+      "projection_similarity": {
+        "front": 0.237,
+        "top": 0.284
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 5,
+          "rendered_internal_profiles": 12,
+          "crop_internal_profiles": 5,
+          "source_aspect": 1.009,
+          "rendered_aspect": 11.688,
+          "source_opening_centroids": [
+            [
+              0.758,
+              0.766
+            ],
+            [
+              0.233,
+              0.766
+            ],
+            [
+              0.496,
+              0.503
+            ],
+            [
+              0.759,
+              0.243
+            ],
+            [
+              0.232,
+              0.24
+            ]
+          ],
+          "rendered_opening_centroids": [
+            [
+              0.798,
+              0.472
+            ],
+            [
+              0.754,
+              0.47
+            ],
+            [
+              0.711,
+              0.47
+            ],
+            [
+              0.666,
+              0.47
+            ],
+            [
+              0.618,
+              0.47
+            ],
+            [
+              0.57,
+              0.47
+            ],
+            [
+              0.521,
+              0.47
+            ],
+            [
+              0.473,
+              0.47
+            ],
+            [
+              0.425,
+              0.47
+            ],
+            [
+              0.377,
+              0.47
+            ],
+            [
+              0.265,
+              0.471
+            ],
+            [
+              0.068,
+              0.473
+            ]
+          ],
+          "missing_opening_centroids": [
+            [
+              0.232,
+              0.24
+            ],
+            [
+              0.759,
+              0.243
+            ],
+            [
+              0.758,
+              0.766
+            ],
+            [
+              0.233,
+              0.766
+            ]
+          ],
+          "feature_position_fidelity": 0.2
+        },
+        "top": {
+          "source_internal_profiles": 1,
+          "rendered_internal_profiles": 1,
+          "crop_internal_profiles": 1,
+          "source_aspect": 6.486,
+          "rendered_aspect": 1.0,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": [
+            [
+              0.499,
+              0.499
+            ]
+          ]
+        }
+      },
+      "demanded_openings": {
+        "total": 6,
+        "per_view": {
+          "front": 5,
+          "top": 1
+        },
+        "sheet_total": 5,
+        "registration_gap": 0
+      },
+      "failures": [
+        "degenerate or implausible axis dimensions: Y=120 mm vs expected 18.75 mm, Z=10 mm vs expected 117.32 mm",
+        "openings do not go through the solid: the drawing demands 6 openings across the registered views (strongest: front) but the mesh has 1 true through-hole \u2014 the rendered openings are blind pockets or edge notches; cut all the way through the wall",
+        "CAD projections poorly match the drawing: front similarity 0.24, top similarity 0.28 (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly.",
+        "features exist but sit at the wrong positions in front view(s): match each opening's location (u,v within the outer profile) to the drawing; check the cad_mapping signs (front: u->+X v->-Z; top: u->+X v->-Y i.e. sheet-down is the FRONT of the part)"
+      ]
+    },
+    "mesh_health": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 1216,
+      "through_holes": 1,
+      "extents_mm": [
+        120.0,
+        120.0,
+        10.0
+      ],
+      "volume_mm3": 96609.514
+    },
+    "build": {
+      "version": 1,
+      "backend": "openscad",
+      "source_format": "openscad",
+      "ok": true,
+      "units": "mm",
+      "axes": {
+        "x": "width",
+        "y": "depth",
+        "z": "height"
+      },
+      "views": [
+        "isometric",
+        "front",
+        "top",
+        "right"
+      ],
+      "measurements": {
+        "watertight": true,
+        "components": 1,
+        "triangles": 1216,
+        "through_holes": 1,
+        "extents_mm": [
+          120.0,
+          120.0,
+          10.0
+        ],
+        "volume_mm3": 96609.514
+      },
+      "diagnostics": [],
+      "drawing_evaluated": false
+    },
+    "compile_log": "Geometries in cache: 8\nGeometry cache size in bytes: 74944\nCGAL Polyhedrons in cache: 4\nCGAL cache size in bytes: 2198384\nTotal rendering time: 0:00:00.456\n   Top level object is a 3D object:\n   Simple:        yes\n   Vertices:      608\n   Halfedges:    1824\n   Edges:         912\n   Halffacets:    612\n   Facets:        306\n   Volumes:         2",
+    "files": {
+      "scad": "attempt-02/model.scad",
+      "stl": "attempt-02/model.stl",
+      "views": {
+        "isometric": "attempt-02/view-isometric.png",
+        "front": "attempt-02/view-front.png",
+        "top": "attempt-02/view-top.png",
+        "right": "attempt-02/view-right.png"
+      }
+    },
+    "supervisor": {
+      "action": "regenerate_scad",
+      "problems": [
+        "Bolt holes are positioned at radius 56.6mm (corners of 80x80 square), causing them to intersect the outer edge (R=60mm) and become notches.",
+        "Front view projection fails because the holes are not fully internal, creating edge artifacts instead of clean internal circles.",
+        "Evaluation reports only 1 through-hole because the 4 bolt holes are open to the boundary."
+      ],
+      "preserve": [
+        "Overall flange diameter (120mm) and thickness (10mm).",
+        "Center bore diameter (40mm).",
+        "Bolt hole diameter (12mm).",
+        "4-fold rotational symmetry."
+      ],
+      "instructions": "Previous repair made no measurable progress. Regenerate cleanly from the specification and mandatory gate failures using a different construction strategy.",
+      "confidence": 1.0
+    }
+  },
+  {
+    "attempt": 3,
+    "action": "regenerate_scad",
+    "preflight": {
+      "passed": true,
+      "errors": [],
+      "warnings": [
+        "multiple top-level geometry expressions detected (4); ensure they intentionally form one connected design"
+      ],
+      "expected_subtractive_feature_groups": 5
+    },
+    "compiler_repairs": [],
+    "uniform_scale": {
+      "factor": 0.6667,
+      "before_max_mm": 180.0,
+      "after_max_mm": 120.0,
+      "params": [
+        "flange_diameter",
+        "flange_thickness",
+        "center_bore_diameter",
+        "bolt_hole_diameter",
+        "bolt_circle_diameter"
+      ]
+    },
+    "evaluation": {
+      "score": 72.6,
+      "valid_mesh": true,
+      "accepted": false,
+      "mandatory_gates": {
+        "compiled": true,
+        "topology": true,
+        "dimensions": true,
+        "shape_sanity": false,
+        "features": false,
+        "openings_through": true,
+        "projections": false,
+        "build_envelope": true
+      },
+      "scores": {
+        "topology": 45,
+        "dimensions": 20.0,
+        "features": 0.0,
+        "projections": 7.6
+      },
+      "projection_similarity": {
+        "front": 0.616,
+        "top": 0.392
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 5,
+          "rendered_internal_profiles": 3,
+          "crop_internal_profiles": 5,
+          "source_aspect": 1.009,
+          "rendered_aspect": 0.663,
+          "source_opening_centroids": [
+            [
+              0.758,
+              0.766
+            ],
+            [
+              0.233,
+              0.766
+            ],
+            [
+              0.496,
+              0.503
+            ],
+            [
+              0.759,
+              0.243
+            ],
+            [
+              0.232,
+              0.24
+            ]
+          ],
+          "rendered_opening_centroids": [
+            [
+              0.262,
+              0.175
+            ],
+            [
+              0.734,
+              0.175
+            ],
+            [
+              0.498,
+              0.289
+            ],
+            [
+              0.262,
+              0.499
+            ],
+            [
+              0.735,
+              0.499
+            ],
+            [
+              0.498,
+              0.712
+            ],
+            [
+              0.262,
+              0.822
+            ],
+            [
+              0.734,
+              0.822
+            ],
+            [
+              0.477,
+              0.803
+            ],
+            [
+              0.496,
+              0.334
+            ]
+          ],
+          "missing_opening_centroids": [
+            [
+              0.496,
+              0.503
+            ]
+          ],
+          "feature_position_fidelity": 0.8
+        },
+        "top": {
+          "source_internal_profiles": 1,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 1,
+          "source_aspect": 6.486,
+          "rendered_aspect": 1.0,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": [
+            [
+              0.498,
+              0.403
+            ],
+            [
+              0.498,
+              0.593
+            ]
+          ]
+        }
+      },
+      "demanded_openings": {
+        "total": 6,
+        "per_view": {
+          "front": 5,
+          "top": 1
+        },
+        "sheet_total": 5,
+        "registration_gap": 0
+      },
+      "failures": [
+        "degenerate or implausible axis dimensions: Y=80 mm vs expected 18.75 mm",
+        "required internal profiles are missing: front demands 5, renders 3, top demands 1, renders 0; best rendered view has 3. Missing at these view-local centres \u2014 add cutters there: (u=0.496,v=0.503).",
+        "CAD projections poorly match the drawing: top similarity 0.39 (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly."
+      ]
+    },
+    "mesh_health": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 2744,
+      "through_holes": 10,
+      "extents_mm": [
+        80.0,
+        80.0,
+        120.0
+      ],
+      "volume_mm3": 75466.4
+    },
+    "build": {
+      "version": 1,
+      "backend": "openscad",
+      "source_format": "openscad",
+      "ok": true,
+      "units": "mm",
+      "axes": {
+        "x": "width",
+        "y": "depth",
+        "z": "height"
+      },
+      "views": [
+        "isometric",
+        "front",
+        "top",
+        "right"
+      ],
+      "measurements": {
+        "watertight": true,
+        "components": 1,
+        "triangles": 2744,
+        "through_holes": 10,
+        "extents_mm": [
+          80.0,
+          80.0,
+          120.0
+        ],
+        "volume_mm3": 75466.4
+      },
+      "diagnostics": [],
+      "drawing_evaluated": false
+    },
+    "compile_log": "Geometries in cache: 13\nGeometry cache size in bytes: 121784\nCGAL Polyhedrons in cache: 4\nCGAL cache size in bytes: 4237712\nTotal rendering time: 0:00:02.418\n   Top level object is a 3D object:\n   Simple:        yes\n   Vertices:     1354\n   Halfedges:    4076\n   Edges:        2038\n   Halffacets:   1362\n   Facets:        681\n   Volumes:         2",
+    "files": {
+      "scad": "attempt-03/model.scad",
+      "stl": "attempt-03/uniform-scaled/model.stl",
+      "views": {
+        "isometric": "attempt-03/uniform-scaled/view-isometric.png",
+        "front": "attempt-03/uniform-scaled/view-front.png",
+        "top": "attempt-03/uniform-scaled/view-top.png",
+        "right": "attempt-03/uniform-scaled/view-right.png"
+      }
+    }
+  }
+]

@@ -1,0 +1,85 @@
+{
+  "drawing": "002_greek_vase_silhouette",
+  "backend": "openscad",
+  "trial": 3,
+  "submitted_at": "2026-10-22T05:05:54.399444+00:00",
+  "finished_at": "2026-10-22T05:08:10.887242+00:00",
+  "run_id": "75b8cffb3ef3",
+  "wall_seconds": 136.5,
+  "job_status": "done",
+  "error": null,
+  "questions_asked": 0,
+  "question_kinds": [],
+  "build": {
+    "watertight": true,
+    "components": 1,
+    "genus": 1,
+    "extents_mm": [
+      107.53,
+      107.53,
+      120.0
+    ],
+    "volume_mm3": 78266.1,
+    "sha256": "c261ed73987a5b5838980520e65d28989c06ef884d8cbe724b5a6f16dafdb87e",
+    "bytes": 406667
+  },
+  "checks": {
+    "build_success": true,
+    "extents_pass": false,
+    "genus_pass": false,
+    "volume_pass": false,
+    "fidelity_pass": true,
+    "overall_pass": false,
+    "not_applicable": []
+  },
+  "fidelity": {
+    "scores": {
+      "front": 0.743
+    },
+    "pass": true,
+    "reason": null,
+    "topology": {
+      "front": {
+        "expected": 0,
+        "actual": 10,
+        "position_fidelity": null
+      }
+    }
+  },
+  "product": {
+    "success": true,
+    "accepted": true,
+    "status": null,
+    "score": 96.1,
+    "projection_status": null,
+    "geometry_status": null,
+    "failures": []
+  },
+  "attempts": {
+    "count": 1,
+    "recovered": false,
+    "corrections": null,
+    "selected": 1
+  },
+  "unsupported": {
+    "flag": false,
+    "code": null
+  },
+  "edit": {
+    "available": true,
+    "ok": true,
+    "seconds": 0.46,
+    "param": "height",
+    "old": 120.0,
+    "new": 144.0,
+    "message": null
+  },
+  "targeted": {
+    "available": false,
+    "ok": false,
+    "seconds": null,
+    "operation": null,
+    "value": null,
+    "message": "not_applicable: the product requires a BRep result for targeted edits"
+  }
+}

@@ -1,0 +1,136 @@
+{
+  "version": 1,
+  "object_hypothesis": "Wheel",
+  "features": [
+    {
+      "id": "outer_rim",
+      "type": "rim",
+      "description": "Outer circular boundary of the wheel",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "High circularity (0.898) and large area in the front view indicate the primary outer boundary."
+    },
+    {
+      "id": "inner_rim",
+      "type": "rim",
+      "description": "Inner circular boundary of the wheel rim",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "The front view shows a concentric inner circle defining the rim thickness, though OpenCV merged it into the outer contour."
+    },
+    {
+      "id": "hub",
+      "type": "hub",
+      "description": "Central circular hub",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "A central circle is visible in the front view, serving as the anchor for the spokes."
+    },
+    {
+      "id": "spokes",
+      "type": "spoke",
+      "description": "Radial spokes connecting hub to rim",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "Linear segments radiating from the center to the rim are visible in the front view."
+    },
+    {
+      "id": "wheel_thickness",
+      "type": "body",
+      "description": "Axial thickness of the wheel",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_14"
+        }
+      ],
+      "reason": "The right view shows a rectangular profile representing the wheel's thickness."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "spoke_connectivity",
+      "type": "connected",
+      "features": [
+        "spokes",
+        "hub",
+        "inner_rim"
+      ],
+      "description": "Spokes connect the hub to the inner rim",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "In the front view, the spoke lines terminate at the boundaries of the hub and the inner rim."
+    },
+    {
+      "id": "rim_concentricity",
+      "type": "shared_dimension",
+      "features": [
+        "outer_rim",
+        "inner_rim"
+      ],
+      "description": "Outer and inner rims are concentric",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "The visual representation in the front view implies concentric circles, although OpenCV isolated them as a single complex contour."
+    },
+    {
+      "id": "spoke_symmetry",
+      "type": "symmetry",
+      "features": [
+        "spokes"
+      ],
+      "description": "Spokes are arranged with rotational symmetry",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "The visual arrangement of the spokes suggests a regular, symmetric pattern typical of a wheel."
+    }
+  ],
+  "assumptions": [
+    "The object is a wheel based on the visual structure of a rim, hub, and spokes.",
+    "The front view (view_4) represents the face of the wheel.",
+    "The right view (view_5) represents the side profile of the wheel."
+  ],
+  "unresolved": [
+    "The exact number of spokes is difficult to determine precisely from the OpenCV contour due to merging.",
+    "The specific cross-sectional shape of the spokes (e.g., rectangular, I-beam) is not defined by the 2D lines."
+  ],
+  "conflicts": [
+    "OpenCV identified the complex wheel structure in view_4 as a single outer contour (profile_contour_16), failing to separate the hub, spokes, and rim into distinct features."
+  ]
+}

@@ -1,0 +1,381 @@
+[
+  {
+    "attempt": 1,
+    "action": "generate",
+    "preflight": {
+      "passed": true,
+      "errors": [],
+      "warnings": [
+        "multiple top-level geometry expressions detected (7); ensure they intentionally form one connected design"
+      ],
+      "expected_subtractive_feature_groups": 0
+    },
+    "compiler_repairs": [],
+    "uniform_scale": {
+      "factor": 1.125,
+      "before_max_mm": 48.0,
+      "after_max_mm": 49.0,
+      "params": [
+        "leg_length",
+        "rod_diameter"
+      ]
+    },
+    "evaluation": {
+      "score": 92.3,
+      "valid_mesh": true,
+      "accepted": false,
+      "mandatory_gates": {
+        "compiled": true,
+        "topology": true,
+        "dimensions": false,
+        "shape_sanity": false,
+        "features": true,
+        "projections": true,
+        "build_envelope": true
+      },
+      "scores": {
+        "topology": 45,
+        "dimensions": 18.1,
+        "features": 20,
+        "projections": 9.2
+      },
+      "projection_similarity": {
+        "top": 0.61
+      },
+      "profile_topology": {
+        "top": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 3,
+          "crop_internal_profiles": 0,
+          "source_aspect": 4.35,
+          "rendered_aspect": 5.375,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": [
+            [
+              0.411,
+              0.169
+            ]
+          ]
+        }
+      },
+      "failures": [
+        "maximum dimension is 49 mm; target is 54 mm (tolerance 5%)",
+        "degenerate or implausible axis dimensions: X=49 mm vs expected 16.73 mm"
+      ]
+    },
+    "mesh_health": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 1214,
+      "extents_mm": [
+        49.0,
+        8.951,
+        48.732
+      ],
+      "volume_mm3": 9009.208
+    },
+    "build": {
+      "version": 1,
+      "backend": "openscad",
+      "source_format": "openscad",
+      "ok": true,
+      "units": "mm",
+      "axes": {
+        "x": "width",
+        "y": "depth",
+        "z": "height"
+      },
+      "views": [
+        "isometric",
+        "front",
+        "top",
+        "right"
+      ],
+      "measurements": {
+        "watertight": true,
+        "components": 1,
+        "triangles": 1214,
+        "extents_mm": [
+          49.0,
+          8.951,
+          48.732
+        ],
+        "volume_mm3": 9009.208
+      },
+      "diagnostics": [],
+      "drawing_evaluated": false
+    },
+    "compile_log": "Geometries in cache: 8\nGeometry cache size in bytes: 73984\nCGAL Polyhedrons in cache: 4\nCGAL cache size in bytes: 4550024\nTotal rendering time: 0:00:00.457\n   Top level object is a 3D object:\n   Simple:        yes\n   Vertices:      607\n   Halfedges:    2818\n   Edges:        1409\n   Halffacets:   1618\n   Facets:        809\n   Volumes:         2",
+    "files": {
+      "scad": "attempt-01/model.scad",
+      "stl": "attempt-01/uniform-scaled/model.stl",
+      "views": {
+        "isometric": "attempt-01/uniform-scaled/view-isometric.png",
+        "front": "attempt-01/uniform-scaled/view-front.png",
+        "top": "attempt-01/uniform-scaled/view-top.png",
+        "right": "attempt-01/uniform-scaled/view-right.png"
+      }
+    },
+    "supervisor": {
+      "action": "repair_scad",
+      "problems": [
+        "Dimensions are incorrect: Max dimension is 49mm, target is 54mm.",
+        "Leg length parameter (33.75) deviates from spec (30).",
+        "Rod diameter parameter (9) deviates from spec (8).",
+        "Torus intersection logic is flawed, potentially creating a full ring or incorrect geometry."
+      ],
+      "preserve": [
+        "Overall inverted U-shape topology.",
+        "Sweep-based construction strategy.",
+        "Symmetry about the vertical centerline."
+      ],
+      "instructions": "Update parameters to match spec: leg_length=30, rod_diameter=8, bend_radius=20. Fix the torus intersection to strictly keep the upper half (Z >= leg_length) relative to the bend center. Ensure the total height (leg_length + bend_radius + rod_radius) equals 54mm. Verify the legs are cylinders extending downwards from the bend."
+    }
+  },
+  {
+    "attempt": 2,
+    "action": "repair_scad",
+    "preflight": {
+      "passed": true,
+      "errors": [],
+      "warnings": [
+        "multiple top-level geometry expressions detected (7); ensure they intentionally form one connected design"
+      ],
+      "expected_subtractive_feature_groups": 0
+    },
+    "compiler_repairs": [],
+    "uniform_scale": {
+      "factor": 1.1277,
+      "before_max_mm": 47.884,
+      "after_max_mm": 48.923,
+      "params": [
+        "leg_length",
+        "rod_diameter"
+      ]
+    },
+    "evaluation": {
+      "score": 67.2,
+      "valid_mesh": false,
+      "accepted": false,
+      "mandatory_gates": {
+        "compiled": true,
+        "topology": false,
+        "dimensions": false,
+        "shape_sanity": false,
+        "features": true,
+        "projections": false,
+        "build_envelope": true
+      },
+      "scores": {
+        "topology": 27,
+        "dimensions": 18.1,
+        "features": 20,
+        "projections": 2.1
+      },
+      "projection_similarity": {
+        "top": 0.139
+      },
+      "profile_topology": {
+        "top": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 0,
+          "source_aspect": 4.35,
+          "rendered_aspect": 5.513,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": []
+        }
+      },
+      "failures": [
+        "mesh has 2 disconnected components",
+        "maximum dimension is 48.923 mm; target is 54 mm (tolerance 5%)",
+        "degenerate or implausible axis dimensions: X=48.923 mm vs expected 16.73 mm",
+        "CAD projections poorly match the drawing: top similarity 0.14 (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly."
+      ]
+    },
+    "mesh_health": {
+      "watertight": true,
+      "components": 2,
+      "triangles": 112,
+      "extents_mm": [
+        48.923,
+        8.972,
+        33.832
+      ],
+      "volume_mm3": 4200.062
+    },
+    "build": {
+      "version": 1,
+      "backend": "openscad",
+      "source_format": "openscad",
+      "ok": true,
+      "units": "mm",
+      "axes": {
+        "x": "width",
+        "y": "depth",
+        "z": "height"
+      },
+      "views": [
+        "isometric",
+        "front",
+        "top",
+        "right"
+      ],
+      "measurements": {
+        "watertight": true,
+        "components": 2,
+        "triangles": 112,
+        "extents_mm": [
+          48.923,
+          8.972,
+          33.832
+        ],
+        "volume_mm3": 4200.062
+      },
+      "diagnostics": [],
+      "drawing_evaluated": false
+    },
+    "compile_log": "Geometries in cache: 8\nGeometry cache size in bytes: 73984\nCGAL Polyhedrons in cache: 4\nCGAL cache size in bytes: 81728\nTotal rendering time: 0:00:00.165\n   Top level object is a 3D object:\n   Simple:        yes\n   Vertices:       60\n   Halfedges:     180\n   Edges:          90\n   Halffacets:     68\n   Facets:         34\n   Volumes:         3",
+    "files": {
+      "scad": "attempt-02/model.scad",
+      "stl": "attempt-02/uniform-scaled/model.stl",
+      "views": {
+        "isometric": "attempt-02/uniform-scaled/view-isometric.png",
+        "front": "attempt-02/uniform-scaled/view-front.png",
+        "top": "attempt-02/uniform-scaled/view-top.png",
+        "right": "attempt-02/uniform-scaled/view-right.png"
+      }
+    },
+    "supervisor": {
+      "action": "repair_scad",
+      "problems": [
+        "Mesh has 2 disconnected components (missing semi-circular bend)",
+        "Dimensions incorrect: X=48.9mm (target 16.7mm), Z=33.8mm (target 54mm)",
+        "Parameters in code (leg_length=33.8, rod_diameter=9.0) contradict spec (30, 8)",
+        "Torus intersection logic failed to generate the connecting arc"
+      ],
+      "preserve": [
+        "Sweep strategy (circle along path)",
+        "Coordinate frame (Z=height, X=width)",
+        "Object identity (Curved Handle)"
+      ],
+      "instructions": "Rewrite the geometry to form a single connected U-shape. Set parameters to bend_radius=20, leg_length=30, rod_diameter=8. Construct the path using two vertical cylinders (length 30) and a torus segment (major radius 20, minor radius 4) connecting their tops. Ensure the torus is rotated to lie in the XZ plane and intersects the cylinders to form a watertight union. Verify total height is 54mm and width is 48mm.",
+      "confidence": 1.0
+    }
+  },
+  {
+    "attempt": 3,
+    "action": "repair_scad",
+    "preflight": {
+      "passed": true,
+      "errors": [],
+      "warnings": [
+        "multiple top-level geometry expressions detected (7); ensure they intentionally form one connected design"
+      ],
+      "expected_subtractive_feature_groups": 0
+    },
+    "compiler_repairs": [],
+    "uniform_scale": {
+      "factor": 1.1277,
+      "before_max_mm": 47.884,
+      "after_max_mm": 48.923,
+      "params": [
+        "leg_length",
+        "rod_diameter"
+      ]
+    },
+    "evaluation": {
+      "score": 67.2,
+      "valid_mesh": false,
+      "accepted": false,
+      "mandatory_gates": {
+        "compiled": true,
+        "topology": false,
+        "dimensions": false,
+        "shape_sanity": false,
+        "features": true,
+        "projections": false,
+        "build_envelope": true
+      },
+      "scores": {
+        "topology": 27,
+        "dimensions": 18.1,
+        "features": 20,
+        "projections": 2.1
+      },
+      "projection_similarity": {
+        "top": 0.139
+      },
+      "profile_topology": {
+        "top": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 0,
+          "source_aspect": 4.35,
+          "rendered_aspect": 5.513,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": []
+        }
+      },
+      "failures": [
+        "mesh has 2 disconnected components",
+        "maximum dimension is 48.923 mm; target is 54 mm (tolerance 5%)",
+        "degenerate or implausible axis dimensions: X=48.923 mm vs expected 16.73 mm",
+        "CAD projections poorly match the drawing: top similarity 0.14 (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly."
+      ]
+    },
+    "mesh_health": {
+      "watertight": true,
+      "components": 2,
+      "triangles": 112,
+      "extents_mm": [
+        48.923,
+        8.972,
+        33.832
+      ],
+      "volume_mm3": 4200.062
+    },
+    "build": {
+      "version": 1,
+      "backend": "openscad",
+      "source_format": "openscad",
+      "ok": true,
+      "units": "mm",
+      "axes": {
+        "x": "width",
+        "y": "depth",
+        "z": "height"
+      },
+      "views": [
+        "isometric",
+        "front",
+        "top",
+        "right"
+      ],
+      "measurements": {
+        "watertight": true,
+        "components": 2,
+        "triangles": 112,
+        "extents_mm": [
+          48.923,
+          8.972,
+          33.832
+        ],
+        "volume_mm3": 4200.062
+      },
+      "diagnostics": [],
+      "drawing_evaluated": false
+    },
+    "compile_log": "Geometries in cache: 8\nGeometry cache size in bytes: 73984\nCGAL Polyhedrons in cache: 4\nCGAL cache size in bytes: 81728\nTotal rendering time: 0:00:00.151\n   Top level object is a 3D object:\n   Simple:        yes\n   Vertices:       60\n   Halfedges:     180\n   Edges:          90\n   Halffacets:     68\n   Facets:         34\n   Volumes:         3",
+    "files": {
+      "scad": "attempt-03/model.scad",
+      "stl": "attempt-03/uniform-scaled/model.stl",
+      "views": {
+        "isometric": "attempt-03/uniform-scaled/view-isometric.png",
+        "front": "attempt-03/uniform-scaled/view-front.png",
+        "top": "attempt-03/uniform-scaled/view-top.png",
+        "right": "attempt-03/uniform-scaled/view-right.png"
+      }
+    }
+  }
+]

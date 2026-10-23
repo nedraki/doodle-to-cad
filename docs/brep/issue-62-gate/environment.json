@@ -1,0 +1,17 @@
+{
+  "captured_utc": "2026-10-19T10:39:33.059113Z",
+  "host": "spark-8322",
+  "os": "Linux-6.17.0-1022-nvidia-aarch64-with-glibc2.39",
+  "machine": "aarch64",
+  "python_app": "3.11.16",
+  "openscad": "docker shim via .env OPENSCAD_BIN",
+  "git_rev": "9bbb4a3141bcd2cfdf2123bb04470143f3aa06eb",
+  "frozen_source": "docs/brep/task-17-comparison/runs (80 rows, SHA256SUMS in that dossier)",
+  "live_runs": [
+    "jeep c4182aeca6b7",
+    "grille 7c0175c7ff7d",
+    "motor 7c274ef76d20",
+    "A/B main 34962e61b41f e17a9ccd5e68 e8107d64c913",
+    "A/B branch 06de487133d8 dfa8a3608afc 4cf6e48320db"
+  ]
+}

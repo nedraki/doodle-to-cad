@@ -1,0 +1,437 @@
+[
+  {
+    "attempt": 1,
+    "action": "generate",
+    "preflight": {
+      "passed": false,
+      "errors": [
+        "unbalanced braces"
+      ],
+      "warnings": [],
+      "expected_subtractive_feature_groups": 0
+    },
+    "compiler_repairs": [
+      {
+        "repair": 1,
+        "preflight": {
+          "passed": false,
+          "errors": [
+            "unbalanced braces"
+          ],
+          "warnings": [],
+          "expected_subtractive_feature_groups": 0
+        },
+        "compile_log": "PREFLIGHT: unbalanced braces",
+        "failed_scad": "compiler-repair-01.failed.scad"
+      },
+      {
+        "repair": 2,
+        "preflight": {
+          "passed": true,
+          "errors": [],
+          "warnings": [],
+          "expected_subtractive_feature_groups": 0
+        },
+        "compile_log": "Geometries in cache: 1\nGeometry cache size in bytes: 0\nCGAL Polyhedrons in cache: 0\nCGAL cache size in bytes: 0\nTotal rendering time: 0:00:00.000\nCurrent top level object is empty.",
+        "failed_scad": "compiler-repair-02.failed.scad"
+      }
+    ],
+    "uniform_scale": null,
+    "evaluation": {
+      "score": 20.0,
+      "valid_mesh": false,
+      "accepted": false,
+      "mandatory_gates": {
+        "compiled": false,
+        "topology": false,
+        "dimensions": false,
+        "shape_sanity": true,
+        "features": true,
+        "openings_through": true,
+        "projections": true,
+        "build_envelope": true
+      },
+      "scores": {
+        "topology": 0.0,
+        "dimensions": 0,
+        "features": 20,
+        "projections": 0
+      },
+      "projection_similarity": {},
+      "profile_topology": {},
+      "demanded_openings": {
+        "total": 0,
+        "per_view": {},
+        "sheet_total": 0,
+        "registration_gap": 0
+      },
+      "failures": [
+        "OpenSCAD did not produce a valid STL",
+        "maximum dimension is 0 mm; target is 100 mm (tolerance 5%)"
+      ]
+    },
+    "mesh_health": null,
+    "build": null,
+    "compile_log": "PREFLIGHT: unbalanced braces",
+    "files": {
+      "scad": "attempt-01/model.scad",
+      "stl": null,
+      "views": {}
+    },
+    "supervisor": {
+      "action": "repair_scad",
+      "problems": [
+        "OpenSCAD compilation failed due to unbalanced braces in the provided code.",
+        "The provided code contains extensive reasoning comments instead of executable geometry logic.",
+        "The sweep implementation is missing; the code only defines path points without generating the solid.",
+        "The 'width' parameter logic is confused between section width and bounding box width."
+      ],
+      "preserve": [
+        "S-curve path definition: 10mm straight, 90-deg arc (R20), 90-deg arc (R20) opposite, 10mm straight.",
+        "Rectangular cross-section: 6mm wide (in path plane), 4mm thick (normal to path plane).",
+        "Orientation: Path in XY plane, thickness along Z axis."
+      ],
+      "instructions": "Rewrite the OpenSCAD file completely. Remove all reasoning comments. Define the S-curve path using a sequence of `translate` and `rotate` operations on a rectangular profile (6x4). Use `linear_extrude` for the straight segments and `rotate_extrude` or a custom sweep module for the arcs, ensuring the profile remains oriented correctly relative to the path tangent. Ensure the total bounding box width matches the 'width' parameter (100mm) by scaling the base geometry (R=20, L=10 yields 60mm width) if necessary, or adjust R/L to fit 100mm while maintaining the S-shape proportions. Ensure all braces are balanced and the code compiles to a valid watertight mesh.",
+      "confidence": 1.0
+    }
+  },
+  {
+    "attempt": 2,
+    "action": "repair_scad",
+    "preflight": {
+      "passed": false,
+      "errors": [
+        "unbalanced braces"
+      ],
+      "warnings": [],
+      "expected_subtractive_feature_groups": 0
+    },
+    "compiler_repairs": [
+      {
+        "repair": 1,
+        "preflight": {
+          "passed": false,
+          "errors": [
+            "unbalanced braces"
+          ],
+          "warnings": [],
+          "expected_subtractive_feature_groups": 0
+        },
+        "compile_log": "PREFLIGHT: unbalanced braces",
+        "failed_scad": "compiler-repair-01.failed.scad"
+      },
+      {
+        "repair": 2,
+        "preflight": {
+          "passed": false,
+          "errors": [
+            "unbalanced braces"
+          ],
+          "warnings": [],
+          "expected_subtractive_feature_groups": 0
+        },
+        "compile_log": "PREFLIGHT: unbalanced braces",
+        "failed_scad": "compiler-repair-02.failed.scad"
+      }
+    ],
+    "uniform_scale": null,
+    "evaluation": {
+      "score": 20.0,
+      "valid_mesh": false,
+      "accepted": false,
+      "mandatory_gates": {
+        "compiled": false,
+        "topology": false,
+        "dimensions": false,
+        "shape_sanity": true,
+        "features": true,
+        "openings_through": true,
+        "projections": true,
+        "build_envelope": true
+      },
+      "scores": {
+        "topology": 0.0,
+        "dimensions": 0,
+        "features": 20,
+        "projections": 0
+      },
+      "projection_similarity": {},
+      "profile_topology": {},
+      "demanded_openings": {
+        "total": 0,
+        "per_view": {},
+        "sheet_total": 0,
+        "registration_gap": 0
+      },
+      "failures": [
+        "OpenSCAD did not produce a valid STL",
+        "maximum dimension is 0 mm; target is 100 mm (tolerance 5%)"
+      ]
+    },
+    "mesh_health": null,
+    "build": null,
+    "compile_log": "PREFLIGHT: unbalanced braces",
+    "files": {
+      "scad": "attempt-02/model.scad",
+      "stl": null,
+      "views": {}
+    },
+    "supervisor": {
+      "action": "regenerate_scad",
+      "problems": [
+        "OpenSCAD compilation failed due to unbalanced braces in the provided code.",
+        "The provided code contains extensive reasoning comments instead of executable geometry.",
+        "The code attempts to define a path but fails to implement the sweep logic or close the module.",
+        "The 'width' parameter logic in comments suggests scaling, but the code does not implement it."
+      ],
+      "preserve": [
+        "S-curve path definition: 10mm straight, R20 arc, R20 arc (opposite), 10mm straight.",
+        "Rectangular cross-section: 6mm width (in path plane), 4mm thickness (normal to path plane).",
+        "Orientation: Path in XY plane, thickness along Z axis.",
+        "Target bounding box width of 100mm (requires scaling the base 60mm geometry)."
+      ],
+      "instructions": "Previous repair made no measurable progress. Regenerate cleanly from the specification and mandatory gate failures using a different construction strategy.",
+      "confidence": 1.0
+    }
+  },
+  {
+    "attempt": 3,
+    "action": "regenerate_scad",
+    "preflight": {
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "expected_subtractive_feature_groups": 0
+    },
+    "compiler_repairs": [],
+    "uniform_scale": {
+      "factor": 0.8233,
+      "before_max_mm": 121.457,
+      "after_max_mm": 103.681,
+      "params": [
+        "width",
+        "thickness",
+        "straight_len"
+      ]
+    },
+    "evaluation": {
+      "score": 92.7,
+      "valid_mesh": true,
+      "accepted": false,
+      "mandatory_gates": {
+        "compiled": true,
+        "topology": true,
+        "dimensions": true,
+        "shape_sanity": false,
+        "features": true,
+        "openings_through": true,
+        "projections": false,
+        "build_envelope": true
+      },
+      "scores": {
+        "topology": 45,
+        "dimensions": 19.3,
+        "features": 20,
+        "projections": 8.5
+      },
+      "projection_similarity": {
+        "front": 0.379,
+        "top": 0.315,
+        "right": 1.0
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 10,
+          "crop_internal_profiles": 0,
+          "source_aspect": 0.795,
+          "rendered_aspect": 17.636,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": [
+            [
+              0.959,
+              0.456
+            ],
+            [
+              0.79,
+              0.456
+            ],
+            [
+              0.732,
+              0.456
+            ],
+            [
+              0.668,
+              0.456
+            ],
+            [
+              0.601,
+              0.456
+            ],
+            [
+              0.534,
+              0.456
+            ],
+            [
+              0.469,
+              0.456
+            ],
+            [
+              0.371,
+              0.457
+            ],
+            [
+              0.244,
+              0.457
+            ],
+            [
+              0.114,
+              0.457
+            ]
+          ]
+        },
+        "top": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 2,
+          "crop_internal_profiles": 0,
+          "source_aspect": 14.088,
+          "rendered_aspect": 1.078,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": [
+            [
+              0.285,
+              0.31
+            ],
+            [
+              0.461,
+              0.499
+            ],
+            [
+              0.637,
+              0.689
+            ]
+          ]
+        },
+        "right": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 10,
+          "crop_internal_profiles": 0,
+          "source_aspect": 7.944,
+          "rendered_aspect": 16.364,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": [
+            [
+              0.906,
+              0.456
+            ],
+            [
+              0.851,
+              0.456
+            ],
+            [
+              0.789,
+              0.456
+            ],
+            [
+              0.715,
+              0.456
+            ],
+            [
+              0.576,
+              0.456
+            ],
+            [
+              0.518,
+              0.456
+            ],
+            [
+              0.451,
+              0.456
+            ],
+            [
+              0.345,
+              0.456
+            ],
+            [
+              0.238,
+              0.456
+            ],
+            [
+              0.122,
+              0.457
+            ]
+          ]
+        }
+      },
+      "demanded_openings": {
+        "total": 0,
+        "per_view": {
+          "front": 0,
+          "top": 0,
+          "right": 0
+        },
+        "sheet_total": 0,
+        "registration_gap": 0
+      },
+      "failures": [
+        "degenerate or implausible axis dimensions: Y=96.05 mm vs expected 7.72 mm, Z=5.832 mm vs expected 49.58 mm",
+        "CAD projections poorly match the drawing: front similarity 0.38, top similarity 0.32 (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly."
+      ]
+    },
+    "mesh_health": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 488,
+      "through_holes": 3,
+      "extents_mm": [
+        103.681,
+        96.05,
+        5.832
+      ],
+      "volume_mm3": 18124.442
+    },
+    "build": {
+      "version": 1,
+      "backend": "openscad",
+      "source_format": "openscad",
+      "ok": true,
+      "units": "mm",
+      "axes": {
+        "x": "width",
+        "y": "depth",
+        "z": "height"
+      },
+      "views": [
+        "isometric",
+        "front",
+        "top",
+        "right"
+      ],
+      "measurements": {
+        "watertight": true,
+        "components": 1,
+        "triangles": 488,
+        "through_holes": 3,
+        "extents_mm": [
+          103.681,
+          96.05,
+          5.832
+        ],
+        "volume_mm3": 18124.442
+      },
+      "diagnostics": [],
+      "drawing_evaluated": false
+    },
+    "compile_log": "Geometries in cache: 8\nGeometry cache size in bytes: 13312\nCGAL Polyhedrons in cache: 8\nCGAL cache size in bytes: 1506048\nTotal rendering time: 0:00:00.358\n   Top level object is a 3D object:\n   Simple:        yes\n   Vertices:      240\n   Halfedges:     720\n   Edges:         360\n   Halffacets:    244\n   Facets:        122\n   Volumes:         2",
+    "files": {
+      "scad": "attempt-03/model.scad",
+      "stl": "attempt-03/uniform-scaled/model.stl",
+      "views": {
+        "isometric": "attempt-03/uniform-scaled/view-isometric.png",
+        "front": "attempt-03/uniform-scaled/view-front.png",
+        "top": "attempt-03/uniform-scaled/view-top.png",
+        "right": "attempt-03/uniform-scaled/view-right.png"
+      }
+    }
+  }
+]

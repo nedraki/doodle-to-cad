@@ -1,0 +1,169 @@
+{
+  "002_greek_vase_silhouette/usd-brep": {
+    "baseline": {
+      "submitted": 2,
+      "build_success": 0,
+      "overall_pass": 0,
+      "errors": {
+        "unsupported_construction": 1,
+        "unresolved_design": 1
+      },
+      "product_status": {
+        "none": 2
+      }
+    },
+    "revolve_branch": {
+      "submitted": 3,
+      "build_success": 3,
+      "overall_pass": 0,
+      "errors": {},
+      "product_status": {
+        "unverified": 3
+      }
+    }
+  },
+  "002_greek_vase_silhouette/openscad": {
+    "baseline": {
+      "submitted": 2,
+      "build_success": 2,
+      "overall_pass": 0,
+      "errors": {},
+      "accepted": 2,
+      "mean_score": 94.3
+    },
+    "revolve_branch": {
+      "submitted": 3,
+      "build_success": 3,
+      "overall_pass": 0,
+      "errors": {},
+      "accepted": 3,
+      "mean_score": 98.2
+    }
+  },
+  "005_bolt_flange/usd-brep": {
+    "baseline": {
+      "submitted": 2,
+      "build_success": 2,
+      "overall_pass": 0,
+      "errors": {},
+      "product_status": {
+        "failed": 2
+      }
+    },
+    "revolve_branch": {
+      "submitted": 3,
+      "build_success": 3,
+      "overall_pass": 0,
+      "errors": {},
+      "product_status": {
+        "failed": 3
+      }
+    }
+  },
+  "005_bolt_flange/openscad": {
+    "baseline": {
+      "submitted": 2,
+      "build_success": 2,
+      "overall_pass": 0,
+      "errors": {},
+      "accepted": 0,
+      "mean_score": 99.3
+    },
+    "revolve_branch": {
+      "submitted": 3,
+      "build_success": 3,
+      "overall_pass": 0,
+      "errors": {},
+      "accepted": 0,
+      "mean_score": 90.9
+    }
+  },
+  "006_stepped_knob/usd-brep": {
+    "baseline": {
+      "submitted": 2,
+      "build_success": 1,
+      "overall_pass": 0,
+      "errors": {
+        "invalid_recipe": 1
+      },
+      "product_status": {
+        "unverified": 1,
+        "none": 1
+      }
+    },
+    "revolve_branch": {
+      "submitted": 3,
+      "build_success": 2,
+      "overall_pass": 0,
+      "errors": {
+        "invalid_recipe": 1
+      },
+      "product_status": {
+        "unverified": 1,
+        "none": 1,
+        "failed": 1
+      }
+    }
+  },
+  "006_stepped_knob/openscad": {
+    "baseline": {
+      "submitted": 2,
+      "build_success": 2,
+      "overall_pass": 0,
+      "errors": {},
+      "accepted": 2,
+      "mean_score": 94.8
+    },
+    "revolve_branch": {
+      "submitted": 3,
+      "build_success": 3,
+      "overall_pass": 0,
+      "errors": {},
+      "accepted": 3,
+      "mean_score": 98.6
+    }
+  },
+  "009_hex_prism_knob/usd-brep": {
+    "baseline": {
+      "submitted": 2,
+      "build_success": 0,
+      "overall_pass": 0,
+      "errors": {
+        "invalid_recipe": 2
+      },
+      "product_status": {
+        "none": 2
+      }
+    },
+    "revolve_branch": {
+      "submitted": 3,
+      "build_success": 2,
+      "overall_pass": 0,
+      "errors": {
+        "invalid_recipe": 1
+      },
+      "product_status": {
+        "none": 1,
+        "unverified": 2
+      }
+    }
+  },
+  "009_hex_prism_knob/openscad": {
+    "baseline": {
+      "submitted": 2,
+      "build_success": 2,
+      "overall_pass": 0,
+      "errors": {},
+      "accepted": 2,
+      "mean_score": 96.5
+    },
+    "revolve_branch": {
+      "submitted": 3,
+      "build_success": 3,
+      "overall_pass": 0,
+      "errors": {},
+      "accepted": 3,
+      "mean_score": 96.8
+    }
+  }
+}

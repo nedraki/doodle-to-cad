@@ -1,0 +1,2119 @@
+{
+  "backend": "openscad",
+  "build": {
+    "version": 1,
+    "backend": "openscad",
+    "source_format": "openscad",
+    "ok": true,
+    "units": "mm",
+    "axes": {
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    },
+    "views": [
+      "isometric",
+      "front",
+      "top",
+      "right"
+    ],
+    "measurements": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 40,
+      "through_holes": 0,
+      "extents_mm": [
+        51.323,
+        23.243,
+        60.0
+      ],
+      "volume_mm3": 54485.714
+    },
+    "diagnostics": [],
+    "drawing_evaluated": false
+  },
+  "id": "10da54833e1a",
+  "success": false,
+  "model": "local-inference-lab/Qwen3.8-Flash-Next-NVFP4",
+  "model_source": "auto-discovery",
+  "base_url": "http://127.0.0.1:8000/v1",
+  "spec": {
+    "object": "Y motor holder",
+    "object_count": 1,
+    "dimensionality": "3d",
+    "projection_standard": "third-angle",
+    "views": [
+      {
+        "direction": "front",
+        "sheet_region": "bottom-left",
+        "constrains": "Side profile (X-Z plane). Defines the object's height, depth, and the angled cut on the top surface."
+      },
+      {
+        "direction": "top",
+        "sheet_region": "top-center",
+        "constrains": "Plan view (X-Y plane). Defines the L-shaped footprint, the curved cutout on the left, and the positions of the mounting holes."
+      },
+      {
+        "direction": "right",
+        "sheet_region": "bottom-right",
+        "constrains": "End view (Y-Z plane). Defines the width (Y-axis) and the vertical arrangement of the mounting holes."
+      }
+    ],
+    "manufacturing_strategy": "3D print",
+    "parts": [
+      {
+        "id": "part_1",
+        "name": "Motor Holder Body",
+        "description": "A single solid block with an L-shaped footprint, a curved cutout on one side, and an angled top surface."
+      }
+    ],
+    "features": [
+      {
+        "id": "feat_1",
+        "name": "Angled Top Surface",
+        "type": "planar_face",
+        "description": "The top surface slopes downwards from the back (high) to the front (low), visible in the front view."
+      },
+      {
+        "id": "feat_2",
+        "name": "Curved Cutout",
+        "type": "subtractive_feature",
+        "description": "A large curved indentation on the left side of the top view, likely for motor clearance."
+      },
+      {
+        "id": "feat_3",
+        "name": "Mounting Holes",
+        "type": "through_hole",
+        "description": "Two circular holes visible in the top view (one in the curved section, one in the upper right) and corresponding holes in the right view."
+      }
+    ],
+    "relations": [
+      {
+        "type": "alignment",
+        "elements": [
+          "feat_3 (top view hole 1)",
+          "feat_3 (right view hole 1)"
+        ],
+        "description": "The holes align vertically between the top and right views."
+      },
+      {
+        "type": "alignment",
+        "elements": [
+          "feat_3 (top view hole 2)",
+          "feat_3 (right view hole 2)"
+        ],
+        "description": "The holes align vertically between the top and right views."
+      }
+    ],
+    "symmetry": "none",
+    "repetitions": [
+      {
+        "feature_id": "feat_3",
+        "count": 2,
+        "description": "Two mounting holes are present."
+      }
+    ],
+    "dimensions": {
+      "max_width": 55.55,
+      "max_depth": 60.0,
+      "max_height": 27.5,
+      "size_provenance": "measured ink spans x authoritative max dimension"
+    },
+    "uncertainties": [
+      "Exact thickness of the base plate is inferred from the right view height.",
+      "Exact radius of the curved cutout is estimated from the top view."
+    ],
+    "interpretation_conflicts": [],
+    "generation_notes": "The object is a Y-axis motor mount. It features a base plate with an angled top face. The top view shows an L-shape with a significant curved cutout on the left side. Two mounting holes are visible in the top view and correspond to the holes seen in the right view.",
+    "construction_plan": {
+      "schema_version": 1,
+      "family": "extrude",
+      "coordinate_frame": {
+        "x": "width",
+        "y": "depth",
+        "z": "height",
+        "front": {
+          "plane": "XZ",
+          "view_axis": "Y"
+        },
+        "top": {
+          "plane": "XY",
+          "view_axis": "Z"
+        },
+        "right": {
+          "plane": "YZ",
+          "view_axis": "X"
+        }
+      },
+      "operations": [
+        {
+          "id": "op_1",
+          "operation": "extrude",
+          "profile_plane": "XY",
+          "direction_axis": "Z",
+          "owner": "part_1",
+          "parameters": {
+            "profile": "L-shaped outline with curved cutout from top view",
+            "height": "derived from front view height"
+          },
+          "source_views": [
+            "view_1",
+            "view_3"
+          ]
+        },
+        {
+          "id": "feat_3",
+          "operation": "through_cut",
+          "profile_plane": null,
+          "direction_axis": null,
+          "owner": null,
+          "parameters": {
+            "description": "Two circular holes visible in the top view (one in the curved section, one in the upper right) and corresponding holes in the right view."
+          },
+          "source_views": []
+        }
+      ],
+      "unresolved_constraints": [
+        "Exact hole diameters",
+        "Exact fillet radii on corners"
+      ]
+    },
+    "user_intent": {
+      "description": "y motor holder",
+      "object_type_hint": "",
+      "authoritative_max_dimension_mm": "60.0"
+    },
+    "source_view_group_count": 3,
+    "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+    "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+  },
+  "geometry": {
+    "image_size_px": [
+      1024,
+      768
+    ],
+    "ink_fraction": 0.0193,
+    "contour_count": 10,
+    "line_count": 55,
+    "drawing_sheet_contract": "All spatial groups are projections or isometric depictions of ONE physical object.",
+    "view_group_count": 3,
+    "view_groups": [
+      {
+        "bbox_normalized": [
+          0.3799,
+          0.026,
+          0.2441,
+          0.362
+        ],
+        "center_normalized": [
+          0.502,
+          0.207
+        ],
+        "relative_size": 0.0884,
+        "meaning": "view_of_same_object",
+        "view_id": "view_1"
+      },
+      {
+        "bbox_normalized": [
+          0.7451,
+          0.5221,
+          0.2549,
+          0.1615
+        ],
+        "center_normalized": [
+          0.8726,
+          0.6029
+        ],
+        "relative_size": 0.0412,
+        "meaning": "view_of_same_object",
+        "view_id": "view_2"
+      },
+      {
+        "bbox_normalized": [
+          0.3809,
+          0.5247,
+          0.2432,
+          0.1602
+        ],
+        "center_normalized": [
+          0.5024,
+          0.6048
+        ],
+        "relative_size": 0.0389,
+        "meaning": "view_of_same_object",
+        "view_id": "view_3"
+      }
+    ],
+    "closed_internal_profile_count": 4,
+    "closed_internal_profiles": [
+      {
+        "contour_id": "contour_9",
+        "parent_contour_id": "contour_8",
+        "area_ratio": 0.00051,
+        "bbox_normalized": [
+          0.4072,
+          0.2786,
+          0.0225,
+          0.0312
+        ],
+        "center_normalized": [
+          0.4185,
+          0.2943
+        ],
+        "vertices": 8,
+        "circularity": 0.893,
+        "hierarchy_depth": 2,
+        "closed_internal_profile": true,
+        "orphan_opening_ring": false,
+        "polygon_sheet_normalized": [
+          [
+            0.417,
+            0.2786
+          ],
+          [
+            0.4082,
+            0.2865
+          ],
+          [
+            0.4082,
+            0.2995
+          ],
+          [
+            0.418,
+            0.3086
+          ],
+          [
+            0.4248,
+            0.3086
+          ],
+          [
+            0.4287,
+            0.3008
+          ],
+          [
+            0.4287,
+            0.2878
+          ],
+          [
+            0.4229,
+            0.2786
+          ]
+        ]
+      },
+      {
+        "contour_id": "contour_0",
+        "parent_contour_id": null,
+        "area_ratio": 0.0005,
+        "bbox_normalized": [
+          0.9043,
+          0.5625,
+          0.0215,
+          0.0312
+        ],
+        "center_normalized": [
+          0.915,
+          0.5781
+        ],
+        "vertices": 8,
+        "circularity": 0.89,
+        "hierarchy_depth": 0,
+        "closed_internal_profile": true,
+        "orphan_opening_ring": true,
+        "polygon_sheet_normalized": [
+          [
+            0.918,
+            0.5625
+          ],
+          [
+            0.9092,
+            0.5638
+          ],
+          [
+            0.9043,
+            0.5716
+          ],
+          [
+            0.9043,
+            0.5807
+          ],
+          [
+            0.9092,
+            0.5924
+          ],
+          [
+            0.917,
+            0.5924
+          ],
+          [
+            0.9238,
+            0.5846
+          ],
+          [
+            0.9248,
+            0.5703
+          ]
+        ]
+      },
+      {
+        "contour_id": "contour_2",
+        "parent_contour_id": null,
+        "area_ratio": 0.00046,
+        "bbox_normalized": [
+          0.7871,
+          0.5625,
+          0.0225,
+          0.0312
+        ],
+        "center_normalized": [
+          0.7983,
+          0.5781
+        ],
+        "vertices": 9,
+        "circularity": 0.86,
+        "hierarchy_depth": 0,
+        "closed_internal_profile": true,
+        "orphan_opening_ring": true,
+        "polygon_sheet_normalized": [
+          [
+            0.7959,
+            0.5625
+          ],
+          [
+            0.7891,
+            0.569
+          ],
+          [
+            0.7871,
+            0.5794
+          ],
+          [
+            0.7959,
+            0.5911
+          ],
+          [
+            0.8008,
+            0.5924
+          ],
+          [
+            0.8047,
+            0.5885
+          ],
+          [
+            0.8086,
+            0.5781
+          ],
+          [
+            0.8086,
+            0.5729
+          ],
+          [
+            0.8027,
+            0.5638
+          ]
+        ]
+      },
+      {
+        "contour_id": "contour_11",
+        "parent_contour_id": "contour_8",
+        "area_ratio": 0.00043,
+        "bbox_normalized": [
+          0.5703,
+          0.0612,
+          0.0225,
+          0.0286
+        ],
+        "center_normalized": [
+          0.5815,
+          0.0755
+        ],
+        "vertices": 9,
+        "circularity": 0.858,
+        "hierarchy_depth": 2,
+        "closed_internal_profile": true,
+        "orphan_opening_ring": false,
+        "polygon_sheet_normalized": [
+          [
+            0.5791,
+            0.0612
+          ],
+          [
+            0.5732,
+            0.0677
+          ],
+          [
+            0.5703,
+            0.0755
+          ],
+          [
+            0.5703,
+            0.0807
+          ],
+          [
+            0.5762,
+            0.0885
+          ],
+          [
+            0.5859,
+            0.0885
+          ],
+          [
+            0.5918,
+            0.082
+          ],
+          [
+            0.5918,
+            0.0768
+          ],
+          [
+            0.5859,
+            0.0638
+          ]
+        ]
+      }
+    ],
+    "largest_regions": [
+      {
+        "contour_id": "contour_7",
+        "parent_contour_id": null,
+        "area_ratio": 0.04235,
+        "bbox_normalized": [
+          0.3877,
+          0.0339,
+          0.2275,
+          0.3464
+        ],
+        "center_normalized": [
+          0.5015,
+          0.207
+        ],
+        "vertices": 9,
+        "circularity": 0.397,
+        "hierarchy_depth": 0,
+        "closed_internal_profile": false,
+        "orphan_opening_ring": false,
+        "polygon_sheet_normalized": [
+          [
+            0.6123,
+            0.0352
+          ],
+          [
+            0.5273,
+            0.0352
+          ],
+          [
+            0.498,
+            0.0716
+          ],
+          [
+            0.5547,
+            0.1536
+          ],
+          [
+            0.5449,
+            0.2344
+          ],
+          [
+            0.3916,
+            0.2695
+          ],
+          [
+            0.3877,
+            0.2982
+          ],
+          [
+            0.4453,
+            0.3776
+          ],
+          [
+            0.6123,
+            0.375
+          ]
+        ]
+      },
+      {
+        "contour_id": "contour_8",
+        "parent_contour_id": "contour_7",
+        "area_ratio": 0.03578,
+        "bbox_normalized": [
+          0.3926,
+          0.0404,
+          0.2178,
+          0.3333
+        ],
+        "center_normalized": [
+          0.5015,
+          0.207
+        ],
+        "vertices": 8,
+        "circularity": 0.362,
+        "hierarchy_depth": 1,
+        "closed_internal_profile": false,
+        "orphan_opening_ring": false,
+        "polygon_sheet_normalized": [
+          [
+            0.6074,
+            0.0404
+          ],
+          [
+            0.6084,
+            0.3685
+          ],
+          [
+            0.4473,
+            0.3711
+          ],
+          [
+            0.3945,
+            0.276
+          ],
+          [
+            0.5498,
+            0.2383
+          ],
+          [
+            0.5586,
+            0.1484
+          ],
+          [
+            0.5029,
+            0.0742
+          ],
+          [
+            0.5293,
+            0.0417
+          ]
+        ]
+      },
+      {
+        "contour_id": "contour_4",
+        "parent_contour_id": null,
+        "area_ratio": 0.02389,
+        "bbox_normalized": [
+          0.3887,
+          0.5326,
+          0.2266,
+          0.1445
+        ],
+        "center_normalized": [
+          0.502,
+          0.6048
+        ],
+        "vertices": 5,
+        "circularity": 0.57,
+        "hierarchy_depth": 0,
+        "closed_internal_profile": false,
+        "orphan_opening_ring": false,
+        "polygon_sheet_normalized": [
+          [
+            0.6143,
+            0.5365
+          ],
+          [
+            0.5625,
+            0.5352
+          ],
+          [
+            0.3936,
+            0.6094
+          ],
+          [
+            0.3896,
+            0.6706
+          ],
+          [
+            0.6094,
+            0.6693
+          ]
+        ]
+      },
+      {
+        "contour_id": "contour_5",
+        "parent_contour_id": "contour_4",
+        "area_ratio": 0.01988,
+        "bbox_normalized": [
+          0.3936,
+          0.5391,
+          0.2168,
+          0.1315
+        ],
+        "center_normalized": [
+          0.502,
+          0.6048
+        ],
+        "vertices": 5,
+        "circularity": 0.529,
+        "hierarchy_depth": 1,
+        "closed_internal_profile": false,
+        "orphan_opening_ring": false,
+        "polygon_sheet_normalized": [
+          [
+            0.6094,
+            0.5417
+          ],
+          [
+            0.6055,
+            0.6641
+          ],
+          [
+            0.3936,
+            0.6641
+          ],
+          [
+            0.3965,
+            0.6146
+          ],
+          [
+            0.5645,
+            0.5417
+          ]
+        ]
+      },
+      {
+        "contour_id": "contour_6",
+        "parent_contour_id": null,
+        "area_ratio": 0.00436,
+        "bbox_normalized": [
+          0.7529,
+          0.5299,
+          0.2471,
+          0.1458
+        ],
+        "center_normalized": [
+          0.8765,
+          0.6029
+        ],
+        "vertices": 10,
+        "circularity": 0.024,
+        "hierarchy_depth": 0,
+        "closed_internal_profile": false,
+        "orphan_opening_ring": false,
+        "polygon_sheet_normalized": [
+          [
+            0.7539,
+            0.5339
+          ],
+          [
+            0.7559,
+            0.6719
+          ],
+          [
+            0.999,
+            0.6719
+          ],
+          [
+            0.7598,
+            0.6654
+          ],
+          [
+            0.7598,
+            0.5378
+          ],
+          [
+            0.915,
+            0.5391
+          ],
+          [
+            0.9531,
+            0.6172
+          ],
+          [
+            0.999,
+            0.6094
+          ],
+          [
+            0.9551,
+            0.6107
+          ],
+          [
+            0.916,
+            0.5326
+          ]
+        ]
+      },
+      {
+        "contour_id": "contour_9",
+        "parent_contour_id": "contour_8",
+        "area_ratio": 0.00051,
+        "bbox_normalized": [
+          0.4072,
+          0.2786,
+          0.0225,
+          0.0312
+        ],
+        "center_normalized": [
+          0.4185,
+          0.2943
+        ],
+        "vertices": 8,
+        "circularity": 0.893,
+        "hierarchy_depth": 2,
+        "closed_internal_profile": true,
+        "orphan_opening_ring": false,
+        "polygon_sheet_normalized": [
+          [
+            0.417,
+            0.2786
+          ],
+          [
+            0.4082,
+            0.2865
+          ],
+          [
+            0.4082,
+            0.2995
+          ],
+          [
+            0.418,
+            0.3086
+          ],
+          [
+            0.4248,
+            0.3086
+          ],
+          [
+            0.4287,
+            0.3008
+          ],
+          [
+            0.4287,
+            0.2878
+          ],
+          [
+            0.4229,
+            0.2786
+          ]
+        ]
+      },
+      {
+        "contour_id": "contour_0",
+        "parent_contour_id": null,
+        "area_ratio": 0.0005,
+        "bbox_normalized": [
+          0.9043,
+          0.5625,
+          0.0215,
+          0.0312
+        ],
+        "center_normalized": [
+          0.915,
+          0.5781
+        ],
+        "vertices": 8,
+        "circularity": 0.89,
+        "hierarchy_depth": 0,
+        "closed_internal_profile": true,
+        "orphan_opening_ring": true,
+        "polygon_sheet_normalized": [
+          [
+            0.918,
+            0.5625
+          ],
+          [
+            0.9092,
+            0.5638
+          ],
+          [
+            0.9043,
+            0.5716
+          ],
+          [
+            0.9043,
+            0.5807
+          ],
+          [
+            0.9092,
+            0.5924
+          ],
+          [
+            0.917,
+            0.5924
+          ],
+          [
+            0.9238,
+            0.5846
+          ],
+          [
+            0.9248,
+            0.5703
+          ]
+        ]
+      },
+      {
+        "contour_id": "contour_2",
+        "parent_contour_id": null,
+        "area_ratio": 0.00046,
+        "bbox_normalized": [
+          0.7871,
+          0.5625,
+          0.0225,
+          0.0312
+        ],
+        "center_normalized": [
+          0.7983,
+          0.5781
+        ],
+        "vertices": 9,
+        "circularity": 0.86,
+        "hierarchy_depth": 0,
+        "closed_internal_profile": true,
+        "orphan_opening_ring": true,
+        "polygon_sheet_normalized": [
+          [
+            0.7959,
+            0.5625
+          ],
+          [
+            0.7891,
+            0.569
+          ],
+          [
+            0.7871,
+            0.5794
+          ],
+          [
+            0.7959,
+            0.5911
+          ],
+          [
+            0.8008,
+            0.5924
+          ],
+          [
+            0.8047,
+            0.5885
+          ],
+          [
+            0.8086,
+            0.5781
+          ],
+          [
+            0.8086,
+            0.5729
+          ],
+          [
+            0.8027,
+            0.5638
+          ]
+        ]
+      },
+      {
+        "contour_id": "contour_11",
+        "parent_contour_id": "contour_8",
+        "area_ratio": 0.00043,
+        "bbox_normalized": [
+          0.5703,
+          0.0612,
+          0.0225,
+          0.0286
+        ],
+        "center_normalized": [
+          0.5815,
+          0.0755
+        ],
+        "vertices": 9,
+        "circularity": 0.858,
+        "hierarchy_depth": 2,
+        "closed_internal_profile": true,
+        "orphan_opening_ring": false,
+        "polygon_sheet_normalized": [
+          [
+            0.5791,
+            0.0612
+          ],
+          [
+            0.5732,
+            0.0677
+          ],
+          [
+            0.5703,
+            0.0755
+          ],
+          [
+            0.5703,
+            0.0807
+          ],
+          [
+            0.5762,
+            0.0885
+          ],
+          [
+            0.5859,
+            0.0885
+          ],
+          [
+            0.5918,
+            0.082
+          ],
+          [
+            0.5918,
+            0.0768
+          ],
+          [
+            0.5859,
+            0.0638
+          ]
+        ]
+      },
+      {
+        "contour_id": "contour_10",
+        "parent_contour_id": "contour_9",
+        "area_ratio": 0.00016,
+        "bbox_normalized": [
+          0.4121,
+          0.2852,
+          0.0137,
+          0.0182
+        ],
+        "center_normalized": [
+          0.4189,
+          0.2943
+        ],
+        "vertices": 10,
+        "circularity": 0.851,
+        "hierarchy_depth": 3,
+        "closed_internal_profile": true,
+        "orphan_opening_ring": false,
+        "polygon_sheet_normalized": [
+          [
+            0.4141,
+            0.2878
+          ],
+          [
+            0.418,
+            0.2852
+          ],
+          [
+            0.4209,
+            0.2852
+          ],
+          [
+            0.4238,
+            0.2891
+          ],
+          [
+            0.4238,
+            0.2943
+          ],
+          [
+            0.4248,
+            0.2969
+          ],
+          [
+            0.4219,
+            0.3021
+          ],
+          [
+            0.4189,
+            0.3021
+          ],
+          [
+            0.4131,
+            0.2969
+          ],
+          [
+            0.4121,
+            0.2917
+          ]
+        ]
+      }
+    ],
+    "view_geometry": [
+      {
+        "view_id": "view_1",
+        "sheet_bbox_normalized": [
+          0.3799,
+          0.026,
+          0.2441,
+          0.362
+        ],
+        "pixel_aspect_ratio_width_over_height": 0.8991,
+        "measured_span_pixels": {
+          "horizontal_axis_u": 250,
+          "vertical_axis_v": 278
+        },
+        "coordinate_system": {
+          "origin": "top-left of this view crop",
+          "u_axis": "right",
+          "v_axis": "down",
+          "range": "u and v are normalized from 0 to 1 within this view"
+        },
+        "outer_profile": {
+          "profile_id": "contour_7",
+          "bbox_view_normalized": [
+            0.032,
+            0.0218,
+            0.932,
+            0.9569
+          ],
+          "center_view_normalized": [
+            0.4982,
+            0.5
+          ],
+          "polygon_view_normalized": [
+            [
+              0.9521,
+              0.0254
+            ],
+            [
+              0.6039,
+              0.0254
+            ],
+            [
+              0.4838,
+              0.126
+            ],
+            [
+              0.7161,
+              0.3525
+            ],
+            [
+              0.676,
+              0.5757
+            ],
+            [
+              0.0479,
+              0.6727
+            ],
+            [
+              0.032,
+              0.7519
+            ],
+            [
+              0.2679,
+              0.9713
+            ],
+            [
+              0.9521,
+              0.9641
+            ]
+          ],
+          "vertices": 9,
+          "circularity": 0.397,
+          "area_ratio_of_sheet": 0.04235
+        },
+        "internal_profiles": [
+          {
+            "profile_id": "contour_11",
+            "bbox_view_normalized": [
+              0.78,
+              0.0972,
+              0.0922,
+              0.079
+            ],
+            "center_view_normalized": [
+              0.8259,
+              0.1367
+            ],
+            "polygon_view_normalized": [
+              [
+                0.8161,
+                0.0972
+              ],
+              [
+                0.7919,
+                0.1152
+              ],
+              [
+                0.78,
+                0.1367
+              ],
+              [
+                0.78,
+                0.1511
+              ],
+              [
+                0.8042,
+                0.1727
+              ],
+              [
+                0.8439,
+                0.1727
+              ],
+              [
+                0.8681,
+                0.1547
+              ],
+              [
+                0.8681,
+                0.1403
+              ],
+              [
+                0.8439,
+                0.1044
+              ]
+            ],
+            "vertices": 9,
+            "circularity": 0.858,
+            "area_ratio_of_sheet": 0.00043
+          },
+          {
+            "profile_id": "contour_9",
+            "bbox_view_normalized": [
+              0.1118,
+              0.6978,
+              0.0922,
+              0.0862
+            ],
+            "center_view_normalized": [
+              0.1581,
+              0.7412
+            ],
+            "polygon_view_normalized": [
+              [
+                0.152,
+                0.6978
+              ],
+              [
+                0.1159,
+                0.7196
+              ],
+              [
+                0.1159,
+                0.7555
+              ],
+              [
+                0.1561,
+                0.7807
+              ],
+              [
+                0.1839,
+                0.7807
+              ],
+              [
+                0.1999,
+                0.7591
+              ],
+              [
+                0.1999,
+                0.7232
+              ],
+              [
+                0.1762,
+                0.6978
+              ]
+            ],
+            "vertices": 8,
+            "circularity": 0.893,
+            "area_ratio_of_sheet": 0.00051
+          }
+        ],
+        "direction": "top",
+        "cad_mapping": {
+          "plane": "XY",
+          "view_axis": "Z",
+          "u_maps_to": "+X",
+          "v_maps_to": "-Y"
+        }
+      },
+      {
+        "view_id": "view_2",
+        "sheet_bbox_normalized": [
+          0.7451,
+          0.5221,
+          0.2549,
+          0.1615
+        ],
+        "pixel_aspect_ratio_width_over_height": 2.1044,
+        "measured_span_pixels": {
+          "horizontal_axis_u": 261,
+          "vertical_axis_v": 124
+        },
+        "coordinate_system": {
+          "origin": "top-left of this view crop",
+          "u_axis": "right",
+          "v_axis": "down",
+          "range": "u and v are normalized from 0 to 1 within this view"
+        },
+        "outer_profile": {
+          "profile_id": "contour_6",
+          "bbox_view_normalized": [
+            0.0306,
+            0.0483,
+            0.9694,
+            0.9028
+          ],
+          "center_view_normalized": [
+            0.5155,
+            0.5003
+          ],
+          "polygon_view_normalized": [
+            [
+              0.0345,
+              0.0731
+            ],
+            [
+              0.0424,
+              0.9276
+            ],
+            [
+              0.9961,
+              0.9276
+            ],
+            [
+              0.0577,
+              0.8873
+            ],
+            [
+              0.0577,
+              0.0972
+            ],
+            [
+              0.6665,
+              0.1053
+            ],
+            [
+              0.816,
+              0.5889
+            ],
+            [
+              0.9961,
+              0.5406
+            ],
+            [
+              0.8239,
+              0.5486
+            ],
+            [
+              0.6705,
+              0.065
+            ]
+          ],
+          "vertices": 10,
+          "circularity": 0.024,
+          "area_ratio_of_sheet": 0.00436
+        },
+        "internal_profiles": [
+          {
+            "profile_id": "contour_2",
+            "bbox_view_normalized": [
+              0.1648,
+              0.2502,
+              0.0883,
+              0.1932
+            ],
+            "center_view_normalized": [
+              0.2087,
+              0.3467
+            ],
+            "polygon_view_normalized": [
+              [
+                0.1993,
+                0.2502
+              ],
+              [
+                0.1726,
+                0.2904
+              ],
+              [
+                0.1648,
+                0.3548
+              ],
+              [
+                0.1993,
+                0.4272
+              ],
+              [
+                0.2185,
+                0.4353
+              ],
+              [
+                0.2338,
+                0.4111
+              ],
+              [
+                0.2491,
+                0.3467
+              ],
+              [
+                0.2491,
+                0.3146
+              ],
+              [
+                0.226,
+                0.2582
+              ]
+            ],
+            "vertices": 9,
+            "circularity": 0.86,
+            "area_ratio_of_sheet": 0.00046
+          },
+          {
+            "profile_id": "contour_0",
+            "bbox_view_normalized": [
+              0.6246,
+              0.2502,
+              0.0843,
+              0.1932
+            ],
+            "center_view_normalized": [
+              0.6665,
+              0.3467
+            ],
+            "polygon_view_normalized": [
+              [
+                0.6783,
+                0.2502
+              ],
+              [
+                0.6438,
+                0.2582
+              ],
+              [
+                0.6246,
+                0.3065
+              ],
+              [
+                0.6246,
+                0.3628
+              ],
+              [
+                0.6438,
+                0.4353
+              ],
+              [
+                0.6744,
+                0.4353
+              ],
+              [
+                0.7011,
+                0.387
+              ],
+              [
+                0.705,
+                0.2985
+              ]
+            ],
+            "vertices": 8,
+            "circularity": 0.89,
+            "area_ratio_of_sheet": 0.0005
+          }
+        ],
+        "direction": "right",
+        "cad_mapping": {
+          "plane": "YZ",
+          "view_axis": "X",
+          "u_maps_to": "+Y",
+          "v_maps_to": "-Z"
+        }
+      },
+      {
+        "view_id": "view_3",
+        "sheet_bbox_normalized": [
+          0.3809,
+          0.5247,
+          0.2432,
+          0.1602
+        ],
+        "pixel_aspect_ratio_width_over_height": 2.0241,
+        "measured_span_pixels": {
+          "horizontal_axis_u": 249,
+          "vertical_axis_v": 123
+        },
+        "coordinate_system": {
+          "origin": "top-left of this view crop",
+          "u_axis": "right",
+          "v_axis": "down",
+          "range": "u and v are normalized from 0 to 1 within this view"
+        },
+        "outer_profile": {
+          "profile_id": "contour_4",
+          "bbox_view_normalized": [
+            0.0321,
+            0.0493,
+            0.9317,
+            0.902
+          ],
+          "center_view_normalized": [
+            0.4979,
+            0.5
+          ],
+          "polygon_view_normalized": [
+            [
+              0.9597,
+              0.0737
+            ],
+            [
+              0.7467,
+              0.0655
+            ],
+            [
+              0.0522,
+              0.5287
+            ],
+            [
+              0.0358,
+              0.9107
+            ],
+            [
+              0.9396,
+              0.9026
+            ]
+          ],
+          "vertices": 5,
+          "circularity": 0.57,
+          "area_ratio_of_sheet": 0.02389
+        },
+        "internal_profiles": [],
+        "direction": "front",
+        "cad_mapping": {
+          "plane": "XZ",
+          "view_axis": "Y",
+          "u_maps_to": "+X",
+          "v_maps_to": "-Z"
+        }
+      }
+    ],
+    "coordinate_contract": {
+      "sheet": {
+        "origin": "top-left",
+        "x_axis": "right",
+        "y_axis": "down",
+        "units": "normalized image fraction"
+      },
+      "cad": {
+        "origin": "shared object origin",
+        "x_axis": "width",
+        "y_axis": "front-to-back depth",
+        "z_axis": "height",
+        "units": "millimetres"
+      },
+      "rule": "Use view-local profile coordinates and cad_mapping; sheet placement separates views and is never physical geometry."
+    }
+  },
+  "mesh_health": {
+    "watertight": true,
+    "components": 1,
+    "triangles": 40,
+    "through_holes": 0,
+    "extents_mm": [
+      51.323,
+      23.243,
+      60.0
+    ],
+    "volume_mm3": 54485.714
+  },
+  "evaluation": {
+    "score": 69.7,
+    "valid_mesh": true,
+    "accepted": false,
+    "mandatory_gates": {
+      "compiled": true,
+      "topology": true,
+      "dimensions": true,
+      "shape_sanity": true,
+      "features": false,
+      "openings_through": false,
+      "projections": false,
+      "build_envelope": true
+    },
+    "scores": {
+      "topology": 45,
+      "dimensions": 20.0,
+      "features": 0.0,
+      "projections": 4.7
+    },
+    "projection_similarity": {
+      "front": 0.332,
+      "top": 0.35,
+      "right": 0.253
+    },
+    "profile_topology": {
+      "front": {
+        "source_internal_profiles": 0,
+        "rendered_internal_profiles": 0,
+        "crop_internal_profiles": 0,
+        "source_aspect": 2.008,
+        "rendered_aspect": 0.855,
+        "source_opening_centroids": [],
+        "rendered_opening_centroids": []
+      },
+      "top": {
+        "source_internal_profiles": 2,
+        "rendered_internal_profiles": 0,
+        "crop_internal_profiles": 2,
+        "source_aspect": 0.896,
+        "rendered_aspect": 2.2,
+        "source_opening_centroids": [
+          [
+            0.137,
+            0.75
+          ],
+          [
+            0.849,
+            0.122
+          ]
+        ],
+        "rendered_opening_centroids": [],
+        "missing_opening_centroids": [
+          [
+            0.137,
+            0.75
+          ],
+          [
+            0.849,
+            0.122
+          ]
+        ],
+        "feature_position_fidelity": 0.0
+      },
+      "right": {
+        "source_internal_profiles": 0,
+        "rendered_internal_profiles": 0,
+        "crop_internal_profiles": 2,
+        "source_aspect": 2.096,
+        "rendered_aspect": 0.389,
+        "source_opening_centroids": [],
+        "rendered_opening_centroids": []
+      }
+    },
+    "demanded_openings": {
+      "total": 4,
+      "per_view": {
+        "front": 0,
+        "top": 2,
+        "right": 2
+      },
+      "sheet_total": 4,
+      "registration_gap": 0
+    },
+    "failures": [
+      "required internal profiles are missing: right demands 2, renders 0, top demands 2, renders 0; best rendered view has 0. Missing at these view-local centres \u2014 add cutters there: (u=0.137,v=0.75); (u=0.849,v=0.122).",
+      "openings do not go through the solid: the drawing demands 4 openings across the registered views (strongest: top) but the mesh has 0 true through-holes \u2014 the rendered openings are blind pockets or edge notches; cut all the way through the wall",
+      "CAD projections poorly match the drawing: front similarity 0.33, right similarity 0.25, top similarity 0.35 (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly.",
+      "features exist but sit at the wrong positions in top view(s): match each opening's location (u,v within the outer profile) to the drawing; check the cad_mapping signs (front: u->+X v->-Z; top: u->+X v->-Y i.e. sheet-down is the FRONT of the part)"
+    ]
+  },
+  "selected_attempt": 1,
+  "attempts": [
+    {
+      "attempt": 1,
+      "action": "generate",
+      "preflight": {
+        "passed": true,
+        "errors": [],
+        "warnings": [],
+        "expected_subtractive_feature_groups": 1
+      },
+      "compiler_repairs": [],
+      "uniform_scale": null,
+      "evaluation": {
+        "score": 69.7,
+        "valid_mesh": true,
+        "accepted": false,
+        "mandatory_gates": {
+          "compiled": true,
+          "topology": true,
+          "dimensions": true,
+          "shape_sanity": true,
+          "features": false,
+          "openings_through": false,
+          "projections": false,
+          "build_envelope": true
+        },
+        "scores": {
+          "topology": 45,
+          "dimensions": 20.0,
+          "features": 0.0,
+          "projections": 4.7
+        },
+        "projection_similarity": {
+          "front": 0.332,
+          "top": 0.35,
+          "right": 0.253
+        },
+        "profile_topology": {
+          "front": {
+            "source_internal_profiles": 0,
+            "rendered_internal_profiles": 0,
+            "crop_internal_profiles": 0,
+            "source_aspect": 2.008,
+            "rendered_aspect": 0.855,
+            "source_opening_centroids": [],
+            "rendered_opening_centroids": []
+          },
+          "top": {
+            "source_internal_profiles": 2,
+            "rendered_internal_profiles": 0,
+            "crop_internal_profiles": 2,
+            "source_aspect": 0.896,
+            "rendered_aspect": 2.2,
+            "source_opening_centroids": [
+              [
+                0.137,
+                0.75
+              ],
+              [
+                0.849,
+                0.122
+              ]
+            ],
+            "rendered_opening_centroids": [],
+            "missing_opening_centroids": [
+              [
+                0.137,
+                0.75
+              ],
+              [
+                0.849,
+                0.122
+              ]
+            ],
+            "feature_position_fidelity": 0.0
+          },
+          "right": {
+            "source_internal_profiles": 0,
+            "rendered_internal_profiles": 0,
+            "crop_internal_profiles": 2,
+            "source_aspect": 2.096,
+            "rendered_aspect": 0.389,
+            "source_opening_centroids": [],
+            "rendered_opening_centroids": []
+          }
+        },
+        "demanded_openings": {
+          "total": 4,
+          "per_view": {
+            "front": 0,
+            "top": 2,
+            "right": 2
+          },
+          "sheet_total": 4,
+          "registration_gap": 0
+        },
+        "failures": [
+          "required internal profiles are missing: right demands 2, renders 0, top demands 2, renders 0; best rendered view has 0. Missing at these view-local centres \u2014 add cutters there: (u=0.137,v=0.75); (u=0.849,v=0.122).",
+          "openings do not go through the solid: the drawing demands 4 openings across the registered views (strongest: top) but the mesh has 0 true through-holes \u2014 the rendered openings are blind pockets or edge notches; cut all the way through the wall",
+          "CAD projections poorly match the drawing: front similarity 0.33, right similarity 0.25, top similarity 0.35 (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly.",
+          "features exist but sit at the wrong positions in top view(s): match each opening's location (u,v within the outer profile) to the drawing; check the cad_mapping signs (front: u->+X v->-Z; top: u->+X v->-Y i.e. sheet-down is the FRONT of the part)"
+        ]
+      },
+      "mesh_health": {
+        "watertight": true,
+        "components": 1,
+        "triangles": 40,
+        "through_holes": 0,
+        "extents_mm": [
+          51.323,
+          23.243,
+          60.0
+        ],
+        "volume_mm3": 54485.714
+      },
+      "build": {
+        "version": 1,
+        "backend": "openscad",
+        "source_format": "openscad",
+        "ok": true,
+        "units": "mm",
+        "axes": {
+          "x": "width",
+          "y": "depth",
+          "z": "height"
+        },
+        "views": [
+          "isometric",
+          "front",
+          "top",
+          "right"
+        ],
+        "measurements": {
+          "watertight": true,
+          "components": 1,
+          "triangles": 40,
+          "through_holes": 0,
+          "extents_mm": [
+            51.323,
+            23.243,
+            60.0
+          ],
+          "volume_mm3": 54485.714
+        },
+        "diagnostics": [],
+        "drawing_evaluated": false
+      },
+      "compile_log": "Geometries in cache: 7\nGeometry cache size in bytes: 14320\nCGAL Polyhedrons in cache: 2\nCGAL cache size in bytes: 74256\nTotal rendering time: 0:00:00.048\n   Top level object is a 3D object:\n   Simple:        yes\n   Vertices:       22\n   Halfedges:      66\n   Edges:          33\n   Halffacets:     26\n   Facets:         13\n   Volumes:         2",
+      "files": {
+        "scad": "attempt-01/model.scad",
+        "stl": "attempt-01/model.stl",
+        "views": {
+          "isometric": "attempt-01/view-isometric.png",
+          "front": "attempt-01/view-front.png",
+          "top": "attempt-01/view-top.png",
+          "right": "attempt-01/view-right.png"
+        }
+      },
+      "supervisor": {
+        "action": "repair_scad",
+        "problems": [
+          "Mounting holes are missing (0 through-holes detected).",
+          "Curved cutout is missing; top view shows a solid block instead of L-shape.",
+          "Front view aspect ratio is inverted (tall vs wide); geometry orientation is wrong.",
+          "Top view shows a trapezoid instead of the required L-shaped footprint."
+        ],
+        "preserve": [
+          "Overall bounding box dimensions (55.55 x 60.0 x 27.5).",
+          "General concept of an angled top surface.",
+          "Parameter definitions for width, depth, height."
+        ],
+        "instructions": "Reconstruct the geometry by extruding the L-shaped footprint (with curved cutout) from the Top View along the Z-axis. Apply a boolean intersection with a wedge shape defined by the Front View to create the angled top surface. Ensure the two mounting holes are cut vertically through the entire solid at the specified coordinates. Correct the orientation so the Front View is wide (X) and short (Z), and the Top View is wide (X) and deep (Y)."
+      }
+    },
+    {
+      "attempt": 2,
+      "action": "repair_scad",
+      "preflight": {
+        "passed": true,
+        "errors": [],
+        "warnings": [],
+        "expected_subtractive_feature_groups": 1
+      },
+      "compiler_repairs": [],
+      "uniform_scale": null,
+      "evaluation": {
+        "score": 69.7,
+        "valid_mesh": true,
+        "accepted": false,
+        "mandatory_gates": {
+          "compiled": true,
+          "topology": true,
+          "dimensions": true,
+          "shape_sanity": true,
+          "features": false,
+          "openings_through": false,
+          "projections": false,
+          "build_envelope": true
+        },
+        "scores": {
+          "topology": 45,
+          "dimensions": 20.0,
+          "features": 0.0,
+          "projections": 4.7
+        },
+        "projection_similarity": {
+          "front": 0.332,
+          "top": 0.35,
+          "right": 0.253
+        },
+        "profile_topology": {
+          "front": {
+            "source_internal_profiles": 0,
+            "rendered_internal_profiles": 0,
+            "crop_internal_profiles": 0,
+            "source_aspect": 2.008,
+            "rendered_aspect": 0.855,
+            "source_opening_centroids": [],
+            "rendered_opening_centroids": []
+          },
+          "top": {
+            "source_internal_profiles": 2,
+            "rendered_internal_profiles": 0,
+            "crop_internal_profiles": 2,
+            "source_aspect": 0.896,
+            "rendered_aspect": 2.2,
+            "source_opening_centroids": [
+              [
+                0.137,
+                0.75
+              ],
+              [
+                0.849,
+                0.122
+              ]
+            ],
+            "rendered_opening_centroids": [],
+            "missing_opening_centroids": [
+              [
+                0.137,
+                0.75
+              ],
+              [
+                0.849,
+                0.122
+              ]
+            ],
+            "feature_position_fidelity": 0.0
+          },
+          "right": {
+            "source_internal_profiles": 0,
+            "rendered_internal_profiles": 0,
+            "crop_internal_profiles": 2,
+            "source_aspect": 2.096,
+            "rendered_aspect": 0.389,
+            "source_opening_centroids": [],
+            "rendered_opening_centroids": []
+          }
+        },
+        "demanded_openings": {
+          "total": 4,
+          "per_view": {
+            "front": 0,
+            "top": 2,
+            "right": 2
+          },
+          "sheet_total": 4,
+          "registration_gap": 0
+        },
+        "failures": [
+          "required internal profiles are missing: right demands 2, renders 0, top demands 2, renders 0; best rendered view has 0. Missing at these view-local centres \u2014 add cutters there: (u=0.137,v=0.75); (u=0.849,v=0.122).",
+          "openings do not go through the solid: the drawing demands 4 openings across the registered views (strongest: top) but the mesh has 0 true through-holes \u2014 the rendered openings are blind pockets or edge notches; cut all the way through the wall",
+          "CAD projections poorly match the drawing: front similarity 0.33, right similarity 0.25, top similarity 0.35 (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly.",
+          "features exist but sit at the wrong positions in top view(s): match each opening's location (u,v within the outer profile) to the drawing; check the cad_mapping signs (front: u->+X v->-Z; top: u->+X v->-Y i.e. sheet-down is the FRONT of the part)"
+        ]
+      },
+      "mesh_health": {
+        "watertight": true,
+        "components": 1,
+        "triangles": 40,
+        "through_holes": 0,
+        "extents_mm": [
+          51.323,
+          23.243,
+          60.0
+        ],
+        "volume_mm3": 54485.714
+      },
+      "build": {
+        "version": 1,
+        "backend": "openscad",
+        "source_format": "openscad",
+        "ok": true,
+        "units": "mm",
+        "axes": {
+          "x": "width",
+          "y": "depth",
+          "z": "height"
+        },
+        "views": [
+          "isometric",
+          "front",
+          "top",
+          "right"
+        ],
+        "measurements": {
+          "watertight": true,
+          "components": 1,
+          "triangles": 40,
+          "through_holes": 0,
+          "extents_mm": [
+            51.323,
+            23.243,
+            60.0
+          ],
+          "volume_mm3": 54485.714
+        },
+        "diagnostics": [],
+        "drawing_evaluated": false
+      },
+      "compile_log": "Geometries in cache: 7\nGeometry cache size in bytes: 14320\nCGAL Polyhedrons in cache: 2\nCGAL cache size in bytes: 74256\nTotal rendering time: 0:00:00.042\n   Top level object is a 3D object:\n   Simple:        yes\n   Vertices:       22\n   Halfedges:      66\n   Edges:          33\n   Halffacets:     26\n   Facets:         13\n   Volumes:         2",
+      "files": {
+        "scad": "attempt-02/model.scad",
+        "stl": "attempt-02/model.stl",
+        "views": {
+          "isometric": "attempt-02/view-isometric.png",
+          "front": "attempt-02/view-front.png",
+          "top": "attempt-02/view-top.png",
+          "right": "attempt-02/view-right.png"
+        }
+      },
+      "supervisor": {
+        "action": "regenerate_scad",
+        "problems": [
+          "Missing mounting holes (0 rendered vs 2 required)",
+          "Missing curved cutout (L-shape not formed)",
+          "Front view is a solid rectangle (missing angled top)",
+          "Right view is a solid rectangle (missing curved cutout profile)",
+          "Top view is a solid trapezoid (missing L-shape and holes)"
+        ],
+        "preserve": [
+          "Overall bounding box dimensions (55.55 x 60.0 x 27.5)",
+          "General orientation of the angled top surface"
+        ],
+        "instructions": "Previous repair made no measurable progress. Regenerate cleanly from the specification and mandatory gate failures using a different construction strategy.",
+        "confidence": 0.95
+      }
+    },
+    {
+      "attempt": 3,
+      "action": "regenerate_scad",
+      "preflight": {
+        "passed": true,
+        "errors": [],
+        "warnings": [],
+        "expected_subtractive_feature_groups": 1
+      },
+      "compiler_repairs": [],
+      "uniform_scale": null,
+      "evaluation": {
+        "score": 54.6,
+        "valid_mesh": false,
+        "accepted": false,
+        "mandatory_gates": {
+          "compiled": true,
+          "topology": false,
+          "dimensions": true,
+          "shape_sanity": true,
+          "features": false,
+          "openings_through": true,
+          "projections": false,
+          "build_envelope": true
+        },
+        "scores": {
+          "topology": 27,
+          "dimensions": 20.0,
+          "features": 0.0,
+          "projections": 7.6
+        },
+        "projection_similarity": {
+          "front": 0.707,
+          "top": 0.622,
+          "right": 0.2
+        },
+        "profile_topology": {
+          "front": {
+            "source_internal_profiles": 0,
+            "rendered_internal_profiles": 0,
+            "crop_internal_profiles": 0,
+            "source_aspect": 2.008,
+            "rendered_aspect": 2.036,
+            "source_opening_centroids": [],
+            "rendered_opening_centroids": []
+          },
+          "top": {
+            "source_internal_profiles": 2,
+            "rendered_internal_profiles": 1,
+            "crop_internal_profiles": 2,
+            "source_aspect": 0.896,
+            "rendered_aspect": 0.929,
+            "source_opening_centroids": [
+              [
+                0.137,
+                0.75
+              ],
+              [
+                0.849,
+                0.122
+              ]
+            ],
+            "rendered_opening_centroids": [
+              [
+                0.823,
+                0.135
+              ]
+            ],
+            "missing_opening_centroids": [
+              [
+                0.137,
+                0.75
+              ]
+            ],
+            "feature_position_fidelity": 0.5
+          },
+          "right": {
+            "source_internal_profiles": 0,
+            "rendered_internal_profiles": 0,
+            "crop_internal_profiles": 2,
+            "source_aspect": 2.096,
+            "rendered_aspect": 2.19,
+            "source_opening_centroids": [],
+            "rendered_opening_centroids": []
+          }
+        },
+        "demanded_openings": {
+          "total": 4,
+          "per_view": {
+            "front": 0,
+            "top": 2,
+            "right": 2
+          },
+          "sheet_total": 4,
+          "registration_gap": 0
+        },
+        "failures": [
+          "mesh has 2 disconnected components",
+          "required internal profiles are missing: right demands 2, renders 0, top demands 2, renders 1; best rendered view has 1. Missing at these view-local centres \u2014 add cutters there: (u=0.137,v=0.75).",
+          "CAD projections poorly match the drawing: right similarity 0.20 (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly."
+        ]
+      },
+      "mesh_health": {
+        "watertight": true,
+        "components": 2,
+        "triangles": 116,
+        "through_holes": 1,
+        "extents_mm": [
+          55.55,
+          60.0,
+          27.5
+        ],
+        "volume_mm3": 64929.929
+      },
+      "build": {
+        "version": 1,
+        "backend": "openscad",
+        "source_format": "openscad",
+        "ok": true,
+        "units": "mm",
+        "axes": {
+          "x": "width",
+          "y": "depth",
+          "z": "height"
+        },
+        "views": [
+          "isometric",
+          "front",
+          "top",
+          "right"
+        ],
+        "measurements": {
+          "watertight": true,
+          "components": 2,
+          "triangles": 116,
+          "through_holes": 1,
+          "extents_mm": [
+            55.55,
+            60.0,
+            27.5
+          ],
+          "volume_mm3": 64929.929
+        },
+        "diagnostics": [],
+        "drawing_evaluated": false
+      },
+      "compile_log": "Geometries in cache: 9\nGeometry cache size in bytes: 15752\nCGAL Polyhedrons in cache: 2\nCGAL cache size in bytes: 136704\nTotal rendering time: 0:00:00.079\n   Top level object is a 3D object:\n   Simple:        yes\n   Vertices:       60\n   Halfedges:     180\n   Edges:          90\n   Halffacets:     68\n   Facets:         34\n   Volumes:         3",
+      "files": {
+        "scad": "attempt-03/model.scad",
+        "stl": "attempt-03/model.stl",
+        "views": {
+          "isometric": "attempt-03/view-isometric.png",
+          "front": "attempt-03/view-front.png",
+          "top": "attempt-03/view-top.png",
+          "right": "attempt-03/view-right.png"
+        }
+      }
+    }
+  ],
+  "controls": {
+    "object_type_hint": "",
+    "method": "3D print",
+    "primary_view": "front",
+    "projection_standard": "third-angle",
+    "strict_watertight": true,
+    "refine_mode": "regularize"
+  },
+  "size_clarification": null,
+  "additional_view_count": 0,
+  "repaired": true,
+  "compile_log": "Geometries in cache: 7\nGeometry cache size in bytes: 14320\nCGAL Polyhedrons in cache: 2\nCGAL cache size in bytes: 74256\nTotal rendering time: 0:00:00.048\n   Top level object is a 3D object:\n   Simple:        yes\n   Vertices:       22\n   Halfedges:      66\n   Edges:          33\n   Halffacets:     26\n   Facets:         13\n   Volumes:         2",
+  "duration_seconds": 343.4,
+  "files": {
+    "scad": "/results/10da54833e1a/model.scad",
+    "stl": "/results/10da54833e1a/model.stl",
+    "attempts": "/results/10da54833e1a/attempts.json",
+    "overlay": "/results/10da54833e1a/geometry-overlay.png",
+    "views": {
+      "isometric": "/results/10da54833e1a/view-isometric.png",
+      "front": "/results/10da54833e1a/view-front.png",
+      "top": "/results/10da54833e1a/view-top.png",
+      "right": "/results/10da54833e1a/view-right.png"
+    }
+  }
+}

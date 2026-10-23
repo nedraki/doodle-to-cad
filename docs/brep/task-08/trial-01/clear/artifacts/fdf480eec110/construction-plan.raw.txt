@@ -1,0 +1,38 @@
+{
+  "view_frame": "The drawing uses a third-angle projection layout. The primary view is 'TOP (XY)', showing the object's width (X) and depth (Y). The 'SECTION THROUGH CENTRE' view shows the object's thickness (Z) and confirms the internal geometry. The coordinate system is defined as: X = Width (40mm), Y = Depth (30mm), Z = Height/Thickness (12mm). The origin (0,0,0) is assumed to be the bottom-left-front corner of the block.",
+  "features": [
+    {
+      "id": "block_body",
+      "shape": "Rectangular Prism (Cuboid)",
+      "section": "Rectangular",
+      "axis_or_plane": "XY plane (Top view)",
+      "dimensions": [
+        "40",
+        "30",
+        "12"
+      ],
+      "placement": "Starts at (0,0,0) and extends to (40,30,12).",
+      "evidence": "Top view shows a rectangle with dimensions 40 (width) and 30 (depth). Text states 'Body: 40 wide x 30 deep x 12 thick'."
+    },
+    {
+      "id": "central_hole",
+      "shape": "Cylinder (Through-hole)",
+      "section": "Circular",
+      "axis_or_plane": "Z axis (Vertical)",
+      "dimensions": [
+        "Ø8"
+      ],
+      "placement": "Centred in the XY plane at (20, 15). Extends through the full Z height from Z=0 to Z=12.",
+      "evidence": "Top view shows a circle labelled 'Ø8' centred in the rectangle. Section view text states 'Ø8 THROUGH' and 'No floor below opening'."
+    }
+  ],
+  "connections": [
+    "The central_hole is subtracted from the block_body."
+  ],
+  "edit_rules": [
+    "If block width (X) changes, the hole centre X coordinate must update to width/2.",
+    "If block depth (Y) changes, the hole centre Y coordinate must update to depth/2.",
+    "If block thickness (Z) changes, the hole depth must update to match the new thickness."
+  ],
+  "unresolved": []
+}

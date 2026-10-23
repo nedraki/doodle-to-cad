@@ -1,0 +1,38 @@
+{
+  "view_frame": "The drawing provides a TOP view in the XY plane. X represents width (horizontal), Y represents depth (vertical on the sheet), and Z represents height/thickness (perpendicular to the view). The part is a rectangular block.",
+  "features": [
+    {
+      "id": "block_body",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "40",
+        "30",
+        "12"
+      ],
+      "placement": "Centred at (0,0) in XY. Extends from X=-20 to 20, Y=-15 to 15, and Z=0 to 12.",
+      "evidence": "Text 'Body: 40 wide x 30 deep x 12 thick' and dimension lines '40' and '30' on the TOP view."
+    },
+    {
+      "id": "top_opening",
+      "shape": "cylinder",
+      "section": "circle",
+      "axis_or_plane": "Z",
+      "dimensions": [
+        "8"
+      ],
+      "placement": "Centred at (0,0) in XY. Extends through the full thickness Z=0 to 12.",
+      "evidence": "Circle in the centre of the TOP view labelled '\u00d88'. Text 'Opening centred in top face'. User answer confirms 'through'."
+    }
+  ],
+  "connections": [
+    "The top_opening is a subtractive feature from the block_body."
+  ],
+  "edit_rules": [
+    "Changing block_body width (X) or depth (Y) maintains the centred position of the top_opening.",
+    "Changing block_body thickness (Z) updates the length of the top_opening to maintain the through condition.",
+    "Changing top_opening diameter updates the hole size while maintaining its centred position."
+  ],
+  "unresolved": []
+}

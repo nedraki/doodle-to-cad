@@ -1,0 +1,40 @@
+{
+  "case": "shell",
+  "track": "manually_authored",
+  "user_review": "pending",
+  "measurement_validation": "provisional; awaiting #81",
+  "attempts": [
+    {
+      "role": "initial",
+      "backend": "usd-brep",
+      "updates": {},
+      "attempt": "01-initial",
+      "build_ok": true,
+      "seconds": 0.8083,
+      "diagnostics": [],
+      "stl_sha256": "4bfe7a10cd1c5636897528db6cf43cc7f4747016dd2c507a1f4eb4ee0eb2517d",
+      "exception": "ValueError: insufficient lower-left arc samples"
+    }
+  ],
+  "outcome": "failed",
+  "error": "ValueError: insufficient lower-left arc samples",
+  "openscad": {
+    "status": "attempted",
+    "attempts": [
+      {
+        "role": "initial",
+        "build_ok": true,
+        "seconds": 0.6519,
+        "construction": "manually_authored OpenSCAD, $fn=96",
+        "note": "Uniform floor and wall thickness; varying wall/floor dimensions not exposed by shell."
+      },
+      {
+        "role": "edited",
+        "build_ok": true,
+        "seconds": 0.5947,
+        "construction": "manually_authored OpenSCAD, $fn=96",
+        "note": "Uniform floor and wall thickness; varying wall/floor dimensions not exposed by shell."
+      }
+    ]
+  }
+}

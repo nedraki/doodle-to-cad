@@ -1,0 +1,31 @@
+{
+  "view_frame": "The drawing is a single silhouette view (Front) of an axisymmetric object. The vertical axis of the drawing corresponds to the world Z axis (height). The horizontal axis corresponds to the world X axis (radius). The object is centered on the Z axis (X=0).",
+  "features": [
+    {
+      "id": "vase_body",
+      "shape": "revolve",
+      "section": "closed polyline",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "height: 120",
+        "max_radius: 45",
+        "rim_radius: 30",
+        "neck_radius: 15",
+        "wall_thickness: 3",
+        "floor_thickness: 3"
+      ],
+      "placement": "Revolve the closed profile 360 degrees about the Z axis. The profile is defined by an outer wall curve and an inner wall curve offset by the wall thickness. The base is at Z=0. The profile vertices (radius, height) are approximated from the silhouette: (0,0) -> (45,0) -> (45,10) -> (40,30) -> (15,60) -> (15,100) -> (30,110) -> (30,120) -> (27,120) -> (27,110) -> (12,100) -> (12,60) -> (37,30) -> (42,10) -> (42,0) -> (0,0).",
+      "evidence": "Single silhouette outline showing a vase shape with a flared rim, narrow neck, and bulbous body. The user notes specify 'Greek vase from a single silhouette'."
+    }
+  ],
+  "connections": [],
+  "edit_rules": [
+    "Changing the wall_thickness parameter must update the inner profile vertices to maintain the specified offset from the outer profile.",
+    "Changing the height parameter must scale the Z coordinates of all profile vertices proportionally.",
+    "Changing the max_radius parameter must scale the X coordinates of the body vertices proportionally."
+  ],
+  "unresolved": [
+    "The floor thickness is assumed to be equal to the wall thickness (3mm) as it is not explicitly dimensioned, though the wall thickness was provided via clarification."
+  ],
+  "clarification": null
+}

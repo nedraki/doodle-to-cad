@@ -4,16 +4,20 @@ import json
 import math
 import time
 import uuid
+from pathlib import Path
 
 from fastapi import HTTPException
 
 from .brep_recipe import validate_recipe
 from .build_contract import BuildError
 from .recipe_jobs import check_worker, run_recipe_job
+from .construction_intent import PROMPT as INTENT_PROMPT, PROMPT_VERSION as INTENT_VERSION, validate_plan
 
-PROMPT_VERSION = 'drawing-brep-4'
+PROMPT_VERSION = 'drawing-brep-19'
 PROMPT = """Construct ONE editable BRep part directly from the drawing and measured evidence.
 Return valid JSON only. Never return Python or OpenSCAD. If the part needs an unsupported operation, return {"unsupported":"specific reason"}.
+
+First resolve the path plane and cross-section from the drawing labels. A path shown in TOP lies in XY; its thickness is along Z. A circular end section applies to straight segments as well as bends. A rectangular longitudinal silhouette does not make the section rectangular: use cylinders for circular-section straight segments. Moving a part above the bed is a translation through origins, not a rotation.
 
 Complete minimal version 2 recipe example (all root fields are required):
 {"version":2,"units":"mm","name":"plate","parameters":{"width":{"value":60,"min":30,"max":100}},"operations":[{"id":"plate","kind":"box","origin":[0,0,0],"size":["width",40,5],"frame":"world","depends_on":[],"evidence":["e1"]}],"output":"plate","frames":{"world":{"origin":[0,0,0],"x":"width","y":"depth","z":"height"}},"bodies":[{"id":"part","output":"plate"}],"evidence":{"observed":[],"inferred":[],"assumptions":[{"id":"e1","text":"Assumed plate thickness 5 mm."}],"unresolved":[]},"constraints":[]}
@@ -25,26 +29,36 @@ SCHEMA:
 - Dimensions are finite numbers or QUOTED arithmetic strings using parameter names and + - * / parentheses only. Example: [0,"-width/2",0]. Bare arithmetic is invalid JSON. No trig functions or references to operation fields.
 - Every operation has id,kind,frame:"world",depends_on:[earlier input body IDs],evidence:[IDs from recipe.evidence]. At most 128 operations, in dependency order.
 - Add exactly the fields listed for its kind:
+shell: body (earlier solid),thickness (positive inward uniform wall AND floor thickness),opening (exactly "top"),preserve (exactly "outer"). Removes the single highest planar face and hollows inward, preserving outside bounds. Tested for boxes and boxes with rounded vertical corners. Keep outer width, depth, height and outside corner radius independent of thickness. For a rounded tray, make the outer box, fillet ONLY parallel_z edges to the drawn outside radius, then shell that rounded body. Flat top and floor faces remain flat. Expose thickness with label "Wall and floor thickness". If wall and floor need DIFFERENT dimensions, use an explicit difference with separate wall/floor parameters instead of pretending shell supports them. Reject missing or conflicting cavity details; never assume a missing wall/floor thickness.
+loft: plane (only "xy"),correspondence (exactly "rectangle_corners_to_circle_diagonals"),profiles (exactly two ordered objects). First: {"shape":"rectangle","center":[x,y,z],"width":X_length,"height":Y_length}. Second: {"shape":"circle","center":[same_x,same_y,higher_z],"radius":R}. This is a SOLID rectangular-to-round transition with flat caps, not a hollow duct. Profiles are parallel XY planes with equal XY centres. The circle must be 0.01–256 mm above the rectangle. Profile dimensions must be 0.01–128 mm. The worker matches rectangle corners NE/NW/SW/SE to circle points at 45/135/225/315 degrees in CCW order and makes a degree-1 loft. No twist, rotated/offset profiles, intermediate profiles, splines or holes. Numeric fields allow quoted parameter expressions. Expose rectangle width as a parameter; changing it must keep the circle radius, centre and separation fixed. Use the two end profiles and labelled side-view separation, not a straight extrusion or cone approximation.
+sweep: origin (world translation, normally [0,0,0]),plane (only "xy"),frame_rule (exactly "normal_to_path_z_up"),section_width (in-plane width),section_height (Z height),path (ordered open list containing one circular arc, optionally preceded/followed by one tangent line). This makes a solid RECTANGULAR section, with flat caps. Path points are local XY centreline coordinates. The section centre follows the path at local Z=section_height/2; its bottom stays at Z=0 before origin translation. Line: {"kind":"line","start":[x,y],"end":[x,y]}. Arc: {"kind":"arc","center":[x,y],"radius":R,"start_angle":degrees,"end_angle":degrees}. Angles are measured from +X. Positive sweep is CCW; negative sweep is clockwise. The absolute difference must be 1–180 degrees. Radius > section_width/2 + 0.01 mm. Lines must meet the arc endpoints exactly and follow its tangent. Line endpoint order is normalized to join the arc; coordinates are never moved. For CCW arcs, tangent directions at angles 0/90/180/270 degrees are +Y/-X/-Y/+X. The arc 0 to 180 passes above its centre; 180 to 360 passes below. Clockwise tangents are the opposite directions. Clockwise 180 to 0 passes above its centre. The worker reverses clockwise traversal to the equivalent CCW chain before kernel construction. Check endpoint coordinates AND tangent direction at both joins. Preserve the upright rectangular section through the bend. No spline, multiple bends, sharp joints or other planes. Numeric fields allow quoted parameter expressions. Expose section_height or section_width as a parameter; height edits must keep the XY path and width fixed. Use this for a rectangular-section bend with optional straight ends, not arc_pipe (which is circular).
+extrude: origin (world XYZ translation),plane (only "xy"),direction (integer 1 or -1 along Z),depth (positive 0.01–256 mm),loops (outer loop first, followed by through-opening loops). Each loop is an ordered list of line/arc objects, joined end-to-start and closed. Line: {"kind":"line","start":[u,v],"end":[u,v]}. Arc: {"kind":"arc","center":[u,v],"radius":positive,"start_angle":degrees,"end_angle":degrees}; CCW from +X, 0 < end-start <=360. A circle is one 0-to-360 arc. Do not split a circle across multiple same-circle arcs. Local u,v are X,Y; origin translates the profile into the world. Numeric profile fields may use quoted parameter expressions. At most 128 edges and 16 loops. No crossing, touching, nested holes, open outlines or splines. Use the exact line/arc outline, not a bounding rectangle. Expose thickness via depth; changing depth must not change the profile. Other extrusion planes are unsupported because their USD round trip is not verified. Do not rotate an extruded profile to evade that restriction.
 box: origin (minimum corner),size (three positive lengths along X,Y,Z).
-cylinder: origin (base centre),radius,height,axis (x/y/z).
+cylinder: origin (base centre),radius,height,axis (x/y/z). Height is positive; the cylinder extends from origin in the POSITIVE axis direction. For a segment that runs from a joint toward negative Y, put its origin at joint_y - height so its positive-Y endpoint meets the joint. Apply the same rule on X and Z. Compute both endpoints; text claiming a negative direction does not change this geometry.
 union/difference: left,right (earlier operation IDs).
 rotate: body,origin (pivot),axis (x/y/z),angle (degrees, 0<angle<=360). Right-hand rotation of a COPY about the world axis through the pivot.
 fillet: body,radius,selector (all/parallel_x/parallel_y/parallel_z).
-chamfer: body,radius (width across all chamfered edges).
+chamfer: body,radius (straight-line width ACROSS the bevel face, applied to all edges). For a 45-degree bevel with setback C along each adjoining face, radius = C * 1.4142135623730951. Expose C as a parameter and use a quoted expression for radius.
 arc_pipe: origin (arc centre),bend_radius,radius,angle (0<angle<=270). Circular solid profile swept along an XY arc from +X anticlockwise. radius < bend_radius.
+revolve: origin (world XYZ translation),axis (exactly "z"),profile (one closed ordered list of 3–128 numeric [r,z] pairs; r = radius from the axis, z = height. The last pair joins back to the first; never repeat the first pair. r must be 0 or positive; the profile never crosses the axis. No crossing, touching, repeated or zero-area edges. Full 360 degrees about +Z; partial angles and spline profiles are unsupported. Numeric fields allow quoted parameter expressions.). This makes ONE axisymmetric solid from its radius-height silhouette: vase, bottle, cup, ring or stepped shaft. Prefer it over stacked cylinders for smooth stepped circular profiles. Keep each vertex an honest straight-line approximation of the drawn curve and disclose that in evidence. Build a HOLLOW vessel with ONE closed profile: base from the axis outward, outer wall up to the rim, rim inward by the wall thickness, inner wall down, inner floor across, back to the axis. Derive every inner radius and floor height from the declared wall and floor thickness values; never invent them. Keep the lowest z at 0 before origin translation. Expose overall height, maximum radius and, for vessels, wall and floor thickness as parameters; an edit to the maximum radius must move every dependent radius by the same amount.
 - Each evidence category contains entries with only id,text. Keep observed, inferred, assumptions and unresolved separate. Unresolved construction values prevent building.
-- constraints contains material joints: {"id":"joint1","kind":"connected","left":"feature1","right":"feature2","min_volume_mm3":0.01}. Both features must occur in final construction. Do not confuse containment with material connection.
+- constraints contains ONLY intentionally overlapping volumetric material joints. Do not add these constraints to tangential pipe/leg joints with matching end faces; those have zero intersection volume even when their union is one connected solid. Full-face fused joints are checked through the final connected solid, not an invented positive overlap requirement. Each volumetric joint has the form: {"id":"joint1","kind":"connected","left":"feature1","right":"feature2","min_volume_mm3":0.01}. Both features must occur in final construction. Do not confuse containment with material connection.
 
 GEOMETRY:
 The whole drawing sheet depicts ONE object. X=width, Y=depth, Z=height. Front projection is XZ, top is XY, right is YZ. A circular feature seen in front has its cylinder axis along Y, not Z. Lowest Z must be zero, including rotated bodies.
 Preserve measured proportions, feature counts, unequal sizes and the declared maximum dimension. Keep one connected final solid. Expose useful dimension parameters.
-Box origin is its minimum corner and its endpoint equals origin + size. Compute joint endpoints explicitly. Extend joined material into both owners by a positive overlap. Never subtract away required joint overlap. Cutters must cross the wall they cut.
-Use rotation for diagonal features and radial patterns. Loft, arbitrary profiles and arbitrary sweeps are unsupported. Do not replace them silently with another construction.
+Box origin is its minimum corner and its endpoint equals origin + size. Compute joint endpoints explicitly. For a volumetric joint, extend joined material into both owners by a positive overlap. Full matching end faces can instead be fused by union into one solid; do not claim positive overlap volume for that face-to-face joint. Gaps and edge-only contact are invalid. Never subtract away required joint overlap. Cutters must cross the wall they cut.
+Use rotation for diagonal features and radial patterns. Closed XY line/arc profile extrusion and the bounded rectangular sweep described above are supported. The rectangular-to-round loft described above is supported. The bounded revolve described above is supported for axisymmetric silhouettes. Other lofts, spline profiles, extrusions in other planes and other sweeps are unsupported. Do not replace them silently with another construction.
 For missing depth or dimensions, choose explicit conservative assumptions and expose parameters. Do not silently discard unresolved drawing details. Return unsupported if uncertainty prevents a supported construction.
 Check placement and dimensions with numeric arithmetic before returning the recipe:
 - A cylinder along X or Y extends one radius below its centre in Z. Put its centre at least that radius above Z=0.
 - A connector endpoint is origin + length, not origin + a radius. Keep it inside the outer envelope while extending it into its owners.
 - Stacked bodies that meet at one plane have zero overlap volume. Extend the internal member into each owner; retain the intended outer heights. The overlap must meet the declared min_volume_mm3, including after later cuts.
+Use the visible shape, not just its object name. Preserve rounded transitions and flat bevels when the drawing shows them. Use a fillet only on the indicated edge family; rounding vertical corners must not round a sharp top or bottom rim.
+For a curved circular-section path, use arc_pipe and any visible straight segments. Its centreline radius differs from its inner and outer radii. Preserve the section size and endpoint positions. Do not replace a curve by a box.
+Expose the actual bend radius, section size and edge-treatment size as useful parameters. Reference these parameters in operation fields and dependent origins. An editable radius must also move connected endpoints and the section centre above the bed where required. Preserve dimensions that the edit is not meant to change.
+Follow the planned axes, cross-sections and endpoint arithmetic in the construction_plan. The plan is an interpretation, not proof: report contradictions with the original image instead of silently changing its feature types.
+Clarification answers are authoritative for their named feature. A thickness_mm answer applies to its kind: wall_thickness, floor_thickness or uniform_thickness (both walls and floor). Preserve it exactly and keep other declared dimensions fixed. Never replace missing wall/floor thickness with an assumption. Clarification opening answers are authoritative for their named opening. Never replace a through-hole/recess answer or recess depth with an assumption. If opening extent remains unresolved without an answer or clear drawing evidence, return unsupported. Other plan uncertainties must be resolved into explicitly disclosed assumptions under the construction-plan default policy, or remain unresolved in recipe evidence and fail validation.
 The interpretation can contain mistakes; check the original image. Evidence is not proof of drawing fidelity.
 """
 
@@ -115,7 +129,7 @@ async def correct_construction(pipeline, out, recipe, failure, attempt, maximum)
 
 
 async def submit_direct_job(image, mime, notes, dimension, extra, controls,
-                            pipeline, results_dir, jobs, prune, save_result):
+                            pipeline, results_dir, jobs, prune, save_result, routing=None):
     if extra:
         raise HTTPException(422, {'code':'unsupported_input', 'message':'Direct BRep currently accepts one drawing sheet. Put all projections on that sheet.'})
     if controls['primary_view'] not in {'front','top','right','left','rear'} or controls['projection_standard'] not in {'first-angle','third-angle'}:
@@ -132,11 +146,13 @@ async def submit_direct_job(image, mime, notes, dimension, extra, controls,
     run_id = uuid.uuid4().hex[:12]
     job = {'job_id':run_id,'kind':'recipe','status':'running','stage':'queued',
            'created':time.monotonic(),'result':None,'error':None,'task':None}
+    if routing is not None:
+        job['routing'] = routing
     jobs[run_id] = job
     prune()
     provenance = {'path':'drawing-to-brep','backend':'usd-brep','prompt_version':PROMPT_VERSION,
                   'correction_prompt_version':CORRECTION_PROMPT_VERSION,'max_construction_corrections':2,
-                  'model':None,'notes':notes,'maximum_dimension_mm':maximum,'controls':controls,
+                  'construction_plan_version':INTENT_VERSION,'model':None,'notes':notes,'maximum_dimension_mm':maximum,'controls':controls,
                   'generated_scad':False,'drawing_fidelity_verified':False,'attempts':[]}
 
     async def prepare(out):
@@ -147,8 +163,36 @@ async def submit_direct_job(image, mime, notes, dimension, extra, controls,
         provenance['model'] = (await pipeline.client.discover()).selected
         (out/'generation.json').write_text(json.dumps(provenance,indent=2))
         evidence = await pipeline.interpret_features(image, mime, controls, out=out)
+        job['stage'] = 'planning BRep geometry'
+        intent_request = {'controls':controls,'maximum_dimension_mm':maximum,'notes':notes}
+        (out/'construction-plan-prompt.txt').write_text(INTENT_PROMPT)
+        (out/'construction-plan-request.json').write_text(json.dumps(intent_request,indent=2))
+        intent_messages = [{'role':'system','content':INTENT_PROMPT},{'role':'user','content':[
+            {'type':'text','text':json.dumps(intent_request)},
+            {'type':'image_url','image_url':{'url':pipeline.client.image_url(image,mime)}}]}]
+        from .clarification import ask_clarification
+        answers=[];history=[]
+        for round_number in range(4):
+            label='construction-plan' if not round_number else f'construction-plan-answer-{round_number}'
+            raw_plan = await pipeline._json_call(intent_messages,out,label,temperature=0)
+            try:
+                plan = validate_plan(raw_plan)
+            except ValueError as exc:
+                raise BuildError('invalid_recipe', 'Construction plan rejected: '+str(exc)) from exc
+            (out/(label+'.json')).write_text(json.dumps(plan,indent=2))
+            question=plan.get('clarification')
+            if not question:
+                break
+            if round_number==3 or any(a['feature_id']==question['feature_id'] and a.get('kind','opening_extent')==question['kind'] for a in answers):
+                raise BuildError('unresolved_design','The drawing still leaves a required design detail unclear after clarification. No part was built.')
+            answer=await ask_clarification(job,out,question,maximum,history)
+            answers.append(answer)
+            intent_request['clarification_answers']=answers
+            (out/f'construction-plan-answer-{round_number+1}-request.json').write_text(json.dumps(intent_request,indent=2))
+            intent_messages[1]['content'][0]['text']=json.dumps(intent_request)
+        (out/'construction-plan.json').write_text(json.dumps(plan,indent=2))
         job['stage'] = 'planning BRep recipe'
-        payload = {'evidence':evidence,'notes':notes,'maximum_dimension_mm':maximum,'controls':controls}
+        payload = {'clarification_answers':answers,'evidence':evidence,'construction_plan':plan,'notes':notes,'maximum_dimension_mm':maximum,'controls':controls}
         (out/'recipe-request.json').write_text(json.dumps(payload,indent=2))
         messages = [{'role':'system','content':PROMPT},{'role':'user','content':[
             {'type':'text','text':json.dumps(payload)},
@@ -182,8 +226,21 @@ async def submit_direct_job(image, mime, notes, dimension, extra, controls,
         provenance['construction_attempts'] = json.loads((out/'build-history.json').read_text())
         (out/'generation.json').write_text(json.dumps(provenance,indent=2))
         result = save_result(out,recipe,built,controls=controls)
+        from .brep_checks import evaluate_drawing
+        from .feature_evidence import view_assignment_evidence
+        geometry_path = out/'geometry.json'
+        geometry = json.loads(geometry_path.read_text()) if geometry_path.exists() else {}
+        views = {name:out/Path(url).relative_to('/results/'+run_id) for name,url in built.get('views',{}).items()}
+        evaluation = evaluate_drawing(image, view_assignment_evidence(geometry), views,
+                                      built['build']['measurements'], controls, maximum)
+        result['evaluation'] = evaluation
+        (out/'drawing-checks.json').write_text(json.dumps(evaluation,indent=2))
+        result['files']['drawing_checks'] = f'/results/{run_id}/drawing-checks.json'
         result.update(model=provenance['model'],generation=provenance,
                       duration_seconds=round(time.monotonic()-job['created'],2))
+        if (out/'clarifications.json').exists():
+            result['files']['clarifications'] = f'/results/{run_id}/clarifications.json'
+        result['files']['construction_plan'] = f'/results/{run_id}/construction-plan.json'
         result['files']['evidence'] = f'/results/{run_id}/feature-evidence.json'
         result['files']['generation'] = f'/results/{run_id}/generation.json'
         (out/'result.json').write_text(json.dumps(result,indent=2))

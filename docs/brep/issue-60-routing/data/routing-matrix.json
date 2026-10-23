@@ -1,0 +1,139 @@
+{
+  "summary": {
+    "drawings": 8,
+    "agree": 2,
+    "disagree": 0,
+    "neutral": 6,
+    "note": "agree = recommended backend produced accepted rows while the other backend produced none; disagree = the reverse; neutral = both or neither accepted (rules cannot be validated there)"
+  },
+  "rows": [
+    {
+      "drawing": "ambiguous",
+      "recommended": "openscad",
+      "rule": "V",
+      "signals": {
+        "view_group_count": 5,
+        "closed_internal_profile_count": 2,
+        "circular_profile_count": 1,
+        "notes_keywords": "no",
+        "dimension_given": false,
+        "kernel_history_hit": false
+      },
+      "openscad_accepted": "0/5",
+      "usd_brep_accepted": "0/5",
+      "verdict": "neutral"
+    },
+    {
+      "drawing": "bookend",
+      "recommended": "openscad",
+      "rule": "V",
+      "signals": {
+        "view_group_count": 2,
+        "closed_internal_profile_count": 4,
+        "circular_profile_count": 1,
+        "notes_keywords": "no",
+        "dimension_given": false,
+        "kernel_history_hit": false
+      },
+      "openscad_accepted": "2/5",
+      "usd_brep_accepted": "0/5",
+      "verdict": "agree"
+    },
+    {
+      "drawing": "curved_handle",
+      "recommended": "openscad",
+      "rule": "V",
+      "signals": {
+        "view_group_count": 6,
+        "closed_internal_profile_count": 0,
+        "circular_profile_count": 0,
+        "notes_keywords": "no",
+        "dimension_given": false,
+        "kernel_history_hit": false
+      },
+      "openscad_accepted": "0/5",
+      "usd_brep_accepted": "0/5",
+      "verdict": "neutral"
+    },
+    {
+      "drawing": "enclosure",
+      "recommended": "openscad",
+      "rule": "V",
+      "signals": {
+        "view_group_count": 2,
+        "closed_internal_profile_count": 1,
+        "circular_profile_count": 0,
+        "notes_keywords": "no",
+        "dimension_given": false,
+        "kernel_history_hit": false
+      },
+      "openscad_accepted": "5/5",
+      "usd_brep_accepted": "0/5",
+      "verdict": "agree"
+    },
+    {
+      "drawing": "missing_thickness",
+      "recommended": "openscad",
+      "rule": "V",
+      "signals": {
+        "view_group_count": 12,
+        "closed_internal_profile_count": 0,
+        "circular_profile_count": 0,
+        "notes_keywords": "no",
+        "dimension_given": false,
+        "kernel_history_hit": false
+      },
+      "openscad_accepted": "0/5",
+      "usd_brep_accepted": "0/5",
+      "verdict": "neutral"
+    },
+    {
+      "drawing": "profiles_empty_notes",
+      "recommended": "openscad",
+      "rule": "V",
+      "signals": {
+        "view_group_count": 11,
+        "closed_internal_profile_count": 4,
+        "circular_profile_count": 3,
+        "notes_keywords": "no",
+        "dimension_given": false,
+        "kernel_history_hit": false
+      },
+      "openscad_accepted": "0/5",
+      "usd_brep_accepted": "0/5",
+      "verdict": "neutral"
+    },
+    {
+      "drawing": "transition",
+      "recommended": "openscad",
+      "rule": "V",
+      "signals": {
+        "view_group_count": 9,
+        "closed_internal_profile_count": 0,
+        "circular_profile_count": 0,
+        "notes_keywords": "no",
+        "dimension_given": false,
+        "kernel_history_hit": false
+      },
+      "openscad_accepted": "0/5",
+      "usd_brep_accepted": "0/5",
+      "verdict": "neutral"
+    },
+    {
+      "drawing": "wheel",
+      "recommended": "openscad",
+      "rule": "V",
+      "signals": {
+        "view_group_count": 6,
+        "closed_internal_profile_count": 0,
+        "circular_profile_count": 0,
+        "notes_keywords": "no",
+        "dimension_given": false,
+        "kernel_history_hit": false
+      },
+      "openscad_accepted": "0/5",
+      "usd_brep_accepted": "0/5",
+      "verdict": "neutral"
+    }
+  ]
+}

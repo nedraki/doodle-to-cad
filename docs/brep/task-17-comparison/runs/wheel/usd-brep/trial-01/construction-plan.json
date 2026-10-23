@@ -1,0 +1,38 @@
+{
+  "view_frame": "Front view (XZ) displays the wheel face with X as horizontal width and Z as vertical height. Right view (YZ) displays the side profile with Y as depth (thickness) and Z as height. The wheel is a flat disc lying in the XZ plane with thickness along Y.",
+  "features": [
+    {
+      "id": "wheel_body",
+      "shape": "Extruded Profile",
+      "section": "Closed XY profile (interpreted as XZ face) extruded along Y",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "OD 120 mm",
+        "thickness 8 mm",
+        "ASSUMED rim_width 10 mm",
+        "ASSUMED hub_diameter 30 mm",
+        "ASSUMED spoke_width 10 mm"
+      ],
+      "placement": "Centered at (0,0,0). Outer boundary is a circle of radius 60 mm in XZ. Inner boundary is a circle of radius 15 mm in XZ. The profile consists of the annulus between these circles, minus 8 rectangular cutouts (spokes) of width 10 mm, rotated at 45-degree intervals.",
+      "evidence": "Front view shows concentric circles and 8 spokes. Text annotation states 'OD 120 mm; thickness 8 mm; 8 spokes'."
+    }
+  ],
+  "connections": [
+    "The 8 spokes connect the central hub to the outer rim.",
+    "The rim connects the outer ends of all spokes.",
+    "The hub connects the inner ends of all spokes."
+  ],
+  "edit_rules": [
+    "Changing OD 120 mm updates the outer circle radius.",
+    "Changing thickness 8 mm updates the extrusion depth along Y.",
+    "Changing ASSUMED rim_width updates the inner radius of the outer circle.",
+    "Changing ASSUMED hub_diameter updates the radius of the inner circle.",
+    "Changing ASSUMED spoke_width updates the width of the 8 rectangular cutouts."
+  ],
+  "unresolved": [
+    "Rim width is not dimensioned; assumed 10 mm.",
+    "Hub diameter is not dimensioned; assumed 30 mm.",
+    "Spoke width is not dimensioned; assumed 10 mm."
+  ],
+  "clarification": null
+}

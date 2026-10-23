@@ -1,0 +1,716 @@
+{
+  "id": "8f7f9e2e4b27",
+  "interpretation": {
+    "version": 1,
+    "object_hypothesis": "Bent handle with a 180-degree arch and straight legs, featuring a constant rectangular cross-section.",
+    "features": [
+      {
+        "id": "arch_body",
+        "type": "body",
+        "description": "Curved arch segment forming the top of the handle.",
+        "status": "observed",
+        "evidence": [
+          {
+            "view_id": "view_7",
+            "region_id": "profile_contour_316"
+          }
+        ],
+        "reason": "Visible as the curved portion of the outer contour in the top view."
+      },
+      {
+        "id": "leg_left",
+        "type": "body",
+        "description": "Straight leg segment on the left side.",
+        "status": "observed",
+        "evidence": [
+          {
+            "view_id": "view_7",
+            "region_id": "profile_contour_316"
+          }
+        ],
+        "reason": "Visible as the left vertical extension of the outer contour."
+      },
+      {
+        "id": "leg_right",
+        "type": "body",
+        "description": "Straight leg segment on the right side.",
+        "status": "observed",
+        "evidence": [
+          {
+            "view_id": "view_7",
+            "region_id": "profile_contour_316"
+          }
+        ],
+        "reason": "Visible as the right vertical extension of the outer contour."
+      },
+      {
+        "id": "section_profile",
+        "type": "profile",
+        "description": "Rectangular cross-section of the handle.",
+        "status": "observed",
+        "evidence": [
+          {
+            "view_id": "view_8",
+            "region_id": "profile_contour_208"
+          }
+        ],
+        "reason": "The right view shows a rectangular profile corresponding to the handle's cross-section."
+      },
+      {
+        "id": "flat_end_left",
+        "type": "other",
+        "description": "Termination of the left leg.",
+        "status": "observed",
+        "evidence": [
+          {
+            "view_id": "view_7",
+            "region_id": "profile_contour_316"
+          }
+        ],
+        "reason": "The contour closes with a straight line at the bottom of the left leg."
+      },
+      {
+        "id": "flat_end_right",
+        "type": "other",
+        "description": "Termination of the right leg.",
+        "status": "observed",
+        "evidence": [
+          {
+            "view_id": "view_7",
+            "region_id": "profile_contour_316"
+          }
+        ],
+        "reason": "The contour closes with a straight line at the bottom of the right leg."
+      }
+    ],
+    "relationships": [
+      {
+        "id": "leg_arch_conn_left",
+        "type": "connected",
+        "features": [
+          "leg_left",
+          "arch_body"
+        ],
+        "description": "Left leg connects to the arch.",
+        "status": "inferred",
+        "evidence": [
+          {
+            "view_id": "view_7",
+            "region_id": "profile_contour_316"
+          }
+        ],
+        "reason": "Continuous boundary line in the top view.",
+        "model_status": "observed",
+        "review_note": "Visible projected continuity does not prove a connected 3D solid."
+      },
+      {
+        "id": "leg_arch_conn_right",
+        "type": "connected",
+        "features": [
+          "leg_right",
+          "arch_body"
+        ],
+        "description": "Right leg connects to the arch.",
+        "status": "inferred",
+        "evidence": [
+          {
+            "view_id": "view_7",
+            "region_id": "profile_contour_316"
+          }
+        ],
+        "reason": "Continuous boundary line in the top view.",
+        "model_status": "observed",
+        "review_note": "Visible projected continuity does not prove a connected 3D solid."
+      },
+      {
+        "id": "symmetry",
+        "type": "symmetry",
+        "features": [
+          "leg_left",
+          "leg_right"
+        ],
+        "description": "Left and right legs appear symmetrical.",
+        "status": "inferred",
+        "evidence": [
+          {
+            "view_id": "view_7",
+            "region_id": "profile_contour_316"
+          }
+        ],
+        "reason": "Visual balance of the legs in the top view suggests symmetry."
+      },
+      {
+        "id": "section_consistency",
+        "type": "shared_dimension",
+        "features": [
+          "arch_body",
+          "leg_left",
+          "leg_right"
+        ],
+        "description": "Uniform width of the handle throughout.",
+        "status": "unresolved",
+        "evidence": [
+          {
+            "view_id": "view_7",
+            "region_id": "profile_contour_316"
+          }
+        ],
+        "reason": "The distance between inner and outer contours appears constant in the top view.",
+        "model_status": "inferred",
+        "review_note": "Shared dimensions require evidence from at least two views."
+      }
+    ],
+    "assumptions": [
+      "The object is a single solid part.",
+      "The cross-section is constant along the entire length of the handle.",
+      "The handle lies flat in the XY plane."
+    ],
+    "unresolved": [
+      "Exact thickness of the handle (Z-height) is not directly measured in the top view.",
+      "Exact length of the straight legs is not measured.",
+      "section_consistency: Shared dimensions require evidence from at least two views."
+    ],
+    "conflicts": [],
+    "review": {
+      "reference_integrity_checked": true,
+      "drawing_fidelity_verified": false,
+      "policy_warnings": [
+        "leg_arch_conn_left: Visible projected continuity does not prove a connected 3D solid.",
+        "leg_arch_conn_right: Visible projected continuity does not prove a connected 3D solid.",
+        "section_consistency: Shared dimensions require evidence from at least two views."
+      ],
+      "executable": false
+    }
+  },
+  "regions": [
+    {
+      "view_id": "view_1",
+      "direction": "unassigned",
+      "sheet_bbox_normalized": [
+        0.0901,
+        0.1435,
+        0.3267,
+        0.0323
+      ],
+      "cad_mapping": {},
+      "view_assignment": "spatial heuristic",
+      "region_id": "view",
+      "kind": "view",
+      "bbox_view_normalized": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "measured_span_pixels": {
+        "horizontal_axis_u": 377,
+        "vertical_axis_v": 34
+      }
+    },
+    {
+      "view_id": "view_2",
+      "direction": "unassigned",
+      "sheet_bbox_normalized": [
+        0.1326,
+        0.1835,
+        0.0867,
+        0.0342
+      ],
+      "cad_mapping": {},
+      "view_assignment": "spatial heuristic",
+      "region_id": "view",
+      "kind": "view",
+      "bbox_view_normalized": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "measured_span_pixels": {
+        "horizontal_axis_u": 100,
+        "vertical_axis_v": 36
+      }
+    },
+    {
+      "view_id": "view_3",
+      "direction": "unassigned",
+      "sheet_bbox_normalized": [
+        0.6222,
+        0.2538,
+        0.0988,
+        0.0323
+      ],
+      "cad_mapping": {},
+      "view_assignment": "spatial heuristic",
+      "region_id": "view",
+      "kind": "view",
+      "bbox_view_normalized": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "measured_span_pixels": {
+        "horizontal_axis_u": 114,
+        "vertical_axis_v": 34
+      }
+    },
+    {
+      "view_id": "view_4",
+      "direction": "unassigned",
+      "sheet_bbox_normalized": [
+        0.6213,
+        0.289,
+        0.1889,
+        0.0323
+      ],
+      "cad_mapping": {},
+      "view_assignment": "spatial heuristic",
+      "region_id": "view",
+      "kind": "view",
+      "bbox_view_normalized": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "measured_span_pixels": {
+        "horizontal_axis_u": 218,
+        "vertical_axis_v": 34
+      }
+    },
+    {
+      "view_id": "view_5",
+      "direction": "unassigned",
+      "sheet_bbox_normalized": [
+        0.6213,
+        0.3241,
+        0.1482,
+        0.0323
+      ],
+      "cad_mapping": {},
+      "view_assignment": "spatial heuristic",
+      "region_id": "view",
+      "kind": "view",
+      "bbox_view_normalized": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "measured_span_pixels": {
+        "horizontal_axis_u": 171,
+        "vertical_axis_v": 34
+      }
+    },
+    {
+      "view_id": "view_6",
+      "direction": "unassigned",
+      "sheet_bbox_normalized": [
+        0.6213,
+        0.3593,
+        0.1525,
+        0.0314
+      ],
+      "cad_mapping": {},
+      "view_assignment": "spatial heuristic",
+      "region_id": "view",
+      "kind": "view",
+      "bbox_view_normalized": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "measured_span_pixels": {
+        "horizontal_axis_u": 176,
+        "vertical_axis_v": 33
+      }
+    },
+    {
+      "view_id": "view_7",
+      "direction": "top",
+      "sheet_bbox_normalized": [
+        0.1317,
+        0.2177,
+        0.4619,
+        0.4221
+      ],
+      "cad_mapping": {
+        "plane": "XY",
+        "view_axis": "Z",
+        "u_maps_to": "+X",
+        "v_maps_to": "-Y"
+      },
+      "view_assignment": "spatial heuristic",
+      "region_id": "view",
+      "kind": "view",
+      "bbox_view_normalized": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "measured_span_pixels": {
+        "horizontal_axis_u": 533,
+        "vertical_axis_v": 444
+      }
+    },
+    {
+      "view_id": "view_7",
+      "direction": "top",
+      "sheet_bbox_normalized": [
+        0.1317,
+        0.2177,
+        0.4619,
+        0.4221
+      ],
+      "cad_mapping": {
+        "plane": "XY",
+        "view_axis": "Z",
+        "u_maps_to": "+X",
+        "v_maps_to": "-Y"
+      },
+      "view_assignment": "spatial heuristic",
+      "region_id": "profile_contour_316",
+      "kind": "outer",
+      "profile_id": "contour_316",
+      "bbox_view_normalized": [
+        0.0169,
+        0.0201,
+        0.9643,
+        0.9593
+      ],
+      "center_view_normalized": [
+        0.499,
+        0.4999
+      ],
+      "polygon_view_normalized": [
+        [
+          0.0881,
+          0.2883
+        ],
+        [
+          0.0188,
+          0.9751
+        ],
+        [
+          0.1483,
+          0.9706
+        ],
+        [
+          0.199,
+          0.3738
+        ],
+        [
+          0.4616,
+          0.1779
+        ],
+        [
+          0.7673,
+          0.3288
+        ],
+        [
+          0.848,
+          0.9728
+        ],
+        [
+          0.9794,
+          0.9728
+        ],
+        [
+          0.9606,
+          0.4369
+        ],
+        [
+          0.7447,
+          0.099
+        ],
+        [
+          0.3639,
+          0.0405
+        ]
+      ],
+      "vertices": 11,
+      "circularity": 0.175,
+      "area_ratio_of_sheet": 0.05954
+    },
+    {
+      "view_id": "view_8",
+      "direction": "right",
+      "sheet_bbox_normalized": [
+        0.6213,
+        0.4116,
+        0.2678,
+        0.0703
+      ],
+      "cad_mapping": {
+        "plane": "YZ",
+        "view_axis": "X",
+        "u_maps_to": "+Y",
+        "v_maps_to": "-Z"
+      },
+      "view_assignment": "spatial heuristic",
+      "region_id": "view",
+      "kind": "view",
+      "bbox_view_normalized": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "measured_span_pixels": {
+        "horizontal_axis_u": 309,
+        "vertical_axis_v": 74
+      }
+    },
+    {
+      "view_id": "view_8",
+      "direction": "right",
+      "sheet_bbox_normalized": [
+        0.6213,
+        0.4116,
+        0.2678,
+        0.0703
+      ],
+      "cad_mapping": {
+        "plane": "YZ",
+        "view_axis": "X",
+        "u_maps_to": "+Y",
+        "v_maps_to": "-Z"
+      },
+      "view_assignment": "spatial heuristic",
+      "region_id": "profile_contour_208",
+      "kind": "outer",
+      "profile_id": "contour_208",
+      "bbox_view_normalized": [
+        0.6344,
+        0.6358,
+        0.1199,
+        0.2034
+      ],
+      "center_view_normalized": [
+        0.6942,
+        0.7368
+      ],
+      "polygon_view_normalized": [
+        [
+          0.6344,
+          0.6757
+        ],
+        [
+          0.6441,
+          0.825
+        ],
+        [
+          0.6665,
+          0.8108
+        ],
+        [
+          0.6763,
+          0.7027
+        ],
+        [
+          0.686,
+          0.8108
+        ],
+        [
+          0.7024,
+          0.8108
+        ],
+        [
+          0.7121,
+          0.7027
+        ],
+        [
+          0.7315,
+          0.825
+        ],
+        [
+          0.7509,
+          0.771
+        ],
+        [
+          0.7412,
+          0.6757
+        ],
+        [
+          0.699,
+          0.6757
+        ],
+        [
+          0.6927,
+          0.744
+        ],
+        [
+          0.6636,
+          0.6358
+        ],
+        [
+          0.6538,
+          0.798
+        ],
+        [
+          0.6441,
+          0.7568
+        ],
+        [
+          0.6538,
+          0.6757
+        ]
+      ],
+      "vertices": 16,
+      "circularity": 0.132,
+      "area_ratio_of_sheet": 0.0002
+    },
+    {
+      "view_id": "view_9",
+      "direction": "unassigned",
+      "sheet_bbox_normalized": [
+        0.6213,
+        0.4819,
+        0.1733,
+        0.0323
+      ],
+      "cad_mapping": {},
+      "view_assignment": "spatial heuristic",
+      "region_id": "view",
+      "kind": "view",
+      "bbox_view_normalized": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "measured_span_pixels": {
+        "horizontal_axis_u": 200,
+        "vertical_axis_v": 34
+      }
+    },
+    {
+      "view_id": "view_10",
+      "direction": "unassigned",
+      "sheet_bbox_normalized": [
+        0.6213,
+        0.5171,
+        0.2669,
+        0.0352
+      ],
+      "cad_mapping": {},
+      "view_assignment": "spatial heuristic",
+      "region_id": "view",
+      "kind": "view",
+      "bbox_view_normalized": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "measured_span_pixels": {
+        "horizontal_axis_u": 308,
+        "vertical_axis_v": 37
+      }
+    },
+    {
+      "view_id": "view_11",
+      "direction": "unassigned",
+      "sheet_bbox_normalized": [
+        0.2929,
+        0.6445,
+        0.1534,
+        0.0314
+      ],
+      "cad_mapping": {},
+      "view_assignment": "spatial heuristic",
+      "region_id": "view",
+      "kind": "view",
+      "bbox_view_normalized": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "measured_span_pixels": {
+        "horizontal_axis_u": 177,
+        "vertical_axis_v": 33
+      }
+    },
+    {
+      "view_id": "view_12",
+      "direction": "unassigned",
+      "sheet_bbox_normalized": [
+        0.1334,
+        0.6835,
+        0.227,
+        0.0361
+      ],
+      "cad_mapping": {},
+      "view_assignment": "spatial heuristic",
+      "region_id": "view",
+      "kind": "view",
+      "bbox_view_normalized": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "measured_span_pixels": {
+        "horizontal_axis_u": 262,
+        "vertical_axis_v": 38
+      }
+    }
+  ],
+  "shared_axis_evidence": [
+    {
+      "axis": "Y",
+      "evidence": [
+        {
+          "view_id": "view_7",
+          "region_id": "view"
+        },
+        {
+          "view_id": "view_8",
+          "region_id": "view"
+        }
+      ],
+      "measured_spans_pixels": [
+        444,
+        309
+      ],
+      "relative_difference": 0.3041,
+      "status": "review_required",
+      "assumption": "Views use the same drawing scale and their assigned directions are correct.",
+      "physical_dimension_verified": false
+    }
+  ],
+  "view_assignment_review": {
+    "excluded_from_direction_assignment": [
+      "view_2",
+      "view_3",
+      "view_4",
+      "view_5",
+      "view_6",
+      "view_9",
+      "view_10",
+      "view_11",
+      "view_12"
+    ],
+    "rule": "Groups below 5% of the largest group box area remain unassigned; they may be text or detail views.",
+    "regions_retained": true
+  },
+  "controls": {
+    "object_type_hint": "",
+    "method": "3D print",
+    "primary_view": "top",
+    "projection_standard": "third-angle",
+    "strict_watertight": true,
+    "refine_mode": "regularize"
+  },
+  "notes": "",
+  "default_generation_changed": false,
+  "files": {
+    "input": "/results/8f7f9e2e4b27/input.png",
+    "overlay": "/results/8f7f9e2e4b27/geometry-overlay.png",
+    "interpretation": "/results/8f7f9e2e4b27/feature-evidence.json"
+  }
+}

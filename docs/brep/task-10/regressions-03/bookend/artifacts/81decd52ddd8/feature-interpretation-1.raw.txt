@@ -1,0 +1,171 @@
+```json
+{
+  "version": 1,
+  "object_hypothesis": "L-shaped bracket with a vertical face containing multiple rectangular openings",
+  "features": [
+    {
+      "id": "body_front",
+      "type": "body",
+      "description": "Rectangular outer boundary of the front view",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_0"
+        }
+      ],
+      "reason": "Closed polygon defining the extent of the front face."
+    },
+    {
+      "id": "opening_top_left",
+      "type": "opening",
+      "description": "Rectangular cutout located in the upper-left quadrant of the front face",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_8"
+        }
+      ],
+      "reason": "Internal closed contour distinct from the outer boundary."
+    },
+    {
+      "id": "opening_center",
+      "type": "opening",
+      "description": "Vertical rectangular cutout located in the center of the front face",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_6"
+        }
+      ],
+      "reason": "Internal closed contour distinct from the outer boundary."
+    },
+    {
+      "id": "opening_bottom_left",
+      "type": "opening",
+      "description": "Vertical rectangular cutout located in the lower-left quadrant of the front face",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_4"
+        }
+      ],
+      "reason": "Internal closed contour distinct from the outer boundary."
+    },
+    {
+      "id": "opening_bottom_right",
+      "type": "opening",
+      "description": "Vertical rectangular cutout located in the lower-right quadrant of the front face",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_2"
+        }
+      ],
+      "reason": "Internal closed contour distinct from the outer boundary."
+    },
+    {
+      "id": "body_side",
+      "type": "body",
+      "description": "L-shaped profile of the side view",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_10"
+        }
+      ],
+      "reason": "Closed polygon showing the object's thickness and depth profile."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "rel_openings_in_face",
+      "type": "position",
+      "features": [
+        "opening_top_left",
+        "opening_center",
+        "opening_bottom_left",
+        "opening_bottom_right",
+        "body_front"
+      ],
+      "description": "Four openings are positioned within the rectangular front face",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_8"
+        },
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_6"
+        },
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_4"
+        },
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_2"
+        },
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_0"
+        }
+      ],
+      "reason": "Internal contours are spatially contained within the outer contour in the front view."
+    },
+    {
+      "id": "rel_front_side_height",
+      "type": "shared_dimension",
+      "features": [
+        "body_front",
+        "body_side"
+      ],
+      "description": "The vertical height of the front view corresponds to the vertical height of the side view",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_0"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_10"
+        }
+      ],
+      "reason": "Standard orthographic alignment suggests the vertical extent (Z-axis) is shared between the front and right views."
+    },
+    {
+      "id": "rel_side_shape",
+      "type": "other",
+      "features": [
+        "body_side"
+      ],
+      "description": "The object has an L-shaped cross-section",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_10"
+        }
+      ],
+      "reason": "The side view explicitly shows a vertical section and a horizontal base section."
+    }
+  ],
+  "assumptions": [
+    "The views represent a single 3D object.",
+    "The front view corresponds to the face with the openings.",
+    "The side view corresponds to the profile of the object's thickness and depth."
+  ],
+  "unresolved": [
+    "Whether the openings are through-holes or blind pockets (depth is not visible).",
+    "The exact thickness of the material (wall thickness) is not explicitly dimensioned."
+  ],
+  "conflicts": []
+}
+```

@@ -1,0 +1,96 @@
+{
+  "drawing": "003_front_grille_multiview",
+  "backend": "openscad",
+  "trial": 1,
+  "submitted_at": "2026-10-19T15:19:09.129469+00:00",
+  "finished_at": "2026-10-19T15:24:20.140310+00:00",
+  "run_id": "acfadf34d610",
+  "wall_seconds": 311.0,
+  "job_status": "done",
+  "error": null,
+  "questions_asked": 0,
+  "question_kinds": [],
+  "build": {
+    "watertight": true,
+    "components": 1,
+    "genus": 0,
+    "extents_mm": [
+      123.077,
+      7.52,
+      75.693
+    ],
+    "volume_mm3": 54971.4,
+    "sha256": "77760556cbe26f44f8af56c0b3552e40d33ec9ea3a248d7ef7017cb2656d8f75",
+    "bytes": 6877
+  },
+  "checks": {
+    "build_success": true,
+    "extents_pass": false,
+    "genus_pass": false,
+    "volume_pass": false,
+    "fidelity_pass": false,
+    "overall_pass": false,
+    "not_applicable": []
+  },
+  "fidelity": {
+    "scores": {
+      "front": 0.35,
+      "top": 0.963
+    },
+    "pass": false,
+    "reason": null,
+    "topology": {
+      "front": {
+        "expected": 9,
+        "actual": 0,
+        "position_fidelity": 0.0
+      },
+      "top": {
+        "expected": 0,
+        "actual": 3,
+        "position_fidelity": null
+      }
+    }
+  },
+  "product": {
+    "success": false,
+    "accepted": false,
+    "status": null,
+    "score": 74.4,
+    "projection_status": null,
+    "geometry_status": null,
+    "failures": [
+      "required internal profiles are missing: front demands 9, renders 0; best rendered view has 3. Missing at these view-local centres \u2014 add cutters there: (u=0.832,v=0.628); (u=0.166,v=0.625); (u=0.564,v=0.421); (u=0.694,v=0.441); (u=0.629,v=0.426); (u=0.499,v=0.43).",
+      "openings do not go through the solid: the drawing demands 9 openings across the registered views (strongest: front) but the mesh has 0 true through-holes \u2014 the rendered openings are blind pockets or edge notches; cut all the way through the wall",
+      "CAD projections poorly match the drawing: front similarity 0.35 (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly.",
+      "features exist but sit at the wrong positions in front view(s): match each opening's location (u,v within the outer profile) to the drawing; check the cad_mapping signs (front: u->+X v->-Z; top: u->+X v->-Y i.e. sheet-down is the FRONT of the part)"
+    ]
+  },
+  "attempts": {
+    "count": 3,
+    "recovered": false,
+    "corrections": null,
+    "selected": 2
+  },
+  "unsupported": {
+    "flag": false,
+    "code": null
+  },
+  "edit": {
+    "available": true,
+    "ok": true,
+    "seconds": 0.55,
+    "param": "width",
+    "old": 126.0,
+    "new": 151.2,
+    "message": null
+  },
+  "targeted": {
+    "available": false,
+    "ok": false,
+    "seconds": null,
+    "operation": null,
+    "value": null,
+    "message": "not_applicable: the product requires a BRep result for targeted edits"
+  }
+}

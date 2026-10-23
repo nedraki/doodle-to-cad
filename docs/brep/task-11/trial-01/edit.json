@@ -1,0 +1,137 @@
+{
+  "ok": true,
+  "backend": "usd-brep",
+  "applied": {
+    "base_width": 48
+  },
+  "stl": "/results/9c190363732f/brep-ed9f45c1b9a1489092428d7b31826ae0/model.stl",
+  "source": "/results/9c190363732f/brep-ed9f45c1b9a1489092428d7b31826ae0/model.recipe.json",
+  "usd": "/results/9c190363732f/brep-ed9f45c1b9a1489092428d7b31826ae0/model.usda",
+  "diagnostics": {
+    "backend": "usd-brep",
+    "version": "1.0.0",
+    "recipe_version": 2,
+    "solid_volume_mm3": 40885.53344099346,
+    "mesh_volume_mm3": 40873.53105991438,
+    "extents_mm": [
+      48.0,
+      30.0,
+      50.0
+    ],
+    "bounds_mm": [
+      [
+        -24.0,
+        -15.0,
+        0.0
+      ],
+      [
+        24.0,
+        15.0,
+        50.0
+      ]
+    ],
+    "watertight": true,
+    "winding_consistent": true,
+    "euler_number": 2,
+    "triangles": 6040,
+    "usd_roundtrip": true,
+    "volume_relative_accuracy": 1e-08,
+    "usd_volume_mm3": 40885.53344099347,
+    "operations": [
+      {
+        "id": "transition",
+        "kind": "loft",
+        "faces": 6
+      }
+    ],
+    "connections": [],
+    "build_seconds": 0.357
+  },
+  "views": {
+    "isometric": "/results/9c190363732f/brep-ed9f45c1b9a1489092428d7b31826ae0/view-isometric.png",
+    "front": "/results/9c190363732f/brep-ed9f45c1b9a1489092428d7b31826ae0/view-front.png",
+    "top": "/results/9c190363732f/brep-ed9f45c1b9a1489092428d7b31826ae0/view-top.png",
+    "right": "/results/9c190363732f/brep-ed9f45c1b9a1489092428d7b31826ae0/view-right.png"
+  },
+  "build": {
+    "version": 1,
+    "backend": "usd-brep",
+    "source_format": "brep-recipe-v2",
+    "ok": true,
+    "units": "mm",
+    "axes": {
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    },
+    "views": [
+      "isometric",
+      "front",
+      "top",
+      "right"
+    ],
+    "measurements": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 6040,
+      "extents_mm": [
+        48.0,
+        30.0,
+        50.0
+      ],
+      "volume_mm3": 40873.531
+    },
+    "diagnostics": [],
+    "drawing_evaluated": false
+  },
+  "params": [
+    {
+      "name": "base_width",
+      "value": 48.0,
+      "low": 10,
+      "high": 100,
+      "step": 0.01,
+      "label": "Base Width",
+      "unit": "mm",
+      "description": "Width of the rectangular base along X",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "base_depth",
+      "value": 30.0,
+      "low": 10,
+      "high": 100,
+      "step": 0.01,
+      "label": "Base Depth",
+      "unit": "mm",
+      "description": "Depth of the rectangular base along Y",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "top_diameter",
+      "value": 20.0,
+      "low": 5,
+      "high": 100,
+      "step": 0.01,
+      "label": "Top Diameter",
+      "unit": "mm",
+      "description": "Diameter of the circular top",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "height",
+      "value": 50.0,
+      "low": 10,
+      "high": 200,
+      "step": 0.01,
+      "label": "Height",
+      "unit": "mm",
+      "description": "Total height of the transition piece along Z",
+      "group": "Details",
+      "feature": null
+    }
+  ]
+}

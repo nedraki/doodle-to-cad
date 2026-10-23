@@ -1,0 +1,9 @@
+{
+  "job_id": "f5094f485f35",
+  "status": "error",
+  "stage": "failed",
+  "error": {
+    "message": "usd_brep 1.0.0 kernel returned a non-manifold solid: bracket_shape: kernel produced an invalid solid. Observed twice in the frozen comparison on spoke operations (docs/brep/task-17-comparison wheel trial-04/05); the triggering recipe was not retained, so no minimal reproducer exists yet (issue #61). Retry with the OpenSCAD backend.",
+    "code": "kernel_unavailable"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "view_frame": "The drawing provides a TOP (XY) view. The X-axis represents the width (40 mm), the Y-axis represents the depth (30 mm), and the Z-axis represents the thickness/height (12 mm). The origin (0,0,0) is assumed to be the bottom-left-front corner of the block.",
+  "features": [
+    {
+      "id": "block_body",
+      "shape": "Rectangular Prism",
+      "section": "Rectangle",
+      "axis_or_plane": "XY plane (Top view)",
+      "dimensions": [
+        "40 mm (X)",
+        "30 mm (Y)",
+        "12 mm (Z)"
+      ],
+      "placement": "Centred at (20, 15, 6). Extends from (0,0,0) to (40,30,12).",
+      "evidence": "Text 'Body: 40 wide x 30 deep x 12 thick' and the rectangular outline in the TOP view."
+    },
+    {
+      "id": "opening_centre",
+      "shape": "Circle",
+      "section": "Circle",
+      "axis_or_plane": "XY plane (Top view)",
+      "dimensions": [
+        "Ø8 mm"
+      ],
+      "placement": "Centred at (20, 15). The circle lies in the XY plane at Z=12 (top face).",
+      "evidence": "Circular outline in the TOP view with dimension 'Ø8' and text 'Opening centred in top face'."
+    }
+  ],
+  "connections": [
+    "The opening is located within the block body.",
+    "The opening is concentric with the block body in the XY plane."
+  ],
+  "edit_rules": [
+    "If the block width (X) changes, the opening centre X-coordinate must update to width/2.",
+    "If the block depth (Y) changes, the opening centre Y-coordinate must update to depth/2.",
+    "If the opening diameter changes, the circle radius in the top view must update."
+  ],
+  "unresolved": [
+    "The depth of the opening is not specified. It is unclear if this is a through-hole (12 mm deep) or a blind hole/recess of a specific depth."
+  ],
+  "clarification": {
+    "feature_id": "opening_centre",
+    "feature_label": "Ø8 Opening in top face",
+    "reason": "The drawing shows the opening in the top view but does not indicate if it goes all the way through the 12mm thickness or stops at a specific depth.",
+    "kind": "opening_extent"
+  }
+}

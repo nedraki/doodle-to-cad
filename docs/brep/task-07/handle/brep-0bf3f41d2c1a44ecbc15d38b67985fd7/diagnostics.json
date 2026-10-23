@@ -1,0 +1,60 @@
+{
+  "backend": "usd-brep",
+  "version": "1.0.0",
+  "recipe_version": 1,
+  "solid_volume_mm3": 6174.196741149019,
+  "mesh_volume_mm3": 6129.292688854975,
+  "extents_mm": [
+    48.0,
+    53.99403381347656,
+    8.000000203998283
+  ],
+  "bounds_mm": [
+    [
+      -24.0,
+      -30.0,
+      -2.0399828315476043e-07
+    ],
+    [
+      24.0,
+      23.994033813476562,
+      8.0
+    ]
+  ],
+  "watertight": true,
+  "winding_consistent": true,
+  "euler_number": 2,
+  "triangles": 2236,
+  "usd_roundtrip": true,
+  "volume_relative_accuracy": 1e-08,
+  "usd_volume_mm3": 6174.19676380205,
+  "operations": [
+    {
+      "id": "arc",
+      "kind": "arc_pipe",
+      "faces": 3
+    },
+    {
+      "id": "left",
+      "kind": "cylinder",
+      "faces": 3
+    },
+    {
+      "id": "right",
+      "kind": "cylinder",
+      "faces": 3
+    },
+    {
+      "id": "join",
+      "kind": "union",
+      "faces": 4
+    },
+    {
+      "id": "part",
+      "kind": "union",
+      "faces": 5
+    }
+  ],
+  "connections": [],
+  "build_seconds": 1.814
+}

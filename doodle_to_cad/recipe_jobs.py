@@ -75,8 +75,12 @@ async def run_recipe_job(job, recipe, results_dir: Path, save_result, *, prepare
         out.mkdir()
         if prepare is not None:
             job['stage'] = 'interpreting drawing'
-            async with asyncio.timeout(600):
-                recipe = await prepare(out)
+            async with asyncio.timeout(600) as timer:
+                job['_prepare_timeout'] = timer
+                try:
+                    recipe = await prepare(out)
+                finally:
+                    job.pop('_prepare_timeout', None)
         history = []
         for attempt in range(1, 4 if repair is not None else 2):
             attempt_dir = out / 'construction-attempts' / str(attempt)

@@ -1,0 +1,185 @@
+{
+  "object": "Rounded Open Tray",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "top",
+      "sheet_region": "view_7",
+      "constrains": "Outer footprint (60x40), inner cavity footprint (wall thickness), corner radii (R6 outer)."
+    },
+    {
+      "direction": "front",
+      "sheet_region": "view_8",
+      "constrains": "Overall height (20), wall thickness (visualized as vertical lines), flat rim."
+    },
+    {
+      "direction": "left",
+      "sheet_region": "view_9",
+      "constrains": "Overall depth (40), wall thickness (visualized as vertical lines), flat rim."
+    },
+    {
+      "direction": "section",
+      "sheet_region": "view_10",
+      "constrains": "Cross-section profile showing U-shape, uniform wall and floor thickness."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "tray_body",
+      "name": "Tray Body",
+      "material": "generic_plastic",
+      "geometry_type": "shell"
+    }
+  ],
+  "features": [
+    {
+      "id": "outer_profile",
+      "type": "profile",
+      "description": "Rectangular base with rounded corners (R6)",
+      "dimensions": {
+        "length": 60,
+        "width": 40,
+        "corner_radius": 6
+      }
+    },
+    {
+      "id": "inner_cavity",
+      "type": "cutout",
+      "description": "Inner rectangular cavity with rounded corners",
+      "dimensions": {
+        "length": "60 - 2*t",
+        "width": "40 - 2*t",
+        "corner_radius": "6 - t"
+      }
+    },
+    {
+      "id": "rim",
+      "type": "face",
+      "description": "Flat top rim formed by the difference between outer and inner profiles"
+    }
+  ],
+  "relations": [
+    {
+      "type": "concentric",
+      "targets": [
+        "outer_profile",
+        "inner_cavity"
+      ],
+      "description": "Inner cavity is concentric with outer profile"
+    },
+    {
+      "type": "parallel",
+      "targets": [
+        "rim",
+        "floor"
+      ],
+      "description": "Top rim is parallel to the bottom floor"
+    }
+  ],
+  "symmetry": {
+    "planes": [
+      "XZ",
+      "YZ"
+    ],
+    "axes": [
+      "Z"
+    ]
+  },
+  "repetitions": [],
+  "dimensions": {
+    "overall_length": 60,
+    "overall_width": 40,
+    "overall_height": 20,
+    "outer_corner_radius": 6,
+    "wall_thickness": "unspecified",
+    "max_width": 46.15,
+    "max_depth": 5.31,
+    "max_height": 60.0,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "Wall and floor thickness value is not explicitly given in the drawing text, though visually represented in the section view."
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "The object is a simple open tray. The construction requires a base profile (60x40 with R6 corners) extruded to height 20. A boolean subtraction of an inner profile (offset by wall thickness) from the top down to the floor level (offset by floor thickness) creates the cavity. The prompt states 'Same wall and floor thickness', implying a uniform shell thickness 't'. Since 't' is not given, a default reasonable value (e.g., 2mm or 3mm) must be inferred or left as a parameter.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "shell",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_2",
+        "operation": "extrude",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "owner": "tray_body",
+        "parameters": {
+          "height": 20,
+          "start_z": 0
+        },
+        "source_views": [
+          "view_8",
+          "view_9"
+        ]
+      },
+      {
+        "id": "op_3",
+        "operation": "shell",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "owner": "tray_body",
+        "parameters": {
+          "thickness": "inferred_default",
+          "open_face": "top",
+          "remove_faces": [
+            "top"
+          ]
+        },
+        "source_views": [
+          "view_10"
+        ]
+      },
+      {
+        "id": "inner_cavity",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Inner rectangular cavity with rounded corners"
+        },
+        "source_views": []
+      }
+    ],
+    "unresolved_constraints": [
+      "Wall and floor thickness value is missing."
+    ]
+  },
+  "user_intent": {
+    "description": "",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "60"
+  },
+  "source_view_group_count": 12,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

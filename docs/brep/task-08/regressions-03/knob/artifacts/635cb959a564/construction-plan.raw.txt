@@ -1,0 +1,29 @@
+{
+  "view_frame": "The drawing presents two views of a single object, likely a front view and a rear view (or a mirrored view), arranged side-by-side. The primary view is Front (XZ plane). The object is a flat, symmetrical bracket or connector. The X-axis represents width, the Y-axis represents depth (thickness), and the Z-axis represents height. The object is centered at the origin (0,0,0) in the XY plane.",
+  "features": [
+    {
+      "id": "main_body",
+      "shape": "Extruded polygon",
+      "section": "Polygonal profile",
+      "axis_or_plane": "XY plane (extruded along Z)",
+      "dimensions": [
+        "120.0",
+        "ASSUMED: 10.0 (thickness)"
+      ],
+      "placement": "Centered at (0,0). The profile is defined by 16 vertices forming a symmetrical 'H' or bracket shape. The outer width is 120mm. The top and bottom flanges extend to +/- 60mm in X. The central web is narrower. The profile is symmetric about both X and Z axes.",
+      "evidence": "The drawing shows a closed polygonal outline with a central constriction and wider flanges at the top and bottom. The shape is mirrored in the second view."
+    }
+  ],
+  "connections": [
+    "The main_body is a single continuous solid."
+  ],
+  "edit_rules": [
+    "Changing the overall width (120.0) scales the X-coordinates of all vertices proportionally.",
+    "Changing the thickness (ASSUMED: 10.0) adjusts the extrusion depth along the Z-axis.",
+    "The profile must remain symmetric about the X and Z axes to maintain the bracket shape."
+  ],
+  "unresolved": [
+    "The exact thickness of the object is not specified in the drawing. An assumption of 10.0mm is used for the extrusion depth.",
+    "The specific dimensions of the inner web width and flange heights are not explicitly dimensioned, only visually represented. These are derived from the visual proportions of the 120mm width."
+  ]
+}

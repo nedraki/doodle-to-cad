@@ -1,0 +1,122 @@
+{
+  "object": "Greek vase (amphora)",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "front",
+      "sheet_region": "center",
+      "constrains": "Outer silhouette profile (radius vs height) and vertical extent"
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "vase_body",
+      "description": "Single watertight vessel body with flared rim, neck, shoulder, and base",
+      "material": "plastic"
+    }
+  ],
+  "features": [
+    {
+      "id": "rim",
+      "type": "flange",
+      "description": "Top flared opening of the vase",
+      "location": "top"
+    },
+    {
+      "id": "neck",
+      "type": "cylinder",
+      "description": "Narrow cylindrical section below the rim",
+      "location": "upper"
+    },
+    {
+      "id": "shoulder",
+      "type": "bulge",
+      "description": "Widest part of the vase body",
+      "location": "middle"
+    },
+    {
+      "id": "base",
+      "type": "foot",
+      "description": "Bottom support of the vase",
+      "location": "bottom"
+    }
+  ],
+  "relations": [
+    {
+      "type": "revolved",
+      "target": "vase_body",
+      "description": "The 2D silhouette is revolved 360 degrees around the vertical axis to create the 3D volume"
+    }
+  ],
+  "symmetry": {
+    "type": "rotational",
+    "axis": "Z",
+    "order": "infinite"
+  },
+  "repetitions": [],
+  "dimensions": {
+    "height": 120.0,
+    "max_width": 107.53,
+    "max_height": 120.0,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "Wall thickness is not specified; assumed solid for 3D printing unless hollowing is applied.",
+    "Exact curvature of the shoulder and neck is inferred from the single silhouette."
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "The input is a single silhouette of a Greek vase. The geometry is interpreted as a surface of revolution. The profile is extracted from the front view, mirrored across the vertical axis, and revolved 360 degrees around the Z-axis. The maximum dimension (height) is scaled to 120mm.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "revolve",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_2",
+        "operation": "revolve",
+        "profile_plane": "XZ",
+        "direction_axis": "Z",
+        "owner": "vase_body",
+        "parameters": {
+          "angle": 360,
+          "axis": "Z",
+          "scale_to_height": 120
+        },
+        "source_views": [
+          "view_1"
+        ]
+      }
+    ],
+    "unresolved_constraints": [
+      "Wall thickness is not specified; assumed solid for 3D printing unless hollowing is applied.",
+      "Exact curvature of the shoulder and neck is inferred from the single silhouette."
+    ]
+  },
+  "user_intent": {
+    "description": "Greek vase from a single silhouette",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "120"
+  },
+  "source_view_group_count": 1,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

@@ -1,0 +1,16 @@
+{
+  "job": "curved_handle",
+  "category": "regression-probe",
+  "fixture": "curved_handle",
+  "overrides": {},
+  "build_ok": false,
+  "build_seconds": 7.24,
+  "diagnostics_errors": [
+    {
+      "code": "build_failed",
+      "message": "No module named '_omni_solid'",
+      "severity": "error"
+    }
+  ],
+  "worker_log_tail": "BRep build failed: No module named '_omni_solid'\n"
+}

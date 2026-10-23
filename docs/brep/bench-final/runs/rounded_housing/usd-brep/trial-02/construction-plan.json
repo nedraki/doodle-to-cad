@@ -1,0 +1,29 @@
+{
+  "view_frame": "The drawing presents a solid block in third-angle projection. The TOP view (XY plane) defines the footprint with X as width (80mm) and Y as depth (50mm). The FRONT view (XZ plane) defines the height (Z) as 30mm. The vertical lines in the front view correspond to the tangent points of the rounded corners seen in the top view.",
+  "features": [
+    {
+      "id": "housing_block",
+      "shape": "Extruded Profile",
+      "section": "Closed XY profile: Rectangle 80x50 with 4 corners filleted at R6.",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "80",
+        "50",
+        "30",
+        "R6"
+      ],
+      "placement": "Centred at (0,0) in XY. The profile consists of straight segments at X=\u00b140 and Y=\u00b125, connected by quarter-circle arcs of radius 6mm. The profile is extruded along the Z-axis from Z=0 to Z=30.",
+      "evidence": "Top view shows a rectangle with rounded corners labelled '4 corners: R6' and dimensions 80 and 50. Front view shows a rectangle of height 30 and width 80. Notes state 'Solid blank. Same corner shape through the full height.'"
+    }
+  ],
+  "connections": [
+    "The vertical lines in the FRONT view align with the tangent points of the R6 fillets in the TOP view, confirming the fillets extend through the full height."
+  ],
+  "edit_rules": [
+    "Changing the '80' dimension adjusts the straight length of the top and bottom edges in the XY profile.",
+    "Changing the '50' dimension adjusts the straight length of the left and right edges in the XY profile.",
+    "Changing the '30' dimension adjusts the extrusion height along the Z-axis.",
+    "Changing the 'R6' dimension adjusts the radius of the four corner arcs in the XY profile."
+  ],
+  "unresolved": []
+}

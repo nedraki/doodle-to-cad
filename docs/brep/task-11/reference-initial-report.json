@@ -1,0 +1,179 @@
+{
+  "40": {
+    "extents_mm": [
+      40.0,
+      30.0,
+      50.0
+    ],
+    "volume_mm3": 35630.40565651141,
+    "expected_volume_mm3": 35690.662026152124,
+    "sections": [
+      {
+        "status": "passed",
+        "symmetric_boundary_error_mm": 0.04926,
+        "tolerance_mm": 0.25,
+        "sampling_spacing_mm": 0.1,
+        "axis": 2,
+        "position_mm": 0.1,
+        "loops": 1
+      },
+      {
+        "status": "passed",
+        "symmetric_boundary_error_mm": 0.14035,
+        "tolerance_mm": 0.25,
+        "sampling_spacing_mm": 0.1,
+        "axis": 2,
+        "position_mm": 12.5,
+        "loops": 1
+      },
+      {
+        "status": "passed",
+        "symmetric_boundary_error_mm": 0.23902,
+        "tolerance_mm": 0.25,
+        "sampling_spacing_mm": 0.1,
+        "axis": 2,
+        "position_mm": 25,
+        "loops": 1
+      },
+      {
+        "status": "passed",
+        "symmetric_boundary_error_mm": 0.24175,
+        "tolerance_mm": 0.25,
+        "sampling_spacing_mm": 0.1,
+        "axis": 2,
+        "position_mm": 37.5,
+        "loops": 1
+      },
+      {
+        "status": "passed",
+        "symmetric_boundary_error_mm": 0.05015,
+        "tolerance_mm": 0.25,
+        "sampling_spacing_mm": 0.1,
+        "axis": 2,
+        "position_mm": 49.9,
+        "loops": 1
+      }
+    ],
+    "watertight": true,
+    "components": 1,
+    "passed": true
+  },
+  "48": {
+    "extents_mm": [
+      48.0,
+      30.0,
+      50.0
+    ],
+    "volume_mm3": 40819.30614313962,
+    "expected_volume_mm3": 40885.48383255519,
+    "sections": [
+      {
+        "status": "passed",
+        "symmetric_boundary_error_mm": 0.04958,
+        "tolerance_mm": 0.25,
+        "sampling_spacing_mm": 0.1,
+        "axis": 2,
+        "position_mm": 0.1,
+        "loops": 1
+      },
+      {
+        "status": "passed",
+        "symmetric_boundary_error_mm": 0.14323,
+        "tolerance_mm": 0.25,
+        "sampling_spacing_mm": 0.1,
+        "axis": 2,
+        "position_mm": 12.5,
+        "loops": 1
+      },
+      {
+        "status": "passed",
+        "symmetric_boundary_error_mm": 0.24844,
+        "tolerance_mm": 0.25,
+        "sampling_spacing_mm": 0.1,
+        "axis": 2,
+        "position_mm": 25,
+        "loops": 1
+      },
+      {
+        "status": "failed",
+        "symmetric_boundary_error_mm": 0.26536,
+        "tolerance_mm": 0.25,
+        "sampling_spacing_mm": 0.1,
+        "axis": 2,
+        "position_mm": 37.5,
+        "loops": 1
+      },
+      {
+        "status": "passed",
+        "symmetric_boundary_error_mm": 0.05037,
+        "tolerance_mm": 0.25,
+        "sampling_spacing_mm": 0.1,
+        "axis": 2,
+        "position_mm": 49.9,
+        "loops": 1
+      }
+    ],
+    "watertight": true,
+    "components": 1,
+    "passed": false
+  },
+  "negative_box": {
+    "extents_mm": [
+      40.0,
+      30.0,
+      50.0
+    ],
+    "volume_mm3": 60000.0,
+    "expected_volume_mm3": 35690.662026152124,
+    "sections": [
+      {
+        "status": "passed",
+        "symmetric_boundary_error_mm": 0.05576,
+        "tolerance_mm": 0.25,
+        "sampling_spacing_mm": 0.1,
+        "axis": 2,
+        "position_mm": 0.1,
+        "loops": 1
+      },
+      {
+        "status": "failed",
+        "symmetric_boundary_error_mm": 3.79165,
+        "tolerance_mm": 0.25,
+        "sampling_spacing_mm": 0.1,
+        "axis": 2,
+        "position_mm": 12.5,
+        "loops": 1
+      },
+      {
+        "status": "failed",
+        "symmetric_boundary_error_mm": 7.58329,
+        "tolerance_mm": 0.25,
+        "sampling_spacing_mm": 0.1,
+        "axis": 2,
+        "position_mm": 25,
+        "loops": 1
+      },
+      {
+        "status": "failed",
+        "symmetric_boundary_error_mm": 11.37494,
+        "tolerance_mm": 0.25,
+        "sampling_spacing_mm": 0.1,
+        "axis": 2,
+        "position_mm": 37.5,
+        "loops": 1
+      },
+      {
+        "status": "failed",
+        "symmetric_boundary_error_mm": 14.97352,
+        "tolerance_mm": 0.25,
+        "sampling_spacing_mm": 0.1,
+        "axis": 2,
+        "position_mm": 49.9,
+        "loops": 1
+      }
+    ],
+    "watertight": true,
+    "components": 1,
+    "passed": false
+  }
+}

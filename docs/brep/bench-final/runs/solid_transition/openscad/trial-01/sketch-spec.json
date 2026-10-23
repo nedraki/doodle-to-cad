@@ -1,0 +1,140 @@
+{
+  "object": "Rectangular-to-Circular Transition Piece",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "front",
+      "sheet_region": "view_6",
+      "what_it_constrains": "Overall height (60mm) and the linear taper of the side walls from the rectangular base width to the circular top diameter."
+    },
+    {
+      "direction": "left",
+      "sheet_region": "view_5",
+      "what_it_constrains": "The circular cross-section of the top face (diameter 30mm) and the taper of the front/back walls."
+    },
+    {
+      "direction": "bottom",
+      "sheet_region": "view_4",
+      "what_it_constrains": "The rectangular base profile (60mm x 40mm)."
+    },
+    {
+      "direction": "top",
+      "sheet_region": "view_3",
+      "what_it_constrains": "The circular top profile (diameter 30mm)."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "part_1",
+      "name": "Transition Body",
+      "description": "A solid lofted shape transitioning from a rectangular base to a circular top."
+    }
+  ],
+  "features": [
+    {
+      "id": "feat_base",
+      "type": "face",
+      "owner": "part_1",
+      "description": "Rectangular base face, 60mm x 40mm."
+    },
+    {
+      "id": "feat_top",
+      "type": "face",
+      "owner": "part_1",
+      "description": "Circular top face, diameter 30mm."
+    },
+    {
+      "id": "feat_side",
+      "type": "surface",
+      "owner": "part_1",
+      "description": "Tapered side surface connecting the base perimeter to the top perimeter."
+    }
+  ],
+  "relations": [
+    {
+      "type": "concentric",
+      "elements": [
+        "feat_base",
+        "feat_top"
+      ],
+      "description": "The circular top is centered relative to the rectangular base."
+    }
+  ],
+  "symmetry": {
+    "planes": [
+      "XZ",
+      "YZ"
+    ],
+    "description": "The object is symmetric about the vertical center planes."
+  },
+  "repetitions": [],
+  "dimensions": {
+    "width": 60.0,
+    "depth": 40.0,
+    "diameter": 30.0,
+    "height": 60.0,
+    "max_width": 33.4,
+    "max_depth": 6.8,
+    "max_height": 60.0,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "The specific curvature of the transition (linear vs. curved) is inferred as linear based on the straight lines in the front view."
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "The object is a standard geometric transition piece. The front view shows a trapezoid, indicating linear tapering of the width. The left view shows a circle, indicating the top is circular. The bottom view confirms the rectangular base. The transition is modeled as a loft between the two profiles.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "loft",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_3",
+        "operation": "loft",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "owner": "part_1",
+        "parameters": {
+          "profiles": [
+            "op_1",
+            "op_2"
+          ],
+          "ruled": true
+        },
+        "source_views": [
+          "view_6"
+        ]
+      }
+    ],
+    "unresolved_constraints": [
+      "The specific curvature of the transition (linear vs. curved) is inferred as linear based on the straight lines in the front view."
+    ]
+  },
+  "user_intent": {
+    "description": "solid transition from rectangular to round end",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "60"
+  },
+  "source_view_group_count": 9,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

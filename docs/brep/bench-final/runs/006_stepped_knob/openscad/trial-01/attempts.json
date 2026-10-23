@@ -1,0 +1,242 @@
+[
+  {
+    "attempt": 1,
+    "action": "generate",
+    "preflight": {
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "expected_subtractive_feature_groups": 0
+    },
+    "compiler_repairs": [],
+    "uniform_scale": null,
+    "evaluation": {
+      "score": 97.2,
+      "valid_mesh": true,
+      "accepted": true,
+      "mandatory_gates": {
+        "compiled": true,
+        "topology": true,
+        "dimensions": true,
+        "shape_sanity": true,
+        "features": true,
+        "openings_through": true,
+        "projections": true,
+        "build_envelope": true
+      },
+      "scores": {
+        "topology": 45,
+        "dimensions": 20.0,
+        "features": 20,
+        "projections": 12.2
+      },
+      "projection_similarity": {
+        "front": 0.812,
+        "right": 0.816
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 12,
+          "crop_internal_profiles": 0,
+          "source_aspect": 1.432,
+          "rendered_aspect": 1.457,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": [
+            [
+              0.926,
+              0.867
+            ],
+            [
+              0.865,
+              0.867
+            ],
+            [
+              0.788,
+              0.866
+            ],
+            [
+              0.145,
+              0.867
+            ],
+            [
+              0.926,
+              0.237
+            ],
+            [
+              0.865,
+              0.237
+            ],
+            [
+              0.788,
+              0.237
+            ],
+            [
+              0.697,
+              0.464
+            ],
+            [
+              0.544,
+              0.473
+            ],
+            [
+              0.403,
+              0.487
+            ],
+            [
+              0.313,
+              0.494
+            ],
+            [
+              0.145,
+              0.237
+            ]
+          ]
+        },
+        "right": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 17,
+          "crop_internal_profiles": 0,
+          "source_aspect": 1.463,
+          "rendered_aspect": 1.448,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": [
+            [
+              0.952,
+              0.867
+            ],
+            [
+              0.9,
+              0.867
+            ],
+            [
+              0.83,
+              0.867
+            ],
+            [
+              0.747,
+              0.866
+            ],
+            [
+              0.177,
+              0.867
+            ],
+            [
+              0.042,
+              0.867
+            ],
+            [
+              0.383,
+              0.608
+            ],
+            [
+              0.952,
+              0.237
+            ],
+            [
+              0.9,
+              0.237
+            ],
+            [
+              0.83,
+              0.237
+            ],
+            [
+              0.747,
+              0.237
+            ],
+            [
+              0.652,
+              0.461
+            ],
+            [
+              0.545,
+              0.474
+            ],
+            [
+              0.449,
+              0.474
+            ],
+            [
+              0.341,
+              0.468
+            ],
+            [
+              0.177,
+              0.237
+            ],
+            [
+              0.042,
+              0.237
+            ]
+          ]
+        }
+      },
+      "demanded_openings": {
+        "total": 0,
+        "per_view": {
+          "front": 0,
+          "right": 0
+        },
+        "sheet_total": 0,
+        "registration_gap": 0
+      },
+      "failures": []
+    },
+    "mesh_health": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 356,
+      "through_holes": 0,
+      "extents_mm": [
+        56.0,
+        55.693,
+        38.64
+      ],
+      "volume_mm3": 73144.708
+    },
+    "build": {
+      "version": 1,
+      "backend": "openscad",
+      "source_format": "openscad",
+      "ok": true,
+      "units": "mm",
+      "axes": {
+        "x": "width",
+        "y": "depth",
+        "z": "height"
+      },
+      "views": [
+        "isometric",
+        "front",
+        "top",
+        "right"
+      ],
+      "measurements": {
+        "watertight": true,
+        "components": 1,
+        "triangles": 356,
+        "through_holes": 0,
+        "extents_mm": [
+          56.0,
+          55.693,
+          38.64
+        ],
+        "volume_mm3": 73144.708
+      },
+      "diagnostics": [],
+      "drawing_evaluated": false
+    },
+    "compile_log": "Geometries in cache: 6\nGeometry cache size in bytes: 26832\nCGAL Polyhedrons in cache: 1\nCGAL cache size in bytes: 243024\nTotal rendering time: 0:00:00.191\n   Top level object is a 3D object:\n   Simple:        yes\n   Vertices:      180\n   Halfedges:     540\n   Edges:         270\n   Halffacets:    188\n   Facets:         94\n   Volumes:         2",
+    "files": {
+      "scad": "attempt-01/model.scad",
+      "stl": "attempt-01/model.stl",
+      "views": {
+        "isometric": "attempt-01/view-isometric.png",
+        "front": "attempt-01/view-front.png",
+        "top": "attempt-01/view-top.png",
+        "right": "attempt-01/view-right.png"
+      }
+    }
+  }
+]

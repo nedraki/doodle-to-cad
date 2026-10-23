@@ -1,0 +1,42 @@
+{
+  "case": "shell",
+  "track": "manually_authored",
+  "user_review": "pending",
+  "measurement_validation": "provisional; awaiting #81",
+  "attempts": [
+    {
+      "role": "initial",
+      "backend": "usd-brep",
+      "updates": {},
+      "attempt": "01-initial",
+      "build_ok": false,
+      "seconds": 0.5,
+      "diagnostics": [],
+      "stl_sha256": "62edd2b8ae65be54aa5f04325a848ebb85b9f36bffa100931a44a2d1b064462d",
+      "exception": "ModuleNotFoundError: No module named 'scipy'"
+    }
+  ],
+  "outcome": "failed",
+  "error": "ModuleNotFoundError: No module named 'scipy'",
+  "openscad": {
+    "status": "attempted",
+    "attempts": [
+      {
+        "role": "initial",
+        "build_ok": true,
+        "seconds": 0.5891,
+        "construction": "manually_authored OpenSCAD, $fn=96",
+        "note": "Uniform floor and wall thickness; varying wall/floor dimensions not exposed by shell.",
+        "measurement_error": "No module named 'scipy'"
+      },
+      {
+        "role": "edited",
+        "build_ok": true,
+        "seconds": 0.5854,
+        "construction": "manually_authored OpenSCAD, $fn=96",
+        "note": "Uniform floor and wall thickness; varying wall/floor dimensions not exposed by shell.",
+        "measurement_error": "No module named 'scipy'"
+      }
+    ]
+  }
+}

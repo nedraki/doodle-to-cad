@@ -1,0 +1,85 @@
+{
+  "drawing": "012_vent_grille_grid",
+  "backend": "openscad",
+  "trial": 1,
+  "submitted_at": "2026-10-19T16:02:43.078885+00:00",
+  "finished_at": "2026-10-19T16:04:11.291082+00:00",
+  "run_id": "5c3aad019dd6",
+  "wall_seconds": 88.2,
+  "job_status": "done",
+  "error": null,
+  "questions_asked": 0,
+  "question_kinds": [],
+  "build": {
+    "watertight": true,
+    "components": 1,
+    "genus": 0,
+    "extents_mm": [
+      100.0,
+      5.0,
+      61.4
+    ],
+    "volume_mm3": 28079.5,
+    "sha256": "815e1b1c671ed0f9d790ea135ff420efc8e2014191d70badd285bd369a22deb9",
+    "bytes": 93214
+  },
+  "checks": {
+    "build_success": true,
+    "extents_pass": false,
+    "genus_pass": false,
+    "volume_pass": false,
+    "fidelity_pass": true,
+    "overall_pass": false,
+    "not_applicable": []
+  },
+  "fidelity": {
+    "scores": {
+      "front": 0.637
+    },
+    "pass": true,
+    "reason": null,
+    "topology": {
+      "front": {
+        "expected": 0,
+        "actual": 6,
+        "position_fidelity": null
+      }
+    }
+  },
+  "product": {
+    "success": true,
+    "accepted": true,
+    "status": null,
+    "score": 94.6,
+    "projection_status": null,
+    "geometry_status": null,
+    "failures": []
+  },
+  "attempts": {
+    "count": 1,
+    "recovered": false,
+    "corrections": null,
+    "selected": 1
+  },
+  "unsupported": {
+    "flag": false,
+    "code": null
+  },
+  "edit": {
+    "available": true,
+    "ok": true,
+    "seconds": 0.77,
+    "param": "plate_width",
+    "old": 100.0,
+    "new": 120.0,
+    "message": null
+  },
+  "targeted": {
+    "available": false,
+    "ok": false,
+    "seconds": null,
+    "operation": null,
+    "value": null,
+    "message": "not_applicable: the product requires a BRep result for targeted edits"
+  }
+}

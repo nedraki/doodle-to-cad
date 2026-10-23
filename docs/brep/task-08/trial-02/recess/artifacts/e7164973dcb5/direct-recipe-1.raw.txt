@@ -1,0 +1,119 @@
+{
+  "version": 2,
+  "units": "mm",
+  "name": "block_with_recess",
+  "parameters": {
+    "width": {
+      "value": 40,
+      "min": 10,
+      "max": 100,
+      "label": "Width",
+      "unit": "mm",
+      "description": "Block width along X"
+    },
+    "depth": {
+      "value": 30,
+      "min": 10,
+      "max": 100,
+      "label": "Depth",
+      "unit": "mm",
+      "description": "Block depth along Y"
+    },
+    "thickness": {
+      "value": 12,
+      "min": 1,
+      "max": 50,
+      "label": "Thickness",
+      "unit": "mm",
+      "description": "Block height along Z"
+    },
+    "opening_diameter": {
+      "value": 8,
+      "min": 1,
+      "max": 20,
+      "label": "Opening Diameter",
+      "unit": "mm",
+      "description": "Diameter of the circular recess"
+    },
+    "recess_depth": {
+      "value": 5,
+      "min": 1,
+      "max": 10,
+      "label": "Recess Depth",
+      "unit": "mm",
+      "description": "Depth of the circular recess from the top face"
+    }
+  },
+  "operations": [
+    {
+      "id": "block",
+      "kind": "box",
+      "origin": [0, 0, 0],
+      "size": ["width", "depth", "thickness"],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": ["e1"]
+    },
+    {
+      "id": "cutter",
+      "kind": "cylinder",
+      "origin": ["width/2", "depth/2", "thickness - recess_depth"],
+      "radius": "opening_diameter/2",
+      "height": "recess_depth",
+      "axis": "z",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": ["e2"]
+    },
+    {
+      "id": "part",
+      "kind": "difference",
+      "left": "block",
+      "right": "cutter",
+      "frame": "world",
+      "depends_on": ["block", "cutter"],
+      "evidence": ["e1", "e2"]
+    }
+  ],
+  "output": "part",
+  "frames": {
+    "world": {
+      "origin": [0, 0, 0],
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    }
+  },
+  "bodies": [
+    {
+      "id": "part",
+      "output": "part"
+    }
+  ],
+  "evidence": {
+    "observed": [
+      {
+        "id": "e1",
+        "text": "Rectangular block outline in TOP view with dimensions 40 wide x 30 deep x 12 thick."
+      },
+      {
+        "id": "e2",
+        "text": "Circular opening Ø8 centred in the top face."
+      }
+    ],
+    "inferred": [
+      {
+        "id": "e3",
+        "text": "The opening is a recess (blind hole) based on user clarification."
+      }
+    ],
+    "assumptions": [
+      {
+        "id": "e4",
+        "text": "The recess depth is 5 mm as specified in the clarification."
+      }
+    ],
+    "unresolved": []
+  },
+  "constraints": []
+}

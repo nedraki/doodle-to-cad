@@ -1,0 +1,348 @@
+[
+  {
+    "attempt": 1,
+    "action": "generate",
+    "preflight": {
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "expected_subtractive_feature_groups": 1
+    },
+    "compiler_repairs": [],
+    "uniform_scale": null,
+    "evaluation": {
+      "score": 88.7,
+      "valid_mesh": true,
+      "accepted": false,
+      "mandatory_gates": {
+        "compiled": true,
+        "topology": true,
+        "dimensions": true,
+        "shape_sanity": false,
+        "features": true,
+        "projections": false,
+        "build_envelope": true
+      },
+      "scores": {
+        "topology": 45,
+        "dimensions": 20.0,
+        "features": 20,
+        "projections": 3.7
+      },
+      "projection_similarity": {
+        "top": 0.247
+      },
+      "profile_topology": {
+        "top": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 1,
+          "crop_internal_profiles": 0,
+          "source_aspect": 8.757,
+          "rendered_aspect": 1.497,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": [
+            [
+              0.499,
+              0.497
+            ]
+          ]
+        }
+      },
+      "failures": [
+        "degenerate or implausible axis dimensions: Y=39.959 mm vs expected 5.31 mm, Z=1 mm vs expected 60 mm",
+        "CAD projections poorly match the drawing: top similarity 0.25 (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly."
+      ]
+    },
+    "mesh_health": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 116,
+      "extents_mm": [
+        59.918,
+        39.959,
+        1.0
+      ],
+      "volume_mm3": 2362.788
+    },
+    "build": {
+      "version": 1,
+      "backend": "openscad",
+      "source_format": "openscad",
+      "ok": true,
+      "units": "mm",
+      "axes": {
+        "x": "width",
+        "y": "depth",
+        "z": "height"
+      },
+      "views": [
+        "isometric",
+        "front",
+        "top",
+        "right"
+      ],
+      "measurements": {
+        "watertight": true,
+        "components": 1,
+        "triangles": 116,
+        "extents_mm": [
+          59.918,
+          39.959,
+          1.0
+        ],
+        "volume_mm3": 2362.788
+      },
+      "diagnostics": [],
+      "drawing_evaluated": false
+    },
+    "compile_log": "Geometries in cache: 14\nGeometry cache size in bytes: 45904\nCGAL Polyhedrons in cache: 1\nCGAL cache size in bytes: 74960\nTotal rendering time: 0:00:00.059\n   Top level object is a 3D object:\n   Simple:        yes\n   Vertices:       60\n   Halfedges:     164\n   Edges:          82\n   Halffacets:     50\n   Facets:         25\n   Volumes:         2",
+    "files": {
+      "scad": "attempt-01/model.scad",
+      "stl": "attempt-01/model.stl",
+      "views": {
+        "isometric": "attempt-01/view-isometric.png",
+        "front": "attempt-01/view-front.png",
+        "top": "attempt-01/view-top.png",
+        "right": "attempt-01/view-right.png"
+      }
+    },
+    "supervisor": {
+      "action": "repair_scad",
+      "problems": [
+        "Z-height is 1mm instead of 20mm",
+        "rounded_rect module creates a flat 2D shape (h=1) instead of a 3D extrusion",
+        "Front and Right views are flat lines due to missing height"
+      ],
+      "preserve": [
+        "Outer footprint 60x40",
+        "Corner radius 6",
+        "Wall thickness 2",
+        "General subtraction logic"
+      ],
+      "instructions": "Fix the `rounded_rect` module to accept a height parameter and extrude the hull to that height. Update the main design to pass `height` to the outer shell and `inner_height` to the inner cavity. Ensure the outer shell is centered or positioned correctly in Z to achieve the full 20mm height.",
+      "confidence": 1.0
+    }
+  },
+  {
+    "attempt": 2,
+    "action": "repair_scad",
+    "preflight": {
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "expected_subtractive_feature_groups": 1
+    },
+    "compiler_repairs": [],
+    "uniform_scale": null,
+    "evaluation": {
+      "score": 88.7,
+      "valid_mesh": true,
+      "accepted": false,
+      "mandatory_gates": {
+        "compiled": true,
+        "topology": true,
+        "dimensions": true,
+        "shape_sanity": false,
+        "features": true,
+        "projections": false,
+        "build_envelope": true
+      },
+      "scores": {
+        "topology": 45,
+        "dimensions": 20.0,
+        "features": 20,
+        "projections": 3.7
+      },
+      "projection_similarity": {
+        "top": 0.247
+      },
+      "profile_topology": {
+        "top": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 0,
+          "source_aspect": 8.757,
+          "rendered_aspect": 1.493,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": []
+        }
+      },
+      "failures": [
+        "degenerate or implausible axis dimensions: Y=39.959 mm vs expected 5.31 mm",
+        "CAD projections poorly match the drawing: top similarity 0.25 (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly."
+      ]
+    },
+    "mesh_health": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 148,
+      "extents_mm": [
+        59.918,
+        39.959,
+        20.0
+      ],
+      "volume_mm3": 11358.803
+    },
+    "build": {
+      "version": 1,
+      "backend": "openscad",
+      "source_format": "openscad",
+      "ok": true,
+      "units": "mm",
+      "axes": {
+        "x": "width",
+        "y": "depth",
+        "z": "height"
+      },
+      "views": [
+        "isometric",
+        "front",
+        "top",
+        "right"
+      ],
+      "measurements": {
+        "watertight": true,
+        "components": 1,
+        "triangles": 148,
+        "extents_mm": [
+          59.918,
+          39.959,
+          20.0
+        ],
+        "volume_mm3": 11358.803
+      },
+      "diagnostics": [],
+      "drawing_evaluated": false
+    },
+    "compile_log": "Geometries in cache: 14\nGeometry cache size in bytes: 45904\nCGAL Polyhedrons in cache: 1\nCGAL cache size in bytes: 102992\nTotal rendering time: 0:00:00.058\n   Top level object is a 3D object:\n   Simple:        yes\n   Vertices:       76\n   Halfedges:     228\n   Edges:         114\n   Halffacets:     82\n   Facets:         41\n   Volumes:         2",
+    "files": {
+      "scad": "attempt-02/model.scad",
+      "stl": "attempt-02/model.stl",
+      "views": {
+        "isometric": "attempt-02/view-isometric.png",
+        "front": "attempt-02/view-front.png",
+        "top": "attempt-02/view-top.png",
+        "right": "attempt-02/view-right.png"
+      }
+    },
+    "supervisor": {
+      "action": "repair_scad",
+      "problems": [
+        "Top view shows a solid block instead of an open tray (missing cavity)",
+        "Inner cavity cutout is not visible in rendered projections",
+        "Shape sanity check failed due to missing internal void"
+      ],
+      "preserve": [
+        "Outer dimensions (60x40x20)",
+        "Corner radius (R6)",
+        "Wall thickness (2mm)",
+        "Overall geometry structure"
+      ],
+      "instructions": "Fix the inner cavity subtraction logic. The current code likely fails to create a visible opening in the top view. Ensure the inner rounded rectangle is subtracted from the top surface downwards, leaving a floor of thickness 'wall_thickness'. The top view must clearly show the inner rectangular boundary.",
+      "confidence": 0.95
+    }
+  },
+  {
+    "attempt": 3,
+    "action": "repair_scad",
+    "preflight": {
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "expected_subtractive_feature_groups": 1
+    },
+    "compiler_repairs": [],
+    "uniform_scale": null,
+    "evaluation": {
+      "score": 88.7,
+      "valid_mesh": true,
+      "accepted": false,
+      "mandatory_gates": {
+        "compiled": true,
+        "topology": true,
+        "dimensions": true,
+        "shape_sanity": false,
+        "features": true,
+        "projections": false,
+        "build_envelope": true
+      },
+      "scores": {
+        "topology": 45,
+        "dimensions": 20.0,
+        "features": 20,
+        "projections": 3.7
+      },
+      "projection_similarity": {
+        "top": 0.247
+      },
+      "profile_topology": {
+        "top": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 0,
+          "source_aspect": 8.757,
+          "rendered_aspect": 1.493,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": []
+        }
+      },
+      "failures": [
+        "degenerate or implausible axis dimensions: Y=39.959 mm vs expected 5.31 mm",
+        "CAD projections poorly match the drawing: top similarity 0.25 (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly."
+      ]
+    },
+    "mesh_health": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 148,
+      "extents_mm": [
+        59.918,
+        39.959,
+        20.0
+      ],
+      "volume_mm3": 11358.803
+    },
+    "build": {
+      "version": 1,
+      "backend": "openscad",
+      "source_format": "openscad",
+      "ok": true,
+      "units": "mm",
+      "axes": {
+        "x": "width",
+        "y": "depth",
+        "z": "height"
+      },
+      "views": [
+        "isometric",
+        "front",
+        "top",
+        "right"
+      ],
+      "measurements": {
+        "watertight": true,
+        "components": 1,
+        "triangles": 148,
+        "extents_mm": [
+          59.918,
+          39.959,
+          20.0
+        ],
+        "volume_mm3": 11358.803
+      },
+      "diagnostics": [],
+      "drawing_evaluated": false
+    },
+    "compile_log": "Geometries in cache: 14\nGeometry cache size in bytes: 45904\nCGAL Polyhedrons in cache: 1\nCGAL cache size in bytes: 102992\nTotal rendering time: 0:00:00.061\n   Top level object is a 3D object:\n   Simple:        yes\n   Vertices:       76\n   Halfedges:     228\n   Edges:         114\n   Halffacets:     82\n   Facets:         41\n   Volumes:         2",
+    "files": {
+      "scad": "attempt-03/model.scad",
+      "stl": "attempt-03/model.stl",
+      "views": {
+        "isometric": "attempt-03/view-isometric.png",
+        "front": "attempt-03/view-front.png",
+        "top": "attempt-03/view-top.png",
+        "right": "attempt-03/view-right.png"
+      }
+    }
+  }
+]

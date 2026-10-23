@@ -1,0 +1,97 @@
+{
+  "drawing": "102_lcd_knob",
+  "backend": "openscad",
+  "trial": 1,
+  "submitted_at": "2026-10-19T16:13:32.053231+00:00",
+  "finished_at": "2026-10-19T16:15:00.303301+00:00",
+  "run_id": "97e2178653fc",
+  "wall_seconds": 88.3,
+  "job_status": "done",
+  "error": null,
+  "questions_asked": 0,
+  "question_kinds": [],
+  "build": {
+    "watertight": true,
+    "components": 1,
+    "genus": 0,
+    "extents_mm": [
+      48.018,
+      50.0,
+      13.045
+    ],
+    "volume_mm3": 19258.8,
+    "sha256": "9710c5a2f25f19181f21528eecd54c635edd5840e2f7a7612c01ab2e0d8c3362",
+    "bytes": 44283
+  },
+  "checks": {
+    "build_success": true,
+    "extents_pass": false,
+    "genus_pass": true,
+    "volume_pass": false,
+    "fidelity_pass": true,
+    "overall_pass": false,
+    "not_applicable": []
+  },
+  "fidelity": {
+    "scores": {
+      "front": 0.937,
+      "top": 0.454,
+      "right": 0.955
+    },
+    "pass": true,
+    "reason": null,
+    "topology": {
+      "front": {
+        "expected": 0,
+        "actual": 6,
+        "position_fidelity": null
+      },
+      "top": {
+        "expected": 0,
+        "actual": 0,
+        "position_fidelity": null
+      },
+      "right": {
+        "expected": 0,
+        "actual": 0,
+        "position_fidelity": null
+      }
+    }
+  },
+  "product": {
+    "success": true,
+    "accepted": true,
+    "status": null,
+    "score": 96.7,
+    "projection_status": null,
+    "geometry_status": null,
+    "failures": []
+  },
+  "attempts": {
+    "count": 1,
+    "recovered": false,
+    "corrections": null,
+    "selected": 1
+  },
+  "unsupported": {
+    "flag": false,
+    "code": null
+  },
+  "edit": {
+    "available": true,
+    "ok": true,
+    "seconds": 0.78,
+    "param": "base_diameter",
+    "old": 44.46104323391844,
+    "new": 53.35,
+    "message": null
+  },
+  "targeted": {
+    "available": false,
+    "ok": false,
+    "seconds": null,
+    "operation": null,
+    "value": null,
+    "message": "not_applicable: the product requires a BRep result for targeted edits"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "view_frame": "The drawing presents a TOP (XY) view and an END SECTION view. The TOP view shows the handle's path in the XY plane. The END SECTION shows the circular cross-section of the handle. The Z-axis represents the thickness of the handle (perpendicular to the XY plane).",
+  "features": [
+    {
+      "id": "handle_path",
+      "shape": "U-shaped path",
+      "section": "circular",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "Bend centreline R20",
+        "straight legs 30 mm",
+        "diameter 8 mm"
+      ],
+      "placement": "The path consists of two straight segments and one semicircular arc. The straight segments are parallel to the Y-axis. The arc connects the two straight segments. The centreline of the arc has a radius of 20 mm. The straight legs have a length of 30 mm. The entire path is centred in the XY plane.",
+      "evidence": "The TOP view shows a U-shaped path with a semicircular bend and two straight legs. The text 'Bend centreline R20; straight legs 30 mm' confirms the dimensions. The END SECTION shows a circle with 'diameter 8 mm'."
+    }
+  ],
+  "connections": [
+    "The two straight segments are tangent to the semicircular arc at their endpoints."
+  ],
+  "edit_rules": [
+    "Changing the bend centreline radius will change the overall width of the handle.",
+    "Changing the straight leg length will change the overall height of the handle.",
+    "Changing the diameter will change the thickness of the handle."
+  ],
+  "unresolved": [],
+  "clarification": null
+}

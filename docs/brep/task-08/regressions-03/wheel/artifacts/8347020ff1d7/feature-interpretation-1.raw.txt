@@ -1,0 +1,157 @@
+```json
+{
+  "version": 1,
+  "object_hypothesis": "A spoked wheel assembly featuring a central hub, an outer rim, and eight radial spokes.",
+  "features": [
+    {
+      "id": "outer_rim",
+      "type": "rim",
+      "description": "The outermost circular boundary of the wheel structure.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "Visible as the primary circular outline in the front view."
+    },
+    {
+      "id": "inner_rim",
+      "type": "rim",
+      "description": "A concentric circular boundary inside the outer rim, defining the rim's thickness.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "Visible as the inner circle of the rim band in the front view."
+    },
+    {
+      "id": "central_hub",
+      "type": "hub",
+      "description": "A solid circular region at the geometric center of the wheel.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "Visible as the central circle in the front view."
+    },
+    {
+      "id": "spoke_group",
+      "type": "spoke",
+      "description": "A set of eight radial bars connecting the hub to the rim.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "Visible as eight distinct linear segments radiating from the center in the front view."
+    },
+    {
+      "id": "wheel_thickness",
+      "type": "body",
+      "description": "The depth or thickness of the wheel structure.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_14"
+        }
+      ],
+      "reason": "Visible as the width of the rectangular profile in the right view."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "spoke_connectivity",
+      "type": "connected",
+      "features": [
+        "spoke_group",
+        "central_hub",
+        "inner_rim"
+      ],
+      "description": "The spokes connect the central hub to the inner rim.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "The ends of the spoke lines terminate at the boundaries of the hub and inner rim."
+    },
+    {
+      "id": "spoke_symmetry",
+      "type": "symmetry",
+      "features": [
+        "spoke_group"
+      ],
+      "description": "The spokes are arranged with rotational symmetry around the hub.",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "The visual arrangement suggests equal angular spacing (45 degrees) between the eight spokes."
+    },
+    {
+      "id": "rim_concentricity",
+      "type": "shared_dimension",
+      "features": [
+        "outer_rim",
+        "inner_rim",
+        "central_hub"
+      ],
+      "description": "The outer rim, inner rim, and hub share a common center point.",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "The circular elements appear concentric in the front view."
+    },
+    {
+      "id": "view_correspondence",
+      "type": "other",
+      "features": [
+        "outer_rim",
+        "wheel_thickness"
+      ],
+      "description": "The height of the right view corresponds to the diameter of the front view.",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        },
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_14"
+        }
+      ],
+      "reason": "Standard orthographic projection alignment implies the vertical extent of the side view matches the diameter of the front view."
+    }
+  ],
+  "assumptions": [
+    "The object is a single rigid body.",
+    "The view assignments (Front, Right) are correct based on the spatial heuristic."
+  ],
+  "unresolved": [
+    "The specific material of the object.",
+    "The exact dimensions of the hub and rim thickness (only relative proportions are visible)."
+  ],
+  "conflicts": []
+}
+```

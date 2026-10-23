@@ -196,8 +196,13 @@ def _crop_internal_profile_count(image:np.ndarray)->int:
 
     Mirrors _normalized_profile's hole logic (depth-2 rings for source ink) so
     the features gate compares like with like: profiles demanded by THIS view
-    against profiles rendered in THIS view.
+    against profiles rendered in THIS view. Issue #67 adds the orphan branch:
+    openings drawn inside a view group but NOT geometrically enclosed by its
+    outline (hook elevations) are top-level stroke rings (depth 0/1) and must
+    still be demanded by the view that shows them.
     """
+    from doodle_to_cad.geometry import (RING_AREA_SHARE_OF_GROUP_DOMINANT_MAX,
+                                        RING_CHILD_RATIO_RANGE, RING_CIRCULARITY_MIN)
     ink=cv2.threshold(cv2.cvtColor(image,cv2.COLOR_BGR2GRAY),190,255,cv2.THRESH_BINARY_INV)[1]
     ink=cv2.morphologyEx(ink,cv2.MORPH_CLOSE,np.ones((3,3),np.uint8))
     contours,hierarchy=cv2.findContours(ink,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
@@ -207,7 +212,24 @@ def _crop_internal_profile_count(image:np.ndarray)->int:
         depth=0;parent=int(hierarchy[i][3])
         while parent>=0:depth+=1;parent=int(hierarchy[parent][3])
         depths.append(depth)
-    return sum(1 for i,d in enumerate(depths) if d==2 and cv2.contourArea(contours[i])>ink.size*.0005)
+    areas=[cv2.contourArea(c) for c in contours]
+    largest=max(areas) if areas else 0.0
+    minimum=ink.size*.0005
+    count=0
+    for i,d in enumerate(depths):
+        if areas[i]<=minimum:continue
+        if d==2:
+            count+=1
+            continue
+        if d%2==0 and largest and areas[i]<=RING_AREA_SHARE_OF_GROUP_DOMINANT_MAX*largest:
+            child=max((areas[j] for j,item in enumerate(hierarchy) if int(item[3])==i),default=0.0)
+            if child<=0:continue
+            ratio=child/areas[i]
+            if not(RING_CHILD_RATIO_RANGE[0]<=ratio<=RING_CHILD_RATIO_RANGE[1]):continue
+            perimeter=cv2.arcLength(contours[i],True)
+            circularity=4*np.pi*areas[i]/(perimeter*perimeter) if perimeter else 0.0
+            if circularity>=RING_CIRCULARITY_MIN:count+=1
+    return count
 
 def _profile_centroids(image:np.ndarray,*,render:bool)->list[tuple[float,float]]:
     """Centers of enclosed openings normalized (0..1) inside the outer silhouette.
@@ -361,8 +383,33 @@ def _render_aspect(image:np.ndarray)->float:
     if points is None:return 0.0
     x,y,w,h=cv2.boundingRect(points);return w/max(h,1)
 
+def openings_through_check(health: dict[str, Any] | None, expected: int,
+                           best_direction: str, strict: bool) -> tuple[bool, str]:
+    """Issue #62 genus floor: a rendered closed circle is not proof of a
+    through-opening — blind pockets and bottom-edge notches look identical in
+    orthographic renders. Only mesh topology (Euler genus) proves the material
+    was removed all the way through. Calibrated on the frozen 80-run set:
+    removes two blind-pocket false accepts with zero false rejections of
+    trusted rows (docs/brep/issue-62-gate/data/metrics.json); dimension-based
+    variants of this rule were measured and rejected (FRR)."""
+    if not (strict and expected and health and health.get("watertight")
+            and health.get("components") == 1):
+        return True, ""
+    holes = health.get("through_holes")
+    if holes is None:
+        return True, ""
+    if holes >= expected:
+        return True, ""
+    plural = "s" if expected != 1 else ""
+    return False, (f"openings do not go through the solid: the drawing demands "
+                   f"{expected} opening{plural} across the registered views "
+                   f"(strongest: {best_direction}) but the mesh has {holes} true through-hole"
+                   f"{'s' if holes != 1 else ''} — the rendered openings are blind pockets "
+                   f"or edge notches; cut all the way through the wall")
+
+
 def evaluate_candidate(*,stl:Path|None,health:dict[str,Any]|None,scad:str,views:dict[str,Path],source:bytes,evidence:dict[str,Any],spec:dict[str,Any],target_dimension:str,strict:bool,primary_view:str="front",projection_standard:str="third-angle",dimension_tolerance:float=.05)->dict[str,Any]:
-    failures=[];gates={"compiled":bool(stl and health),"topology":False,"dimensions":True,"shape_sanity":True,"features":True,"projections":True,"silhouette":True,"build_envelope":True};topology_score=0.0
+    failures=[];gates={"compiled":bool(stl and health),"topology":False,"dimensions":True,"shape_sanity":True,"features":True,"openings_through":True,"projections":True,"silhouette":True,"build_envelope":True};topology_score=0.0
     if health:
         gates["topology"]=bool(health["watertight"] and (health["components"]==1 or not strict));topology_score=(22 if health["watertight"] else 0)+(18 if health["components"]==1 else 0)+(5 if health["triangles"]>=12 else 0)
         # BambuLab-class FDM build volume (X1C/P1S: 256 mm cube). A part that
@@ -389,6 +436,14 @@ def evaluate_candidate(*,stl:Path|None,health:dict[str,Any]|None,scad:str,views:
             try: expected=float(expected)
             except (TypeError,ValueError): continue
             ratio=float(actual)/expected if expected>0 else 1
+            axis_name=("width","depth","height")[axis]
+            # Issue #68: an axis the USER stated is a hard contract, not a
+            # suggestion — the loose sanity window below must not swallow it.
+            if axis_name in (dimensions.get("user_supplied_axes") or []):
+                if abs(ratio-1)>0.15:
+                    gates["dimensions"]=False
+                    failures.append(f"user-stated {axis_name} is {expected:g} mm but the mesh measures {actual:g} mm on {'XYZ'[axis]} ({(ratio-1):+.0%}); rebuild with exactly {expected:g} mm for that axis")
+                    continue
             # Window must catch axis COLLAPSE (flat-slab repairs) without
             # punishing good meshes over noisy LLM size estimates: reg4/101's
             # mesh matched GT exactly (Y=60) yet spec estimated 30 (ratio 2.0).
@@ -402,17 +457,42 @@ def evaluate_candidate(*,stl:Path|None,health:dict[str,Any]|None,scad:str,views:
                     if collapsed_any else "")
             failures.append("degenerate or implausible axis dimensions: " + ", ".join(mismatches) + hint)
     projections,profile_topology=projection_scores(source,evidence,views,primary_view,projection_standard)
+    # Issue #67: each registered view demands ITS OWN openings from the product;
+    # the solid must satisfy every view at once, so the demanded total is the
+    # SUM of per-view crop counts (a single-view sheet — the shape of every
+    # frozen #34 row — keeps sum == the old best-view max, a measured no-op).
+    # Fail-safe: if the sheet shows openings inside a REGISTERED view that no
+    # crop counted (registration gap > 1), demand the sheet total instead of
+    # letting the lost openings silently excuse the product. Profiles living
+    # outside every registered group (title blocks, notes clusters) are not a
+    # registration loss and must not inflate the demand — measured: the
+    # profiles_empty_notes frozen family would false-reject on them.
     sheet_expected=evidence.get("closed_internal_profile_count",0)
-    # Fair requirement = profiles the drawing demands of the SINGLE best-scored
-    # registered view (crop-local count), not the whole-sheet total which mixes
-    # every view's features and is unreachable by any one projection.
+    assigned_for_guard=assign_view_groups(evidence,primary_view,projection_standard)
+    listed=evidence.get("closed_internal_profiles") or []
+    if assigned_for_guard and len(listed)>=sheet_expected:
+        def _in_registered(p):
+            cx,cy=p["center_normalized"]
+            return any(g["bbox_normalized"][0]<=cx<=g["bbox_normalized"][0]+g["bbox_normalized"][2]
+                       and g["bbox_normalized"][1]<=cy<=g["bbox_normalized"][1]+g["bbox_normalized"][3]
+                       for g in assigned_for_guard.values())
+        sheet_expected=sum(1 for p in listed if _in_registered(p))
     if profile_topology:
-        expected,best_direction=max(((t.get("crop_internal_profiles",0),d) for d,t in profile_topology.items()),key=lambda item:(item[0],projections.get(item[1],0)))
+        demanded={d:int(t.get("crop_internal_profiles",0) or 0) for d,t in profile_topology.items()}
+        rendered={d:int(t.get("rendered_internal_profiles",0) or 0) for d,t in profile_topology.items()}
+        best_direction=max(demanded,key=lambda d:(demanded[d],projections.get(d,0)))
+        registration_gap=max(sheet_expected-sum(demanded.values()),0)
+        total_expected=sum(demanded.values())
+        if registration_gap>1:total_expected=sheet_expected
     else:
-        expected,best_direction=sheet_expected,primary_view
-    observed=max((t.get("rendered_internal_profiles",0) for t in profile_topology.values()),default=0)
+        demanded,rendered,best_direction,registration_gap,total_expected={},{},primary_view,0,sheet_expected
+    observed=max(rendered.values(),default=0)
+    per_view_ok=[min(rendered.get(d,0)/demand,1.0) for d,demand in demanded.items() if demand>0]
+    if registration_gap>1 and sheet_expected>0:
+        per_view_ok.append(min(observed/sheet_expected,1.0))
+    expected=total_expected
     if expected:
-        gates["features"]=observed>=expected
+        gates["features"]=all(r>=1.0 for r in per_view_ok) and bool(per_view_ok)
         if not gates["features"]:
             hint=""
             best_info=profile_topology.get(best_direction) or {}
@@ -420,8 +500,13 @@ def evaluate_candidate(*,stl:Path|None,health:dict[str,Any]|None,scad:str,views:
             if missing:
                 pts="; ".join(f"(u={a},v={b})" for a,b in missing[:6])
                 hint=f" Missing at these view-local centres — add cutters there: {pts}."
-            failures.append(f"required internal profiles are missing: {best_direction} view demands {expected}, best rendered view has {observed}.{hint}")
-    feature_score=20 if not expected else 20*min(observed/expected,1)
+            per_view_note=", ".join(f"{d} demands {c}, renders {rendered.get(d,0)}" for d,c in sorted(demanded.items()) if c>0) or f"sheet demands {sheet_expected}"
+            failures.append(f"required internal profiles are missing: {per_view_note}; best rendered view has {observed}.{hint}")
+    through_ok, through_fail = openings_through_check(health, expected, best_direction, strict)
+    gates["openings_through"] = through_ok
+    if not through_ok:
+        failures.append(through_fail)
+    feature_score=20 if not expected else (20*min(per_view_ok) if per_view_ok else 0.0)
     if projections:
         gates["projections"]=all(v>=.45 for v in projections.values())
         if not gates["projections"]:
@@ -447,4 +532,4 @@ def evaluate_candidate(*,stl:Path|None,health:dict[str,Any]|None,scad:str,views:
                             "(use its curve_segments for the arcs); do not substitute a rounded rectangle, "
                             "ellipse or plain box, and do not add fillets to recover the shape.")
     visual_score=15*(sum(projections.values())/len(projections)) if projections else 0;total=round(topology_score+dimension_score+feature_score+visual_score,1)
-    return {"score":total,"valid_mesh":gates["topology"],"accepted":all(gates.values()),"mandatory_gates":gates,"scores":{"topology":round(topology_score,1),"dimensions":round(dimension_score,1),"features":round(feature_score,1),"projections":round(visual_score,1)},"projection_similarity":projections,"profile_topology":profile_topology,"failures":failures}
+    return {"score":total,"valid_mesh":gates["topology"],"accepted":all(gates.values()),"mandatory_gates":gates,"scores":{"topology":round(topology_score,1),"dimensions":round(dimension_score,1),"features":round(feature_score,1),"projections":round(visual_score,1)},"projection_similarity":projections,"profile_topology":profile_topology,"demanded_openings":{"total":expected,"per_view":demanded,"sheet_total":sheet_expected,"registration_gap":registration_gap},"failures":failures}

@@ -1,0 +1,65 @@
+{
+  "run_id": "49983158d2e2",
+  "params": [
+    {
+      "name": "width",
+      "value": 60,
+      "low": 30,
+      "high": 100,
+      "step": 0.01,
+      "label": "Outer Width",
+      "unit": "mm",
+      "description": "Rebuilds the saved construction recipe",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "depth",
+      "value": 40,
+      "low": 20,
+      "high": 80,
+      "step": 0.01,
+      "label": "Outer Depth",
+      "unit": "mm",
+      "description": "Rebuilds the saved construction recipe",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "height",
+      "value": 20,
+      "low": 10,
+      "high": 50,
+      "step": 0.01,
+      "label": "Height",
+      "unit": "mm",
+      "description": "Rebuilds the saved construction recipe",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "corner_radius",
+      "value": 6,
+      "low": 1,
+      "high": 20,
+      "step": 0.01,
+      "label": "Outer Corner Radius",
+      "unit": "mm",
+      "description": "Rebuilds the saved construction recipe",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "thickness",
+      "value": 2,
+      "low": 0.5,
+      "high": 5,
+      "step": 0.01,
+      "label": "Wall and floor thickness",
+      "unit": "mm",
+      "description": "Rebuilds the saved construction recipe",
+      "group": "Details",
+      "feature": null
+    }
+  ]
+}

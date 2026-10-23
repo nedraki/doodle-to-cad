@@ -1,0 +1,118 @@
+{
+  "version": 1,
+  "object_hypothesis": "Solid transition piece (loft) connecting a rectangular base to a circular top",
+  "features": [
+    {
+      "id": "base_profile",
+      "type": "profile",
+      "description": "Rectangular profile (40x30) located at the bottom (Z=0)",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_271"
+        },
+        {
+          "view_id": "view_11",
+          "region_id": "profile_contour_246"
+        }
+      ],
+      "reason": "View 5 shows a rectangular outline corresponding to the 'END A' label. View 11 (Top) shows the projected outline of the base."
+    },
+    {
+      "id": "top_profile",
+      "type": "profile",
+      "description": "Circular profile (Ø20) located at the top (Z=50)",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_269"
+        }
+      ],
+      "reason": "View 4 shows a circular outline corresponding to the 'END B' label."
+    },
+    {
+      "id": "body",
+      "type": "body",
+      "description": "Tapered solid body connecting the base and top profiles",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "view"
+        },
+        {
+          "view_id": "view_3",
+          "region_id": "view"
+        }
+      ],
+      "reason": "The text describes a 'Solid transition' and 'Smooth transition'. The Front view (view_1) shows a trapezoidal silhouette indicating a taper from the wider base to the narrower top."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "base_body_conn",
+      "type": "connected",
+      "features": [
+        "base_profile",
+        "body"
+      ],
+      "description": "The rectangular base forms the bottom face of the body",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "view"
+        }
+      ],
+      "reason": "The bottom edge of the Front view (view_1) aligns with the width of the base profile."
+    },
+    {
+      "id": "top_body_conn",
+      "type": "connected",
+      "features": [
+        "top_profile",
+        "body"
+      ],
+      "description": "The circular top forms the top face of the body",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "view"
+        }
+      ],
+      "reason": "The top edge of the Front view (view_1) aligns with the diameter of the top profile."
+    },
+    {
+      "id": "concentricity",
+      "type": "shared_dimension",
+      "features": [
+        "base_profile",
+        "top_profile"
+      ],
+      "description": "Both profiles share the same XY center",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "view"
+        }
+      ],
+      "reason": "The Front view (view_1) shows a symmetrical trapezoid, implying the top and bottom centers are aligned vertically."
+    }
+  ],
+  "assumptions": [
+    "The object is solid throughout (no internal cavities).",
+    "The transition between profiles is smooth (lofted) rather than faceted.",
+    "The object is oriented with the rectangle at the bottom (Z=0) and circle at the top (Z=50)."
+  ],
+  "unresolved": [
+    "Exact surface geometry between the rectangle and circle (e.g., ruled vs. smooth interpolation).",
+    "Specific view assignments for views 2, 6, 7, 8, 9, 10, 12 (likely section views or noise)."
+  ],
+  "conflicts": [
+    "View 11 (Top) shows a quadrilateral shape (contour_246) rather than a circle, which is consistent with viewing the rectangular base from above, but the circular top is not explicitly isolated as a separate contour in this view."
+  ]
+}

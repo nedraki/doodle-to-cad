@@ -1,0 +1,1034 @@
+{
+  "evidence": {
+    "id": "710295b8f6e1",
+    "interpretation": {
+      "version": 1,
+      "object_hypothesis": "Rounded Housing Blank",
+      "features": [
+        {
+          "id": "body_main",
+          "type": "body",
+          "description": "Rectangular block with rounded corners",
+          "status": "observed",
+          "evidence": [
+            {
+              "view_id": "view_6",
+              "region_id": "profile_contour_151"
+            },
+            {
+              "view_id": "view_5",
+              "region_id": "profile_contour_147"
+            }
+          ],
+          "reason": "View 6 (Top) shows a rectangular outline with rounded corners. View 5 (Right) shows a rectangular profile consistent with a block."
+        },
+        {
+          "id": "corner_rounding",
+          "type": "profile",
+          "description": "Rounded corners (R6)",
+          "status": "observed",
+          "evidence": [
+            {
+              "view_id": "view_6",
+              "region_id": "profile_contour_151"
+            }
+          ],
+          "reason": "View 6 shows curved transitions at the corners of the rectangular outline. The drawing annotation explicitly labels '4 corners: R6'."
+        },
+        {
+          "id": "front_face",
+          "type": "wall",
+          "description": "Front face of the block",
+          "status": "unresolved",
+          "evidence": [
+            {
+              "view_id": "view_5",
+              "region_id": "profile_contour_147"
+            }
+          ],
+          "reason": "View 5 (Right) displays a rectangular face. The vertical lines near the edges in the drawing (not isolated as separate regions) suggest the side faces of the rounded corners.",
+          "model_status": "observed",
+          "review_note": "Outer outlines alone do not establish hidden wall or cavity geometry."
+        },
+        {
+          "id": "top_face",
+          "type": "wall",
+          "description": "Top face of the block",
+          "status": "unresolved",
+          "evidence": [
+            {
+              "view_id": "view_6",
+              "region_id": "profile_contour_151"
+            }
+          ],
+          "reason": "View 6 (Top) shows the planar surface of the block.",
+          "model_status": "observed",
+          "review_note": "Outer outlines alone do not establish hidden wall or cavity geometry."
+        }
+      ],
+      "relationships": [
+        {
+          "id": "rel_corner_body",
+          "type": "connected",
+          "features": [
+            "corner_rounding",
+            "body_main"
+          ],
+          "description": "Rounded corners are part of the main body perimeter",
+          "status": "inferred",
+          "evidence": [
+            {
+              "view_id": "view_6",
+              "region_id": "profile_contour_151"
+            }
+          ],
+          "reason": "The rounded corners are integral to the outline of the body in the top view.",
+          "model_status": "observed",
+          "review_note": "Visible projected continuity does not prove a connected 3D solid."
+        },
+        {
+          "id": "rel_face_body",
+          "type": "connected",
+          "features": [
+            "front_face",
+            "body_main"
+          ],
+          "description": "Front face is a side of the main body",
+          "status": "inferred",
+          "evidence": [
+            {
+              "view_id": "view_5",
+              "region_id": "profile_contour_147"
+            }
+          ],
+          "reason": "The rectangular profile in the right view corresponds to the side of the block defined in the top view.",
+          "model_status": "observed",
+          "review_note": "Visible projected continuity does not prove a connected 3D solid."
+        }
+      ],
+      "assumptions": [
+        "The object is a solid block as stated in the drawing notes ('Solid blank', 'No cavity').",
+        "The vertical lines in the Front view (view_5) represent the edges of the rounded corners, though they were not isolated as separate regions by OpenCV.",
+        "The 'unassigned' views (1, 2, 3, 4, 7, 8) are likely noise or artifacts from the drawing sheet (e.g., text, dimension lines) and are ignored for the 3D model."
+      ],
+      "unresolved": [
+        "Exact height of the block (drawing says 30, but no measured region confirms this dimension directly).",
+        "Exact width and depth (drawing says 80 and 50, but no measured region confirms these dimensions directly).",
+        "front_face: Outer outlines alone do not establish hidden wall or cavity geometry.",
+        "top_face: Outer outlines alone do not establish hidden wall or cavity geometry."
+      ],
+      "conflicts": [
+        "None."
+      ],
+      "review": {
+        "reference_integrity_checked": true,
+        "drawing_fidelity_verified": false,
+        "policy_warnings": [
+          "front_face: Outer outlines alone do not establish hidden wall or cavity geometry.",
+          "top_face: Outer outlines alone do not establish hidden wall or cavity geometry.",
+          "rel_corner_body: Visible projected continuity does not prove a connected 3D solid.",
+          "rel_face_body: Visible projected continuity does not prove a connected 3D solid."
+        ],
+        "executable": false
+      }
+    },
+    "regions": [
+      {
+        "view_id": "view_1",
+        "direction": "unassigned",
+        "sheet_bbox_normalized": [
+          0.0233,
+          0.025,
+          0.3383,
+          0.0437
+        ],
+        "cad_mapping": {},
+        "view_assignment": "spatial heuristic",
+        "region_id": "view",
+        "kind": "view",
+        "bbox_view_normalized": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "measured_span_pixels": {
+          "horizontal_axis_u": 406,
+          "vertical_axis_v": 35
+        }
+      },
+      {
+        "view_id": "view_1",
+        "direction": "unassigned",
+        "sheet_bbox_normalized": [
+          0.0233,
+          0.025,
+          0.3383,
+          0.0437
+        ],
+        "cad_mapping": {},
+        "view_assignment": "spatial heuristic",
+        "region_id": "profile_contour_252",
+        "kind": "outer",
+        "profile_id": "contour_252",
+        "bbox_view_normalized": [
+          0.3252,
+          0.1716,
+          0.0467,
+          0.6293
+        ],
+        "center_view_normalized": [
+          0.3485,
+          0.4851
+        ],
+        "polygon_view_normalized": [
+          [
+            0.3278,
+            0.1716
+          ],
+          [
+            0.3252,
+            0.7437
+          ],
+          [
+            0.3574,
+            0.7437
+          ],
+          [
+            0.3695,
+            0.5446
+          ],
+          [
+            0.3671,
+            0.3135
+          ],
+          [
+            0.35,
+            0.1716
+          ]
+        ],
+        "vertices": 6,
+        "circularity": 0.859,
+        "area_ratio_of_sheet": 0.00035
+      },
+      {
+        "view_id": "view_2",
+        "direction": "unassigned",
+        "sheet_bbox_normalized": [
+          0.0217,
+          0.0737,
+          0.3992,
+          0.0413
+        ],
+        "cad_mapping": {},
+        "view_assignment": "spatial heuristic",
+        "region_id": "view",
+        "kind": "view",
+        "bbox_view_normalized": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "measured_span_pixels": {
+          "horizontal_axis_u": 479,
+          "vertical_axis_v": 33
+        }
+      },
+      {
+        "view_id": "view_2",
+        "direction": "unassigned",
+        "sheet_bbox_normalized": [
+          0.0217,
+          0.0737,
+          0.3992,
+          0.0413
+        ],
+        "cad_mapping": {},
+        "view_assignment": "spatial heuristic",
+        "region_id": "profile_contour_207",
+        "kind": "outer",
+        "profile_id": "contour_207",
+        "bbox_view_normalized": [
+          0.5531,
+          0.3027,
+          0.0438,
+          0.4843
+        ],
+        "center_view_normalized": [
+          0.5749,
+          0.5472
+        ],
+        "polygon_view_normalized": [
+          [
+            0.5531,
+            0.3341
+          ],
+          [
+            0.5531,
+            0.6077
+          ],
+          [
+            0.5574,
+            0.6077
+          ],
+          [
+            0.5574,
+            0.4552
+          ],
+          [
+            0.5636,
+            0.3947
+          ],
+          [
+            0.5676,
+            0.4552
+          ],
+          [
+            0.5676,
+            0.6077
+          ],
+          [
+            0.5739,
+            0.4867
+          ],
+          [
+            0.5802,
+            0.7579
+          ],
+          [
+            0.5927,
+            0.6973
+          ],
+          [
+            0.5927,
+            0.3341
+          ],
+          [
+            0.5824,
+            0.3027
+          ],
+          [
+            0.5739,
+            0.4552
+          ],
+          [
+            0.5656,
+            0.3027
+          ]
+        ],
+        "vertices": 14,
+        "circularity": 0.249,
+        "area_ratio_of_sheet": 0.00017
+      },
+      {
+        "view_id": "view_3",
+        "direction": "unassigned",
+        "sheet_bbox_normalized": [
+          0.05,
+          0.16,
+          0.0975,
+          0.0437
+        ],
+        "cad_mapping": {},
+        "view_assignment": "spatial heuristic",
+        "region_id": "view",
+        "kind": "view",
+        "bbox_view_normalized": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "measured_span_pixels": {
+          "horizontal_axis_u": 117,
+          "vertical_axis_v": 35
+        }
+      },
+      {
+        "view_id": "view_3",
+        "direction": "unassigned",
+        "sheet_bbox_normalized": [
+          0.05,
+          0.16,
+          0.0975,
+          0.0437
+        ],
+        "cad_mapping": {},
+        "view_assignment": "spatial heuristic",
+        "region_id": "profile_contour_181",
+        "kind": "outer",
+        "profile_id": "contour_181",
+        "bbox_view_normalized": [
+          0.2133,
+          0.2014,
+          0.1282,
+          0.5149
+        ],
+        "center_view_normalized": [
+          0.2779,
+          0.4577
+        ],
+        "polygon_view_normalized": [
+          [
+            0.2564,
+            0.2014
+          ],
+          [
+            0.2133,
+            0.3432
+          ],
+          [
+            0.2133,
+            0.5423
+          ],
+          [
+            0.239,
+            0.659
+          ],
+          [
+            0.2903,
+            0.6865
+          ],
+          [
+            0.3333,
+            0.5721
+          ],
+          [
+            0.3333,
+            0.3135
+          ],
+          [
+            0.2903,
+            0.2014
+          ]
+        ],
+        "vertices": 8,
+        "circularity": 0.907,
+        "area_ratio_of_sheet": 0.00021
+      },
+      {
+        "view_id": "view_4",
+        "direction": "unassigned",
+        "sheet_bbox_normalized": [
+          0.535,
+          0.16,
+          0.1233,
+          0.0437
+        ],
+        "cad_mapping": {},
+        "view_assignment": "spatial heuristic",
+        "region_id": "view",
+        "kind": "view",
+        "bbox_view_normalized": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "measured_span_pixels": {
+          "horizontal_axis_u": 148,
+          "vertical_axis_v": 35
+        }
+      },
+      {
+        "view_id": "view_4",
+        "direction": "unassigned",
+        "sheet_bbox_normalized": [
+          0.535,
+          0.16,
+          0.1233,
+          0.0437
+        ],
+        "cad_mapping": {},
+        "view_assignment": "spatial heuristic",
+        "region_id": "profile_contour_172",
+        "kind": "outer",
+        "profile_id": "contour_172",
+        "bbox_view_normalized": [
+          0.2571,
+          0.2014,
+          0.1014,
+          0.5149
+        ],
+        "center_view_normalized": [
+          0.3074,
+          0.4577
+        ],
+        "polygon_view_normalized": [
+          [
+            0.2903,
+            0.2014
+          ],
+          [
+            0.2571,
+            0.3432
+          ],
+          [
+            0.2571,
+            0.5423
+          ],
+          [
+            0.2774,
+            0.659
+          ],
+          [
+            0.3179,
+            0.6865
+          ],
+          [
+            0.3512,
+            0.5721
+          ],
+          [
+            0.3512,
+            0.3135
+          ],
+          [
+            0.3179,
+            0.2014
+          ]
+        ],
+        "vertices": 8,
+        "circularity": 0.907,
+        "area_ratio_of_sheet": 0.00021
+      },
+      {
+        "view_id": "view_5",
+        "direction": "right",
+        "sheet_bbox_normalized": [
+          0.5333,
+          0.255,
+          0.4483,
+          0.245
+        ],
+        "cad_mapping": {
+          "plane": "YZ",
+          "view_axis": "X",
+          "u_maps_to": "+Y",
+          "v_maps_to": "-Z"
+        },
+        "view_assignment": "spatial heuristic",
+        "region_id": "view",
+        "kind": "view",
+        "bbox_view_normalized": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "measured_span_pixels": {
+          "horizontal_axis_u": 538,
+          "vertical_axis_v": 196
+        }
+      },
+      {
+        "view_id": "view_5",
+        "direction": "right",
+        "sheet_bbox_normalized": [
+          0.5333,
+          0.255,
+          0.4483,
+          0.245
+        ],
+        "cad_mapping": {
+          "plane": "YZ",
+          "view_axis": "X",
+          "u_maps_to": "+Y",
+          "v_maps_to": "-Z"
+        },
+        "view_assignment": "spatial heuristic",
+        "region_id": "profile_contour_147",
+        "kind": "outer",
+        "profile_id": "contour_147",
+        "bbox_view_normalized": [
+          0.0187,
+          0.0306,
+          0.8978,
+          0.9339
+        ],
+        "center_view_normalized": [
+          0.4675,
+          0.4976
+        ],
+        "polygon_view_normalized": [
+          [
+            0.0187,
+            0.0355
+          ],
+          [
+            0.0205,
+            0.9592
+          ],
+          [
+            0.9146,
+            0.9543
+          ],
+          [
+            0.9128,
+            0.0306
+          ]
+        ],
+        "vertices": 4,
+        "circularity": 0.627,
+        "area_ratio_of_sheet": 0.09138
+      },
+      {
+        "view_id": "view_6",
+        "direction": "top",
+        "sheet_bbox_normalized": [
+          0.05,
+          0.205,
+          0.4192,
+          0.445
+        ],
+        "cad_mapping": {
+          "plane": "XY",
+          "view_axis": "Z",
+          "u_maps_to": "+X",
+          "v_maps_to": "-Y"
+        },
+        "view_assignment": "spatial heuristic",
+        "region_id": "view",
+        "kind": "view",
+        "bbox_view_normalized": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "measured_span_pixels": {
+          "horizontal_axis_u": 503,
+          "vertical_axis_v": 356
+        }
+      },
+      {
+        "view_id": "view_6",
+        "direction": "top",
+        "sheet_bbox_normalized": [
+          0.05,
+          0.205,
+          0.4192,
+          0.445
+        ],
+        "cad_mapping": {
+          "plane": "XY",
+          "view_axis": "Z",
+          "u_maps_to": "+X",
+          "v_maps_to": "-Y"
+        },
+        "view_assignment": "spatial heuristic",
+        "region_id": "profile_contour_151",
+        "kind": "outer",
+        "profile_id": "contour_151",
+        "bbox_view_normalized": [
+          0.0198,
+          0.087,
+          0.9602,
+          0.8933
+        ],
+        "center_view_normalized": [
+          0.5,
+          0.5337
+        ],
+        "polygon_view_normalized": [
+          [
+            0.0298,
+            0.1798
+          ],
+          [
+            0.0556,
+            0.9636
+          ],
+          [
+            0.968,
+            0.927
+          ],
+          [
+            0.9423,
+            0.1431
+          ],
+          [
+            0.1391,
+            0.087
+          ]
+        ],
+        "vertices": 5,
+        "circularity": 0.501,
+        "area_ratio_of_sheet": 0.15095
+      },
+      {
+        "view_id": "view_7",
+        "direction": "bottom",
+        "sheet_bbox_normalized": [
+          0.0517,
+          0.76,
+          0.5233,
+          0.0462
+        ],
+        "cad_mapping": {
+          "plane": "XY",
+          "view_axis": "Z",
+          "u_maps_to": "+X",
+          "v_maps_to": "+Y"
+        },
+        "view_assignment": "spatial heuristic",
+        "region_id": "view",
+        "kind": "view",
+        "bbox_view_normalized": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "measured_span_pixels": {
+          "horizontal_axis_u": 628,
+          "vertical_axis_v": 37
+        }
+      },
+      {
+        "view_id": "view_7",
+        "direction": "bottom",
+        "sheet_bbox_normalized": [
+          0.0517,
+          0.76,
+          0.5233,
+          0.0462
+        ],
+        "cad_mapping": {
+          "plane": "XY",
+          "view_axis": "Z",
+          "u_maps_to": "+X",
+          "v_maps_to": "+Y"
+        },
+        "view_assignment": "spatial heuristic",
+        "region_id": "profile_contour_119",
+        "kind": "outer",
+        "profile_id": "contour_119",
+        "bbox_view_normalized": [
+          0.7292,
+          0.1623,
+          0.0334,
+          0.5152
+        ],
+        "center_view_normalized": [
+          0.746,
+          0.4199
+        ],
+        "polygon_view_normalized": [
+          [
+            0.7309,
+            0.2424
+          ],
+          [
+            0.734,
+            0.6494
+          ],
+          [
+            0.7468,
+            0.6494
+          ],
+          [
+            0.75,
+            0.3788
+          ],
+          [
+            0.7564,
+            0.4069
+          ],
+          [
+            0.7564,
+            0.5952
+          ],
+          [
+            0.7611,
+            0.6212
+          ],
+          [
+            0.7596,
+            0.3506
+          ],
+          [
+            0.75,
+            0.3247
+          ],
+          [
+            0.7468,
+            0.1623
+          ],
+          [
+            0.742,
+            0.5952
+          ],
+          [
+            0.7357,
+            0.5411
+          ],
+          [
+            0.7405,
+            0.3247
+          ]
+        ],
+        "vertices": 13,
+        "circularity": 0.135,
+        "area_ratio_of_sheet": 0.00016
+      },
+      {
+        "view_id": "view_8",
+        "direction": "unassigned",
+        "sheet_bbox_normalized": [
+          0.05,
+          0.81,
+          0.5458,
+          0.0462
+        ],
+        "cad_mapping": {},
+        "view_assignment": "spatial heuristic",
+        "region_id": "view",
+        "kind": "view",
+        "bbox_view_normalized": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "measured_span_pixels": {
+          "horizontal_axis_u": 655,
+          "vertical_axis_v": 37
+        }
+      },
+      {
+        "view_id": "view_8",
+        "direction": "unassigned",
+        "sheet_bbox_normalized": [
+          0.05,
+          0.81,
+          0.5458,
+          0.0462
+        ],
+        "cad_mapping": {},
+        "view_assignment": "spatial heuristic",
+        "region_id": "profile_contour_63",
+        "kind": "outer",
+        "profile_id": "contour_63",
+        "bbox_view_normalized": [
+          0.1603,
+          0.1623,
+          0.0381,
+          0.5152
+        ],
+        "center_view_normalized": [
+          0.1794,
+          0.4199
+        ],
+        "polygon_view_normalized": [
+          [
+            0.1603,
+            0.1883
+          ],
+          [
+            0.1618,
+            0.6494
+          ],
+          [
+            0.1709,
+            0.6494
+          ],
+          [
+            0.1786,
+            0.513
+          ],
+          [
+            0.1863,
+            0.6494
+          ],
+          [
+            0.1938,
+            0.6212
+          ],
+          [
+            0.197,
+            0.4329
+          ],
+          [
+            0.1924,
+            0.3247
+          ],
+          [
+            0.1863,
+            0.2965
+          ],
+          [
+            0.1786,
+            0.4329
+          ],
+          [
+            0.1741,
+            0.3247
+          ],
+          [
+            0.1664,
+            0.3247
+          ],
+          [
+            0.1634,
+            0.1623
+          ]
+        ],
+        "vertices": 13,
+        "circularity": 0.398,
+        "area_ratio_of_sheet": 0.00027
+      }
+    ],
+    "shared_axis_evidence": [
+      {
+        "axis": "Y",
+        "evidence": [
+          {
+            "view_id": "view_5",
+            "region_id": "view"
+          },
+          {
+            "view_id": "view_6",
+            "region_id": "view"
+          }
+        ],
+        "measured_spans_pixels": [
+          538,
+          356
+        ],
+        "relative_difference": 0.3383,
+        "status": "review_required",
+        "assumption": "Views use the same drawing scale and their assigned directions are correct.",
+        "physical_dimension_verified": false
+      },
+      {
+        "axis": "Y",
+        "evidence": [
+          {
+            "view_id": "view_5",
+            "region_id": "view"
+          },
+          {
+            "view_id": "view_7",
+            "region_id": "view"
+          }
+        ],
+        "measured_spans_pixels": [
+          538,
+          37
+        ],
+        "relative_difference": 0.9312,
+        "status": "review_required",
+        "assumption": "Views use the same drawing scale and their assigned directions are correct.",
+        "physical_dimension_verified": false
+      },
+      {
+        "axis": "X",
+        "evidence": [
+          {
+            "view_id": "view_6",
+            "region_id": "view"
+          },
+          {
+            "view_id": "view_7",
+            "region_id": "view"
+          }
+        ],
+        "measured_spans_pixels": [
+          503,
+          628
+        ],
+        "relative_difference": 0.199,
+        "status": "review_required",
+        "assumption": "Views use the same drawing scale and their assigned directions are correct.",
+        "physical_dimension_verified": false
+      },
+      {
+        "axis": "Y",
+        "evidence": [
+          {
+            "view_id": "view_6",
+            "region_id": "view"
+          },
+          {
+            "view_id": "view_7",
+            "region_id": "view"
+          }
+        ],
+        "measured_spans_pixels": [
+          356,
+          37
+        ],
+        "relative_difference": 0.8961,
+        "status": "review_required",
+        "assumption": "Views use the same drawing scale and their assigned directions are correct.",
+        "physical_dimension_verified": false
+      }
+    ],
+    "view_assignment_review": {
+      "excluded_from_direction_assignment": [
+        "view_3",
+        "view_4"
+      ],
+      "rule": "Groups below 5% of the largest group box area remain unassigned; they may be text or detail views.",
+      "regions_retained": true
+    },
+    "controls": {
+      "object_type_hint": "",
+      "method": "3D print",
+      "primary_view": "top",
+      "projection_standard": "third-angle",
+      "strict_watertight": true,
+      "refine_mode": "regularize"
+    },
+    "notes": "",
+    "default_generation_changed": false,
+    "files": {
+      "input": "/results/710295b8f6e1/input.png",
+      "overlay": "/results/710295b8f6e1/geometry-overlay.png",
+      "interpretation": "/results/710295b8f6e1/feature-evidence.json"
+    }
+  },
+  "construction_plan": {
+    "view_frame": "The drawing uses third-angle projection with two primary views: TOP (XY) and FRONT (XZ). The world coordinate system is defined as X = width (horizontal in both views), Y = depth (vertical in TOP view), and Z = height (vertical in FRONT view). The origin (0,0,0) is located at the bottom-left-front corner of the bounding box.",
+    "features": [
+      {
+        "id": "housing_blank",
+        "shape": "extruded_prism",
+        "section": "rounded_rectangle",
+        "axis_or_plane": "Z",
+        "dimensions": [
+          "80",
+          "50",
+          "30",
+          "R6"
+        ],
+        "placement": "Base section lies in XY plane at Z=0. Extends to Z=30. Centre of the bounding box is at (40, 25, 15). The section is a rectangle 80mm (X) by 50mm (Y) with 4 corners filleted by radius 6mm.",
+        "evidence": "TOP view shows a rectangle 80x50 with '4 corners: R6' annotation. FRONT view shows height 30. Text notes 'Solid blank. Same corner shape through the full height.'"
+      }
+    ],
+    "connections": [
+      "The vertical edges of the FRONT view correspond to the projected silhouette of the rounded corners from the TOP view.",
+      "The top and bottom faces of the FRONT view correspond to the top and bottom faces of the solid prism."
+    ],
+    "edit_rules": [
+      "Changing the '80' dimension in TOP view must update the width in FRONT view.",
+      "Changing the '50' dimension in TOP view updates the depth (Y) but does not affect the FRONT view width.",
+      "Changing the '30' dimension in FRONT view updates the height (Z) but does not affect the TOP view.",
+      "Changing the 'R6' corner radius updates the corner geometry in the TOP view and the position of the vertical lines in the FRONT view.",
+      "Top and bottom perimeter edges must remain sharp (no fillets on Z-axis edges)."
+    ],
+    "unresolved": []
+  },
+  "notes": "",
+  "maximum_dimension_mm": 80.0,
+  "controls": {
+    "object_type_hint": "",
+    "method": "3D print",
+    "primary_view": "top",
+    "projection_standard": "third-angle",
+    "strict_watertight": true,
+    "refine_mode": "regularize"
+  }
+}

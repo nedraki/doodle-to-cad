@@ -1,0 +1,286 @@
+{
+  "version": 2,
+  "units": "mm",
+  "name": "lcd_knob",
+  "parameters": {
+    "base_diameter": {
+      "value": 40,
+      "min": 10,
+      "max": 100,
+      "label": "Base Diameter",
+      "description": "Diameter of the knob base"
+    },
+    "top_diameter": {
+      "value": 30,
+      "min": 5,
+      "max": 100,
+      "label": "Top Diameter",
+      "description": "Diameter of the knob top"
+    },
+    "height": {
+      "value": 10,
+      "min": 1,
+      "max": 50,
+      "label": "Height",
+      "description": "Height of the knob body"
+    },
+    "lobe_length": {
+      "value": 5,
+      "min": 1,
+      "max": 50,
+      "label": "Lobe Length",
+      "description": "Length of the protruding lobes"
+    },
+    "lobe_width": {
+      "value": 6,
+      "min": 1,
+      "max": 50,
+      "label": "Lobe Width",
+      "description": "Width of the protruding lobes"
+    }
+  },
+  "operations": [
+    {
+      "id": "body",
+      "kind": "extrude",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "plane": "xy",
+      "direction": 1,
+      "depth": "height",
+      "loops": [
+        [
+          {
+            "kind": "arc",
+            "center": [
+              0,
+              0
+            ],
+            "radius": "base_diameter/2",
+            "start_angle": 0,
+            "end_angle": 360
+          }
+        ]
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "lobe1",
+      "kind": "box",
+      "origin": [
+        "base_diameter/2 - 1",
+        "-lobe_width/2",
+        0
+      ],
+      "size": [
+        "lobe_length",
+        "lobe_width",
+        "height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "lobe2",
+      "kind": "box",
+      "origin": [
+        "base_diameter/2 - 1",
+        "-lobe_width/2",
+        0
+      ],
+      "size": [
+        "lobe_length",
+        "lobe_width",
+        "height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "lobe2_rot",
+      "kind": "rotate",
+      "body": "lobe2",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "axis": "z",
+      "angle": 120,
+      "frame": "world",
+      "depends_on": [
+        "lobe2"
+      ],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "lobe3",
+      "kind": "box",
+      "origin": [
+        "base_diameter/2 - 1",
+        "-lobe_width/2",
+        0
+      ],
+      "size": [
+        "lobe_length",
+        "lobe_width",
+        "height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "lobe3_rot",
+      "kind": "rotate",
+      "body": "lobe3",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "axis": "z",
+      "angle": 240,
+      "frame": "world",
+      "depends_on": [
+        "lobe3"
+      ],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "union1",
+      "kind": "union",
+      "left": "body",
+      "right": "lobe1",
+      "frame": "world",
+      "depends_on": [
+        "body",
+        "lobe1"
+      ],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "union2",
+      "kind": "union",
+      "left": "union1",
+      "right": "lobe2_rot",
+      "frame": "world",
+      "depends_on": [
+        "union1",
+        "lobe2_rot"
+      ],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "union3",
+      "kind": "union",
+      "left": "union2",
+      "right": "lobe3_rot",
+      "frame": "world",
+      "depends_on": [
+        "union2",
+        "lobe3_rot"
+      ],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "chamfered",
+      "kind": "chamfer",
+      "body": "union3",
+      "radius": "height/2",
+      "frame": "world",
+      "depends_on": [
+        "union3"
+      ],
+      "evidence": [
+        "e4"
+      ]
+    }
+  ],
+  "output": "chamfered",
+  "frames": {
+    "world": {
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    }
+  },
+  "bodies": [
+    {
+      "id": "part",
+      "output": "chamfered"
+    }
+  ],
+  "evidence": {
+    "observed": [
+      {
+        "id": "e1",
+        "text": "Top view shows a circular base."
+      },
+      {
+        "id": "e2",
+        "text": "Top view shows three lobes spaced 120 degrees apart."
+      },
+      {
+        "id": "e4",
+        "text": "Front and right views show a trapezoidal profile (tapered sides)."
+      }
+    ],
+    "inferred": [
+      {
+        "id": "e3",
+        "text": "Lobes are fused to the central body."
+      }
+    ],
+    "assumptions": [
+      {
+        "id": "a1",
+        "text": "Assumed base diameter 40mm."
+      },
+      {
+        "id": "a2",
+        "text": "Assumed height 10mm."
+      },
+      {
+        "id": "a3",
+        "text": "Assumed lobe dimensions 5mm length, 6mm width."
+      },
+      {
+        "id": "a4",
+        "text": "Assumed chamfer creates the trapezoidal profile seen in side views."
+      }
+    ],
+    "unresolved": []
+  },
+  "constraints": []
+}

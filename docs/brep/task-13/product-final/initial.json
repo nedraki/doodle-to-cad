@@ -1,0 +1,112 @@
+{
+  "id": "d25b1ad87303",
+  "backend": "usd-brep",
+  "success": false,
+  "spec": {
+    "object": "rounded_tray"
+  },
+  "model": "experimental BRep recipe",
+  "duration_seconds": 0.333,
+  "evaluation": {
+    "accepted": false,
+    "failures": [
+      "Drawing fidelity has not been evaluated."
+    ]
+  },
+  "diagnostics": {
+    "backend": "usd-brep",
+    "version": "1.0.0",
+    "recipe_version": 2,
+    "solid_volume_mm3": 11341.168510344905,
+    "mesh_volume_mm3": 11332.376664723919,
+    "extents_mm": [
+      60.0,
+      40.0,
+      20.0
+    ],
+    "bounds_mm": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        60.0,
+        40.0,
+        20.0
+      ]
+    ],
+    "watertight": true,
+    "winding_consistent": true,
+    "euler_number": 2,
+    "triangles": 284,
+    "usd_roundtrip": true,
+    "volume_relative_accuracy": 1e-08,
+    "usd_volume_mm3": 11341.1685103449,
+    "operations": [
+      {
+        "id": "blank",
+        "kind": "box",
+        "faces": 6
+      },
+      {
+        "id": "rounded",
+        "kind": "fillet",
+        "faces": 10
+      },
+      {
+        "id": "tray",
+        "kind": "shell",
+        "faces": 19
+      }
+    ],
+    "connections": [],
+    "build_seconds": 0.333
+  },
+  "controls": {
+    "primary_view": "front"
+  },
+  "files": {
+    "source": "/results/d25b1ad87303/brep-85ecaa2e5a0d4bec8c1e48d07f69a0bd/model.recipe.json",
+    "stl": "/results/d25b1ad87303/brep-85ecaa2e5a0d4bec8c1e48d07f69a0bd/model.stl",
+    "usd": "/results/d25b1ad87303/brep-85ecaa2e5a0d4bec8c1e48d07f69a0bd/model.usda",
+    "views": {
+      "isometric": "/results/d25b1ad87303/brep-85ecaa2e5a0d4bec8c1e48d07f69a0bd/view-isometric.png",
+      "front": "/results/d25b1ad87303/brep-85ecaa2e5a0d4bec8c1e48d07f69a0bd/view-front.png",
+      "top": "/results/d25b1ad87303/brep-85ecaa2e5a0d4bec8c1e48d07f69a0bd/view-top.png",
+      "right": "/results/d25b1ad87303/brep-85ecaa2e5a0d4bec8c1e48d07f69a0bd/view-right.png"
+    }
+  },
+  "build": {
+    "version": 1,
+    "backend": "usd-brep",
+    "source_format": "brep-recipe-v2",
+    "ok": true,
+    "units": "mm",
+    "axes": {
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    },
+    "views": [
+      "isometric",
+      "front",
+      "top",
+      "right"
+    ],
+    "measurements": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 284,
+      "extents_mm": [
+        60.0,
+        40.0,
+        20.0
+      ],
+      "volume_mm3": 11332.377
+    },
+    "diagnostics": [],
+    "drawing_evaluated": false
+  },
+  "original_run_id": null
+}

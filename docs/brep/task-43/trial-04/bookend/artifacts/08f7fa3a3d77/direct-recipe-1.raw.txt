@@ -1,0 +1,280 @@
+```json
+{
+  "version": 2,
+  "units": "mm",
+  "name": "L_bracket",
+  "parameters": {
+    "width": {
+      "value": 100,
+      "min": 50,
+      "max": 150,
+      "label": "Width",
+      "description": "Overall width of the bracket (X)"
+    },
+    "height": {
+      "value": 120,
+      "min": 60,
+      "max": 180,
+      "label": "Height",
+      "description": "Overall height of the bracket (Z)"
+    },
+    "depth": {
+      "value": 80,
+      "min": 40,
+      "max": 120,
+      "label": "Depth",
+      "description": "Overall depth of the base (Y)"
+    },
+    "thickness": {
+      "value": 10,
+      "min": 5,
+      "max": 20,
+      "label": "Thickness",
+      "description": "Uniform thickness of the L-profile"
+    }
+  },
+  "operations": [
+    {
+      "id": "backplate",
+      "kind": "box",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "size": [
+        "width",
+        "thickness",
+        "height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "base",
+      "kind": "box",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "size": [
+        "width",
+        "depth",
+        "thickness"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "l_shape",
+      "kind": "union",
+      "left": "backplate",
+      "right": "base",
+      "frame": "world",
+      "depends_on": [
+        "backplate",
+        "base"
+      ],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "slot_1",
+      "kind": "box",
+      "origin": [
+        "width * 0.12",
+        -1,
+        "height * 0.70"
+      ],
+      "size": [
+        "width * 0.28",
+        "thickness + 2",
+        "height * 0.20"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "slot_2",
+      "kind": "box",
+      "origin": [
+        "width * 0.48",
+        -1,
+        "height * 0.43"
+      ],
+      "size": [
+        "width * 0.11",
+        "thickness + 2",
+        "height * 0.31"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "slot_3",
+      "kind": "box",
+      "origin": [
+        "width * 0.24",
+        -1,
+        "height * 0.20"
+      ],
+      "size": [
+        "width * 0.17",
+        "thickness + 2",
+        "height * 0.40"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "slot_4",
+      "kind": "box",
+      "origin": [
+        "width * 0.68",
+        -1,
+        "height * 0.21"
+      ],
+      "size": [
+        "width * 0.13",
+        "thickness + 2",
+        "height * 0.39"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "cut_1",
+      "kind": "difference",
+      "left": "l_shape",
+      "right": "slot_1",
+      "frame": "world",
+      "depends_on": [
+        "l_shape",
+        "slot_1"
+      ],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "cut_2",
+      "kind": "difference",
+      "left": "cut_1",
+      "right": "slot_2",
+      "frame": "world",
+      "depends_on": [
+        "cut_1",
+        "slot_2"
+      ],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "cut_3",
+      "kind": "difference",
+      "left": "cut_2",
+      "right": "slot_3",
+      "frame": "world",
+      "depends_on": [
+        "cut_2",
+        "slot_3"
+      ],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "final_part",
+      "kind": "difference",
+      "left": "cut_3",
+      "right": "slot_4",
+      "frame": "world",
+      "depends_on": [
+        "cut_3",
+        "slot_4"
+      ],
+      "evidence": [
+        "e2"
+      ]
+    }
+  ],
+  "output": "final_part",
+  "frames": {
+    "world": {
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    }
+  },
+  "bodies": [
+    {
+      "id": "part",
+      "output": "final_part"
+    }
+  ],
+  "evidence": {
+    "observed": [
+      {
+        "id": "e1",
+        "text": "L-shaped profile observed in Right view (view_2)."
+      },
+      {
+        "id": "e2",
+        "text": "Four rectangular openings observed in Front view (view_1)."
+      }
+    ],
+    "inferred": [
+      {
+        "id": "e3",
+        "text": "Openings are through-holes penetrating the backplate thickness."
+      }
+    ],
+    "assumptions": [
+      {
+        "id": "e4",
+        "text": "Uniform thickness of 10mm assumed for both flanges."
+      },
+      {
+        "id": "e5",
+        "text": "Slot positions and sizes estimated from normalized view coordinates."
+      }
+    ],
+    "unresolved": []
+  },
+  "constraints": [
+    {
+      "id": "joint1",
+      "kind": "connected",
+      "left": "backplate",
+      "right": "base",
+      "min_volume_mm3": 1000
+    }
+  ]
+}
+```

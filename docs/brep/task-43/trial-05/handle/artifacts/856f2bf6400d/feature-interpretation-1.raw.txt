@@ -1,0 +1,141 @@
+{
+  "version": 1,
+  "object_hypothesis": "Curved handle with U-shaped profile and circular cross-section",
+  "features": [
+    {
+      "id": "f_body",
+      "type": "body",
+      "description": "Main structural element forming the U-shape",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_19"
+        }
+      ],
+      "reason": "View 5 shows the primary U-shaped outline of the object."
+    },
+    {
+      "id": "f_cross_section",
+      "type": "profile",
+      "description": "Circular cross-section of the handle",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_3",
+          "region_id": "profile_contour_17"
+        }
+      ],
+      "reason": "View 3 displays a circular profile, consistent with a round bar or tube."
+    },
+    {
+      "id": "f_leg_left",
+      "type": "body",
+      "description": "Left vertical leg of the handle",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_19"
+        }
+      ],
+      "reason": "The left vertical segment of the U-shape in View 5."
+    },
+    {
+      "id": "f_leg_right",
+      "type": "body",
+      "description": "Right vertical leg of the handle",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_19"
+        }
+      ],
+      "reason": "The right vertical segment of the U-shape in View 5."
+    },
+    {
+      "id": "f_bend",
+      "type": "body",
+      "description": "Curved top section connecting the legs",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_19"
+        }
+      ],
+      "reason": "The curved upper portion of the U-shape in View 5."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "r_legs_to_bend",
+      "type": "connected",
+      "features": [
+        "f_leg_left",
+        "f_leg_right",
+        "f_bend"
+      ],
+      "description": "Legs are connected to the curved bend",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_19"
+        }
+      ],
+      "reason": "The continuous outline in View 5 shows the legs joining the bend."
+    },
+    {
+      "id": "r_cross_section_to_body",
+      "type": "shared_dimension",
+      "features": [
+        "f_cross_section",
+        "f_body"
+      ],
+      "description": "Circular cross-section applies to the entire body",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_3",
+          "region_id": "profile_contour_17"
+        },
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_19"
+        }
+      ],
+      "reason": "View 3 shows a circular profile, and View 5 shows the body shape; it is inferred that the body has this uniform cross-section."
+    },
+    {
+      "id": "r_legs_symmetry",
+      "type": "symmetry",
+      "features": [
+        "f_leg_left",
+        "f_leg_right"
+      ],
+      "description": "Legs appear symmetrical",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_19"
+        }
+      ],
+      "reason": "The U-shape in View 5 suggests bilateral symmetry, though exact equality is inferred."
+    }
+  ],
+  "assumptions": [
+    "The object is a single continuous piece.",
+    "The circular profile in View 3 represents the cross-section of the entire handle.",
+    "The 'diameter 8 mm' annotation applies to the circular profile in View 3."
+  ],
+  "unresolved": [
+    "Exact dimensions of the bend radius and leg lengths are not directly measured from the regions.",
+    "Whether the ends of the legs are open or capped is not visible."
+  ],
+  "conflicts": [
+    "None identified."
+  ]
+}

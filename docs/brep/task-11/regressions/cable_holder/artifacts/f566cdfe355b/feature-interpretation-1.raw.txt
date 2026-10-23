@@ -1,0 +1,180 @@
+```json
+{
+  "version": 1,
+  "object_hypothesis": "A flat, rectangular component (likely a bracket or plate) featuring a central circular hole and a series of five rectangular slots or holes arranged in a staggered pattern.",
+  "features": [
+    {
+      "id": "body_plate",
+      "type": "body",
+      "description": "The main rectangular body of the object.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_14"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_2"
+        },
+        {
+          "view_id": "view_3",
+          "region_id": "profile_contour_0"
+        }
+      ],
+      "reason": "Visible as the primary outer contour in all three views. View 1 shows the face, View 2 shows the side profile with thickness, and View 3 shows the edge."
+    },
+    {
+      "id": "central_hole",
+      "type": "opening",
+      "description": "A circular opening located near the center of the object.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "Clearly visible as a closed internal loop in the top view (View 1). Its circularity (0.87) supports a round shape."
+    },
+    {
+      "id": "slot_group",
+      "type": "opening",
+      "description": "A group of five rectangular openings arranged in a staggered vertical pattern.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_12"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_10"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_8"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_6"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_4"
+        }
+      ],
+      "reason": "Five distinct internal contours are visible in View 2. The drawing shows these as rectangular slots. Note: The catalog assigns these to View 2 (Right), but visually they appear on the face (View 1). This is treated as a feature of the object based on the drawing."
+    },
+    {
+      "id": "top_notch",
+      "type": "opening",
+      "description": "A curved indentation or notch at the top edge of the object.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_14"
+        }
+      ],
+      "reason": "The outer contour in View 1 shows a concave curve at the top edge, distinct from the straight sides."
+    },
+    {
+      "id": "bottom_notch",
+      "type": "opening",
+      "description": "A curved indentation or notch at the bottom edge of the object.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_14"
+        }
+      ],
+      "reason": "The outer contour in View 1 shows a concave curve at the bottom edge, mirroring the top notch."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "slot_arrangement",
+      "type": "repeated",
+      "features": [
+        "slot_group"
+      ],
+      "description": "The five rectangular slots are arranged in a staggered (zig-zag) pattern along the length of the object.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_12"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_10"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_8"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_6"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_4"
+        }
+      ],
+      "reason": "The horizontal positions (u-coordinates) of the slots in View 2 alternate between left and right sides of the centerline."
+    },
+    {
+      "id": "hole_position",
+      "type": "position",
+      "features": [
+        "central_hole",
+        "body_plate"
+      ],
+      "description": "The central hole is located within the main body, roughly centered horizontally.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_16"
+        },
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_14"
+        }
+      ],
+      "reason": "In View 1, the center of the hole (0.4915) aligns closely with the center of the body (0.4958)."
+    },
+    {
+      "id": "notch_symmetry",
+      "type": "symmetry",
+      "features": [
+        "top_notch",
+        "bottom_notch"
+      ],
+      "description": "The top and bottom notches appear to be mirror images of each other.",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_14"
+        }
+      ],
+      "reason": "The curvature and depth of the notches in View 1 appear visually similar, suggesting a symmetric design, though exact measurements are not provided."
+    }
+  ],
+  "assumptions": [
+    "The view assignments in the catalog (View 1=Top, View 2=Right, View 3=Front) are treated as spatial heuristics. The drawing visually suggests View 1 is the Front (face with hole) and View 2 is the Side (face with slots), but the JSON follows the catalog IDs for evidence mapping.",
+    "The object is assumed to be a single solid piece with through-holes, as no hidden lines or separate components are indicated."
+  ],
+  "unresolved": [
+    "The exact depth of the notches (top and bottom) is not defined by the side views.",
+    "The thickness of the object is visible in View 2 but not explicitly dimensioned."
+  ],
+  "conflicts": [
+    "The catalog assigns the five rectangular slots to View 2 (Right/Side), but the drawing clearly shows them on the face of the object (which corresponds to View 1/Top in the catalog). This suggests a mismatch between the visual content and the catalog's view labeling."
+  ]
+}
+```

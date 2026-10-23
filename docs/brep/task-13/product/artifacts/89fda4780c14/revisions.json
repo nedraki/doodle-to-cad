@@ -1,0 +1,705 @@
+{
+  "version": 1,
+  "selected": "1c4090a39448420f99a8b943f958a415",
+  "selection_version": 2,
+  "revisions": {
+    "original": {
+      "id": "original",
+      "parent_id": null,
+      "result": {
+        "id": "89fda4780c14",
+        "backend": "usd-brep",
+        "success": false,
+        "spec": {
+          "object": "rounded_tray"
+        },
+        "model": "experimental BRep recipe",
+        "duration_seconds": 0.362,
+        "evaluation": {
+          "accepted": false,
+          "failures": [
+            "Drawing fidelity has not been evaluated."
+          ]
+        },
+        "diagnostics": {
+          "backend": "usd-brep",
+          "version": "1.0.0",
+          "recipe_version": 2,
+          "solid_volume_mm3": 11341.168322636167,
+          "mesh_volume_mm3": 11332.376707010882,
+          "extents_mm": [
+            60.0,
+            40.0,
+            20.0
+          ],
+          "bounds_mm": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              60.0,
+              40.0,
+              20.0
+            ]
+          ],
+          "watertight": true,
+          "winding_consistent": true,
+          "euler_number": 2,
+          "triangles": 284,
+          "usd_roundtrip": true,
+          "volume_relative_accuracy": 1e-08,
+          "usd_volume_mm3": 11341.168322636162,
+          "operations": [
+            {
+              "id": "blank",
+              "kind": "box",
+              "faces": 6
+            },
+            {
+              "id": "rounded",
+              "kind": "fillet",
+              "faces": 10
+            },
+            {
+              "id": "tray",
+              "kind": "shell",
+              "faces": 19
+            }
+          ],
+          "connections": [],
+          "build_seconds": 0.362
+        },
+        "controls": {
+          "primary_view": "front"
+        },
+        "files": {
+          "source": "/results/89fda4780c14/brep-c6709418fc46450fab9eab8a99cf858b/model.recipe.json",
+          "stl": "/results/89fda4780c14/brep-c6709418fc46450fab9eab8a99cf858b/model.stl",
+          "usd": "/results/89fda4780c14/brep-c6709418fc46450fab9eab8a99cf858b/model.usda",
+          "views": {
+            "isometric": "/results/89fda4780c14/brep-c6709418fc46450fab9eab8a99cf858b/view-isometric.png",
+            "front": "/results/89fda4780c14/brep-c6709418fc46450fab9eab8a99cf858b/view-front.png",
+            "top": "/results/89fda4780c14/brep-c6709418fc46450fab9eab8a99cf858b/view-top.png",
+            "right": "/results/89fda4780c14/brep-c6709418fc46450fab9eab8a99cf858b/view-right.png"
+          }
+        },
+        "build": {
+          "version": 1,
+          "backend": "usd-brep",
+          "source_format": "brep-recipe-v2",
+          "ok": true,
+          "units": "mm",
+          "axes": {
+            "x": "width",
+            "y": "depth",
+            "z": "height"
+          },
+          "views": [
+            "isometric",
+            "front",
+            "top",
+            "right"
+          ],
+          "measurements": {
+            "watertight": true,
+            "components": 1,
+            "triangles": 284,
+            "extents_mm": [
+              60.0,
+              40.0,
+              20.0
+            ],
+            "volume_mm3": 11332.377
+          },
+          "diagnostics": [],
+          "drawing_evaluated": false
+        },
+        "original_run_id": null
+      },
+      "source_text": "{\n  \"version\": 2,\n  \"units\": \"mm\",\n  \"name\": \"rounded_tray\",\n  \"parameters\": {\n    \"thickness\": {\n      \"value\": 2,\n      \"min\": 0.5,\n      \"max\": 30,\n      \"label\": \"Wall and floor thickness\"\n    },\n    \"width\": {\n      \"value\": 60,\n      \"min\": 40,\n      \"max\": 80,\n      \"label\": \"Outside width\"\n    }\n  },\n  \"operations\": [\n    {\n      \"id\": \"blank\",\n      \"kind\": \"box\",\n      \"origin\": [\n        0,\n        0,\n        0\n      ],\n      \"size\": [\n        \"width\",\n        40,\n        20\n      ],\n      \"frame\": \"world\",\n      \"depends_on\": [],\n      \"evidence\": []\n    },\n    {\n      \"id\": \"rounded\",\n      \"kind\": \"fillet\",\n      \"body\": \"blank\",\n      \"radius\": 6,\n      \"selector\": \"parallel_z\",\n      \"frame\": \"world\",\n      \"depends_on\": [\n        \"blank\"\n      ],\n      \"evidence\": []\n    },\n    {\n      \"id\": \"tray\",\n      \"kind\": \"shell\",\n      \"body\": \"rounded\",\n      \"thickness\": \"thickness\",\n      \"opening\": \"top\",\n      \"preserve\": \"outer\",\n      \"frame\": \"world\",\n      \"depends_on\": [\n        \"rounded\"\n      ],\n      \"evidence\": []\n    }\n  ],\n  \"output\": \"tray\",\n  \"frames\": {\n    \"world\": {\n      \"origin\": [\n        0,\n        0,\n        0\n      ],\n      \"x\": \"width\",\n      \"y\": \"depth\",\n      \"z\": \"height\"\n    }\n  },\n  \"bodies\": [\n    {\n      \"id\": \"part\",\n      \"output\": \"tray\"\n    }\n  ],\n  \"evidence\": {\n    \"observed\": [],\n    \"inferred\": [],\n    \"assumptions\": [],\n    \"unresolved\": []\n  },\n  \"constraints\": []\n}",
+      "kind": "generation"
+    },
+    "39e3d0c0f72241dd9f5e919f8935d2d0": {
+      "id": "39e3d0c0f72241dd9f5e919f8935d2d0",
+      "parent_id": "original",
+      "kind": "parameter_edit",
+      "result": {
+        "id": "89fda4780c14",
+        "backend": "usd-brep",
+        "success": false,
+        "spec": {
+          "object": "rounded_tray"
+        },
+        "model": "experimental BRep recipe",
+        "duration_seconds": 0.362,
+        "evaluation": {
+          "status": "unverified",
+          "accepted": false,
+          "failures": [
+            "Drawing checks have not been rerun for this edit."
+          ]
+        },
+        "diagnostics": {
+          "backend": "usd-brep",
+          "version": "1.0.0",
+          "recipe_version": 2,
+          "solid_volume_mm3": 16301.283425253625,
+          "mesh_volume_mm3": 16289.771495771382,
+          "extents_mm": [
+            60.0,
+            40.0,
+            20.0
+          ],
+          "bounds_mm": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              60.0,
+              40.0,
+              20.0
+            ]
+          ],
+          "watertight": true,
+          "winding_consistent": true,
+          "euler_number": 2,
+          "triangles": 284,
+          "usd_roundtrip": true,
+          "volume_relative_accuracy": 1e-08,
+          "usd_volume_mm3": 16301.283425253621,
+          "operations": [
+            {
+              "id": "blank",
+              "kind": "box",
+              "faces": 6
+            },
+            {
+              "id": "rounded",
+              "kind": "fillet",
+              "faces": 10
+            },
+            {
+              "id": "tray",
+              "kind": "shell",
+              "faces": 19
+            }
+          ],
+          "connections": [],
+          "build_seconds": 0.402
+        },
+        "controls": {
+          "primary_view": "front"
+        },
+        "files": {
+          "source": "/results/89fda4780c14/brep-f3a4d80db7194419a197a72fdf25eb84/model.recipe.json",
+          "stl": "/results/89fda4780c14/brep-f3a4d80db7194419a197a72fdf25eb84/model.stl",
+          "usd": "/results/89fda4780c14/brep-f3a4d80db7194419a197a72fdf25eb84/model.usda",
+          "views": {
+            "isometric": "/results/89fda4780c14/brep-f3a4d80db7194419a197a72fdf25eb84/view-isometric.png",
+            "front": "/results/89fda4780c14/brep-f3a4d80db7194419a197a72fdf25eb84/view-front.png",
+            "top": "/results/89fda4780c14/brep-f3a4d80db7194419a197a72fdf25eb84/view-top.png",
+            "right": "/results/89fda4780c14/brep-f3a4d80db7194419a197a72fdf25eb84/view-right.png"
+          }
+        },
+        "build": {
+          "version": 1,
+          "backend": "usd-brep",
+          "source_format": "brep-recipe-v2",
+          "ok": true,
+          "units": "mm",
+          "axes": {
+            "x": "width",
+            "y": "depth",
+            "z": "height"
+          },
+          "views": [
+            "isometric",
+            "front",
+            "top",
+            "right"
+          ],
+          "measurements": {
+            "watertight": true,
+            "components": 1,
+            "triangles": 284,
+            "extents_mm": [
+              60.0,
+              40.0,
+              20.0
+            ],
+            "volume_mm3": 16289.771
+          },
+          "diagnostics": [],
+          "drawing_evaluated": false
+        },
+        "original_run_id": null
+      },
+      "source_text": "{\n  \"version\": 2,\n  \"units\": \"mm\",\n  \"name\": \"rounded_tray\",\n  \"parameters\": {\n    \"thickness\": {\n      \"value\": 3.0,\n      \"min\": 0.5,\n      \"max\": 30,\n      \"label\": \"Wall and floor thickness\"\n    },\n    \"width\": {\n      \"value\": 60.0,\n      \"min\": 40,\n      \"max\": 80,\n      \"label\": \"Outside width\"\n    }\n  },\n  \"operations\": [\n    {\n      \"id\": \"blank\",\n      \"kind\": \"box\",\n      \"origin\": [\n        0,\n        0,\n        0\n      ],\n      \"size\": [\n        \"width\",\n        40,\n        20\n      ],\n      \"frame\": \"world\",\n      \"depends_on\": [],\n      \"evidence\": []\n    },\n    {\n      \"id\": \"rounded\",\n      \"kind\": \"fillet\",\n      \"body\": \"blank\",\n      \"radius\": 6,\n      \"selector\": \"parallel_z\",\n      \"frame\": \"world\",\n      \"depends_on\": [\n        \"blank\"\n      ],\n      \"evidence\": []\n    },\n    {\n      \"id\": \"tray\",\n      \"kind\": \"shell\",\n      \"body\": \"rounded\",\n      \"thickness\": \"thickness\",\n      \"opening\": \"top\",\n      \"preserve\": \"outer\",\n      \"frame\": \"world\",\n      \"depends_on\": [\n        \"rounded\"\n      ],\n      \"evidence\": []\n    }\n  ],\n  \"output\": \"tray\",\n  \"frames\": {\n    \"world\": {\n      \"origin\": [\n        0,\n        0,\n        0\n      ],\n      \"x\": \"width\",\n      \"y\": \"depth\",\n      \"z\": \"height\"\n    }\n  },\n  \"bodies\": [\n    {\n      \"id\": \"part\",\n      \"output\": \"tray\"\n    }\n  ],\n  \"evidence\": {\n    \"observed\": [],\n    \"inferred\": [],\n    \"assumptions\": [],\n    \"unresolved\": []\n  },\n  \"constraints\": []\n}",
+      "parameters": [
+        {
+          "name": "thickness",
+          "value": 3.0,
+          "low": 0.5,
+          "high": 30,
+          "step": 0.01,
+          "label": "Wall and floor thickness",
+          "unit": "mm",
+          "description": "Rebuilds the saved construction recipe",
+          "group": "Details",
+          "feature": null
+        },
+        {
+          "name": "width",
+          "value": 60.0,
+          "low": 40,
+          "high": 80,
+          "step": 0.01,
+          "label": "Outside width",
+          "unit": "mm",
+          "description": "Rebuilds the saved construction recipe",
+          "group": "Details",
+          "feature": null
+        }
+      ]
+    },
+    "a23da8bdc36142a4ae69d781300aa2a8": {
+      "id": "a23da8bdc36142a4ae69d781300aa2a8",
+      "parent_id": "original",
+      "kind": "parameter_edit",
+      "result": {
+        "id": "89fda4780c14",
+        "backend": "usd-brep",
+        "success": false,
+        "spec": {
+          "object": "rounded_tray"
+        },
+        "model": "experimental BRep recipe",
+        "duration_seconds": 0.362,
+        "evaluation": {
+          "status": "unverified",
+          "accepted": false,
+          "failures": [
+            "Drawing checks have not been rerun for this edit."
+          ]
+        },
+        "diagnostics": {
+          "backend": "usd-brep",
+          "version": "1.0.0",
+          "recipe_version": 2,
+          "solid_volume_mm3": 16301.28353357935,
+          "mesh_volume_mm3": 16289.771481470283,
+          "extents_mm": [
+            60.0,
+            40.0,
+            20.0
+          ],
+          "bounds_mm": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              60.0,
+              40.0,
+              20.0
+            ]
+          ],
+          "watertight": true,
+          "winding_consistent": true,
+          "euler_number": 2,
+          "triangles": 284,
+          "usd_roundtrip": true,
+          "volume_relative_accuracy": 1e-08,
+          "usd_volume_mm3": 16301.283533579352,
+          "operations": [
+            {
+              "id": "blank",
+              "kind": "box",
+              "faces": 6
+            },
+            {
+              "id": "rounded",
+              "kind": "fillet",
+              "faces": 10
+            },
+            {
+              "id": "tray",
+              "kind": "shell",
+              "faces": 19
+            }
+          ],
+          "connections": [],
+          "build_seconds": 0.41
+        },
+        "controls": {
+          "primary_view": "front"
+        },
+        "files": {
+          "source": "/results/89fda4780c14/brep-c5ad374dea8a4a449bcbf58b29be00ad/model.recipe.json",
+          "stl": "/results/89fda4780c14/brep-c5ad374dea8a4a449bcbf58b29be00ad/model.stl",
+          "usd": "/results/89fda4780c14/brep-c5ad374dea8a4a449bcbf58b29be00ad/model.usda",
+          "views": {
+            "isometric": "/results/89fda4780c14/brep-c5ad374dea8a4a449bcbf58b29be00ad/view-isometric.png",
+            "front": "/results/89fda4780c14/brep-c5ad374dea8a4a449bcbf58b29be00ad/view-front.png",
+            "top": "/results/89fda4780c14/brep-c5ad374dea8a4a449bcbf58b29be00ad/view-top.png",
+            "right": "/results/89fda4780c14/brep-c5ad374dea8a4a449bcbf58b29be00ad/view-right.png"
+          }
+        },
+        "build": {
+          "version": 1,
+          "backend": "usd-brep",
+          "source_format": "brep-recipe-v2",
+          "ok": true,
+          "units": "mm",
+          "axes": {
+            "x": "width",
+            "y": "depth",
+            "z": "height"
+          },
+          "views": [
+            "isometric",
+            "front",
+            "top",
+            "right"
+          ],
+          "measurements": {
+            "watertight": true,
+            "components": 1,
+            "triangles": 284,
+            "extents_mm": [
+              60.0,
+              40.0,
+              20.0
+            ],
+            "volume_mm3": 16289.771
+          },
+          "diagnostics": [],
+          "drawing_evaluated": false
+        },
+        "original_run_id": null
+      },
+      "source_text": "{\n  \"version\": 2,\n  \"units\": \"mm\",\n  \"name\": \"rounded_tray\",\n  \"parameters\": {\n    \"thickness\": {\n      \"value\": 3.0,\n      \"min\": 0.5,\n      \"max\": 30,\n      \"label\": \"Wall and floor thickness\"\n    },\n    \"width\": {\n      \"value\": 60.0,\n      \"min\": 40,\n      \"max\": 80,\n      \"label\": \"Outside width\"\n    }\n  },\n  \"operations\": [\n    {\n      \"id\": \"blank\",\n      \"kind\": \"box\",\n      \"origin\": [\n        0,\n        0,\n        0\n      ],\n      \"size\": [\n        \"width\",\n        40,\n        20\n      ],\n      \"frame\": \"world\",\n      \"depends_on\": [],\n      \"evidence\": []\n    },\n    {\n      \"id\": \"rounded\",\n      \"kind\": \"fillet\",\n      \"body\": \"blank\",\n      \"radius\": 6,\n      \"selector\": \"parallel_z\",\n      \"frame\": \"world\",\n      \"depends_on\": [\n        \"blank\"\n      ],\n      \"evidence\": []\n    },\n    {\n      \"id\": \"tray\",\n      \"kind\": \"shell\",\n      \"body\": \"rounded\",\n      \"thickness\": \"thickness\",\n      \"opening\": \"top\",\n      \"preserve\": \"outer\",\n      \"frame\": \"world\",\n      \"depends_on\": [\n        \"rounded\"\n      ],\n      \"evidence\": []\n    }\n  ],\n  \"output\": \"tray\",\n  \"frames\": {\n    \"world\": {\n      \"origin\": [\n        0,\n        0,\n        0\n      ],\n      \"x\": \"width\",\n      \"y\": \"depth\",\n      \"z\": \"height\"\n    }\n  },\n  \"bodies\": [\n    {\n      \"id\": \"part\",\n      \"output\": \"tray\"\n    }\n  ],\n  \"evidence\": {\n    \"observed\": [],\n    \"inferred\": [],\n    \"assumptions\": [],\n    \"unresolved\": []\n  },\n  \"constraints\": []\n}",
+      "parameters": [
+        {
+          "name": "thickness",
+          "value": 3.0,
+          "low": 0.5,
+          "high": 30,
+          "step": 0.01,
+          "label": "Wall and floor thickness",
+          "unit": "mm",
+          "description": "Rebuilds the saved construction recipe",
+          "group": "Details",
+          "feature": null
+        },
+        {
+          "name": "width",
+          "value": 60.0,
+          "low": 40,
+          "high": 80,
+          "step": 0.01,
+          "label": "Outside width",
+          "unit": "mm",
+          "description": "Rebuilds the saved construction recipe",
+          "group": "Details",
+          "feature": null
+        }
+      ]
+    },
+    "1c4090a39448420f99a8b943f958a415": {
+      "id": "1c4090a39448420f99a8b943f958a415",
+      "parent_id": "a23da8bdc36142a4ae69d781300aa2a8",
+      "kind": "parameter_edit",
+      "result": {
+        "id": "89fda4780c14",
+        "backend": "usd-brep",
+        "success": false,
+        "spec": {
+          "object": "rounded_tray"
+        },
+        "model": "experimental BRep recipe",
+        "duration_seconds": 0.362,
+        "evaluation": {
+          "status": "unverified",
+          "accepted": false,
+          "failures": [
+            "Drawing checks have not been rerun for this edit."
+          ]
+        },
+        "diagnostics": {
+          "backend": "usd-brep",
+          "version": "1.0.0",
+          "recipe_version": 2,
+          "solid_volume_mm3": 18521.283506227068,
+          "mesh_volume_mm3": 18509.771024070767,
+          "extents_mm": [
+            70.0,
+            40.0,
+            20.0
+          ],
+          "bounds_mm": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              70.0,
+              40.0,
+              20.0
+            ]
+          ],
+          "watertight": true,
+          "winding_consistent": true,
+          "euler_number": 2,
+          "triangles": 284,
+          "usd_roundtrip": true,
+          "volume_relative_accuracy": 1e-08,
+          "usd_volume_mm3": 18521.28350622708,
+          "operations": [
+            {
+              "id": "blank",
+              "kind": "box",
+              "faces": 6
+            },
+            {
+              "id": "rounded",
+              "kind": "fillet",
+              "faces": 10
+            },
+            {
+              "id": "tray",
+              "kind": "shell",
+              "faces": 19
+            }
+          ],
+          "connections": [],
+          "build_seconds": 0.344
+        },
+        "controls": {
+          "primary_view": "front"
+        },
+        "files": {
+          "source": "/results/89fda4780c14/brep-d2e388b13aef40c19d33d599ca928c97/model.recipe.json",
+          "stl": "/results/89fda4780c14/brep-d2e388b13aef40c19d33d599ca928c97/model.stl",
+          "usd": "/results/89fda4780c14/brep-d2e388b13aef40c19d33d599ca928c97/model.usda",
+          "views": {
+            "isometric": "/results/89fda4780c14/brep-d2e388b13aef40c19d33d599ca928c97/view-isometric.png",
+            "front": "/results/89fda4780c14/brep-d2e388b13aef40c19d33d599ca928c97/view-front.png",
+            "top": "/results/89fda4780c14/brep-d2e388b13aef40c19d33d599ca928c97/view-top.png",
+            "right": "/results/89fda4780c14/brep-d2e388b13aef40c19d33d599ca928c97/view-right.png"
+          }
+        },
+        "build": {
+          "version": 1,
+          "backend": "usd-brep",
+          "source_format": "brep-recipe-v2",
+          "ok": true,
+          "units": "mm",
+          "axes": {
+            "x": "width",
+            "y": "depth",
+            "z": "height"
+          },
+          "views": [
+            "isometric",
+            "front",
+            "top",
+            "right"
+          ],
+          "measurements": {
+            "watertight": true,
+            "components": 1,
+            "triangles": 284,
+            "extents_mm": [
+              70.0,
+              40.0,
+              20.0
+            ],
+            "volume_mm3": 18509.771
+          },
+          "diagnostics": [],
+          "drawing_evaluated": false
+        },
+        "original_run_id": null
+      },
+      "source_text": "{\n  \"version\": 2,\n  \"units\": \"mm\",\n  \"name\": \"rounded_tray\",\n  \"parameters\": {\n    \"thickness\": {\n      \"value\": 3.0,\n      \"min\": 0.5,\n      \"max\": 30,\n      \"label\": \"Wall and floor thickness\"\n    },\n    \"width\": {\n      \"value\": 70.0,\n      \"min\": 40,\n      \"max\": 80,\n      \"label\": \"Outside width\"\n    }\n  },\n  \"operations\": [\n    {\n      \"id\": \"blank\",\n      \"kind\": \"box\",\n      \"origin\": [\n        0,\n        0,\n        0\n      ],\n      \"size\": [\n        \"width\",\n        40,\n        20\n      ],\n      \"frame\": \"world\",\n      \"depends_on\": [],\n      \"evidence\": []\n    },\n    {\n      \"id\": \"rounded\",\n      \"kind\": \"fillet\",\n      \"body\": \"blank\",\n      \"radius\": 6,\n      \"selector\": \"parallel_z\",\n      \"frame\": \"world\",\n      \"depends_on\": [\n        \"blank\"\n      ],\n      \"evidence\": []\n    },\n    {\n      \"id\": \"tray\",\n      \"kind\": \"shell\",\n      \"body\": \"rounded\",\n      \"thickness\": \"thickness\",\n      \"opening\": \"top\",\n      \"preserve\": \"outer\",\n      \"frame\": \"world\",\n      \"depends_on\": [\n        \"rounded\"\n      ],\n      \"evidence\": []\n    }\n  ],\n  \"output\": \"tray\",\n  \"frames\": {\n    \"world\": {\n      \"origin\": [\n        0,\n        0,\n        0\n      ],\n      \"x\": \"width\",\n      \"y\": \"depth\",\n      \"z\": \"height\"\n    }\n  },\n  \"bodies\": [\n    {\n      \"id\": \"part\",\n      \"output\": \"tray\"\n    }\n  ],\n  \"evidence\": {\n    \"observed\": [],\n    \"inferred\": [],\n    \"assumptions\": [],\n    \"unresolved\": []\n  },\n  \"constraints\": []\n}",
+      "parameters": [
+        {
+          "name": "thickness",
+          "value": 3.0,
+          "low": 0.5,
+          "high": 30,
+          "step": 0.01,
+          "label": "Wall and floor thickness",
+          "unit": "mm",
+          "description": "Rebuilds the saved construction recipe",
+          "group": "Details",
+          "feature": null
+        },
+        {
+          "name": "width",
+          "value": 70.0,
+          "low": 40,
+          "high": 80,
+          "step": 0.01,
+          "label": "Outside width",
+          "unit": "mm",
+          "description": "Rebuilds the saved construction recipe",
+          "group": "Details",
+          "feature": null
+        }
+      ]
+    },
+    "d3b72e25fca94174afa4e21cf1f943a9": {
+      "id": "d3b72e25fca94174afa4e21cf1f943a9",
+      "parent_id": "1c4090a39448420f99a8b943f958a415",
+      "kind": "parameter_edit",
+      "result": {
+        "id": "89fda4780c14",
+        "backend": "usd-brep",
+        "success": false,
+        "spec": {
+          "object": "rounded_tray"
+        },
+        "model": "experimental BRep recipe",
+        "duration_seconds": 0.362,
+        "evaluation": {
+          "status": "unverified",
+          "accepted": false,
+          "failures": [
+            "Drawing checks have not been rerun for this edit."
+          ]
+        },
+        "diagnostics": {
+          "backend": "usd-brep",
+          "version": "1.0.0",
+          "recipe_version": 2,
+          "solid_volume_mm3": 23692.885083346726,
+          "mesh_volume_mm3": 23679.57982527799,
+          "extents_mm": [
+            70.0,
+            40.0,
+            20.0
+          ],
+          "bounds_mm": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              70.0,
+              40.0,
+              20.0
+            ]
+          ],
+          "watertight": true,
+          "winding_consistent": true,
+          "euler_number": 2,
+          "triangles": 284,
+          "usd_roundtrip": true,
+          "volume_relative_accuracy": 1e-08,
+          "usd_volume_mm3": 23692.88508334673,
+          "operations": [
+            {
+              "id": "blank",
+              "kind": "box",
+              "faces": 6
+            },
+            {
+              "id": "rounded",
+              "kind": "fillet",
+              "faces": 10
+            },
+            {
+              "id": "tray",
+              "kind": "shell",
+              "faces": 19
+            }
+          ],
+          "connections": [],
+          "build_seconds": 0.368
+        },
+        "controls": {
+          "primary_view": "front"
+        },
+        "files": {
+          "source": "/results/89fda4780c14/brep-e0522c84c9d64cdab80a54f412fa8238/model.recipe.json",
+          "stl": "/results/89fda4780c14/brep-e0522c84c9d64cdab80a54f412fa8238/model.stl",
+          "usd": "/results/89fda4780c14/brep-e0522c84c9d64cdab80a54f412fa8238/model.usda",
+          "views": {
+            "isometric": "/results/89fda4780c14/brep-e0522c84c9d64cdab80a54f412fa8238/view-isometric.png",
+            "front": "/results/89fda4780c14/brep-e0522c84c9d64cdab80a54f412fa8238/view-front.png",
+            "top": "/results/89fda4780c14/brep-e0522c84c9d64cdab80a54f412fa8238/view-top.png",
+            "right": "/results/89fda4780c14/brep-e0522c84c9d64cdab80a54f412fa8238/view-right.png"
+          }
+        },
+        "build": {
+          "version": 1,
+          "backend": "usd-brep",
+          "source_format": "brep-recipe-v2",
+          "ok": true,
+          "units": "mm",
+          "axes": {
+            "x": "width",
+            "y": "depth",
+            "z": "height"
+          },
+          "views": [
+            "isometric",
+            "front",
+            "top",
+            "right"
+          ],
+          "measurements": {
+            "watertight": true,
+            "components": 1,
+            "triangles": 284,
+            "extents_mm": [
+              70.0,
+              40.0,
+              20.0
+            ],
+            "volume_mm3": 23679.58
+          },
+          "diagnostics": [],
+          "drawing_evaluated": false
+        },
+        "original_run_id": null
+      },
+      "source_text": "{\n  \"version\": 2,\n  \"units\": \"mm\",\n  \"name\": \"rounded_tray\",\n  \"parameters\": {\n    \"thickness\": {\n      \"value\": 4.0,\n      \"min\": 0.5,\n      \"max\": 30,\n      \"label\": \"Wall and floor thickness\"\n    },\n    \"width\": {\n      \"value\": 70.0,\n      \"min\": 40,\n      \"max\": 80,\n      \"label\": \"Outside width\"\n    }\n  },\n  \"operations\": [\n    {\n      \"id\": \"blank\",\n      \"kind\": \"box\",\n      \"origin\": [\n        0,\n        0,\n        0\n      ],\n      \"size\": [\n        \"width\",\n        40,\n        20\n      ],\n      \"frame\": \"world\",\n      \"depends_on\": [],\n      \"evidence\": []\n    },\n    {\n      \"id\": \"rounded\",\n      \"kind\": \"fillet\",\n      \"body\": \"blank\",\n      \"radius\": 6,\n      \"selector\": \"parallel_z\",\n      \"frame\": \"world\",\n      \"depends_on\": [\n        \"blank\"\n      ],\n      \"evidence\": []\n    },\n    {\n      \"id\": \"tray\",\n      \"kind\": \"shell\",\n      \"body\": \"rounded\",\n      \"thickness\": \"thickness\",\n      \"opening\": \"top\",\n      \"preserve\": \"outer\",\n      \"frame\": \"world\",\n      \"depends_on\": [\n        \"rounded\"\n      ],\n      \"evidence\": []\n    }\n  ],\n  \"output\": \"tray\",\n  \"frames\": {\n    \"world\": {\n      \"origin\": [\n        0,\n        0,\n        0\n      ],\n      \"x\": \"width\",\n      \"y\": \"depth\",\n      \"z\": \"height\"\n    }\n  },\n  \"bodies\": [\n    {\n      \"id\": \"part\",\n      \"output\": \"tray\"\n    }\n  ],\n  \"evidence\": {\n    \"observed\": [],\n    \"inferred\": [],\n    \"assumptions\": [],\n    \"unresolved\": []\n  },\n  \"constraints\": []\n}",
+      "parameters": [
+        {
+          "name": "thickness",
+          "value": 4.0,
+          "low": 0.5,
+          "high": 30,
+          "step": 0.01,
+          "label": "Wall and floor thickness",
+          "unit": "mm",
+          "description": "Rebuilds the saved construction recipe",
+          "group": "Details",
+          "feature": null
+        },
+        {
+          "name": "width",
+          "value": 70.0,
+          "low": 40,
+          "high": 80,
+          "step": 0.01,
+          "label": "Outside width",
+          "unit": "mm",
+          "description": "Rebuilds the saved construction recipe",
+          "group": "Details",
+          "feature": null
+        }
+      ]
+    }
+  }
+}

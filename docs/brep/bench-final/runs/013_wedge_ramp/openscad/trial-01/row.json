@@ -1,0 +1,93 @@
+{
+  "drawing": "013_wedge_ramp",
+  "backend": "openscad",
+  "trial": 1,
+  "submitted_at": "2026-10-19T16:04:37.298846+00:00",
+  "finished_at": "2026-10-19T16:08:41.892322+00:00",
+  "run_id": "7af251b656b7",
+  "wall_seconds": 244.6,
+  "job_status": "done",
+  "error": null,
+  "questions_asked": 0,
+  "question_kinds": [],
+  "build": {
+    "watertight": true,
+    "components": 1,
+    "genus": 0,
+    "extents_mm": [
+      100.0,
+      32.58,
+      62.62
+    ],
+    "volume_mm3": 102008.0,
+    "sha256": "fa844e175d141bfbc1dab0d8c6ea4199c17200e096d220c7371898661f5689e9",
+    "bytes": 1178
+  },
+  "checks": {
+    "build_success": true,
+    "extents_pass": false,
+    "genus_pass": true,
+    "volume_pass": false,
+    "fidelity_pass": false,
+    "overall_pass": false,
+    "not_applicable": []
+  },
+  "fidelity": {
+    "scores": {
+      "front": 0.246,
+      "top": 0.282
+    },
+    "pass": false,
+    "reason": null,
+    "topology": {
+      "front": {
+        "expected": 0,
+        "actual": 0,
+        "position_fidelity": null
+      },
+      "top": {
+        "expected": 0,
+        "actual": 0,
+        "position_fidelity": null
+      }
+    }
+  },
+  "product": {
+    "success": false,
+    "accepted": false,
+    "status": null,
+    "score": 84.0,
+    "projection_status": null,
+    "geometry_status": null,
+    "failures": [
+      "CAD projections poorly match the drawing: front similarity 0.25, top similarity 0.28 (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly."
+    ]
+  },
+  "attempts": {
+    "count": 3,
+    "recovered": false,
+    "corrections": null,
+    "selected": 3
+  },
+  "unsupported": {
+    "flag": false,
+    "code": null
+  },
+  "edit": {
+    "available": true,
+    "ok": true,
+    "seconds": 0.41,
+    "param": "width",
+    "old": 100.0,
+    "new": 120.0,
+    "message": null
+  },
+  "targeted": {
+    "available": false,
+    "ok": false,
+    "seconds": null,
+    "operation": null,
+    "value": null,
+    "message": "not_applicable: the product requires a BRep result for targeted edits"
+  }
+}

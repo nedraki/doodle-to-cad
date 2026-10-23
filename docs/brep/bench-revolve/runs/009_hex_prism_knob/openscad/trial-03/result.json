@@ -1,0 +1,907 @@
+{
+  "backend": "openscad",
+  "build": {
+    "version": 1,
+    "backend": "openscad",
+    "source_format": "openscad",
+    "ok": true,
+    "units": "mm",
+    "axes": {
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    },
+    "views": [
+      "isometric",
+      "front",
+      "top",
+      "right"
+    ],
+    "measurements": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 116,
+      "through_holes": 0,
+      "extents_mm": [
+        70.0,
+        69.617,
+        61.49
+      ],
+      "volume_mm3": 234915.307
+    },
+    "diagnostics": [],
+    "drawing_evaluated": false
+  },
+  "id": "435d2400586c",
+  "success": true,
+  "model": "local-inference-lab/Qwen3.8-Flash-Next-NVFP4",
+  "model_source": "auto-discovery",
+  "base_url": "http://127.0.0.1:8000/v1",
+  "spec": {
+    "object": "Hex prism handle",
+    "object_count": 1,
+    "dimensionality": "3d",
+    "projection_standard": "third-angle",
+    "views": [
+      {
+        "direction": "front",
+        "sheet_region": "left",
+        "constrains": "Cross-sectional profile (XY plane) and width/depth dimensions"
+      },
+      {
+        "direction": "right",
+        "sheet_region": "right",
+        "constrains": "Side profile (YZ plane) and height dimension"
+      }
+    ],
+    "manufacturing_strategy": "3D print",
+    "parts": [
+      {
+        "id": "part_1",
+        "name": "Hex Prism Body",
+        "material": "generic_plastic",
+        "description": "A solid hexagonal prism extruded along the Z-axis."
+      }
+    ],
+    "features": [
+      {
+        "id": "feat_hex_profile",
+        "type": "profile",
+        "owner": "part_1",
+        "description": "Regular hexagon shape defined by the front view."
+      }
+    ],
+    "relations": [],
+    "symmetry": {
+      "type": "rotational",
+      "axis": "Z",
+      "order": 6,
+      "description": "The object exhibits 6-fold rotational symmetry around the vertical axis."
+    },
+    "repetitions": [],
+    "dimensions": {
+      "overall": 70.0,
+      "max_width": 70.0,
+      "max_depth": 69.51,
+      "max_height": 61.49,
+      "size_provenance": "measured ink spans x authoritative max dimension"
+    },
+    "uncertainties": [
+      "The specific orientation of the hexagon (flat-top vs pointy-top) is inferred from the front view geometry.",
+      "The exact height of the prism is inferred to be equal to the width to satisfy the 'maximum dimension' constraint and the visual aspect ratio of the side view."
+    ],
+    "interpretation_conflicts": [],
+    "generation_notes": "The drawing shows two views of a single object. The front view (left) displays the hexagonal cross-section. The right view (right) displays the side profile. Since the side view is also a hexagon, the object is a hexagonal prism where the height is equal to the width (a 'short' prism or puck). The user specified 'Hex prism handle', confirming the geometry. The maximum dimension is 70mm.",
+    "construction_plan": {
+      "schema_version": 1,
+      "family": "extrude",
+      "coordinate_frame": {
+        "x": "width",
+        "y": "depth",
+        "z": "height",
+        "front": {
+          "plane": "XZ",
+          "view_axis": "Y"
+        },
+        "top": {
+          "plane": "XY",
+          "view_axis": "Z"
+        },
+        "right": {
+          "plane": "YZ",
+          "view_axis": "X"
+        }
+      },
+      "operations": [
+        {
+          "id": "op_2",
+          "operation": "extrude",
+          "profile_plane": "XY",
+          "direction_axis": "Z",
+          "owner": "part_1",
+          "parameters": {
+            "depth": 70,
+            "start": 0
+          },
+          "source_views": [
+            "view_2"
+          ]
+        }
+      ],
+      "unresolved_constraints": [
+        "The specific orientation of the hexagon (flat-top vs pointy-top) is inferred from the front view geometry.",
+        "The exact height of the prism is inferred to be equal to the width to satisfy the 'maximum dimension' constraint and the visual aspect ratio of the side view."
+      ]
+    },
+    "user_intent": {
+      "description": "Hex prism handle (extruded hexagon)",
+      "object_type_hint": "",
+      "authoritative_max_dimension_mm": "70"
+    },
+    "source_view_group_count": 2,
+    "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+    "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+  },
+  "geometry": {
+    "image_size_px": [
+      1000,
+      750
+    ],
+    "ink_fraction": 0.0128,
+    "contour_count": 4,
+    "line_count": 55,
+    "drawing_sheet_contract": "All spatial groups are projections or isometric depictions of ONE physical object.",
+    "view_group_count": 2,
+    "view_groups": [
+      {
+        "bbox_normalized": [
+          0.15,
+          0.3333,
+          0.288,
+          0.336
+        ],
+        "center_normalized": [
+          0.294,
+          0.5013
+        ],
+        "relative_size": 0.0968,
+        "meaning": "view_of_same_object",
+        "view_id": "view_1"
+      },
+      {
+        "bbox_normalized": [
+          0.695,
+          0.332,
+          0.286,
+          0.3387
+        ],
+        "center_normalized": [
+          0.838,
+          0.5013
+        ],
+        "relative_size": 0.0969,
+        "meaning": "view_of_same_object",
+        "view_id": "view_2"
+      }
+    ],
+    "closed_internal_profile_count": 0,
+    "closed_internal_profiles": [],
+    "largest_regions": [
+      {
+        "contour_id": "contour_0",
+        "parent_contour_id": null,
+        "area_ratio": 0.06201,
+        "bbox_normalized": [
+          0.158,
+          0.3413,
+          0.271,
+          0.32
+        ],
+        "center_normalized": [
+          0.2935,
+          0.5013
+        ],
+        "vertices": 6,
+        "circularity": 0.774,
+        "hierarchy_depth": 0,
+        "closed_internal_profile": false,
+        "orphan_opening_ring": false,
+        "polygon_sheet_normalized": [
+          [
+            0.22,
+            0.348
+          ],
+          [
+            0.158,
+            0.496
+          ],
+          [
+            0.212,
+            0.652
+          ],
+          [
+            0.36,
+            0.6587
+          ],
+          [
+            0.428,
+            0.508
+          ],
+          [
+            0.362,
+            0.3533
+          ]
+        ]
+      },
+      {
+        "contour_id": "contour_2",
+        "parent_contour_id": null,
+        "area_ratio": 0.06068,
+        "bbox_normalized": [
+          0.703,
+          0.34,
+          0.269,
+          0.3227
+        ],
+        "center_normalized": [
+          0.8375,
+          0.5013
+        ],
+        "vertices": 6,
+        "circularity": 0.741,
+        "hierarchy_depth": 0,
+        "closed_internal_profile": false,
+        "orphan_opening_ring": false,
+        "polygon_sheet_normalized": [
+          [
+            0.894,
+            0.3413
+          ],
+          [
+            0.757,
+            0.3613
+          ],
+          [
+            0.703,
+            0.5147
+          ],
+          [
+            0.763,
+            0.6427
+          ],
+          [
+            0.907,
+            0.6587
+          ],
+          [
+            0.971,
+            0.4933
+          ]
+        ]
+      },
+      {
+        "contour_id": "contour_1",
+        "parent_contour_id": "contour_0",
+        "area_ratio": 0.05655,
+        "bbox_normalized": [
+          0.163,
+          0.348,
+          0.259,
+          0.3067
+        ],
+        "center_normalized": [
+          0.2925,
+          0.5013
+        ],
+        "vertices": 6,
+        "circularity": 0.772,
+        "hierarchy_depth": 1,
+        "closed_internal_profile": false,
+        "orphan_opening_ring": false,
+        "polygon_sheet_normalized": [
+          [
+            0.224,
+            0.3533
+          ],
+          [
+            0.359,
+            0.36
+          ],
+          [
+            0.421,
+            0.5067
+          ],
+          [
+            0.356,
+            0.6533
+          ],
+          [
+            0.216,
+            0.6453
+          ],
+          [
+            0.163,
+            0.4987
+          ]
+        ]
+      },
+      {
+        "contour_id": "contour_3",
+        "parent_contour_id": "contour_2",
+        "area_ratio": 0.05527,
+        "bbox_normalized": [
+          0.708,
+          0.3467,
+          0.25,
+          0.3093
+        ],
+        "center_normalized": [
+          0.833,
+          0.5013
+        ],
+        "vertices": 6,
+        "circularity": 0.798,
+        "hierarchy_depth": 1,
+        "closed_internal_profile": false,
+        "orphan_opening_ring": false,
+        "polygon_sheet_normalized": [
+          [
+            0.89,
+            0.3467
+          ],
+          [
+            0.957,
+            0.4947
+          ],
+          [
+            0.904,
+            0.652
+          ],
+          [
+            0.767,
+            0.6373
+          ],
+          [
+            0.708,
+            0.512
+          ],
+          [
+            0.759,
+            0.3707
+          ]
+        ]
+      }
+    ],
+    "view_geometry": [
+      {
+        "view_id": "view_1",
+        "sheet_bbox_normalized": [
+          0.15,
+          0.3333,
+          0.288,
+          0.336
+        ],
+        "pixel_aspect_ratio_width_over_height": 1.1429,
+        "measured_span_pixels": {
+          "horizontal_axis_u": 288,
+          "vertical_axis_v": 252
+        },
+        "coordinate_system": {
+          "origin": "top-left of this view crop",
+          "u_axis": "right",
+          "v_axis": "down",
+          "range": "u and v are normalized from 0 to 1 within this view"
+        },
+        "outer_profile": {
+          "profile_id": "contour_0",
+          "bbox_view_normalized": [
+            0.0278,
+            0.0238,
+            0.941,
+            0.9524
+          ],
+          "center_view_normalized": [
+            0.4983,
+            0.5
+          ],
+          "polygon_view_normalized": [
+            [
+              0.2431,
+              0.0437
+            ],
+            [
+              0.0278,
+              0.4842
+            ],
+            [
+              0.2153,
+              0.9485
+            ],
+            [
+              0.7292,
+              0.9685
+            ],
+            [
+              0.9653,
+              0.5199
+            ],
+            [
+              0.7361,
+              0.0595
+            ]
+          ],
+          "vertices": 6,
+          "circularity": 0.774,
+          "area_ratio_of_sheet": 0.06201
+        },
+        "internal_profiles": [],
+        "direction": "front",
+        "cad_mapping": {
+          "plane": "XZ",
+          "view_axis": "Y",
+          "u_maps_to": "+X",
+          "v_maps_to": "-Z"
+        }
+      },
+      {
+        "view_id": "view_2",
+        "sheet_bbox_normalized": [
+          0.695,
+          0.332,
+          0.286,
+          0.3387
+        ],
+        "pixel_aspect_ratio_width_over_height": 1.1259,
+        "measured_span_pixels": {
+          "horizontal_axis_u": 286,
+          "vertical_axis_v": 254
+        },
+        "coordinate_system": {
+          "origin": "top-left of this view crop",
+          "u_axis": "right",
+          "v_axis": "down",
+          "range": "u and v are normalized from 0 to 1 within this view"
+        },
+        "outer_profile": {
+          "profile_id": "contour_2",
+          "bbox_view_normalized": [
+            0.028,
+            0.0236,
+            0.9406,
+            0.9528
+          ],
+          "center_view_normalized": [
+            0.4983,
+            0.4999
+          ],
+          "polygon_view_normalized": [
+            [
+              0.6958,
+              0.0275
+            ],
+            [
+              0.2168,
+              0.0865
+            ],
+            [
+              0.028,
+              0.5394
+            ],
+            [
+              0.2378,
+              0.9173
+            ],
+            [
+              0.7413,
+              0.9646
+            ],
+            [
+              0.965,
+              0.4762
+            ]
+          ],
+          "vertices": 6,
+          "circularity": 0.741,
+          "area_ratio_of_sheet": 0.06068
+        },
+        "internal_profiles": [],
+        "direction": "right",
+        "cad_mapping": {
+          "plane": "YZ",
+          "view_axis": "X",
+          "u_maps_to": "+Y",
+          "v_maps_to": "-Z"
+        }
+      }
+    ],
+    "coordinate_contract": {
+      "sheet": {
+        "origin": "top-left",
+        "x_axis": "right",
+        "y_axis": "down",
+        "units": "normalized image fraction"
+      },
+      "cad": {
+        "origin": "shared object origin",
+        "x_axis": "width",
+        "y_axis": "front-to-back depth",
+        "z_axis": "height",
+        "units": "millimetres"
+      },
+      "rule": "Use view-local profile coordinates and cad_mapping; sheet placement separates views and is never physical geometry."
+    }
+  },
+  "mesh_health": {
+    "watertight": true,
+    "components": 1,
+    "triangles": 116,
+    "through_holes": 0,
+    "extents_mm": [
+      70.0,
+      69.617,
+      61.49
+    ],
+    "volume_mm3": 234915.307
+  },
+  "evaluation": {
+    "score": 95.8,
+    "valid_mesh": true,
+    "accepted": true,
+    "mandatory_gates": {
+      "compiled": true,
+      "topology": true,
+      "dimensions": true,
+      "shape_sanity": true,
+      "features": true,
+      "openings_through": true,
+      "projections": true,
+      "build_envelope": true
+    },
+    "scores": {
+      "topology": 45,
+      "dimensions": 20.0,
+      "features": 20,
+      "projections": 10.8
+    },
+    "projection_similarity": {
+      "front": 0.724,
+      "right": 0.719
+    },
+    "profile_topology": {
+      "front": {
+        "source_internal_profiles": 0,
+        "rendered_internal_profiles": 9,
+        "crop_internal_profiles": 0,
+        "source_aspect": 1.139,
+        "rendered_aspect": 1.136,
+        "source_opening_centroids": [],
+        "rendered_opening_centroids": [
+          [
+            0.929,
+            0.497
+          ],
+          [
+            0.868,
+            0.497
+          ],
+          [
+            0.791,
+            0.497
+          ],
+          [
+            0.7,
+            0.497
+          ],
+          [
+            0.601,
+            0.497
+          ],
+          [
+            0.497,
+            0.497
+          ],
+          [
+            0.393,
+            0.497
+          ],
+          [
+            0.294,
+            0.497
+          ],
+          [
+            0.142,
+            0.497
+          ]
+        ]
+      },
+      "right": {
+        "source_internal_profiles": 0,
+        "rendered_internal_profiles": 10,
+        "crop_internal_profiles": 0,
+        "source_aspect": 1.122,
+        "rendered_aspect": 1.136,
+        "source_opening_centroids": [],
+        "rendered_opening_centroids": [
+          [
+            0.953,
+            0.497
+          ],
+          [
+            0.899,
+            0.497
+          ],
+          [
+            0.83,
+            0.497
+          ],
+          [
+            0.747,
+            0.497
+          ],
+          [
+            0.651,
+            0.497
+          ],
+          [
+            0.549,
+            0.497
+          ],
+          [
+            0.445,
+            0.497
+          ],
+          [
+            0.343,
+            0.497
+          ],
+          [
+            0.178,
+            0.497
+          ],
+          [
+            0.041,
+            0.497
+          ]
+        ]
+      }
+    },
+    "demanded_openings": {
+      "total": 0,
+      "per_view": {
+        "front": 0,
+        "right": 0
+      },
+      "sheet_total": 0,
+      "registration_gap": 0
+    },
+    "failures": []
+  },
+  "selected_attempt": 1,
+  "attempts": [
+    {
+      "attempt": 1,
+      "action": "generate",
+      "preflight": {
+        "passed": true,
+        "errors": [],
+        "warnings": [],
+        "expected_subtractive_feature_groups": 0
+      },
+      "compiler_repairs": [],
+      "uniform_scale": null,
+      "evaluation": {
+        "score": 95.8,
+        "valid_mesh": true,
+        "accepted": true,
+        "mandatory_gates": {
+          "compiled": true,
+          "topology": true,
+          "dimensions": true,
+          "shape_sanity": true,
+          "features": true,
+          "openings_through": true,
+          "projections": true,
+          "build_envelope": true
+        },
+        "scores": {
+          "topology": 45,
+          "dimensions": 20.0,
+          "features": 20,
+          "projections": 10.8
+        },
+        "projection_similarity": {
+          "front": 0.724,
+          "right": 0.719
+        },
+        "profile_topology": {
+          "front": {
+            "source_internal_profiles": 0,
+            "rendered_internal_profiles": 9,
+            "crop_internal_profiles": 0,
+            "source_aspect": 1.139,
+            "rendered_aspect": 1.136,
+            "source_opening_centroids": [],
+            "rendered_opening_centroids": [
+              [
+                0.929,
+                0.497
+              ],
+              [
+                0.868,
+                0.497
+              ],
+              [
+                0.791,
+                0.497
+              ],
+              [
+                0.7,
+                0.497
+              ],
+              [
+                0.601,
+                0.497
+              ],
+              [
+                0.497,
+                0.497
+              ],
+              [
+                0.393,
+                0.497
+              ],
+              [
+                0.294,
+                0.497
+              ],
+              [
+                0.142,
+                0.497
+              ]
+            ]
+          },
+          "right": {
+            "source_internal_profiles": 0,
+            "rendered_internal_profiles": 10,
+            "crop_internal_profiles": 0,
+            "source_aspect": 1.122,
+            "rendered_aspect": 1.136,
+            "source_opening_centroids": [],
+            "rendered_opening_centroids": [
+              [
+                0.953,
+                0.497
+              ],
+              [
+                0.899,
+                0.497
+              ],
+              [
+                0.83,
+                0.497
+              ],
+              [
+                0.747,
+                0.497
+              ],
+              [
+                0.651,
+                0.497
+              ],
+              [
+                0.549,
+                0.497
+              ],
+              [
+                0.445,
+                0.497
+              ],
+              [
+                0.343,
+                0.497
+              ],
+              [
+                0.178,
+                0.497
+              ],
+              [
+                0.041,
+                0.497
+              ]
+            ]
+          }
+        },
+        "demanded_openings": {
+          "total": 0,
+          "per_view": {
+            "front": 0,
+            "right": 0
+          },
+          "sheet_total": 0,
+          "registration_gap": 0
+        },
+        "failures": []
+      },
+      "mesh_health": {
+        "watertight": true,
+        "components": 1,
+        "triangles": 116,
+        "through_holes": 0,
+        "extents_mm": [
+          70.0,
+          69.617,
+          61.49
+        ],
+        "volume_mm3": 234915.307
+      },
+      "build": {
+        "version": 1,
+        "backend": "openscad",
+        "source_format": "openscad",
+        "ok": true,
+        "units": "mm",
+        "axes": {
+          "x": "width",
+          "y": "depth",
+          "z": "height"
+        },
+        "views": [
+          "isometric",
+          "front",
+          "top",
+          "right"
+        ],
+        "measurements": {
+          "watertight": true,
+          "components": 1,
+          "triangles": 116,
+          "through_holes": 0,
+          "extents_mm": [
+            70.0,
+            69.617,
+            61.49
+          ],
+          "volume_mm3": 234915.307
+        },
+        "diagnostics": [],
+        "drawing_evaluated": false
+      },
+      "compile_log": "WARNING: height was assigned on line 5 but was overwritten in file model.scad, line 128\nGeometries in cache: 2\nGeometry cache size in bytes: 8944\nCGAL Polyhedrons in cache: 0\nCGAL cache size in bytes: 0\nTotal rendering time: 0:00:00.000\n   Top level object is a 3D object:\n   Facets:         32",
+      "files": {
+        "scad": "attempt-01/model.scad",
+        "stl": "attempt-01/model.stl",
+        "views": {
+          "isometric": "attempt-01/view-isometric.png",
+          "front": "attempt-01/view-front.png",
+          "top": "attempt-01/view-top.png",
+          "right": "attempt-01/view-right.png"
+        }
+      }
+    }
+  ],
+  "controls": {
+    "object_type_hint": "",
+    "method": "3D print",
+    "primary_view": "front",
+    "projection_standard": "third-angle",
+    "strict_watertight": true,
+    "refine_mode": "regularize"
+  },
+  "size_clarification": null,
+  "additional_view_count": 0,
+  "repaired": false,
+  "compile_log": "WARNING: height was assigned on line 5 but was overwritten in file model.scad, line 128\nGeometries in cache: 2\nGeometry cache size in bytes: 8944\nCGAL Polyhedrons in cache: 0\nCGAL cache size in bytes: 0\nTotal rendering time: 0:00:00.000\n   Top level object is a 3D object:\n   Facets:         32",
+  "duration_seconds": 173.36,
+  "files": {
+    "scad": "/results/435d2400586c/model.scad",
+    "stl": "/results/435d2400586c/model.stl",
+    "attempts": "/results/435d2400586c/attempts.json",
+    "overlay": "/results/435d2400586c/geometry-overlay.png",
+    "views": {
+      "isometric": "/results/435d2400586c/view-isometric.png",
+      "front": "/results/435d2400586c/view-front.png",
+      "top": "/results/435d2400586c/view-top.png",
+      "right": "/results/435d2400586c/view-right.png"
+    }
+  }
+}

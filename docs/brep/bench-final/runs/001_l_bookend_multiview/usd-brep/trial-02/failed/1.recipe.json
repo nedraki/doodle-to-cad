@@ -1,0 +1,266 @@
+{
+  "version": 2,
+  "units": "mm",
+  "name": "l_bracket",
+  "parameters": {
+    "width": {
+      "value": 80,
+      "min": 40,
+      "max": 120,
+      "label": "Width",
+      "description": "Overall width of the bracket"
+    },
+    "height": {
+      "value": 100,
+      "min": 50,
+      "max": 150,
+      "label": "Height",
+      "description": "Overall height of the bracket"
+    },
+    "depth": {
+      "value": 60,
+      "min": 30,
+      "max": 100,
+      "label": "Depth",
+      "description": "Overall depth of the base flange"
+    },
+    "thickness": {
+      "value": 5,
+      "min": 2,
+      "max": 10,
+      "label": "Thickness",
+      "description": "Uniform thickness of the backplate and base flange"
+    },
+    "cutout_w": {
+      "value": 15,
+      "min": 5,
+      "max": 30,
+      "label": "Cutout Width",
+      "description": "Width of the rectangular cutouts"
+    },
+    "cutout_h": {
+      "value": 30,
+      "min": 10,
+      "max": 60,
+      "label": "Cutout Height",
+      "description": "Height of the rectangular cutouts"
+    }
+  },
+  "operations": [
+    {
+      "id": "backplate",
+      "kind": "box",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "size": [
+        "width",
+        "thickness",
+        "height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "base_flange",
+      "kind": "box",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "size": [
+        "width",
+        "depth",
+        "thickness"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "l_shape",
+      "kind": "union",
+      "left": "backplate",
+      "right": "base_flange",
+      "frame": "world",
+      "depends_on": [
+        "backplate",
+        "base_flange"
+      ],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "cutout_top",
+      "kind": "box",
+      "origin": [
+        "width * 0.15",
+        "-1",
+        "height * 0.7"
+      ],
+      "size": [
+        "cutout_w",
+        "thickness + 2",
+        "cutout_h"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "cutout_left",
+      "kind": "box",
+      "origin": [
+        "width * 0.2",
+        "-1",
+        "height * 0.15"
+      ],
+      "size": [
+        "cutout_w",
+        "thickness + 2",
+        "cutout_h"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "cutout_center",
+      "kind": "box",
+      "origin": [
+        "width * 0.45",
+        "-1",
+        "height * 0.4"
+      ],
+      "size": [
+        "cutout_w",
+        "thickness + 2",
+        "cutout_h"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "cutout_right",
+      "kind": "box",
+      "origin": [
+        "width * 0.7",
+        "-1",
+        "height * 0.15"
+      ],
+      "size": [
+        "cutout_w",
+        "thickness + 2",
+        "cutout_h"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "diff_top",
+      "kind": "difference",
+      "left": "l_shape",
+      "right": "cutout_top",
+      "frame": "world",
+      "depends_on": [
+        "l_shape",
+        "cutout_top"
+      ],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "diff_left",
+      "kind": "difference",
+      "left": "diff_top",
+      "right": "cutout_left",
+      "frame": "world",
+      "depends_on": [
+        "diff_top",
+        "cutout_left"
+      ],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "diff_center",
+      "kind": "difference",
+      "left": "diff_left",
+      "right": "cutout_center",
+      "frame": "world",
+      "depends_on": [
+        "diff_left",
+        "cutout_center"
+      ],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "final_part",
+      "kind": "difference",
+      "left": "diff_center",
+      "right": "cutout_right",
+      "frame": "world",
+      "depends_on": [
+        "diff_center",
+        "cutout_right"
+      ],
+      "evidence": [
+        "e1"
+      ]
+    }
+  ],
+  "output": "final_part",
+  "frames": {
+    "world": {
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    }
+  },
+  "bodies": [
+    {
+      "id": "part",
+      "output": "final_part"
+    }
+  ],
+  "evidence": {
+    "observed": [],
+    "inferred": [],
+    "assumptions": [
+      {
+        "id": "e1",
+        "text": "Assumed uniform thickness of 5mm for backplate and base flange. Assumed cutouts are through-holes. Assumed dimensions based on visual proportions relative to 100mm max height."
+      }
+    ],
+    "unresolved": []
+  },
+  "constraints": []
+}

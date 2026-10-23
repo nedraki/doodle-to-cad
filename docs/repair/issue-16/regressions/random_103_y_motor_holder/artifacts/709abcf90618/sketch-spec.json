@@ -1,0 +1,217 @@
+{
+  "object": "L-shaped bracket with angled support rib",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "top",
+      "sheet_region": "view_1",
+      "constrains": "XY footprint, L-shape profile, hole positions, rib width"
+    },
+    {
+      "direction": "front",
+      "sheet_region": "view_3",
+      "constrains": "XZ profile, height variation (angled rib), base thickness"
+    },
+    {
+      "direction": "right",
+      "sheet_region": "view_2",
+      "constrains": "YZ profile, depth, hole visibility, rib thickness"
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "part_1",
+      "name": "Main Bracket Body",
+      "description": "L-shaped base plate with a vertical back wall and an angled triangular support rib connecting the base to the wall."
+    }
+  ],
+  "features": [
+    {
+      "id": "feat_base",
+      "type": "extrusion",
+      "owner": "part_1",
+      "description": "The flat L-shaped base plate."
+    },
+    {
+      "id": "feat_wall",
+      "type": "extrusion",
+      "owner": "part_1",
+      "description": "The vertical back wall rising from the right side of the base."
+    },
+    {
+      "id": "feat_rib",
+      "type": "extrusion",
+      "owner": "part_1",
+      "description": "The triangular support rib extending from the wall to the base, with an angled top surface."
+    },
+    {
+      "id": "feat_hole_1",
+      "type": "hole",
+      "owner": "part_1",
+      "description": "Circular hole in the base plate (left side in Top view)."
+    },
+    {
+      "id": "feat_hole_2",
+      "type": "hole",
+      "owner": "part_1",
+      "description": "Circular hole in the vertical wall (upper right in Top view)."
+    }
+  ],
+  "relations": [
+    {
+      "type": "coincident",
+      "elements": [
+        "feat_base",
+        "feat_wall"
+      ],
+      "description": "The wall rises vertically from the right edge of the base."
+    },
+    {
+      "type": "coincident",
+      "elements": [
+        "feat_rib",
+        "feat_wall",
+        "feat_base"
+      ],
+      "description": "The rib connects the inner face of the wall to the top surface of the base."
+    },
+    {
+      "type": "through",
+      "elements": [
+        "feat_hole_1",
+        "feat_base"
+      ],
+      "description": "Hole 1 passes through the base plate."
+    },
+    {
+      "type": "through",
+      "elements": [
+        "feat_hole_2",
+        "feat_wall"
+      ],
+      "description": "Hole 2 passes through the vertical wall."
+    }
+  ],
+  "symmetry": "none",
+  "repetitions": [],
+  "dimensions": {
+    "max_dimension": 120.0,
+    "max_width": 111.09,
+    "max_depth": 120.0,
+    "max_height": 54.99,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "Exact thickness of the base plate and wall is inferred from the Right view proportions relative to the max dimension.",
+    "The 'hook' shape in the Top view (contour_7) is interpreted as the L-shaped footprint of the base and wall combined."
+  ],
+  "interpretation_conflicts": [
+    "The Top view (view_1) shows a complex outline that combines the footprint of the base and the wall. The Front view (view_3) confirms the L-shape profile (base + wall). The Right view (view_2) confirms the depth and the angled rib."
+  ],
+  "generation_notes": "The object is a standard L-bracket. The Top view defines the XY layout: a long base extending left, a wall on the right, and a rib connecting them. The Front view defines the Z height: the wall is tall, the base is thin, and the rib has a sloped top. The Right view confirms the uniform depth (Y-axis) and shows the holes.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "multi_face_union",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_base",
+        "operation": "extrude",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "owner": "feat_base",
+        "parameters": {
+          "profile_source": "view_1 (lower section)",
+          "height": "inferred from view_3 base thickness"
+        },
+        "source_views": [
+          "view_1",
+          "view_3"
+        ]
+      },
+      {
+        "id": "op_wall",
+        "operation": "extrude",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "owner": "feat_wall",
+        "parameters": {
+          "profile_source": "view_1 (right section)",
+          "height": "inferred from view_3 wall height"
+        },
+        "source_views": [
+          "view_1",
+          "view_3"
+        ]
+      },
+      {
+        "id": "op_rib",
+        "operation": "extrude",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "owner": "feat_rib",
+        "parameters": {
+          "profile_source": "view_1 (middle section)",
+          "height": "variable (angled top defined by view_3)"
+        },
+        "source_views": [
+          "view_1",
+          "view_3"
+        ]
+      },
+      {
+        "id": "feat_hole_1",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Circular hole in the base plate (left side in Top view)."
+        },
+        "source_views": []
+      },
+      {
+        "id": "feat_hole_2",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Circular hole in the vertical wall (upper right in Top view)."
+        },
+        "source_views": []
+      }
+    ],
+    "unresolved_constraints": [
+      "Exact wall thickness",
+      "Exact base thickness"
+    ]
+  },
+  "user_intent": {
+    "description": "",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "120"
+  },
+  "source_view_group_count": 3,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

@@ -1,0 +1,108 @@
+{
+  "drawing": "006_stepped_knob",
+  "backend": "usd-brep",
+  "trial": 1,
+  "submitted_at": "2026-10-22T05:21:02.933925+00:00",
+  "finished_at": "2026-10-22T05:24:43.686888+00:00",
+  "run_id": "df337f34e821",
+  "wall_seconds": 220.8,
+  "job_status": "done",
+  "error": null,
+  "questions_asked": 0,
+  "question_kinds": [],
+  "build": {
+    "watertight": true,
+    "components": 1,
+    "genus": 0,
+    "extents_mm": [
+      56.0,
+      56.0,
+      56.0
+    ],
+    "volume_mm3": 60472.0,
+    "sha256": "82eb709bd59033952875dde7547f0d4bce4db786e0f26ed799d35848aeab886c",
+    "bytes": 38284
+  },
+  "checks": {
+    "build_success": true,
+    "extents_pass": false,
+    "genus_pass": true,
+    "volume_pass": false,
+    "fidelity_pass": true,
+    "overall_pass": false,
+    "not_applicable": []
+  },
+  "fidelity": {
+    "scores": {
+      "front": 0.513,
+      "right": 0.511
+    },
+    "pass": true,
+    "reason": null,
+    "topology": {
+      "front": {
+        "expected": 0,
+        "actual": 16,
+        "position_fidelity": null
+      },
+      "right": {
+        "expected": 0,
+        "actual": 16,
+        "position_fidelity": null
+      }
+    }
+  },
+  "product": {
+    "success": false,
+    "accepted": false,
+    "status": "unverified",
+    "score": null,
+    "projection_status": "passed",
+    "geometry_status": "passed",
+    "failures": [
+      "Detailed drawing features and view assignments require review."
+    ]
+  },
+  "attempts": {
+    "count": 1,
+    "recovered": false,
+    "corrections": 1
+  },
+  "unsupported": {
+    "flag": false,
+    "code": null
+  },
+  "brep_only": {
+    "operations": [
+      "revolve"
+    ],
+    "loft": false,
+    "shell": false,
+    "arc_pipe": false,
+    "sweep": false,
+    "extrude": false,
+    "parameter_names": [
+      "flange_height",
+      "max_radius",
+      "neck_radius",
+      "total_height"
+    ]
+  },
+  "edit": {
+    "available": true,
+    "ok": true,
+    "seconds": 2.83,
+    "param": "total_height",
+    "old": 56.0,
+    "new": 67.2,
+    "message": null
+  },
+  "targeted": {
+    "available": false,
+    "ok": false,
+    "seconds": null,
+    "operation": null,
+    "value": null,
+    "message": "no probe value produced a valid targeted plan"
+  }
+}

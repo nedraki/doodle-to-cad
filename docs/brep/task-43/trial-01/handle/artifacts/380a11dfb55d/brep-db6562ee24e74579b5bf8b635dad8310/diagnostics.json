@@ -1,0 +1,65 @@
+{
+  "backend": "usd-brep",
+  "version": "1.0.0",
+  "recipe_version": 2,
+  "solid_volume_mm3": 7428.846248176437,
+  "mesh_volume_mm3": 7400.063247960969,
+  "extents_mm": [
+    56.0,
+    31.993038177490234,
+    34.0
+  ],
+  "bounds_mm": [
+    [
+      -28.0,
+      -27.993038177490234,
+      0.0
+    ],
+    [
+      28.0,
+      4.0,
+      34.0
+    ]
+  ],
+  "watertight": true,
+  "winding_consistent": true,
+  "euler_number": 2,
+  "triangles": 2124,
+  "usd_roundtrip": true,
+  "volume_relative_accuracy": 1e-08,
+  "usd_volume_mm3": 7428.846732643186,
+  "operations": [
+    {
+      "id": "arc",
+      "kind": "arc_pipe",
+      "faces": 3
+    },
+    {
+      "id": "leg_left",
+      "kind": "box",
+      "faces": 6
+    },
+    {
+      "id": "leg_right",
+      "kind": "box",
+      "faces": 6
+    },
+    {
+      "id": "handle",
+      "kind": "union",
+      "faces": 10
+    },
+    {
+      "id": "handle_full",
+      "kind": "union",
+      "faces": 17
+    },
+    {
+      "id": "handle_lifted",
+      "kind": "rotate",
+      "faces": 17
+    }
+  ],
+  "connections": [],
+  "build_seconds": 8.454
+}

@@ -314,7 +314,7 @@ def test_generate_endpoint_is_async_job_with_polling(monkeypatch):
     submitted = {}
 
     async def fake_generate(self, image, mime, notes, dimension, extra=None, controls=None,
-                            run_id=None, on_stage=None):
+                       run_id=None, on_stage=None, ask_user=None):
         submitted["run_id"] = run_id
         if on_stage: on_stage("interpreting")
         return {"id": run_id, "success": True, "evaluation": {"score": 99},
@@ -345,7 +345,7 @@ def test_generate_endpoint_reports_job_failure(monkeypatch):
     client_app = TestClient(api.app)
 
     async def failing_generate(self, image, mime, notes, dimension, extra=None, controls=None,
-                               run_id=None, on_stage=None):
+                               run_id=None, on_stage=None, ask_user=None):
         raise RuntimeError("model exploded")
 
     monkeypatch.setattr(api.Pipeline, "generate", failing_generate)

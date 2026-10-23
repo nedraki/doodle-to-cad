@@ -1,0 +1,32 @@
+{
+  "view_frame": "Front view (XZ plane) showing the vase silhouette. X is width, Z is height. Y is depth (axis of revolution). The part is axisymmetric about the Z axis.",
+  "features": [
+    {
+      "id": "vase_silhouette",
+      "shape": "revolve",
+      "section": "closed_profile",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "height: 120",
+        "max_radius: 40",
+        "neck_radius: 15",
+        "rim_radius: 35",
+        "wall_thickness: 3",
+        "floor_thickness: 3"
+      ],
+      "placement": "Revolve 360 degrees about Z axis. Profile defined in XZ plane. Vertices (X, Z): (0,0) -> (40,0) -> (40,10) -> (30,30) -> (15,60) -> (15,100) -> (35,120) -> (32,120) -> (12,100) -> (12,60) -> (27,30) -> (37,10) -> (37,3) -> (0,3) -> (0,0).",
+      "evidence": "Single continuous outline showing a vase shape with a flared rim, narrow neck, and bulbous body. User notes specify 'Greek vase from a single silhouette'. Clarification answer specifies wall thickness of 3mm."
+    }
+  ],
+  "connections": [
+    "vase_silhouette is a single solid of revolution"
+  ],
+  "edit_rules": [
+    "Changing height scales Z coordinates of all vertices.",
+    "Changing max_radius scales X coordinates of the widest points.",
+    "Changing wall_thickness adjusts the inner profile X coordinates relative to the outer profile.",
+    "Changing floor_thickness adjusts the inner profile Z coordinate of the bottom."
+  ],
+  "unresolved": [],
+  "clarification": null
+}

@@ -1,0 +1,605 @@
+{
+  "id": "ddbb0fc01ac3",
+  "backend": "usd-brep",
+  "success": false,
+  "spec": {
+    "object": "L_profile"
+  },
+  "model": "local-inference-lab/Qwen3.8-Flash-Next-NVFP4",
+  "duration_seconds": 123.5,
+  "evaluation": {
+    "version": 1,
+    "accepted": false,
+    "status": "failed",
+    "build_status": "passed",
+    "geometry_status": "passed",
+    "projection_status": "failed",
+    "checks": [
+      {
+        "name": "connected solid",
+        "status": "passed",
+        "detail": {
+          "watertight": true,
+          "components": 1
+        }
+      },
+      {
+        "name": "requested maximum",
+        "status": "passed",
+        "detail": {
+          "actual_mm": 120.0,
+          "limit_mm": 120.0,
+          "tolerance_mm": 0.5
+        }
+      },
+      {
+        "name": "front projection",
+        "status": "failed",
+        "detail": {
+          "similarity": 0.186,
+          "minimum": 0.45
+        }
+      },
+      {
+        "name": "top projection",
+        "status": "failed",
+        "detail": {
+          "similarity": 0.147,
+          "minimum": 0.45
+        }
+      },
+      {
+        "name": "dimensions and detailed features",
+        "status": "unverified",
+        "detail": "Projection checks cannot prove radii, bevel angles, hidden depth or section shape. Review measured features and view assignments."
+      }
+    ],
+    "projection_similarity": {
+      "front": 0.186,
+      "top": 0.147
+    },
+    "profile_topology": {
+      "front": {
+        "source_internal_profiles": 0,
+        "rendered_internal_profiles": 0,
+        "crop_internal_profiles": 0,
+        "source_aspect": 1.104,
+        "rendered_aspect": 6.0,
+        "source_opening_centroids": [],
+        "rendered_opening_centroids": []
+      },
+      "top": {
+        "source_internal_profiles": 0,
+        "rendered_internal_profiles": 0,
+        "crop_internal_profiles": 0,
+        "source_aspect": 4.396,
+        "rendered_aspect": 1.0,
+        "source_opening_centroids": [],
+        "rendered_opening_centroids": []
+      }
+    },
+    "failures": [
+      "front projection",
+      "top projection",
+      "Detailed drawing features and view assignments require review."
+    ],
+    "scope": "Partial automatic checks. No drawing acceptance from solid validity alone."
+  },
+  "diagnostics": {
+    "selection_catalog": {
+      "version": 1,
+      "status": "available",
+      "unresolved": [],
+      "output_owner": "l_profile",
+      "targets": [
+        {
+          "id": "47f102ff5e5b8b3c",
+          "label": "Outside X min face",
+          "rule": {
+            "kind": "extreme_face",
+            "owner": "l_profile",
+            "axis": 0,
+            "side": "min"
+          },
+          "match_count": 1,
+          "geometry": {
+            "triangles": [
+              [
+                0.0,
+                120.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                20.0
+              ],
+              [
+                0.0,
+                120.0,
+                20.0
+              ],
+              [
+                0.0,
+                0.0,
+                20.0
+              ],
+              [
+                0.0,
+                120.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ]
+            ]
+          }
+        },
+        {
+          "id": "179002162499d80e",
+          "label": "Outside X max face",
+          "rule": {
+            "kind": "extreme_face",
+            "owner": "l_profile",
+            "axis": 0,
+            "side": "max"
+          },
+          "match_count": 1,
+          "geometry": {
+            "triangles": [
+              [
+                120.0,
+                0.0,
+                0.0
+              ],
+              [
+                120.0,
+                10.0,
+                20.0
+              ],
+              [
+                120.0,
+                0.0,
+                20.0
+              ],
+              [
+                120.0,
+                10.0,
+                20.0
+              ],
+              [
+                120.0,
+                0.0,
+                0.0
+              ],
+              [
+                120.0,
+                10.0,
+                0.0
+              ]
+            ]
+          }
+        },
+        {
+          "id": "c6ff1133b08cb6cd",
+          "label": "Outside Y min face",
+          "rule": {
+            "kind": "extreme_face",
+            "owner": "l_profile",
+            "axis": 1,
+            "side": "min"
+          },
+          "match_count": 1,
+          "geometry": {
+            "triangles": [
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                120.0,
+                0.0,
+                20.0
+              ],
+              [
+                0.0,
+                0.0,
+                20.0
+              ],
+              [
+                120.0,
+                0.0,
+                20.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                120.0,
+                0.0,
+                0.0
+              ]
+            ]
+          }
+        },
+        {
+          "id": "409d69b67c24574b",
+          "label": "Outside Y max face",
+          "rule": {
+            "kind": "extreme_face",
+            "owner": "l_profile",
+            "axis": 1,
+            "side": "max"
+          },
+          "match_count": 1,
+          "geometry": {
+            "triangles": [
+              [
+                10.0,
+                120.0,
+                0.0
+              ],
+              [
+                0.0,
+                120.0,
+                20.0
+              ],
+              [
+                10.0,
+                120.0,
+                20.0
+              ],
+              [
+                0.0,
+                120.0,
+                20.0
+              ],
+              [
+                10.0,
+                120.0,
+                0.0
+              ],
+              [
+                0.0,
+                120.0,
+                0.0
+              ]
+            ]
+          }
+        },
+        {
+          "id": "7829fdc7118a9295",
+          "label": "Outside Z min face",
+          "rule": {
+            "kind": "extreme_face",
+            "owner": "l_profile",
+            "axis": 2,
+            "side": "min"
+          },
+          "match_count": 1,
+          "geometry": {
+            "triangles": [
+              [
+                120.0,
+                0.0,
+                0.0
+              ],
+              [
+                10.0,
+                10.0,
+                0.0
+              ],
+              [
+                120.0,
+                10.0,
+                0.0
+              ],
+              [
+                10.0,
+                10.0,
+                0.0
+              ],
+              [
+                0.0,
+                120.0,
+                0.0
+              ],
+              [
+                10.0,
+                120.0,
+                0.0
+              ],
+              [
+                10.0,
+                10.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                120.0,
+                0.0
+              ],
+              [
+                10.0,
+                10.0,
+                0.0
+              ],
+              [
+                120.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ]
+            ]
+          }
+        },
+        {
+          "id": "5bbd98b05e9bcf01",
+          "label": "Outside Z max face",
+          "rule": {
+            "kind": "extreme_face",
+            "owner": "l_profile",
+            "axis": 2,
+            "side": "max"
+          },
+          "match_count": 1,
+          "geometry": {
+            "triangles": [
+              [
+                10.0,
+                10.0,
+                20.0
+              ],
+              [
+                120.0,
+                0.0,
+                20.0
+              ],
+              [
+                120.0,
+                10.0,
+                20.0
+              ],
+              [
+                0.0,
+                120.0,
+                20.0
+              ],
+              [
+                10.0,
+                10.0,
+                20.0
+              ],
+              [
+                10.0,
+                120.0,
+                20.0
+              ],
+              [
+                0.0,
+                0.0,
+                20.0
+              ],
+              [
+                10.0,
+                10.0,
+                20.0
+              ],
+              [
+                0.0,
+                120.0,
+                20.0
+              ],
+              [
+                120.0,
+                0.0,
+                20.0
+              ],
+              [
+                10.0,
+                10.0,
+                20.0
+              ],
+              [
+                0.0,
+                0.0,
+                20.0
+              ]
+            ]
+          }
+        },
+        {
+          "id": "9afdb812ba95fb06",
+          "label": "Outer vertical edges",
+          "rule": {
+            "kind": "outer_vertical_edges",
+            "owner": "l_profile",
+            "expected_edges": 3
+          },
+          "match_count": 3,
+          "geometry": {
+            "lines": [
+              [
+                [
+                  120.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  120.0,
+                  0.0,
+                  20.0
+                ]
+              ],
+              [
+                [
+                  0.0,
+                  120.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  120.0,
+                  20.0
+                ]
+              ],
+              [
+                [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  20.0
+                ]
+              ]
+            ]
+          }
+        }
+      ],
+      "supported": "Axis-aligned extreme planar faces, four-wall box cutouts and straight outer vertical edges. Recheck after every rebuild."
+    },
+    "backend": "usd-brep",
+    "version": "1.0.0",
+    "recipe_version": 2,
+    "solid_volume_mm3": 45999.99999999996,
+    "mesh_volume_mm3": 46000.0,
+    "extents_mm": [
+      120.0,
+      120.0,
+      20.0
+    ],
+    "bounds_mm": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        120.0,
+        120.0,
+        20.0
+      ]
+    ],
+    "watertight": true,
+    "winding_consistent": true,
+    "euler_number": 2,
+    "triangles": 20,
+    "usd_roundtrip": true,
+    "volume_relative_accuracy": 1e-08,
+    "usd_volume_mm3": 46000.0,
+    "operations": [
+      {
+        "id": "l_profile",
+        "kind": "extrude",
+        "faces": 8
+      }
+    ],
+    "connections": [],
+    "build_seconds": 0.191
+  },
+  "controls": {
+    "object_type_hint": "",
+    "method": "3D print",
+    "primary_view": "front",
+    "projection_standard": "third-angle",
+    "strict_watertight": true,
+    "refine_mode": "regularize"
+  },
+  "files": {
+    "source": "/results/ddbb0fc01ac3/brep-f4282c8dd9c642829f94ed8fb1e44050/model.recipe.json",
+    "stl": "/results/ddbb0fc01ac3/brep-f4282c8dd9c642829f94ed8fb1e44050/model.stl",
+    "usd": "/results/ddbb0fc01ac3/brep-f4282c8dd9c642829f94ed8fb1e44050/model.usda",
+    "views": {
+      "isometric": "/results/ddbb0fc01ac3/brep-f4282c8dd9c642829f94ed8fb1e44050/view-isometric.png",
+      "front": "/results/ddbb0fc01ac3/brep-f4282c8dd9c642829f94ed8fb1e44050/view-front.png",
+      "top": "/results/ddbb0fc01ac3/brep-f4282c8dd9c642829f94ed8fb1e44050/view-top.png",
+      "right": "/results/ddbb0fc01ac3/brep-f4282c8dd9c642829f94ed8fb1e44050/view-right.png"
+    },
+    "drawing_checks": "/results/ddbb0fc01ac3/drawing-checks.json",
+    "construction_plan": "/results/ddbb0fc01ac3/construction-plan.json",
+    "evidence": "/results/ddbb0fc01ac3/feature-evidence.json",
+    "generation": "/results/ddbb0fc01ac3/generation.json"
+  },
+  "build": {
+    "version": 1,
+    "backend": "usd-brep",
+    "source_format": "brep-recipe-v2",
+    "ok": true,
+    "units": "mm",
+    "axes": {
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    },
+    "views": [
+      "isometric",
+      "front",
+      "top",
+      "right"
+    ],
+    "measurements": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 20,
+      "extents_mm": [
+        120.0,
+        120.0,
+        20.0
+      ],
+      "volume_mm3": 46000.0
+    },
+    "diagnostics": [],
+    "drawing_evaluated": false
+  },
+  "original_run_id": null,
+  "generation": {
+    "path": "drawing-to-brep",
+    "backend": "usd-brep",
+    "prompt_version": "drawing-brep-18",
+    "correction_prompt_version": "construction-numeric-fields-3",
+    "max_construction_corrections": 2,
+    "construction_plan_version": "construction-intent-11",
+    "model": "local-inference-lab/Qwen3.8-Flash-Next-NVFP4",
+    "notes": "",
+    "maximum_dimension_mm": 120.0,
+    "controls": {
+      "object_type_hint": "",
+      "method": "3D print",
+      "primary_view": "front",
+      "projection_standard": "third-angle",
+      "strict_watertight": true,
+      "refine_mode": "regularize"
+    },
+    "generated_scad": false,
+    "drawing_fidelity_verified": false,
+    "attempts": [
+      {
+        "attempt": 1,
+        "schema_valid": true
+      }
+    ],
+    "construction_attempts": [
+      {
+        "attempt": 1,
+        "status": "built"
+      }
+    ]
+  }
+}

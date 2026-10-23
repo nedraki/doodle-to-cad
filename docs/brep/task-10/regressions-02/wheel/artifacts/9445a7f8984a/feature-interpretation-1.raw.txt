@@ -1,0 +1,105 @@
+{
+  "version": 1,
+  "object_hypothesis": "Spoked wheel assembly",
+  "features": [
+    {
+      "id": "outer_rim",
+      "type": "rim",
+      "description": "Outer circular boundary of the wheel",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "High circularity (0.898) and large area in the front view indicate the primary outer boundary."
+    },
+    {
+      "id": "central_hub",
+      "type": "hub",
+      "description": "Central circular body",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "view"
+        }
+      ],
+      "reason": "Visible central circle in the front view acts as the anchor for spokes."
+    },
+    {
+      "id": "spoke_group",
+      "type": "spoke",
+      "description": "Radial connecting members",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "view"
+        }
+      ],
+      "reason": "Linear features connecting the hub to the rim are visible in the front view."
+    },
+    {
+      "id": "wheel_thickness",
+      "type": "body",
+      "description": "Axial depth of the wheel",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_14"
+        }
+      ],
+      "reason": "Rectangular profile in the right view indicates the object's thickness."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "spoke_connectivity",
+      "type": "connected",
+      "features": [
+        "spoke_group",
+        "central_hub",
+        "outer_rim"
+      ],
+      "description": "Spokes connect the hub to the rim",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "view"
+        }
+      ],
+      "reason": "Visual continuity in the front view suggests connection, though hidden depth continuity is not proven."
+    },
+    {
+      "id": "radial_symmetry",
+      "type": "symmetry",
+      "features": [
+        "spoke_group"
+      ],
+      "description": "Spokes are arranged radially",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "view"
+        }
+      ],
+      "reason": "Even distribution of spokes around the center suggests rotational symmetry."
+    }
+  ],
+  "assumptions": [
+    "View 4 represents the primary face of the object.",
+    "View 5 represents the side profile of the object.",
+    "The object is a single rigid body."
+  ],
+  "unresolved": [
+    "Internal structure of the hub (solid vs hollow).",
+    "Exact number of spokes (OpenCV did not isolate individual spoke regions).",
+    "Nature of small unassigned views (1, 2, 3, 6)."
+  ],
+  "conflicts": []
+}

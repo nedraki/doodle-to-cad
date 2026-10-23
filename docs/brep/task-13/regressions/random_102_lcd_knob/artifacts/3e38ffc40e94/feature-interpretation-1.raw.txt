@@ -1,0 +1,160 @@
+{
+  "version": 1,
+  "object_hypothesis": "A three-lobed mechanical component, resembling a cam or impeller, with a central body and three protruding arms or vanes.",
+  "features": [
+    {
+      "id": "f_body",
+      "type": "body",
+      "description": "Central circular body of the component.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_4"
+        }
+      ],
+      "reason": "The central region of the top view (view_1) shows a continuous circular boundary."
+    },
+    {
+      "id": "f_arm_1",
+      "type": "other",
+      "description": "Protruding arm or vane extending from the central body.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_4"
+        }
+      ],
+      "reason": "The top view (view_1) shows a distinct extension from the main body. The polygon vertices indicate a protrusion."
+    },
+    {
+      "id": "f_arm_2",
+      "type": "other",
+      "description": "Protruding arm or vane extending from the central body.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_4"
+        }
+      ],
+      "reason": "The top view (view_1) shows a distinct extension from the main body. The polygon vertices indicate a protrusion."
+    },
+    {
+      "id": "f_arm_3",
+      "type": "other",
+      "description": "Protruding arm or vane extending from the central body.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_4"
+        }
+      ],
+      "reason": "The top view (view_1) shows a distinct extension from the main body. The polygon vertices indicate a protrusion."
+    },
+    {
+      "id": "f_base",
+      "type": "body",
+      "description": "Trapezoidal base structure visible in the front view.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_2"
+        }
+      ],
+      "reason": "View_2 shows a trapezoidal profile, suggesting a base or housing structure."
+    },
+    {
+      "id": "f_side_profile",
+      "type": "body",
+      "description": "Side profile structure visible in the right view.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_3",
+          "region_id": "profile_contour_1"
+        }
+      ],
+      "reason": "View_3 shows a profile consistent with the side of the object, appearing somewhat rectangular with a slight taper."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "r_arms_to_body",
+      "type": "connected",
+      "features": [
+        "f_arm_1",
+        "f_arm_2",
+        "f_arm_3",
+        "f_body"
+      ],
+      "description": "The three arms are connected to the central body.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_4"
+        }
+      ],
+      "reason": "In the top view, the arms appear as continuous extensions of the central circular boundary."
+    },
+    {
+      "id": "r_base_to_body",
+      "type": "connected",
+      "features": [
+        "f_base",
+        "f_body"
+      ],
+      "description": "The base structure is connected to the central body.",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_2"
+        },
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_4"
+        }
+      ],
+      "reason": "The front view (view_2) shows a base structure that aligns spatially with the central body seen in the top view (view_1)."
+    },
+    {
+      "id": "r_side_to_base",
+      "type": "connected",
+      "features": [
+        "f_side_profile",
+        "f_base"
+      ],
+      "description": "The side profile is connected to the base structure.",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_3",
+          "region_id": "profile_contour_1"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_2"
+        }
+      ],
+      "reason": "The right view (view_3) shows a profile that aligns with the base structure seen in the front view (view_2)."
+    }
+  ],
+  "assumptions": [
+    "The object is a single, solid piece.",
+    "The views represent orthogonal projections of the same object.",
+    "The arms are evenly spaced around the central body."
+  ],
+  "unresolved": [
+    "The exact thickness of the arms and body.",
+    "The internal structure of the base.",
+    "The specific function of the arms (e.g., vanes, cams, handles)."
+  ],
+  "conflicts": [
+    "The side profile (view_3) appears somewhat rectangular, while the front profile (view_2) is trapezoidal. This could indicate a complex geometry or a perspective distortion in the sketch."
+  ]
+}

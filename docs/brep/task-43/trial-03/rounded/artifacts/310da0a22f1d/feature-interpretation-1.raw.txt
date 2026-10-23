@@ -1,0 +1,185 @@
+{
+  "version": 1,
+  "object_hypothesis": "Rounded Housing Blank",
+  "features": [
+    {
+      "id": "body_main",
+      "type": "body",
+      "description": "Rectangular block with rounded corners, dimensions 80x50x30",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_6",
+          "region_id": "profile_contour_151"
+        },
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_147"
+        }
+      ],
+      "reason": "View 6 (Top) shows the 80x50 footprint with rounded corners. View 5 (Right) shows the height and depth profile. The text confirms 'Solid blank'."
+    },
+    {
+      "id": "corner_feature",
+      "type": "profile",
+      "description": "Rounded corners (R6) on the vertical edges",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_6",
+          "region_id": "profile_contour_151"
+        }
+      ],
+      "reason": "View 6 (Top) clearly displays the rounded corners. The text annotation '4 corners: R6' confirms the radius."
+    },
+    {
+      "id": "front_face",
+      "type": "wall",
+      "description": "Front face of the housing (80x30)",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_147"
+        }
+      ],
+      "reason": "View 5 (Right) shows the side profile. The front face corresponds to the main rectangular area of this view."
+    },
+    {
+      "id": "side_face",
+      "type": "wall",
+      "description": "Side face of the housing (50x30)",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_147"
+        }
+      ],
+      "reason": "View 5 (Right) shows the side profile. The side face corresponds to the depth dimension of this view."
+    },
+    {
+      "id": "top_face",
+      "type": "wall",
+      "description": "Top surface of the housing",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_6",
+          "region_id": "profile_contour_151"
+        }
+      ],
+      "reason": "View 6 (Top) shows the top surface boundary. The text states 'Top and bottom perimeter edges remain sharp'."
+    },
+    {
+      "id": "bottom_face",
+      "type": "wall",
+      "description": "Bottom surface of the housing",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_6",
+          "region_id": "profile_contour_151"
+        }
+      ],
+      "reason": "Inferred from the solid nature of the object and the text 'Top and bottom perimeter edges remain sharp'."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "rel_corner_body",
+      "type": "connected",
+      "features": [
+        "corner_feature",
+        "body_main"
+      ],
+      "description": "Corners are part of the main body",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_6",
+          "region_id": "profile_contour_151"
+        }
+      ],
+      "reason": "The rounded corners are integral to the outline of the main body in the top view."
+    },
+    {
+      "id": "rel_face_body",
+      "type": "connected",
+      "features": [
+        "front_face",
+        "body_main"
+      ],
+      "description": "Front face is part of the main body",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_147"
+        }
+      ],
+      "reason": "The front face is the primary visible surface in the right view."
+    },
+    {
+      "id": "rel_side_body",
+      "type": "connected",
+      "features": [
+        "side_face",
+        "body_main"
+      ],
+      "description": "Side face is part of the main body",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_147"
+        }
+      ],
+      "reason": "The side face is the depth dimension visible in the right view."
+    },
+    {
+      "id": "rel_top_body",
+      "type": "connected",
+      "features": [
+        "top_face",
+        "body_main"
+      ],
+      "description": "Top face is part of the main body",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_6",
+          "region_id": "profile_contour_151"
+        }
+      ],
+      "reason": "The top face is the primary visible surface in the top view."
+    },
+    {
+      "id": "rel_bottom_body",
+      "type": "connected",
+      "features": [
+        "bottom_face",
+        "body_main"
+      ],
+      "description": "Bottom face is part of the main body",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_6",
+          "region_id": "profile_contour_151"
+        }
+      ],
+      "reason": "The bottom face is the opposite surface to the top face, forming the solid block."
+    }
+  ],
+  "assumptions": [
+    "The object is a solid block as stated in the text.",
+    "The dimensions 80, 50, and 30 correspond to length, width, and height respectively.",
+    "The corner radius R6 applies to all four vertical corners."
+  ],
+  "unresolved": [
+    "Exact material properties",
+    "Surface finish details"
+  ],
+  "conflicts": []
+}

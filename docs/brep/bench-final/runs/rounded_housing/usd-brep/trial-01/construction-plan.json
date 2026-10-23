@@ -1,0 +1,30 @@
+{
+  "view_frame": "The drawing uses a third-angle projection system. The TOP view represents the XY plane (X is width, Y is depth). The FRONT view represents the XZ plane (X is width, Z is height). The part is a solid block with constant cross-section along the Z axis.",
+  "features": [
+    {
+      "id": "housing_blank",
+      "shape": "Extruded Profile",
+      "section": "Rounded Rectangle",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "80",
+        "50",
+        "30",
+        "R6"
+      ],
+      "placement": "Centered at (0,0) in XY. The profile extends from Z=0 to Z=30. The straight segments of the profile are at X=\u00b140 and Y=\u00b125. The corners are circular arcs of radius 6 centered at (\u00b134, \u00b119).",
+      "evidence": "TOP view shows a rectangle with rounded corners labeled '4 corners: R6' and dimensions 80 (width) and 50 (depth). FRONT view shows a rectangle with height 30 and width 80. Notes state 'Solid blank. Same corner shape through the full height.'"
+    }
+  ],
+  "connections": [
+    "The vertical edges of the housing_blank are filleted with radius 6mm.",
+    "The top and bottom perimeter edges of the housing_blank are sharp (90 degrees)."
+  ],
+  "edit_rules": [
+    "Changing the '80' dimension adjusts the X-width of the straight segments and the position of the corner centers.",
+    "Changing the '50' dimension adjusts the Y-depth of the straight segments and the position of the corner centers.",
+    "Changing the '30' dimension adjusts the Z-height of the extrusion.",
+    "Changing the 'R6' dimension adjusts the corner radius and the position of the corner centers."
+  ],
+  "unresolved": []
+}

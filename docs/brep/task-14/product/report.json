@@ -1,0 +1,47 @@
+{
+  "cutout": {
+    "job": "b619123298d7",
+    "checks": [
+      {
+        "parameter": "width",
+        "value": 70,
+        "selection": "matched",
+        "camera_preserved": true
+      },
+      {
+        "parameter": "hole4_x",
+        "value": 90,
+        "selection": "lost",
+        "camera_preserved": true
+      },
+      {
+        "discard_restores_selection": true
+      }
+    ],
+    "reload_selection": true
+  },
+  "enclosure_face": {
+    "job": "841778ce3f1c",
+    "checks": [
+      {
+        "parameter": "thickness",
+        "value": 3,
+        "selection": "matched",
+        "camera_preserved": true
+      }
+    ],
+    "reload_selection": true
+  },
+  "outer_edges": {
+    "job": "3b89e0795202",
+    "checks": [
+      {
+        "parameter": "width",
+        "value": 70,
+        "selection": "matched",
+        "camera_preserved": true
+      }
+    ],
+    "reload_selection": true
+  }
+}

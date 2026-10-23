@@ -1,0 +1,54 @@
+{
+  "label": "A-certified",
+  "job_id": "064f8b26b31a",
+  "server": "http://127.0.0.1:8135",
+  "panels": [
+    {
+      "index": 0,
+      "title": "input drawing"
+    },
+    {
+      "index": 1,
+      "title": "built by usd-brep revolve"
+    },
+    {
+      "index": 2,
+      "title": "ground truth"
+    }
+  ],
+  "montage": "docs/brep/issue-95-revolve/A-certified/triptych.png",
+  "montage_sha256": "6643f776fb7c646c275827f18455131ad392a1985d3e04757e09e802e688d69e",
+  "built_stl_sha256": "1d9aadfb35dc455081f9384caaf6581d87cda531740a6cf2e62af95f969c3610",
+  "gt_stl_sha256": "43e9c1a57c83f08dd2e4b5814fa0ce3a6b789c859df2a9692701b2c0ea7e52c1",
+  "input_sha256": "fcd10bfadce5c6d8d331790963fb63691101a71f4c5ad707c974af39ed3145b1",
+  "row": {
+    "label": "A-certified",
+    "job_id": "064f8b26b31a",
+    "status": "done",
+    "error": null,
+    "evaluation": false,
+    "built_stl": "/tmp/doodle-brep-95/results/064f8b26b31a/brep-fa9914a706ec466381558b475024a396/model.stl",
+    "built_measurement": {
+      "components": 1,
+      "watertight": true,
+      "genus": 0,
+      "volume_mm3": 82086.9,
+      "extents_mm": [
+        80.0,
+        80.0,
+        120.0
+      ]
+    },
+    "gt_measurement": {
+      "components": 1,
+      "watertight": true,
+      "genus": 0,
+      "volume_mm3": 116828.8,
+      "extents_mm": [
+        102.5,
+        102.5,
+        120.0
+      ]
+    }
+  }
+}

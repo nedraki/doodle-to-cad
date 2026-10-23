@@ -1,0 +1,266 @@
+{
+  "job_id": "635cb959a564",
+  "status": "done",
+  "stage": "done",
+  "result": {
+    "id": "635cb959a564",
+    "backend": "usd-brep",
+    "success": false,
+    "spec": {
+      "object": "pulley"
+    },
+    "model": "local-inference-lab/Qwen3.8-Flash-Next-NVFP4",
+    "duration_seconds": 114.7,
+    "evaluation": {
+      "version": 1,
+      "accepted": false,
+      "status": "failed",
+      "build_status": "passed",
+      "geometry_status": "passed",
+      "projection_status": "failed",
+      "checks": [
+        {
+          "name": "connected solid",
+          "status": "passed",
+          "detail": {
+            "watertight": true,
+            "components": 1
+          }
+        },
+        {
+          "name": "requested maximum",
+          "status": "passed",
+          "detail": {
+            "actual_mm": 120.0,
+            "limit_mm": 120.0,
+            "tolerance_mm": 0.5
+          }
+        },
+        {
+          "name": "front projection",
+          "status": "passed",
+          "detail": {
+            "similarity": 0.498,
+            "minimum": 0.45
+          }
+        },
+        {
+          "name": "right projection",
+          "status": "failed",
+          "detail": {
+            "similarity": 0.139,
+            "minimum": 0.45
+          }
+        },
+        {
+          "name": "dimensions and detailed features",
+          "status": "unverified",
+          "detail": "Projection checks cannot prove radii, bevel angles, hidden depth or section shape. Review measured features and view assignments."
+        }
+      ],
+      "projection_similarity": {
+        "front": 0.498,
+        "right": 0.139
+      },
+      "profile_topology": {
+        "front": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 0,
+          "source_aspect": 1.432,
+          "rendered_aspect": 1.0,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": []
+        },
+        "right": {
+          "source_internal_profiles": 0,
+          "rendered_internal_profiles": 0,
+          "crop_internal_profiles": 0,
+          "source_aspect": 1.463,
+          "rendered_aspect": 0.086,
+          "source_opening_centroids": [],
+          "rendered_opening_centroids": []
+        }
+      },
+      "failures": [
+        "right projection",
+        "Detailed drawing features and view assignments require review."
+      ],
+      "scope": "Partial automatic checks. No drawing acceptance from solid validity alone."
+    },
+    "diagnostics": {
+      "backend": "usd-brep",
+      "version": "1.0.0",
+      "recipe_version": 2,
+      "solid_volume_mm3": 72000.0,
+      "mesh_volume_mm3": 72000.0,
+      "extents_mm": [
+        120.0,
+        10.0,
+        120.0
+      ],
+      "bounds_mm": [
+        [
+          -60.0,
+          -5.0,
+          0.0
+        ],
+        [
+          60.0,
+          5.0,
+          120.0
+        ]
+      ],
+      "watertight": true,
+      "winding_consistent": true,
+      "euler_number": 2,
+      "triangles": 44,
+      "usd_roundtrip": true,
+      "volume_relative_accuracy": 1e-08,
+      "usd_volume_mm3": 72000.0,
+      "operations": [
+        {
+          "id": "flange_top",
+          "kind": "box",
+          "faces": 6
+        },
+        {
+          "id": "flange_bottom",
+          "kind": "box",
+          "faces": 6
+        },
+        {
+          "id": "web",
+          "kind": "box",
+          "faces": 6
+        },
+        {
+          "id": "pulley",
+          "kind": "union",
+          "faces": 12
+        },
+        {
+          "id": "pulley_full",
+          "kind": "union",
+          "faces": 14
+        }
+      ],
+      "connections": [
+        {
+          "id": "joint1",
+          "overlap_mm3": 400.0,
+          "passed": true
+        },
+        {
+          "id": "joint2",
+          "overlap_mm3": 400.0000000000001,
+          "passed": true
+        }
+      ],
+      "build_seconds": 0.131
+    },
+    "controls": {
+      "object_type_hint": "",
+      "method": "3D print",
+      "primary_view": "front",
+      "projection_standard": "third-angle",
+      "strict_watertight": true,
+      "refine_mode": "regularize"
+    },
+    "files": {
+      "source": "/results/635cb959a564/brep-2a344cd383b84bf0ae69927ede98eb93/model.recipe.json",
+      "stl": "/results/635cb959a564/brep-2a344cd383b84bf0ae69927ede98eb93/model.stl",
+      "usd": "/results/635cb959a564/brep-2a344cd383b84bf0ae69927ede98eb93/model.usda",
+      "views": {
+        "isometric": "/results/635cb959a564/brep-2a344cd383b84bf0ae69927ede98eb93/view-isometric.png",
+        "front": "/results/635cb959a564/brep-2a344cd383b84bf0ae69927ede98eb93/view-front.png",
+        "top": "/results/635cb959a564/brep-2a344cd383b84bf0ae69927ede98eb93/view-top.png",
+        "right": "/results/635cb959a564/brep-2a344cd383b84bf0ae69927ede98eb93/view-right.png"
+      },
+      "drawing_checks": "/results/635cb959a564/drawing-checks.json",
+      "construction_plan": "/results/635cb959a564/construction-plan.json",
+      "evidence": "/results/635cb959a564/feature-evidence.json",
+      "generation": "/results/635cb959a564/generation.json"
+    },
+    "build": {
+      "version": 1,
+      "backend": "usd-brep",
+      "source_format": "brep-recipe-v2",
+      "ok": true,
+      "units": "mm",
+      "axes": {
+        "x": "width",
+        "y": "depth",
+        "z": "height"
+      },
+      "views": [
+        "isometric",
+        "front",
+        "top",
+        "right"
+      ],
+      "measurements": {
+        "watertight": true,
+        "components": 1,
+        "triangles": 44,
+        "extents_mm": [
+          120.0,
+          10.0,
+          120.0
+        ],
+        "volume_mm3": 72000.0
+      },
+      "diagnostics": [],
+      "drawing_evaluated": false
+    },
+    "original_run_id": null,
+    "generation": {
+      "path": "drawing-to-brep",
+      "backend": "usd-brep",
+      "prompt_version": "drawing-brep-11",
+      "correction_prompt_version": "construction-numeric-fields-3",
+      "max_construction_corrections": 2,
+      "construction_plan_version": "construction-intent-5",
+      "model": "local-inference-lab/Qwen3.8-Flash-Next-NVFP4",
+      "notes": "",
+      "maximum_dimension_mm": 120.0,
+      "controls": {
+        "object_type_hint": "",
+        "method": "3D print",
+        "primary_view": "front",
+        "projection_standard": "third-angle",
+        "strict_watertight": true,
+        "refine_mode": "regularize"
+      },
+      "generated_scad": false,
+      "drawing_fidelity_verified": false,
+      "attempts": [
+        {
+          "attempt": 1,
+          "schema_valid": false,
+          "error": "Expected canonical world frame: X width, Y depth, Z height, origin [0,0,0]"
+        },
+        {
+          "attempt": 2,
+          "schema_valid": true
+        }
+      ],
+      "construction_attempts": [
+        {
+          "attempt": 1,
+          "status": "failed",
+          "error": {
+            "code": "connection_failed",
+            "message": "joint1: required connection failed between flange_top and web (required overlap 0.01 mm3): overlap 0 mm3 is too small"
+          }
+        },
+        {
+          "attempt": 2,
+          "status": "built"
+        }
+      ]
+    }
+  },
+  "error": null,
+  "elapsed_seconds": 116.2
+}

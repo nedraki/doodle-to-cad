@@ -1,0 +1,22 @@
+{
+  "wheel": {
+    "job": "3381a2120207",
+    "status": "error",
+    "question_requested": false,
+    "error": {
+      "message": "More drawing information is needed: Rim width (radial thickness) is not dimensioned; assumed 10 mm.; Hub diameter is not dimensioned; assumed 30 mm.; Spoke width is not dimensioned; assumed 8 mm.",
+      "code": "unresolved_design"
+    },
+    "drawing_status": null
+  },
+  "knob": {
+    "job": "6c8918f48980",
+    "status": "error",
+    "question_requested": false,
+    "error": {
+      "message": "Construction plan rejected: Unsupported clarification or unknown feature",
+      "code": "invalid_recipe"
+    },
+    "drawing_status": null
+  }
+}

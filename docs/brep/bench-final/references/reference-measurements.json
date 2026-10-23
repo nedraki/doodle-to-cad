@@ -1,0 +1,276 @@
+{
+  "001_l_bookend_multiview": {
+    "kind": "ground_truth_stl",
+    "source": "benchmarks/cases/001_l_bookend_multiview/ground_truth/model.stl",
+    "watertight": true,
+    "components": 1,
+    "extents_mm": [
+      80.0,
+      50.0,
+      100.0
+    ],
+    "volume_mm3": 30854.4,
+    "genus": 4
+  },
+  "002_greek_vase_silhouette": {
+    "kind": "ground_truth_stl",
+    "source": "benchmarks/cases/002_greek_vase_silhouette/ground_truth/model.stl",
+    "watertight": true,
+    "components": 1,
+    "extents_mm": [
+      102.48,
+      102.48,
+      120.0
+    ],
+    "volume_mm3": 116828.8,
+    "genus": 0
+  },
+  "003_front_grille_multiview": {
+    "kind": "ground_truth_stl",
+    "source": "benchmarks/cases/003_front_grille_multiview/ground_truth/model.stl",
+    "watertight": true,
+    "components": 1,
+    "extents_mm": [
+      126.0,
+      76.0,
+      3.0
+    ],
+    "volume_mm3": 18266.0,
+    "genus": 9
+  },
+  "004_flat_mounting_plate": {
+    "kind": "ground_truth_stl",
+    "source": "benchmarks/cases/004_flat_mounting_plate/ground_truth/model.stl",
+    "watertight": true,
+    "components": 1,
+    "extents_mm": [
+      100.0,
+      5.0,
+      60.0
+    ],
+    "volume_mm3": 28519.1,
+    "genus": 3
+  },
+  "005_bolt_flange": {
+    "kind": "ground_truth_stl",
+    "source": "benchmarks/cases/005_bolt_flange/ground_truth/model.stl",
+    "watertight": true,
+    "components": 1,
+    "extents_mm": [
+      120.0,
+      12.0,
+      120.0
+    ],
+    "volume_mm3": 116818.8,
+    "genus": 5
+  },
+  "006_stepped_knob": {
+    "kind": "ground_truth_stl",
+    "source": "benchmarks/cases/006_stepped_knob/ground_truth/model.stl",
+    "watertight": true,
+    "components": 1,
+    "extents_mm": [
+      56.0,
+      56.0,
+      38.0
+    ],
+    "volume_mm3": 49306.5,
+    "genus": 0
+  },
+  "007_angle_bracket_holes": {
+    "kind": "ground_truth_stl",
+    "source": "benchmarks/cases/007_angle_bracket_holes/ground_truth/model.stl",
+    "watertight": true,
+    "components": 1,
+    "extents_mm": [
+      80.0,
+      40.0,
+      50.0
+    ],
+    "volume_mm3": 27182.9,
+    "genus": 3
+  },
+  "008_open_enclosure_window": {
+    "kind": "ground_truth_stl",
+    "source": "benchmarks/cases/008_open_enclosure_window/ground_truth/model.stl",
+    "watertight": true,
+    "components": 1,
+    "extents_mm": [
+      120.0,
+      80.0,
+      40.0
+    ],
+    "volume_mm3": 67548.0,
+    "genus": 1
+  },
+  "009_hex_prism_knob": {
+    "kind": "ground_truth_stl",
+    "source": "benchmarks/cases/009_hex_prism_knob/ground_truth/model.stl",
+    "watertight": true,
+    "components": 1,
+    "extents_mm": [
+      70.0,
+      34.64,
+      30.0
+    ],
+    "volume_mm3": 54556.5,
+    "genus": 0
+  },
+  "010_nameplate_slots_vents": {
+    "kind": "ground_truth_stl",
+    "source": "benchmarks/cases/010_nameplate_slots_vents/ground_truth/model.stl",
+    "watertight": true,
+    "components": 1,
+    "extents_mm": [
+      140.0,
+      3.0,
+      24.0
+    ],
+    "volume_mm3": 9356.8,
+    "genus": 7
+  },
+  "011_wall_hook": {
+    "kind": "ground_truth_stl",
+    "source": "benchmarks/cases/011_wall_hook/ground_truth/model.stl",
+    "watertight": true,
+    "components": 1,
+    "extents_mm": [
+      60.0,
+      10.0,
+      55.0
+    ],
+    "volume_mm3": 13220.0,
+    "genus": 0
+  },
+  "012_vent_grille_grid": {
+    "kind": "ground_truth_stl",
+    "source": "benchmarks/cases/012_vent_grille_grid/ground_truth/model.stl",
+    "watertight": true,
+    "components": 1,
+    "extents_mm": [
+      100.0,
+      4.0,
+      60.0
+    ],
+    "volume_mm3": 21190.7,
+    "genus": 9
+  },
+  "013_wedge_ramp": {
+    "kind": "ground_truth_stl",
+    "source": "benchmarks/cases/013_wedge_ramp/ground_truth/model.stl",
+    "watertight": true,
+    "components": 1,
+    "extents_mm": [
+      100.0,
+      60.0,
+      30.0
+    ],
+    "volume_mm3": 90000.0,
+    "genus": 0
+  },
+  "101_bltouch_bracket": {
+    "kind": "ground_truth_stl",
+    "source": "benchmarks/cases/101_bltouch_bracket/ground_truth/model.stl",
+    "watertight": true,
+    "components": 1,
+    "extents_mm": [
+      39.53,
+      60.0,
+      43.6
+    ],
+    "volume_mm3": 25970.0,
+    "genus": 5
+  },
+  "102_lcd_knob": {
+    "kind": "ground_truth_stl",
+    "source": "benchmarks/cases/102_lcd_knob/ground_truth/model.stl",
+    "watertight": true,
+    "components": 1,
+    "extents_mm": [
+      43.3,
+      50.0,
+      11.07
+    ],
+    "volume_mm3": 6086.8,
+    "genus": 0
+  },
+  "103_y_motor_holder": {
+    "kind": "ground_truth_stl",
+    "source": "benchmarks/cases/103_y_motor_holder/ground_truth/model.stl",
+    "watertight": true,
+    "components": 1,
+    "extents_mm": [
+      52.5,
+      60.0,
+      23.75
+    ],
+    "volume_mm3": 22350.9,
+    "genus": -11
+  },
+  "104_cable_holder": {
+    "kind": "ground_truth_stl",
+    "source": "benchmarks/cases/104_cable_holder/ground_truth/model.stl",
+    "watertight": true,
+    "components": 1,
+    "extents_mm": [
+      10.13,
+      18.13,
+      40.0
+    ],
+    "volume_mm3": 3738.0,
+    "genus": 11
+  },
+  "constant_radius_handle": {
+    "kind": "openscad_reference",
+    "source": "references/curved_handle-reference.stl",
+    "watertight": true,
+    "components": 1,
+    "extents_mm": [
+      48.0,
+      54.0,
+      8.0
+    ],
+    "volume_mm3": 6170.5,
+    "genus": 0
+  },
+  "rounded_housing": {
+    "kind": "no_ground_truth",
+    "note": "feature contract drawing (#42/#43); shape checks n/a, build+gates still scored"
+  },
+  "bevelled_block": {
+    "kind": "no_ground_truth",
+    "note": "feature contract drawing (#42/#43); shape checks n/a, build+gates still scored"
+  },
+  "rectangular_sweep": {
+    "kind": "no_ground_truth",
+    "note": "feature contract drawing (#42/#43); shape checks n/a, build+gates still scored"
+  },
+  "solid_transition": {
+    "kind": "openscad_reference",
+    "source": "references/transition-reference.stl",
+    "watertight": true,
+    "components": 1,
+    "extents_mm": [
+      60.0,
+      40.0,
+      60.0
+    ],
+    "volume_mm3": 92140.1,
+    "genus": 0
+  },
+  "wheel": {
+    "kind": "openscad_reference",
+    "source": "benchmarks/brep-baseline/wheel/reference.scad",
+    "watertight": true,
+    "components": 1,
+    "extents_mm": [
+      120.0,
+      8.0,
+      120.0
+    ],
+    "volume_mm3": 43128.5,
+    "genus": 8,
+    "source_original": "/tmp/doodle-brep-34/benchmarks/brep-baseline/wheel/reference.scad",
+    "source_note": "normalized from the author tree path at issue #79; bytes are identical (sha256 25be26a7... verified against benchmarks/brep-baseline/wheel/reference.scad)"
+  }
+}

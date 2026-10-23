@@ -1,0 +1,150 @@
+{
+  "object": "Rounded Open Tray",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "top",
+      "sheet_region": "view_7",
+      "what_it_constrains": "Outer footprint (60x40), inner cavity footprint, and corner radii (R6 outer)."
+    },
+    {
+      "direction": "section_xz",
+      "sheet_region": "view_8",
+      "what_it_constrains": "Overall height (20), wall thickness, floor thickness, and rim profile."
+    },
+    {
+      "direction": "bottom",
+      "sheet_region": "view_12",
+      "what_it_constrains": "Confirms flat bottom surface."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "tray_body",
+      "name": "Tray Body",
+      "material": "plastic",
+      "color": "default"
+    }
+  ],
+  "features": [
+    {
+      "id": "outer_shell",
+      "type": "extrusion",
+      "description": "Rectangular prism with rounded vertical corners (R6) and flat top/bottom faces."
+    },
+    {
+      "id": "inner_cavity",
+      "type": "cutout",
+      "description": "Rectangular pocket with rounded corners, open at the top, leaving a uniform wall and floor thickness."
+    }
+  ],
+  "relations": [
+    {
+      "type": "concentric",
+      "targets": [
+        "outer_shell",
+        "inner_cavity"
+      ],
+      "description": "Inner cavity is centered within the outer shell footprint."
+    },
+    {
+      "type": "coaxial",
+      "targets": [
+        "outer_shell",
+        "inner_cavity"
+      ],
+      "description": "Both share the same vertical axis."
+    }
+  ],
+  "symmetry": {
+    "planes": [
+      "XZ",
+      "YZ"
+    ],
+    "axes": [
+      "Z"
+    ],
+    "rotational_order": 2
+  },
+  "repetitions": [],
+  "dimensions": {
+    "length": 60.0,
+    "width": 40.0,
+    "height": 20.0,
+    "radius": 6.0,
+    "wall_thickness": 2.0,
+    "floor_thickness": 2.0,
+    "max_width": 46.15,
+    "max_depth": 5.31,
+    "max_height": 60.0,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "Wall and floor thickness are not explicitly dimensioned; estimated at 2mm based on visual proportions in the section view.",
+    "Inner corner radius is not explicitly dimensioned; assumed to be concentric with outer radius (R_inner = R_outer - thickness)."
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "The object is a simple open tray. The geometry is defined by a 60x40x20 outer box with R6 vertical fillets. A subtractive boolean operation removes an inner volume to create the cavity. The wall and floor thickness are uniform. The top view shows the rim, and the section view confirms the open top and flat bottom.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "extrude",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_2",
+        "operation": "extrude",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "owner": "tray_body",
+        "parameters": {
+          "depth": 20,
+          "start_position": 0
+        },
+        "source_views": [
+          "view_8"
+        ]
+      },
+      {
+        "id": "inner_cavity",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Rectangular pocket with rounded corners, open at the top, leaving a uniform wall and floor thickness."
+        },
+        "source_views": []
+      }
+    ],
+    "unresolved_constraints": [
+      "Exact wall and floor thickness value."
+    ]
+  },
+  "user_intent": {
+    "description": "",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "60"
+  },
+  "source_view_group_count": 12,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

@@ -1,0 +1,174 @@
+{
+  "object": "Notched Plate",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "top",
+      "sheet_region": "view_5",
+      "constrains": "XY profile (60x40 rectangle), top-edge notch (20x10), top-right corner fillet (R6), and \u00d88 through-hole location."
+    },
+    {
+      "direction": "front",
+      "sheet_region": "view_10",
+      "constrains": "Thickness (Z-axis) of 6mm."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "part_1",
+      "name": "Main Plate Body",
+      "material": "generic_plastic",
+      "bounding_box": [
+        60,
+        40,
+        6
+      ]
+    }
+  ],
+  "features": [
+    {
+      "id": "feat_1",
+      "type": "base_profile",
+      "description": "Rectangular base 60mm (X) x 40mm (Y).",
+      "source_views": [
+        "view_5"
+      ]
+    },
+    {
+      "id": "feat_2",
+      "type": "cutout",
+      "description": "Rectangular notch on the top edge (Y=40). Width 20mm, Depth 10mm. Centered horizontally (X=30).",
+      "parameters": {
+        "width": 20,
+        "depth": 10,
+        "position": "top_center"
+      },
+      "source_views": [
+        "view_5"
+      ]
+    },
+    {
+      "id": "feat_3",
+      "type": "fillet",
+      "description": "Top-right corner fillet (X=60, Y=40). Radius 6mm.",
+      "parameters": {
+        "radius": 6
+      },
+      "source_views": [
+        "view_5"
+      ]
+    },
+    {
+      "id": "feat_4",
+      "type": "hole",
+      "description": "Circular through-hole. Diameter 8mm.",
+      "parameters": {
+        "diameter": 8,
+        "center_x": 12,
+        "center_y": 15
+      },
+      "source_views": [
+        "view_5"
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "type": "extrusion",
+      "target": "feat_1",
+      "axis": "Z",
+      "distance": 6
+    },
+    {
+      "type": "subtract",
+      "target": "feat_1",
+      "tool": "feat_2"
+    },
+    {
+      "type": "subtract",
+      "target": "feat_1",
+      "tool": "feat_4"
+    }
+  ],
+  "symmetry": "none",
+  "repetitions": [],
+  "dimensions": {
+    "max_width": 15.62,
+    "max_depth": 60.0,
+    "max_height": 14.15,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [],
+  "interpretation_conflicts": [],
+  "generation_notes": "The object is a flat plate with a specific XY profile extruded by 6mm. The notch is centered on the top edge (X=30), extending from Y=40 down to Y=30. The hole is located at (12, 15). The top-right corner is rounded with R6.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "extrude",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_2",
+        "operation": "extrude",
+        "profile_plane": "XY",
+        "direction_axis": "Z",
+        "owner": "part_1",
+        "parameters": {
+          "distance": 6
+        },
+        "source_views": [
+          "view_10"
+        ]
+      },
+      {
+        "id": "feat_2",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Rectangular notch on the top edge (Y=40). Width 20mm, Depth 10mm. Centered horizontally (X=30)."
+        },
+        "source_views": []
+      },
+      {
+        "id": "feat_4",
+        "operation": "through_cut",
+        "profile_plane": null,
+        "direction_axis": null,
+        "owner": null,
+        "parameters": {
+          "description": "Circular through-hole. Diameter 8mm."
+        },
+        "source_views": []
+      }
+    ],
+    "unresolved_constraints": []
+  },
+  "user_intent": {
+    "description": "",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "60"
+  },
+  "source_view_group_count": 11,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

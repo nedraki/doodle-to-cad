@@ -1,0 +1,108 @@
+{
+  "drawing": "profiles_empty_notes",
+  "backend": "usd-brep",
+  "trial": 1,
+  "submitted_at": "2026-10-19T00:07:30.704918+00:00",
+  "finished_at": "2026-10-19T00:09:27.020162+00:00",
+  "run_id": "27c568c7b985",
+  "wall_seconds": 116.3,
+  "job_status": "done",
+  "error": null,
+  "questions_asked": 0,
+  "question_kinds": [],
+  "build": {
+    "watertight": true,
+    "components": 1,
+    "genus": 1,
+    "extents_mm": [
+      60.0,
+      40.0,
+      6.0
+    ],
+    "volume_mm3": 12852.9,
+    "sha256": "2009f1aeba020677a1390e17cf4af68910c06971343251aaf3449565f813611e",
+    "bytes": 9684
+  },
+  "checks": {
+    "build_success": true,
+    "extents_pass": true,
+    "genus_pass": true,
+    "volume_pass": true,
+    "fidelity_pass": false,
+    "overall_pass": false,
+    "not_applicable": []
+  },
+  "fidelity": {
+    "scores": {
+      "top": 0.313
+    },
+    "pass": false,
+    "reason": null,
+    "topology": {
+      "top": {
+        "expected": 0,
+        "actual": 1,
+        "position_fidelity": null
+      }
+    }
+  },
+  "product": {
+    "success": false,
+    "accepted": false,
+    "status": "failed",
+    "score": null,
+    "projection_status": "failed",
+    "geometry_status": "passed",
+    "failures": [
+      "top projection",
+      "Detailed drawing features and view assignments require review."
+    ]
+  },
+  "attempts": {
+    "count": 1,
+    "recovered": false,
+    "corrections": 1
+  },
+  "unsupported": {
+    "flag": false,
+    "code": null
+  },
+  "brep_only": {
+    "operations": [
+      "extrude"
+    ],
+    "loft": false,
+    "shell": false,
+    "arc_pipe": false,
+    "sweep": false,
+    "extrude": true,
+    "parameter_names": [
+      "corner_radius",
+      "depth",
+      "hole_diameter",
+      "hole_x",
+      "hole_y",
+      "notch_depth",
+      "notch_width",
+      "thickness",
+      "width"
+    ]
+  },
+  "edit": {
+    "available": true,
+    "ok": true,
+    "seconds": 2.82,
+    "param": "width",
+    "old": 60,
+    "new": 72.0,
+    "message": null
+  },
+  "targeted": {
+    "available": false,
+    "ok": false,
+    "seconds": null,
+    "operation": null,
+    "value": null,
+    "message": "no probe value produced a valid targeted plan"
+  }
+}

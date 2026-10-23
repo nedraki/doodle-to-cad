@@ -1,0 +1,19 @@
+{
+  "feature_id": "side_holes",
+  "feature_label": "Five rectangular holes on the right face",
+  "reason": "The drawing shows five holes but does not specify their exact vertical positions or spacing.",
+  "kind": "opening_extent",
+  "id": "1484033ef5c243738a0581a4a25d70ab",
+  "text": "Should this hole go all the way through the part?",
+  "maximum_depth_mm": 120.0,
+  "choices": [
+    {
+      "id": "through",
+      "label": "Yes \u2014 make a through-hole"
+    },
+    {
+      "id": "recess",
+      "label": "No \u2014 leave a bottom"
+    }
+  ]
+}

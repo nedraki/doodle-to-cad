@@ -1,0 +1,71 @@
+{
+  "view_frame": "The drawing presents a single view, identified as the Front view (XZ plane). The X-axis represents the width of the nameplate, and the Z-axis represents its height. The Y-axis represents the depth (thickness) of the plate, which is not visible in this view.",
+  "features": [
+    {
+      "id": "nameplate_body",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "ASSUMED_thickness"
+      ],
+      "placement": "Centered at origin (0,0,0). Extends from -W/2 to W/2 in X, -H/2 to H/2 in Z, and -T/2 to T/2 in Y.",
+      "evidence": "The main rectangular outline of the nameplate."
+    },
+    {
+      "id": "left_slot",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "ASSUMED_slot_width",
+        "ASSUMED_slot_height",
+        "ASSUMED_thickness"
+      ],
+      "placement": "Centered at (-X_slot, 0, 0). Extends from -X_slot - W_slot/2 to -X_slot + W_slot/2 in X, -H_slot/2 to H_slot/2 in Z, and -T/2 to T/2 in Y.",
+      "evidence": "Rectangular cutout on the left side of the nameplate."
+    },
+    {
+      "id": "right_slot",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "ASSUMED_slot_width",
+        "ASSUMED_slot_height",
+        "ASSUMED_thickness"
+      ],
+      "placement": "Centered at (X_slot, 0, 0). Extends from X_slot - W_slot/2 to X_slot + W_slot/2 in X, -H_slot/2 to H_slot/2 in Z, and -T/2 to T/2 in Y.",
+      "evidence": "Rectangular cutout on the right side of the nameplate."
+    },
+    {
+      "id": "vent_holes",
+      "shape": "cylindrical_prism",
+      "section": "circle",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "ASSUMED_hole_diameter",
+        "ASSUMED_thickness"
+      ],
+      "placement": "Five holes centered at (X_hole, 0, 0) where X_hole is [-2*D, -D, 0, D, 2*D]. Each hole extends from -T/2 to T/2 in Y.",
+      "evidence": "Five circular cutouts in the center of the nameplate."
+    }
+  ],
+  "connections": [
+    "left_slot is subtracted from nameplate_body",
+    "right_slot is subtracted from nameplate_body",
+    "vent_holes are subtracted from nameplate_body"
+  ],
+  "edit_rules": [
+    "Changing ASSUMED_thickness updates the Y-dimension of all features.",
+    "Changing ASSUMED_slot_width updates the X-dimension of left_slot and right_slot.",
+    "Changing ASSUMED_slot_height updates the Z-dimension of left_slot and right_slot.",
+    "Changing ASSUMED_hole_diameter updates the diameter of all vent_holes."
+  ],
+  "unresolved": [
+    "The thickness of the nameplate is not specified.",
+    "The width and height of the end slots are not specified.",
+    "The diameter of the vent holes is not specified.",
+    "The spacing between the vent holes is not specified."
+  ]
+}

@@ -1,0 +1,133 @@
+{
+  "case": "sweep",
+  "track": "manually_authored",
+  "user_review": "pending",
+  "measurement_validation": "provisional; awaiting #81",
+  "attempts": [
+    {
+      "role": "initial",
+      "backend": "usd-brep",
+      "updates": {},
+      "attempt": "01-initial",
+      "build_ok": true,
+      "seconds": 0.7927,
+      "diagnostics": [],
+      "stl_sha256": "1c1fa794c7cc461c99b4186b3251b01b2914a2f290688baad8617f66319f94da",
+      "observations_within_provisional_tolerances": true,
+      "native_measurement_available": true
+    },
+    {
+      "role": "edited",
+      "backend": "usd-brep",
+      "updates": {
+        "radius": 25
+      },
+      "attempt": "02-edited",
+      "build_ok": true,
+      "seconds": 0.747,
+      "diagnostics": [],
+      "stl_sha256": "a4b1ea150fadb56b808cee3512d3b77c062c48f2037b7157115bace9f8ec8112",
+      "observations_within_provisional_tolerances": true,
+      "native_measurement_available": true
+    },
+    {
+      "role": "rejected",
+      "backend": "usd-brep",
+      "updates": {
+        "radius": -1
+      },
+      "attempt": "03-rejected",
+      "build_ok": false,
+      "seconds": 0.0001,
+      "exception": "ValueError: radius must be between 8.0 and 40.0"
+    },
+    {
+      "role": "continued",
+      "backend": "usd-brep",
+      "updates": {
+        "radius": 23
+      },
+      "attempt": "04-continued",
+      "build_ok": true,
+      "seconds": 0.7945,
+      "diagnostics": [],
+      "stl_sha256": "0f1e5b35975a065f268dacca39be6e6798a021e77dbadffc861760f8eaf417f8",
+      "observations_within_provisional_tolerances": true,
+      "native_measurement_available": true
+    }
+  ],
+  "selection_rule": null,
+  "selection_limitation": "Geometric rule for pocket or bottom face; arbitrary face/edge targeting is not implemented.",
+  "preview_keeps_original_selected": true,
+  "selection_after_edit": {
+    "status": "none"
+  },
+  "rejection": {
+    "rejected": true,
+    "error": "radius must be between 8.0 and 40.0",
+    "type": "ValueError"
+  },
+  "failure_recovery": {
+    "selected_revision_unchanged": true,
+    "store_unchanged": true,
+    "downloads_unchanged": true,
+    "download_sha256": {
+      "source": "69610d03b955e0841f643afd1612e6adb50176e60748206023ad707164fbca8c",
+      "stl": "a4b1ea150fadb56b808cee3512d3b77c062c48f2037b7157115bace9f8ec8112",
+      "usd": "794ffe05aa8d503cf26bf18feab73ae47dbd979fab2a77f5737924d5a6ce08f4"
+    }
+  },
+  "continued_edit_recorded": true,
+  "outcome": "constructed_and_edited",
+  "preservation": {
+    "section_width": {
+      "before": 6.0211131953357935,
+      "after": 6.027321591800316,
+      "tolerance_mm": 0.05,
+      "within_tolerance": true
+    },
+    "section_height": {
+      "before": 8.000000000693417,
+      "after": 8.000000000000153,
+      "tolerance_mm": 0.05,
+      "within_tolerance": true
+    },
+    "leg_length": {
+      "before": 15.0,
+      "after": 15.0,
+      "tolerance_mm": 0.05,
+      "within_tolerance": true
+    },
+    "minimum_x": {
+      "before": 0.0,
+      "after": 0.0,
+      "tolerance_mm": 0.05,
+      "within_tolerance": true
+    },
+    "minimum_y": {
+      "before": -1.8369701465288538e-16,
+      "after": -1.8369701465288538e-16,
+      "tolerance_mm": 0.05,
+      "within_tolerance": true
+    }
+  },
+  "openscad": {
+    "status": "attempted",
+    "attempts": [
+      {
+        "role": "initial",
+        "build_ok": true,
+        "seconds": 0.3632,
+        "construction": "manually_authored OpenSCAD, $fn=96",
+        "note": "Rectangular section, not a circular tube. Native sweep avoids separate join booleans."
+      },
+      {
+        "role": "edited",
+        "build_ok": true,
+        "seconds": 0.3504,
+        "construction": "manually_authored OpenSCAD, $fn=96",
+        "note": "Rectangular section, not a circular tube. Native sweep avoids separate join booleans."
+      }
+    ]
+  }
+}

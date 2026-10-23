@@ -1,0 +1,321 @@
+{
+  "fillet": {
+    "case": "fillet",
+    "track": "manually_authored",
+    "user_review": "pending",
+    "measurement_validation": "provisional; awaiting #81",
+    "attempts": [
+      {
+        "role": "initial",
+        "backend": "usd-brep",
+        "updates": {},
+        "attempt": "01-initial",
+        "build_ok": false,
+        "seconds": 0.3404,
+        "diagnostics": [],
+        "stl_sha256": "ce95519ed89343baccc934f81f45011c4e0990f3f4875b5b8c44c7402a27ce73",
+        "exception": "ModuleNotFoundError: No module named 'scipy'"
+      }
+    ],
+    "outcome": "failed",
+    "error": "ModuleNotFoundError: No module named 'scipy'",
+    "openscad": {
+      "status": "attempted",
+      "attempts": [
+        {
+          "role": "initial",
+          "build_ok": true,
+          "seconds": 0.6162,
+          "construction": "manually_authored OpenSCAD, $fn=96",
+          "note": "Supported outer vertical edge family; no arbitrary bracket-junction selector.",
+          "measurement_error": "No module named 'scipy'"
+        },
+        {
+          "role": "edited",
+          "build_ok": true,
+          "seconds": 0.5983,
+          "construction": "manually_authored OpenSCAD, $fn=96",
+          "note": "Supported outer vertical edge family; no arbitrary bracket-junction selector.",
+          "measurement_error": "No module named 'scipy'"
+        }
+      ]
+    }
+  },
+  "chamfer": {
+    "case": "chamfer",
+    "track": "manually_authored",
+    "user_review": "pending",
+    "measurement_validation": "provisional; awaiting #81",
+    "attempts": [
+      {
+        "role": "initial",
+        "backend": "usd-brep",
+        "updates": {},
+        "attempt": "01-initial",
+        "build_ok": false,
+        "seconds": 0.376,
+        "diagnostics": [],
+        "stl_sha256": "92dfb59e965f0d52eeb043e447324fc1f88ccdd40a8fb6430cfaab4b0c1dad11",
+        "exception": "ModuleNotFoundError: No module named 'scipy'"
+      }
+    ],
+    "outcome": "failed",
+    "error": "ModuleNotFoundError: No module named 'scipy'",
+    "openscad": {
+      "status": "attempted",
+      "attempts": [
+        {
+          "role": "initial",
+          "build_ok": true,
+          "seconds": 0.4253,
+          "construction": "manually_authored OpenSCAD, $fn=96",
+          "note": "Measured convention: radius is bevel hypotenuse; setback=radius/sqrt(2), angle=45 degrees. No selective hole entrance API.",
+          "measurement_error": "No module named 'scipy'"
+        },
+        {
+          "role": "edited",
+          "build_ok": true,
+          "seconds": 0.4162,
+          "construction": "manually_authored OpenSCAD, $fn=96",
+          "note": "Measured convention: radius is bevel hypotenuse; setback=radius/sqrt(2), angle=45 degrees. No selective hole entrance API.",
+          "measurement_error": "No module named 'scipy'"
+        }
+      ]
+    }
+  },
+  "arc": {
+    "case": "arc",
+    "track": "manually_authored",
+    "user_review": "pending",
+    "measurement_validation": "provisional; awaiting #81",
+    "attempts": [
+      {
+        "role": "initial",
+        "backend": "usd-brep",
+        "updates": {},
+        "attempt": "01-initial",
+        "build_ok": false,
+        "seconds": 1.7709,
+        "diagnostics": [],
+        "stl_sha256": "9efcebdc4881a0c77ac2c4d0bd19aee24f3499ee3321cb5899ebabe85c46c5c3",
+        "exception": "ModuleNotFoundError: No module named 'scipy'"
+      }
+    ],
+    "outcome": "failed",
+    "error": "ModuleNotFoundError: No module named 'scipy'",
+    "openscad": {
+      "status": "attempted",
+      "attempts": [
+        {
+          "role": "initial",
+          "build_ok": true,
+          "seconds": 0.4741,
+          "construction": "manually_authored OpenSCAD, $fn=96",
+          "note": "Arc-only case explicitly does not satisfy the straight-ended handle; separate rectangular sweep below does.",
+          "measurement_error": "No module named 'scipy'"
+        },
+        {
+          "role": "edited",
+          "build_ok": true,
+          "seconds": 0.4888,
+          "construction": "manually_authored OpenSCAD, $fn=96",
+          "note": "Arc-only case explicitly does not satisfy the straight-ended handle; separate rectangular sweep below does.",
+          "measurement_error": "No module named 'scipy'"
+        }
+      ]
+    }
+  },
+  "sweep": {
+    "case": "sweep",
+    "track": "manually_authored",
+    "user_review": "pending",
+    "measurement_validation": "provisional; awaiting #81",
+    "attempts": [
+      {
+        "role": "initial",
+        "backend": "usd-brep",
+        "updates": {},
+        "attempt": "01-initial",
+        "build_ok": false,
+        "seconds": 0.9244,
+        "diagnostics": [],
+        "stl_sha256": "1c1fa794c7cc461c99b4186b3251b01b2914a2f290688baad8617f66319f94da",
+        "exception": "ModuleNotFoundError: No module named 'scipy'"
+      }
+    ],
+    "outcome": "failed",
+    "error": "ModuleNotFoundError: No module named 'scipy'",
+    "openscad": {
+      "status": "attempted",
+      "attempts": [
+        {
+          "role": "initial",
+          "build_ok": true,
+          "seconds": 0.4292,
+          "construction": "manually_authored OpenSCAD, $fn=96",
+          "note": "Rectangular section, not a circular tube. Native sweep avoids separate join booleans.",
+          "measurement_error": "No module named 'scipy'"
+        },
+        {
+          "role": "edited",
+          "build_ok": true,
+          "seconds": 0.4191,
+          "construction": "manually_authored OpenSCAD, $fn=96",
+          "note": "Rectangular section, not a circular tube. Native sweep avoids separate join booleans.",
+          "measurement_error": "No module named 'scipy'"
+        }
+      ]
+    }
+  },
+  "loft": {
+    "case": "loft",
+    "track": "manually_authored",
+    "user_review": "pending",
+    "measurement_validation": "provisional; awaiting #81",
+    "attempts": [
+      {
+        "role": "initial",
+        "backend": "usd-brep",
+        "updates": {},
+        "attempt": "01-initial",
+        "build_ok": false,
+        "seconds": 0.4823,
+        "diagnostics": [],
+        "stl_sha256": "b84cfb9d0424e73083326c4a9508e2a150b6bc3bc950cc8ecfc6fbe518e76756",
+        "exception": "ModuleNotFoundError: No module named 'scipy'"
+      }
+    ],
+    "outcome": "failed",
+    "error": "ModuleNotFoundError: No module named 'scipy'",
+    "openscad": {
+      "status": "attempted",
+      "attempts": [
+        {
+          "role": "initial",
+          "build_ok": true,
+          "seconds": 0.4068,
+          "construction": "manually_authored OpenSCAD, $fn=96",
+          "note": "Solid transition only. OpenSCAD polar-correspondence polyhedron is an explicit approximation; intermediate surfaces may differ.",
+          "measurement_error": "No module named 'scipy'"
+        },
+        {
+          "role": "edited",
+          "build_ok": true,
+          "seconds": 0.4078,
+          "construction": "manually_authored OpenSCAD, $fn=96",
+          "note": "Solid transition only. OpenSCAD polar-correspondence polyhedron is an explicit approximation; intermediate surfaces may differ.",
+          "measurement_error": "No module named 'scipy'"
+        }
+      ]
+    }
+  },
+  "shell": {
+    "case": "shell",
+    "track": "manually_authored",
+    "user_review": "pending",
+    "measurement_validation": "provisional; awaiting #81",
+    "attempts": [
+      {
+        "role": "initial",
+        "backend": "usd-brep",
+        "updates": {},
+        "attempt": "01-initial",
+        "build_ok": false,
+        "seconds": 0.5,
+        "diagnostics": [],
+        "stl_sha256": "62edd2b8ae65be54aa5f04325a848ebb85b9f36bffa100931a44a2d1b064462d",
+        "exception": "ModuleNotFoundError: No module named 'scipy'"
+      }
+    ],
+    "outcome": "failed",
+    "error": "ModuleNotFoundError: No module named 'scipy'",
+    "openscad": {
+      "status": "attempted",
+      "attempts": [
+        {
+          "role": "initial",
+          "build_ok": true,
+          "seconds": 0.5891,
+          "construction": "manually_authored OpenSCAD, $fn=96",
+          "note": "Uniform floor and wall thickness; varying wall/floor dimensions not exposed by shell.",
+          "measurement_error": "No module named 'scipy'"
+        },
+        {
+          "role": "edited",
+          "build_ok": true,
+          "seconds": 0.5854,
+          "construction": "manually_authored OpenSCAD, $fn=96",
+          "note": "Uniform floor and wall thickness; varying wall/floor dimensions not exposed by shell.",
+          "measurement_error": "No module named 'scipy'"
+        }
+      ]
+    }
+  },
+  "combined": {
+    "case": "combined",
+    "track": "manually_authored",
+    "user_review": "pending",
+    "measurement_validation": "provisional; awaiting #81",
+    "attempts": [
+      {
+        "role": "initial",
+        "backend": "usd-brep",
+        "updates": {},
+        "attempt": "01-initial",
+        "build_ok": false,
+        "seconds": 0.9899,
+        "diagnostics": [],
+        "stl_sha256": "2b462c9836a87fbb9f04a5efcdea80bf9f7f4686985cbaa1130c8fb1f581bf57",
+        "exception": "ModuleNotFoundError: No module named 'scipy'"
+      }
+    ],
+    "outcome": "failed",
+    "error": "ModuleNotFoundError: No module named 'scipy'",
+    "openscad": {
+      "status": "not_attempted",
+      "reason": "Combination probe: does global chamfer bevel the opening as well as exterior edges? No selected-hole chamfer claim. OpenSCAD comparator deferred until operation placement is measured."
+    }
+  },
+  "pocket": {
+    "case": "pocket",
+    "track": "manually_authored",
+    "user_review": "pending",
+    "measurement_validation": "provisional; awaiting #81",
+    "attempts": [
+      {
+        "role": "initial",
+        "backend": "usd-brep",
+        "updates": {},
+        "attempt": "01-initial",
+        "build_ok": false,
+        "seconds": 0.308,
+        "diagnostics": [],
+        "stl_sha256": "9baf9f4b98e14e67930230a938ec4f2e4c3deeaad1f22c3f428754893516b9a7",
+        "exception": "ModuleNotFoundError: No module named 'scipy'"
+      }
+    ],
+    "outcome": "failed",
+    "error": "ModuleNotFoundError: No module named 'scipy'",
+    "openscad": {
+      "status": "attempted",
+      "attempts": [
+        {
+          "role": "initial",
+          "build_ok": true,
+          "seconds": 0.4807,
+          "construction": "manually_authored OpenSCAD, $fn=96",
+          "note": "Uses production targeted-edit planning and verification, not a whole-part text rewrite.",
+          "measurement_error": "No module named 'scipy'"
+        },
+        {
+          "role": "edited",
+          "build_ok": true,
+          "seconds": 0.465,
+          "construction": "manually_authored OpenSCAD, $fn=96",
+          "note": "Uses production targeted-edit planning and verification, not a whole-part text rewrite.",
+          "measurement_error": "No module named 'scipy'"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "connected_after": true,
+  "watertight_after": true,
+  "extents_after": [
+    120.0,
+    8.0,
+    120.0
+  ],
+  "preservation": {
+    "extent_x": {
+      "before": 120.0,
+      "after": 120.0,
+      "preserved": true
+    },
+    "extent_y": {
+      "before": 8.0,
+      "after": 8.0,
+      "preserved": true
+    },
+    "extent_z": {
+      "before": 120.0,
+      "after": 120.0,
+      "preserved": true
+    },
+    "hub_full_cover_radius_mm": {
+      "before": 15,
+      "after": 15,
+      "preserved": true
+    },
+    "spoke_count_at_r40": {
+      "before": 8,
+      "after": 8,
+      "preserved": true
+    },
+    "spoke_widths_at_r40_mm": {
+      "before": [
+        8.03,
+        8.03,
+        8.03,
+        8.03,
+        8.03,
+        8.03,
+        8.03,
+        8.03
+      ],
+      "after": [
+        8.03,
+        8.03,
+        8.03,
+        8.03,
+        8.03,
+        8.03,
+        8.03,
+        8.03
+      ],
+      "preserved": true
+    }
+  },
+  "keep_matches": true,
+  "discard_restores": true,
+  "stale_keep_rejected": true,
+  "params_follow_displayed": true,
+  "app_checks": {
+    "compiles": "passed",
+    "watertight": "passed",
+    "connected_components": "passed",
+    "extents_preserved": "passed",
+    "editable_parameters_preserved": "passed",
+    "volume_change": "measured",
+    "requested_correction": "unverified"
+  }
+}

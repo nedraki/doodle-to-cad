@@ -1,0 +1,548 @@
+{
+  "version": 1,
+  "selected": "7364199b8c5544dab671a1bb6db52845",
+  "selection_version": 1,
+  "revisions": {
+    "original": {
+      "id": "original",
+      "parent_id": null,
+      "result": {
+        "id": "70521fc0d6a2",
+        "backend": "openscad",
+        "success": true,
+        "spec": {
+          "object": "eight-spoke wheel"
+        },
+        "model": "fixture",
+        "model_source": "seeded",
+        "fixture": {
+          "kind": "synthetic_broken_wheel",
+          "generator": "scripts/make_repair_fixture.py",
+          "authority": "Controlled test fixture, not a user doodle or generation claim."
+        },
+        "evaluation": {
+          "accepted": true,
+          "score": 88,
+          "failures": []
+        },
+        "files": {
+          "scad": "/results/70521fc0d6a2/model.scad",
+          "source": "/results/70521fc0d6a2/model.scad",
+          "stl": "/results/70521fc0d6a2/model.stl",
+          "views": {
+            "isometric": "/results/70521fc0d6a2/view-isometric.png",
+            "front": "/results/70521fc0d6a2/view-front.png",
+            "top": "/results/70521fc0d6a2/view-top.png",
+            "right": "/results/70521fc0d6a2/view-right.png"
+          }
+        }
+      },
+      "source_text": "$fn=128;\n/* doodle-meta {\"version\":1,\"parameters\":{\"outer_diameter\":{\"label\":\"Outer diameter\",\"description\":\"Outer rim diameter\",\"unit\":\"mm\"},\"hub_diameter\":{\"label\":\"Hub\",\"description\":\"Hub diameter\",\"unit\":\"mm\"},\"spoke_width\":{\"label\":\"Spoke width\",\"description\":\"Spoke bar thickness\",\"unit\":\"mm\"}}} */\n// Wheel lies in XZ. BROKEN: spokes stop 5 mm short of the rim inner wall.\nouter_diameter = 120; // mm\nrim_inner_diameter = 108; // mm\nhub_diameter = 32; // mm\nthickness = 8; // mm\nspoke_count = 8; // count\nspoke_width = 8; // mm\nspoke_reach = 34; // mm from hub overlap start; stops short of the rim\ntranslate([outer_diameter/2,thickness/2,outer_diameter/2]) rotate([90,0,0]) union(){\n  difference(){cylinder(d=outer_diameter,h=thickness);translate([0,0,-1])cylinder(d=rim_inner_diameter,h=thickness+2);}\n  cylinder(d=hub_diameter,h=thickness);\n  for(a=[0:360/spoke_count:360-360/spoke_count])rotate([0,0,a])translate([hub_diameter/2-1,-thickness/2,0])cube([spoke_reach,thickness,thickness]);\n}\n",
+      "parameters": [
+        {
+          "label": "Outer diameter",
+          "feature": null,
+          "name": "outer_diameter",
+          "value": 120.0,
+          "unit": "mm",
+          "group": null,
+          "description": "Outer rim diameter",
+          "low": 0.0,
+          "high": 240.0,
+          "step": 0.01
+        },
+        {
+          "label": "Hub",
+          "feature": null,
+          "name": "hub_diameter",
+          "value": 32.0,
+          "unit": "mm",
+          "group": null,
+          "description": "Hub diameter",
+          "low": 0.0,
+          "high": 64.0,
+          "step": 0.01
+        },
+        {
+          "label": "Spoke width",
+          "feature": null,
+          "name": "spoke_width",
+          "value": 8.0,
+          "unit": "mm",
+          "group": null,
+          "description": "Spoke bar thickness",
+          "low": 0.0,
+          "high": 16.0,
+          "step": 0.01
+        }
+      ],
+      "kind": "generation"
+    },
+    "7364199b8c5544dab671a1bb6db52845": {
+      "id": "7364199b8c5544dab671a1bb6db52845",
+      "parent_id": "original",
+      "kind": "repair",
+      "result": {
+        "id": "70521fc0d6a2",
+        "backend": "openscad",
+        "success": false,
+        "spec": {
+          "object": "eight-spoke wheel"
+        },
+        "model": "fixture",
+        "model_source": "seeded",
+        "fixture": {
+          "kind": "synthetic_broken_wheel",
+          "generator": "scripts/make_repair_fixture.py",
+          "authority": "Controlled test fixture, not a user doodle or generation claim."
+        },
+        "evaluation": {
+          "status": "unverified",
+          "accepted": false,
+          "score": null,
+          "failures": [
+            "The original generation acceptance score was not rerun for this repair candidate."
+          ]
+        },
+        "files": {
+          "scad": "/results/70521fc0d6a2/repair-87ea4a47/model.scad",
+          "source": "/results/70521fc0d6a2/repair-87ea4a47/model.scad",
+          "stl": "/results/70521fc0d6a2/repair-87ea4a47/model.stl",
+          "views": {
+            "isometric": "/results/70521fc0d6a2/repair-87ea4a47/view-isometric.png",
+            "front": "/results/70521fc0d6a2/repair-87ea4a47/view-front.png",
+            "top": "/results/70521fc0d6a2/repair-87ea4a47/view-top.png",
+            "right": "/results/70521fc0d6a2/repair-87ea4a47/view-right.png"
+          },
+          "repair": "/results/70521fc0d6a2/repair-87ea4a47/repair.json"
+        },
+        "build": {
+          "version": 1,
+          "backend": "openscad",
+          "source_format": "openscad",
+          "ok": true,
+          "units": "mm",
+          "axes": {
+            "x": "width",
+            "y": "depth",
+            "z": "height"
+          },
+          "views": [
+            "isometric",
+            "front",
+            "top",
+            "right"
+          ],
+          "measurements": {
+            "watertight": true,
+            "components": 1,
+            "triangles": 1244,
+            "extents_mm": [
+              120.0,
+              8.0,
+              120.0
+            ],
+            "volume_mm3": 43128.458
+          },
+          "diagnostics": [],
+          "drawing_evaluated": false
+        },
+        "repair": {
+          "instruction": "Connect every spoke to the rim. Keep the outer diameter, hub, spoke count, and thickness unchanged. Make the wheel one connected printable part.",
+          "parent_id": "original",
+          "started_from": "parent-revision",
+          "interpretation": {
+            "requested_change": "Extend the spokes to connect the hub to the rim, merging the components into a single connected body.",
+            "preserve": [
+              "outer_diameter",
+              "hub_diameter",
+              "spoke_count",
+              "thickness"
+            ],
+            "expected_evidence": [
+              "components count is 1",
+              "watertight is true"
+            ]
+          },
+          "interpretation_failure": null,
+          "checks": [
+            {
+              "name": "compiles",
+              "status": "passed",
+              "compile_seconds": 19.54
+            },
+            {
+              "name": "watertight",
+              "status": "passed",
+              "before": true,
+              "after": true
+            },
+            {
+              "name": "connected_components",
+              "status": "passed",
+              "before": 2,
+              "after": 1,
+              "note": "passed means one connected component; separate from watertightness"
+            },
+            {
+              "name": "extents_preserved",
+              "status": "passed",
+              "before": [
+                120.0,
+                8.0,
+                120.0
+              ],
+              "after": [
+                120.0,
+                8.0,
+                120.0
+              ],
+              "drift": [],
+              "tolerances": {
+                "extent_relative": 0.02,
+                "extent_abs_mm": 0.5
+              }
+            },
+            {
+              "name": "editable_parameters_preserved",
+              "status": "passed",
+              "changed": [],
+              "before": {
+                "outer_diameter": 120.0,
+                "hub_diameter": 32.0,
+                "spoke_width": 8.0
+              },
+              "after": {
+                "outer_diameter": 120.0,
+                "hub_diameter": 32.0,
+                "spoke_width": 8.0
+              },
+              "note": "changed parameters are allowed only when the correction requires them"
+            },
+            {
+              "name": "volume_change",
+              "status": "measured",
+              "before": 40599.249,
+              "after": 43128.458,
+              "ratio": 1.0623
+            },
+            {
+              "name": "requested_correction",
+              "status": "unverified",
+              "note": "Needs visual inspection of the preview plus the model interpretation below."
+            }
+          ],
+          "diagnostics": {
+            "before": {
+              "watertight": true,
+              "components": 2,
+              "triangles": 1308,
+              "extents_mm": [
+                120.0,
+                8.0,
+                120.0
+              ],
+              "volume_mm3": 40599.249
+            },
+            "after": {
+              "watertight": true,
+              "components": 1,
+              "triangles": 1244,
+              "extents_mm": [
+                120.0,
+                8.0,
+                120.0
+              ],
+              "volume_mm3": 43128.458
+            }
+          },
+          "tolerances": {
+            "extent_relative": 0.02,
+            "extent_abs_mm": 0.5,
+            "editable_parameter_values": "exact; any change is listed for review",
+            "volume_relative_informational": 0.25
+          },
+          "prompt_version": 1,
+          "model": null,
+          "score_carried_from_generation": false
+        }
+      },
+      "source_text": "$fn=128;\n/* doodle-meta {\"version\":1,\"parameters\":{\"outer_diameter\":{\"label\":\"Outer diameter\",\"description\":\"Outer rim diameter\",\"unit\":\"mm\"},\"hub_diameter\":{\"label\":\"Hub\",\"description\":\"Hub diameter\",\"unit\":\"mm\"},\"spoke_width\":{\"label\":\"Spoke width\",\"description\":\"Spoke bar thickness\",\"unit\":\"mm\"}}} */\n// Wheel lies in XZ. FIXED: spokes extend to overlap the rim inner wall.\nouter_diameter = 120; // mm\nrim_inner_diameter = 108; // mm\nhub_diameter = 32; // mm\nthickness = 8; // mm\nspoke_count = 8; // count\nspoke_width = 8; // mm\nspoke_reach = 40; // mm from hub overlap start; extends into the rim\ntranslate([outer_diameter/2,thickness/2,outer_diameter/2]) rotate([90,0,0]) union(){\n  difference(){cylinder(d=outer_diameter,h=thickness);translate([0,0,-1])cylinder(d=rim_inner_diameter,h=thickness+2);}\n  cylinder(d=hub_diameter,h=thickness);\n  for(a=[0:360/spoke_count:360-360/spoke_count])rotate([0,0,a])translate([hub_diameter/2-1,-thickness/2,0])cube([spoke_reach,thickness,thickness]);\n}\n",
+      "parameters": [
+        {
+          "label": "Outer diameter",
+          "feature": null,
+          "name": "outer_diameter",
+          "value": 120.0,
+          "unit": "mm",
+          "group": null,
+          "description": "Outer rim diameter",
+          "low": 0.0,
+          "high": 240.0,
+          "step": 0.01
+        },
+        {
+          "label": "Hub",
+          "feature": null,
+          "name": "hub_diameter",
+          "value": 32.0,
+          "unit": "mm",
+          "group": null,
+          "description": "Hub diameter",
+          "low": 0.0,
+          "high": 64.0,
+          "step": 0.01
+        },
+        {
+          "label": "Spoke width",
+          "feature": null,
+          "name": "spoke_width",
+          "value": 8.0,
+          "unit": "mm",
+          "group": null,
+          "description": "Spoke bar thickness",
+          "low": 0.0,
+          "high": 16.0,
+          "step": 0.01
+        }
+      ],
+      "instruction": "Connect every spoke to the rim. Keep the outer diameter, hub, spoke count, and thickness unchanged. Make the wheel one connected printable part."
+    },
+    "cc6d10cd8ac44518a6f8f2a9a612226e": {
+      "id": "cc6d10cd8ac44518a6f8f2a9a612226e",
+      "parent_id": "7364199b8c5544dab671a1bb6db52845",
+      "kind": "repair",
+      "result": {
+        "id": "70521fc0d6a2",
+        "backend": "openscad",
+        "success": false,
+        "spec": {
+          "object": "eight-spoke wheel"
+        },
+        "model": "fixture",
+        "model_source": "seeded",
+        "fixture": {
+          "kind": "synthetic_broken_wheel",
+          "generator": "scripts/make_repair_fixture.py",
+          "authority": "Controlled test fixture, not a user doodle or generation claim."
+        },
+        "evaluation": {
+          "status": "unverified",
+          "accepted": false,
+          "score": null,
+          "failures": [
+            "The original generation acceptance score was not rerun for this repair candidate."
+          ]
+        },
+        "files": {
+          "scad": "/results/70521fc0d6a2/repair-0f98b2f8/model.scad",
+          "source": "/results/70521fc0d6a2/repair-0f98b2f8/model.scad",
+          "stl": "/results/70521fc0d6a2/repair-0f98b2f8/model.stl",
+          "views": {
+            "isometric": "/results/70521fc0d6a2/repair-0f98b2f8/view-isometric.png",
+            "front": "/results/70521fc0d6a2/repair-0f98b2f8/view-front.png",
+            "top": "/results/70521fc0d6a2/repair-0f98b2f8/view-top.png",
+            "right": "/results/70521fc0d6a2/repair-0f98b2f8/view-right.png"
+          },
+          "repair": "/results/70521fc0d6a2/repair-0f98b2f8/repair.json"
+        },
+        "build": {
+          "version": 1,
+          "backend": "openscad",
+          "source_format": "openscad",
+          "ok": true,
+          "units": "mm",
+          "axes": {
+            "x": "width",
+            "y": "depth",
+            "z": "height"
+          },
+          "views": [
+            "isometric",
+            "front",
+            "top",
+            "right"
+          ],
+          "measurements": {
+            "watertight": true,
+            "components": 1,
+            "triangles": 1308,
+            "extents_mm": [
+              120.0,
+              8.0,
+              120.0
+            ],
+            "volume_mm3": 43803.227
+          },
+          "diagnostics": [],
+          "drawing_evaluated": false
+        },
+        "repair": {
+          "instruction": "Make the hub slightly larger.",
+          "parent_id": "7364199b8c5544dab671a1bb6db52845",
+          "started_from": "parent-revision",
+          "interpretation": {
+            "requested_change": "Increase the hub diameter of the eight-spoke wheel.",
+            "preserve": [
+              "outer_diameter",
+              "spoke_width",
+              "spoke_count",
+              "watertight",
+              "components"
+            ],
+            "expected_evidence": [
+              "hub_diameter > 32.0",
+              "outer_diameter == 120.0",
+              "spoke_width == 8.0",
+              "watertight == true",
+              "components == 1"
+            ]
+          },
+          "interpretation_failure": null,
+          "checks": [
+            {
+              "name": "compiles",
+              "status": "passed",
+              "compile_seconds": 20.31
+            },
+            {
+              "name": "watertight",
+              "status": "passed",
+              "before": true,
+              "after": true
+            },
+            {
+              "name": "connected_components",
+              "status": "passed",
+              "before": 1,
+              "after": 1,
+              "note": "passed means one connected component; separate from watertightness"
+            },
+            {
+              "name": "extents_preserved",
+              "status": "passed",
+              "before": [
+                120.0,
+                8.0,
+                120.0
+              ],
+              "after": [
+                120.0,
+                8.0,
+                120.0
+              ],
+              "drift": [],
+              "tolerances": {
+                "extent_relative": 0.02,
+                "extent_abs_mm": 0.5
+              }
+            },
+            {
+              "name": "editable_parameters_preserved",
+              "status": "reported",
+              "changed": [
+                "hub_diameter"
+              ],
+              "before": {
+                "outer_diameter": 120.0,
+                "hub_diameter": 32.0,
+                "spoke_width": 8.0
+              },
+              "after": {
+                "outer_diameter": 120.0,
+                "hub_diameter": 36.0,
+                "spoke_width": 8.0
+              },
+              "note": "changed parameters are allowed only when the correction requires them"
+            },
+            {
+              "name": "volume_change",
+              "status": "measured",
+              "before": 43128.458,
+              "after": 43803.227,
+              "ratio": 1.0156
+            },
+            {
+              "name": "requested_correction",
+              "status": "unverified",
+              "note": "Needs visual inspection of the preview plus the model interpretation below."
+            }
+          ],
+          "diagnostics": {
+            "before": {
+              "watertight": true,
+              "components": 1,
+              "triangles": 1244,
+              "extents_mm": [
+                120.0,
+                8.0,
+                120.0
+              ],
+              "volume_mm3": 43128.458
+            },
+            "after": {
+              "watertight": true,
+              "components": 1,
+              "triangles": 1308,
+              "extents_mm": [
+                120.0,
+                8.0,
+                120.0
+              ],
+              "volume_mm3": 43803.227
+            }
+          },
+          "tolerances": {
+            "extent_relative": 0.02,
+            "extent_abs_mm": 0.5,
+            "editable_parameter_values": "exact; any change is listed for review",
+            "volume_relative_informational": 0.25
+          },
+          "prompt_version": 1,
+          "model": null,
+          "score_carried_from_generation": false
+        }
+      },
+      "source_text": "$fn=128;\n/* doodle-meta {\"version\":1,\"parameters\":{\"outer_diameter\":{\"label\":\"Outer diameter\",\"description\":\"Outer rim diameter\",\"unit\":\"mm\"},\"hub_diameter\":{\"label\":\"Hub\",\"description\":\"Hub diameter\",\"unit\":\"mm\"},\"spoke_width\":{\"label\":\"Spoke width\",\"description\":\"Spoke bar thickness\",\"unit\":\"mm\"}}} */\n// Wheel lies in XZ. FIXED: spokes extend to overlap the rim inner wall.\nouter_diameter = 120; // mm\nrim_inner_diameter = 108; // mm\nhub_diameter = 36; // mm\nthickness = 8; // mm\nspoke_count = 8; // count\nspoke_width = 8; // mm\nspoke_reach = 40; // mm from hub overlap start; extends into the rim\ntranslate([outer_diameter/2,thickness/2,outer_diameter/2]) rotate([90,0,0]) union(){\n  difference(){cylinder(d=outer_diameter,h=thickness);translate([0,0,-1])cylinder(d=rim_inner_diameter,h=thickness+2);}\n  cylinder(d=hub_diameter,h=thickness);\n  for(a=[0:360/spoke_count:360-360/spoke_count])rotate([0,0,a])translate([hub_diameter/2-1,-thickness/2,0])cube([spoke_reach,thickness,thickness]);\n}\n",
+      "parameters": [
+        {
+          "label": "Outer diameter",
+          "feature": null,
+          "name": "outer_diameter",
+          "value": 120.0,
+          "unit": "mm",
+          "group": null,
+          "description": "Outer rim diameter",
+          "low": 0.0,
+          "high": 240.0,
+          "step": 0.01
+        },
+        {
+          "label": "Hub",
+          "feature": null,
+          "name": "hub_diameter",
+          "value": 36.0,
+          "unit": "mm",
+          "group": null,
+          "description": "Hub diameter",
+          "low": 0.0,
+          "high": 72.0,
+          "step": 0.01
+        },
+        {
+          "label": "Spoke width",
+          "feature": null,
+          "name": "spoke_width",
+          "value": 8.0,
+          "unit": "mm",
+          "group": null,
+          "description": "Spoke bar thickness",
+          "low": 0.0,
+          "high": 16.0,
+          "step": 0.01
+        }
+      ],
+      "instruction": "Make the hub slightly larger."
+    }
+  }
+}

@@ -1,0 +1,279 @@
+```json
+{
+  "version": 2,
+  "units": "mm",
+  "name": "notched_plate",
+  "parameters": {
+    "width": {
+      "value": 60,
+      "min": 30,
+      "max": 100,
+      "label": "Width",
+      "unit": "mm",
+      "description": "Overall width of the plate (X)"
+    },
+    "depth": {
+      "value": 40,
+      "min": 20,
+      "max": 80,
+      "label": "Depth",
+      "unit": "mm",
+      "description": "Overall depth of the plate (Y)"
+    },
+    "thickness": {
+      "value": 6,
+      "min": 1,
+      "max": 20,
+      "label": "Thickness",
+      "unit": "mm",
+      "description": "Thickness of the plate (Z)"
+    },
+    "notch_width": {
+      "value": 20,
+      "min": 5,
+      "max": 50,
+      "label": "Notch Width",
+      "unit": "mm",
+      "description": "Width of the top notch"
+    },
+    "notch_depth": {
+      "value": 10,
+      "min": 1,
+      "max": 30,
+      "label": "Notch Depth",
+      "unit": "mm",
+      "description": "Depth of the top notch"
+    },
+    "corner_radius": {
+      "value": 6,
+      "min": 1,
+      "max": 20,
+      "label": "Corner Radius",
+      "unit": "mm",
+      "description": "Radius of the top-right rounded corner"
+    },
+    "hole_diameter": {
+      "value": 8,
+      "min": 2,
+      "max": 20,
+      "label": "Hole Diameter",
+      "unit": "mm",
+      "description": "Diameter of the through hole"
+    },
+    "hole_x": {
+      "value": 12,
+      "min": 0,
+      "max": 60,
+      "label": "Hole X",
+      "unit": "mm",
+      "description": "X position of the hole center"
+    },
+    "hole_y": {
+      "value": 15,
+      "min": 0,
+      "max": 40,
+      "label": "Hole Y",
+      "unit": "mm",
+      "description": "Y position of the hole center"
+    }
+  },
+  "operations": [
+    {
+      "id": "plate",
+      "kind": "extrude",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "plane": "xy",
+      "direction": 1,
+      "depth": "thickness",
+      "loops": [
+        [
+          {
+            "kind": "line",
+            "start": [
+              0,
+              0
+            ],
+            "end": [
+              "width",
+              0
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              "width",
+              0
+            ],
+            "end": [
+              "width",
+              "depth - corner_radius"
+            ]
+          },
+          {
+            "kind": "arc",
+            "center": [
+              "width - corner_radius",
+              "depth - corner_radius"
+            ],
+            "radius": "corner_radius",
+            "start_angle": 0,
+            "end_angle": 90
+          },
+          {
+            "kind": "line",
+            "start": [
+              "width - corner_radius",
+              "depth"
+            ],
+            "end": [
+              "width/2 + notch_width/2",
+              "depth"
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              "width/2 + notch_width/2",
+              "depth"
+            ],
+            "end": [
+              "width/2 + notch_width/2",
+              "depth - notch_depth"
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              "width/2 + notch_width/2",
+              "depth - notch_depth"
+            ],
+            "end": [
+              "width/2 - notch_width/2",
+              "depth - notch_depth"
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              "width/2 - notch_width/2",
+              "depth - notch_depth"
+            ],
+            "end": [
+              "width/2 - notch_width/2",
+              "depth"
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              "width/2 - notch_width/2",
+              "depth"
+            ],
+            "end": [
+              0,
+              "depth"
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              0,
+              "depth"
+            ],
+            "end": [
+              0,
+              0
+            ]
+          }
+        ],
+        [
+          {
+            "kind": "arc",
+            "center": [
+              "hole_x",
+              "hole_y"
+            ],
+            "radius": "hole_diameter/2",
+            "start_angle": 0,
+            "end_angle": 360
+          }
+        ]
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1",
+        "e2",
+        "e3",
+        "e4",
+        "e5",
+        "e6"
+      ]
+    }
+  ],
+  "output": "plate",
+  "frames": {
+    "world": {
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    }
+  },
+  "bodies": [
+    {
+      "id": "part",
+      "output": "plate"
+    }
+  ],
+  "evidence": {
+    "observed": [
+      {
+        "id": "e1",
+        "text": "Top view shows overall width 60 and depth 40."
+      },
+      {
+        "id": "e2",
+        "text": "Front view shows thickness 6."
+      },
+      {
+        "id": "e3",
+        "text": "Top view shows a notch on the top edge, annotated as 20 wide x 10 deep and centred."
+      },
+      {
+        "id": "e4",
+        "text": "Top view shows a rounded top-right corner, annotated as R6."
+      },
+      {
+        "id": "e5",
+        "text": "Top view shows a circular hole, annotated as Ø8 THROUGH."
+      },
+      {
+        "id": "e6",
+        "text": "Hole centre is annotated as 12 from left edge and 15 from bottom edge."
+      }
+    ],
+    "inferred": [],
+    "assumptions": [
+      {
+        "id": "a1",
+        "text": "The notch is centred on the top edge (X=30)."
+      },
+      {
+        "id": "a2",
+        "text": "The hole is a through hole penetrating the full thickness."
+      }
+    ],
+    "unresolved": []
+  },
+  "constraints": []
+}
+```

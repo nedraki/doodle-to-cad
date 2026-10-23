@@ -1,0 +1,31 @@
+{
+  "view_frame": "The drawing presents two views of a flat part. The left view is the Front view (XZ plane), showing the part's width (X) and height (Z). The right view is the Top view (XY plane), showing the part's width (X) and depth (Y). The part is a flat plate with a constant thickness along the Y-axis.",
+  "features": [
+    {
+      "id": "main_body",
+      "shape": "Extruded Profile",
+      "section": "Closed XY polygon",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "ASSUMED_THICKNESS_Y",
+        "WIDTH_X",
+        "HEIGHT_Z"
+      ],
+      "placement": "The profile is defined in the XY plane. The extrusion is along the Y-axis. The profile shape is a 'T' with flared ends on the top and bottom bars. The top bar extends from X=0 to X=WIDTH_X. The bottom bar extends from X=0 to X=WIDTH_X. The central stem connects them. The flares are trapezoidal extensions at the ends of the top and bottom bars.",
+      "evidence": "The left view shows the 'T' shape with flared ends. The right view shows the same 'T' shape, confirming the profile is constant through the thickness."
+    }
+  ],
+  "connections": [
+    "The top and bottom flared bars are connected by the central vertical stem."
+  ],
+  "edit_rules": [
+    "Changing ASSUMED_THICKNESS_Y will extrude the profile to a different depth.",
+    "Changing WIDTH_X will scale the width of the top and bottom bars.",
+    "Changing HEIGHT_Z will scale the height of the part.",
+    "The flare angles and stem width are currently fixed by the profile definition."
+  ],
+  "unresolved": [
+    "The exact dimensions (WIDTH_X, HEIGHT_Z, ASSUMED_THICKNESS_Y) are not provided in the drawing.",
+    "The specific geometry of the flares (angles, lengths) is not dimensioned."
+  ]
+}

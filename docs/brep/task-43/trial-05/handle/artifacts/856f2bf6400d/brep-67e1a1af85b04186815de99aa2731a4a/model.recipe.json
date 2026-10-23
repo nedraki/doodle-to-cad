@@ -1,0 +1,169 @@
+{
+  "version": 2,
+  "units": "mm",
+  "name": "curved_handle",
+  "parameters": {
+    "diameter": {
+      "value": 8.0,
+      "min": 4,
+      "max": 20,
+      "label": "Handle Diameter",
+      "description": "Diameter of the circular cross-section"
+    },
+    "bend_radius": {
+      "value": 20.0,
+      "min": 10,
+      "max": 50,
+      "label": "Bend Centreline Radius",
+      "description": "Radius of the U-bend centreline"
+    },
+    "leg_length": {
+      "value": 30.0,
+      "min": 10,
+      "max": 100,
+      "label": "Straight Leg Length",
+      "description": "Length of the straight legs extending from the bend"
+    }
+  },
+  "operations": [
+    {
+      "id": "arc",
+      "kind": "arc_pipe",
+      "origin": [
+        0,
+        0,
+        4
+      ],
+      "bend_radius": "bend_radius",
+      "radius": "diameter/2",
+      "angle": 180,
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1",
+        "e2"
+      ]
+    },
+    {
+      "id": "leg_right",
+      "kind": "cylinder",
+      "origin": [
+        "bend_radius",
+        0,
+        4
+      ],
+      "radius": "diameter/2",
+      "height": "leg_length",
+      "axis": "y",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1",
+        "e3"
+      ]
+    },
+    {
+      "id": "leg_left",
+      "kind": "cylinder",
+      "origin": [
+        "-bend_radius",
+        0,
+        4
+      ],
+      "radius": "diameter/2",
+      "height": "leg_length",
+      "axis": "y",
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1",
+        "e3"
+      ]
+    },
+    {
+      "id": "handle",
+      "kind": "union",
+      "left": "arc",
+      "right": "leg_right",
+      "frame": "world",
+      "depends_on": [
+        "arc",
+        "leg_right"
+      ],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "handle_final",
+      "kind": "union",
+      "left": "handle",
+      "right": "leg_left",
+      "frame": "world",
+      "depends_on": [
+        "handle",
+        "leg_left"
+      ],
+      "evidence": [
+        "e1"
+      ]
+    }
+  ],
+  "output": "handle_final",
+  "frames": {
+    "world": {
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    }
+  },
+  "bodies": [
+    {
+      "id": "part",
+      "output": "handle_final"
+    }
+  ],
+  "evidence": {
+    "observed": [
+      {
+        "id": "e1",
+        "text": "Drawing shows a U-shaped handle with a circular cross-section."
+      },
+      {
+        "id": "e2",
+        "text": "Top view shows the U-shape path in the XY plane."
+      },
+      {
+        "id": "e3",
+        "text": "End section shows a circle with diameter 8 mm."
+      }
+    ],
+    "inferred": [
+      {
+        "id": "e4",
+        "text": "The bend centreline radius is 20 mm."
+      },
+      {
+        "id": "e5",
+        "text": "The straight legs are 30 mm long."
+      }
+    ],
+    "assumptions": [
+      {
+        "id": "e6",
+        "text": "The part is a solid round bar bent into a U-shape."
+      },
+      {
+        "id": "e7",
+        "text": "The legs extend in the negative Y direction from the arc endpoints."
+      }
+    ],
+    "unresolved": []
+  },
+  "constraints": []
+}

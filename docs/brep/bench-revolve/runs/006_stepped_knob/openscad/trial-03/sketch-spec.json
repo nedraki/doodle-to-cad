@@ -1,0 +1,134 @@
+{
+  "object": "Stepped round knob",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "front",
+      "sheet_region": "left",
+      "constrains": "Defines the axial profile (radius vs height) of the revolved object. The stepped shape indicates a wide base, a narrower neck, and a wide head."
+    },
+    {
+      "direction": "right",
+      "sheet_region": "right",
+      "constrains": "Confirms the rotational symmetry of the object. The profile matches the front view, indicating the object is a solid of revolution."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "knob_body",
+      "name": "Main Knob Body",
+      "material": "plastic",
+      "count": 1
+    }
+  ],
+  "features": [
+    {
+      "id": "base_flange",
+      "type": "cylinder",
+      "description": "Wide bottom section of the knob",
+      "owner": "knob_body"
+    },
+    {
+      "id": "neck",
+      "type": "cylinder",
+      "description": "Narrower middle section connecting base and head",
+      "owner": "knob_body"
+    },
+    {
+      "id": "head",
+      "type": "cylinder",
+      "description": "Wide top section of the knob",
+      "owner": "knob_body"
+    }
+  ],
+  "relations": [
+    {
+      "type": "coaxial",
+      "targets": [
+        "base_flange",
+        "neck",
+        "head"
+      ]
+    },
+    {
+      "type": "stacked",
+      "targets": [
+        "base_flange",
+        "neck",
+        "head"
+      ]
+    }
+  ],
+  "symmetry": {
+    "type": "rotational",
+    "axis": "Z",
+    "order": "infinite"
+  },
+  "repetitions": [],
+  "dimensions": {
+    "max_dimension": 56.0,
+    "max_width": 56.0,
+    "max_depth": 55.87,
+    "max_height": 38.64,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "Exact step heights and radii are estimated from the drawing aspect ratio.",
+    "The top surface is assumed flat based on the straight line in the front view."
+  ],
+  "interpretation_conflicts": [],
+  "generation_notes": "The object is interpreted as a stepped knob based on the user description and the stepped profile visible in both orthographic views. The views are identical, confirming rotational symmetry. The construction uses a revolve operation on the half-profile.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "revolve",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_2",
+        "operation": "revolve",
+        "profile_plane": "XZ",
+        "direction_axis": "Z",
+        "owner": "knob_body",
+        "parameters": {
+          "angle": 360,
+          "axis": "Z"
+        },
+        "source_views": [
+          "view_1",
+          "view_2"
+        ]
+      }
+    ],
+    "unresolved_constraints": [
+      "Exact step heights and radii are estimated from the drawing aspect ratio.",
+      "The top surface is assumed flat based on the straight line in the front view."
+    ]
+  },
+  "user_intent": {
+    "description": "Stepped round knob (revolved profile)",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "56"
+  },
+  "source_view_group_count": 2,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

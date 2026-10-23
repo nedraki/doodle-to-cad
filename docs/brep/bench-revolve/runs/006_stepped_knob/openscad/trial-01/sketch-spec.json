@@ -1,0 +1,113 @@
+{
+  "object": "Stepped round knob",
+  "object_count": 1,
+  "dimensionality": "3d",
+  "projection_standard": "third-angle",
+  "views": [
+    {
+      "direction": "front",
+      "sheet_region": "left",
+      "constrains": "Defines the axial profile (radius vs height) of the revolved object. The stepped shape represents the silhouette of the knob's cross-section."
+    },
+    {
+      "direction": "right",
+      "sheet_region": "right",
+      "constrains": "Confirms the rotational symmetry of the object. The identical profile to the front view indicates the object is a solid of revolution."
+    }
+  ],
+  "manufacturing_strategy": "3D print",
+  "parts": [
+    {
+      "id": "part_1",
+      "name": "Knob Body",
+      "material": "plastic",
+      "description": "A single revolved body featuring a wide top flange, a narrower neck, and a wide base flange."
+    }
+  ],
+  "features": [
+    {
+      "id": "feat_1",
+      "type": "revolved_profile",
+      "owner": "part_1",
+      "description": "The stepped geometry defined by the outer contour of the front view."
+    }
+  ],
+  "relations": [
+    {
+      "type": "revolved_from",
+      "source": "view_1",
+      "target": "part_1"
+    }
+  ],
+  "symmetry": {
+    "type": "rotational",
+    "axis": "Z",
+    "order": "infinite"
+  },
+  "repetitions": [],
+  "dimensions": {
+    "max_dimension": 56.0,
+    "max_width": 56.0,
+    "max_depth": 55.87,
+    "max_height": 38.64,
+    "size_provenance": "measured ink spans x authoritative max dimension"
+  },
+  "uncertainties": [
+    "The specific mapping of the '56' dimension (diameter vs height) is inferred from the aspect ratio; the view is wider than it is tall, suggesting 56mm is the diameter.",
+    "The exact fillet radii at the steps are not explicitly dimensioned and are inferred from the stroke curvature."
+  ],
+  "interpretation_conflicts": [
+    "The user description 'Stepped round knob' implies a circular object, while the drawing shows a stepped profile. This is resolved by interpreting the drawing as the orthographic projection of a revolved solid."
+  ],
+  "generation_notes": "The object is modeled as a solid of revolution. The profile from the front view is extracted, mirrored across the vertical axis, and revolved 360 degrees around the Z-axis. The profile consists of three main sections: a top flange, a central neck, and a bottom flange.",
+  "construction_plan": {
+    "schema_version": 1,
+    "family": "revolve",
+    "coordinate_frame": {
+      "x": "width",
+      "y": "depth",
+      "z": "height",
+      "front": {
+        "plane": "XZ",
+        "view_axis": "Y"
+      },
+      "top": {
+        "plane": "XY",
+        "view_axis": "Z"
+      },
+      "right": {
+        "plane": "YZ",
+        "view_axis": "X"
+      }
+    },
+    "operations": [
+      {
+        "id": "op_2",
+        "operation": "revolve",
+        "profile_plane": "XZ",
+        "direction_axis": "Z",
+        "owner": "part_1",
+        "parameters": {
+          "angle": 360,
+          "axis": "Z"
+        },
+        "source_views": [
+          "view_1",
+          "view_2"
+        ]
+      }
+    ],
+    "unresolved_constraints": [
+      "The specific mapping of the '56' dimension (diameter vs height) is inferred from the aspect ratio; the view is wider than it is tall, suggesting 56mm is the diameter.",
+      "The exact fillet radii at the steps are not explicitly dimensioned and are inferred from the stroke curvature."
+    ]
+  },
+  "user_intent": {
+    "description": "Stepped round knob (revolved profile)",
+    "object_type_hint": "",
+    "authoritative_max_dimension_mm": "56"
+  },
+  "source_view_group_count": 2,
+  "multi_view_contract": "All source views constrain one shared physical object; never instantiate views as separate geometry.",
+  "cutout_policy": "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+}

@@ -1,0 +1,276 @@
+{
+  "version": 2,
+  "units": "mm",
+  "name": "lcd_knob",
+  "parameters": {
+    "base_width": {
+      "value": 40,
+      "min": 10,
+      "max": 100,
+      "label": "Base Width",
+      "description": "Width of the knob base"
+    },
+    "top_width": {
+      "value": 30,
+      "min": 5,
+      "max": 100,
+      "label": "Top Width",
+      "description": "Width of the knob top"
+    },
+    "height": {
+      "value": 10,
+      "min": 1,
+      "max": 50,
+      "label": "Height",
+      "description": "Height of the knob body"
+    },
+    "protrusion_width": {
+      "value": 10,
+      "min": 1,
+      "max": 50,
+      "label": "Protrusion Width",
+      "description": "Width of the protrusions"
+    },
+    "protrusion_height": {
+      "value": 5,
+      "min": 1,
+      "max": 50,
+      "label": "Protrusion Height",
+      "description": "Height of the protrusions"
+    },
+    "protrusion_depth": {
+      "value": 5,
+      "min": 1,
+      "max": 50,
+      "label": "Protrusion Depth",
+      "description": "Depth of the protrusions"
+    }
+  },
+  "operations": [
+    {
+      "id": "knob_body",
+      "kind": "extrude",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "plane": "xy",
+      "direction": 1,
+      "depth": "height",
+      "loops": [
+        [
+          {
+            "kind": "line",
+            "start": [
+              "-base_width/2",
+              "-base_width/2"
+            ],
+            "end": [
+              "base_width/2",
+              "-base_width/2"
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              "base_width/2",
+              "-base_width/2"
+            ],
+            "end": [
+              "top_width/2",
+              "top_width/2"
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              "top_width/2",
+              "top_width/2"
+            ],
+            "end": [
+              "-top_width/2",
+              "top_width/2"
+            ]
+          },
+          {
+            "kind": "line",
+            "start": [
+              "-top_width/2",
+              "top_width/2"
+            ],
+            "end": [
+              "-base_width/2",
+              "-base_width/2"
+            ]
+          }
+        ]
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e1"
+      ]
+    },
+    {
+      "id": "protrusion_1",
+      "kind": "box",
+      "origin": [
+        "-base_width/2 - protrusion_width/2",
+        "-protrusion_depth/2",
+        "height/2 - protrusion_height/2"
+      ],
+      "size": [
+        "protrusion_width",
+        "protrusion_depth",
+        "protrusion_height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e2"
+      ]
+    },
+    {
+      "id": "protrusion_2",
+      "kind": "box",
+      "origin": [
+        "base_width/2 * 0.5 - protrusion_width/2",
+        "-protrusion_depth/2",
+        "height/2 + base_width/2 * 0.866 - protrusion_height/2"
+      ],
+      "size": [
+        "protrusion_width",
+        "protrusion_depth",
+        "protrusion_height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e3"
+      ]
+    },
+    {
+      "id": "protrusion_3",
+      "kind": "box",
+      "origin": [
+        "base_width/2 * 0.5 - protrusion_width/2",
+        "-protrusion_depth/2",
+        "height/2 - base_width/2 * 0.866 - protrusion_height/2"
+      ],
+      "size": [
+        "protrusion_width",
+        "protrusion_depth",
+        "protrusion_height"
+      ],
+      "frame": "world",
+      "depends_on": [],
+      "evidence": [
+        "e4"
+      ]
+    },
+    {
+      "id": "union_1",
+      "kind": "union",
+      "left": "knob_body",
+      "right": "protrusion_1",
+      "frame": "world",
+      "depends_on": [
+        "knob_body",
+        "protrusion_1"
+      ],
+      "evidence": [
+        "e5"
+      ]
+    },
+    {
+      "id": "union_2",
+      "kind": "union",
+      "left": "union_1",
+      "right": "protrusion_2",
+      "frame": "world",
+      "depends_on": [
+        "union_1",
+        "protrusion_2"
+      ],
+      "evidence": [
+        "e6"
+      ]
+    },
+    {
+      "id": "union_3",
+      "kind": "union",
+      "left": "union_2",
+      "right": "protrusion_3",
+      "frame": "world",
+      "depends_on": [
+        "union_2",
+        "protrusion_3"
+      ],
+      "evidence": [
+        "e7"
+      ]
+    }
+  ],
+  "output": "union_3",
+  "frames": {
+    "world": {
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    }
+  },
+  "bodies": [
+    {
+      "id": "part",
+      "output": "union_3"
+    }
+  ],
+  "evidence": {
+    "observed": [
+      {
+        "id": "e1",
+        "text": "Trapezoidal profile in top and right views."
+      },
+      {
+        "id": "e2",
+        "text": "Rectangular protrusion on the left in front view."
+      },
+      {
+        "id": "e3",
+        "text": "Rectangular protrusion on the top right in front view."
+      },
+      {
+        "id": "e4",
+        "text": "Rectangular protrusion on the bottom right in front view."
+      }
+    ],
+    "inferred": [
+      {
+        "id": "e5",
+        "text": "Protrusion 1 connects to the knob body."
+      },
+      {
+        "id": "e6",
+        "text": "Protrusion 2 connects to the knob body."
+      },
+      {
+        "id": "e7",
+        "text": "Protrusion 3 connects to the knob body."
+      }
+    ],
+    "assumptions": [
+      {
+        "id": "e8",
+        "text": "Assumed dimensions for knob body and protrusions."
+      }
+    ],
+    "unresolved": []
+  },
+  "constraints": []
+}

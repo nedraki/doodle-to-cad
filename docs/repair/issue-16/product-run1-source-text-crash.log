@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/tmp/doodle-brep-16/scripts/check_repair_product.py", line 208, in <module>
+    (OUT / "kept-model.scad").write_text(kept["source_text"])
+                                         ~~~~^^^^^^^^^^^^^^^
+KeyError: 'source_text'

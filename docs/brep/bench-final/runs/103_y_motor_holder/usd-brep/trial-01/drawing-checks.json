@@ -1,0 +1,154 @@
+{
+  "version": 1,
+  "accepted": false,
+  "status": "failed",
+  "build_status": "passed",
+  "geometry_status": "passed",
+  "projection_status": "failed",
+  "checks": [
+    {
+      "name": "connected solid",
+      "status": "passed",
+      "detail": {
+        "watertight": true,
+        "components": 1
+      }
+    },
+    {
+      "name": "requested maximum",
+      "status": "passed",
+      "detail": {
+        "actual_mm": 60.0,
+        "limit_mm": 60.0,
+        "tolerance_mm": 0.5
+      }
+    },
+    {
+      "name": "front projection",
+      "status": "failed",
+      "detail": {
+        "similarity": 0.325,
+        "minimum": 0.45
+      }
+    },
+    {
+      "name": "top projection",
+      "status": "failed",
+      "detail": {
+        "similarity": 0.35,
+        "minimum": 0.45
+      }
+    },
+    {
+      "name": "top openings",
+      "status": "failed",
+      "detail": {
+        "expected_at_least": 2,
+        "actual": 0
+      }
+    },
+    {
+      "name": "top opening positions",
+      "status": "failed",
+      "detail": {
+        "fidelity": 0.0,
+        "minimum": 0.5,
+        "missing": [
+          [
+            0.137,
+            0.75
+          ],
+          [
+            0.849,
+            0.122
+          ]
+        ]
+      }
+    },
+    {
+      "name": "right projection",
+      "status": "failed",
+      "detail": {
+        "similarity": 0.358,
+        "minimum": 0.45
+      }
+    },
+    {
+      "name": "right openings",
+      "status": "failed",
+      "detail": {
+        "expected_at_least": 2,
+        "actual": 0
+      }
+    },
+    {
+      "name": "dimensions and detailed features",
+      "status": "unverified",
+      "detail": "Projection checks cannot prove radii, bevel angles, hidden depth or section shape. Review measured features and view assignments."
+    }
+  ],
+  "projection_similarity": {
+    "front": 0.325,
+    "top": 0.35,
+    "right": 0.358
+  },
+  "profile_topology": {
+    "front": {
+      "source_internal_profiles": 0,
+      "rendered_internal_profiles": 0,
+      "crop_internal_profiles": 0,
+      "source_aspect": 2.008,
+      "rendered_aspect": 20.778,
+      "source_opening_centroids": [],
+      "rendered_opening_centroids": []
+    },
+    "top": {
+      "source_internal_profiles": 2,
+      "rendered_internal_profiles": 0,
+      "crop_internal_profiles": 2,
+      "source_aspect": 0.896,
+      "rendered_aspect": 1.0,
+      "source_opening_centroids": [
+        [
+          0.137,
+          0.75
+        ],
+        [
+          0.849,
+          0.122
+        ]
+      ],
+      "rendered_opening_centroids": [],
+      "missing_opening_centroids": [
+        [
+          0.137,
+          0.75
+        ],
+        [
+          0.849,
+          0.122
+        ]
+      ],
+      "feature_position_fidelity": 0.0
+    },
+    "right": {
+      "source_internal_profiles": 0,
+      "rendered_internal_profiles": 0,
+      "crop_internal_profiles": 2,
+      "source_aspect": 2.096,
+      "rendered_aspect": 20.778,
+      "source_opening_centroids": [],
+      "rendered_opening_centroids": []
+    }
+  },
+  "failures": [
+    "front projection",
+    "top projection",
+    "top openings",
+    "top opening positions",
+    "right projection",
+    "right openings",
+    "Detailed drawing features and view assignments require review."
+  ],
+  "scope": "Partial automatic checks. No drawing acceptance from solid validity alone."
+}

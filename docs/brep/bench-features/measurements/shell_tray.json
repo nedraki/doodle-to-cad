@@ -1,0 +1,88 @@
+{
+  "job": "shell_tray",
+  "category": "feature",
+  "build_ok": true,
+  "expected_fail": false,
+  "verdict": {
+    "ok": true,
+    "checks": {
+      "slice wall area": {
+        "status": "passed",
+        "measured_area_mm2": 1056.0,
+        "expected_area_mm2": 1056,
+        "tolerance_mm2": 2.0,
+        "thickness_from_area_mm": 4.0,
+        "expected_thickness_mm": 4
+      },
+      "x walls thickness by probes": {
+        "status": "passed",
+        "measured_mm": [
+          4.0,
+          4.0
+        ],
+        "expected_mm": [
+          4,
+          4
+        ],
+        "tolerance_mm": 0.1
+      },
+      "y walls thickness by probes": {
+        "status": "passed",
+        "measured_mm": [
+          4.0,
+          4.0
+        ],
+        "expected_mm": [
+          4,
+          4
+        ],
+        "tolerance_mm": 0.1
+      },
+      "floor thickness by probes": {
+        "status": "passed",
+        "measured_mm": [
+          4.0
+        ],
+        "expected_mm": [
+          4
+        ],
+        "tolerance_mm": 0.1
+      },
+      "open top, hollow interior, walls reach top": {
+        "status": "passed",
+        "cavity_open_at_top": true,
+        "wall_solid_at_top": true,
+        "cavity_hollow_at_mid": true
+      }
+    }
+  },
+  "mesh_summary": {
+    "watertight": true,
+    "winding_consistent": true,
+    "volume_mm3": 46656.0,
+    "extents_mm": [
+      80.0,
+      60.0,
+      30.0
+    ],
+    "bounds_mm": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        80.0,
+        60.0,
+        30.0
+      ]
+    ],
+    "triangles": 28,
+    "euler_number": 2,
+    "components": 1
+  },
+  "face_count_change": null,
+  "note": null,
+  "captured_utc": "2026-10-19T05:30:14Z",
+  "status": "passed"
+}

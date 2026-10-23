@@ -1,0 +1,113 @@
+{
+  "attempt": 3,
+  "action": "repair_scad",
+  "preflight": {
+    "passed": true,
+    "errors": [],
+    "warnings": [],
+    "expected_subtractive_feature_groups": 0
+  },
+  "compiler_repairs": [],
+  "uniform_scale": null,
+  "evaluation": {
+    "score": 90.9,
+    "valid_mesh": true,
+    "accepted": false,
+    "mandatory_gates": {
+      "compiled": true,
+      "topology": true,
+      "dimensions": true,
+      "shape_sanity": false,
+      "features": true,
+      "projections": false,
+      "build_envelope": true
+    },
+    "scores": {
+      "topology": 45,
+      "dimensions": 20.0,
+      "features": 20,
+      "projections": 5.9
+    },
+    "projection_similarity": {
+      "top": 0.181,
+      "right": 0.612
+    },
+    "profile_topology": {
+      "top": {
+        "source_internal_profiles": 0,
+        "rendered_internal_profiles": 0,
+        "crop_internal_profiles": 0,
+        "source_aspect": 14.088,
+        "rendered_aspect": 1.493,
+        "source_opening_centroids": [],
+        "rendered_opening_centroids": []
+      },
+      "right": {
+        "source_internal_profiles": 0,
+        "rendered_internal_profiles": 0,
+        "crop_internal_profiles": 0,
+        "source_aspect": 4.324,
+        "rendered_aspect": 2.0,
+        "source_opening_centroids": [],
+        "rendered_opening_centroids": []
+      }
+    },
+    "failures": [
+      "degenerate or implausible axis dimensions: Z=20 mm vs expected 4.27 mm",
+      "CAD projections poorly match the drawing: top similarity 0.18 (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly."
+    ]
+  },
+  "mesh_health": {
+    "watertight": true,
+    "components": 1,
+    "triangles": 52,
+    "extents_mm": [
+      60.0,
+      40.0,
+      20.0
+    ],
+    "volume_mm3": 47690.667
+  },
+  "build": {
+    "version": 1,
+    "backend": "openscad",
+    "source_format": "openscad",
+    "ok": true,
+    "units": "mm",
+    "axes": {
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    },
+    "views": [
+      "isometric",
+      "front",
+      "top",
+      "right"
+    ],
+    "measurements": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 52,
+      "extents_mm": [
+        60.0,
+        40.0,
+        20.0
+      ],
+      "volume_mm3": 47690.667
+    },
+    "diagnostics": [],
+    "drawing_evaluated": false
+  },
+  "compile_log": "Geometries in cache: 54\nGeometry cache size in bytes: 32112\nCGAL Polyhedrons in cache: 2\nCGAL cache size in bytes: 75824\nTotal rendering time: 0:00:00.108\n   Top level object is a 3D object:\n   Simple:        yes\n   Vertices:       28\n   Halfedges:      92\n   Edges:          46\n   Halffacets:     40\n   Facets:         20\n   Volumes:         2",
+  "files": {
+    "scad": "attempt-03/model.scad",
+    "stl": "attempt-03/model.stl",
+    "views": {
+      "isometric": "attempt-03/view-isometric.png",
+      "front": "attempt-03/view-front.png",
+      "top": "attempt-03/view-top.png",
+      "right": "attempt-03/view-right.png"
+    }
+  }
+}

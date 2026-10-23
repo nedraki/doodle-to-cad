@@ -1,0 +1,46 @@
+{
+  "view_frame": "The drawing presents two views of a single object, likely a front view and a rear view (or a mirrored view), showing a symmetrical I-beam or spool-like profile. The primary view is Front (XZ plane). The object is symmetric about the vertical Z-axis and horizontal X-axis. The depth (Y-axis) is not explicitly dimensioned but is implied by the 3D print context and the nature of the profile.",
+  "features": [
+    {
+      "id": "main_body",
+      "shape": "extrusion",
+      "section": "closed_xy_profile",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "ASSUMED_DEPTH",
+        "ASSUMED_WIDTH",
+        "ASSUMED_HEIGHT",
+        "ASSUMED_FLANGE_THICKNESS",
+        "ASSUMED_WEB_THICKNESS"
+      ],
+      "placement": "Centered at (0,0,0). The profile is defined in the XY plane (or XZ depending on orientation, but extrusion is along Y). Based on the 'Front' view being XZ, the profile shown is in XZ. The extrusion is along Y. The profile consists of a top flange, a bottom flange, and a central web. The flanges have a slight outward flare or curvature at the outer edges.",
+      "evidence": "The drawing shows a continuous closed loop forming an 'I' shape with flared ends. The symmetry suggests a single solid body."
+    }
+  ],
+  "connections": [
+    "The top flange connects to the central web.",
+    "The bottom flange connects to the central web.",
+    "The left and right sides of the flanges are symmetric."
+  ],
+  "edit_rules": [
+    "Changing ASSUMED_DEPTH scales the object along the Y-axis.",
+    "Changing ASSUMED_WIDTH scales the object along the X-axis.",
+    "Changing ASSUMED_HEIGHT scales the object along the Z-axis.",
+    "Changing ASSUMED_FLANGE_THICKNESS adjusts the vertical thickness of the top and bottom flanges.",
+    "Changing ASSUMED_WEB_THICKNESS adjusts the horizontal thickness of the central vertical section."
+  ],
+  "unresolved": [
+    "The depth (Y-axis dimension) is not provided.",
+    "The overall width (X-axis dimension) is not provided.",
+    "The overall height (Z-axis dimension) is not provided.",
+    "The thickness of the flanges is not provided.",
+    "The thickness of the web is not provided.",
+    "The specific curvature or flare of the flange ends is not dimensioned."
+  ],
+  "clarification": {
+    "feature_id": "main_body",
+    "feature_label": "Main I-beam body",
+    "reason": "The drawing lacks all critical dimensions (width, height, depth, wall thicknesses) required to construct the geometry.",
+    "kind": "missing_dimensions"
+  }
+}

@@ -1,0 +1,187 @@
+```json
+{
+  "version": 1,
+  "object_hypothesis": "A stepped mechanical component, likely a pulley or flanged hub, characterized by a central web and two opposing flanges.",
+  "features": [
+    {
+      "id": "body",
+      "type": "body",
+      "description": "The main solid mass of the component defined by the outer perimeter.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_3"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_1"
+        }
+      ],
+      "reason": "Visible as the primary closed polygon in both views."
+    },
+    {
+      "id": "top_flange",
+      "type": "flange",
+      "description": "The upper horizontal extension of the body.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_3"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_1"
+        }
+      ],
+      "reason": "Identified by the top segment of the polygon in both views."
+    },
+    {
+      "id": "bottom_flange",
+      "type": "flange",
+      "description": "The lower horizontal extension of the body.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_3"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_1"
+        }
+      ],
+      "reason": "Identified by the bottom segment of the polygon in both views."
+    },
+    {
+      "id": "central_web",
+      "type": "body",
+      "description": "The narrower vertical section connecting the top and bottom flanges.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_3"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_1"
+        }
+      ],
+      "reason": "The central region of the polygon where the width is reduced relative to the flanges."
+    },
+    {
+      "id": "step_top",
+      "type": "step",
+      "description": "The transition surface between the top flange and the central web.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_3"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_1"
+        }
+      ],
+      "reason": "Visible as the inward horizontal segments of the polygon boundary."
+    },
+    {
+      "id": "step_bottom",
+      "type": "step",
+      "description": "The transition surface between the bottom flange and the central web.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_3"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_1"
+        }
+      ],
+      "reason": "Visible as the inward horizontal segments of the polygon boundary."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "symmetry_axis",
+      "type": "symmetry",
+      "features": [
+        "top_flange",
+        "bottom_flange",
+        "central_web"
+      ],
+      "description": "The component exhibits approximate symmetry about a horizontal axis.",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_3"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_1"
+        }
+      ],
+      "reason": "The top and bottom flanges appear to have similar dimensions and positions relative to the center in both views."
+    },
+    {
+      "id": "view_consistency",
+      "type": "other",
+      "features": [
+        "body"
+      ],
+      "description": "The silhouette in the right view is nearly identical to the front view.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_3"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_1"
+        }
+      ],
+      "reason": "The polygon coordinates and shapes are highly similar across both views."
+    },
+    {
+      "id": "flange_connection",
+      "type": "connected",
+      "features": [
+        "top_flange",
+        "central_web",
+        "bottom_flange"
+      ],
+      "description": "The flanges are connected to the central web.",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_3"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_1"
+        }
+      ],
+      "reason": "The polygon is a single continuous closed loop."
+    }
+  ],
+  "assumptions": [
+    "The object is a single solid piece.",
+    "The views represent orthogonal projections (Front and Right).",
+    "The object is likely rotationally symmetric (e.g., a pulley) given the identical silhouettes in orthogonal views, though this is not proven by the 2D outlines alone."
+  ],
+  "unresolved": [
+    "Internal geometry (e.g., whether the center is hollow or solid).",
+    "Exact 3D shape (e.g., whether the flanges are circular discs or square plates).",
+    "The nature of the small isolated marks near the center of the web in both views (could be noise, a hole, or a keyway)."
+  ],
+  "conflicts": []
+}
+```

@@ -1,0 +1,102 @@
+{
+  "drawing": "101_bltouch_bracket",
+  "backend": "openscad",
+  "trial": 2,
+  "submitted_at": "2026-10-19T16:08:54.008471+00:00",
+  "finished_at": "2026-10-19T16:13:42.955236+00:00",
+  "run_id": "a06c953b93c9",
+  "wall_seconds": 288.9,
+  "job_status": "done",
+  "error": null,
+  "questions_asked": 0,
+  "question_kinds": [],
+  "build": {
+    "watertight": true,
+    "components": 2,
+    "genus": null,
+    "extents_mm": [
+      43.22,
+      60.0,
+      45.52
+    ],
+    "volume_mm3": 15071.2,
+    "sha256": "fe4274ea790c8798fab5affb3bd5c7c071f843f84746a7ebf3ded02f4f4538cf",
+    "bytes": 15685
+  },
+  "checks": {
+    "build_success": false,
+    "extents_pass": false,
+    "genus_pass": false,
+    "volume_pass": false,
+    "fidelity_pass": false,
+    "overall_pass": false,
+    "not_applicable": []
+  },
+  "fidelity": {
+    "scores": {
+      "front": 0.0,
+      "top": 0.274,
+      "right": 0.293
+    },
+    "pass": false,
+    "reason": null,
+    "topology": {
+      "front": {
+        "expected": 0,
+        "actual": 0,
+        "position_fidelity": null
+      },
+      "top": {
+        "expected": 3,
+        "actual": 0,
+        "position_fidelity": 0.0
+      },
+      "right": {
+        "expected": 3,
+        "actual": 0,
+        "position_fidelity": 0.0
+      }
+    }
+  },
+  "product": {
+    "success": false,
+    "accepted": false,
+    "status": null,
+    "score": 49.8,
+    "projection_status": null,
+    "geometry_status": null,
+    "failures": [
+      "mesh has 2 disconnected components",
+      "required internal profiles are missing: right demands 3, renders 0, top demands 3, renders 0; best rendered view has 0. Missing at these view-local centres \u2014 add cutters there: (u=0.507,v=0.616); (u=0.159,v=0.183); (u=0.852,v=0.182).",
+      "CAD projections poorly match the drawing: front similarity 0.00, right similarity 0.29, top similarity 0.27 (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly.",
+      "features exist but sit at the wrong positions in top, right view(s): match each opening's location (u,v within the outer profile) to the drawing; check the cad_mapping signs (front: u->+X v->-Z; top: u->+X v->-Y i.e. sheet-down is the FRONT of the part)"
+    ]
+  },
+  "attempts": {
+    "count": 3,
+    "recovered": false,
+    "corrections": null,
+    "selected": 3
+  },
+  "unsupported": {
+    "flag": false,
+    "code": null
+  },
+  "edit": {
+    "available": true,
+    "ok": true,
+    "seconds": 0.51,
+    "param": "width",
+    "old": 43.22,
+    "new": 51.86,
+    "message": null
+  },
+  "targeted": {
+    "available": false,
+    "ok": false,
+    "seconds": null,
+    "operation": null,
+    "value": null,
+    "message": "not_applicable: the product requires a BRep result for targeted edits"
+  }
+}

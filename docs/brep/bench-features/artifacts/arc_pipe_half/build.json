@@ -1,0 +1,53 @@
+{
+  "job": "arc_pipe_half",
+  "category": "feature",
+  "fixture": "arc_pipe_half",
+  "overrides": {},
+  "build_ok": true,
+  "build_seconds": 1.74,
+  "diagnostics_errors": [],
+  "worker_log_tail": "amed 'pxr'\n\nWarning: in _LoadLibModules at line 329 of /builds/omniverse/usd-ci/USD/pxr/base/tf/scriptModuleLoader.cpp -- Error loading lib sdr's module 'pxr.Sdr':\nModuleNotFoundError: No module named 'pxr'\n\nWarning: in _LoadLibModules at line 329 of /builds/omniverse/usd-ci/USD/pxr/base/tf/scriptModuleLoader.cpp -- Error loading lib tf's module 'pxr.Tf':\nModuleNotFoundError: No module named 'pxr'\n\nWarning: in _LoadLibModules at line 329 of /builds/omniverse/usd-ci/USD/pxr/base/tf/scriptModuleLoader.cpp -- Error loading lib trace's module 'pxr.Trace':\nModuleNotFoundError: No module named 'pxr'\n\nWarning: in _LoadLibModules at line 329 of /builds/omniverse/usd-ci/USD/pxr/base/tf/scriptModuleLoader.cpp -- Error loading lib ts's module 'pxr.Ts':\nModuleNotFoundError: No module named 'pxr'\n\nWarning: in _LoadLibModules at line 329 of /builds/omniverse/usd-ci/USD/pxr/base/tf/scriptModuleLoader.cpp -- Error loading lib usd's module 'pxr.Usd':\nModuleNotFoundError: No module named 'pxr'\n\nWarning: in _LoadLibModules at line 329 of /builds/omniverse/usd-ci/USD/pxr/base/tf/scriptModuleLoader.cpp -- Error loading lib usdGeom's module 'pxr.UsdGeom':\nModuleNotFoundError: No module named 'pxr'\n\nWarning: in _LoadLibModules at line 329 of /builds/omniverse/usd-ci/USD/pxr/base/tf/scriptModuleLoader.cpp -- Error loading lib usdShade's module 'pxr.UsdShade':\nModuleNotFoundError: No module named 'pxr'\n\nWarning: in _LoadLibModules at line 329 of /builds/omniverse/usd-ci/USD/pxr/base/tf/scriptModuleLoader.cpp -- Error loading lib usdUtils's module 'pxr.UsdUtils':\nModuleNotFoundError: No module named 'pxr'\n\nWarning: in _LoadLibModules at line 329 of /builds/omniverse/usd-ci/USD/pxr/base/tf/scriptModuleLoader.cpp -- Error loading lib vt's module 'pxr.Vt':\nModuleNotFoundError: No module named 'pxr'\n\nWarning: in _LoadLibModules at line 329 of /builds/omniverse/usd-ci/USD/pxr/base/tf/scriptModuleLoader.cpp -- Error loading lib work's module 'pxr.Work':\nModuleNotFoundError: No module named 'pxr'\n\n",
+  "mesh_summary": {
+    "watertight": true,
+    "winding_consistent": true,
+    "volume_mm3": 3920.199,
+    "extents_mm": [
+      58.0,
+      28.9928,
+      8.0
+    ],
+    "bounds_mm": [
+      [
+        -29.0,
+        -0.0,
+        -0.0
+      ],
+      [
+        29.0,
+        28.9928,
+        8.0
+      ]
+    ],
+    "triangles": 2324,
+    "euler_number": 2,
+    "components": 1
+  },
+  "worker_diagnostics": {
+    "solid_volume_mm3": 3947.8349658002667,
+    "mesh_volume_mm3": 3920.199049704673,
+    "usd_roundtrip": true,
+    "extents_mm": [
+      58.0,
+      28.99279022216797,
+      8.000000000000002
+    ],
+    "triangles": 2324
+  },
+  "checker": "verify_arc_pipe",
+  "expected_args": [
+    25,
+    4,
+    180,
+    90
+  ]
+}

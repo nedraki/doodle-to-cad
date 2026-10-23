@@ -1,0 +1,125 @@
+{
+  "version": 1,
+  "object_hypothesis": "Spoked wheel assembly",
+  "features": [
+    {
+      "id": "outer_rim",
+      "type": "rim",
+      "description": "Outer circular boundary of the wheel",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        }
+      ],
+      "reason": "High circularity (0.898) and large area in the front view indicate the primary outer boundary."
+    },
+    {
+      "id": "central_hub",
+      "type": "hub",
+      "description": "Central circular body",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "view"
+        }
+      ],
+      "reason": "Visible central circle in the front view acts as the anchor for spokes. OpenCV did not isolate this specific contour, but it is visually distinct."
+    },
+    {
+      "id": "spokes",
+      "type": "spoke",
+      "description": "Radial bars connecting hub to rim",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "view"
+        }
+      ],
+      "reason": "Visible linear segments radiating from the center to the perimeter in the front view."
+    },
+    {
+      "id": "wheel_thickness",
+      "type": "body",
+      "description": "Rectangular profile representing the wheel's depth",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_14"
+        }
+      ],
+      "reason": "The right view shows a narrow rectangle, indicating the object is a flat plate or disk with uniform thickness."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "spoke_connectivity",
+      "type": "connected",
+      "features": [
+        "spokes",
+        "central_hub",
+        "outer_rim"
+      ],
+      "description": "Spokes bridge the hub and rim",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "view"
+        }
+      ],
+      "reason": "In the front view, the ends of the spoke lines touch the boundaries of both the central hub and the outer rim."
+    },
+    {
+      "id": "radial_symmetry",
+      "type": "symmetry",
+      "features": [
+        "spokes"
+      ],
+      "description": "Spokes are arranged radially",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "view"
+        }
+      ],
+      "reason": "The visual arrangement suggests equal angular spacing (45 degrees) typical of wheel designs, though exact angles are not measured."
+    },
+    {
+      "id": "planar_geometry",
+      "type": "other",
+      "features": [
+        "outer_rim",
+        "wheel_thickness"
+      ],
+      "description": "Wheel is a flat disk",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_4",
+          "region_id": "profile_contour_16"
+        },
+        {
+          "view_id": "view_5",
+          "region_id": "profile_contour_14"
+        }
+      ],
+      "reason": "The combination of a circular front view and a rectangular side view implies a cylindrical or disk-like geometry."
+    }
+  ],
+  "assumptions": [
+    "The object is a single rigid body.",
+    "The 'unassigned' views (1, 2, 3, 6) are noise or artifacts and are ignored for the primary object definition."
+  ],
+  "unresolved": [
+    "Exact number of spokes (visual count suggests 8, but not explicitly measured).",
+    "Internal structure of the hub (solid vs hollow).",
+    "Exact thickness value (visual estimate only)."
+  ],
+  "conflicts": []
+}

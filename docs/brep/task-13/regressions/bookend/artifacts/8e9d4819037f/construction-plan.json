@@ -1,0 +1,102 @@
+{
+  "view_frame": "The drawing presents two views. The left view is the Front view (XZ plane), showing the width (X) and height (Z) of the part. The right view is the Right view (YZ plane), showing the depth (Y) and height (Z). The part is an L-shaped bracket with a vertical backplate and a horizontal base.",
+  "features": [
+    {
+      "id": "backplate",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "width: 100mm (estimated)",
+        "height: 120mm (estimated)",
+        "thickness: 10mm (estimated)"
+      ],
+      "placement": "Centered at X=0, extending from Z=0 to Z=120. Located at Y=0 to Y=10.",
+      "evidence": "The large rectangular outline in the Front view and the vertical leg of the L-shape in the Right view."
+    },
+    {
+      "id": "base",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "width: 100mm (estimated)",
+        "depth: 80mm (estimated)",
+        "thickness: 10mm (estimated)"
+      ],
+      "placement": "Extends from Y=0 to Y=80, Z=0 to Z=10. Centered at X=0.",
+      "evidence": "The horizontal leg of the L-shape in the Right view."
+    },
+    {
+      "id": "opening_1",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "width: 40mm (estimated)",
+        "height: 30mm (estimated)",
+        "depth: 10mm (assumed through)"
+      ],
+      "placement": "Located in the upper-left quadrant of the backplate. Center approx X=-25, Z=90.",
+      "evidence": "Rectangular outline in the upper-left of the Front view."
+    },
+    {
+      "id": "opening_2",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "width: 15mm (estimated)",
+        "height: 40mm (estimated)",
+        "depth: 10mm (assumed through)"
+      ],
+      "placement": "Located in the upper-middle of the backplate. Center approx X=5, Z=70.",
+      "evidence": "Vertical rectangular outline in the upper-middle of the Front view."
+    },
+    {
+      "id": "opening_3",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "width: 20mm (estimated)",
+        "height: 50mm (estimated)",
+        "depth: 10mm (assumed through)"
+      ],
+      "placement": "Located in the lower-left of the backplate. Center approx X=-20, Z=40.",
+      "evidence": "Vertical rectangular outline in the lower-left of the Front view."
+    },
+    {
+      "id": "opening_4",
+      "shape": "rectangular_prism",
+      "section": "rectangle",
+      "axis_or_plane": "XZ",
+      "dimensions": [
+        "width: 15mm (estimated)",
+        "height: 45mm (estimated)",
+        "depth: 10mm (assumed through)"
+      ],
+      "placement": "Located in the lower-right of the backplate. Center approx X=25, Z=35.",
+      "evidence": "Vertical rectangular outline in the lower-right of the Front view."
+    }
+  ],
+  "connections": [
+    "The backplate and base are joined at the bottom edge of the backplate (Z=0) and the back edge of the base (Y=0).",
+    "The openings are cut through the backplate."
+  ],
+  "edit_rules": [
+    "Changing the backplate width must maintain the alignment of the openings relative to the centerline.",
+    "Changing the base depth must maintain the L-shape connection with the backplate.",
+    "Changing the thickness of the backplate must update the depth of the openings if they are through-holes."
+  ],
+  "unresolved": [
+    "Exact dimensions for all features are estimated from the drawing proportions.",
+    "The nature of the openings (through-hole vs. recess) is not explicitly stated, though through-hole is assumed for a bracket."
+  ],
+  "clarification": {
+    "feature_id": "opening_1",
+    "feature_label": "Upper-left rectangular opening",
+    "reason": "The drawing does not specify if the rectangular outlines represent through-holes or recesses.",
+    "kind": "opening_extent"
+  }
+}

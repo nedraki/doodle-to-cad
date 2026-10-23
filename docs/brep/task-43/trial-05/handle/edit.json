@@ -1,0 +1,145 @@
+{
+  "ok": true,
+  "backend": "usd-brep",
+  "applied": {
+    "bend_radius": 24
+  },
+  "stl": "/results/856f2bf6400d/brep-ceef6a0074504e958b931fbf33e19f7e/model.stl",
+  "source": "/results/856f2bf6400d/brep-ceef6a0074504e958b931fbf33e19f7e/model.recipe.json",
+  "usd": "/results/856f2bf6400d/brep-ceef6a0074504e958b931fbf33e19f7e/model.usda",
+  "diagnostics": {
+    "backend": "usd-brep",
+    "version": "1.0.0",
+    "recipe_version": 2,
+    "solid_volume_mm3": 4679.788635906078,
+    "mesh_volume_mm3": 4649.009072725789,
+    "extents_mm": [
+      56.0,
+      30.0,
+      8.0
+    ],
+    "bounds_mm": [
+      [
+        -28.0,
+        -2.4492937051703357e-16,
+        -8.879300802279021e-16
+      ],
+      [
+        28.0,
+        30.0,
+        8.0
+      ]
+    ],
+    "watertight": true,
+    "winding_consistent": true,
+    "euler_number": 2,
+    "triangles": 2212,
+    "usd_roundtrip": true,
+    "volume_relative_accuracy": 1e-08,
+    "usd_volume_mm3": 4679.788685921958,
+    "operations": [
+      {
+        "id": "arc",
+        "kind": "arc_pipe",
+        "faces": 3
+      },
+      {
+        "id": "leg_right",
+        "kind": "cylinder",
+        "faces": 3
+      },
+      {
+        "id": "leg_left",
+        "kind": "cylinder",
+        "faces": 3
+      },
+      {
+        "id": "handle",
+        "kind": "union",
+        "faces": 4
+      },
+      {
+        "id": "handle_final",
+        "kind": "union",
+        "faces": 6
+      }
+    ],
+    "connections": [],
+    "build_seconds": 16.041
+  },
+  "views": {
+    "isometric": "/results/856f2bf6400d/brep-ceef6a0074504e958b931fbf33e19f7e/view-isometric.png",
+    "front": "/results/856f2bf6400d/brep-ceef6a0074504e958b931fbf33e19f7e/view-front.png",
+    "top": "/results/856f2bf6400d/brep-ceef6a0074504e958b931fbf33e19f7e/view-top.png",
+    "right": "/results/856f2bf6400d/brep-ceef6a0074504e958b931fbf33e19f7e/view-right.png"
+  },
+  "build": {
+    "version": 1,
+    "backend": "usd-brep",
+    "source_format": "brep-recipe-v2",
+    "ok": true,
+    "units": "mm",
+    "axes": {
+      "x": "width",
+      "y": "depth",
+      "z": "height"
+    },
+    "views": [
+      "isometric",
+      "front",
+      "top",
+      "right"
+    ],
+    "measurements": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 2212,
+      "extents_mm": [
+        56.0,
+        30.0,
+        8.0
+      ],
+      "volume_mm3": 4649.009
+    },
+    "diagnostics": [],
+    "drawing_evaluated": false
+  },
+  "params": [
+    {
+      "name": "diameter",
+      "value": 8.0,
+      "low": 4,
+      "high": 20,
+      "step": 0.01,
+      "label": "Handle Diameter",
+      "unit": "mm",
+      "description": "Diameter of the circular cross-section",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "bend_radius",
+      "value": 24.0,
+      "low": 10,
+      "high": 50,
+      "step": 0.01,
+      "label": "Bend Centreline Radius",
+      "unit": "mm",
+      "description": "Radius of the U-bend centreline",
+      "group": "Details",
+      "feature": null
+    },
+    {
+      "name": "leg_length",
+      "value": 30.0,
+      "low": 10,
+      "high": 100,
+      "step": 0.01,
+      "label": "Straight Leg Length",
+      "unit": "mm",
+      "description": "Length of the straight legs extending from the bend",
+      "group": "Details",
+      "feature": null
+    }
+  ]
+}

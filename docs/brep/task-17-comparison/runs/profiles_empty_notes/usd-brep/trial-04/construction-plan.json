@@ -1,0 +1,47 @@
+{
+  "view_frame": "The drawing provides a TOP view (XY plane) and a FRONT view (XZ plane). The world origin (0,0,0) is defined at the bottom-left corner of the plate's top face. X extends to the right (width), Y extends upwards (depth), and Z extends downwards (thickness/height).",
+  "features": [
+    {
+      "id": "plate_body",
+      "shape": "Extruded Profile",
+      "section": "Closed XY profile",
+      "axis_or_plane": "XY plane",
+      "dimensions": [
+        "60 mm (width)",
+        "40 mm (depth)",
+        "6 mm (thickness)",
+        "R6 mm (top-right corner radius)",
+        "20 mm (notch width)",
+        "10 mm (notch depth)"
+      ],
+      "placement": "Starts at (0,0,0). The profile consists of: (0,0) -> (60,0) -> (60,34) -> Arc to (54,40) -> (40,40) -> (40,30) -> (20,30) -> (20,40) -> (0,40) -> (0,0). Extruded along Z from 0 to 6.",
+      "evidence": "Top view shows the outline with dimensions 60 and 40. Text notes 'Top-right corner R6 only', 'Notch: 20 wide x 10 deep', 'Notch centred on top edge'. Front view shows '6 thick' and notes 'Same outline through full thickness'."
+    },
+    {
+      "id": "through_hole",
+      "shape": "Cylinder (Subtractive)",
+      "section": "Circle",
+      "axis_or_plane": "XY plane",
+      "dimensions": [
+        "\u00d88 mm (diameter)"
+      ],
+      "placement": "Center at (12, 15). Axis parallel to Z. Extends from Z=0 to Z=6.",
+      "evidence": "Top view shows a circle labeled '\u00d88 THROUGH'. Text notes 'Hole centre: 12 from left edge, 15 from bottom edge'."
+    }
+  ],
+  "connections": [
+    "The through_hole is subtracted from the plate_body.",
+    "The plate_body is the base solid."
+  ],
+  "edit_rules": [
+    "Changing plate width (60) moves the right edge and the top-right arc center.",
+    "Changing plate depth (40) moves the top edge and the notch floor.",
+    "Changing thickness (6) scales the Z extrusion.",
+    "Changing notch width (20) adjusts the X coordinates of the notch vertical walls symmetrically around X=30.",
+    "Changing notch depth (10) adjusts the Y coordinate of the notch floor.",
+    "Changing hole diameter (8) scales the circle radius.",
+    "Changing hole position (12, 15) moves the circle center."
+  ],
+  "unresolved": [],
+  "clarification": null
+}

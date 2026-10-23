@@ -1,0 +1,154 @@
+```json
+{
+  "version": 1,
+  "object_hypothesis": "L-shaped bracket with rectangular cutouts",
+  "features": [
+    {
+      "id": "body_front",
+      "type": "body",
+      "description": "Rectangular outer boundary of the front view",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_0"
+        }
+      ],
+      "reason": "Closed polygon defining the extent of the object in the front view."
+    },
+    {
+      "id": "body_side",
+      "type": "body",
+      "description": "L-shaped outer boundary of the right view",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_10"
+        }
+      ],
+      "reason": "Closed polygon defining the extent of the object in the right view."
+    },
+    {
+      "id": "opening_top_left",
+      "type": "opening",
+      "description": "Rectangular internal contour in the upper-left quadrant",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_8"
+        }
+      ],
+      "reason": "Closed internal loop located at normalized coordinates [0.123, 0.0985]."
+    },
+    {
+      "id": "opening_center",
+      "type": "opening",
+      "description": "Vertical rectangular internal contour in the center",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_6"
+        }
+      ],
+      "reason": "Closed internal loop located at normalized coordinates [0.4777, 0.2701]."
+    },
+    {
+      "id": "opening_bottom_left",
+      "type": "opening",
+      "description": "Vertical rectangular internal contour in the lower-left",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_4"
+        }
+      ],
+      "reason": "Closed internal loop located at normalized coordinates [0.2403, 0.4028]."
+    },
+    {
+      "id": "opening_bottom_right",
+      "type": "opening",
+      "description": "Vertical rectangular internal contour in the lower-right",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_2"
+        }
+      ],
+      "reason": "Closed internal loop located at normalized coordinates [0.6788, 0.4188]."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "rel_openings_in_body",
+      "type": "position",
+      "features": [
+        "opening_top_left",
+        "opening_center",
+        "opening_bottom_left",
+        "opening_bottom_right",
+        "body_front"
+      ],
+      "description": "Internal openings are positioned within the front body boundary",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_8"
+        },
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_6"
+        },
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_4"
+        },
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_2"
+        },
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_0"
+        }
+      ],
+      "reason": "Internal contours are spatially contained within the outer contour in view_1."
+    },
+    {
+      "id": "rel_views_alignment",
+      "type": "other",
+      "features": [
+        "body_front",
+        "body_side"
+      ],
+      "description": "Front and side views share vertical alignment (Z-axis)",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_0"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_10"
+        }
+      ],
+      "reason": "Both views map v_maps_to '-Z', implying they share the same vertical height reference."
+    }
+  ],
+  "assumptions": [
+    "The object is a single solid piece.",
+    "The internal contours in the front view represent through-holes or pockets."
+  ],
+  "unresolved": [
+    "Depth of the internal openings (through vs blind).",
+    "Exact thickness of the L-bracket flanges."
+  ],
+  "conflicts": []
+}
+```

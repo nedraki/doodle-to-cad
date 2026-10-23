@@ -1,0 +1,305 @@
+{
+  "case": "pocket",
+  "track": "manually_authored",
+  "user_review": "pending",
+  "measurement_validation": "provisional; awaiting #81",
+  "attempts": [
+    {
+      "role": "initial",
+      "backend": "usd-brep",
+      "updates": {},
+      "attempt": "01-initial",
+      "build_ok": true,
+      "seconds": 0.3142,
+      "diagnostics": [],
+      "stl_sha256": "9baf9f4b98e14e67930230a938ec4f2e4c3deeaad1f22c3f428754893516b9a7",
+      "observations_within_provisional_tolerances": true,
+      "native_measurement_available": true
+    },
+    {
+      "role": "edited",
+      "backend": "usd-brep",
+      "updates": {},
+      "attempt": "02-edited",
+      "build_ok": true,
+      "seconds": 0.3059,
+      "diagnostics": [],
+      "stl_sha256": "8acf4c83e01e83ec37742af19ef22b0865b9bfd56035268a590c45852e76515d",
+      "observations_within_provisional_tolerances": true,
+      "native_measurement_available": true
+    },
+    {
+      "role": "rejected",
+      "backend": "usd-brep",
+      "attempt": "03-rejected",
+      "build_ok": false,
+      "stage": "production_targeted_planner",
+      "requested_depth": -1,
+      "exception": "422: The requested change must be a positive number in millimetres."
+    },
+    {
+      "role": "continued",
+      "backend": "usd-brep",
+      "updates": {},
+      "attempt": "04-continued",
+      "build_ok": true,
+      "seconds": 0.3273,
+      "diagnostics": [],
+      "stl_sha256": "c74fc3e1433681271690679e66db353f5906c1a48ef5a8023ce28db8980c3698",
+      "observations_within_provisional_tolerances": true,
+      "native_measurement_available": true
+    }
+  ],
+  "selection_rule": {
+    "kind": "box_cutout",
+    "owner": "cut1",
+    "cutter": "box_p1",
+    "expected_faces": 5
+  },
+  "selection_limitation": "Geometric rule for pocket or bottom face; arbitrary face/edge targeting is not implemented.",
+  "preview_keeps_original_selected": true,
+  "selection_after_edit": {
+    "rule": {
+      "kind": "box_cutout",
+      "owner": "cut1",
+      "cutter": "box_p1",
+      "expected_faces": 5
+    },
+    "label": "Cutout cut1",
+    "selected_in_revision": "original",
+    "status": "matched",
+    "target": {
+      "id": "047b63c1880454f2",
+      "label": "Cutout cut1",
+      "rule": {
+        "kind": "box_cutout",
+        "owner": "cut1",
+        "cutter": "box_p1",
+        "expected_faces": 5
+      },
+      "match_count": 5,
+      "geometry": {
+        "triangles": [
+          [
+            8.0,
+            8.0,
+            20.0
+          ],
+          [
+            8.0,
+            8.0,
+            15.0
+          ],
+          [
+            8.0,
+            20.0,
+            15.0
+          ],
+          [
+            8.0,
+            20.0,
+            15.0
+          ],
+          [
+            8.0,
+            20.0,
+            20.0
+          ],
+          [
+            8.0,
+            8.0,
+            20.0
+          ],
+          [
+            8.0,
+            20.0,
+            15.0
+          ],
+          [
+            8.0,
+            8.0,
+            15.0
+          ],
+          [
+            20.0,
+            8.0,
+            15.0
+          ],
+          [
+            20.0,
+            8.0,
+            15.0
+          ],
+          [
+            20.0,
+            20.0,
+            15.0
+          ],
+          [
+            8.0,
+            20.0,
+            15.0
+          ],
+          [
+            8.0,
+            8.0,
+            15.0
+          ],
+          [
+            8.0,
+            8.0,
+            20.0
+          ],
+          [
+            20.0,
+            8.0,
+            20.0
+          ],
+          [
+            20.0,
+            8.0,
+            20.0
+          ],
+          [
+            20.0,
+            8.0,
+            15.0
+          ],
+          [
+            8.0,
+            8.0,
+            15.0
+          ],
+          [
+            20.0,
+            8.0,
+            15.0
+          ],
+          [
+            20.0,
+            8.0,
+            20.0
+          ],
+          [
+            20.0,
+            20.0,
+            20.0
+          ],
+          [
+            20.0,
+            20.0,
+            20.0
+          ],
+          [
+            20.0,
+            20.0,
+            15.0
+          ],
+          [
+            20.0,
+            8.0,
+            15.0
+          ],
+          [
+            8.0,
+            20.0,
+            20.0
+          ],
+          [
+            8.0,
+            20.0,
+            15.0
+          ],
+          [
+            20.0,
+            20.0,
+            15.0
+          ],
+          [
+            20.0,
+            20.0,
+            15.0
+          ],
+          [
+            20.0,
+            20.0,
+            20.0
+          ],
+          [
+            8.0,
+            20.0,
+            20.0
+          ]
+        ]
+      }
+    }
+  },
+  "rejection": {
+    "rejected": true,
+    "error": "422: The requested change must be a positive number in millimetres.",
+    "type": "HTTPException"
+  },
+  "failure_recovery": {
+    "selected_revision_unchanged": true,
+    "store_unchanged": true,
+    "downloads_unchanged": true,
+    "download_sha256": {
+      "source": "368fd310d76c2f3c19f2d9a8998e9dd4413a0e6a58cb188deab6b86f5d546482",
+      "stl": "8acf4c83e01e83ec37742af19ef22b0865b9bfd56035268a590c45852e76515d",
+      "usd": "65cd72dbc293494b93dc043e9ad34c855efc44cd594d685d475b1bcae2495e5d"
+    }
+  },
+  "continued_edit_recorded": true,
+  "outcome": "constructed_and_edited",
+  "preservation": {
+    "outside_x": {
+      "before": 60.0,
+      "after": 60.0,
+      "tolerance_mm": 0.05,
+      "within_tolerance": true
+    },
+    "outside_y": {
+      "before": 40.0,
+      "after": 40.0,
+      "tolerance_mm": 0.05,
+      "within_tolerance": true
+    },
+    "outside_z": {
+      "before": 20.0,
+      "after": 20.0,
+      "tolerance_mm": 0.05,
+      "within_tolerance": true
+    },
+    "neighbor_2_depth": {
+      "before": 2.0,
+      "after": 2.0,
+      "tolerance_mm": 0.05,
+      "within_tolerance": true
+    },
+    "neighbor_3_depth": {
+      "before": 5.0,
+      "after": 5.0,
+      "tolerance_mm": 0.05,
+      "within_tolerance": true
+    }
+  },
+  "openscad": {
+    "status": "attempted",
+    "attempts": [
+      {
+        "role": "initial",
+        "build_ok": true,
+        "seconds": 0.4591,
+        "construction": "manually_authored OpenSCAD, $fn=96",
+        "note": "Uses production targeted-edit planning and verification, not a whole-part text rewrite."
+      },
+      {
+        "role": "edited",
+        "build_ok": true,
+        "seconds": 0.453,
+        "construction": "manually_authored OpenSCAD, $fn=96",
+        "note": "Uses production targeted-edit planning and verification, not a whole-part text rewrite."
+      }
+    ]
+  }
+}

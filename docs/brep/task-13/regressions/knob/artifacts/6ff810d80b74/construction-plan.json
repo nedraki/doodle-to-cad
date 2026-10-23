@@ -1,0 +1,35 @@
+{
+  "view_frame": "The drawing presents two views of a single part, likely a front view and a rear view (or a mirrored view) to show symmetry. The primary view is Front (XZ plane). The part is symmetric about the vertical centerline (Z axis). The horizontal axis is X (width), and the vertical axis is Z (height). The depth axis is Y.",
+  "features": [
+    {
+      "id": "main_body",
+      "shape": "extrusion",
+      "section": "closed_xy_profile",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "ASSUMED_thickness_mm"
+      ],
+      "placement": "Centered at X=0, Z=0. The profile is defined in the XZ plane and extruded along Y.",
+      "evidence": "The drawing shows a continuous closed outline resembling a capital 'I' with flared ends. The two views show the same shape, implying symmetry or a view from the back."
+    }
+  ],
+  "connections": [
+    "The top flange connects to the central web.",
+    "The bottom flange connects to the central web."
+  ],
+  "edit_rules": [
+    "Changing the thickness (Y dimension) scales the extrusion depth.",
+    "Changing the width (X dimension) scales the flange width and web width proportionally.",
+    "Changing the height (Z dimension) scales the flange height and web height proportionally."
+  ],
+  "unresolved": [
+    "The thickness of the part (Y dimension) is not specified in the drawing.",
+    "The specific dimensions (width, height, flange thickness, web thickness) are not provided, only relative proportions."
+  ],
+  "clarification": {
+    "feature_id": "main_body",
+    "feature_label": "Main Body Thickness",
+    "reason": "The drawing shows the front profile but does not specify the depth (Y dimension) of the extrusion.",
+    "kind": "uniform_thickness"
+  }
+}

@@ -1,0 +1,21 @@
+trial 1: crashed=True code=build_failed (6.87s) No module named '_omni_solid'
+trial 2: crashed=True code=build_failed (6.92s) No module named '_omni_solid'
+trial 3: crashed=True code=build_failed (6.91s) No module named '_omni_solid'
+verdict: 3/3 behaved as expected (expected=crash, signature="No module named '_omni_solid'")
+repro_exit=0
+--- control: arc_only (must NOT crash)
+trial 1: crashed=False code=ok (1.77s) ModuleLoader.cpp -- Error loading lib vt's module 'pxr.Vt':
+ModuleNotFoundError: No module named 'pxr'
+
+Warning: in _LoadLibModules at line 329 of /builds/omniverse/usd-ci/USD/pxr/base/tf/scriptModuleLoader.cpp -- Error loading lib work's module 'pxr.Work':
+ModuleNotFoundError: No module named 'pxr'
+verdict: 1/1 behaved as expected (expected=ok, signature="No module named '_omni_solid'")
+control_arc_only_exit=0
+--- control: arc_plus_box_union (must NOT crash)
+trial 1: crashed=False code=ok (11.48s) ModuleLoader.cpp -- Error loading lib vt's module 'pxr.Vt':
+ModuleNotFoundError: No module named 'pxr'
+
+Warning: in _LoadLibModules at line 329 of /builds/omniverse/usd-ci/USD/pxr/base/tf/scriptModuleLoader.cpp -- Error loading lib work's module 'pxr.Work':
+ModuleNotFoundError: No module named 'pxr'
+verdict: 0/1 behaved as expected (expected=crash, signature="No module named '_omni_solid'")
+control_box_union_exit=1

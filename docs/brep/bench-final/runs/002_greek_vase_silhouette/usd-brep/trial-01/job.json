@@ -1,0 +1,9 @@
+{
+  "job_id": "a24af3ab4fe3",
+  "status": "error",
+  "stage": "failed",
+  "error": {
+    "message": "The drawing depicts a vase with a complex, organic silhouette (bulbous body, narrow neck, flared rim). The available BRep operations (box, cylinder, extrude, sweep, loft, arc_pipe) cannot construct a solid of revolution with a spline or complex polygonal profile. The 'loft' operation is strictly limited to a single transition between a rectangle and a circle, which cannot approximate the multi-stage curvature of the vase profile.",
+    "code": "unsupported_construction"
+  }
+}

@@ -1,0 +1,145 @@
+{
+  "version": 1,
+  "object_hypothesis": "Stepped mechanical component with flanges and a central neck",
+  "features": [
+    {
+      "id": "top_flange",
+      "type": "flange",
+      "description": "Horizontal flange at the top of the component",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_3"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_1"
+        }
+      ],
+      "reason": "Visible as the uppermost horizontal section in both views."
+    },
+    {
+      "id": "bottom_flange",
+      "type": "flange",
+      "description": "Horizontal flange at the bottom of the component",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_3"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_1"
+        }
+      ],
+      "reason": "Visible as the lowermost horizontal section in both views."
+    },
+    {
+      "id": "central_neck",
+      "type": "neck",
+      "description": "Central vertical section connecting top and bottom flanges",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_3"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_1"
+        }
+      ],
+      "reason": "Visible as the narrower central section in both views."
+    },
+    {
+      "id": "left_step",
+      "type": "step",
+      "description": "Step feature on the left side of the central neck",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_3"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_1"
+        }
+      ],
+      "reason": "Visible indentation on the left side of the neck in both views."
+    },
+    {
+      "id": "right_step",
+      "type": "step",
+      "description": "Step feature on the right side of the central neck",
+      "status": "observed",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_3"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_1"
+        }
+      ],
+      "reason": "Visible indentation on the right side of the neck in both views."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "flange_neck_connection",
+      "type": "connected",
+      "features": [
+        "top_flange",
+        "bottom_flange",
+        "central_neck"
+      ],
+      "description": "Top and bottom flanges are connected by the central neck",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_3"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_1"
+        }
+      ],
+      "reason": "The neck visually connects the flanges in both views, implying a continuous structure."
+    },
+    {
+      "id": "step_symmetry",
+      "type": "symmetry",
+      "features": [
+        "left_step",
+        "right_step"
+      ],
+      "description": "Left and right steps appear symmetrically placed on the neck",
+      "status": "inferred",
+      "evidence": [
+        {
+          "view_id": "view_1",
+          "region_id": "profile_contour_3"
+        },
+        {
+          "view_id": "view_2",
+          "region_id": "profile_contour_1"
+        }
+      ],
+      "reason": "The steps are positioned similarly on both sides of the neck in both views, suggesting symmetry."
+    }
+  ],
+  "assumptions": [
+    "The component is a single solid piece.",
+    "The views represent orthogonal projections of the same object."
+  ],
+  "unresolved": [
+    "Internal structure or hollow sections.",
+    "Exact dimensions and scale."
+  ],
+  "conflicts": []
+}

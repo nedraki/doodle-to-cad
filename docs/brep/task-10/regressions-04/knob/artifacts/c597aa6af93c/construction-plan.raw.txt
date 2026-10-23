@@ -1,0 +1,37 @@
+{
+  "view_frame": "The drawing presents two views of a single part. The left view is the Front view (XZ plane), showing the part's width (X) and height (Z). The right view is the Right view (YZ plane), showing the part's depth (Y) and height (Z). The Top view (XY plane) is not explicitly drawn but is implied by the projection standard.",
+  "features": [
+    {
+      "id": "main_body",
+      "shape": "extruded_profile",
+      "section": "closed_xy_profile",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "ASSUMED_thickness"
+      ],
+      "placement": "The profile is defined in the XY plane. The Front view (left) shows the XZ projection of this profile. The Right view (right) shows the YZ projection. The profile is extruded along the Z-axis by the thickness value.",
+      "evidence": "The left view shows a complex outline with a top flange, a central web, and a bottom flange. The right view shows a similar outline, suggesting the part has depth. The small dash marks in both views suggest symmetry or a centerline."
+    }
+  ],
+  "connections": [
+    "The top flange connects to the central web.",
+    "The central web connects to the bottom flange.",
+    "The left and right sides of the flanges connect to the web."
+  ],
+  "edit_rules": [
+    "Changing the thickness (ASSUMED_thickness) will scale the part along the Z-axis.",
+    "Changing the width of the flanges will affect the X-dimension in the Front view and the Y-dimension in the Right view.",
+    "Changing the height of the web will affect the Z-dimension in both views."
+  ],
+  "unresolved": [
+    "The thickness of the part is not specified in the drawing. An assumption (ASSUMED_thickness) is used for the extrusion depth.",
+    "The exact dimensions of the flanges and web are not provided. The drawing only shows the shape.",
+    "The meaning of the small dash marks is unclear. They could be centerlines or indicate a specific feature not fully detailed."
+  ],
+  "clarification": {
+    "feature_id": "main_body",
+    "feature_label": "Main body thickness",
+    "reason": "The drawing does not specify the thickness of the part, which is required for the extrusion operation.",
+    "kind": "opening_extent"
+  }
+}

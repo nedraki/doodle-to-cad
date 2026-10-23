@@ -1,0 +1,65 @@
+{
+  "view_frame": "The drawing provides a TOP view in the XY plane and a FRONT view in the XZ plane. The X-axis represents width (horizontal in both views), the Y-axis represents depth (vertical in TOP view), and the Z-axis represents height/thickness (vertical in FRONT view). The part is a flat plate with constant thickness.",
+  "features": [
+    {
+      "id": "plate_body",
+      "shape": "extrusion",
+      "section": "closed_xy_profile",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "60",
+        "40",
+        "6"
+      ],
+      "placement": "Base profile lies in XY plane from (0,0) to (60,40). Extruded along Z from 0 to 6.",
+      "evidence": "TOP view shows a 60x40 rectangle. FRONT view shows '6 thick'. Text states 'Same outline through full thickness'."
+    },
+    {
+      "id": "top_right_corner_round",
+      "shape": "arc",
+      "section": "corner_rounding",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "R6"
+      ],
+      "placement": "Located at the top-right corner of the plate (X=60, Y=40). The corner is rounded with a radius of 6mm.",
+      "evidence": "TOP view shows a rounded corner at top-right. Text annotation: 'Top-right corner R6 only'."
+    },
+    {
+      "id": "top_notch",
+      "shape": "rectangle",
+      "section": "cutout",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "20",
+        "10"
+      ],
+      "placement": "Centred on the top edge (Y=40). Width 20mm (X from 20 to 40). Depth 10mm (Y from 30 to 40).",
+      "evidence": "TOP view shows a rectangular cutout on the top edge. Text annotation: 'Notch: 20 wide x 10 deep', 'Notch centred on top edge'."
+    },
+    {
+      "id": "through_hole",
+      "shape": "circle",
+      "section": "through_hole",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "\u00d88"
+      ],
+      "placement": "Centre at X=12, Y=15. Through all Z (0 to 6).",
+      "evidence": "TOP view shows a circle. Text annotation: '\u00d88 THROUGH', 'Hole centre: 12 from left edge, 15 from bottom edge'."
+    }
+  ],
+  "connections": [
+    "The notch is a subtraction from the top edge of the plate body.",
+    "The top-right corner rounding modifies the corner of the plate body.",
+    "The through hole is a subtraction through the plate body."
+  ],
+  "edit_rules": [
+    "Changing plate width (X) or depth (Y) requires updating the notch position (centred on top edge) and hole position (relative to left/bottom edges).",
+    "Changing plate thickness (Z) does not affect the XY profile.",
+    "Changing notch width requires re-centring it on the top edge.",
+    "Changing hole diameter does not affect its centre location."
+  ],
+  "unresolved": [],
+  "clarification": null
+}

@@ -1,0 +1,31 @@
+[
+  {
+    "question": {
+      "feature_id": "vase_solid",
+      "feature_label": "Vase Body",
+      "reason": "The drawing shows a silhouette but does not indicate if the object is a solid block or a hollow vessel (e.g., with an opening at the top).",
+      "kind": "opening_extent",
+      "id": "4dfb7d8309c64906a03a5a48a0d7ab60",
+      "text": "Should this hole go all the way through the part?",
+      "maximum_depth_mm": 120.0,
+      "choices": [
+        {
+          "id": "through",
+          "label": "Yes \u2014 make a through-hole"
+        },
+        {
+          "id": "recess",
+          "label": "No \u2014 leave a bottom"
+        }
+      ]
+    },
+    "status": "answered",
+    "answer": {
+      "question_id": "4dfb7d8309c64906a03a5a48a0d7ab60",
+      "feature_id": "vase_solid",
+      "kind": "opening_extent",
+      "choice": "recess",
+      "depth_mm": 116
+    }
+  }
+]

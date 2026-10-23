@@ -1,0 +1,87 @@
+{
+  "drawing": "wheel",
+  "backend": "openscad",
+  "trial": 4,
+  "submitted_at": "2026-10-18T23:21:19.772495+00:00",
+  "finished_at": "2026-10-18T23:24:12.404722+00:00",
+  "run_id": "775dd767ff81",
+  "wall_seconds": 172.6,
+  "job_status": "done",
+  "error": null,
+  "questions_asked": 0,
+  "question_kinds": [],
+  "build": {
+    "watertight": true,
+    "components": 1,
+    "genus": 8,
+    "extents_mm": [
+      120.0,
+      120.0,
+      9.5
+    ],
+    "volume_mm3": 59685.0,
+    "sha256": "23795c4efb100447eac05d6e5c9764a0117aaa99d579f71003e46755d2dfe163",
+    "bytes": 137677
+  },
+  "checks": {
+    "build_success": true,
+    "extents_pass": false,
+    "genus_pass": true,
+    "volume_pass": false,
+    "fidelity_pass": true,
+    "overall_pass": false,
+    "not_applicable": []
+  },
+  "fidelity": {
+    "scores": {
+      "front": 0.997
+    },
+    "pass": true,
+    "reason": null,
+    "topology": {
+      "front": {
+        "expected": 0,
+        "actual": 11,
+        "position_fidelity": null
+      }
+    }
+  },
+  "product": {
+    "success": false,
+    "accepted": false,
+    "status": null,
+    "score": 100.0,
+    "projection_status": null,
+    "geometry_status": null,
+    "failures": [
+      "degenerate or implausible axis dimensions: X=120 mm vs expected 27.8 mm"
+    ]
+  },
+  "attempts": {
+    "count": 3,
+    "recovered": false,
+    "corrections": null,
+    "selected": 3
+  },
+  "unsupported": {
+    "flag": false,
+    "code": null
+  },
+  "edit": {
+    "available": true,
+    "ok": true,
+    "seconds": 1.29,
+    "param": "outer_diameter",
+    "old": 120.0,
+    "new": 144.0,
+    "message": null
+  },
+  "targeted": {
+    "available": false,
+    "ok": false,
+    "seconds": null,
+    "operation": null,
+    "value": null,
+    "message": "not_applicable: the product requires a BRep result for targeted edits"
+  }
+}

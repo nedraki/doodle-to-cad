@@ -1,0 +1,88 @@
+{
+  "drawing": "wheel",
+  "backend": "openscad",
+  "trial": 3,
+  "submitted_at": "2026-10-18T23:20:23.562721+00:00",
+  "finished_at": "2026-10-18T23:23:26.240053+00:00",
+  "run_id": "916a7a331eac",
+  "wall_seconds": 182.7,
+  "job_status": "done",
+  "error": null,
+  "questions_asked": 0,
+  "question_kinds": [],
+  "build": {
+    "watertight": true,
+    "components": 2,
+    "genus": null,
+    "extents_mm": [
+      120.0,
+      119.343,
+      8.0
+    ],
+    "volume_mm3": 47674.5,
+    "sha256": "325691440a30ff59098a4b81896eb357a8b53ea204be1fa438f6d595cf80f166",
+    "bytes": 59944
+  },
+  "checks": {
+    "build_success": false,
+    "extents_pass": true,
+    "genus_pass": false,
+    "volume_pass": false,
+    "fidelity_pass": true,
+    "overall_pass": false,
+    "not_applicable": []
+  },
+  "fidelity": {
+    "scores": {
+      "front": 0.997
+    },
+    "pass": true,
+    "reason": null,
+    "topology": {
+      "front": {
+        "expected": 0,
+        "actual": 9,
+        "position_fidelity": null
+      }
+    }
+  },
+  "product": {
+    "success": false,
+    "accepted": false,
+    "status": null,
+    "score": 82.0,
+    "projection_status": null,
+    "geometry_status": null,
+    "failures": [
+      "mesh has 2 disconnected components",
+      "degenerate or implausible axis dimensions: X=120 mm vs expected 27.8 mm"
+    ]
+  },
+  "attempts": {
+    "count": 3,
+    "recovered": false,
+    "corrections": null,
+    "selected": 3
+  },
+  "unsupported": {
+    "flag": false,
+    "code": null
+  },
+  "edit": {
+    "available": true,
+    "ok": true,
+    "seconds": 1.03,
+    "param": "outer_diameter",
+    "old": 120.0,
+    "new": 144.0,
+    "message": null
+  },
+  "targeted": {
+    "available": false,
+    "ok": false,
+    "seconds": null,
+    "operation": null,
+    "value": null,
+    "message": "not_applicable: the product requires a BRep result for targeted edits"
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "view_frame": "The drawing presents a TOP view in the XY plane and a SECTION view in the XZ plane. The world axes are defined as: X is the width (60 mm), Y is the depth (40 mm), and Z is the height (20 mm). The origin (0,0,0) is located at the bottom-left-front corner of the tray's outer envelope.",
+  "features": [
+    {
+      "id": "tray_outer_solid",
+      "shape": "Extruded rounded rectangle",
+      "section": "Closed XY profile",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "60",
+        "40",
+        "20",
+        "R6"
+      ],
+      "placement": "Centered at (30, 20) in XY. Extruded from Z=0 to Z=20. The profile consists of straight segments at X=0, X=60, Y=0, Y=40 connected by R6 fillets at the four corners.",
+      "evidence": "Top view shows outer boundary with dimensions 60 and 40. Text notes 'Outside: 60 x 40 x 20' and 'Outer vertical corners: R6'. Section view shows height 20."
+    },
+    {
+      "id": "tray_cavity",
+      "shape": "Extruded rounded rectangle (subtractive)",
+      "section": "Closed XY profile",
+      "axis_or_plane": "XY",
+      "dimensions": [
+        "54",
+        "34",
+        "17",
+        "R3",
+        "3"
+      ],
+      "placement": "Centered at (30, 20) in XY. Extruded from Z=3 to Z=20. The profile is offset inward by 3 mm from the outer solid. Straight segments at X=3, X=57, Y=3, Y=37. Corner fillets are R3 (Outer R6 - Thickness 3).",
+      "evidence": "Top view shows inner boundary. Section view shows 'EMPTY' interior with floor and walls. User clarification answer specifies uniform thickness of 3 mm."
+    }
+  ],
+  "connections": [
+    "tray_cavity is subtracted from tray_outer_solid to form the final watertight tray geometry."
+  ],
+  "edit_rules": [
+    "Changing the uniform thickness parameter updates the inner profile dimensions (length, width, corner radius) and the cavity start Z coordinate simultaneously.",
+    "Changing the outer dimensions (60, 40, 20) updates the outer profile and shifts the inner profile to maintain the specified uniform thickness.",
+    "Changing the outer corner radius (R6) updates the inner corner radius to (Outer Radius - Thickness)."
+  ],
+  "unresolved": []
+}

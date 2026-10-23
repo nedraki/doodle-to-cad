@@ -1,0 +1,1997 @@
+{
+  "image_size_px": [
+    1200,
+    800
+  ],
+  "ink_fraction": 0.0381,
+  "contour_count": 35,
+  "line_count": 157,
+  "drawing_sheet_contract": "All spatial groups are projections or isometric depictions of ONE physical object.",
+  "view_group_count": 8,
+  "view_groups": [
+    {
+      "bbox_normalized": [
+        0.0233,
+        0.025,
+        0.3383,
+        0.0437
+      ],
+      "center_normalized": [
+        0.1925,
+        0.0469
+      ],
+      "relative_size": 0.0148,
+      "meaning": "view_of_same_object",
+      "view_id": "view_1"
+    },
+    {
+      "bbox_normalized": [
+        0.0217,
+        0.0737,
+        0.3992,
+        0.0413
+      ],
+      "center_normalized": [
+        0.2213,
+        0.0944
+      ],
+      "relative_size": 0.0165,
+      "meaning": "view_of_same_object",
+      "view_id": "view_2"
+    },
+    {
+      "bbox_normalized": [
+        0.05,
+        0.16,
+        0.0975,
+        0.0437
+      ],
+      "center_normalized": [
+        0.0988,
+        0.1819
+      ],
+      "relative_size": 0.0043,
+      "meaning": "view_of_same_object",
+      "view_id": "view_3"
+    },
+    {
+      "bbox_normalized": [
+        0.535,
+        0.16,
+        0.1233,
+        0.0437
+      ],
+      "center_normalized": [
+        0.5967,
+        0.1819
+      ],
+      "relative_size": 0.0054,
+      "meaning": "view_of_same_object",
+      "view_id": "view_4"
+    },
+    {
+      "bbox_normalized": [
+        0.5333,
+        0.255,
+        0.4483,
+        0.245
+      ],
+      "center_normalized": [
+        0.7575,
+        0.3775
+      ],
+      "relative_size": 0.1098,
+      "meaning": "view_of_same_object",
+      "view_id": "view_5"
+    },
+    {
+      "bbox_normalized": [
+        0.05,
+        0.205,
+        0.4192,
+        0.445
+      ],
+      "center_normalized": [
+        0.2596,
+        0.4275
+      ],
+      "relative_size": 0.1865,
+      "meaning": "view_of_same_object",
+      "view_id": "view_6"
+    },
+    {
+      "bbox_normalized": [
+        0.0517,
+        0.76,
+        0.5233,
+        0.0462
+      ],
+      "center_normalized": [
+        0.3133,
+        0.7831
+      ],
+      "relative_size": 0.0242,
+      "meaning": "view_of_same_object",
+      "view_id": "view_7"
+    },
+    {
+      "bbox_normalized": [
+        0.05,
+        0.81,
+        0.5458,
+        0.0462
+      ],
+      "center_normalized": [
+        0.3229,
+        0.8331
+      ],
+      "relative_size": 0.0252,
+      "meaning": "view_of_same_object",
+      "view_id": "view_8"
+    }
+  ],
+  "closed_internal_profile_count": 1,
+  "closed_internal_profiles": [
+    {
+      "contour_id": "contour_144",
+      "parent_contour_id": null,
+      "area_ratio": 0.00016,
+      "bbox_normalized": [
+        0.9633,
+        0.3625,
+        0.01,
+        0.0225
+      ],
+      "center_normalized": [
+        0.9683,
+        0.3738
+      ],
+      "vertices": 9,
+      "circularity": 0.823,
+      "hierarchy_depth": 0,
+      "closed_internal_profile": true,
+      "orphan_opening_ring": true,
+      "polygon_sheet_normalized": [
+        [
+          0.9667,
+          0.3625
+        ],
+        [
+          0.965,
+          0.3638
+        ],
+        [
+          0.9633,
+          0.3688
+        ],
+        [
+          0.9633,
+          0.3775
+        ],
+        [
+          0.965,
+          0.3825
+        ],
+        [
+          0.9692,
+          0.3837
+        ],
+        [
+          0.9725,
+          0.3787
+        ],
+        [
+          0.9725,
+          0.3675
+        ],
+        [
+          0.9708,
+          0.3638
+        ]
+      ]
+    }
+  ],
+  "largest_regions": [
+    {
+      "contour_id": "contour_151",
+      "parent_contour_id": null,
+      "area_ratio": 0.15095,
+      "bbox_normalized": [
+        0.0583,
+        0.2437,
+        0.4025,
+        0.3975
+      ],
+      "center_normalized": [
+        0.2596,
+        0.4425
+      ],
+      "vertices": 5,
+      "circularity": 0.501,
+      "hierarchy_depth": 0,
+      "closed_internal_profile": false,
+      "orphan_opening_ring": false,
+      "polygon_sheet_normalized": [
+        [
+          0.0625,
+          0.285
+        ],
+        [
+          0.0733,
+          0.6338
+        ],
+        [
+          0.4558,
+          0.6175
+        ],
+        [
+          0.445,
+          0.2687
+        ],
+        [
+          0.1083,
+          0.2437
+        ]
+      ]
+    },
+    {
+      "contour_id": "contour_152",
+      "parent_contour_id": "contour_151",
+      "area_ratio": 0.14418,
+      "bbox_normalized": [
+        0.0617,
+        0.2662,
+        0.3958,
+        0.37
+      ],
+      "center_normalized": [
+        0.2596,
+        0.4512
+      ],
+      "vertices": 4,
+      "circularity": 0.742,
+      "hierarchy_depth": 1,
+      "closed_internal_profile": false,
+      "orphan_opening_ring": false,
+      "polygon_sheet_normalized": [
+        [
+          0.065,
+          0.2875
+        ],
+        [
+          0.4417,
+          0.2712
+        ],
+        [
+          0.4542,
+          0.6125
+        ],
+        [
+          0.0767,
+          0.6312
+        ]
+      ]
+    },
+    {
+      "contour_id": "contour_147",
+      "parent_contour_id": null,
+      "area_ratio": 0.09138,
+      "bbox_normalized": [
+        0.5417,
+        0.2625,
+        0.4025,
+        0.2288
+      ],
+      "center_normalized": [
+        0.7429,
+        0.3769
+      ],
+      "vertices": 4,
+      "circularity": 0.627,
+      "hierarchy_depth": 0,
+      "closed_internal_profile": false,
+      "orphan_opening_ring": false,
+      "polygon_sheet_normalized": [
+        [
+          0.5417,
+          0.2637
+        ],
+        [
+          0.5425,
+          0.49
+        ],
+        [
+          0.9433,
+          0.4888
+        ],
+        [
+          0.9425,
+          0.2625
+        ]
+      ]
+    },
+    {
+      "contour_id": "contour_149",
+      "parent_contour_id": "contour_147",
+      "area_ratio": 0.07341,
+      "bbox_normalized": [
+        0.5742,
+        0.2662,
+        0.3383,
+        0.2213
+      ],
+      "center_normalized": [
+        0.7433,
+        0.3769
+      ],
+      "vertices": 4,
+      "circularity": 0.659,
+      "hierarchy_depth": 1,
+      "closed_internal_profile": false,
+      "orphan_opening_ring": false,
+      "polygon_sheet_normalized": [
+        [
+          0.5742,
+          0.2687
+        ],
+        [
+          0.91,
+          0.2662
+        ],
+        [
+          0.9117,
+          0.4838
+        ],
+        [
+          0.5758,
+          0.4863
+        ]
+      ]
+    },
+    {
+      "contour_id": "contour_150",
+      "parent_contour_id": "contour_147",
+      "area_ratio": 0.0058,
+      "bbox_normalized": [
+        0.545,
+        0.2662,
+        0.0275,
+        0.2213
+      ],
+      "center_normalized": [
+        0.5587,
+        0.3769
+      ],
+      "vertices": 4,
+      "circularity": 0.414,
+      "hierarchy_depth": 1,
+      "closed_internal_profile": false,
+      "orphan_opening_ring": false,
+      "polygon_sheet_normalized": [
+        [
+          0.57,
+          0.2662
+        ],
+        [
+          0.5717,
+          0.4838
+        ],
+        [
+          0.5458,
+          0.485
+        ],
+        [
+          0.545,
+          0.2687
+        ]
+      ]
+    },
+    {
+      "contour_id": "contour_148",
+      "parent_contour_id": "contour_147",
+      "area_ratio": 0.00562,
+      "bbox_normalized": [
+        0.9142,
+        0.2662,
+        0.0267,
+        0.2213
+      ],
+      "center_normalized": [
+        0.9275,
+        0.3769
+      ],
+      "vertices": 4,
+      "circularity": 0.405,
+      "hierarchy_depth": 1,
+      "closed_internal_profile": false,
+      "orphan_opening_ring": false,
+      "polygon_sheet_normalized": [
+        [
+          0.9158,
+          0.2662
+        ],
+        [
+          0.94,
+          0.2687
+        ],
+        [
+          0.9392,
+          0.485
+        ],
+        [
+          0.9142,
+          0.4838
+        ]
+      ]
+    },
+    {
+      "contour_id": "contour_252",
+      "parent_contour_id": null,
+      "area_ratio": 0.00035,
+      "bbox_normalized": [
+        0.1333,
+        0.0325,
+        0.0158,
+        0.0275
+      ],
+      "center_normalized": [
+        0.1412,
+        0.0462
+      ],
+      "vertices": 6,
+      "circularity": 0.859,
+      "hierarchy_depth": 0,
+      "closed_internal_profile": false,
+      "orphan_opening_ring": false,
+      "polygon_sheet_normalized": [
+        [
+          0.1342,
+          0.0325
+        ],
+        [
+          0.1333,
+          0.0575
+        ],
+        [
+          0.1442,
+          0.0575
+        ],
+        [
+          0.1483,
+          0.0488
+        ],
+        [
+          0.1475,
+          0.0387
+        ],
+        [
+          0.1417,
+          0.0325
+        ]
+      ]
+    },
+    {
+      "contour_id": "contour_255",
+      "parent_contour_id": null,
+      "area_ratio": 0.00034,
+      "bbox_normalized": [
+        0.1008,
+        0.0325,
+        0.015,
+        0.0275
+      ],
+      "center_normalized": [
+        0.1083,
+        0.0462
+      ],
+      "vertices": 7,
+      "circularity": 0.853,
+      "hierarchy_depth": 0,
+      "closed_internal_profile": false,
+      "orphan_opening_ring": false,
+      "polygon_sheet_normalized": [
+        [
+          0.1017,
+          0.0325
+        ],
+        [
+          0.1008,
+          0.0575
+        ],
+        [
+          0.1092,
+          0.0587
+        ],
+        [
+          0.1125,
+          0.0563
+        ],
+        [
+          0.115,
+          0.0512
+        ],
+        [
+          0.1142,
+          0.0375
+        ],
+        [
+          0.1092,
+          0.0325
+        ]
+      ]
+    },
+    {
+      "contour_id": "contour_259",
+      "parent_contour_id": null,
+      "area_ratio": 0.00033,
+      "bbox_normalized": [
+        0.0467,
+        0.0325,
+        0.0167,
+        0.0275
+      ],
+      "center_normalized": [
+        0.055,
+        0.0462
+      ],
+      "vertices": 11,
+      "circularity": 0.865,
+      "hierarchy_depth": 0,
+      "closed_internal_profile": false,
+      "orphan_opening_ring": false,
+      "polygon_sheet_normalized": [
+        [
+          0.0525,
+          0.0325
+        ],
+        [
+          0.0483,
+          0.0362
+        ],
+        [
+          0.0467,
+          0.0488
+        ],
+        [
+          0.0492,
+          0.0563
+        ],
+        [
+          0.0525,
+          0.0587
+        ],
+        [
+          0.0567,
+          0.0587
+        ],
+        [
+          0.0608,
+          0.055
+        ],
+        [
+          0.0625,
+          0.05
+        ],
+        [
+          0.0625,
+          0.0425
+        ],
+        [
+          0.06,
+          0.035
+        ],
+        [
+          0.0567,
+          0.0325
+        ]
+      ]
+    },
+    {
+      "contour_id": "contour_249",
+      "parent_contour_id": null,
+      "area_ratio": 0.00033,
+      "bbox_normalized": [
+        0.1758,
+        0.0325,
+        0.0167,
+        0.0275
+      ],
+      "center_normalized": [
+        0.1842,
+        0.0462
+      ],
+      "vertices": 11,
+      "circularity": 0.857,
+      "hierarchy_depth": 0,
+      "closed_internal_profile": false,
+      "orphan_opening_ring": false,
+      "polygon_sheet_normalized": [
+        [
+          0.1817,
+          0.0325
+        ],
+        [
+          0.1783,
+          0.035
+        ],
+        [
+          0.1767,
+          0.0387
+        ],
+        [
+          0.1758,
+          0.0488
+        ],
+        [
+          0.1783,
+          0.0563
+        ],
+        [
+          0.1817,
+          0.0587
+        ],
+        [
+          0.1858,
+          0.0587
+        ],
+        [
+          0.19,
+          0.055
+        ],
+        [
+          0.1917,
+          0.0425
+        ],
+        [
+          0.1892,
+          0.035
+        ],
+        [
+          0.1858,
+          0.0325
+        ]
+      ]
+    },
+    {
+      "contour_id": "contour_241",
+      "parent_contour_id": null,
+      "area_ratio": 0.00028,
+      "bbox_normalized": [
+        0.2767,
+        0.0325,
+        0.0125,
+        0.0275
+      ],
+      "center_normalized": [
+        0.2829,
+        0.0462
+      ],
+      "vertices": 9,
+      "circularity": 0.765,
+      "hierarchy_depth": 0,
+      "closed_internal_profile": false,
+      "orphan_opening_ring": false,
+      "polygon_sheet_normalized": [
+        [
+          0.2775,
+          0.0325
+        ],
+        [
+          0.2767,
+          0.0575
+        ],
+        [
+          0.285,
+          0.0587
+        ],
+        [
+          0.2883,
+          0.055
+        ],
+        [
+          0.2883,
+          0.0475
+        ],
+        [
+          0.2867,
+          0.045
+        ],
+        [
+          0.2883,
+          0.0375
+        ],
+        [
+          0.2867,
+          0.0338
+        ],
+        [
+          0.2842,
+          0.0325
+        ]
+      ]
+    },
+    {
+      "contour_id": "contour_239",
+      "parent_contour_id": null,
+      "area_ratio": 0.00027,
+      "bbox_normalized": [
+        0.2925,
+        0.0325,
+        0.0275,
+        0.0275
+      ],
+      "center_normalized": [
+        0.3063,
+        0.0462
+      ],
+      "vertices": 9,
+      "circularity": 0.164,
+      "hierarchy_depth": 0,
+      "closed_internal_profile": false,
+      "orphan_opening_ring": false,
+      "polygon_sheet_normalized": [
+        [
+          0.2925,
+          0.0338
+        ],
+        [
+          0.2933,
+          0.0587
+        ],
+        [
+          0.3058,
+          0.0587
+        ],
+        [
+          0.31,
+          0.05
+        ],
+        [
+          0.3192,
+          0.0575
+        ],
+        [
+          0.3125,
+          0.0325
+        ],
+        [
+          0.3033,
+          0.0563
+        ],
+        [
+          0.295,
+          0.0537
+        ],
+        [
+          0.2958,
+          0.035
+        ]
+      ]
+    },
+    {
+      "contour_id": "contour_63",
+      "parent_contour_id": null,
+      "area_ratio": 0.00027,
+      "bbox_normalized": [
+        0.1375,
+        0.8175,
+        0.0208,
+        0.0238
+      ],
+      "center_normalized": [
+        0.1479,
+        0.8294
+      ],
+      "vertices": 13,
+      "circularity": 0.398,
+      "hierarchy_depth": 0,
+      "closed_internal_profile": false,
+      "orphan_opening_ring": false,
+      "polygon_sheet_normalized": [
+        [
+          0.1375,
+          0.8187
+        ],
+        [
+          0.1383,
+          0.84
+        ],
+        [
+          0.1433,
+          0.84
+        ],
+        [
+          0.1475,
+          0.8337
+        ],
+        [
+          0.1517,
+          0.84
+        ],
+        [
+          0.1558,
+          0.8387
+        ],
+        [
+          0.1575,
+          0.83
+        ],
+        [
+          0.155,
+          0.825
+        ],
+        [
+          0.1517,
+          0.8237
+        ],
+        [
+          0.1475,
+          0.83
+        ],
+        [
+          0.145,
+          0.825
+        ],
+        [
+          0.1408,
+          0.825
+        ],
+        [
+          0.1392,
+          0.8175
+        ]
+      ]
+    },
+    {
+      "contour_id": "contour_261",
+      "parent_contour_id": null,
+      "area_ratio": 0.00021,
+      "bbox_normalized": [
+        0.0317,
+        0.0325,
+        0.0142,
+        0.0275
+      ],
+      "center_normalized": [
+        0.0387,
+        0.0462
+      ],
+      "vertices": 13,
+      "circularity": 0.375,
+      "hierarchy_depth": 0,
+      "closed_internal_profile": false,
+      "orphan_opening_ring": false,
+      "polygon_sheet_normalized": [
+        [
+          0.0325,
+          0.0325
+        ],
+        [
+          0.0317,
+          0.0575
+        ],
+        [
+          0.0342,
+          0.0575
+        ],
+        [
+          0.0342,
+          0.05
+        ],
+        [
+          0.0367,
+          0.0475
+        ],
+        [
+          0.0408,
+          0.0525
+        ],
+        [
+          0.0417,
+          0.0575
+        ],
+        [
+          0.0442,
+          0.0587
+        ],
+        [
+          0.045,
+          0.0563
+        ],
+        [
+          0.0408,
+          0.0475
+        ],
+        [
+          0.0425,
+          0.0437
+        ],
+        [
+          0.0425,
+          0.0362
+        ],
+        [
+          0.0392,
+          0.0325
+        ]
+      ]
+    },
+    {
+      "contour_id": "contour_172",
+      "parent_contour_id": null,
+      "area_ratio": 0.00021,
+      "bbox_normalized": [
+        0.5667,
+        0.1688,
+        0.0125,
+        0.0225
+      ],
+      "center_normalized": [
+        0.5729,
+        0.18
+      ],
+      "vertices": 8,
+      "circularity": 0.907,
+      "hierarchy_depth": 0,
+      "closed_internal_profile": false,
+      "orphan_opening_ring": false,
+      "polygon_sheet_normalized": [
+        [
+          0.5708,
+          0.1688
+        ],
+        [
+          0.5667,
+          0.175
+        ],
+        [
+          0.5667,
+          0.1837
+        ],
+        [
+          0.5692,
+          0.1888
+        ],
+        [
+          0.5742,
+          0.19
+        ],
+        [
+          0.5783,
+          0.185
+        ],
+        [
+          0.5783,
+          0.1737
+        ],
+        [
+          0.5742,
+          0.1688
+        ]
+      ]
+    },
+    {
+      "contour_id": "contour_181",
+      "parent_contour_id": null,
+      "area_ratio": 0.00021,
+      "bbox_normalized": [
+        0.0708,
+        0.1688,
+        0.0125,
+        0.0225
+      ],
+      "center_normalized": [
+        0.0771,
+        0.18
+      ],
+      "vertices": 8,
+      "circularity": 0.907,
+      "hierarchy_depth": 0,
+      "closed_internal_profile": false,
+      "orphan_opening_ring": false,
+      "polygon_sheet_normalized": [
+        [
+          0.075,
+          0.1688
+        ],
+        [
+          0.0708,
+          0.175
+        ],
+        [
+          0.0708,
+          0.1837
+        ],
+        [
+          0.0733,
+          0.1888
+        ],
+        [
+          0.0783,
+          0.19
+        ],
+        [
+          0.0825,
+          0.185
+        ],
+        [
+          0.0825,
+          0.1737
+        ],
+        [
+          0.0783,
+          0.1688
+        ]
+      ]
+    },
+    {
+      "contour_id": "contour_257",
+      "parent_contour_id": null,
+      "area_ratio": 0.00018,
+      "bbox_normalized": [
+        0.0833,
+        0.0325,
+        0.0142,
+        0.0275
+      ],
+      "center_normalized": [
+        0.0904,
+        0.0462
+      ],
+      "vertices": 10,
+      "circularity": 0.163,
+      "hierarchy_depth": 0,
+      "closed_internal_profile": false,
+      "orphan_opening_ring": false,
+      "polygon_sheet_normalized": [
+        [
+          0.0842,
+          0.0325
+        ],
+        [
+          0.0833,
+          0.0575
+        ],
+        [
+          0.0858,
+          0.0575
+        ],
+        [
+          0.0867,
+          0.0413
+        ],
+        [
+          0.0925,
+          0.0563
+        ],
+        [
+          0.0958,
+          0.0587
+        ],
+        [
+          0.0967,
+          0.0338
+        ],
+        [
+          0.0942,
+          0.0338
+        ],
+        [
+          0.0933,
+          0.05
+        ],
+        [
+          0.0875,
+          0.035
+        ]
+      ]
+    },
+    {
+      "contour_id": "contour_245",
+      "parent_contour_id": null,
+      "area_ratio": 0.00018,
+      "bbox_normalized": [
+        0.2333,
+        0.0325,
+        0.0142,
+        0.0275
+      ],
+      "center_normalized": [
+        0.2404,
+        0.0462
+      ],
+      "vertices": 10,
+      "circularity": 0.161,
+      "hierarchy_depth": 0,
+      "closed_internal_profile": false,
+      "orphan_opening_ring": false,
+      "polygon_sheet_normalized": [
+        [
+          0.2342,
+          0.0325
+        ],
+        [
+          0.2333,
+          0.0575
+        ],
+        [
+          0.2358,
+          0.0575
+        ],
+        [
+          0.2367,
+          0.0413
+        ],
+        [
+          0.2425,
+          0.0563
+        ],
+        [
+          0.2458,
+          0.0587
+        ],
+        [
+          0.2467,
+          0.0338
+        ],
+        [
+          0.2442,
+          0.0338
+        ],
+        [
+          0.2433,
+          0.05
+        ],
+        [
+          0.2375,
+          0.035
+        ]
+      ]
+    },
+    {
+      "contour_id": "contour_238",
+      "parent_contour_id": null,
+      "area_ratio": 0.00018,
+      "bbox_normalized": [
+        0.3217,
+        0.0325,
+        0.0142,
+        0.0275
+      ],
+      "center_normalized": [
+        0.3287,
+        0.0462
+      ],
+      "vertices": 10,
+      "circularity": 0.16,
+      "hierarchy_depth": 0,
+      "closed_internal_profile": false,
+      "orphan_opening_ring": false,
+      "polygon_sheet_normalized": [
+        [
+          0.3225,
+          0.0325
+        ],
+        [
+          0.3217,
+          0.0575
+        ],
+        [
+          0.3242,
+          0.0575
+        ],
+        [
+          0.325,
+          0.0413
+        ],
+        [
+          0.3308,
+          0.0563
+        ],
+        [
+          0.3342,
+          0.0587
+        ],
+        [
+          0.335,
+          0.0338
+        ],
+        [
+          0.3325,
+          0.0338
+        ],
+        [
+          0.3317,
+          0.05
+        ],
+        [
+          0.3258,
+          0.035
+        ]
+      ]
+    },
+    {
+      "contour_id": "contour_244",
+      "parent_contour_id": null,
+      "area_ratio": 0.00017,
+      "bbox_normalized": [
+        0.25,
+        0.0325,
+        0.0158,
+        0.0275
+      ],
+      "center_normalized": [
+        0.2579,
+        0.0462
+      ],
+      "vertices": 16,
+      "circularity": 0.148,
+      "hierarchy_depth": 0,
+      "closed_internal_profile": false,
+      "orphan_opening_ring": false,
+      "polygon_sheet_normalized": [
+        [
+          0.2542,
+          0.0338
+        ],
+        [
+          0.25,
+          0.0425
+        ],
+        [
+          0.2508,
+          0.0525
+        ],
+        [
+          0.2558,
+          0.0587
+        ],
+        [
+          0.265,
+          0.0563
+        ],
+        [
+          0.2642,
+          0.0437
+        ],
+        [
+          0.2592,
+          0.045
+        ],
+        [
+          0.2625,
+          0.0488
+        ],
+        [
+          0.2608,
+          0.055
+        ],
+        [
+          0.2558,
+          0.055
+        ],
+        [
+          0.2525,
+          0.0488
+        ],
+        [
+          0.2525,
+          0.0425
+        ],
+        [
+          0.2558,
+          0.0362
+        ],
+        [
+          0.2633,
+          0.0387
+        ],
+        [
+          0.265,
+          0.0362
+        ],
+        [
+          0.2617,
+          0.0325
+        ]
+      ]
+    }
+  ],
+  "view_geometry": [
+    {
+      "view_id": "view_1",
+      "sheet_bbox_normalized": [
+        0.0233,
+        0.025,
+        0.3383,
+        0.0437
+      ],
+      "pixel_aspect_ratio_width_over_height": 11.6121,
+      "measured_span_pixels": {
+        "horizontal_axis_u": 406,
+        "vertical_axis_v": 35
+      },
+      "coordinate_system": {
+        "origin": "top-left of this view crop",
+        "u_axis": "right",
+        "v_axis": "down",
+        "range": "u and v are normalized from 0 to 1 within this view"
+      },
+      "outer_profile": {
+        "profile_id": "contour_252",
+        "bbox_view_normalized": [
+          0.3252,
+          0.1716,
+          0.0467,
+          0.6293
+        ],
+        "center_view_normalized": [
+          0.3485,
+          0.4851
+        ],
+        "polygon_view_normalized": [
+          [
+            0.3278,
+            0.1716
+          ],
+          [
+            0.3252,
+            0.7437
+          ],
+          [
+            0.3574,
+            0.7437
+          ],
+          [
+            0.3695,
+            0.5446
+          ],
+          [
+            0.3671,
+            0.3135
+          ],
+          [
+            0.35,
+            0.1716
+          ]
+        ],
+        "vertices": 6,
+        "circularity": 0.859,
+        "area_ratio_of_sheet": 0.00035
+      },
+      "internal_profiles": []
+    },
+    {
+      "view_id": "view_2",
+      "sheet_bbox_normalized": [
+        0.0217,
+        0.0737,
+        0.3992,
+        0.0413
+      ],
+      "pixel_aspect_ratio_width_over_height": 14.4988,
+      "measured_span_pixels": {
+        "horizontal_axis_u": 479,
+        "vertical_axis_v": 33
+      },
+      "coordinate_system": {
+        "origin": "top-left of this view crop",
+        "u_axis": "right",
+        "v_axis": "down",
+        "range": "u and v are normalized from 0 to 1 within this view"
+      },
+      "outer_profile": {
+        "profile_id": "contour_207",
+        "bbox_view_normalized": [
+          0.5531,
+          0.3027,
+          0.0438,
+          0.4843
+        ],
+        "center_view_normalized": [
+          0.5749,
+          0.5472
+        ],
+        "polygon_view_normalized": [
+          [
+            0.5531,
+            0.3341
+          ],
+          [
+            0.5531,
+            0.6077
+          ],
+          [
+            0.5574,
+            0.6077
+          ],
+          [
+            0.5574,
+            0.4552
+          ],
+          [
+            0.5636,
+            0.3947
+          ],
+          [
+            0.5676,
+            0.4552
+          ],
+          [
+            0.5676,
+            0.6077
+          ],
+          [
+            0.5739,
+            0.4867
+          ],
+          [
+            0.5802,
+            0.7579
+          ],
+          [
+            0.5927,
+            0.6973
+          ],
+          [
+            0.5927,
+            0.3341
+          ],
+          [
+            0.5824,
+            0.3027
+          ],
+          [
+            0.5739,
+            0.4552
+          ],
+          [
+            0.5656,
+            0.3027
+          ]
+        ],
+        "vertices": 14,
+        "circularity": 0.249,
+        "area_ratio_of_sheet": 0.00017
+      },
+      "internal_profiles": [],
+      "direction": "top",
+      "cad_mapping": {
+        "plane": "XY",
+        "view_axis": "Z",
+        "u_maps_to": "+X",
+        "v_maps_to": "-Y"
+      }
+    },
+    {
+      "view_id": "view_3",
+      "sheet_bbox_normalized": [
+        0.05,
+        0.16,
+        0.0975,
+        0.0437
+      ],
+      "pixel_aspect_ratio_width_over_height": 3.3467,
+      "measured_span_pixels": {
+        "horizontal_axis_u": 117,
+        "vertical_axis_v": 35
+      },
+      "coordinate_system": {
+        "origin": "top-left of this view crop",
+        "u_axis": "right",
+        "v_axis": "down",
+        "range": "u and v are normalized from 0 to 1 within this view"
+      },
+      "outer_profile": {
+        "profile_id": "contour_181",
+        "bbox_view_normalized": [
+          0.2133,
+          0.2014,
+          0.1282,
+          0.5149
+        ],
+        "center_view_normalized": [
+          0.2779,
+          0.4577
+        ],
+        "polygon_view_normalized": [
+          [
+            0.2564,
+            0.2014
+          ],
+          [
+            0.2133,
+            0.3432
+          ],
+          [
+            0.2133,
+            0.5423
+          ],
+          [
+            0.239,
+            0.659
+          ],
+          [
+            0.2903,
+            0.6865
+          ],
+          [
+            0.3333,
+            0.5721
+          ],
+          [
+            0.3333,
+            0.3135
+          ],
+          [
+            0.2903,
+            0.2014
+          ]
+        ],
+        "vertices": 8,
+        "circularity": 0.907,
+        "area_ratio_of_sheet": 0.00021
+      },
+      "internal_profiles": []
+    },
+    {
+      "view_id": "view_4",
+      "sheet_bbox_normalized": [
+        0.535,
+        0.16,
+        0.1233,
+        0.0437
+      ],
+      "pixel_aspect_ratio_width_over_height": 4.2323,
+      "measured_span_pixels": {
+        "horizontal_axis_u": 148,
+        "vertical_axis_v": 35
+      },
+      "coordinate_system": {
+        "origin": "top-left of this view crop",
+        "u_axis": "right",
+        "v_axis": "down",
+        "range": "u and v are normalized from 0 to 1 within this view"
+      },
+      "outer_profile": {
+        "profile_id": "contour_172",
+        "bbox_view_normalized": [
+          0.2571,
+          0.2014,
+          0.1014,
+          0.5149
+        ],
+        "center_view_normalized": [
+          0.3074,
+          0.4577
+        ],
+        "polygon_view_normalized": [
+          [
+            0.2903,
+            0.2014
+          ],
+          [
+            0.2571,
+            0.3432
+          ],
+          [
+            0.2571,
+            0.5423
+          ],
+          [
+            0.2774,
+            0.659
+          ],
+          [
+            0.3179,
+            0.6865
+          ],
+          [
+            0.3512,
+            0.5721
+          ],
+          [
+            0.3512,
+            0.3135
+          ],
+          [
+            0.3179,
+            0.2014
+          ]
+        ],
+        "vertices": 8,
+        "circularity": 0.907,
+        "area_ratio_of_sheet": 0.00021
+      },
+      "internal_profiles": []
+    },
+    {
+      "view_id": "view_5",
+      "sheet_bbox_normalized": [
+        0.5333,
+        0.255,
+        0.4483,
+        0.245
+      ],
+      "pixel_aspect_ratio_width_over_height": 2.7447,
+      "measured_span_pixels": {
+        "horizontal_axis_u": 538,
+        "vertical_axis_v": 196
+      },
+      "coordinate_system": {
+        "origin": "top-left of this view crop",
+        "u_axis": "right",
+        "v_axis": "down",
+        "range": "u and v are normalized from 0 to 1 within this view"
+      },
+      "outer_profile": {
+        "profile_id": "contour_147",
+        "bbox_view_normalized": [
+          0.0187,
+          0.0306,
+          0.8978,
+          0.9339
+        ],
+        "center_view_normalized": [
+          0.4675,
+          0.4976
+        ],
+        "polygon_view_normalized": [
+          [
+            0.0187,
+            0.0355
+          ],
+          [
+            0.0205,
+            0.9592
+          ],
+          [
+            0.9146,
+            0.9543
+          ],
+          [
+            0.9128,
+            0.0306
+          ]
+        ],
+        "vertices": 4,
+        "circularity": 0.627,
+        "area_ratio_of_sheet": 0.09138
+      },
+      "internal_profiles": [
+        {
+          "profile_id": "contour_144",
+          "bbox_view_normalized": [
+            0.9592,
+            0.4388,
+            0.0223,
+            0.0918
+          ],
+          "center_view_normalized": [
+            0.9703,
+            0.4849
+          ],
+          "polygon_view_normalized": [
+            [
+              0.9668,
+              0.4388
+            ],
+            [
+              0.963,
+              0.4441
+            ],
+            [
+              0.9592,
+              0.4645
+            ],
+            [
+              0.9592,
+              0.5
+            ],
+            [
+              0.963,
+              0.5204
+            ],
+            [
+              0.9723,
+              0.5253
+            ],
+            [
+              0.9797,
+              0.5049
+            ],
+            [
+              0.9797,
+              0.4592
+            ],
+            [
+              0.9759,
+              0.4441
+            ]
+          ],
+          "vertices": 9,
+          "circularity": 0.823,
+          "area_ratio_of_sheet": 0.00016
+        }
+      ],
+      "direction": "right",
+      "cad_mapping": {
+        "plane": "YZ",
+        "view_axis": "X",
+        "u_maps_to": "+Y",
+        "v_maps_to": "-Z"
+      }
+    },
+    {
+      "view_id": "view_6",
+      "sheet_bbox_normalized": [
+        0.05,
+        0.205,
+        0.4192,
+        0.445
+      ],
+      "pixel_aspect_ratio_width_over_height": 1.413,
+      "measured_span_pixels": {
+        "horizontal_axis_u": 503,
+        "vertical_axis_v": 356
+      },
+      "coordinate_system": {
+        "origin": "top-left of this view crop",
+        "u_axis": "right",
+        "v_axis": "down",
+        "range": "u and v are normalized from 0 to 1 within this view"
+      },
+      "outer_profile": {
+        "profile_id": "contour_151",
+        "bbox_view_normalized": [
+          0.0198,
+          0.087,
+          0.9602,
+          0.8933
+        ],
+        "center_view_normalized": [
+          0.5,
+          0.5337
+        ],
+        "polygon_view_normalized": [
+          [
+            0.0298,
+            0.1798
+          ],
+          [
+            0.0556,
+            0.9636
+          ],
+          [
+            0.968,
+            0.927
+          ],
+          [
+            0.9423,
+            0.1431
+          ],
+          [
+            0.1391,
+            0.087
+          ]
+        ],
+        "vertices": 5,
+        "circularity": 0.501,
+        "area_ratio_of_sheet": 0.15095
+      },
+      "internal_profiles": [],
+      "direction": "front",
+      "cad_mapping": {
+        "plane": "XZ",
+        "view_axis": "Y",
+        "u_maps_to": "+X",
+        "v_maps_to": "-Z"
+      }
+    },
+    {
+      "view_id": "view_7",
+      "sheet_bbox_normalized": [
+        0.0517,
+        0.76,
+        0.5233,
+        0.0462
+      ],
+      "pixel_aspect_ratio_width_over_height": 16.9903,
+      "measured_span_pixels": {
+        "horizontal_axis_u": 628,
+        "vertical_axis_v": 37
+      },
+      "coordinate_system": {
+        "origin": "top-left of this view crop",
+        "u_axis": "right",
+        "v_axis": "down",
+        "range": "u and v are normalized from 0 to 1 within this view"
+      },
+      "outer_profile": {
+        "profile_id": "contour_119",
+        "bbox_view_normalized": [
+          0.7292,
+          0.1623,
+          0.0334,
+          0.5152
+        ],
+        "center_view_normalized": [
+          0.746,
+          0.4199
+        ],
+        "polygon_view_normalized": [
+          [
+            0.7309,
+            0.2424
+          ],
+          [
+            0.734,
+            0.6494
+          ],
+          [
+            0.7468,
+            0.6494
+          ],
+          [
+            0.75,
+            0.3788
+          ],
+          [
+            0.7564,
+            0.4069
+          ],
+          [
+            0.7564,
+            0.5952
+          ],
+          [
+            0.7611,
+            0.6212
+          ],
+          [
+            0.7596,
+            0.3506
+          ],
+          [
+            0.75,
+            0.3247
+          ],
+          [
+            0.7468,
+            0.1623
+          ],
+          [
+            0.742,
+            0.5952
+          ],
+          [
+            0.7357,
+            0.5411
+          ],
+          [
+            0.7405,
+            0.3247
+          ]
+        ],
+        "vertices": 13,
+        "circularity": 0.135,
+        "area_ratio_of_sheet": 0.00016
+      },
+      "internal_profiles": [],
+      "direction": "bottom",
+      "cad_mapping": {
+        "plane": "XY",
+        "view_axis": "Z",
+        "u_maps_to": "+X",
+        "v_maps_to": "+Y"
+      }
+    },
+    {
+      "view_id": "view_8",
+      "sheet_bbox_normalized": [
+        0.05,
+        0.81,
+        0.5458,
+        0.0462
+      ],
+      "pixel_aspect_ratio_width_over_height": 17.7208,
+      "measured_span_pixels": {
+        "horizontal_axis_u": 655,
+        "vertical_axis_v": 37
+      },
+      "coordinate_system": {
+        "origin": "top-left of this view crop",
+        "u_axis": "right",
+        "v_axis": "down",
+        "range": "u and v are normalized from 0 to 1 within this view"
+      },
+      "outer_profile": {
+        "profile_id": "contour_63",
+        "bbox_view_normalized": [
+          0.1603,
+          0.1623,
+          0.0381,
+          0.5152
+        ],
+        "center_view_normalized": [
+          0.1794,
+          0.4199
+        ],
+        "polygon_view_normalized": [
+          [
+            0.1603,
+            0.1883
+          ],
+          [
+            0.1618,
+            0.6494
+          ],
+          [
+            0.1709,
+            0.6494
+          ],
+          [
+            0.1786,
+            0.513
+          ],
+          [
+            0.1863,
+            0.6494
+          ],
+          [
+            0.1938,
+            0.6212
+          ],
+          [
+            0.197,
+            0.4329
+          ],
+          [
+            0.1924,
+            0.3247
+          ],
+          [
+            0.1863,
+            0.2965
+          ],
+          [
+            0.1786,
+            0.4329
+          ],
+          [
+            0.1741,
+            0.3247
+          ],
+          [
+            0.1664,
+            0.3247
+          ],
+          [
+            0.1634,
+            0.1623
+          ]
+        ],
+        "vertices": 13,
+        "circularity": 0.398,
+        "area_ratio_of_sheet": 0.00027
+      },
+      "internal_profiles": []
+    }
+  ],
+  "coordinate_contract": {
+    "sheet": {
+      "origin": "top-left",
+      "x_axis": "right",
+      "y_axis": "down",
+      "units": "normalized image fraction"
+    },
+    "cad": {
+      "origin": "shared object origin",
+      "x_axis": "width",
+      "y_axis": "front-to-back depth",
+      "z_axis": "height",
+      "units": "millimetres"
+    },
+    "rule": "Use view-local profile coordinates and cad_mapping; sheet placement separates views and is never physical geometry."
+  }
+}
