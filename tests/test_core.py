@@ -602,3 +602,124 @@ def test_concurrent_parameter_edits_use_isolated_artifacts(tmp_path, monkeypatch
         assert (tmp_path / scad_filename).read_text() == (tmp_path / filename).read_text()
     assert original.read_text() == SAMPLE_SCAD
     assert history.read_text() == '[{"attempt": 1, "score": 100}]'
+
+
+def test_fdm_3d_assembly_rejects_flat_plaque_and_merged_single_blob():
+    health = {
+        "watertight": True,
+        "components": 1,
+        "component_volumes_mm3": [15000.0],
+        "min_component_volume_ratio": 1.0,
+        "triangles": 400,
+        "extents_mm": [88.8, 4.0, 120.0],
+        "volume_mm3": 15000.0,
+    }
+    spec = {"dimensionality": "3d", "fdm_assembly": {"min_solid_count": 3, "max_solid_count": 5}}
+    ev = evaluate_candidate(
+        stl=object(), health=health, scad="linear_extrude(4) circle(10);",
+        views={}, source=b"", evidence={}, spec=spec, target_dimension="", strict=True,
+    )
+    assert not ev["accepted"]
+    assert not ev["mandatory_gates"]["topology"]
+    assert not ev["mandatory_gates"]["shape_sanity"]
+    assert not ev["mandatory_gates"]["features"]
+    assert any("2.5D slab/plaque" in f for f in ev["failures"])
+    assert any("separate watertight printable solids" in f for f in ev["failures"])
+
+
+def test_fdm_3d_assembly_accepts_three_part_volumetric_assembly():
+    health = {
+        "watertight": True,
+        "components": 3,
+        "component_volumes_mm3": [24000.0, 12000.0, 8000.0],
+        "min_component_volume_ratio": round(8000.0 / 44000.0, 4),
+        "triangles": 1200,
+        "extents_mm": [95.0, 62.0, 130.0],
+        "volume_mm3": 44000.0,
+    }
+    spec = {"dimensionality": "3d", "fdm_assembly": {"min_solid_count": 3, "max_solid_count": 5}}
+    scad = "clearance = 0.6;\ndifference(){ sphere(r=20); cylinder(r=4+clearance, h=30); }\n"
+    ev = evaluate_candidate(
+        stl=object(), health=health, scad=scad,
+        views={}, source=b"", evidence={}, spec=spec, target_dimension="", strict=True,
+    )
+    assert ev["accepted"], ev["failures"]
+    assert ev["mandatory_gates"]["topology"]
+    assert ev["mandatory_gates"]["shape_sanity"]
+    assert ev["mandatory_gates"]["features"]
+
+
+def test_fdm_3d_assembly_rejects_tiny_floating_splinter():
+    health = {
+        "watertight": True,
+        "components": 4,
+        "component_volumes_mm3": [25000.0, 12000.0, 8000.0, 10.0],
+        "min_component_volume_ratio": 0.0002,
+        "triangles": 1200,
+        "extents_mm": [95.0, 62.0, 130.0],
+        "volume_mm3": 45010.0,
+    }
+    spec = {"dimensionality": "3d", "fdm_assembly": {"min_solid_count": 3, "max_solid_count": 5}}
+    scad = "clearance = 0.6;\ndifference(){ sphere(r=20); cylinder(r=4+clearance, h=30); }\n"
+    ev = evaluate_candidate(
+        stl=object(), health=health, scad=scad,
+        views={}, source=b"", evidence={}, spec=spec, target_dimension="", strict=True,
+    )
+    assert not ev["accepted"]
+    assert not ev["mandatory_gates"]["topology"]
+    assert any("debris splinter" in f for f in ev["failures"])
+
+
+def test_metadata_with_min_max_and_optional_description_unit():
+    scad = """/* doodle-meta
+{"version": 1, "parameters": {
+  "width": {"label": "Overall Width", "min": 100.0, "max": 160.0, "step": 1.0},
+  "clearance": {"label": "Mating Clearance", "min": 0.4, "max": 1.0, "step": 0.05},
+  "explode_gap": {"label": "Explode Gap", "min": 0.0, "max": 50.0, "step": 1.0}
+}} */
+width = 120.0; // mm width
+clearance = 0.65;
+explode_gap = 0.0;
+module body() { cube(width); }
+body();
+"""
+    params = {p.name: p for p in extract_params(scad)}
+    assert list(params) == ["width", "clearance", "explode_gap"]
+    assert params["width"].low == 100.0 and params["width"].high == 160.0
+    assert params["clearance"].low == 0.4 and params["clearance"].high == 1.0
+    assert params["explode_gap"].low == 0.0 and params["explode_gap"].high == 50.0
+
+
+def test_download_endpoints_return_attachment_headers_and_parts_zip(tmp_path, monkeypatch):
+    import zipfile
+    import io
+    import trimesh
+    from fastapi.testclient import TestClient
+    import doodle_to_cad.app as app_module
+
+    scad = tmp_path / "model.scad"
+    scad.write_text("width = 20;\ncube(width);\n")
+    b1 = trimesh.creation.box(extents=[10, 10, 10])
+    b2 = trimesh.creation.box(extents=[5, 5, 5]).apply_translation([25, 0, 0])
+    combined = trimesh.util.concatenate([b1, b2])
+    stl = tmp_path / "model.stl"
+    combined.export(stl)
+    (tmp_path / "sketch-spec.json").write_text('{"parts":[{"id":"vessel"},{"id":"lid"}]}')
+
+    monkeypatch.setattr(app_module, "_run_dir", lambda run_id: (tmp_path, scad))
+    client = TestClient(app_module.app)
+
+    r_scad = client.get("/api/results/abcdef123456/download/scad")
+    assert r_scad.status_code == 200
+    assert 'attachment; filename="doodle-abcdef123456.scad"' in r_scad.headers.get("content-disposition", "")
+
+    r_stl = client.get("/api/results/abcdef123456/download/stl")
+    assert r_stl.status_code == 200
+    assert 'attachment; filename="doodle-abcdef123456.stl"' in r_stl.headers.get("content-disposition", "")
+
+    r_zip = client.get("/api/results/abcdef123456/download/parts.zip")
+    assert r_zip.status_code == 200
+    assert 'attachment; filename="doodle-abcdef123456-parts.zip"' in r_zip.headers.get("content-disposition", "")
+    zf = zipfile.ZipFile(io.BytesIO(r_zip.content))
+    names = set(zf.namelist())
+    assert {"model.scad", "assembled.stl", "part-1-vessel.stl", "part-2-lid.stl"} <= names

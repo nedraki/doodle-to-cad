@@ -22,57 +22,67 @@ from .refine import refine_evidence
 from .sizes import derive_physical_sizes, normalize_dimensions, uniform_scale_scad
 
 
-SPEC_PROMPT = """You are the perception planner in a multi-view doodle-to-CAD system.
+SPEC_PROMPT = """You are a principal mechanical engineer and industrial designer in a doodle-to-CAD system for FDM 3D printing.
 
-NON-NEGOTIABLE VIEW CONTRACT:
-- The entire drawing sheet describes exactly ONE physical object.
-- Spatially separated drawings are front/top/bottom/left/right projections or an isometric view of that SAME object. They are not separate parts to place beside each other.
-- Reconcile the views into one consistent 3D part graph. A feature seen in multiple views is one feature with shared coordinates.
-- Use the declared first-angle or third-angle projection standard to interpret view placement.
-- User notes and object-type hints are authoritative. Never replace an explicit object identity with a visually fanciful guess.
+CORE PRODUCT PHILOSOPHY (THE DOODLE IS A 3D DESIGN SEED, NOT A 2D COOKIE-CUTTER):
+- Unless multiple explicit orthographic drafting views of a flat sheet-metal plate are drawn, treat the user's doodle as a creative seed for a TRUE 3D VOLUMETRIC, MECHANICALLY FUNCTIONAL, FDM 3D-PRINTABLE ASSEMBLY made of 3 distinct printable parts (dimensionality = "3d").
+- NEVER interpret a 3D physical object as a flat 2D/2.5D extruded plaque or relief token.
+- Infer the real-world 3D depth, round/tubular/domed cross-sections, and inherent mechanical movements or modular assembly joints that make the object an appealing, functional 3D-printed product:
+  1. Decompose the object into 3 distinct, functional 3D-printable parts (which may include paired sub-elements such as a symmetric rotating pair, giving 3 to 5 watertight solids in the STL).
+  2. Engineer real mechanical joints or couplings between the 3 parts (e.g., rotating axles in bores, pivoting shafts in sleeves, ball-and-socket or pin-and-socket joints, detachable multi-stage collars/tenons, or a weighted freestanding support base + 3D structural frame/column + posable/removable 3D head/module).
+  3. Specify an explicit FDM clearance gap (`clearance_mm`: 0.5 to 0.6 mm) at every joint so the parts assemble/move smoothly and remain separate watertight solids in the compiled mesh.
+  4. Design for FDM printability: ensure stable bed contact at Z=0 (add a 3D support base/stand or stable contact elements touching Z=0 if the object would otherwise tip over), self-supporting angles, and sturdy cross-sections (>= 4 mm diameter for shafts/axles/columns).
 
-GEOMETRY CONTRACT:
-- Interpret imperfect strokes by design intent, regularizing near-lines, near-circles, symmetry, alignment, repetition and equal sizes.
-- Closed profiles inside a containing outline are candidate holes/cutouts. For sheet metal, laser-cut, plate, bracket, grille and bookend designs, default such profiles to subtractive through-cutouts unless evidence explicitly says emboss/protrusion.
-- Separate ink contours may describe attached faces of one bent or assembled object.
-- OpenCV hierarchy is evidence, not absolute truth; resolve it with semantics and all views.
-- OpenCV view_geometry is the quantitative geometry contract. Preserve each view's pixel aspect ratio, outer profile, and every internal profile's view-local center, size and polygon.
-- Use each view's cad_mapping to convert local (u,v) coordinates into the canonical X/Y/Z frame. Never compare or transfer raw sheet coordinates between views.
-- Regularize stroke noise, but do not center, align, resize, or make repeated features equal unless the measured view-local geometry supports that relation.
+Return JSON only with:
+- object: concise description of the 3D functional assembly
+- object_count: 1
+- dimensionality: "3d" (use "flat" ONLY if the drawing is explicitly a multi-view flat mounting plate/bracket)
+- projection_standard: "third-angle" or "first-angle"
+- views: list of views (each with direction, sheet region and what it constrains)
+- manufacturing_strategy: concrete FDM 3D printing & multi-part assembly strategy (how the 3 parts are built in 3D volume, how they join/move with clearance, and how the assembly stands stably on Z=0)
+- fdm_assembly: {
+    "printable_part_count": 3,
+    "min_solid_count": 3,
+    "max_solid_count": 5,
+    "clearance_mm": 0.5,
+    "kinematics_and_joints": [
+      {"joint_id": "...", "type": "rotary_axle|steering_pivot|snap_socket|stage_tenon|ball_socket", "part_a": "...", "part_b": "...", "axis": "X|Y|Z", "clearance_mm": 0.5, "function": "..."}
+    ],
+    "fdm_print_notes": "..."
+  }
+- parts: list of the 3 distinct printable parts (each with id, name, role, primitive_3d_strategy, cross_section_shape, dimensions_mm, and joint_interfaces)
+- features: list of key 3D volumetric and functional features (do NOT list enclosed 2D pen-stroke spaces as through-holes unless they are true windows/wheel-spokes/bores)
+- relations: spatial and mechanical joint relations between the 3 parts
+- symmetry, repetitions, dimensions (must include max_width, max_depth, max_height in mm with max_depth >= 25% of max dimension so it is truly 3D), uncertainties, interpretation_conflicts, generation_notes, and construction_plan."""
 
-Return JSON only with: object, object_count (must be 1), dimensionality (flat|3d|ambiguous), projection_standard, views (each with direction, sheet region and what it constrains), manufacturing_strategy, parts, features, relations, symmetry, repetitions, dimensions, uncertainties, interpretation_conflicts, generation_notes, and construction_plan.
-construction_plan must contain family (extrude|revolve|multi_face_union|loft|sweep|shell|assembled|freeform|ambiguous), operations in dependency order, and unresolved_constraints. Each operation contains id, operation, owner, profile_plane, direction_axis, parameters, and source_views. Choose a construction family only when supported by the views; otherwise use ambiguous. Respect user dimensions over visual estimates. Infer occluded details only when justified and label uncertainty."""
+SCAD_PROMPT = """You are a principal mechanical engineer and OpenSCAD master generating a TRUE 3D VOLUMETRIC, MULTI-PART FDM 3D-PRINTABLE ASSEMBLY from a user's doodle seed and structured specification. Output OpenSCAD code only.
 
-SCAD_PROMPT = """You are an expert mechanical designer generating ONE CAD design from multiple orthographic/isometric depictions of the same object. Create complete parametric OpenSCAD from the structured specification. Output OpenSCAD code only.
-
-Hard requirements:
-- Canonical axes are X=width, Y=front-to-back depth, Z=height.
-- Plane contract: front geometry lies in XZ and front through-features cut along Y; top geometry lies in XY and cuts along Z; right geometry lies in YZ and cuts along X.
-- Cameras are fixed: front looks down Y, top looks down Z, right looks down X. Never redefine these directions in comments or code.
-- Never create one solid per drawing view and never lay projections out as geometry.
-- Fuse views into one coherent object at a shared origin.
-- Use millimetres, named parameters and modules; preserve functional parts, bends, attachments, symmetry and repetition.
-- Before the parameter declarations, include a /* doodle-meta JSON */ comment with version 1, parameters and features objects. Example:
-  /* doodle-meta {"version":1,"parameters":{"width":{"label":"Overall width","description":"Changes the body width","unit":"mm","feature":"body_width"}},"features":{"body_width":{"kind":"dimension","axis":"x","label":"Overall width"}}} */
-- Metadata parameters are an explicit allowlist of user-editable numeric top-level assignments at column 0 before any module/function. Give every control a descriptive label, effect description, unit (mm, °, count, unitless), and optional feature ID. Exclude epsilon, tessellation, and other implementation constants. Keep derived assignments out of the editing allowlist.
-- Feature associations must be explicit. Overall dimension features use kind dimension and axis x/y/z. Local features use kind region, label, min and max arrays of three CAD-world coordinates in mm outlining the feature's bounding region. Each coordinate is a number or {"parameter":"name","scale":0.5,"offset":0}; references must name literal numeric top-level assignments. Include every editable dependency in these coordinates so outlines track edits; omit a region if its placement cannot be represented accurately. Never guess feature associations from variable names.
-- Implement every feature marked hole, slot or through_cutout subtractively with difference(); cutters must fully traverse the owning wall/plate with a small epsilon margin.
-- A cutter's axis must be PERPENDICULAR to the wall it pierces: front-view openings cut along Y -> rotate([90,0,0]) before cylinder(), or use a cube whose Y side spans -eps..thickness+eps. A plain cylinder() has its axis along Z and will drill a vertical tunnel (breaking top/bottom edges) instead of a front hole. Right-view openings cut along X -> rotate([0,90,0]). Rounded slot ends need the same rotation as their slot's through-axis.
-- For a through-cutter, the primitive's own axis must cross the material: use `cylinder(..., center=true)` at the hole centre, or a cube spanning from one epsilon outside the far face to the other (e.g. y from -eps to thickness+eps). A cylinder started at the near face with center=false cuts nothing.
-- Connected parts must overlap enough to form the requested manifold. Do not leave floating decorations or components.
-- Preserve the authoritative maximum dimension and stated manufacturing method.
-- derived_sizes (when non-null) lists measured physical sizes in millimetres per axis from measured ink spans: set the top-level size parameters to exactly those values for non-null axes — they override your own pixel estimates; choose sensible proportions only for null axes.
-- The part must fit a 256 x 256 x 256 mm FDM build cube (BambuLab-class). Keep all extents within it.
-- The part must sit on the build plate: lowest geometry at Z=0 (do not float the solid around Z origin).
-- Do not flatten a perspective object into a traced slab.
-- Use only real OpenSCAD primitives. For rotational solids use rotate_extrude(), never revolve(). Use cube(), never box().
-- OpenSCAD geometry/CSG/module invocations cannot be assigned to variables. Put reusable geometry in module definitions.
-- measured_view_geometry is the measured truth of feature placement: for each internal profile place its opening centre at center_view_normalized (u right, v down within its view). Convert with the view's cad_mapping (front: X = u*width from the left edge, Z = (1-v)*height from the bottom; top: Y = (1-v)*depth, so v=0 at the top of the view is the BACK (+Y) of the part and increasing v moves toward the FRONT; right: Y = u*depth, so u=0 at the left of the view is the FRONT (-Y) and increasing v/up stays height). Never distribute holes evenly, centre them "for symmetry", or invent margins when measured coordinates exist.
-- intent_refinements (when present) is the user's DESIGN INTENT distilled from the hand-drawn strokes and takes precedence over raw polygon tracing: model ideal_shape forms exactly — circle -> cylinder(d=...), rectangle -> cube, slot -> stadium (rounded-ends) cutter; use snapped centres and uniform sizes; build grids/patterns with nested for-loops over the reported pitch. Do not reproduce stroke wobble with polyhedron() or polygon(). Only fall back to raw measured_view_geometry polygons for profiles labelled polygon with low confidence.
-- Chirality is evidence, not semantics: each view's outer_profile polygon is the silhouette truth for that axis. In the right view u=0 is the FRONT (Y=0) and u=1 the back — if the tall/thick mass sits on the left of the right view, that material belongs near Y=0, even if naming the part "back panel" feels natural. Never mirror the solid to satisfy a semantic expectation when the measured outer polygon says otherwise.
-- Model exactly what the registered views show: no curvature, bevels, fillets or decoration that no view depicts (a rectangular top-view outer profile means flat faces, not a curved front). Simplicity that matches every silhouette beats invented realism.
-- Prefer one explicit top-level CSG tree: a complete positive body first, followed by subtractive cutters.
-- The final top-level expression must instantiate exactly one design. Never use external files or unsupported libraries."""
+NON-NEGOTIABLE 3D VOLUMETRIC & FDM MULTI-PART RULES:
+1. NO 2.5D PLAQUES OR SILHOUETTE EXTRUSIONS:
+   - When specification.dimensionality == "3d" (or fdm_assembly is present), NEVER extrude the 2D outer silhouette of the drawing with linear_extrude() and NEVER build a flat backing plate with engraved grooves.
+   - Every part must be a true 3D volumetric solid built from 3D primitives:
+     * Bodies of revolution (axisymmetric vessels, cylindrical/conical bodies, nozzles, rollers, domes, hubs): use `rotate_extrude()` or coaxial `cylinder(r1=..., r2=...)` + `sphere()` domes + `difference()` cavities.
+     * Curved 3D columns, shafts, frames, pipes, and limbs: build true round-cross-section 3D tubes by chaining pairwise `hull() { translate(p_i) sphere(d=d_i); translate(p_next) sphere(d=d_next); }` along 3D `[x, y, z]` waypoints — never a flat 2D strip.
+     * 3D organic or aerodynamic lobes, cantilevers, blades, and grips: build in 3D using `hull()` of scaled 3D `sphere()` / `cylinder()` primitives pitched and rotated in 3D space (`rotate([rx, ry, rz]) scale([sx, sy, sz]) sphere(r=...)`), arranged radially or spatially in 3D around the core so the object has rich 3D depth along Y as well as X and Z.
+2. MULTI-PART MECHANICAL ASSEMBLY WITH REAL CLEARANCE (`components >= 3`):
+   - Render the 3 printable parts in their natural ASSEMBLED 3D pose, plus an `explode_gap = 0;` top-level parameter (in mm) that shifts the parts apart along their assembly axes when increased.
+   - CRITICAL MESH SEPARATION RULE: In OpenSCAD, if two parts touch at even a single point or shared plane, OpenSCAD merges them into 1 connected component! To guarantee that `model.stl` contains 3 to 5 independent watertight printable solids (`components >= 3`) when `explode_gap = 0`:
+     * Declare `clearance = 0.6;` (mm) as a top-level user-editable parameter.
+     * Every mating joint (rotary axle in bore, pivot shaft in sleeve, tenon in mortise/socket, ball/pin in socket, or stepped stage collar) MUST maintain a full `clearance` air gap on BOTH radius (`bore_r = shaft_r + clearance`) AND axial shoulders/floors (`gap >= clearance` along the axis so no faces touch). Remember that a `sphere(d=D)` at the tip of a `hull()` extends `D/2` beyond its center coordinate along the axis, so make any blind socket bore at least `D/2 + 2*clearance` deeper than the sphere center!
+     * When subtracting a socket/bore clearance cutter from a receiving part, extend the clearance cutter envelope along the ENTIRE length of the mating shaft that passes near any overhanging lobes or projections so no overhanging feature grazes the mating part outside the socket.
+     * Never union() separate printable parts together; instantiate each printable part in its own module (`part_1_...()`, `part_2_...()`, `part_3_...()`) at the top level.
+   - Within each individual printable part, all sub-features MUST overlap cleanly by >= 1.5 mm inside one `union()` so there are zero tiny floating splinters.
+3. CANONICAL AXES, ORIENTATION & FDM PRINTABILITY:
+   - Canonical axes: X = width (left-right), Y = front-to-back depth, Z = height (up).
+   - Cameras are fixed: front looks down Y (shows XZ plane), top looks down Z (shows XY plane), right looks down X (shows YZ plane).
+   - Orient the assembly so its primary side/profile matches the drawing in the FRONT view (XZ plane), while having full 3D thickness/radius along Y (depth >= 25% of overall size).
+   - The lowest point of the assembly MUST rest stably at Z = 0 (within 0..0.5 mm) and all extents must fit inside a 256 x 256 x 256 mm FDM build cube.
+4. PARAMETRIC METADATA (`/* doodle-meta JSON */`):
+   - Before the parameter declarations, include a `/* doodle-meta JSON */` comment with version 1, `parameters`, and `features` objects. Example:
+     `/* doodle-meta {"version":1,"parameters":{"width":{"label":"Overall width","description":"Overall X width of the assembly","unit":"mm","min":60,"max":180,"step":1},"explode_gap":{"label":"Explode gap","description":"Separates the printable parts along assembly axes","unit":"mm","min":0,"max":50,"step":1}},"features":{"overall_width":{"kind":"dimension","axis":"x","label":"Overall width"}}} */`
+   - Expose meaningful top-level numeric parameters at column 0 before any module/function, including overall dimensions (`width`, `depth`, `height`), key part dimensions, `clearance`, and `explode_gap`.
+   - Give every entry in `parameters` a `label`, `description`, `unit` (`"mm" | "°" | "count" | "unitless"`), `min`, `max`, and `step`.
+   - Use only real OpenSCAD built-ins (`cube`, `cylinder`, `sphere`, `rotate_extrude`, `linear_extrude`, `hull`, `union`, `difference`, `intersection`, `scale`, `rotate`, `translate`). Never use `box()` or `revolve()`. Never assign geometry to variables."""
 
 COMPILER_REPAIR_PROMPT = """You repair OpenSCAD compiler and empty-object failures without redesigning the part.
 Return complete OpenSCAD code only. Make the smallest source change that compiles to a non-empty STL.
@@ -81,10 +91,15 @@ Preserve and update the doodle-meta JSON comment to match any changed geometry a
 Use only real OpenSCAD syntax and built-ins. Use cube(), not box(); use rotate_extrude(), not revolve().
 Never assign geometry or module invocations to variables. The final program must instantiate one connected design."""
 
-SUPERVISOR_PROMPT = """You supervise a CAD synthesis loop. Diagnose the candidate against the specification, supplied drawings, rendered projections, compile log, and deterministic evaluation. Choose exactly one action:
-- accept: only if geometry and required features appear faithful and the mesh is valid;
-- repair_scad: preserve the interpretation but fix implementation, topology, scale, or missing features;
-- reinterpret: revise the structured design when the chosen design path contradicts the drawings.
+SUPERVISOR_PROMPT = """You supervise a 3D-printable CAD synthesis loop. Diagnose the candidate against the specification, supplied doodle, rendered 3D projections (isometric, front, top, right), compile log, and deterministic evaluation.
+Check specifically:
+1. Is the model a TRUE 3D VOLUMETRIC assembly (round/tubular/revolved/3D-hulled bodies with real depth along Y) rather than a flat 2.5D extruded plaque?
+2. Does `mesh_health.components` equal the expected 3 to 5 independent watertight printable solids (`watertight == true`, separated by `clearance` at every mechanical joint so parts do not boolean-merge into 1 lump, and with zero tiny floating debris splinters)?
+3. Do the 3 parts capture the doodle's visual character and inherent mechanical movement/assembly while standing stably at Z=0?
+Choose exactly one action:
+- accept: only if all mandatory gates pass, the parts are true 3D volumetric solids, and the multi-part FDM assembly is valid;
+- repair_scad: preserve the interpretation but fix joint clearance/separation, 3D volume, topology, scale, or missing features;
+- reinterpret: revise the structured design when the chosen design path contradicts the doodle.
 Return JSON only: {"action":"accept|repair_scad|reinterpret","problems":[...],"preserve":[...],"instructions":"concrete next-step instructions","confidence":0.0}. Never accept merely because a mesh is watertight.
 Discipline: "problems" and "preserve" are short bullet strings (under 120 chars each). "instructions" is a direct command (under 120 words) stating WHAT to fix, never WHY step by step; no OpenSCAD snippets and no reasoning narration inside any string value."""
 
@@ -116,18 +131,29 @@ class Pipeline:
         evidence=label_view_geometry(evidence,assigned_views)
         derived_sizes = derive_physical_sizes(evidence, dimension)
         if derived_sizes: (out / "derived-sizes.json").write_text(json.dumps(derived_sizes, indent=2))
-        user_text = f"User description: {notes or '(none)'}\nAuthoritative maximum dimension: {dimension or '(none supplied)'}\nControls: {json.dumps(controls)}\nOpenCV evidence: {json.dumps(evidence)}"
+        single_view_seed = evidence.get("view_group_count", 1) <= 1 and not additional_views
+        if single_view_seed:
+            vg = (evidence.get("view_geometry") or [{}])[0]
+            prompt_evidence = {
+                "image_size_px": evidence.get("image_size_px"),
+                "view_group_count": evidence.get("view_group_count", 1),
+                "primary_view_bbox_normalized": vg.get("sheet_bbox_normalized"),
+                "pixel_aspect_ratio_width_over_height": vg.get("pixel_aspect_ratio_width_over_height"),
+                "note": "Single-view doodle seed: infer full 3D volumetric geometry, 3 FDM-printable parts, and mechanical joints/clearances rather than tracing 2D contours.",
+            }
+        else:
+            prompt_evidence = evidence
+        user_text = f"User description: {notes or '(none)'}\nAuthoritative maximum dimension: {dimension or '(none supplied)'}\nControls: {json.dumps(controls)}\nDrawing evidence: {json.dumps(prompt_evidence)}"
         visual_content: list[dict[str, Any]] = [
             {"type":"text","text":user_text},
-            {"type":"text","text":"FULL DRAWING SHEET (spatial layout identifies projection views; it is not physical geometry):"},
+            {"type":"text","text":"FULL DRAWING SHEET (use as a 3D industrial design & mechanical seed):"},
             {"type":"image_url","image_url":{"url":self.client.image_url(image,mime)}},
         ]
         registered = self._registered_view_crops(image,evidence,controls,out)
         for direction, crop in registered.items():
             visual_content.extend([
                 {"type":"text","text":(
-                    f"REGISTERED {direction.upper()} ORTHOGRAPHIC VIEW CROP. This is a projection of the same object. "
-                    "Its position on the sheet is not a physical offset, attachment, or separate part."
+                    f"REGISTERED {direction.upper()} VIEW CROP."
                 )},
                 {"type":"image_url","image_url":{"url":self.client.image_url(crop,"image/png")}},
             ])
@@ -137,10 +163,18 @@ class Pipeline:
         stage("interpreting")
         spec = await self._json_call(messages,out,"interpretation")
         spec["object_count"] = 1
+        if single_view_seed and str(spec.get("dimensionality", "")).lower() != "flat":
+            spec["dimensionality"] = "3d"
+            fdm = spec.get("fdm_assembly") if isinstance(spec.get("fdm_assembly"), dict) else {}
+            fdm.setdefault("printable_part_count", 3)
+            fdm.setdefault("min_solid_count", 3)
+            fdm.setdefault("max_solid_count", 5)
+            fdm.setdefault("clearance_mm", 0.6)
+            spec["fdm_assembly"] = fdm
         spec["user_intent"] = {"description": notes, "object_type_hint": controls.get("object_type_hint", ""), "authoritative_max_dimension_mm": dimension}
         spec["source_view_group_count"] = evidence.get("view_group_count", 1)
-        spec["multi_view_contract"] = "All source views constrain one shared physical object; never instantiate views as separate geometry."
-        spec["cutout_policy"] = "Closed internal profiles are subtractive through-cutouts unless explicitly classified otherwise."
+        spec["multi_view_contract"] = "All source views constrain one shared physical assembly; never instantiate views as separate geometry."
+        spec["cutout_policy"] = "Closed internal profiles are subtractive through-cutouts only when explicitly classified as holes/cutouts."
         spec["construction_plan"] = normalize_design_plan(spec)
         spec["dimensions"] = normalize_dimensions(spec.get("dimensions"))
         if derived_sizes:
@@ -157,14 +191,38 @@ class Pipeline:
             dims["size_provenance"] = "measured ink spans x authoritative max dimension"
             spec["dimensions"] = dims
         (out / "sketch-spec.json").write_text(json.dumps(spec,indent=2))
-        generation_input = {"design_contract": {"object_count": 1, "views_are_constraints_not_parts": True, "projection_standard": controls.get("projection_standard"), "strict_watertight": controls.get("strict_watertight"), "method": controls.get("method")}, "specification": spec,
-                            "measured_view_geometry": {"coordinate_contract": evidence.get("coordinate_contract"), "views": evidence.get("view_geometry", [])},
-                            "intent_refinements": refine_evidence(evidence, controls.get("refine_mode", "regularize")),
-                            "derived_sizes": derived_sizes}
+        is_fdm_3d = bool(spec.get("fdm_assembly") or str(spec.get("dimensionality", "")).lower() == "3d")
+        generation_input = {
+            "design_contract": {
+                "object_count": 1,
+                "mode": "fdm_3d_multipart_assembly" if is_fdm_3d else "orthographic_part",
+                "views_are_constraints_not_parts": True,
+                "projection_standard": controls.get("projection_standard"),
+                "strict_watertight": controls.get("strict_watertight"),
+                "method": controls.get("method"),
+            },
+            "specification": spec,
+            "measured_view_geometry": (
+                {"aspect_ratio_width_over_height": (evidence.get("view_geometry") or [{}])[0].get("pixel_aspect_ratio_width_over_height")}
+                if is_fdm_3d
+                else {"coordinate_contract": evidence.get("coordinate_contract"), "views": evidence.get("view_geometry", [])}
+            ),
+            "intent_refinements": None if is_fdm_3d else refine_evidence(evidence, controls.get("refine_mode", "regularize")),
+            "derived_sizes": derived_sizes,
+        }
         strict = bool(controls.get("strict_watertight", True))
         stage("generating")
+        gen_user_content: Any = (
+            [
+                {"type": "text", "text": json.dumps(generation_input, indent=2)},
+                {"type": "text", "text": "ORIGINAL DOODLE SEED (build a true 3D volumetric, 3-part FDM printable assembly with >= 0.6 mm clearance between mating parts):"},
+                {"type": "image_url", "image_url": {"url": self.client.image_url(image, mime)}},
+            ]
+            if (is_fdm_3d and image)
+            else json.dumps(generation_input, indent=2)
+        )
         scad = await self._scad_call(
-            [{"role":"system","content":SCAD_PROMPT},{"role":"user","content":json.dumps(generation_input,indent=2)}],
+            [{"role":"system","content":SCAD_PROMPT},{"role":"user","content":gen_user_content}],
             out, "generation", temperature=.1,
         )
         attempts = []; best = None; next_action = "generate"
@@ -267,22 +325,47 @@ class Pipeline:
                 record["supervisor"]["action"] = next_action
                 record["supervisor"]["instructions"] = "Previous repair made no measurable progress. Regenerate cleanly from the specification and mandatory gate failures using a different construction strategy."
                 fresh_input={**generation_input,"previous_candidate_failures":evaluation["failures"],"require_different_construction":True}
+                regen_content: Any = (
+                    [{"type":"text","text":json.dumps(fresh_input,indent=2)},
+                     {"type":"text","text":"ORIGINAL DOODLE SEED:"},
+                     {"type":"image_url","image_url":{"url":self.client.image_url(image,mime)}}]
+                    if (is_fdm_3d and image)
+                    else json.dumps(fresh_input,indent=2)
+                )
                 scad=await self._scad_call(
-                    [{"role":"system","content":SCAD_PROMPT},{"role":"user","content":json.dumps(fresh_input,indent=2)}],
+                    [{"role":"system","content":SCAD_PROMPT},{"role":"user","content":regen_content}],
                     attempt_dir, "regeneration", temperature=.15,
                 )
                 continue
             if next_action == "reinterpret":
                 revised_content = visual_content + [{"type":"text","text":f"Revise the previous specification using this supervisor diagnosis.\nPREVIOUS SPEC:\n{json.dumps(spec)}\nDIAGNOSIS:\n{json.dumps(diagnosis)}"}]
                 spec = await self._json_call([{"role":"system","content":SPEC_PROMPT},{"role":"user","content":revised_content}],attempt_dir,"reinterpretation",temperature=0)
-                spec["object_count"] = 1; generation_input["specification"] = spec
+                spec["object_count"] = 1
+                if single_view_seed and str(spec.get("dimensionality", "")).lower() != "flat":
+                    spec["dimensionality"] = "3d"
+                    fdm = spec.get("fdm_assembly") if isinstance(spec.get("fdm_assembly"), dict) else {}
+                    fdm.setdefault("printable_part_count", 3)
+                    fdm.setdefault("min_solid_count", 3)
+                    fdm.setdefault("max_solid_count", 5)
+                    fdm.setdefault("clearance_mm", 0.6)
+                    spec["fdm_assembly"] = fdm
+                generation_input["specification"] = spec
+                reinterp_content: Any = (
+                    [{"type":"text","text":json.dumps(generation_input,indent=2)},
+                     {"type":"text","text":"ORIGINAL DOODLE SEED:"},
+                     {"type":"image_url","image_url":{"url":self.client.image_url(image,mime)}}]
+                    if (is_fdm_3d and image)
+                    else json.dumps(generation_input,indent=2)
+                )
                 scad = await self._scad_call(
-                    [{"role":"system","content":SCAD_PROMPT},{"role":"user","content":json.dumps(generation_input,indent=2)}],
+                    [{"role":"system","content":SCAD_PROMPT},{"role":"user","content":reinterp_content}],
                     attempt_dir, "reinterpretation-generation", temperature=.05,
                 )
             else:
                 passing=[name for name,passed in evaluation.get("mandatory_gates",{}).items() if passed]
-                repair_content = [{"type":"text","text":f"Repair this candidate according to the diagnosis and evaluation. Preserve every required feature.\nPRESERVATION CONTRACT: These gates already pass and must not regress: {json.dumps(passing)}. Preserve the current bounding box and valid mesh unless a failing dimension explicitly requires changing it. Do not replace a working base solid while repairing cutters or projections.\nDIAGNOSIS: {json.dumps(diagnosis)}\nEVALUATION: {json.dumps(evaluation)}\nSPEC: {json.dumps(spec)}\nCODE:\n{scad}"}]
+                repair_content: list[dict[str,Any]] = [{"type":"text","text":f"Repair this candidate according to the diagnosis and evaluation. Preserve every required feature.\nPRESERVATION CONTRACT: These gates already pass and must not regress: {json.dumps(passing)}. Ensure mating printable parts maintain a full clearance air gap (both radial and axial >= clearance) so mesh_health.components stays within 3..5 independent watertight printable solids, while sub-features within each individual part overlap cleanly.\nDIAGNOSIS: {json.dumps(diagnosis)}\nEVALUATION: {json.dumps(evaluation)}\nMESH_HEALTH: {json.dumps(health)}\nSPEC: {json.dumps(spec)}\nCODE:\n{scad}"}]
+                if image:
+                    repair_content.extend([{"type":"text","text":"ORIGINAL DOODLE SEED:"},{"type":"image_url","image_url":{"url":self.client.image_url(image,mime)}}])
                 for name,path in views.items(): repair_content.extend([{"type":"text","text":f"CURRENT {name.upper()}:"},{"type":"image_url","image_url":{"url":self.client.image_url(path.read_bytes(),'image/png')}}])
                 scad = await self._scad_call(
                     [{"role":"system","content":SCAD_PROMPT},{"role":"user","content":repair_content}],

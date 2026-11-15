@@ -57,6 +57,8 @@ def _bounds(name: str, value: float, unit: str) -> tuple[float, float, float]:
     if unit == "count":
         low, high = 0, max(2, round(value * 2))
         return float(low), float(high), 1
+    if value == 0 and any(k in name.lower() for k in ("explode", "gap", "sep", "offset")):
+        return 0.0, 60.0, 0.5
     span = max(abs(value), 1.0)
     low = value - span if value < 0 else max(0.0, value - span)
     high = value + span
@@ -77,7 +79,7 @@ def extract_params(scad_text: str, max_params: int = 14) -> list[Param]:
         name, raw, comment = match.group(1), match.group(2), (match.group(3) or "").strip()
         line = head[:match.start()].rpartition("\n")[2] + head[match.start():match.end()]
         # A comment anywhere else on the line (leading comment-out) disqualifies.
-        if "//" in line.split(f"{name}")[0] or name in seen or name.startswith("_"):
+        if "//" in line.split(f"{name}")[0] or name in seen or name.startswith("_") or name.startswith("$"):
             continue
         try:
             value = float(raw)
@@ -99,19 +101,36 @@ def extract_params(scad_text: str, max_params: int = 14) -> list[Param]:
         for name, entry in metadata["parameters"].items():
             if name not in seen or not isinstance(entry, dict):
                 continue
-            if not all(isinstance(entry.get(k), str) and entry[k].strip() for k in ("label", "description", "unit")):
-                continue
-            if entry["unit"] not in {"mm", "°", "count", "unitless"}:
+            label = entry.get("label")
+            if not isinstance(label, str) or not label.strip():
                 continue
             p = seen[name]
-            p.label, p.description, p.unit = entry["label"], entry["description"], entry["unit"]
+            desc = entry.get("description")
+            if isinstance(desc, str) and desc.strip():
+                p.description = desc.strip()
+            elif not p.description or p.description == name.replace("_", " "):
+                p.description = label.strip()
+            raw_unit = entry.get("unit")
+            if raw_unit is not None:
+                if raw_unit not in {"mm", "°", "count", "unitless"}:
+                    continue
+                p.unit = raw_unit
+            p.label = label.strip()
             p.low, p.high, p.step = _bounds(name, p.value, p.unit)
+            meta_min, meta_max = entry.get("min"), entry.get("max")
+            if (isinstance(meta_min, (int, float)) and not isinstance(meta_min, bool)
+                    and isinstance(meta_max, (int, float)) and not isinstance(meta_max, bool)
+                    and math.isfinite(meta_min) and math.isfinite(meta_max)
+                    and meta_min < meta_max and meta_min <= p.value <= meta_max):
+                p.low = float(meta_min)
+                p.high = float(meta_max)
             feature_id = entry.get("feature")
             if isinstance(feature_id, str):
                 p.feature = resolve_feature(metadata.get("features", {}).get(feature_id), {k: v.value for k, v in seen.items()})
             selected.append(p)
-        return selected[:max_params]
-    return list(seen.values())[:max_params]
+        if selected:
+            return selected[:max_params]
+    return [p for p in seen.values() if p.name not in {"eps", "epsilon"}][:max_params]
 
 
 def rewrite_params(scad_text: str, updates: dict[str, float]) -> tuple[str, list[str]]:

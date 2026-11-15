@@ -113,12 +113,55 @@ def compile_stl_only(output_dir: Path, scad_text: str, tag: str, binary: str = "
     scad_path = output_dir / f"{name}.scad"
     stl_path = output_dir / f"{name}.stl"
     scad_path.write_text(scad_text)
-    ok, log = run([binary, "-o", stl_path.name, scad_path.name], cwd=output_dir)
+    ok, log = run([binary, "-o", stl_path.name, "-D", "$fn=36", scad_path.name], cwd=output_dir)
     if not ok or not stl_path.exists():
         stl_path.unlink(missing_ok=True)
         return None, log[-500:] or "OpenSCAD produced no STL"
     run_id = output_dir.name
     return f"/results/{run_id}/{stl_path.name}?v={int(stl_path.stat().st_mtime * 1000)}", ""
+
+
+def export_parts_zip(stl_path: Path, scad_path: Path, spec_path: Path | None, out_zip: Path) -> list[str]:
+    """Split a multi-part STL into individual part STLs and package with assembled STL + SCAD."""
+    import zipfile
+    import trimesh
+
+    loaded = trimesh.load_mesh(stl_path, process=True)
+    meshes = list(loaded.geometry.values()) if isinstance(loaded, trimesh.Scene) else [loaded]
+    components = []
+    for mesh in meshes:
+        components.extend(mesh.split(only_watertight=False))
+    components.sort(key=lambda c: float(abs(c.volume)), reverse=True)
+
+    part_names: list[str] = []
+    if spec_path and spec_path.exists():
+        try:
+            import json
+            spec = json.loads(spec_path.read_text())
+            for item in spec.get("parts") or []:
+                if isinstance(item, dict) and item.get("id"):
+                    part_names.append(re.sub(r"[^A-Za-z0-9_-]", "_", str(item["id"]))[:40])
+        except Exception:
+            pass
+
+    written: list[str] = []
+    parts_dir = out_zip.parent / "parts"
+    parts_dir.mkdir(parents=True, exist_ok=True)
+    with zipfile.ZipFile(out_zip, "w", compression=zipfile.ZIP_DEFLATED) as zf:
+        if scad_path.exists():
+            zf.write(scad_path, arcname="model.scad")
+            written.append("model.scad")
+        if stl_path.exists():
+            zf.write(stl_path, arcname="assembled.stl")
+            written.append("assembled.stl")
+        for idx, comp in enumerate(components, start=1):
+            suffix = f"-{part_names[idx - 1]}" if idx - 1 < len(part_names) else ""
+            part_filename = f"part-{idx}{suffix}.stl"
+            part_path = parts_dir / part_filename
+            comp.export(part_path)
+            zf.write(part_path, arcname=part_filename)
+            written.append(part_filename)
+    return written
 
 
 def mesh_health(stl: Path) -> dict[str, Any]:
@@ -131,10 +174,22 @@ def mesh_health(stl: Path) -> dict[str, Any]:
         components.extend(mesh.split(only_watertight=False))
     triangles = sum(len(component.faces) for component in components)
     extents = loaded.extents.tolist() if hasattr(loaded, "extents") else [0, 0, 0]
+    bounds = loaded.bounds.tolist() if hasattr(loaded, "bounds") and loaded.bounds is not None else [[0, 0, 0], [0, 0, 0]]
+    comp_vols = sorted((round(float(abs(c.volume)), 2) for c in components), reverse=True)
+    total_vol = round(float(sum(comp_vols)), 3)
+    min_vol_ratio = round(min(comp_vols) / total_vol, 4) if comp_vols and total_vol > 0 else 0.0
+    max_ext = max(extents) if extents else 0.0
+    xy_min = min(extents[0], extents[1]) if len(extents) >= 2 else 0.0
+    depth_ratio = round(float(xy_min) / max_ext, 3) if max_ext > 0 else 0.0
     return {
         "watertight": bool(components and all(component.is_watertight for component in components)),
         "components": len(components),
+        "component_volumes_mm3": comp_vols,
+        "min_component_volume_ratio": min_vol_ratio,
         "triangles": int(triangles),
         "extents_mm": [round(float(value), 3) for value in extents],
-        "volume_mm3": round(float(sum(abs(component.volume) for component in components)), 3),
+        "z_min_mm": round(float(bounds[0][2]), 3),
+        "z_max_mm": round(float(bounds[1][2]), 3),
+        "volumetric_depth_ratio": depth_ratio,
+        "volume_mm3": total_vol,
     }

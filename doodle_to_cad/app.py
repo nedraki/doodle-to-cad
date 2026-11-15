@@ -5,6 +5,7 @@ import json
 import re
 import time
 import uuid
+from pathlib import Path
 
 from fastapi import FastAPI, File, Form, HTTPException, UploadFile
 from fastapi.responses import FileResponse
@@ -102,6 +103,60 @@ def parametrize(run_id: str, updates: dict):
         return {"ok": False, "applied": applied,
                 "message": error or "Recompile produced no mesh — last successful geometry retained."}
     return {"ok": True, "applied": applied, "stl": stl_url, "scad": f"/results/{run_id}/{tag}.scad", "params": [p.to_dict() for p in extract_params(edited)]}
+
+
+SAFE_ARTIFACT_RE = re.compile(r"^[A-Za-z0-9_.-]+\.(?:scad|stl)$")
+
+
+def _resolve_artifact(out: Path, requested: str | None, default_name: str) -> Path:
+    name = (requested or default_name).split("?")[0].rsplit("/", 1)[-1]
+    if not SAFE_ARTIFACT_RE.fullmatch(name):
+        raise HTTPException(400, "Invalid artifact filename")
+    target = (out / name).resolve()
+    if target.parent != out.resolve() or not target.exists():
+        raise HTTPException(404, f"Artifact {name} not found")
+    return target
+
+
+@app.get("/api/results/{run_id}/download/scad")
+def download_scad(run_id: str, file: str | None = None):
+    out, _ = _run_dir(run_id)
+    target = _resolve_artifact(out, file, "model.scad")
+    return FileResponse(
+        target,
+        media_type="application/octet-stream",
+        filename=f"doodle-{run_id}.scad",
+        content_disposition_type="attachment",
+    )
+
+
+@app.get("/api/results/{run_id}/download/stl")
+def download_stl(run_id: str, file: str | None = None):
+    out, _ = _run_dir(run_id)
+    target = _resolve_artifact(out, file, "model.stl")
+    return FileResponse(
+        target,
+        media_type="model/stl",
+        filename=f"doodle-{run_id}.stl",
+        content_disposition_type="attachment",
+    )
+
+
+@app.get("/api/results/{run_id}/download/parts.zip")
+def download_parts_zip(run_id: str, stl_file: str | None = None, scad_file: str | None = None):
+    from .openscad import export_parts_zip
+    out, _ = _run_dir(run_id)
+    stl_target = _resolve_artifact(out, stl_file, "model.stl")
+    scad_target = _resolve_artifact(out, scad_file, "model.scad")
+    spec_path = out / "sketch-spec.json"
+    zip_path = out / f"doodle-{run_id}-parts.zip"
+    export_parts_zip(stl_target, scad_target, spec_path if spec_path.exists() else None, zip_path)
+    return FileResponse(
+        zip_path,
+        media_type="application/zip",
+        filename=f"doodle-{run_id}-parts.zip",
+        content_disposition_type="attachment",
+    )
 
 
 @app.post("/api/generate")

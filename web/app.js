@@ -76,10 +76,19 @@ $('#modify').onclick=async()=>{if(!currentRun){return $('#modifyDialog').showMod
 
 // Keep generation provenance separate from the successfully displayed edit.
 let resultVersion=null;
+function updateDownloadLinks(runId,scadUrl,stlUrl){
+  const scadFile=(scadUrl||'model.scad').split('?')[0].split('/').pop();
+  const stlFile=(stlUrl||'model.stl').split('?')[0].split('/').pop();
+  const scadEl=$('#scad'),stlEl=$('#stl'),zipEl=$('#partsZip');
+  if(scadEl){scadEl.href=`/api/results/${runId}/download/scad?file=${encodeURIComponent(scadFile)}`;scadEl.download=`doodle-${runId}.scad`}
+  if(stlEl){stlEl.href=stlUrl?`/api/results/${runId}/download/stl?file=${encodeURIComponent(stlFile)}`:'#';stlEl.download=`doodle-${runId}.stl`;stlEl.hidden=!stlUrl}
+  if(zipEl){zipEl.href=stlUrl?`/api/results/${runId}/download/parts.zip?stl_file=${encodeURIComponent(stlFile)}&scad_file=${encodeURIComponent(scadFile)}`:'#';zipEl.download=`doodle-${runId}-parts.zip`;zipEl.hidden=!stlUrl}
+}
 function initializeResultVersion(run){
   resultVersion={edited:false,original:{badge:$('#statusBadge').textContent,title:$('#resultTitle').textContent,text:$('#resultText').textContent}};
-  $('#originalScad').href=run.files.scad;
-  $('#originalStl').href=run.files.stl||'#';$('#originalStl').hidden=!run.files.stl;
+  updateDownloadLinks(run.id,run.files.scad,run.files.stl);
+  $('#originalScad').href=`/api/results/${run.id}/download/scad`;$('#originalScad').download=`doodle-${run.id}-original.scad`;
+  $('#originalStl').href=run.files.stl?`/api/results/${run.id}/download/stl`:'#';$('#originalStl').download=`doodle-${run.id}-original.stl`;$('#originalStl').hidden=!run.files.stl;
   setResultEditState('original');
 }
 function setResultEditState(phase){
@@ -174,10 +183,11 @@ async function openParamPanel(){
       const slider=row.querySelector('[type=range]'),number=row.querySelector('[type=number]'),output=row.querySelector('output'),error=row.querySelector('.param-error');
       for(const input of [slider,number]){input.min=p.low;input.max=p.high}
       number.step=String(step);
-      slider.step=unit==='count'?'1':'0.1';
+      const sStep=unit==='count'?1:(p.high-p.low<=5?0.01:0.1);
+      slider.step=String(sStep);
       // Anchor the slider to a decimal grid, even when generated bounds are fractional.
-      slider.min=Math.ceil(p.low/Number(slider.step))*Number(slider.step);
-      slider.max=Math.floor(p.high/Number(slider.step))*Number(slider.step);
+      slider.min=Number((Math.ceil(p.low/sStep)*sStep).toFixed(4));
+      slider.max=Number((Math.floor(p.high/sStep)*sStep).toFixed(4));
       row.querySelector('.param-help').textContent=`${format(p.low)}–${format(p.high)} ${unit} · slider ${slider.step} · buttons ±${step}`;
       const reset=row.querySelector('[data-reset]');reset.textContent=`↺ Reset to ${format(p.value)} ${unit}`;
       reset.setAttribute('aria-label',`Reset ${label} to ${format(p.value)} ${unit}`);
@@ -258,7 +268,7 @@ async function runParamCompile(){
     if(!viewer)throw Error('3D viewer unavailable');
     const displayed=await viewer?.replaceStl(url,params,isCurrent);
     if(!isCurrent()||displayed===false)return;
-    $('#stl').href=url;$('#scad').href=scad;
+    updateDownloadLinks(state.runId,scad,url);
     resultVersion.edited=changed.length>0;setResultEditState(changed.length?'edited':'original');
     status.textContent=changed.length?`${changed.length} param(s) updated` : '';status.className='';
   }catch(err){

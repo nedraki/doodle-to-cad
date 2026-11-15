@@ -1,6 +1,7 @@
 from __future__ import annotations
 from pathlib import Path
 from typing import Any
+import re
 import cv2
 import numpy as np
 
@@ -276,7 +277,14 @@ def _position_fidelity(source_centroids:list[tuple[float,float]],render_centroid
             missing.append((sx,sy))
     return matched/len(source_centroids),missing
 
-def projection_scores(source:bytes,evidence:dict[str,Any],views:dict[str,Path],primary_view:str="front",projection_standard:str="third-angle")->tuple[dict[str,float],dict[str,dict[str,int]]]:
+def _rotate_crop(crop:np.ndarray,angle:float)->np.ndarray:
+    if not angle:return crop
+    h,w=crop.shape[:2];center=(w/2,h/2);m=cv2.getRotationMatrix2D(center,angle,1.0)
+    cos,sin=abs(m[0,0]),abs(m[0,1]);nw,nh=int(h*sin+w*cos),int(h*cos+w*sin)
+    m[0,2]+=nw/2-center[0];m[1,2]+=nh/2-center[1]
+    return cv2.warpAffine(crop,m,(nw,nh),flags=cv2.INTER_NEAREST,borderValue=(255,255,255))
+
+def projection_scores(source:bytes,evidence:dict[str,Any],views:dict[str,Path],primary_view:str="front",projection_standard:str="third-angle",*,pose_tolerant:bool=False)->tuple[dict[str,float],dict[str,dict[str,int]]]:
     image=_decode(source);assigned=assign_view_groups(evidence,primary_view,projection_standard)
     if image is None:return {},{}
     h,w=image.shape[:2];scores={};topology={}
@@ -290,7 +298,16 @@ def projection_scores(source:bytes,evidence:dict[str,Any],views:dict[str,Path],p
         union=np.count_nonzero(cv2.bitwise_or(original,rendered));intersection=np.count_nonzero(cv2.bitwise_and(original,rendered))
         iou=intersection/union if union else 0
         edge_score=_edge_similarity(_normalized_edges(crop,render=False),_normalized_edges(rendered_image,render=True))
-        scores[direction]=round(max(iou,edge_score),3)
+        best_score=round(max(iou,edge_score),3)
+        if pose_tolerant and best_score<0.45:
+            for angle in (-40,-30,-20,-10,10,20,30,40):
+                rcrop=_rotate_crop(crop,angle)
+                rorig,_=_normalized_profile(rcrop,render=False)
+                runion=np.count_nonzero(cv2.bitwise_or(rorig,rendered))
+                riou=np.count_nonzero(cv2.bitwise_and(rorig,rendered))/runion if runion else 0
+                redge=_edge_similarity(_normalized_edges(rcrop,render=False),_normalized_edges(rendered_image,render=True))
+                best_score=max(best_score,round(max(riou,redge),3))
+        scores[direction]=best_score
         crop_profiles=_crop_internal_profile_count(crop)
         source_centroids=_profile_centroids(crop,render=False)
         render_centroids=_profile_centroids(rendered_image,render=True)
@@ -303,7 +320,7 @@ def projection_scores(source:bytes,evidence:dict[str,Any],views:dict[str,Path],p
                              "rendered_opening_centroids":[[round(a,3),round(b,3)] for a,b in render_centroids],
                              **({"missing_opening_centroids":[[round(a,3),round(b,3)] for a,b in missing_centroids]} if missing_centroids else {}),
                              **({"feature_position_fidelity":round(fidelity,3)} if fidelity is not None else {})}
-        if fidelity is not None:
+        if fidelity is not None and not pose_tolerant:
             scores[direction]=round(min(scores[direction],0.35+0.65*fidelity),3)
     return scores,topology
 
@@ -318,8 +335,29 @@ def _render_aspect(image:np.ndarray)->float:
 
 def evaluate_candidate(*,stl:Path|None,health:dict[str,Any]|None,scad:str,views:dict[str,Path],source:bytes,evidence:dict[str,Any],spec:dict[str,Any],target_dimension:str,strict:bool,primary_view:str="front",projection_standard:str="third-angle",dimension_tolerance:float=.05)->dict[str,Any]:
     failures=[];gates={"compiled":bool(stl and health),"topology":False,"dimensions":True,"shape_sanity":True,"features":True,"projections":True,"build_envelope":True};topology_score=0.0
+    fdm_assembly=spec.get("fdm_assembly") if isinstance(spec,dict) and isinstance(spec.get("fdm_assembly"),dict) else None
+    is_fdm_3d=bool(fdm_assembly or (isinstance(spec,dict) and str(spec.get("dimensionality","")).lower()=="3d"))
     if health:
-        gates["topology"]=bool(health["watertight"] and (health["components"]==1 or not strict));topology_score=(22 if health["watertight"] else 0)+(18 if health["components"]==1 else 0)+(5 if health["triangles"]>=12 else 0)
+        if is_fdm_3d and fdm_assembly:
+            min_parts=int(fdm_assembly.get("min_solid_count",3))
+            max_parts=int(fdm_assembly.get("max_solid_count",6))
+            comps=int(health.get("components",0))
+            min_ratio=float(health.get("min_component_volume_ratio",1.0))
+            parts_ok=min_parts<=comps<=max_parts and min_ratio>=0.002
+            gates["topology"]=bool(health["watertight"] and parts_ok)
+            topology_score=(22 if health["watertight"] else 0)+(18 if parts_ok else 0)+(5 if health["triangles"]>=12 else 0)
+            if not health["watertight"]:
+                failures.append("mesh is not watertight; every printable part must be a closed 2-manifold solid")
+            if comps<min_parts:
+                failures.append(f"FDM multi-part assembly requires at least {min_parts} separate watertight printable solids separated by clearance (got {comps} connected component(s)). Do not union mating parts together: leave a >= 0.5 mm radial and axial clearance gap between every pin/axle/tenon and its mating socket/bore so each printable part compiles as an independent mesh component.")
+            elif comps>max_parts:
+                failures.append(f"mesh has {comps} disconnected components (expected {min_parts}..{max_parts} printable parts; component volumes: {health.get('component_volumes_mm3')}). Union sub-features belonging to the same part so only the intentional printable parts remain separate.")
+            elif min_ratio<0.002:
+                failures.append(f"mesh contains tiny detached debris splinter(s) (smallest component is {min_ratio:.2%} of total volume; volumes={health.get('component_volumes_mm3')}). Overlap sub-features within each part cleanly.")
+        else:
+            gates["topology"]=bool(health["watertight"] and (health["components"]==1 or not strict));topology_score=(22 if health["watertight"] else 0)+(18 if health["components"]==1 else 0)+(5 if health["triangles"]>=12 else 0)
+            if not health["watertight"]:failures.append("mesh is not watertight")
+            if strict and health["components"]!=1:failures.append(f"mesh has {health['components']} disconnected components")
         # BambuLab-class FDM build volume (X1C/P1S: 256 mm cube). A part that
         # cannot fit is unprintable regardless of how well it matches the doodle.
         max_extent=max(health.get("extents_mm") or [0])
@@ -327,8 +365,6 @@ def evaluate_candidate(*,stl:Path|None,health:dict[str,Any]|None,scad:str,views:
             gates["build_envelope"]=False
             failures.append(f"part does not fit the 256 mm build cube: largest extent {max_extent:g} mm")
     if not gates["compiled"]:failures.append("OpenSCAD did not produce a valid STL")
-    if health and not health["watertight"]:failures.append("mesh is not watertight")
-    if health and strict and health["components"]!=1:failures.append(f"mesh has {health['components']} disconnected components")
     dimension_score=20.0
     try:
         target=float(target_dimension);actual=max(health["extents_mm"]) if health else 0;error=abs(actual-target)/max(target,1)
@@ -351,37 +387,55 @@ def evaluate_candidate(*,stl:Path|None,health:dict[str,Any]|None,scad:str,views:
         if mismatches:
             gates["shape_sanity"]=False
             failures.append("degenerate or implausible axis dimensions: "+", ".join(mismatches))
-    projections,profile_topology=projection_scores(source,evidence,views,primary_view,projection_standard)
-    sheet_expected=evidence.get("closed_internal_profile_count",0)
-    # Fair requirement = profiles the drawing demands of the SINGLE best-scored
-    # registered view (crop-local count), not the whole-sheet total which mixes
-    # every view's features and is unreachable by any one projection.
-    if profile_topology:
-        expected,best_direction=max(((t.get("crop_internal_profiles",0),d) for d,t in profile_topology.items()),key=lambda item:(item[0],projections.get(item[1],0)))
+    if health and is_fdm_3d:
+        ext=health.get("extents_mm") or [0,0,0]
+        max_e=max(ext) if ext else 0
+        xy_min=min(ext[0],ext[1]) if len(ext)>=2 else 0
+        depth_ratio=float(xy_min)/max_e if max_e>0 else 0.0
+        if depth_ratio<0.16:
+            gates["shape_sanity"]=False
+            failures.append(f"model is a flat 2.5D slab/plaque (XY depth ratio {depth_ratio:.2f}, extents={ext} mm; need >= 0.16). Rebuild using true 3D volumetric parts (revolve/rotate_extrude, 3D sphere/ellipsoid hull chains, 3D radial/spatial arrangements, cylindrical shafts, and a 3D base/frame).")
+    projections,profile_topology=projection_scores(source,evidence,views,primary_view,projection_standard,pose_tolerant=is_fdm_3d)
+    if is_fdm_3d:
+        has_clearance=bool(re.search(r"\bclearance\b",scad))
+        has_joint_ops=bool(re.search(r"\b(?:difference|rotate_extrude|hull|cylinder|sphere)\s*\(",scad))
+        gates["features"]=bool(has_clearance and has_joint_ops)
+        if not has_clearance:
+            failures.append("missing top-level `clearance` parameter for FDM mechanical joints/fits; declare `clearance = 0.5;` (or similar) and use it between mating parts")
+        feature_score=20.0 if gates["features"] else 10.0
     else:
-        expected,best_direction=sheet_expected,primary_view
-    observed=max((t.get("rendered_internal_profiles",0) for t in profile_topology.values()),default=0)
-    if expected:
-        gates["features"]=observed>=expected
-        if not gates["features"]:
-            hint=""
-            best_info=profile_topology.get(best_direction) or {}
-            missing=best_info.get("missing_opening_centroids") or []
-            if missing:
-                pts="; ".join(f"(u={a},v={b})" for a,b in missing[:6])
-                hint=f" Missing at these view-local centres — add cutters there: {pts}."
-            failures.append(f"required internal profiles are missing: {best_direction} view demands {expected}, best rendered view has {observed}.{hint}")
-    feature_score=20 if not expected else 20*min(observed/expected,1)
+        sheet_expected=evidence.get("closed_internal_profile_count",0)
+        # Fair requirement = profiles the drawing demands of the SINGLE best-scored
+        # registered view (crop-local count), not the whole-sheet total which mixes
+        # every view's features and is unreachable by any one projection.
+        if profile_topology:
+            expected,best_direction=max(((t.get("crop_internal_profiles",0),d) for d,t in profile_topology.items()),key=lambda item:(item[0],projections.get(item[1],0)))
+        else:
+            expected,best_direction=sheet_expected,primary_view
+        observed=max((t.get("rendered_internal_profiles",0) for t in profile_topology.values()),default=0)
+        if expected:
+            gates["features"]=observed>=expected
+            if not gates["features"]:
+                hint=""
+                best_info=profile_topology.get(best_direction) or {}
+                missing=best_info.get("missing_opening_centroids") or []
+                if missing:
+                    pts="; ".join(f"(u={a},v={b})" for a,b in missing[:6])
+                    hint=f" Missing at these view-local centres — add cutters there: {pts}."
+                failures.append(f"required internal profiles are missing: {best_direction} view demands {expected}, best rendered view has {observed}.{hint}")
+        feature_score=20 if not expected else 20*min(observed/expected,1)
     if projections:
-        gates["projections"]=all(v>=.45 for v in projections.values())
+        floor=0.30 if is_fdm_3d else 0.45
+        gates["projections"]=all(v>=floor for v in projections.values())
         if not gates["projections"]:
-            weak=", ".join(f"{name} similarity {value:.2f}" for name,value in sorted(projections.items()) if value<.45)
-            failures.append(f"CAD projections poorly match the drawing: {weak} (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly.")
-        misplaced=[d for d,t in profile_topology.items() if t.get("feature_position_fidelity") is not None and t["feature_position_fidelity"]<.5]
-        if misplaced:
-            gates["features"]=False
-            failures.append("features exist but sit at the wrong positions in "+", ".join(misplaced)+
-                            " view(s): match each opening's location (u,v within the outer profile) to the drawing; "+
-                            "check the cad_mapping signs (front: u->+X v->-Z; top: u->+X v->-Y i.e. sheet-down is the FRONT of the part)")
+            weak=", ".join(f"{name} similarity {value:.2f}" for name,value in sorted(projections.items()) if value<floor)
+            failures.append(f"CAD projections poorly match the drawing: {weak} (need >= {floor:.2f}). Check overall silhouette orientation and proportions.")
+        if not is_fdm_3d:
+            misplaced=[d for d,t in profile_topology.items() if t.get("feature_position_fidelity") is not None and t["feature_position_fidelity"]<.5]
+            if misplaced:
+                gates["features"]=False
+                failures.append("features exist but sit at the wrong positions in "+", ".join(misplaced)+
+                                " view(s): match each opening's location (u,v within the outer profile) to the drawing; "+
+                                "check the cad_mapping signs (front: u->+X v->-Z; top: u->+X v->-Y i.e. sheet-down is the FRONT of the part)")
     visual_score=15*(sum(projections.values())/len(projections)) if projections else 0;total=round(topology_score+dimension_score+feature_score+visual_score,1)
     return {"score":total,"valid_mesh":gates["topology"],"accepted":all(gates.values()),"mandatory_gates":gates,"scores":{"topology":round(topology_score,1),"dimensions":round(dimension_score,1),"features":round(feature_score,1),"projections":round(visual_score,1)},"projection_similarity":projections,"profile_topology":profile_topology,"failures":failures}
