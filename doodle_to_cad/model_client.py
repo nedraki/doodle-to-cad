@@ -1,8 +1,11 @@
 from __future__ import annotations
 
 import base64
+import hashlib
 import json
+import time
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Any
 
 import httpx
@@ -18,12 +21,54 @@ class ModelInfo:
     error: str | None = None
 
 
+class ReplyCache:
+    """Content-addressed reply cache for A/B and replay work.
+
+    Off unless DOODLE_LLM_CACHE names a directory — the product path never
+    serves stale replies by accident. Only replies that survived the caller's
+    validation (chat raises before storing anything else) are stored, so a
+    cache hit is always a syntactically valid prior answer.
+    """
+
+    def __init__(self, directory: str | None):
+        self.dir = Path(directory) if directory else None
+        self.hits = 0
+        self.misses = 0
+
+    @staticmethod
+    def key(payload: dict[str, Any]) -> str:
+        return hashlib.sha256(json.dumps(payload, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
+
+    def get(self, payload: dict[str, Any]) -> str | None:
+        if not self.dir:
+            return None
+        path = self.dir / (self.key(payload) + ".json")
+        if not path.exists():
+            self.misses += 1
+            return None
+        try:
+            reply = json.loads(path.read_text())["reply"]
+        except Exception:
+            self.misses += 1
+            return None
+        self.hits += 1
+        return reply
+
+    def put(self, payload: dict[str, Any], reply: str) -> None:
+        if not self.dir:
+            return
+        self.dir.mkdir(parents=True, exist_ok=True)
+        (self.dir / (self.key(payload) + ".json")).write_text(json.dumps(
+            {"created": time.strftime("%Y-%m-%dT%H:%M:%S%z"), "payload_key": self.key(payload), "reply": reply}))
+
+
 class CompatibleModelClient:
     """Small OpenAI-compatible client with explicit model provenance."""
 
     def __init__(self, config: Settings):
         self.config = config
         self._model: ModelInfo | None = None
+        self.cache = ReplyCache(getattr(config, "llm_cache_dir", "") or None)
 
     @property
     def headers(self) -> dict[str, str]:
@@ -73,6 +118,14 @@ class CompatibleModelClient:
             "max_tokens": max_tokens or self.config.max_tokens,
             "chat_template_kwargs": template_options,
         }
+        cached = self.cache.get(payload)
+        if cached is not None:
+            return cached
+        content = await self._post_chat(payload)
+        self.cache.put(payload, content)
+        return content
+
+    async def _post_chat(self, payload: dict[str, Any]) -> str:
         async with httpx.AsyncClient(timeout=self.config.timeout) as client:
             response = await client.post(f"{self.config.base_url}/chat/completions", headers=self.headers, json=payload)
             response.raise_for_status()
@@ -86,6 +139,10 @@ class CompatibleModelClient:
                 detail = f" The model produced {len(reasoning)} reasoning characters but no final answer." if reasoning else ""
                 raise RuntimeError(f"Model returned no final content (finish_reason={reason}).{detail}")
             return str(content)
+
+    def cache_stats(self) -> dict[str, Any]:
+        return {"enabled": bool(self.cache.dir), "dir": str(self.cache.dir) if self.cache.dir else None,
+                "hits": self.cache.hits, "misses": self.cache.misses}
 
     @staticmethod
     def image_url(data: bytes, mime: str) -> str:

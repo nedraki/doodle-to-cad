@@ -1,0 +1,45 @@
+run3: 41 blind build grades (5-step scale), machine = one-judge from ab-frozen-main-vs-quality
+
+human-good (PASS/STARS): main 4/21, quality 0/20 (Fisher one-sided p=0.107 -- suggestive, not conclusive)
+machine-accept set (6) INTERSECTS human-good set (4) in ZERO builds:
+  main-200_rocket-t1           human=FAIL           machine=reject  score=92.1
+  main-200_rocket-t2           human=GETTING THERE  machine=reject  score=82.3
+  main-200_rocket-t3           human=GETTING THERE  machine=reject  score=72.2
+  main-201_person-t1           human=PASS           machine=reject  score=96.1
+  main-201_person-t2           human=GETTING THERE  machine=accept  score=96.6
+  main-201_person-t3           human=PASS           machine=reject  score=77.0
+  main-202_lamp-t1             human=PASS           machine=reject  score=94.3
+  main-202_lamp-t2             human=FAIL           machine=reject  score=73.9
+  main-202_lamp-t3             human=GETTING THERE  machine=reject  score=74.7
+  main-203_scooter-t1          human=ALMOST         machine=reject  score=96.0
+  main-203_scooter-t2          human=FAIL           machine=reject  score=92.7
+  main-203_scooter-t3          human=ALMOST         machine=reject  score=92.7
+  main-204_flower-t1           human=FAIL           machine=reject  score=93.2
+  main-204_flower-t2           human=GETTING THERE  machine=accept  score=92.8
+  main-204_flower-t3           human=GETTING THERE  machine=accept  score=92.2
+  main-205_mug-t1              human=ALMOST         machine=accept  score=94.9
+  main-205_mug-t2              human=FAIL           machine=reject  score=52.2
+  main-205_mug-t3              human=GETTING THERE  machine=reject  score=90.2
+  main-206_car_ink-t1          human=GETTING THERE  machine=reject  score=89.8
+  main-206_car_ink-t2          human=FAIL           machine=reject  score=84.2
+  main-206_car_ink-t3          human=PASS           machine=reject  score=89.8
+  quality-200_rocket-t1        human=GETTING THERE  machine=reject  score=92.9
+  quality-200_rocket-t2        human=GETTING THERE  machine=reject  score=74.0
+  quality-200_rocket-t3        human=GETTING THERE  machine=reject  score=93.0
+  quality-201_person-t1        human=FAIL           machine=reject  score=78.7
+  quality-201_person-t2        human=GETTING THERE  machine=accept  score=98.2
+  quality-202_lamp-t1          human=FAIL           machine=reject  score=92.3
+  quality-202_lamp-t2          human=FAIL           machine=reject  score=93.5
+  quality-202_lamp-t3          human=ALMOST         machine=reject  score=93.5
+  quality-203_scooter-t1       human=FAIL           machine=reject  score=95.4
+  quality-203_scooter-t2       human=FAIL           machine=reject  score=76.7
+  quality-203_scooter-t3       human=FAIL           machine=reject  score=78.3
+  quality-204_flower-t1        human=GETTING THERE  machine=reject  score=92.9
+  quality-204_flower-t2        human=ALMOST         machine=reject  score=75.9
+  quality-204_flower-t3        human=ALMOST         machine=accept  score=92.4
+  quality-205_mug-t1           human=FAIL           machine=reject  score=90.2
+  quality-205_mug-t2           human=FAIL           machine=reject  score=72.2
+  quality-205_mug-t3           human=GETTING THERE  machine=reject  score=90.2
+  quality-206_car_ink-t1       human=GETTING THERE  machine=reject  score=94.2
+  quality-206_car_ink-t2       human=GETTING THERE  machine=reject  score=76.6
+  quality-206_car_ink-t3       human=GETTING THERE  machine=reject  score=98.2

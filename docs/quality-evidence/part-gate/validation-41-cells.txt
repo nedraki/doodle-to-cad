@@ -1,0 +1,48 @@
+cell | owner | judge-before | judge-now | part-flag
+main-200_rocket-t1 | FAIL | reject | reject | 
+main-200_rocket-t2 | GETTING THERE | reject | reject |  — rebuild those parts so THIS view shows them, same plane and position as the drawing
+main-200_rocket-t3 | GETTING THERE | reject | reject | 
+quality-200_rocket-t1 | GETTING THERE | reject | reject | 
+quality-200_rocket-t2 | GETTING THERE | reject | reject |  — rebuild those parts so THIS view shows them, same plane and position as the drawing
+quality-200_rocket-t3 | GETTING THERE | reject | reject | 
+main-201_person-t1 | PASS | reject | reject | 
+main-201_person-t2 | GETTING THERE | accept | accept | 
+main-201_person-t3 | PASS | reject | reject | 
+quality-201_person-t1 | FAIL | reject | reject | 
+quality-201_person-t2 | GETTING THERE | accept | accept | 
+main-202_lamp-t1 | PASS | reject | reject | 
+main-202_lamp-t2 | FAIL | reject | reject |  front view part at (u=36.1,v=73.3) only 0% material, front view part at (u=59.4,v=36.3) only 0% mat
+main-202_lamp-t3 | GETTING THERE | reject | reject | 
+quality-202_lamp-t1 | FAIL | reject | reject | 
+quality-202_lamp-t2 | FAIL | reject | reject | 
+quality-202_lamp-t3 | ALMOST | reject | reject | 
+main-203_scooter-t1 | ALMOST | reject | reject | 
+main-203_scooter-t2 | FAIL | reject | reject |  — rebuild those parts so THIS view shows them, same plane and position as the drawing
+main-203_scooter-t3 | ALMOST | reject | reject |  — rebuild those parts so THIS view shows them, same plane and position as the drawing
+quality-203_scooter-t1 | FAIL | reject | reject |  — rebuild those parts so THIS view shows them, same plane and position as the drawing
+quality-203_scooter-t2 | FAIL | reject | reject | 
+quality-203_scooter-t3 | FAIL | reject | reject | 
+main-204_flower-t1 | FAIL | reject | reject | 
+main-204_flower-t2 | GETTING THERE | accept | reject |  front view part at (u=67.3,v=34.3) only 0% material, front view part at (u=56.9,v=23.0) only 0% mat
+main-204_flower-t3 | GETTING THERE | accept | reject |  front view part at (u=67.3,v=34.3) only 0% material, front view part at (u=41.8,v=17.7) only 10% ma
+quality-204_flower-t1 | GETTING THERE | reject | reject |  front view part at (u=67.3,v=34.3) only 0% material, front view part at (u=41.8,v=17.7) only 0% mat
+quality-204_flower-t2 | ALMOST | reject | reject |  front view part at (u=67.3,v=34.3) only 0% material, front view part at (u=56.9,v=23.0) only 0% mat
+quality-204_flower-t3 | ALMOST | accept | reject |  front view part at (u=67.3,v=34.3) only 0% material, front view part at (u=41.8,v=17.7) only 12% ma
+main-205_mug-t1 | ALMOST | accept | reject |  — rebuild those parts so THIS view shows them, same plane and position as the drawing
+main-205_mug-t2 | FAIL | reject | reject |  front view part at (u=17.5,v=48.6) only 4% material) — rebuild those parts so THIS view shows them,
+main-205_mug-t3 | GETTING THERE | reject | reject |  — rebuild those parts so THIS view shows them, same plane and position as the drawing
+quality-205_mug-t1 | FAIL | reject | reject |  — rebuild those parts so THIS view shows them, same plane and position as the drawing
+quality-205_mug-t2 | FAIL | reject | reject |  — rebuild those parts so THIS view shows them, same plane and position as the drawing
+quality-205_mug-t3 | GETTING THERE | reject | reject |  — rebuild those parts so THIS view shows them, same plane and position as the drawing
+main-206_car_ink-t1 | GETTING THERE | reject | reject | 
+main-206_car_ink-t2 | FAIL | reject | reject | 
+main-206_car_ink-t3 | PASS | reject | reject | 
+quality-206_car_ink-t1 | GETTING THERE | reject | reject | 
+quality-206_car_ink-t2 | GETTING THERE | reject | reject | 
+quality-206_car_ink-t3 | GETTING THERE | reject | reject | 
+
+41 cells | owner-good: 10 (part-flagged 4) | owner-bad: 31 (newly rejected by gate: 2, still accepted: 2)
+  FALSE-BLOCK: main-203_scooter-t3 |  — rebuild those parts so THIS view shows them, same plane and position as the drawing
+  FALSE-BLOCK: quality-204_flower-t2 |  front view part at (u=67.3,v=34.3) only 0% material, front view part at (u=56.9,v=23.0) only 0% mat
+  FALSE-BLOCK: quality-204_flower-t3 |  front view part at (u=67.3,v=34.3) only 0% material, front view part at (u=41.8,v=17.7) only 12% ma
+  FALSE-BLOCK: main-205_mug-t1 |  — rebuild those parts so THIS view shows them, same plane and position as the drawing

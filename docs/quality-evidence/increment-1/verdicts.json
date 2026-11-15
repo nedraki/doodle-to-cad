@@ -1,0 +1,50 @@
+{
+  "solids": {
+    "through": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 400,
+      "extents_mm": [
+        120.0,
+        100.0,
+        20.0
+      ],
+      "volume_mm3": 225872.924,
+      "inverted_solids": 0,
+      "genus_total": 1
+    },
+    "blind": {
+      "watertight": true,
+      "components": 1,
+      "triangles": 398,
+      "extents_mm": [
+        120.0,
+        100.0,
+        20.0
+      ],
+      "volume_mm3": 232936.462,
+      "inverted_solids": 0,
+      "genus_total": 0
+    }
+  },
+  "verdicts": {
+    "through": {
+      "genus_total": 1,
+      "accepted": true,
+      "features_pass": true,
+      "projection_similarity": {
+        "front": 1.0
+      },
+      "genus_failure": null
+    },
+    "blind": {
+      "genus_total": 0,
+      "accepted": false,
+      "features_pass": false,
+      "projection_similarity": {
+        "front": 1.0
+      },
+      "genus_failure": "the drawing demands 1 through-opening(s) (best view front) but the solid has genus 0: at least one opening is a blind cut or surface notch, not a through-hole \u2014 extend that cutter fully through the material"
+    }
+  }
+}

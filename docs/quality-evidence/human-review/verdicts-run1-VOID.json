@@ -1,0 +1,45 @@
+{
+ "case-1-200_rocket": {
+  "A": "fail",
+  "B": "getting there",
+  "winner": "B (implied)",
+  "raw": "A Fails / B Getting there",
+  "note": "B re-graded under 5-step scale (stars>pass>almost>getting-there>fail)"
+ },
+ "case-2-201_person": {
+  "A": "fail",
+  "B": "fail",
+  "winner": "both-fail",
+  "raw": "Both failes"
+ },
+ "case-3-202_lamp": {
+  "A": "fail",
+  "B": "almost",
+  "winner": "B",
+  "raw": "B almost others failed"
+ },
+ "case-4-203_scooter": {
+  "A": "pass",
+  "B": "fail",
+  "winner": "A",
+  "raw": "A pass, B fail, winner mis-clicked B then confirmed A"
+ },
+ "case-5-204_flower": {
+  "A": "almost",
+  "B": "fail",
+  "winner": "A",
+  "raw": "A almost, B fail, winner A"
+ },
+ "case-6-205_mug": {
+  "A": "almost",
+  "B": "fail",
+  "winner": "A (implied)",
+  "raw": "A Almost B Fail"
+ },
+ "case-7-206_car_ink": {
+  "A": "getting there",
+  "B": "getting there",
+  "winner": "both fail",
+  "raw": "form: both GETTING THERE, both fail"
+ }
+}

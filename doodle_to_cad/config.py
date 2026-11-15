@@ -30,6 +30,7 @@ class Settings:
     agent_max_attempts: int = max(1, min(6, int(os.getenv("CAD_AGENT_MAX_ATTEMPTS", "3"))))
     agent_accept_score: float = float(os.getenv("CAD_AGENT_ACCEPT_SCORE", "70"))
     openscad_bin: str = os.getenv("OPENSCAD_BIN", "openscad")
+    llm_cache_dir: str = os.getenv("DOODLE_LLM_CACHE", "").strip()
     host: str = os.getenv("DOODLE_HOST", "127.0.0.1")
     port: int = int(os.getenv("DOODLE_PORT", "8080"))
     results_dir: Path = ROOT / os.getenv("DOODLE_RESULTS_DIR", "results")

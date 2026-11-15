@@ -1,0 +1,39 @@
+{
+  "base": 0.384,
+  "chosen_rotation_deg": -35,
+  "aligned": 1.0,
+  "gate_projection_scores": {
+    "front": 1.0
+  },
+  "topology": {
+    "front": {
+      "source_internal_profiles": 2,
+      "rendered_internal_profiles": 2,
+      "crop_internal_profiles": 2,
+      "source_aspect": 1.0,
+      "rendered_aspect": 1.0,
+      "source_rotation_deg": -35,
+      "source_opening_centroids": [
+        [
+          0.699,
+          0.497
+        ],
+        [
+          0.296,
+          0.497
+        ]
+      ],
+      "rendered_opening_centroids": [
+        [
+          0.288,
+          0.497
+        ],
+        [
+          0.707,
+          0.497
+        ]
+      ],
+      "feature_position_fidelity": 1.0
+    }
+  }
+}

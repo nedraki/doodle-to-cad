@@ -1,0 +1,206 @@
+SHA 200_rocket 7a38337574c0fef7
+SHA 201_person aa82ebaf8423e4f7
+SHA 202_lamp 9cb45a385b48fc4d
+SHA 203_scooter e7ad986e9eca8b65
+SHA 204_flower ec3271560ae9c36d
+SHA 205_mug 676a29cd26ac23a3
+SHA 206_car_ink 2f80a0079a110b0f
+HEALTH main {"status":"ok","agentic":{"backend":"bounded-cad-supervisor","max_attempts":3,"accept_score":70.0,"base_url":"http://127
+      [main 200_rocket t1] running/analyzing
+      [main 200_rocket t1] running/interpreting
+      [main 200_rocket t1] running/generating
+      [main 200_rocket t1] running/compiling (attempt 1)
+      [main 200_rocket t1] running/supervising (attempt 1)
+      [main 200_rocket t1] running/compiling (attempt 2)
+      [main 200_rocket t1] running/supervising (attempt 2)
+      [main 200_rocket t1] running/compiling (attempt 3)
+      [main 200_rocket t1] done/done
+DONE  200_rocket t1: accepted=False score=91.0 gates_fail=['features', 'projections'] 759.4s
+      [main 200_rocket t2] running/analyzing
+      [main 200_rocket t2] running/interpreting
+      [main 200_rocket t2] running/generating
+      [main 200_rocket t2] running/compiling (attempt 1)
+      [main 200_rocket t2] running/supervising (attempt 1)
+      [main 200_rocket t2] running/compiling (attempt 2)
+      [main 200_rocket t2] running/supervising (attempt 2)
+      [main 200_rocket t2] running/compiling (attempt 3)
+      [main 200_rocket t2] done/done
+DONE  200_rocket t2: accepted=False score=82.3 gates_fail=['features'] 338.6s
+      [main 200_rocket t3] running/analyzing
+      [main 200_rocket t3] running/interpreting
+      [main 200_rocket t3] running/generating
+      [main 200_rocket t3] running/compiling (attempt 1)
+      [main 200_rocket t3] running/supervising (attempt 1)
+      [main 200_rocket t3] running/compiling (attempt 2)
+      [main 200_rocket t3] running/supervising (attempt 2)
+      [main 200_rocket t3] running/compiling (attempt 3)
+      [main 200_rocket t3] done/done
+DONE  200_rocket t3: accepted=False score=73.1 gates_fail=['topology', 'projections'] 446.9s
+      [main 201_person t1] running/analyzing
+      [main 201_person t1] running/interpreting
+      [main 201_person t1] running/generating
+      [main 201_person t1] running/compiling (attempt 1)
+      [main 201_person t1] done/done
+DONE  201_person t1: accepted=True score=96.1 gates_fail=[] 104.2s
+      [main 201_person t2] running/analyzing
+      [main 201_person t2] running/interpreting
+      [main 201_person t2] running/generating
+      [main 201_person t2] running/compiling (attempt 1)
+      [main 201_person t2] running/supervising (attempt 1)
+      [main 201_person t2] running/compiling (attempt 2)
+      [main 201_person t2] running/supervising (attempt 2)
+      [main 201_person t2] running/compiling (attempt 3)
+      [main 201_person t2] done/done
+DONE  201_person t2: accepted=True score=96.6 gates_fail=[] 246.5s
+      [main 201_person t3] running/analyzing
+      [main 201_person t3] running/interpreting
+      [main 201_person t3] running/generating
+      [main 201_person t3] running/compiling (attempt 1)
+      [main 201_person t3] running/supervising (attempt 1)
+      [main 201_person t3] running/compiling (attempt 2)
+      [main 201_person t3] running/supervising (attempt 2)
+      [main 201_person t3] running/compiling (attempt 3)
+      [main 201_person t3] done/done
+DONE  201_person t3: accepted=False score=77.0 gates_fail=['topology'] 190.4s
+      [main 202_lamp t1] running/analyzing
+      [main 202_lamp t1] running/interpreting
+      [main 202_lamp t1] running/generating
+      [main 202_lamp t1] running/compiling (attempt 1)
+      [main 202_lamp t1] running/supervising (attempt 1)
+      [main 202_lamp t1] running/compiling (attempt 2)
+      [main 202_lamp t1] running/supervising (attempt 2)
+      [main 202_lamp t1] running/compiling (attempt 3)
+      [main 202_lamp t1] done/done
+DONE  202_lamp t1: accepted=False score=89.5 gates_fail=['projections'] 228.5s
+      [main 202_lamp t2] running/analyzing
+      [main 202_lamp t2] running/interpreting
+      [main 202_lamp t2] running/generating
+      [main 202_lamp t2] running/compiling (attempt 1)
+      [main 202_lamp t2] running/supervising (attempt 1)
+      [main 202_lamp t2] running/compiling (attempt 2)
+      [main 202_lamp t2] running/supervising (attempt 2)
+      [main 202_lamp t2] running/compiling (attempt 3)
+      [main 202_lamp t2] done/done
+DONE  202_lamp t2: accepted=False score=73.9 gates_fail=['topology'] 1192.5s
+      [main 202_lamp t3] running/analyzing
+      [main 202_lamp t3] running/interpreting
+      [main 202_lamp t3] running/generating
+      [main 202_lamp t3] running/compiling (attempt 1)
+      [main 202_lamp t3] running/supervising (attempt 1)
+      [main 202_lamp t3] running/compiling (attempt 2)
+      [main 202_lamp t3] running/supervising (attempt 2)
+      [main 202_lamp t3] running/compiling (attempt 3)
+      [main 202_lamp t3] done/done
+DONE  202_lamp t3: accepted=False score=73.4 gates_fail=['topology', 'projections'] 260.5s
+      [main 203_scooter t1] running/analyzing
+      [main 203_scooter t1] running/interpreting
+      [main 203_scooter t1] running/generating
+      [main 203_scooter t1] running/compiling (attempt 1)
+      [main 203_scooter t1] running/supervising (attempt 1)
+      [main 203_scooter t1] running/compiling (attempt 2)
+      [main 203_scooter t1] running/supervising (attempt 2)
+      [main 203_scooter t1] running/compiling (attempt 3)
+      [main 203_scooter t1] done/done
+DONE  203_scooter t1: accepted=False score=91.1 gates_fail=['projections'] 170.3s
+      [main 203_scooter t2] running/analyzing
+      [main 203_scooter t2] running/interpreting
+      [main 203_scooter t2] running/generating
+      [main 203_scooter t2] running/compiling (attempt 1)
+      [main 203_scooter t2] done/done
+DONE  203_scooter t2: accepted=True score=92.7 gates_fail=[] 74.2s
+      [main 203_scooter t3] running/analyzing
+      [main 203_scooter t3] running/interpreting
+      [main 203_scooter t3] running/generating
+      [main 203_scooter t3] running/compiling (attempt 1)
+      [main 203_scooter t3] done/done
+DONE  203_scooter t3: accepted=True score=92.7 gates_fail=[] 74.2s
+      [main 204_flower t1] running/analyzing
+      [main 204_flower t1] running/interpreting
+      [main 204_flower t1] running/generating
+      [main 204_flower t1] running/compiling (attempt 1)
+      [main 204_flower t1] running/supervising (attempt 1)
+      [main 204_flower t1] running/compiling (attempt 2)
+      [main 204_flower t1] running/supervising (attempt 2)
+      [main 204_flower t1] running/compiling (attempt 3)
+      [main 204_flower t1] done/done
+DONE  204_flower t1: accepted=False score=91.6 gates_fail=['projections'] 172.3s
+      [main 204_flower t2] running/analyzing
+      [main 204_flower t2] running/interpreting
+      [main 204_flower t2] running/generating
+      [main 204_flower t2] running/compiling (attempt 1)
+      [main 204_flower t2] running/supervising (attempt 1)
+      [main 204_flower t2] running/compiling (attempt 2)
+      [main 204_flower t2] running/supervising (attempt 2)
+      [main 204_flower t2] running/compiling (attempt 3)
+      [main 204_flower t2] done/done
+DONE  204_flower t2: accepted=True score=92.8 gates_fail=[] 138.3s
+      [main 204_flower t3] running/analyzing
+      [main 204_flower t3] running/interpreting
+      [main 204_flower t3] running/generating
+      [main 204_flower t3] running/compiling (attempt 1)
+      [main 204_flower t3] running/supervising (attempt 1)
+      [main 204_flower t3] running/compiling (attempt 2)
+      [main 204_flower t3] running/supervising (attempt 2)
+      [main 204_flower t3] running/compiling (attempt 3)
+      [main 204_flower t3] done/done
+DONE  204_flower t3: accepted=True score=92.2 gates_fail=[] 162.4s
+      [main 205_mug t1] running/analyzing
+      [main 205_mug t1] running/interpreting
+      [main 205_mug t1] running/generating
+      [main 205_mug t1] running/compiling (attempt 1)
+      [main 205_mug t1] running/supervising (attempt 1)
+      [main 205_mug t1] running/compiling (attempt 2)
+      [main 205_mug t1] done/done
+DONE  205_mug t1: accepted=True score=94.9 gates_fail=[] 206.5s
+      [main 205_mug t2] running/analyzing
+      [main 205_mug t2] running/interpreting
+      [main 205_mug t2] running/generating
+      [main 205_mug t2] running/compiling (attempt 1)
+      [main 205_mug t2] running/supervising (attempt 1)
+      [main 205_mug t2] running/compiling (attempt 2)
+      [main 205_mug t2] running/supervising (attempt 2)
+      [main 205_mug t2] running/compiling (attempt 3)
+      [main 205_mug t2] done/done
+DONE  205_mug t2: accepted=False score=52.2 gates_fail=['topology', 'features', 'projections'] 178.4s
+      [main 205_mug t3] running/analyzing
+      [main 205_mug t3] running/interpreting
+      [main 205_mug t3] running/generating
+      [main 205_mug t3] running/compiling (attempt 1)
+      [main 205_mug t3] running/supervising (attempt 1)
+      [main 205_mug t3] running/compiling (attempt 2)
+      [main 205_mug t3] running/supervising (attempt 2)
+      [main 205_mug t3] running/compiling (attempt 3)
+      [main 205_mug t3] done/done
+DONE  205_mug t3: accepted=False score=90.2 gates_fail=['features', 'projections'] 222.5s
+      [main 206_car_ink t1] running/analyzing
+      [main 206_car_ink t1] running/interpreting
+      [main 206_car_ink t1] running/generating
+      [main 206_car_ink t1] running/compiling (attempt 1)
+      [main 206_car_ink t1] running/supervising (attempt 1)
+      [main 206_car_ink t1] running/compiling (attempt 2)
+      [main 206_car_ink t1] running/supervising (attempt 2)
+      [main 206_car_ink t1] running/compiling (attempt 3)
+      [main 206_car_ink t1] done/done
+DONE  206_car_ink t1: accepted=False score=89.8 gates_fail=['features'] 356.8s
+      [main 206_car_ink t2] running/analyzing
+      [main 206_car_ink t2] running/interpreting
+      [main 206_car_ink t2] running/generating
+      [main 206_car_ink t2] running/compiling (attempt 1)
+      [main 206_car_ink t2] running/supervising (attempt 1)
+      [main 206_car_ink t2] running/compiling (attempt 2)
+      [main 206_car_ink t2] running/supervising (attempt 2)
+      [main 206_car_ink t2] running/compiling (attempt 3)
+      [main 206_car_ink t2] done/done
+DONE  206_car_ink t2: accepted=False score=84.2 gates_fail=['features'] 204.5s
+      [main 206_car_ink t3] running/analyzing
+      [main 206_car_ink t3] running/interpreting
+      [main 206_car_ink t3] running/generating
+      [main 206_car_ink t3] running/compiling (attempt 1)
+      [main 206_car_ink t3] running/supervising (attempt 1)
+      [main 206_car_ink t3] running/compiling (attempt 2)
+      [main 206_car_ink t3] running/supervising (attempt 2)
+      [main 206_car_ink t3] running/compiling (attempt 3)
+      [main 206_car_ink t3] done/done
+DONE  206_car_ink t3: accepted=False score=89.8 gates_fail=['features'] 176.3s
+SUMMARY main: accepted 7/21
+run_jailed: peak RSS 197 MiB (cap 12G)

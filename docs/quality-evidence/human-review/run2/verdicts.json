@@ -1,0 +1,86 @@
+{
+ "200_rocket": {
+  "human_A": "GETTING THERE",
+  "human_B": "GETTING THERE",
+  "winner": "A",
+  "A_branch": "main",
+  "B_branch": "quality",
+  "A_trial": 3,
+  "B_trial": 3,
+  "A_machine": "reject",
+  "B_machine": "reject",
+  "saved_at": "2026-11-13 22:06:55"
+ },
+ "201_person": {
+  "human_A": "FLYING STARS",
+  "human_B": "GETTING THERE",
+  "winner": "A",
+  "A_branch": "main",
+  "B_branch": "quality",
+  "A_trial": 3,
+  "B_trial": 2,
+  "A_machine": "reject",
+  "B_machine": "accept",
+  "saved_at": "2026-11-13 22:07:12"
+ },
+ "202_lamp": {
+  "human_A": "GETTING THERE",
+  "human_B": "FAIL",
+  "winner": "A",
+  "A_branch": "quality",
+  "B_branch": "main",
+  "A_trial": 3,
+  "B_trial": 3,
+  "A_machine": "reject",
+  "B_machine": "reject",
+  "saved_at": "2026-11-13 22:07:29"
+ },
+ "203_scooter": {
+  "human_A": "ALMOST",
+  "human_B": "FAIL",
+  "winner": "A",
+  "A_branch": "main",
+  "B_branch": "quality",
+  "A_trial": 3,
+  "B_trial": 3,
+  "A_machine": "reject",
+  "B_machine": "reject",
+  "saved_at": "2026-11-13 22:07:50"
+ },
+ "204_flower": {
+  "human_A": "GETTING THERE",
+  "human_B": "ALMOST",
+  "winner": "B",
+  "A_branch": "main",
+  "B_branch": "quality",
+  "A_trial": 3,
+  "B_trial": 3,
+  "A_machine": "accept",
+  "B_machine": "accept",
+  "saved_at": "2026-11-13 22:08:04"
+ },
+ "205_mug": {
+  "human_A": "GETTING THERE",
+  "human_B": "GETTING THERE",
+  "winner": "both-fail",
+  "A_branch": "main",
+  "B_branch": "quality",
+  "A_trial": 3,
+  "B_trial": 3,
+  "A_machine": "reject",
+  "B_machine": "reject",
+  "saved_at": "2026-11-13 22:08:21"
+ },
+ "206_car_ink": {
+  "human_A": "GETTING THERE",
+  "human_B": "PASS",
+  "winner": "B",
+  "A_branch": "quality",
+  "B_branch": "main",
+  "A_trial": 3,
+  "B_trial": 3,
+  "A_machine": "reject",
+  "B_machine": "reject",
+  "saved_at": "2026-11-13 22:08:31"
+ }
+}

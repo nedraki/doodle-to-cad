@@ -2,8 +2,11 @@ from __future__ import annotations
 
 import json
 import io
+import os
 import re
 import shutil
+import subprocess
+import hashlib
 import time
 import uuid
 import asyncio
@@ -104,6 +107,26 @@ Return JSON only: {"action":"accept|repair_scad|reinterpret","problems":[...],"p
 Discipline: "problems" and "preserve" are short bullet strings (under 120 chars each). "instructions" is a direct command (under 120 words) stating WHAT to fix, never WHY step by step; no OpenSCAD snippets and no reasoning narration inside any string value."""
 
 JSON_REPAIR_PROMPT = """Repair the supplied malformed JSON into one valid JSON object. Preserve its meaning and fields. Do not add analysis, markdown, comments, or code fences. Output JSON only."""
+
+
+def build_fingerprint(settings: Settings) -> dict[str, Any]:
+    """Machine-provenance for every run (BRep-bench discipline: an evidence
+    line that cannot say WHICH code/prompt produced it cannot be audited).
+    Prompt hashes are taken from the live module globals — they change the
+    moment any prompt text is edited, so they cannot drift out of date."""
+    prompts = {name.lower(): hashlib.sha256(value.encode()).hexdigest()[:8]
+               for name, value in sorted(globals().items())
+               if name.endswith("_PROMPT") and isinstance(value, str)}
+    try:
+        git = subprocess.run(["git", "rev-parse", "--short=9", "HEAD"],
+                             cwd=Path(__file__).resolve().parent.parent,
+                             capture_output=True, text=True, timeout=5).stdout.strip() or None
+    except Exception:
+        git = None
+    kernel: dict[str, Any] = {"bin": settings.openscad_bin}
+    docker_image = os.getenv("DOODLE_OPENSCAD_DOCKER")
+    if docker_image: kernel["docker_image"] = docker_image
+    return {"git_rev": git, "prompts": prompts, "kernel": kernel, "base_url": settings.base_url}
 
 
 class Pipeline:
@@ -384,7 +407,7 @@ class Pipeline:
         repaired = len(attempts) > 1
         model = await self.client.discover()
         passed_mesh_gate = bool(selected["evaluation"]["accepted"])
-        result = {"id":run_id,"success":passed_mesh_gate,"model":model.selected,"model_source":model.source,"base_url":self.settings.base_url,"spec":spec,"geometry":evidence,"mesh_health":health,"evaluation":selected["evaluation"],"selected_attempt":selected["attempt"],"attempts":attempts,"controls":controls,"additional_view_count":len(additional_views),"repaired":repaired,"compile_log":log,"duration_seconds":round(time.monotonic()-started,2),"files":{"scad":f"/results/{run_id}/model.scad","stl":f"/results/{run_id}/model.stl" if stl else None,"attempts":f"/results/{run_id}/attempts.json","overlay":f"/results/{run_id}/geometry-overlay.png","views":{k:f"/results/{run_id}/{v.name}" for k,v in views.items()}}}
+        result = {"id":run_id,"success":passed_mesh_gate,"model":model.selected,"model_source":model.source,"base_url":self.settings.base_url,"fingerprint":build_fingerprint(self.settings),"llm_cache":self.client.cache_stats(),"spec":spec,"geometry":evidence,"mesh_health":health,"evaluation":selected["evaluation"],"selected_attempt":selected["attempt"],"attempts":attempts,"controls":controls,"additional_view_count":len(additional_views),"repaired":repaired,"compile_log":log,"duration_seconds":round(time.monotonic()-started,2),"files":{"scad":f"/results/{run_id}/model.scad","stl":f"/results/{run_id}/model.stl" if stl else None,"attempts":f"/results/{run_id}/attempts.json","overlay":f"/results/{run_id}/geometry-overlay.png","views":{k:f"/results/{run_id}/{v.name}" for k,v in views.items()}}}
         (out/"result.json").write_text(json.dumps(result,indent=2)); return result
 
     @staticmethod

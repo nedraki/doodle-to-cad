@@ -1,0 +1,33 @@
+{
+ "provenance": "human-review run3 (41 blind grades + owner comments) joined with one-judge gate data from ab-frozen-main-vs-quality pass 2",
+ "confusion_41_cells": {"machine_accept_AND_human_good": 0, "machine_accept_human_capped": 6, "machine_reject_human_pass": 4, "machine_reject_human_fail_or_also_reject": 31},
+ "safety_property": {"human_FAIL_leaked_through_machine_accept": 0},
+ "score_uninformative": {"human_GETTING_THERE_top_score": {"cell": "quality-201_person-t2", "score": 98.2}, "human_PASS_lowest_score": {"cell": "main-201_person-t3", "score": 77.0}},
+ "human_pass_fixtures": [
+  {"cell": "main-206_car_ink-t3", "blocked_by": ["features"], "why_blocked": "drawing demands 9 through-openings, solid has genus 7", "owner_note": "circles representing the headlights are cut by the vertical grids", "owner_meaning": "decorative openings ~there is acceptable"},
+  {"cell": "main-201_person-t1", "blocked_by": ["projections"], "why_blocked": "front aspect 0.60 vs 0.40; sim below floor", "owner_note": "proportions of legs and arms changed, still a person", "owner_meaning": "proportion drift acceptable when gestalt + pose read"},
+  {"cell": "main-201_person-t3", "blocked_by": ["topology"], "why_blocked": "2 disconnected components", "owner_note": "clearly represents a person standing with arms on specific position", "owner_meaning": "human lens is representation; ONE-SOLID is a printability contract, not a fidelity judgement"},
+  {"cell": "main-202_lamp-t1", "blocked_by": ["projections"], "why_blocked": "front aspect 1.40 vs 0.66 (shade tilted in depth instead of width); rescue rot 50deg sim 0.62", "owner_note": "shade is held from top on drawing; curve could be better — still PASS", "owner_meaning": "tilt direction is a critique, not a veto"}
+ ],
+ "machine_accepted_owner_capped": [
+  {"cell": "quality-201_person-t2", "grade": "GETTING THERE", "score": 98.2},
+  {"cell": "main-201_person-t2", "grade": "GETTING THERE", "note": "arms shaped square (90deg) but on drawing more triangular"},
+  {"cell": "main-204_flower-t2", "grade": "GETTING THERE", "note": "leaves and petals located on a different plane"},
+  {"cell": "quality-204_flower-t2", "grade": "GETTING THERE", "note": "orientation of flower and leaf wrong plane"},
+  {"cell": "quality-204_flower-t3", "grade": "ALMOST", "note": "very good petals; flower on plane different than drawing"},
+  {"cell": "main-205_mug-t1", "grade": "ALMOST", "note": "handle good design, mug top off"}
+ ],
+ "owner_comment_themes_for_features_gate": [
+  "part-plane consistency: drawn coplanar features built on different planes (flowers, leaves, rocket flaps)",
+  "attach semantics: flaps/wheels/chassis must be recognized as different components that are ATTACHED (floating or mere contact rejected in principle, though printability gate already catches union)",
+  "curve/contour fidelity of characteristic silhouette (lamp shade curve, handlebar curve, person arm angle)",
+  "decorative openings: headlights/grille 'mostly there' is acceptable to owner; exact count demands over-block",
+  "orientation of characteristic parts relative to the drawing (base wide-side-down, shade opening direction) - judged gestalt, not per-view veto"
+ ],
+ "decisions": [
+  "KEEP physical gates (watertight, one-solid, inversion, build-envelope) as SHIP blockers regardless of human lens: they encode printability, which the human grading lens deliberately ignores (owner PASSed a 2-component build).",
+  "Machine 'accepted' corresponds to owner ALMOST at best -> rename verdict tiers SHIP/ALMOST/FAIL in product surface.",
+  "Do NOT re-tune global thresholds on n=41 single-cases (aspect 0.40 -> wider would unblock 2 fixtures but re-admit the original 51%-mismatch lamp class; rescue-rotation gate still catches that — pending measured A/B).",
+  "The discriminator owner uses (planes, attachment semantics, characteristic curves, pose) is not measured by any current gate -> features gate is THE next build; fixtures = these 10 cells + their notes."
+ ]
+}

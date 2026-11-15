@@ -1,0 +1,917 @@
+[
+ {
+  "side": "main",
+  "case": "200_rocket",
+  "trial": 1,
+  "judge_accepted": false,
+  "judge_verified": false,
+  "judge_score": 92.1,
+  "states": {
+   "compiled": "pass",
+   "topology": "pass",
+   "build_envelope": "pass",
+   "dimensions": "unmeasured",
+   "shape_sanity": "unmeasured",
+   "features": "fail",
+   "projections": "fail",
+   "interior": "pass"
+  },
+  "failures": [
+   "the drawing demands 4 through-opening(s) (best view front) but the solid has genus 0: at least one opening is a blind cut or surface notch, not a through-hole \u2014 extend that cutter fully through the material",
+   "front view proportion: drawing aspect 0.81 vs render 0.44 (need within 40%) \u2014 the feature is built on the wrong plane or at the wrong scale for this registered view; rebuild so THIS view matches"
+  ],
+  "own_accepted": false
+ },
+ {
+  "side": "main",
+  "case": "200_rocket",
+  "trial": 2,
+  "judge_accepted": false,
+  "judge_verified": false,
+  "judge_score": 82.3,
+  "states": {
+   "compiled": "pass",
+   "topology": "pass",
+   "build_envelope": "pass",
+   "dimensions": "unmeasured",
+   "shape_sanity": "unmeasured",
+   "features": "fail",
+   "projections": "fail",
+   "interior": "pass"
+  },
+  "failures": [
+   "required internal profiles are missing: front view demands 4, best rendered view has 2. Missing at these view-local centres \u2014 add cutters there: (u=0.659,v=0.301); (u=0.46,v=0.529).",
+   "front view proportion: drawing aspect 0.81 vs render 0.47 (need within 40%) \u2014 the feature is built on the wrong plane or at the wrong scale for this registered view; rebuild so THIS view matches"
+  ],
+  "own_accepted": false
+ },
+ {
+  "side": "main",
+  "case": "200_rocket",
+  "trial": 3,
+  "judge_accepted": false,
+  "judge_verified": false,
+  "judge_score": 72.2,
+  "states": {
+   "compiled": "pass",
+   "topology": "fail",
+   "build_envelope": "pass",
+   "dimensions": "unmeasured",
+   "shape_sanity": "unmeasured",
+   "features": "fail",
+   "projections": "fail",
+   "interior": "pass"
+  },
+  "failures": [
+   "mesh has 4 disconnected components; the model must be ONE solid: union() every member, and any attached member (fin, handle, wheel, arm) must be repositioned or extended until its volume actually overlaps the main body \u2014 a member that merely touches the surface is still floating",
+   "front view only matched after rotating the drawn crop 45 deg to similarity 0.35 \u2014 that is a rescue alignment, not agreement; orient the solid so the upright crop matches"
+  ],
+  "own_accepted": false
+ },
+ {
+  "side": "main",
+  "case": "201_person",
+  "trial": 1,
+  "judge_accepted": false,
+  "judge_verified": false,
+  "judge_score": 96.1,
+  "states": {
+   "compiled": "pass",
+   "topology": "pass",
+   "build_envelope": "pass",
+   "dimensions": "unmeasured",
+   "shape_sanity": "unmeasured",
+   "features": "unmeasured",
+   "projections": "fail",
+   "interior": "pass"
+  },
+  "failures": [
+   "front view proportion: drawing aspect 0.60 vs render 0.40 (need within 40%) \u2014 the feature is built on the wrong plane or at the wrong scale for this registered view; rebuild so THIS view matches",
+   "CAD projections poorly match the drawing:  (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly."
+  ],
+  "own_accepted": true
+ },
+ {
+  "side": "main",
+  "case": "201_person",
+  "trial": 2,
+  "judge_accepted": true,
+  "judge_verified": false,
+  "judge_score": 96.6,
+  "states": {
+   "compiled": "pass",
+   "topology": "pass",
+   "build_envelope": "pass",
+   "dimensions": "unmeasured",
+   "shape_sanity": "unmeasured",
+   "features": "unmeasured",
+   "projections": "pass",
+   "interior": "pass"
+  },
+  "failures": [],
+  "own_accepted": true
+ },
+ {
+  "side": "main",
+  "case": "201_person",
+  "trial": 3,
+  "judge_accepted": false,
+  "judge_verified": false,
+  "judge_score": 77.0,
+  "states": {
+   "compiled": "pass",
+   "topology": "fail",
+   "build_envelope": "pass",
+   "dimensions": "unmeasured",
+   "shape_sanity": "unmeasured",
+   "features": "unmeasured",
+   "projections": "pass",
+   "interior": "pass"
+  },
+  "failures": [
+   "mesh has 2 disconnected components; the model must be ONE solid: union() every member, and any attached member (fin, handle, wheel, arm) must be repositioned or extended until its volume actually overlaps the main body \u2014 a member that merely touches the surface is still floating"
+  ],
+  "own_accepted": false
+ },
+ {
+  "side": "main",
+  "case": "202_lamp",
+  "trial": 1,
+  "judge_accepted": false,
+  "judge_verified": false,
+  "judge_score": 94.3,
+  "states": {
+   "compiled": "pass",
+   "topology": "pass",
+   "build_envelope": "pass",
+   "dimensions": "unmeasured",
+   "shape_sanity": "unmeasured",
+   "features": "unmeasured",
+   "projections": "fail",
+   "interior": "pass"
+  },
+  "failures": [
+   "front view proportion: drawing aspect 1.40 vs render 0.66 (need within 40%) \u2014 the feature is built on the wrong plane or at the wrong scale for this registered view; rebuild so THIS view matches",
+   "front view only matched after rotating the drawn crop 50 deg to similarity 0.62 \u2014 that is a rescue alignment, not agreement; orient the solid so the upright crop matches"
+  ],
+  "own_accepted": false
+ },
+ {
+  "side": "main",
+  "case": "202_lamp",
+  "trial": 2,
+  "judge_accepted": false,
+  "judge_verified": false,
+  "judge_score": 73.9,
+  "states": {
+   "compiled": "pass",
+   "topology": "fail",
+   "build_envelope": "pass",
+   "dimensions": "unmeasured",
+   "shape_sanity": "unmeasured",
+   "features": "unmeasured",
+   "projections": "fail",
+   "interior": "pass"
+  },
+  "failures": [
+   "mesh has 2 disconnected components; the model must be ONE solid: union() every member, and any attached member (fin, handle, wheel, arm) must be repositioned or extended until its volume actually overlaps the main body \u2014 a member that merely touches the surface is still floating",
+   "front view proportion: drawing aspect 1.40 vs render 0.60 (need within 40%) \u2014 the feature is built on the wrong plane or at the wrong scale for this registered view; rebuild so THIS view matches"
+  ],
+  "own_accepted": false
+ },
+ {
+  "side": "main",
+  "case": "202_lamp",
+  "trial": 3,
+  "judge_accepted": false,
+  "judge_verified": false,
+  "judge_score": 74.7,
+  "states": {
+   "compiled": "pass",
+   "topology": "fail",
+   "build_envelope": "pass",
+   "dimensions": "unmeasured",
+   "shape_sanity": "unmeasured",
+   "features": "unmeasured",
+   "projections": "fail",
+   "interior": "pass"
+  },
+  "failures": [
+   "mesh has 2 disconnected components; the model must be ONE solid: union() every member, and any attached member (fin, handle, wheel, arm) must be repositioned or extended until its volume actually overlaps the main body \u2014 a member that merely touches the surface is still floating",
+   "front view proportion: drawing aspect 1.40 vs render 0.67 (need within 40%) \u2014 the feature is built on the wrong plane or at the wrong scale for this registered view; rebuild so THIS view matches"
+  ],
+  "own_accepted": false
+ },
+ {
+  "side": "main",
+  "case": "203_scooter",
+  "trial": 1,
+  "judge_accepted": false,
+  "judge_verified": false,
+  "judge_score": 96.0,
+  "states": {
+   "compiled": "pass",
+   "topology": "pass",
+   "build_envelope": "pass",
+   "dimensions": "unmeasured",
+   "shape_sanity": "unmeasured",
+   "features": "unmeasured",
+   "projections": "pass",
+   "interior": "fail"
+  },
+  "failures": [
+   "the solid renders empty inside while the drawing carries interior structure \u2014 front view: drawing carries 3 interior feature(s), render shows none; bends, steps, cavities and wall separations are being filled over: cut or offset them, do not fill"
+  ],
+  "own_accepted": false
+ },
+ {
+  "side": "main",
+  "case": "203_scooter",
+  "trial": 2,
+  "judge_accepted": false,
+  "judge_verified": false,
+  "judge_score": 92.7,
+  "states": {
+   "compiled": "pass",
+   "topology": "pass",
+   "build_envelope": "pass",
+   "dimensions": "unmeasured",
+   "shape_sanity": "unmeasured",
+   "features": "unmeasured",
+   "projections": "pass",
+   "interior": "fail"
+  },
+  "failures": [
+   "the solid renders empty inside while the drawing carries interior structure \u2014 front view: drawing carries 3 interior feature(s), render shows none; bends, steps, cavities and wall separations are being filled over: cut or offset them, do not fill"
+  ],
+  "own_accepted": true
+ },
+ {
+  "side": "main",
+  "case": "203_scooter",
+  "trial": 3,
+  "judge_accepted": false,
+  "judge_verified": false,
+  "judge_score": 92.7,
+  "states": {
+   "compiled": "pass",
+   "topology": "pass",
+   "build_envelope": "pass",
+   "dimensions": "unmeasured",
+   "shape_sanity": "unmeasured",
+   "features": "unmeasured",
+   "projections": "pass",
+   "interior": "fail"
+  },
+  "failures": [
+   "the solid renders empty inside while the drawing carries interior structure \u2014 front view: drawing carries 3 interior feature(s), render shows none; bends, steps, cavities and wall separations are being filled over: cut or offset them, do not fill"
+  ],
+  "own_accepted": true
+ },
+ {
+  "side": "main",
+  "case": "204_flower",
+  "trial": 1,
+  "judge_accepted": false,
+  "judge_verified": false,
+  "judge_score": 93.2,
+  "states": {
+   "compiled": "pass",
+   "topology": "pass",
+   "build_envelope": "pass",
+   "dimensions": "unmeasured",
+   "shape_sanity": "unmeasured",
+   "features": "unmeasured",
+   "projections": "fail",
+   "interior": "pass"
+  },
+  "failures": [
+   "front view only matched after rotating the drawn crop 25 deg to similarity 0.54 \u2014 that is a rescue alignment, not agreement; orient the solid so the upright crop matches",
+   "CAD projections poorly match the drawing:  (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly."
+  ],
+  "own_accepted": false
+ },
+ {
+  "side": "main",
+  "case": "204_flower",
+  "trial": 2,
+  "judge_accepted": true,
+  "judge_verified": false,
+  "judge_score": 92.8,
+  "states": {
+   "compiled": "pass",
+   "topology": "pass",
+   "build_envelope": "pass",
+   "dimensions": "unmeasured",
+   "shape_sanity": "unmeasured",
+   "features": "unmeasured",
+   "projections": "pass",
+   "interior": "pass"
+  },
+  "failures": [],
+  "own_accepted": true
+ },
+ {
+  "side": "main",
+  "case": "204_flower",
+  "trial": 3,
+  "judge_accepted": true,
+  "judge_verified": false,
+  "judge_score": 92.2,
+  "states": {
+   "compiled": "pass",
+   "topology": "pass",
+   "build_envelope": "pass",
+   "dimensions": "unmeasured",
+   "shape_sanity": "unmeasured",
+   "features": "unmeasured",
+   "projections": "pass",
+   "interior": "pass"
+  },
+  "failures": [],
+  "own_accepted": true
+ },
+ {
+  "side": "main",
+  "case": "205_mug",
+  "trial": 1,
+  "judge_accepted": true,
+  "judge_verified": false,
+  "judge_score": 94.9,
+  "states": {
+   "compiled": "pass",
+   "topology": "pass",
+   "build_envelope": "pass",
+   "dimensions": "unmeasured",
+   "shape_sanity": "unmeasured",
+   "features": "pass",
+   "projections": "pass",
+   "interior": "pass"
+  },
+  "failures": [],
+  "own_accepted": true
+ },
+ {
+  "side": "main",
+  "case": "205_mug",
+  "trial": 2,
+  "judge_accepted": false,
+  "judge_verified": false,
+  "judge_score": 52.2,
+  "states": {
+   "compiled": "pass",
+   "topology": "fail",
+   "build_envelope": "pass",
+   "dimensions": "unmeasured",
+   "shape_sanity": "unmeasured",
+   "features": "fail",
+   "projections": "fail",
+   "interior": "pass"
+  },
+  "failures": [
+   "mesh has 3 disconnected components; the model must be ONE solid: union() every member, and any attached member (fin, handle, wheel, arm) must be repositioned or extended until its volume actually overlaps the main body \u2014 a member that merely touches the surface is still floating",
+   "required internal profiles are missing: front view demands 1, best rendered view has 0. Missing at these view-local centres \u2014 add cutters there: (u=0.648,v=0.089)."
+  ],
+  "own_accepted": false
+ },
+ {
+  "side": "main",
+  "case": "205_mug",
+  "trial": 3,
+  "judge_accepted": false,
+  "judge_verified": false,
+  "judge_score": 90.2,
+  "states": {
+   "compiled": "pass",
+   "topology": "pass",
+   "build_envelope": "pass",
+   "dimensions": "unmeasured",
+   "shape_sanity": "unmeasured",
+   "features": "fail",
+   "projections": "fail",
+   "interior": "pass"
+  },
+  "failures": [
+   "CAD projections poorly match the drawing: front similarity 0.35 (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly.",
+   "features exist but sit at the wrong positions in front view(s): match each opening's location (u,v within the outer profile) to the drawing; check the cad_mapping signs (front: u->+X v->-Z; top: u->+X v->-Y i.e. sheet-down is the FRONT of the part)"
+  ],
+  "own_accepted": false
+ },
+ {
+  "side": "main",
+  "case": "206_car_ink",
+  "trial": 1,
+  "judge_accepted": false,
+  "judge_verified": false,
+  "judge_score": 89.8,
+  "states": {
+   "compiled": "pass",
+   "topology": "pass",
+   "build_envelope": "pass",
+   "dimensions": "unmeasured",
+   "shape_sanity": "unmeasured",
+   "features": "fail",
+   "projections": "pass",
+   "interior": "fail"
+  },
+  "failures": [
+   "required internal profiles are missing: front view demands 9, best rendered view has 6. Missing at these view-local centres \u2014 add cutters there: (u=0.369,v=0.423); (u=0.434,v=0.425); (u=0.499,v=0.43); (u=0.694,v=0.441); (u=0.166,v=0.625); (u=0.832,v=0.628).",
+   "the drawing demands 9 through-opening(s) (best view front) but the solid has genus 3: at least one opening is a blind cut or surface notch, not a through-hole \u2014 extend that cutter fully through the material"
+  ],
+  "own_accepted": false
+ },
+ {
+  "side": "main",
+  "case": "206_car_ink",
+  "trial": 2,
+  "judge_accepted": false,
+  "judge_verified": false,
+  "judge_score": 84.2,
+  "states": {
+   "compiled": "pass",
+   "topology": "pass",
+   "build_envelope": "pass",
+   "dimensions": "unmeasured",
+   "shape_sanity": "unmeasured",
+   "features": "fail",
+   "projections": "pass",
+   "interior": "pass"
+  },
+  "failures": [
+   "required internal profiles are missing: front view demands 9, best rendered view has 3. Missing at these view-local centres \u2014 add cutters there: (u=0.434,v=0.425); (u=0.499,v=0.43); (u=0.166,v=0.625); (u=0.832,v=0.628).",
+   "the drawing demands 9 through-opening(s) (best view front) but the solid has genus 5: at least one opening is a blind cut or surface notch, not a through-hole \u2014 extend that cutter fully through the material"
+  ],
+  "own_accepted": false
+ },
+ {
+  "side": "main",
+  "case": "206_car_ink",
+  "trial": 3,
+  "judge_accepted": false,
+  "judge_verified": false,
+  "judge_score": 89.8,
+  "states": {
+   "compiled": "pass",
+   "topology": "pass",
+   "build_envelope": "pass",
+   "dimensions": "unmeasured",
+   "shape_sanity": "unmeasured",
+   "features": "fail",
+   "projections": "pass",
+   "interior": "pass"
+  },
+  "failures": [
+   "required internal profiles are missing: front view demands 9, best rendered view has 5. Missing at these view-local centres \u2014 add cutters there: (u=0.499,v=0.43); (u=0.694,v=0.441).",
+   "the drawing demands 9 through-opening(s) (best view front) but the solid has genus 7: at least one opening is a blind cut or surface notch, not a through-hole \u2014 extend that cutter fully through the material"
+  ],
+  "own_accepted": false
+ },
+ {
+  "side": "quality",
+  "case": "200_rocket",
+  "trial": 1,
+  "judge_accepted": false,
+  "judge_verified": false,
+  "judge_score": 92.9,
+  "states": {
+   "compiled": "pass",
+   "topology": "pass",
+   "build_envelope": "pass",
+   "dimensions": "unmeasured",
+   "shape_sanity": "unmeasured",
+   "features": "fail",
+   "projections": "fail",
+   "interior": "pass"
+  },
+  "failures": [
+   "the drawing demands 4 through-opening(s) (best view front) but the solid has genus 1: at least one opening is a blind cut or surface notch, not a through-hole \u2014 extend that cutter fully through the material",
+   "front view proportion: drawing aspect 0.81 vs render 0.57 (need within 40%) \u2014 the feature is built on the wrong plane or at the wrong scale for this registered view; rebuild so THIS view matches"
+  ],
+  "own_accepted": false
+ },
+ {
+  "side": "quality",
+  "case": "200_rocket",
+  "trial": 2,
+  "judge_accepted": false,
+  "judge_verified": false,
+  "judge_score": 74.0,
+  "states": {
+   "compiled": "pass",
+   "topology": "fail",
+   "build_envelope": "pass",
+   "dimensions": "unmeasured",
+   "shape_sanity": "unmeasured",
+   "features": "pass",
+   "projections": "pass",
+   "interior": "pass"
+  },
+  "failures": [
+   "mesh has 4 disconnected components; the model must be ONE solid: union() every member, and any attached member (fin, handle, wheel, arm) must be repositioned or extended until its volume actually overlaps the main body \u2014 a member that merely touches the surface is still floating"
+  ],
+  "own_accepted": false
+ },
+ {
+  "side": "quality",
+  "case": "200_rocket",
+  "trial": 3,
+  "judge_accepted": false,
+  "judge_verified": false,
+  "judge_score": 93.0,
+  "states": {
+   "compiled": "pass",
+   "topology": "pass",
+   "build_envelope": "pass",
+   "dimensions": "unmeasured",
+   "shape_sanity": "unmeasured",
+   "features": "fail",
+   "projections": "fail",
+   "interior": "pass"
+  },
+  "failures": [
+   "the drawing demands 4 through-opening(s) (best view front) but the solid has genus 1: at least one opening is a blind cut or surface notch, not a through-hole \u2014 extend that cutter fully through the material",
+   "front view proportion: drawing aspect 0.81 vs render 0.50 (need within 40%) \u2014 the feature is built on the wrong plane or at the wrong scale for this registered view; rebuild so THIS view matches"
+  ],
+  "own_accepted": false
+ },
+ {
+  "side": "quality",
+  "case": "201_person",
+  "trial": 1,
+  "judge_accepted": false,
+  "judge_verified": false,
+  "judge_score": 78.7,
+  "states": {
+   "compiled": "pass",
+   "topology": "fail",
+   "build_envelope": "pass",
+   "dimensions": "unmeasured",
+   "shape_sanity": "unmeasured",
+   "features": "unmeasured",
+   "projections": "pass",
+   "interior": "pass"
+  },
+  "failures": [
+   "mesh has 3 disconnected components; the model must be ONE solid: union() every member, and any attached member (fin, handle, wheel, arm) must be repositioned or extended until its volume actually overlaps the main body \u2014 a member that merely touches the surface is still floating"
+  ],
+  "own_accepted": false
+ },
+ {
+  "side": "quality",
+  "case": "201_person",
+  "trial": 2,
+  "judge_accepted": true,
+  "judge_verified": false,
+  "judge_score": 98.2,
+  "states": {
+   "compiled": "pass",
+   "topology": "pass",
+   "build_envelope": "pass",
+   "dimensions": "unmeasured",
+   "shape_sanity": "unmeasured",
+   "features": "unmeasured",
+   "projections": "pass",
+   "interior": "pass"
+  },
+  "failures": [],
+  "own_accepted": true
+ },
+ {
+  "side": "quality",
+  "case": "202_lamp",
+  "trial": 1,
+  "judge_accepted": false,
+  "judge_verified": false,
+  "judge_score": 92.3,
+  "states": {
+   "compiled": "pass",
+   "topology": "pass",
+   "build_envelope": "pass",
+   "dimensions": "unmeasured",
+   "shape_sanity": "unmeasured",
+   "features": "unmeasured",
+   "projections": "fail",
+   "interior": "pass"
+  },
+  "failures": [
+   "front view proportion: drawing aspect 1.40 vs render 0.80 (need within 40%) \u2014 the feature is built on the wrong plane or at the wrong scale for this registered view; rebuild so THIS view matches",
+   "front view only matched after rotating the drawn crop 20 deg to similarity 0.48 \u2014 that is a rescue alignment, not agreement; orient the solid so the upright crop matches"
+  ],
+  "own_accepted": false
+ },
+ {
+  "side": "quality",
+  "case": "202_lamp",
+  "trial": 2,
+  "judge_accepted": false,
+  "judge_verified": false,
+  "judge_score": 93.5,
+  "states": {
+   "compiled": "pass",
+   "topology": "pass",
+   "build_envelope": "pass",
+   "dimensions": "unmeasured",
+   "shape_sanity": "unmeasured",
+   "features": "unmeasured",
+   "projections": "fail",
+   "interior": "pass"
+  },
+  "failures": [
+   "front view only matched after rotating the drawn crop 35 deg to similarity 0.57 \u2014 that is a rescue alignment, not agreement; orient the solid so the upright crop matches",
+   "CAD projections poorly match the drawing:  (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly."
+  ],
+  "own_accepted": true
+ },
+ {
+  "side": "quality",
+  "case": "202_lamp",
+  "trial": 3,
+  "judge_accepted": false,
+  "judge_verified": false,
+  "judge_score": 93.5,
+  "states": {
+   "compiled": "pass",
+   "topology": "pass",
+   "build_envelope": "pass",
+   "dimensions": "unmeasured",
+   "shape_sanity": "unmeasured",
+   "features": "unmeasured",
+   "projections": "fail",
+   "interior": "pass"
+  },
+  "failures": [
+   "front view proportion: drawing aspect 1.40 vs render 0.71 (need within 40%) \u2014 the feature is built on the wrong plane or at the wrong scale for this registered view; rebuild so THIS view matches",
+   "front view only matched after rotating the drawn crop 50 deg to similarity 0.57 \u2014 that is a rescue alignment, not agreement; orient the solid so the upright crop matches"
+  ],
+  "own_accepted": false
+ },
+ {
+  "side": "quality",
+  "case": "203_scooter",
+  "trial": 1,
+  "judge_accepted": false,
+  "judge_verified": false,
+  "judge_score": 95.4,
+  "states": {
+   "compiled": "pass",
+   "topology": "pass",
+   "build_envelope": "pass",
+   "dimensions": "unmeasured",
+   "shape_sanity": "unmeasured",
+   "features": "unmeasured",
+   "projections": "pass",
+   "interior": "fail"
+  },
+  "failures": [
+   "the solid renders empty inside while the drawing carries interior structure \u2014 front view: drawing carries 3 interior feature(s), render shows none; bends, steps, cavities and wall separations are being filled over: cut or offset them, do not fill"
+  ],
+  "own_accepted": false
+ },
+ {
+  "side": "quality",
+  "case": "203_scooter",
+  "trial": 2,
+  "judge_accepted": false,
+  "judge_verified": false,
+  "judge_score": 76.7,
+  "states": {
+   "compiled": "pass",
+   "topology": "fail",
+   "build_envelope": "pass",
+   "dimensions": "unmeasured",
+   "shape_sanity": "unmeasured",
+   "features": "unmeasured",
+   "projections": "fail",
+   "interior": "fail"
+  },
+  "failures": [
+   "mesh has 3 disconnected components; the model must be ONE solid: union() every member, and any attached member (fin, handle, wheel, arm) must be repositioned or extended until its volume actually overlaps the main body \u2014 a member that merely touches the surface is still floating",
+   "front view only matched after rotating the drawn crop 75 deg to similarity 0.65 \u2014 that is a rescue alignment, not agreement; orient the solid so the upright crop matches"
+  ],
+  "own_accepted": false
+ },
+ {
+  "side": "quality",
+  "case": "203_scooter",
+  "trial": 3,
+  "judge_accepted": false,
+  "judge_verified": false,
+  "judge_score": 78.3,
+  "states": {
+   "compiled": "pass",
+   "topology": "fail",
+   "build_envelope": "pass",
+   "dimensions": "unmeasured",
+   "shape_sanity": "unmeasured",
+   "features": "unmeasured",
+   "projections": "pass",
+   "interior": "fail"
+  },
+  "failures": [
+   "mesh has 2 disconnected components; the model must be ONE solid: union() every member, and any attached member (fin, handle, wheel, arm) must be repositioned or extended until its volume actually overlaps the main body \u2014 a member that merely touches the surface is still floating",
+   "the solid renders empty inside while the drawing carries interior structure \u2014 front view: drawing carries 3 interior feature(s), render shows none; bends, steps, cavities and wall separations are being filled over: cut or offset them, do not fill"
+  ],
+  "own_accepted": false
+ },
+ {
+  "side": "quality",
+  "case": "204_flower",
+  "trial": 1,
+  "judge_accepted": false,
+  "judge_verified": false,
+  "judge_score": 92.9,
+  "states": {
+   "compiled": "pass",
+   "topology": "pass",
+   "build_envelope": "fail",
+   "dimensions": "unmeasured",
+   "shape_sanity": "unmeasured",
+   "features": "unmeasured",
+   "projections": "pass",
+   "interior": "pass"
+  },
+  "failures": [
+   "part does not fit the 256 mm build cube: largest extent 264.567 mm"
+  ],
+  "own_accepted": false
+ },
+ {
+  "side": "quality",
+  "case": "204_flower",
+  "trial": 2,
+  "judge_accepted": false,
+  "judge_verified": false,
+  "judge_score": 75.9,
+  "states": {
+   "compiled": "pass",
+   "topology": "fail",
+   "build_envelope": "pass",
+   "dimensions": "unmeasured",
+   "shape_sanity": "unmeasured",
+   "features": "unmeasured",
+   "projections": "pass",
+   "interior": "pass"
+  },
+  "failures": [
+   "mesh has 3 disconnected components; the model must be ONE solid: union() every member, and any attached member (fin, handle, wheel, arm) must be repositioned or extended until its volume actually overlaps the main body \u2014 a member that merely touches the surface is still floating"
+  ],
+  "own_accepted": false
+ },
+ {
+  "side": "quality",
+  "case": "204_flower",
+  "trial": 3,
+  "judge_accepted": true,
+  "judge_verified": false,
+  "judge_score": 92.4,
+  "states": {
+   "compiled": "pass",
+   "topology": "pass",
+   "build_envelope": "pass",
+   "dimensions": "unmeasured",
+   "shape_sanity": "unmeasured",
+   "features": "unmeasured",
+   "projections": "pass",
+   "interior": "pass"
+  },
+  "failures": [],
+  "own_accepted": true
+ },
+ {
+  "side": "quality",
+  "case": "205_mug",
+  "trial": 1,
+  "judge_accepted": false,
+  "judge_verified": false,
+  "judge_score": 90.2,
+  "states": {
+   "compiled": "pass",
+   "topology": "pass",
+   "build_envelope": "pass",
+   "dimensions": "unmeasured",
+   "shape_sanity": "unmeasured",
+   "features": "fail",
+   "projections": "fail",
+   "interior": "pass"
+  },
+  "failures": [
+   "CAD projections poorly match the drawing: front similarity 0.35 (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly.",
+   "features exist but sit at the wrong positions in front view(s): match each opening's location (u,v within the outer profile) to the drawing; check the cad_mapping signs (front: u->+X v->-Z; top: u->+X v->-Y i.e. sheet-down is the FRONT of the part)"
+  ],
+  "own_accepted": false
+ },
+ {
+  "side": "quality",
+  "case": "205_mug",
+  "trial": 2,
+  "judge_accepted": false,
+  "judge_verified": false,
+  "judge_score": 72.2,
+  "states": {
+   "compiled": "pass",
+   "topology": "fail",
+   "build_envelope": "pass",
+   "dimensions": "unmeasured",
+   "shape_sanity": "unmeasured",
+   "features": "fail",
+   "projections": "fail",
+   "interior": "pass"
+  },
+  "failures": [
+   "mesh has 2 disconnected components; the model must be ONE solid: union() every member, and any attached member (fin, handle, wheel, arm) must be repositioned or extended until its volume actually overlaps the main body \u2014 a member that merely touches the surface is still floating",
+   "CAD projections poorly match the drawing: front similarity 0.35 (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly."
+  ],
+  "own_accepted": false
+ },
+ {
+  "side": "quality",
+  "case": "205_mug",
+  "trial": 3,
+  "judge_accepted": false,
+  "judge_verified": false,
+  "judge_score": 90.2,
+  "states": {
+   "compiled": "pass",
+   "topology": "pass",
+   "build_envelope": "pass",
+   "dimensions": "unmeasured",
+   "shape_sanity": "unmeasured",
+   "features": "fail",
+   "projections": "fail",
+   "interior": "pass"
+  },
+  "failures": [
+   "front view proportion: drawing aspect 1.31 vs render 0.84 (need within 40%) \u2014 the feature is built on the wrong plane or at the wrong scale for this registered view; rebuild so THIS view matches",
+   "CAD projections poorly match the drawing: front similarity 0.35 (need >= 0.45). Check which side/thickness the failing view shows: mirror depth, wall position and bar proportions to match that view exactly."
+  ],
+  "own_accepted": false
+ },
+ {
+  "side": "quality",
+  "case": "206_car_ink",
+  "trial": 1,
+  "judge_accepted": false,
+  "judge_verified": false,
+  "judge_score": 94.2,
+  "states": {
+   "compiled": "pass",
+   "topology": "pass",
+   "build_envelope": "pass",
+   "dimensions": "unmeasured",
+   "shape_sanity": "unmeasured",
+   "features": "fail",
+   "projections": "pass",
+   "interior": "pass"
+  },
+  "failures": [
+   "required internal profiles are missing: front view demands 9, best rendered view has 7. Missing at these view-local centres \u2014 add cutters there: (u=0.166,v=0.625); (u=0.832,v=0.628).",
+   "the drawing demands 9 through-opening(s) (best view front) but the solid has genus 7: at least one opening is a blind cut or surface notch, not a through-hole \u2014 extend that cutter fully through the material"
+  ],
+  "own_accepted": false
+ },
+ {
+  "side": "quality",
+  "case": "206_car_ink",
+  "trial": 2,
+  "judge_accepted": false,
+  "judge_verified": false,
+  "judge_score": 76.6,
+  "states": {
+   "compiled": "pass",
+   "topology": "pass",
+   "build_envelope": "pass",
+   "dimensions": "unmeasured",
+   "shape_sanity": "unmeasured",
+   "features": "fail",
+   "projections": "fail",
+   "interior": "pass"
+  },
+  "failures": [
+   "required internal profiles are missing: front view demands 9, best rendered view has 3. Missing at these view-local centres \u2014 add cutters there: (u=0.304,v=0.42); (u=0.369,v=0.423); (u=0.434,v=0.425); (u=0.629,v=0.426); (u=0.499,v=0.43); (u=0.694,v=0.441).",
+   "the drawing demands 9 through-opening(s) (best view front) but the solid has genus 0: at least one opening is a blind cut or surface notch, not a through-hole \u2014 extend that cutter fully through the material"
+  ],
+  "own_accepted": false
+ },
+ {
+  "side": "quality",
+  "case": "206_car_ink",
+  "trial": 3,
+  "judge_accepted": false,
+  "judge_verified": false,
+  "judge_score": 98.2,
+  "states": {
+   "compiled": "pass",
+   "topology": "pass",
+   "build_envelope": "pass",
+   "dimensions": "unmeasured",
+   "shape_sanity": "unmeasured",
+   "features": "fail",
+   "projections": "pass",
+   "interior": "pass"
+  },
+  "failures": [
+   "the drawing demands 9 through-opening(s) (best view front) but the solid has genus 7: at least one opening is a blind cut or surface notch, not a through-hole \u2014 extend that cutter fully through the material"
+  ],
+  "own_accepted": false
+ }
+]
